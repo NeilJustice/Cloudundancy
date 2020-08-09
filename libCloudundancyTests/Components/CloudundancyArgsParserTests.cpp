@@ -14,7 +14,7 @@ CloudundancyArgsParser _cloudundancyArgsParser;
 DocoptParserMock* _docoptParserMock = nullptr;
 FileSystemMock* _fileSystemMock = nullptr;
 // Function Callers
-ZENMOCK_NONVOID2_STATIC(ProgramMode, CloudundancyArgsParser, GetProgramMode, bool, bool)
+METALMOCK_NONVOID2_STATIC(ProgramMode, CloudundancyArgsParser, GetProgramMode, bool, bool)
 
 STARTUP
 {
@@ -22,7 +22,7 @@ STARTUP
    _cloudundancyArgsParser._docoptParser.reset(_docoptParserMock = new DocoptParserMock);
    _cloudundancyArgsParser._fileSystem.reset(_fileSystemMock = new FileSystemMock);
    // Function Callers
-   _cloudundancyArgsParser._call_GetProgramMode = BIND_2ARG_ZENMOCK_OBJECT(GetProgramModeMock);
+   _cloudundancyArgsParser._call_GetProgramMode = BIND_2ARG_METALMOCK_OBJECT(GetProgramModeMock);
 }
 
 TEST(DefaultConstructor_NewsDocoptParser)
@@ -57,20 +57,20 @@ TEST(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs)
    //
    const CloudundancyArgs args = _cloudundancyArgsParser.ParseStringArgs(stringArgs);
    //
-   ZENMOCK(_docoptParserMock->ParseArgsMock.CalledOnceWith(CloudundancyArgs::CommandLineUsage, stringArgs));
-   ZENMOCK(_docoptParserMock->GetRequiredBoolMock.CalledAsFollows(
+   METALMOCK(_docoptParserMock->ParseArgsMock.CalledOnceWith(CloudundancyArgs::CommandLineUsage, stringArgs));
+   METALMOCK(_docoptParserMock->GetRequiredBoolMock.CalledAsFollows(
    {
       { docoptArgs, "backup-files-and-folders" },
       { docoptArgs, "backup-files-and-folders-to-7z-file" }
    }));
-   ZENMOCK(GetProgramModeMock.CalledOnceWith(isBackupFilesAndFoldersMode, is7ZipBackupMode));
-   ZENMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptArgs, "--ini-file"));
-   ZENMOCK(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledAsFollows(
+   METALMOCK(GetProgramModeMock.CalledOnceWith(isBackupFilesAndFoldersMode, is7ZipBackupMode));
+   METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptArgs, "--ini-file"));
+   METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledAsFollows(
    {
       { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::BackupFilesAndFoldersWith7Zip), "--7z-ini-file" },
       { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::BackupFilesAndFoldersWith7Zip), "--backup-staging-folder" }
    }));
-   ZENMOCK(_fileSystemMock->ThrowIfFilePathIsNotEmptyAndDoesNotExistMock.CalledAsFollows(
+   METALMOCK(_fileSystemMock->ThrowIfFilePathIsNotEmptyAndDoesNotExistMock.CalledAsFollows(
    {
       { iniFilePath },
       { sevenZipIniFilePath }

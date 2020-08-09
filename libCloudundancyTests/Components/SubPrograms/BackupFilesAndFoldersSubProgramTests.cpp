@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersSubProgram.h"
 #include "libCloudundancy/ValueTypes/CloudundancyArgs.h"
-#include "libCloudundancyTests/Components/ZenMock/CloudundancyFileCopierMock.h"
+#include "libCloudundancyTests/Components/MetalMock/CloudundancyFileCopierMock.h"
 
 TESTS(BackupFilesAndFoldersSubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
@@ -28,7 +28,7 @@ TEST(Run_SetsArgs_CallsCopyFilesAndFoldersToMultipleFolders)
    //
    _backupFilesAndFoldersToMultipleFoldersSubProgram.Run(args);
    //
-   ZENMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleFoldersMock.CalledOnceWith(args.iniFilePath));
+   METALMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleFoldersMock.CalledOnceWith(args.iniFilePath));
 }
 
 RUN_TESTS(BackupFilesAndFoldersSubProgramTests)

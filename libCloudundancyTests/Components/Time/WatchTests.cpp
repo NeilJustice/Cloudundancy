@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/Components/Time/Watch.h"
-#include "libCloudundancyTests/Components/Time/ZenMock/CRTWatchMock.h"
+#include "libCloudundancyTests/Components/Time/MetalMock/CRTWatchMock.h"
 
 TESTS(WatchTests)
 FACTS(MonthDayYearToDateString_ReturnsExpectedDateString)
@@ -48,7 +48,7 @@ TEST6X6(DateTimeNowHoursMinutesForFileNames_ReturnsYYYYDashMMDashDDUnderscoreHHD
    //
 	const string dateTimeNowHoursMinutes = _watch.DateTimeNowHoursMinutesForFileNames();
 	//
-   ZENMOCK(_crtWatchMock->TmNowMock.CalledOnce());
+   METALMOCK(_crtWatchMock->TmNowMock.CalledOnce());
    ARE_EQUAL(expectedReturnValue, dateTimeNowHoursMinutes);
 }
 
@@ -72,7 +72,7 @@ TEST4X4(SecondsSinceMidnight_ReturnsCurrentSecondsSinceMidnight,
    //
 	const unsigned secondsSinceMidnight = _watch.SecondsSinceMidnight();
 	//
-   ZENMOCK(_crtWatchMock->TmNowMock.CalledOnce());
+   METALMOCK(_crtWatchMock->TmNowMock.CalledOnce());
 	ARE_EQUAL(expectedSecondsSinceMidnight, secondsSinceMidnight);
 }
 

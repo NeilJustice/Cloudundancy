@@ -20,7 +20,7 @@ class ClassTypeMock : public Zen::Mock<ClassType>
 {
 public:
    vector<ElementType> vec;
-   ZENMOCK_VOID2_CONST(TwoArgFunction, ElementType, Arg2Type)
+   METALMOCK_VOID2_CONST(TwoArgFunction, ElementType, Arg2Type)
 };
 
 using OneExtraArgMemberForEacherType = OneExtraArgMemberForEacher<

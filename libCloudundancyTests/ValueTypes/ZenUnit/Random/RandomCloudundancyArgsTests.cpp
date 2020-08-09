@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libCloudundancy/Enums/ProgramMode.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/Random/RandomCloudundancyArgs.h"
-#include "libCloudundancyTests/Components/Random/ZenMock/UtilsRandomGeneratorMock.h"
+#include "libCloudundancyTests/Components/Random/MetalMock/UtilsRandomGeneratorMock.h"
 
 TESTS(RandomCloudundancyArgsTests)
 AFACT(RandomCloudundancyArgs_ReturnsCloudundancyArgsWithAllNonDefaultFields)
@@ -9,7 +9,7 @@ EVIDENCE
 
 TEST(RandomCloudundancyArgs_ReturnsCloudundancyArgsWithAllNonDefaultFields)
 {
-   ZenMock::RandomGeneratorMock randomGeneratorMock;
+   MetalMock::RandomGeneratorMock randomGeneratorMock;
    const ProgramMode programMode = static_cast<ProgramMode>(randomGeneratorMock.EnumMock.ReturnRandom());
 
    UtilsRandomGeneratorMock utilsRandomGeneratorMock;
@@ -20,9 +20,9 @@ TEST(RandomCloudundancyArgs_ReturnsCloudundancyArgsWithAllNonDefaultFields)
    //
    const CloudundancyArgs cloundundancyArgs = RandomCloudundancyArgs(&randomGeneratorMock, &utilsRandomGeneratorMock);
    //
-   ZENMOCK(randomGeneratorMock.EnumMock.CalledOnceWith(static_cast<int>(ProgramMode::MaxValue)));
-   ZENMOCK(utilsRandomGeneratorMock.RelativeFilePathMock.CalledNTimes(2));
-   ZENMOCK(utilsRandomGeneratorMock.RelativeFolderPathMock.CalledOnce());
+   METALMOCK(randomGeneratorMock.EnumMock.CalledOnceWith(static_cast<int>(ProgramMode::MaxValue)));
+   METALMOCK(utilsRandomGeneratorMock.RelativeFilePathMock.CalledNTimes(2));
+   METALMOCK(utilsRandomGeneratorMock.RelativeFolderPathMock.CalledOnce());
 
    CloudundancyArgs expectedCloundundancyArgs;
    expectedCloundundancyArgs.programMode = programMode;

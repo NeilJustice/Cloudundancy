@@ -31,13 +31,13 @@ TEST(TestableTmRandom_ReturnsTmWithAllRandomFields)
    const int tm_wday = ZenUnit::Random<int>();
    const int tm_yday = ZenUnit::Random<int>();
    const int tm_isdst = ZenUnit::Random<int>();
-   ZenMock::RandomGeneratorMock randomGeneratorMock;
+   MetalMock::RandomGeneratorMock randomGeneratorMock;
    randomGeneratorMock.IntMock.ReturnValues(
       tm_sec, tm_min, tm_hour, tm_mday, tm_mon, tm_year, tm_wday, tm_yday, tm_isdst);
    //
    const tm randomTm = TestableTmRandom(&randomGeneratorMock);
    //
-   ZENMOCK(randomGeneratorMock.IntMock.CalledNTimes(9));
+   METALMOCK(randomGeneratorMock.IntMock.CalledNTimes(9));
    tm expectedRandomTm;
    expectedRandomTm.tm_sec = tm_sec;
    expectedRandomTm.tm_min = tm_min;

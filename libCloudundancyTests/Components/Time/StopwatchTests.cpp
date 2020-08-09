@@ -12,11 +12,11 @@ FACTS(StopAndGetElapsedSeconds_StartPreviouslyCalled_SetsStartTimeBackToDefault_
 EVIDENCE
 
 Stopwatch _stopwatch;
-ZENMOCK_NONVOID0_STATIC(chrono::time_point<chrono::high_resolution_clock>, chrono::high_resolution_clock, now)
+METALMOCK_NONVOID0_STATIC(chrono::time_point<chrono::high_resolution_clock>, chrono::high_resolution_clock, now)
 
 STARTUP
 {
-   _stopwatch._call_high_resolution_clock_now = BIND_0ARG_ZENMOCK_OBJECT(nowMock);
+   _stopwatch._call_high_resolution_clock_now = BIND_0ARG_METALMOCK_OBJECT(nowMock);
 }
 
 TEST(Ctor_SetsNowFunction)
@@ -53,7 +53,7 @@ TEST(StopAndGetElapsedMilliseconds_StartPreviouslyCalled_ReturnsElapsedMilliseco
    //
    const long long elapsedMilliseconds = _stopwatch.StopAndGetElapsedMilliseconds();
    //
-   ZENMOCK(nowMock.CalledOnce());
+   METALMOCK(nowMock.CalledOnce());
    ARE_EQUAL(1000ll, elapsedMilliseconds);
 }
 
@@ -74,7 +74,7 @@ TEST(StopAndGetElapsedMicroseconds_StartPreviouslyCalled_ReturnsElapsedMicroseco
    //
    const long long elapsedMicroseconds = _stopwatch.StopAndGetElapsedMicroseconds();
    //
-   ZENMOCK(nowMock.CalledOnce());
+   METALMOCK(nowMock.CalledOnce());
    ARE_EQUAL(randomMicrosecondDuration, elapsedMicroseconds);
 }
 
@@ -111,7 +111,7 @@ TEST2X2(StopAndGetElapsedSeconds_StartPreviouslyCalled_SetsStartTimeBackToDefaul
    //
    const string elapsedSeconds = _stopwatch.StopAndGetElapsedSeconds();
    //
-   ZENMOCK(nowMock.CalledOnce());
+   METALMOCK(nowMock.CalledOnce());
    ARE_EQUAL(chrono::time_point<chrono::high_resolution_clock>(), _stopwatch._startTime);
    ARE_EQUAL(expectedReturnValue, elapsedSeconds);
 }

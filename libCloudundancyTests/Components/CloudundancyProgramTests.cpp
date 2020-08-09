@@ -1,11 +1,11 @@
 #include "pch.h"
 #include "libCloudundancy/Components/CloudundancyProgram.h"
 #include "libCloudundancy/ValueTypes/CloudundancyArgs.h"
-#include "libCloudundancyTests/Components/SubPrograms/ZenMock/CloudundancySubProgramFactoryMock.h"
-#include "libCloudundancyTests/Components/SubPrograms/ZenMock/CloudundancySubProgramMock.h"
-#include "libCloudundancyTests/Components/ZenMock/CloudundancyArgsParserMock.h"
-#include "libCloudundancyTests/Components/ZenMock/CloudundancyIniFileReaderMock.h"
-#include "libCloudundancyTests/Components/ZenMock/CloudundancyFileCopierMock.h"
+#include "libCloudundancyTests/Components/SubPrograms/MetalMock/CloudundancySubProgramFactoryMock.h"
+#include "libCloudundancyTests/Components/SubPrograms/MetalMock/CloudundancySubProgramMock.h"
+#include "libCloudundancyTests/Components/MetalMock/CloudundancyArgsParserMock.h"
+#include "libCloudundancyTests/Components/MetalMock/CloudundancyIniFileReaderMock.h"
+#include "libCloudundancyTests/Components/MetalMock/CloudundancyFileCopierMock.h"
 
 TESTS(CloudundancyProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
@@ -16,8 +16,8 @@ AFACT(ExceptionHandler_PrintsExceptionGetExceptionClassNameAndMessage_Returns1)
 EVIDENCE
 
 CloudundancyProgram _cloudundancyProgram;
-ZENMOCK_NONVOID2_STATIC(vector<string>, Vector, ArgcArgvToStringVector, int, char**)
-ZENMOCK_NONVOID1_STATIC(string, Exception, GetExceptionClassNameAndMessage, const exception*)
+METALMOCK_NONVOID2_STATIC(vector<string>, Vector, ArgcArgvToStringVector, int, char**)
+METALMOCK_NONVOID1_STATIC(string, Exception, GetExceptionClassNameAndMessage, const exception*)
 CloudundancyArgsParserMock* _cloudundancyArgsParserMock = nullptr;
 CloudundancySubProgramFactoryMock* _cloudundancySubProgramFactoryMock = nullptr;
 ConsoleMock* _consoleMock = nullptr;
@@ -27,8 +27,8 @@ StopwatchMock* _stopwatchMock = nullptr;
 
 STARTUP
 {
-   _cloudundancyProgram._call_Exception_GetExceptionClassNameAndMessage = BIND_1ARG_ZENMOCK_OBJECT(GetExceptionClassNameAndMessageMock);
-   _cloudundancyProgram._call_Vector_ArgcArgvToStringVector = BIND_2ARG_ZENMOCK_OBJECT(ArgcArgvToStringVectorMock);
+   _cloudundancyProgram._call_Exception_GetExceptionClassNameAndMessage = BIND_1ARG_METALMOCK_OBJECT(GetExceptionClassNameAndMessageMock);
+   _cloudundancyProgram._call_Vector_ArgcArgvToStringVector = BIND_2ARG_METALMOCK_OBJECT(ArgcArgvToStringVectorMock);
    _cloudundancyProgram._cloudundancyArgsParser.reset(_cloudundancyArgsParserMock = new CloudundancyArgsParserMock);
    _cloudundancyProgram._cloudundancySubProgramFactory.reset(_cloudundancySubProgramFactoryMock = new CloudundancySubProgramFactoryMock);
    _cloudundancyProgram._console.reset(_consoleMock = new ConsoleMock);
@@ -65,8 +65,8 @@ TEST(Main_CallsTryCatchCallRunWithStringArgs_ReturnsExitCode)
    //
    const int exitCode = _cloudundancyProgram.Main(argc, const_cast<char**>(argv));
    //
-   ZENMOCK(ArgcArgvToStringVectorMock.CalledOnceWith(argc, const_cast<char**>(argv)));
-   ZENMOCK(_tryCatchCallerMock->TryCatchCallMock.CalledOnceWith(
+   METALMOCK(ArgcArgvToStringVectorMock.CalledOnceWith(argc, const_cast<char**>(argv)));
+   METALMOCK(_tryCatchCallerMock->TryCatchCallMock.CalledOnceWith(
       &_cloudundancyProgram, &CloudundancyProgram::Run, stringArgs, &CloudundancyProgram::ExceptionHandler));
    ARE_EQUAL(tryCatchCallReturnValue, exitCode);
 }
@@ -92,20 +92,20 @@ TEST(Run_ParsesArgsWithDocopt_CopiesCode_CallsCodeFolderBackupperIfBackupCodeFol
    //
    const int exitCode = _cloudundancyProgram.Run(stringArgs);
    //
-   ZENMOCK(_stopwatchMock->StartMock.CalledOnce());
+   METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    const string expectedSpaceJoinedArgs = Vector::Join(stringArgs, ' ');
    const string expectedRunningMessage = "[Cloudundancy] Running: " + expectedSpaceJoinedArgs;
-   ZENMOCK(_cloudundancyArgsParserMock->ParseStringArgsMock.CalledOnceWith(stringArgs));
-   ZENMOCK(_cloudundancySubProgramFactoryMock->NewCloudundancySubProgramMock.CalledOnceWith(args.programMode));
-   ZENMOCK(cloudundancySubProgramMock->RunMock.CalledOnceWith(args));
-   ZENMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
+   METALMOCK(_cloudundancyArgsParserMock->ParseStringArgsMock.CalledOnceWith(stringArgs));
+   METALMOCK(_cloudundancySubProgramFactoryMock->NewCloudundancySubProgramMock.CalledOnceWith(args.programMode));
+   METALMOCK(cloudundancySubProgramMock->RunMock.CalledOnceWith(args));
+   METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
       string_view(expectedRunningMessage),
       string_view("[Cloudundancy] OverallBackupResult: All non-ignored files and folders successfully copied to all destination folders."),
       string_view("[Cloudundancy]  OverallElapsedTime: " + elapsedSeconds + " seconds"),
       string_view("[Cloudundancy]            ExitCode: 0")
    }));
-   ZENMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
+   METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
    ARE_EQUAL(0, exitCode);
 }
 
@@ -120,9 +120,9 @@ TEST(ExceptionHandler_PrintsExceptionGetExceptionClassNameAndMessage_Returns1)
    //
    const int exitCode = _cloudundancyProgram.ExceptionHandler(ex, stringArgs);
    //
-   ZENMOCK(GetExceptionClassNameAndMessageMock.CalledOnceWith(&ex));
+   METALMOCK(GetExceptionClassNameAndMessageMock.CalledOnceWith(&ex));
    const string expectedFullExceptionErrorMessage = "\n[Cloudundancy] Error: Exception thrown: " + exceptionTypeNameAndMessage;
-   ZENMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
+   METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
       string_view(expectedFullExceptionErrorMessage),
       string_view("[Cloudundancy] ExitCode: 1")

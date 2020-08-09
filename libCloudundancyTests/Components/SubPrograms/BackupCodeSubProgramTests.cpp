@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/Components/SubPrograms/BackupCodeSubProgram.h"
-#include "libCloudundancyTests/Components/ZenMock/CloudundancyFileCopierMock.h"
+#include "libCloudundancyTests/Components/MetalMock/CloudundancyFileCopierMock.h"
 
 TESTS(BackupCodeSubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
@@ -60,7 +60,7 @@ TEST(Run_DeletesCodeBackupFolder_CopiesCodeToBackupStagingFolder_SevenZipsBackup
    //
    _backupCodeRunner.Run(args);
    //
-   ZENMOCK(_voidOneArgFunctionCallerMock->ConstCallMock.CalledAsFollows(
+   METALMOCK(_voidOneArgFunctionCallerMock->ConstCallMock.CalledAsFollows(
    {
       { &_backupCodeRunner, &BackupCodeSubProgram::DeleteBackupStagingFolder, args },
       { &_backupCodeRunner, &BackupCodeSubProgram::CopyFilesAndFoldersToBackupStagingFolder, args },
@@ -79,10 +79,10 @@ TEST(DeleteBackupStagingFolder_PrintsDeleting_DeletesBackupStagingFolder_PrintsD
    //
    _backupCodeRunner.DeleteBackupStagingFolder(args);
    //
-   ZENMOCK(_cloudundancyFileCopierMock->DeleteFolderMock.CalledOnceWith(args.backupStagingFolderPath));
-   ZENMOCK(_stopwatchMock->StartMock.CalledOnce());
-   ZENMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
-   ZENMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
+   METALMOCK(_cloudundancyFileCopierMock->DeleteFolderMock.CalledOnceWith(args.backupStagingFolderPath));
+   METALMOCK(_stopwatchMock->StartMock.CalledOnce());
+   METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
+   METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
       { "[Cloudundancy] Deleting " + args.backupStagingFolderPath.string() },
       { "[Cloudundancy] Deleted " + args.backupStagingFolderPath.string() + " in " + elapsedSeconds + " seconds\n" }
@@ -99,10 +99,10 @@ TEST(CopyFilesAndFoldersToBackupStagingFolder_CopiesSourceFilesAndFoldersToBacku
    //
    _backupCodeRunner.CopyFilesAndFoldersToBackupStagingFolder(args);
    //
-   ZENMOCK(_stopwatchMock->StartMock.CalledOnce());
-   ZENMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleFoldersMock.CalledOnceWith(args.iniFilePath));
-   ZENMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
-   ZENMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
+   METALMOCK(_stopwatchMock->StartMock.CalledOnce());
+   METALMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleFoldersMock.CalledOnceWith(args.iniFilePath));
+   METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
+   METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
       { "[Cloudundancy] Copying Code Folder To " + args.backupStagingFolderPath.string() },
       { "[Cloudundancy] Copied Code Folder To " + args.backupStagingFolderPath.string() + " in " + elapsedSeconds + " seconds\n" }
@@ -121,17 +121,17 @@ TEST(SevenZipBackupStagingFolder_Writes7zFileToFolder7zFileBackslashSourceFilesA
    //
    _backupCodeRunner.SevenZipBackupStagingFolder(args);
    //
-   ZENMOCK(_stopwatchMock->StartMock.CalledOnce());
-   ZENMOCK(_fileSystemMock->SetCurrentPathMock.CalledOnceWith(args.backupStagingFolderPath));
-   ZENMOCK(_watchMock->DateTimeNowHoursMinutesForFileNamesMock.CalledOnce());
+   METALMOCK(_stopwatchMock->StartMock.CalledOnce());
+   METALMOCK(_fileSystemMock->SetCurrentPathMock.CalledOnceWith(args.backupStagingFolderPath));
+   METALMOCK(_watchMock->DateTimeNowHoursMinutesForFileNamesMock.CalledOnce());
    const string expectedSevenZipCommandLineArguments = "a -r -mx9 7zFile\\SourceFilesAndFolders_" + dateTimeNowHoursMinutes + ".7z";
-   ZENMOCK(_processRunnerMock->FailFastRunMock.CalledOnceWith(
+   METALMOCK(_processRunnerMock->FailFastRunMock.CalledOnceWith(
       "7z.exe", expectedSevenZipCommandLineArguments));
-   ZENMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
+   METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
    const string expectedSevenZippingMessage = String::Concat("[Cloudundancy] 7-zipping ", args.backupStagingFolderPath.string());
    const string expectedSevenZippedMessage = String::Concat(
       "[Cloudundancy] 7-zipped ", args.backupStagingFolderPath.string(), " in ", elapsedSeconds, " seconds\n");
-   ZENMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
+   METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
       { expectedSevenZippingMessage },
       { expectedSevenZippedMessage }
@@ -148,10 +148,10 @@ TEST(Copy7zFileToDestinationFolders_DoesSo_PrintsElapsedSeconds)
    //
    _backupCodeRunner.Copy7zFileToDestinationFolders(args);
    //
-   ZENMOCK(_stopwatchMock->StartMock.CalledOnce());
-   ZENMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleFoldersMock.CalledOnceWith(args.sevenZipIniFilePath));
-   ZENMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
-   ZENMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
+   METALMOCK(_stopwatchMock->StartMock.CalledOnce());
+   METALMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleFoldersMock.CalledOnceWith(args.sevenZipIniFilePath));
+   METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
+   METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
       { "[Cloudundancy] Copying .7z File To Backup Folders." },
       { "[Cloudundancy] Copied .7z File To Backup Folders in " + elapsedSeconds + " seconds\n" }

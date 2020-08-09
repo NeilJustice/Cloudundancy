@@ -14,7 +14,7 @@ TEST(RandomFileCopyResult_CodeCoverage)
 
 TEST(TestableRandomFileCopyResult_ReturnsFileCopyResultWithAllRandomFields)
 {
-   const ZenMock::RandomGeneratorMock randomGeneratorMock;
+   const MetalMock::RandomGeneratorMock randomGeneratorMock;
 
    const fs::path sourceFilePath = ZenUnit::Random<fs::path>();
    const fs::path destinationFilePath = ZenUnit::Random<fs::path>();
@@ -30,10 +30,10 @@ TEST(TestableRandomFileCopyResult_ReturnsFileCopyResultWithAllRandomFields)
    //
    const FileCopyResult randomFileCopyResult = ZenUnit::TestableRandomFileCopyResult(&randomGeneratorMock);
    //
-   ZENMOCK(randomGeneratorMock.PathMock.CalledNTimes(2));
-   ZENMOCK(randomGeneratorMock.BoolMock.CalledOnce());
-   ZENMOCK(randomGeneratorMock.UnsignedLongLongMock.CalledNTimes(2));
-   ZENMOCK(randomGeneratorMock.StringMock.CalledOnce());
+   METALMOCK(randomGeneratorMock.PathMock.CalledNTimes(2));
+   METALMOCK(randomGeneratorMock.BoolMock.CalledOnce());
+   METALMOCK(randomGeneratorMock.UnsignedLongLongMock.CalledNTimes(2));
+   METALMOCK(randomGeneratorMock.StringMock.CalledOnce());
    FileCopyResult expectedRandomFileCopyResult;
    expectedRandomFileCopyResult.sourceFilePath = sourceFilePath;
    expectedRandomFileCopyResult.destinationFilePath = destinationFilePath;

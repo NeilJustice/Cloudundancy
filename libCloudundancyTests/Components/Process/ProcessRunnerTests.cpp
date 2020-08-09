@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "libCloudundancy/Components/Process/ProcessRunner.h"
 #ifdef __linux__
-#include "libCloudundancyTests/Components/Process/Linux/ZenMock/LinuxProcessRunnerMock.h"
+#include "libCloudundancyTests/Components/Process/Linux/MetalMock/LinuxProcessRunnerMock.h"
 #elif _WIN32
-#include "libCloudundancyTests/Components/Process/Windows/ZenMock/WindowsProcessRunnerMock.h"
+#include "libCloudundancyTests/Components/Process/Windows/MetalMock/WindowsProcessRunnerMock.h"
 #endif
 
 TESTS(ProcessRunnerTests)
@@ -42,7 +42,7 @@ TEST(Run_CallsProcessRunnerRun)
    //
    const ProcessResult processResult = _processRunner.Run(processName, arguments);
    //
-   ZENMOCK(_osSpecificProcessRunnerMock->RunMock.CalledOnceWith(processName, arguments));
+   METALMOCK(_osSpecificProcessRunnerMock->RunMock.CalledOnceWith(processName, arguments));
    ARE_EQUAL(runReturnValue, processResult);
 }
 
@@ -54,7 +54,7 @@ TEST(FailFastRun_CallsProcessRunnerFailFastRun)
    //
    const ProcessResult processResult = _processRunner.FailFastRun(processName, arguments);
    //
-   ZENMOCK(_osSpecificProcessRunnerMock->FailFastRunMock.CalledOnceWith(processName, arguments));
+   METALMOCK(_osSpecificProcessRunnerMock->FailFastRunMock.CalledOnceWith(processName, arguments));
    ARE_EQUAL(failFastReturnValue, processResult);
 }
 

@@ -23,7 +23,7 @@ before_build:
    - cmake -A %platform% -G "%generator%" .
 
 build_script:
-   - appveyor DownloadFile https://raw.githubusercontent.com/NeilJustice/ZenUnitAndZenMock/master/ZenUnit/ZenUnit.h
-   - appveyor DownloadFile https://raw.githubusercontent.com/NeilJustice/ZenUnitAndZenMock/master/ZenMock/ZenMock.h
+   - appveyor DownloadFile https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/master/ZenUnit/ZenUnit.h
+   - appveyor DownloadFile https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/master/MetalMock/MetalMock.h
    - cmake --build . --config %configuration% -- /m
 

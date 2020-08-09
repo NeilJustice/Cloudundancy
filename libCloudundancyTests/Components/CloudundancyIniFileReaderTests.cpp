@@ -82,7 +82,7 @@ TEST(ReadIniFile_ParsesCloudundancyIniFile_ReturnsExpectedCloudundancyIni)
    //
    const CloudundancyIni cloudundancyIni = _cloudundancyIniFile.ReadIniFile(cloudundancyIniPath);
    //
-   ZENMOCK(_fileSystemMock->ReadAsciiFileLinesWhichMustBeNonEmptyMock.CalledOnceWith(cloudundancyIniPath));
+   METALMOCK(_fileSystemMock->ReadAsciiFileLinesWhichMustBeNonEmptyMock.CalledOnceWith(cloudundancyIniPath));
    CloudundancyIni expectedCloudundancyIni;
    expectedCloudundancyIni.destinationFolderPaths =
    {
@@ -101,7 +101,7 @@ TEST(ReadIniFile_ParsesCloudundancyIniFile_ReturnsExpectedCloudundancyIni)
    };
    const FilePathLineNumberLineText expectedFilePathLineNumberLineText1(cloudundancyIniPath, 9, filePathA + " -> SuffixA");
    const FilePathLineNumberLineText expectedFilePathLineNumberLineText2(cloudundancyIniPath, 10, filePathB + "\t ->  SuffixB");
-   ZENMOCK(_callerMock_ParseFileCopyInstructionLine->CallConstMemberFunctionMock.CalledAsFollows(
+   METALMOCK(_callerMock_ParseFileCopyInstructionLine->CallConstMemberFunctionMock.CalledAsFollows(
    {
       { &CloudundancyIniFileReader::ParseFileCopyInstructionLine, &_cloudundancyIniFile, expectedFilePathLineNumberLineText1 },
       { &CloudundancyIniFileReader::ParseFileCopyInstructionLine, &_cloudundancyIniFile, expectedFilePathLineNumberLineText2 }
@@ -148,7 +148,7 @@ TEST1X1(ParseFileCopyInstructionLine_LineContainsOneSpaceArrowSpace_ReturnsExpec
    AbsoluteFileOrFolderPathToRelativeFolderPath expectedFileCopyInstruction;
    expectedFileCopyInstruction.absoluteSourceFileOrFolderPath = sourceFilePath;
    expectedFileCopyInstruction.relativeDestinationFolderPath = relativeDestinationFolderPath;
-   ZENMOCK(_callerMock_ThrowIfSourceFileOrFolderDoesNotExist->ConstCallMock.CalledOnceWith(
+   METALMOCK(_callerMock_ThrowIfSourceFileOrFolderDoesNotExist->ConstCallMock.CalledOnceWith(
       &_cloudundancyIniFile, &CloudundancyIniFileReader::ThrowIfSourceFileOrFolderDoesNotExist,
       cloudundancyIniCopyInstruction, filePathLineNumberLineText));
    ARE_EQUAL(expectedFileCopyInstruction, cloudundancyIniCopyInstruction);
@@ -163,7 +163,7 @@ TEST(ThrowIfSourceFileOrFolderDoesNotExist_SourceFileOrFolderPathExists_DoesNotT
    //
    _cloudundancyIniFile.ThrowIfSourceFileOrFolderDoesNotExist(cloudundancyIniCopyInstruction, filePathLineNumberLineText);
    //
-   ZENMOCK(_fileSystemMock->FileOrFolderExistsMock.CalledOnceWith(cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath));
+   METALMOCK(_fileSystemMock->FileOrFolderExistsMock.CalledOnceWith(cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath));
 }
 
 TEST(ThrowIfSourceFileOrFolderDoesNotExist_SourceFileOrFolderPathDoesNotExist_ThrowsFileSystemException)
@@ -182,7 +182,7 @@ TEST(ThrowIfSourceFileOrFolderDoesNotExist_SourceFileOrFolderPathDoesNotExist_Th
    THROWS_EXCEPTION(_cloudundancyIniFile.ThrowIfSourceFileOrFolderDoesNotExist(cloudundancyIniCopyInstruction, filePathLineNumberLineText),
       FileSystemException, expectedExceptionMessage);
    //
-   ZENMOCK(_fileSystemMock->FileOrFolderExistsMock.CalledOnceWith(cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath));
+   METALMOCK(_fileSystemMock->FileOrFolderExistsMock.CalledOnceWith(cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath));
 }
 
 RUN_TESTS(CloudundancyIniFileReaderTests)

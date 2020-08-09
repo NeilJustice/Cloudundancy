@@ -37,30 +37,30 @@ TEST(ForEach_OneElementCollection_CallsFunctionWithElement)
 {
    const CollectionType<T> collection = { 1 };
 
-   ZENMOCK_VOID1_STATIC(ForEacherTests, Function, const T&);
+   METALMOCK_VOID1_STATIC(ForEacherTests, Function, const T&);
    FunctionMock.Expect();
-   function<void(const T&)>_call_Function = BIND_1ARG_ZENMOCK_OBJECT(FunctionMock);
+   function<void(const T&)>_call_Function = BIND_1ARG_METALMOCK_OBJECT(FunctionMock);
 
    ForEacher<CollectionType<T>, decltype(_call_Function)> forEacher;
    //
    forEacher.ForEach(collection,_call_Function);
    //
-   ZENMOCK(FunctionMock.CalledOnceWith(1));
+   METALMOCK(FunctionMock.CalledOnceWith(1));
 }
 
 TEST(ForEach_TwoElementCollection_CallsFunctionWithEachElement)
 {
    const CollectionType<T> collection = { 1, 2 };
 
-   ZENMOCK_VOID1_STATIC(ForEacherTests, Function, const T&);
+   METALMOCK_VOID1_STATIC(ForEacherTests, Function, const T&);
    FunctionMock.Expect();
-   function<void(const T&)>_call_Function = BIND_1ARG_ZENMOCK_OBJECT(FunctionMock);
+   function<void(const T&)>_call_Function = BIND_1ARG_METALMOCK_OBJECT(FunctionMock);
 
    ForEacher<CollectionType<T>, decltype(_call_Function)> forEacher;
    //
    forEacher.ForEach(collection,_call_Function);
    //
-   ZENMOCK(FunctionMock.CalledAsFollows({ 1, 2 }));
+   METALMOCK(FunctionMock.CalledAsFollows({ 1, 2 }));
 }
 
 RUN_TEMPLATE_TESTS(ForEacherTests, vector, int)

@@ -1,9 +1,9 @@
 #include "pch.h"
 #ifdef _WIN32
-#include "libCloudundancyTests/Components/Console/ZenMock/ConsoleMock.h"
+#include "libCloudundancyTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libCloudundancy/Components/Process/Windows/WindowsProcessRunner.h"
 #include "libCloudundancyTests/Components/Process/ZenUnit/ProcessResultEqualizerAndRandom.h"
-#include "libCloudundancyTests/Components/Function/Member/ZenMock/NonVoidTwoArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/Components/Function/Member/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
 
 TESTS(WindowsProcessRunnerTests)
 AFACT(DefaultConstructor_NewsComponents)
@@ -16,13 +16,13 @@ using _caller_Run_MockType = NonVoidTwoArgMemberFunctionCallerMock<
    ProcessResult, WindowsProcessRunner, string_view, string_view>;
 _caller_Run_MockType* _caller_RunMock = nullptr;
 ConsoleMock* _consoleMock = nullptr;
-ZENMOCK_VOID1_FREE(exit, int)
+METALMOCK_VOID1_FREE(exit, int)
 
 STARTUP
 {
    _windowsProcessRunner._caller_Run.reset(_caller_RunMock = new _caller_Run_MockType);
    _windowsProcessRunner._console.reset(_consoleMock = new ConsoleMock);
-   _windowsProcessRunner._call_exit = BIND_1ARG_ZENMOCK_OBJECT(exitMock);
+   _windowsProcessRunner._call_exit = BIND_1ARG_METALMOCK_OBJECT(exitMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
@@ -45,12 +45,12 @@ TEST(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
    //
    const ProcessResult processResult = _windowsProcessRunner.FailFastRun(processName, arguments);
    //
-   ZENMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
+   METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
       string_view("Running \"" + processName + " " + arguments + "\""),
       string_view(runReturnValue.standardOutputAndError)
    }));
-   ZENMOCK(_caller_RunMock->ConstCallMock.CalledOnceWith(&_windowsProcessRunner, &WindowsProcessRunner::Run, processName, arguments));
+   METALMOCK(_caller_RunMock->ConstCallMock.CalledOnceWith(&_windowsProcessRunner, &WindowsProcessRunner::Run, processName, arguments));
    ARE_EQUAL(runReturnValue, processResult);
 }
 
@@ -73,16 +73,16 @@ TEST1X1(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessage_CallsExitWithProce
    //
    const ProcessResult processResult = _windowsProcessRunner.FailFastRun(processName, arguments);
    //
-   ZENMOCK(_caller_RunMock->ConstCallMock.CalledOnceWith(&_windowsProcessRunner, &WindowsProcessRunner::Run, processName, arguments));
+   METALMOCK(_caller_RunMock->ConstCallMock.CalledOnceWith(&_windowsProcessRunner, &WindowsProcessRunner::Run, processName, arguments));
    const string expectedProcessFailedErrorMessage = String::Concat(
       "Process \"", processName, " ", arguments, "\" failed to return exit code 0 by returning exit code ", processResult.exitCode, '.');
-   ZENMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
+   METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
       string_view("Running \"" + processName + " " + arguments + "\""),
       string_view(runReturnValue.standardOutputAndError),
       string_view(expectedProcessFailedErrorMessage)
    }));
-   ZENMOCK(exitMock.CalledOnceWith(exitCode));
+   METALMOCK(exitMock.CalledOnceWith(exitCode));
    ARE_EQUAL(runReturnValue, processResult);
 }
 

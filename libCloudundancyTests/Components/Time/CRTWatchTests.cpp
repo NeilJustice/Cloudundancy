@@ -8,9 +8,9 @@ AFACT(TmNow_ReturnsTmNow)
 EVIDENCE
 
 CRTWatch _crtWatch;
-ZENMOCK_NONVOID0_STATIC(chrono::time_point<chrono::system_clock>, chrono::system_clock, now)
-ZENMOCK_NONVOID1_STATIC(long long, chrono::system_clock, to_time_t, const chrono::system_clock::time_point&)
-ZENMOCK_NONVOID1_FREE(tm*, localtime, const time_t* const)
+METALMOCK_NONVOID0_STATIC(chrono::time_point<chrono::system_clock>, chrono::system_clock, now)
+METALMOCK_NONVOID1_STATIC(long long, chrono::system_clock, to_time_t, const chrono::system_clock::time_point&)
+METALMOCK_NONVOID1_FREE(tm*, localtime, const time_t* const)
 
 static int s_numberOfCallsToLocalTimeCallInstead;
 static time_t s_dereferencedTimeTArgument;
@@ -18,9 +18,9 @@ static tm s_localTimeCallInsteadReturnValue;
 
 STARTUP
 {
-   _crtWatch._call_system_clock_now = BIND_0ARG_ZENMOCK_OBJECT(nowMock);
-   _crtWatch._call_to_time_t = BIND_1ARG_ZENMOCK_OBJECT(to_time_tMock);
-   _crtWatch._call_localtime = BIND_1ARG_ZENMOCK_OBJECT(localtimeMock);
+   _crtWatch._call_system_clock_now = BIND_0ARG_METALMOCK_OBJECT(nowMock);
+   _crtWatch._call_to_time_t = BIND_1ARG_METALMOCK_OBJECT(to_time_tMock);
+   _crtWatch._call_localtime = BIND_1ARG_METALMOCK_OBJECT(localtimeMock);
 }
 
 CLEANUP
@@ -62,8 +62,8 @@ TEST(TmNow_ReturnsTmNow)
    //
    const tm tmNow = _crtWatch.TmNow();
    //
-   ZENMOCK(nowMock.CalledOnce());
-   ZENMOCK(to_time_tMock.CalledOnceWith(nowTimePoint));
+   METALMOCK(nowMock.CalledOnce());
+   METALMOCK(to_time_tMock.CalledOnceWith(nowTimePoint));
    ARE_EQUAL(1, s_numberOfCallsToLocalTimeCallInstead);
    ARE_EQUAL(nowTimeT, s_dereferencedTimeTArgument);
    ARE_EQUAL(s_localTimeCallInsteadReturnValue, tmNow);
