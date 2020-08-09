@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PyUtils", "PyUtils\PyUtils.pyproj", "{7442C4B6-4D10-4AEA-A009-421F7252D55E}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PyUtilsTests", "PyUtilsTests\PyUtilsTests.pyproj", "{5BE2BD06-B3D6-4E12-9D37-CB82AA0EF9D3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JenkinsJobs", "JenkinsJobs", "{88409A64-F6E8-4265-B8D3-C9DD53E33B7E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StaticAnalysis", "StaticAnalysis", "{AC4777E1-CF10-4308-B5EC-CEB9CC3E322B}"
+	ProjectSection(SolutionItems) = preProject
+		.flake8 = .flake8
+		.pylintrc = .pylintrc
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows", "Windows", "{678EE4DB-58D5-44E3-88EA-32AB51DE559C}"
+	ProjectSection(SolutionItems) = preProject
+		JenkinsJobs\Windows\PyUtils.ps1 = JenkinsJobs\Windows\PyUtils.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Linux", "Linux", "{806B2AB8-4582-4080-97E2-B79EAC0D105D}"
+	ProjectSection(SolutionItems) = preProject
+		JenkinsJobs\Linux\PyUtils.sh = JenkinsJobs\Linux\PyUtils.sh
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7442C4B6-4D10-4AEA-A009-421F7252D55E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7442C4B6-4D10-4AEA-A009-421F7252D55E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BE2BD06-B3D6-4E12-9D37-CB82AA0EF9D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BE2BD06-B3D6-4E12-9D37-CB82AA0EF9D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{678EE4DB-58D5-44E3-88EA-32AB51DE559C} = {88409A64-F6E8-4265-B8D3-C9DD53E33B7E}
+		{806B2AB8-4582-4080-97E2-B79EAC0D105D} = {88409A64-F6E8-4265-B8D3-C9DD53E33B7E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {82671E97-3DD4-4529-9667-B702FFFC49EB}
+	EndGlobalSection
+EndGlobal

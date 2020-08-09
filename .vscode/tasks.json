@@ -1,0 +1,75 @@
+{
+   "version": "0.1.0",
+   "command": "bash",
+   "args": [ "-c" ],
+   "options":
+   {
+      "cwd": "${fileDirname}"
+   },
+   "echoCommand": true,
+   "suppressTaskName": true,
+   "tasks":
+   [
+      {
+         "taskName": "Build Debug",
+         "args": [ "cd ${workspaceRoot}/Debug && time ninja -v" ],
+         "isBuildCommand": true,
+         "problemMatcher":
+         {
+            "owner": "cpp",
+            "fileLocation": [
+               "relative",
+               "${workspaceRoot}/DebugOrRelease"
+            ],
+            "pattern": {
+               // ../main.cpp:31:4: error: ‘abc’ was not declared in this scope
+               // ../main.cpp:99:48: fatal error: boost/date_time/posix_time/ptime.hpp: No such file or directory
+               "regexp": "^(.*):(\\d+):(\\d+):\\s+(error|fatal error|warning):\\s+(.*)$",
+               "file": 1, "line": 2, "column": 3, "severity": 4, "message": 5
+            }
+         }
+      },
+      {
+         "taskName": "Build Release",
+         "args": [ "cd ${workspaceRoot}/Release && time ninja -v" ],
+         "isBuildCommand": true,
+         "problemMatcher":
+         {
+            "owner": "cpp",
+            "fileLocation": [ "relative", "${workspaceRoot}/DebugOrRelease" ],
+            "pattern": {
+               // ../main.cpp:31:4: error: ‘abc’ was not declared in this scope
+               // ../main.cpp:99:48: fatal error: boost/date_time/posix_time/ptime.hpp: No such file or directory
+               "regexp": "^(.*):(\\d+):(\\d+):\\s+(error|fatal error|warning):\\s+(.*)$",
+               "file": 1, "line": 2, "column": 3, "severity": 4, "message": 5
+            }
+         }
+      },
+      {
+         "taskName": "Run Debug",
+         "isTestCommand": true,
+         //"args": [ "${workspaceRoot}/Debug/libCloudundancyTests/libCloudundancyTests" ]
+         "args": [ "${workspaceRoot}/Debug/Cloudundancy/Cloudundancy", "makecopies", "--ini-file=/home/blackduckuser/test2/Cloudundancy_blackduckmachine.ini" ]
+      },
+      {
+         "taskName": "Run Release",
+         "args": [ "${workspaceRoot}/Release/libCloudundancyTests/libCloudundancyTests" ]
+      },
+      {
+         "taskName": "Clean Debug",
+         "args": [ "cd ${workspaceRoot}/Debug && time ninja clean" ]
+      },
+      {
+         "taskName": "Clean Release",
+         "args": [ "cd ${workspaceRoot}/Release && time ninja clean" ]
+      },
+      {
+         "taskName": "clang++ Check Syntax",
+         "args": [ "clang++ -fsyntax-only -std=c++1z ${file}" ]
+      },
+      {
+         "taskName": "clang++ Compile File",
+         "args": [ "clang++ -c -H -std=c++1z -Wall -Werror ${file}" ]
+      }
+   ]
+}

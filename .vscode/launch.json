@@ -1,0 +1,20 @@
+{
+   "version": "0.2.0",
+   "configurations":
+   [
+      {
+         "name": "C++ Launch",
+         "request": "launch",
+         "type": "cppdbg",
+         "preLaunchTask": "Build Debug",
+         "program": "${workspaceRoot}/Debug/Cloudundancy/Cloudundancy",
+         //"program": "${workspaceRoot}/Debug/libCloudundancyTests/libCloudundancyTests",
+         "args": [ "makecopies", "--ini-file=/home/blackduckuser/test2/Cloudundancy_blackduckmachine.ini"],
+         "stopAtEntry": false,
+         "cwd": "${fileDirname}",
+         "environment": [],
+         "externalConsole": false,
+         "linux": { "MIMode": "gdb" }
+      }
+   ]
+}

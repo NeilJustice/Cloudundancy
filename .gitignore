@@ -1,0 +1,43 @@
+FileSystemIntegrationTests/
+
+# CMake
+.dir/
+CMakeFiles/
+Debug/
+Release/
+ReleaseCI/
+*.cmake
+!CMakeMacros.cmake
+CMakeCache.txt
+
+# Windows
+.axoCover/
+.vs/
+x64/
+*.dat
+*.db
+*.opendb
+*.sln
+!PyUtils.sln
+*.suo
+*.filters
+*.i
+*.ipch
+*.lib
+*.exe
+*.obj
+*.pdb
+*.user
+*.ilk
+*.pch
+*.vcxproj
+*.tlog
+*.tmp
+*.psess
+*.vspx
+*.txt
+
+# Python
+__pycache__/
+htmlcov/
+coverage.xml

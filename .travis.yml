@@ -1,0 +1,55 @@
+os: linux
+dist: bionic
+language: cpp
+cache: ccache
+sudo: false
+
+git:
+  depth: false
+
+matrix:
+  include:
+    - os: linux
+      compiler: clang
+      env: CMAKE_BUILD_TYPE=Debug COMPILER=clang++-7 CODE_COV_MODE=OFF
+      addons:
+        apt:
+          update: true
+          sources: [ 'ubuntu-toolchain-r-test' ]
+          packages: [ 'ninja-build', 'clang-7', 'libstdc++-8-dev' ]
+
+    - os: linux
+      compiler: clang
+      env: CMAKE_BUILD_TYPE=Release COMPILER=clang++-7 CODE_COV_MODE=OFF
+      addons:
+        apt:
+          update: true
+          sources: [ 'ubuntu-toolchain-r-test' ]
+          packages: [ 'ninja-build', 'clang-7', 'libstdc++-8-dev' ]
+
+    - os: linux
+      compiler: gcc
+      env: CMAKE_BUILD_TYPE=Debug COMPILER=g++ CODE_COV_MODE=OFF
+      addons:
+        apt:
+          update: true
+          sources: [ 'ubuntu-toolchain-r-test' ]
+          packages: [ 'ninja-build' ]
+
+    - os: linux
+      compiler: gcc
+      env: CMAKE_BUILD_TYPE=Release COMPILER=g++ CODE_COV_MODE=ON
+      addons:
+        apt:
+          update: true
+          sources: [ 'ubuntu-toolchain-r-test' ]
+          packages: [ 'ninja-build', 'lcov' ]
+
+script:
+   - ./CloudJobs/travis_script.sh
+
+after_success:
+   - ./CloudJobs/travis_after_success.sh
+
+notifications:
+  email: true

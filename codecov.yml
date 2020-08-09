@@ -1,0 +1,3 @@
+ignore:
+  - "libCloudundancy/Components/Docopt/docopt.h"
+  - "libCloudundancy/Components/Time/date.h"

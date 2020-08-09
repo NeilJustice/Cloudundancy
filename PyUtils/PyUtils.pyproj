@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>7442c4b6-4d10-4aea-a009-421f7252d55e</ProjectGuid>
+    <ProjectHome>
+    </ProjectHome>
+    <StartupFile>CMake.py</StartupFile>
+    <SearchPath>..\</SearchPath>
+    <WorkingDirectory>C:\Code\Cloudundancy</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>PyUtils</Name>
+    <RootNamespace>PyUtils</RootNamespace>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <CommandLineArguments>--solution-name=Cloudundancy --cmake-generator="Visual Studio 16 2019" --cmake-architecture="x64" --cmake-build-type=Debug --tests-project=libCloudundancyTests --no-install</CommandLineArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
+    <IsWindowsApplication>False</IsWindowsApplication>
+    <InterpreterArguments>
+    </InterpreterArguments>
+    <InterpreterId>Global|PythonCore|3.7</InterpreterId>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="BuildAndInstallCPlusPlusProgram.py" />
+    <Compile Include="CMake.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CoverageLintInstallPythonLibrary.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="File.py" />
+    <Compile Include="FileSystem.py" />
+    <Compile Include="Install.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Process.py" />
+    <Compile Include="Python.py" />
+    <Compile Include="Random.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UnitTester.py" />
+    <Compile Include="Util.py" />
+    <Compile Include="__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|PythonCore|3.6" />
+    <InterpreterReference Include="Global|PythonCore|3.7" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>
