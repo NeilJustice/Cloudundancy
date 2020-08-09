@@ -35,7 +35,7 @@ x64/
 *.tmp
 *.psess
 *.vspx
-*.txt
+install_manifest.txt
 
 # Python
 __pycache__/
