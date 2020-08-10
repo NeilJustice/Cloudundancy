@@ -1,7 +1,7 @@
 #pragma once
 #include "libCloudundancy/Components/FileSystem/FileSystem.h"
 
-class FileSystemMock : public Zen::Mock<FileSystem>
+class FileSystemMock : public Metal::Mock<FileSystem>
 {
 public:
    METALMOCK_VOID1_CONST(DeleteFolder, const fs::path&)

@@ -1,7 +1,7 @@
 #pragma once
 #include "libCloudundancy/Components/CloudundancyFileCopier.h"
 
-class CloudundancyFileCopierMock : public Zen::Mock<CloudundancyFileCopier>
+class CloudundancyFileCopierMock : public Metal::Mock<CloudundancyFileCopier>
 {
 public:
    METALMOCK_VOID1_CONST(CopyFilesAndFoldersToMultipleFolders, const fs::path&)

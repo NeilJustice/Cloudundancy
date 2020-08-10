@@ -122,7 +122,7 @@ TEST(IntegrationTest_RecursiveDirectoryIterator_EmptyFilePathIgnoreSubstrings_Re
       "",
       ""
    };
-   EQUAL_ELEMENTS_ANY_ORDER(expectedFilePaths, actualFilePaths);
+   INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedFilePaths, actualFilePaths);
 }
 
 TEST(IntegrationTest_RecursiveDirectoryIterator_NonEmptyFilePathIgnoreSubstrings_ReturnsAllNonIgnoredFilePathsInAndBelowFolderPath)
@@ -173,7 +173,7 @@ TEST(IntegrationTest_RecursiveDirectoryIterator_NonEmptyFilePathIgnoreSubstrings
       "",
       ""
    };
-   EQUAL_ELEMENTS_ANY_ORDER(expectedFilePaths, actualFilePaths);
+   INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedFilePaths, actualFilePaths);
 }
 
 RUN_TESTS(RecursiveDirectoryIteratorIntegrationTests)

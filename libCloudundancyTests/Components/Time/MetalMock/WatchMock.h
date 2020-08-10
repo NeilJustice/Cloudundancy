@@ -1,7 +1,7 @@
 #pragma once
 #include "libCloudundancy/Components/Time/Watch.h"
 
-class WatchMock : public Zen::Mock<Watch>
+class WatchMock : public Metal::Mock<Watch>
 {
 public:
 	METALMOCK_NONVOID0_CONST(string, DateTimeNowHoursMinutesForFileNames)

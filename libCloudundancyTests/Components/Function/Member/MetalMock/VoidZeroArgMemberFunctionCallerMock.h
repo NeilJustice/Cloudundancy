@@ -2,7 +2,7 @@
 #include "libCloudundancy/Components/Function/Member/VoidZeroArgMemberFunctionCaller.h"
 
 template<typename ClassType>
-class VoidZeroArgMemberFunctionCallerMock : public Zen::Mock<VoidZeroArgMemberFunctionCaller<ClassType>>
+class VoidZeroArgMemberFunctionCallerMock : public Metal::Mock<VoidZeroArgMemberFunctionCaller<ClassType>>
 {
 public:
    using ConstMemberFunctionType = void (ClassType::*)() const;

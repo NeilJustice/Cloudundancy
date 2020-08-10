@@ -1,7 +1,7 @@
 #pragma once
 #include "libCloudundancy/Components/RecursiveDirectoryIterator.h"
 
-class RecursiveDirectoryIteratorMock : public Zen::Mock<RecursiveDirectoryIterator>
+class RecursiveDirectoryIteratorMock : public Metal::Mock<RecursiveDirectoryIterator>
 {
 public:
    METALMOCK_VOID1(SetFileSubpathsToNotCopy, const vector<string>&)

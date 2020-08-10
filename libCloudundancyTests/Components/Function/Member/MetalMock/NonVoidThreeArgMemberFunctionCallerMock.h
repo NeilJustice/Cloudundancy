@@ -2,7 +2,7 @@
 #include "libCloudundancy/Components/Function/Member/NonVoidThreeArgMemberFunctionCaller.h"
 
 template<typename ReturnType, typename ClassType, typename Arg1Type, typename Arg2Type, typename Arg3Type>
-class NonVoidThreeArgMemberFunctionCallerMock : public Zen::Mock<NonVoidThreeArgMemberFunctionCaller<ReturnType, ClassType, Arg1Type, Arg2Type, Arg3Type>>
+class NonVoidThreeArgMemberFunctionCallerMock : public Metal::Mock<NonVoidThreeArgMemberFunctionCaller<ReturnType, ClassType, Arg1Type, Arg2Type, Arg3Type>>
 {
 public:
    using ConstMemberFunctionType = ReturnType (ClassType::*)(Arg1Type, Arg2Type, Arg3Type) const;

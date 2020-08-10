@@ -2,7 +2,7 @@
 #include "libCloudundancy/Components/Function/NonMember/NonVoidOneArgFunctionCaller.h"
 
 template<typename ReturnType, typename ArgType>
-class NonVoidOneArgFunctionCallerMock : public Zen::Mock<NonVoidOneArgFunctionCaller<ReturnType, ArgType>>
+class NonVoidOneArgFunctionCallerMock : public Metal::Mock<NonVoidOneArgFunctionCaller<ReturnType, ArgType>>
 {
 public:
    using FunctionType = ReturnType(*)(ArgType);

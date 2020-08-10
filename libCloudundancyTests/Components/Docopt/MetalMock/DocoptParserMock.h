@@ -2,7 +2,7 @@
 #include "libCloudundancy/Components/Docopt/DocoptParser.h"
 #include "libCloudundancy/Components/Time/date.h"
 
-class DocoptParserMock : public Zen::Mock<DocoptParser>
+class DocoptParserMock : public Metal::Mock<DocoptParser>
 {
 public:
    using DocoptMapType = map<string, docopt::Value>;

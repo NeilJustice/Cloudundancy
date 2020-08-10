@@ -1,7 +1,7 @@
 #pragma once
 #include "libCloudundancy/Components/Console/Console.h"
 
-class ConsoleMock : public Zen::Mock<Console>
+class ConsoleMock : public Metal::Mock<Console>
 {
 public:
 	METALMOCK_VOID1_CONST(Write, string_view)

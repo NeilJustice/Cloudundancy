@@ -1,7 +1,7 @@
 #pragma once
 #include "libCloudundancy/Components/FileSystem/FileOpenerCloser.h"
 
-class FileOpenerCloserMock : public Zen::Mock<FileOpenerCloser>
+class FileOpenerCloserMock : public Metal::Mock<FileOpenerCloser>
 {
 public:
    METALMOCK_VOID1_CONST(CloseFile, FILE*)

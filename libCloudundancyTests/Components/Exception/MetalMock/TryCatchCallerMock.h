@@ -2,7 +2,7 @@
 #include "libCloudundancy/Components/Exception/TryCatchCaller.h"
 
 template<typename ClassType, typename ArgumentType>
-class TryCatchCallerMock : public Zen::Mock<TryCatchCaller<ClassType, ArgumentType>>
+class TryCatchCallerMock : public Metal::Mock<TryCatchCaller<ClassType, ArgumentType>>
 {
 public:
    using MemberFunctionType = int (ClassType::*)(ArgumentType);
