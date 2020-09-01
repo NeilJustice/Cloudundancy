@@ -350,7 +350,7 @@ TEST(TryCopyFile_SourceFileIsNotEmpty_CreateParentFolderOfDestinationFilePathThr
 
    const string exceptionMessage = ZenUnit::Random<string>();
    const error_code errorCode = ZenUnit::Random<error_code>();
-   create_directoriesMock.ThrowException<fs::filesystem_error>(exceptionMessage, errorCode);
+   create_directoriesMock.ThrowExceptionWhenCalled<fs::filesystem_error>(exceptionMessage, errorCode);
 
    const unsigned long long elapsedMilliseconds = _stopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
 
