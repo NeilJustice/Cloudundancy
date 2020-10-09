@@ -14,7 +14,7 @@ class CloudundancyProgram
 {
    friend class CloudundancyProgramTests;
 private:
-   // Components
+   // Constant Components
    std::unique_ptr<const CloudundancyArgsParser> _cloudundancyArgsParser;
    std::unique_ptr<const CloudundancySubProgramFactory> _cloudundancySubProgramFactory;
    std::unique_ptr<const Console> _console;

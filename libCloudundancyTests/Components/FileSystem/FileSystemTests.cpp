@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/Components/FileSystem/FileSystem.h"
+#include "libCloudundancy/Components/FileSystem/FileSystemException.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/FileOpenerCloserMock.h"
 #include "libCloudundancyTests/Components/Memory/MetalMock/CharVectorAllocatorMock.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/FileCopyResultEqualizer.h"
@@ -31,7 +32,7 @@ EVIDENCE
 
 FileSystem _fileSystem;
 
-// Components
+// Constant Components
 AsserterMock* _asserterMock = nullptr;
 CharVectorAllocatorMock* _charVectorAllocatorMock = nullptr;
 FileOpenerCloserMock* _fileOpenerCloserMock = nullptr;
@@ -62,7 +63,7 @@ StopwatchMock* _stopwatchMock = nullptr;
 
 STARTUP
 {
-   // Components
+   // Constant Components
    _fileSystem._asserter.reset(_asserterMock = new AsserterMock);
    _fileSystem._charVectorAllocator.reset(_charVectorAllocatorMock = new CharVectorAllocatorMock);
    _fileSystem._fileOpenerCloser.reset(_fileOpenerCloserMock = new FileOpenerCloserMock);
@@ -95,7 +96,7 @@ TEST(GetLinuxErrno_ReturnsAddressOfGlobalErrnoVariable)
 TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 {
    FileSystem fileSystem;
-   // Components
+   // Constant Components
    DELETE_TO_ASSERT_NEWED(fileSystem._asserter);
    DELETE_TO_ASSERT_NEWED(fileSystem._fileOpenerCloser);
    // Function Pointers

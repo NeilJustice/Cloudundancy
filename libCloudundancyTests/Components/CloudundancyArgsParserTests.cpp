@@ -10,7 +10,7 @@ AFACT(GetProgramMode_BothBoolsAreFalse_ThrowsInvalidArgument)
 EVIDENCE
 
 CloudundancyArgsParser _cloudundancyArgsParser;
-// Components
+// Constant Components
 DocoptParserMock* _docoptParserMock = nullptr;
 FileSystemMock* _fileSystemMock = nullptr;
 // Function Callers
@@ -18,7 +18,7 @@ METALMOCK_NONVOID2_STATIC(ProgramMode, CloudundancyArgsParser, GetProgramMode, b
 
 STARTUP
 {
-   // Components
+   // Constant Components
    _cloudundancyArgsParser._docoptParser.reset(_docoptParserMock = new DocoptParserMock);
    _cloudundancyArgsParser._fileSystem.reset(_fileSystemMock = new FileSystemMock);
    // Function Callers

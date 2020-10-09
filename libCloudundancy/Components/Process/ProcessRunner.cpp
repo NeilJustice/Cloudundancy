@@ -19,14 +19,14 @@ ProcessRunner::~ProcessRunner()
 {
 }
 
-ProcessResult ProcessRunner::Run(string_view processName, string_view arguments) const
-{
-   const ProcessResult processResult = _osSpecificProcessRunner->Run(processName, arguments);
-   return processResult;
-}
-
 ProcessResult ProcessRunner::FailFastRun(string_view processName, string_view arguments) const
 {
    const ProcessResult processResult = _osSpecificProcessRunner->FailFastRun(processName, arguments);
+   return processResult;
+}
+
+ProcessResult ProcessRunner::Run(string_view processName, string_view arguments) const
+{
+   const ProcessResult processResult = _osSpecificProcessRunner->Run(processName, arguments);
    return processResult;
 }

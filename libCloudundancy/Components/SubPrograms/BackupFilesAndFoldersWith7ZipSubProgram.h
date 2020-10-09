@@ -14,7 +14,7 @@ class BackupFilesAndFoldersWith7ZipSubProgram : public CloudundancySubProgram
 {
    friend class BackupFilesAndFoldersWith7ZipSubProgramTests;
 private:
-   // Components
+   // Constant Components
    unique_ptr<const Console> _console;
    unique_ptr<const CloudundancyFileCopier> _cloudundancyFileCopier;
    unique_ptr<const FileSystem> _fileSystem;

@@ -11,7 +11,7 @@
 #include "libCloudundancy/Components/Time/Watch.h"
 
 BackupCodeSubProgram::BackupCodeSubProgram()
-   // Components
+   // Constant Components
    : _console(std::make_unique<Console>())
    , _cloudundancyFileCopier(std::make_unique<CloudundancyFileCopier>())
    , _fileSystem(make_unique<FileSystem>())

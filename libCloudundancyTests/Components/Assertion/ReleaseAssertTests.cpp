@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/Components/Assertion/ReleaseAssert.h"
+#include "libCloudundancy/Components/Strings/StringUtil.h"
 
 TESTS(ReleaseAssertTests)
 AFACT(release_assert_IsTrue_DoesNothing)
@@ -25,7 +26,7 @@ void FailReleaseAssertFunction()
    {
       const char* const what = e.what();
       IS_TRUE(String::Contains(what, "release_assert(1 == 0) failed in FailReleaseAssertFunction()"));
-      IS_TRUE(String::CaseInsensitiveContains(what, "ReleaseAssertTests.cpp(22)"));
+      IS_TRUE(String::CaseInsensitiveContains(what, "ReleaseAssertTests.cpp(23)"));
    }
 }
 
@@ -52,7 +53,7 @@ TEST(release_assert_IsFalse_FromOperatorParentheses_ThrowsLogicError)
 #elif _WIN32
       IS_TRUE(String::Contains(what, "release_assert(false) failed in operator ()()"));
 #endif
-      IS_TRUE(String::CaseInsensitiveContains(what, "ReleaseAssertTests.cpp(40)"));
+      IS_TRUE(String::CaseInsensitiveContains(what, "ReleaseAssertTests.cpp(41)"));
    }
 }
 

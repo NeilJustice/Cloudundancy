@@ -23,7 +23,7 @@ AFACT(TryCopyFileToFolder_RelativeDestinationFolderPathIsNotADot_JoinsRelativeDe
 EVIDENCE
 
 CloudundancyFileCopier _cloudundancyFileCopier;
-// Components
+// Constant Components
 CloudundancyIniFileReaderMock* _cloudundancyIniFileReaderMock = nullptr;
 ConsoleMock* _consoleMock = nullptr;
 FileSystemMock* _fileSystemMock = nullptr;
@@ -80,7 +80,7 @@ STARTUP
 TEST(DefaultConstructor_NewsComponents)
 {
    CloudundancyFileCopier fileCopier;
-   // Components
+   // Constant Components
    DELETE_TO_ASSERT_NEWED(fileCopier._cloudundancyIniFileReader);
    DELETE_TO_ASSERT_NEWED(fileCopier._console);
    DELETE_TO_ASSERT_NEWED(fileCopier._fileSystem);

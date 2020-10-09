@@ -61,20 +61,6 @@ bool String::StartsWith(string_view str, const string& substring)
 	return true;
 }
 
-bool String::EndsWith(const string& str, const string& endsWith)
-{
-   const size_t strSize = str.size();
-   const size_t endsWithSize = endsWith.size();
-   if (strSize == 0 || endsWithSize == 0 || endsWithSize > strSize)
-   {
-      return false;
-   }
-   const char* const memcmpStartAddress = str.c_str() + strSize - endsWithSize;
-   const int memcmpResult = memcmp(memcmpStartAddress, endsWith.c_str(), endsWithSize);
-   const bool strEndsWithEndsWith = memcmpResult == 0;
-   return strEndsWithEndsWith;
-}
-
 vector<string> String::Split(const string& str, char separator)
 {
    vector<string> splitString;

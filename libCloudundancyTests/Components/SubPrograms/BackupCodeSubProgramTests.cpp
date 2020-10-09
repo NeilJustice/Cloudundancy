@@ -12,7 +12,7 @@ AFACT(Copy7zFileToDestinationFolders_DoesSo_PrintsElapsedSeconds)
 EVIDENCE
 
 BackupCodeSubProgram _backupCodeRunner;
-// Components
+// Constant Components
 ConsoleMock* _consoleMock = nullptr;
 CloudundancyFileCopierMock* _cloudundancyFileCopierMock = nullptr;
 FileSystemMock* _fileSystemMock = nullptr;
@@ -26,7 +26,7 @@ WatchMock* _watchMock = nullptr;
 
 STARTUP
 {
-   // Components
+   // Constant Components
    _backupCodeRunner._console.reset(_consoleMock = new ConsoleMock);
    _backupCodeRunner._cloudundancyFileCopier.reset(_cloudundancyFileCopierMock = new CloudundancyFileCopierMock);
    _backupCodeRunner._fileSystem.reset(_fileSystemMock = new FileSystemMock);
@@ -41,7 +41,7 @@ STARTUP
 TEST(DefaultConstructor_NewsComponents)
 {
    BackupCodeSubProgram backupCodeRunner;
-   // Components
+   // Constant Components
    DELETE_TO_ASSERT_NEWED(backupCodeRunner._console);
    DELETE_TO_ASSERT_NEWED(backupCodeRunner._cloudundancyFileCopier);
    DELETE_TO_ASSERT_NEWED(backupCodeRunner._fileSystem);

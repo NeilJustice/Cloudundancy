@@ -5,7 +5,7 @@
 #include "libCloudundancy/Components/FileSystem/FileSystem.h"
 
 CloudundancyArgsParser::CloudundancyArgsParser()
-   // Components
+   // Constant Components
    : _docoptParser(make_unique<DocoptParser>())
    , _fileSystem(make_unique<FileSystem>())
    // Function Callers

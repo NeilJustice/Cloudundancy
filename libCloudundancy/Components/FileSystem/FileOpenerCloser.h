@@ -22,9 +22,9 @@ public:
    virtual FILE* CreateBinaryFileInWriteMode(const fs::path& filePath) const;
 private:
 #ifdef __linux__
-   virtual FILE* OpenFileOnLinux(const fs::path& filePath, const char* fileOpenMode) const;
+   FILE* OpenFileOnLinux(const fs::path& filePath, const char* fileOpenMode) const;
 #elif _WIN32
-   virtual FILE* OpenFileOnWindows(const fs::path& filePath, const wchar_t* fileOpenMode) const;
+   FILE* OpenFileOnWindows(const fs::path& filePath, const wchar_t* fileOpenMode) const;
 #endif
-   virtual void ThrowFileOpenExceptionIfFileOpenFailed(FILE* filePointer, const fs::path& filePath) const;
+   void ThrowFileOpenExceptionIfFileOpenFailed(FILE* filePointer, const fs::path& filePath) const;
 };

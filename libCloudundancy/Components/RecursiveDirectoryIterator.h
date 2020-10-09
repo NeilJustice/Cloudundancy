@@ -1,5 +1,4 @@
 #pragma once
-#include "libCloudundancy/ValueTypes/FileCopyInstruction.h"
 #include "libCloudundancy/ValueTypes/AbsoluteFilePathToRelativeFolderPath.h"
 #include "libCloudundancy/ValueTypes/AbsoluteFileOrFolderPathToRelativeFolderPath.h"
 struct CloudundancyIni;

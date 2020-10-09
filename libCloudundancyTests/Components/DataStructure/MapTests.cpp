@@ -38,9 +38,6 @@ namespace std
 TESTS(MapTests)
 AFACT(At_OrderedMap_ReturnsValueIfKeyPresent_OtherwiseThrows)
 AFACT(At_UnorderedMap_ReturnsValueIfKeyPresent_OtherwiseThrows)
-AFACT(ContainsKeyValue_MapDoesNotContainKey_ReturnsFalseFalse)
-AFACT(ContainsKeyValue_MapContainsKeyWithValueThatDoesNotMatch_ReturnsTrueFalse)
-AFACT(ContainsKeyValue_MapContainsKeyWithValueThatMatches_ReturnsTrueTrue)
 AFACT(ContainsKey_ReturnsTrueIfMapContainsKey)
 AFACT(TryGetValue_OrderedMap_MapDoesNotContainKey_ReturnsFalseAndDefaultValue)
 AFACT(TryGetValue_OrderedMap_MapContainsKey_ReturnsCorrespondingValue)
@@ -76,35 +73,6 @@ TEST(At_UnorderedMap_ReturnsValueIfKeyPresent_OtherwiseThrows)
 		out_of_range, "Key not found in map: [Struct::operator<<]");
 	um_Struct_string[Struct(0)] = "1";
 	ARE_EQUAL("1", Map::At(um_Struct_string, Struct(0)));
-}
-
-TEST(ContainsKeyValue_MapDoesNotContainKey_ReturnsFalseFalse)
-{
-   const map<int, int> m_int_int;
-	//
-   const pair<bool, bool> containsKeyValue = Map::ContainsKeyValue(m_int_int, 0, 0);
-	//
-	ARE_EQUAL(make_pair(false, false), containsKeyValue);
-}
-
-TEST(ContainsKeyValue_MapContainsKeyWithValueThatDoesNotMatch_ReturnsTrueFalse)
-{
-	map<int, int> m_int_int;
-	m_int_int[0] = 0;
-	//
-   const pair<bool, bool> containsKeyValue = Map::ContainsKeyValue(m_int_int, 0, 1);
-	//
-	ARE_EQUAL(make_pair(true, false), containsKeyValue);
-}
-
-TEST(ContainsKeyValue_MapContainsKeyWithValueThatMatches_ReturnsTrueTrue)
-{
-	map<int, int> m_int_int;
-	m_int_int[0] = 0;
-	//
-   const pair<bool, bool> containsKeyValue = Map::ContainsKeyValue(m_int_int, 0, 0);
-	//
-	ARE_EQUAL(make_pair(true, true), containsKeyValue);
 }
 
 TEST(ContainsKey_ReturnsTrueIfMapContainsKey)

@@ -17,7 +17,7 @@ class CloudundancyIniFileReader
 {
    friend class CloudundancyIniFileReaderTests;
 private:
-   // Components
+   // Constant Components
    unique_ptr<const FileSystem> _fileSystem;
 
    // Function Callers

@@ -10,6 +10,4 @@ struct FileCopyResult
 	std::string errorMessage;
 
    FileCopyResult();
-   static FileCopyResult MakeEmptyFileNotCopied(
-      const fs::path& emptySourceFilePath, const fs::path& destinationFilePath);
 };

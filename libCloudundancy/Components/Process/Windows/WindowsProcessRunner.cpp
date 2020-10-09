@@ -7,7 +7,7 @@
 #include "libCloudundancy/Components/Strings/StringUtil.h"
 
 WindowsProcessRunner::WindowsProcessRunner()
-   // Components
+   // Constant Components
    : _console(make_unique<Console>())
    // Function Callers
    , _call_exit(::exit)

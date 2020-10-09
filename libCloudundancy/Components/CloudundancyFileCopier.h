@@ -19,7 +19,7 @@ class CloudundancyFileCopier
 {
    friend class CloudundancyFileCopierTests;
 private:
-   // Components
+   // Constant Components
    unique_ptr<const CloudundancyIniFileReader> _cloudundancyIniFileReader;
    unique_ptr<const Console> _console;
    unique_ptr<const FileSystem> _fileSystem;

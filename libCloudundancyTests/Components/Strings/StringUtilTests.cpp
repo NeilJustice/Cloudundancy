@@ -7,7 +7,6 @@ FACTS(CaseInsensitiveContains_ReturnsTrueIfStringCaseInsensitiveContainsSubstrin
 FACTS(ReplaceFirst_ReturnsReplacedString)
 FACTS(RegexReplace_ReturnsRegexReplacedString)
 FACTS(StartsWith_ReturnsTrueIfStringStartsWithSubstring)
-FACTS(EndsWith_ReturnsTrueIfStringEndsWithStr)
 FACTS(Split_ReturnsStringSplitOnCharacterSeparator)
 FACTS(TrimWhitespace_ReturnsStringWithLeadingAndTrailingSpacesAndTabsRemoved)
 AFACT(Concat_ConcatsValuesIntoString)
@@ -110,26 +109,6 @@ TEST3X3(StartsWith_ReturnsTrueIfStringStartsWithSubstring,
    "aa", "aa", true)
 {
    ARE_EQUAL(expectedReturnValue, String::StartsWith(str, substring));
-}
-
-TEST3X3(EndsWith_ReturnsTrueIfStringEndsWithStr,
-   bool expectedReturnValue, const string& str, const string& endsWith,
-   false, "", "",
-   false, " ", "",
-   false, "", " ",
-   false, "", "str",
-   false, "str", "",
-   false, "a", "A",
-   false, "str", "str1",
-   false, "str1", "str",
-   true, " ", " ",
-   true, "a", "a",
-   true, " a", "a",
-   true, "\ta", "a",
-   true, "\na", "a",
-   true, "word1 word2 word3", "word2 word3")
-{
-   ARE_EQUAL(expectedReturnValue, String::EndsWith(str, endsWith));
 }
 
 TEST3X3(Split_ReturnsStringSplitOnCharacterSeparator,

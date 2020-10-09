@@ -17,7 +17,7 @@ int* GetLinuxErrno()
 #endif
 
 FileSystem::FileSystem()
-   // Components
+   // Constant Components
    : _asserter(make_unique<Asserter>())
    , _charVectorAllocator(make_unique<CharVectorAllocator>())
    , _fileOpenerCloser(make_unique<FileOpenerCloser>())

@@ -10,7 +10,7 @@
 #include "libCloudundancy/Components/Time/Watch.h"
 
 BackupFilesAndFoldersWith7ZipSubProgram::BackupFilesAndFoldersWith7ZipSubProgram()
-   // Components
+   // Constant Components
    : _console(std::make_unique<Console>())
    , _cloudundancyFileCopier(std::make_unique<CloudundancyFileCopier>())
    , _fileSystem(make_unique<FileSystem>())

@@ -8,7 +8,6 @@ public:
    static std::string ReplaceFirst(string_view str, string_view substring, string_view replacement);
    static std::string RegexReplace(const std::string& str, const std::string& pattern, const std::string& replacement);
    static bool StartsWith(string_view str, const std::string& substring);
-	static bool EndsWith(const std::string& str, const std::string& endsWith);
    static int ToInt(const std::string& str);
 	static unsigned ToUnsigned(string_view str);
 	static std::vector<std::string> Split(const std::string& str, char separator);

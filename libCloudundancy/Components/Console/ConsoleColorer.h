@@ -21,9 +21,9 @@ public:
    virtual bool SetColor(Color color);
    virtual void UnsetColor(bool didPreviouslySetTextColor) const;
 private:
-   virtual void SetSupportsColorIfUnset();
-   virtual bool SupportsColor() const;
+   void SetSupportsColorIfUnset();
+   bool SupportsColor() const;
    static const char* ColorToLinuxColor(Color color) noexcept;
    static WindowsColor ColorToWindowsColor(Color color) noexcept;
-   virtual void SetTextColor(Color color) const;
+   void SetTextColor(Color color) const;
 };

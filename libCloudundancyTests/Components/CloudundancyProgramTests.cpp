@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "libCloudundancy/Components/CloudundancyProgram.h"
+#include "libCloudundancy/Components/DataStructure/Vector.h"
+#include "libCloudundancy/Components/Exception/Exception.h"
 #include "libCloudundancy/ValueTypes/CloudundancyArgs.h"
 #include "libCloudundancyTests/Components/SubPrograms/MetalMock/CloudundancySubProgramFactoryMock.h"
 #include "libCloudundancyTests/Components/SubPrograms/MetalMock/CloudundancySubProgramMock.h"

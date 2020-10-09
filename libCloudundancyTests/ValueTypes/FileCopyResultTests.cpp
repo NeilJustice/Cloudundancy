@@ -4,7 +4,6 @@
 
 TESTS(FileCopyResultTests)
 AFACT(DefaultConstructor_SetsFieldsTo0)
-AFACT(MakeEmptyFileNotCopied_ReturnsFileCopyResultWithFilePathsSetAndCopySucceededSetToFalse)
 EVIDENCE
 
 TEST(DefaultConstructor_SetsFieldsTo0)
@@ -18,22 +17,6 @@ TEST(DefaultConstructor_SetsFieldsTo0)
    expectedDefaultFileCopyResult.numberOfBytesCopied = 0;
    expectedDefaultFileCopyResult.durationInMilliseconds = 0;
    ARE_EQUAL(expectedDefaultFileCopyResult, defaultFileCopyResult);
-}
-
-TEST(MakeEmptyFileNotCopied_ReturnsFileCopyResultWithFilePathsSetAndCopySucceededSetToFalse)
-{
-   const fs::path emptySourceFilePath = ZenUnit::Random<fs::path>();
-   const fs::path destinationFilePath = ZenUnit::Random<fs::path>();
-   //
-   const FileCopyResult emptyFileNotCopiedResult = FileCopyResult::MakeEmptyFileNotCopied(emptySourceFilePath, destinationFilePath);
-   //
-   FileCopyResult expectedReturnValue;
-   expectedReturnValue.sourceFilePath = emptySourceFilePath;
-   expectedReturnValue.destinationFilePath = destinationFilePath;
-   expectedReturnValue.copySucceeded = false;
-   expectedReturnValue.numberOfBytesCopied = 0;
-   expectedReturnValue.durationInMilliseconds = 0;
-   ARE_EQUAL(expectedReturnValue, emptyFileNotCopiedResult);
 }
 
 RUN_TESTS(FileCopyResultTests)

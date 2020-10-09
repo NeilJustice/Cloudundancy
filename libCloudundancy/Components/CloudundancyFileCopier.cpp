@@ -11,7 +11,7 @@
 #include "libCloudundancy/Components/Time/Stopwatch.h"
 
 CloudundancyFileCopier::CloudundancyFileCopier() noexcept
-   // Components
+   // Constant Components
    : _cloudundancyIniFileReader(make_unique<CloudundancyIniFileReader>())
    , _console(make_unique<Console>())
    , _fileSystem(make_unique<FileSystem>())

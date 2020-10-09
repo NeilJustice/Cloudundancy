@@ -31,8 +31,9 @@
 #endif
 #include <iostream>
 #include <map>
+#ifdef __linux__
 #include <memory>
-#include <mutex>
+#endif
 #include <regex>
 #include <sstream>
 #ifdef _WIN32
@@ -49,7 +50,6 @@ using namespace std;
 #define NOGDI
 #define NOMINMAX
 #include "Windows.h"
-#include "tlhelp32.h"
 #endif
 
 #include "libCloudundancy/Enums/FileSystemExceptionType.h"

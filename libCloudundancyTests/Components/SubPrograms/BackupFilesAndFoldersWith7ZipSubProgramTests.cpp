@@ -13,7 +13,7 @@ AFACT(SevenZipCodeBackupFolder_DoesSo_PrintsElapsedSeconds)
 EVIDENCE
 
 BackupFilesAndFoldersWith7ZipSubProgram _backupFilesAndFoldersTo7zFileSubProgram;
-// Components
+// Constant Components
 ConsoleMock* _consoleMock = nullptr;
 CloudundancyFileCopierMock* _fileCopierMock = nullptr;
 FileSystemMock* _fileSystemMock = nullptr;
@@ -27,7 +27,7 @@ StopwatchMock* _stopwatchMock = nullptr;
 
 STARTUP
 {
-   // Components
+   // Constant Components
    _backupFilesAndFoldersTo7zFileSubProgram._console.reset(_consoleMock = new ConsoleMock);
    _backupFilesAndFoldersTo7zFileSubProgram._cloudundancyFileCopier.reset(_fileCopierMock = new CloudundancyFileCopierMock);
    _backupFilesAndFoldersTo7zFileSubProgram._fileSystem.reset(_fileSystemMock = new FileSystemMock);
@@ -42,7 +42,7 @@ STARTUP
 TEST(DefaultConstructor_NewsComponents)
 {
    BackupFilesAndFoldersWith7ZipSubProgram backupCodeRunner;
-   // Components
+   // Constant Components
    DELETE_TO_ASSERT_NEWED(backupCodeRunner._console);
    DELETE_TO_ASSERT_NEWED(backupCodeRunner._cloudundancyFileCopier);
    DELETE_TO_ASSERT_NEWED(backupCodeRunner._fileSystem);

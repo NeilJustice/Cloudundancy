@@ -14,7 +14,7 @@ class FileSystem
 {
 	friend class ::FileSystemTests;
 private:
-   // Components
+   // Constant Components
    unique_ptr<const Asserter> _asserter;
    unique_ptr<const CharVectorAllocator> _charVectorAllocator;
    unique_ptr<const FileOpenerCloser> _fileOpenerCloser;

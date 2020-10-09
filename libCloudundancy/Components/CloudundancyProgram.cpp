@@ -11,7 +11,7 @@
 #include "libCloudundancy/Components/Time/Stopwatch.h"
 
 CloudundancyProgram::CloudundancyProgram() noexcept
-   // Components
+   // Constant Components
    : _cloudundancyArgsParser(make_unique<CloudundancyArgsParser>())
    , _cloudundancySubProgramFactory(make_unique<CloudundancySubProgramFactory>())
    , _console(make_unique<Console>())

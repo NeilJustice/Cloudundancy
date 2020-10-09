@@ -11,7 +11,7 @@ class WindowsProcessRunner
 {
    friend class WindowsProcessRunnerTests;
 private:
-   // Components
+   // Constant Components
    unique_ptr<const Console> _console;
    // Function Callers
    function<void(int)> _call_exit;

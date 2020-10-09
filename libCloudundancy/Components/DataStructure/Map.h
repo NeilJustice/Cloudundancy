@@ -29,21 +29,6 @@ public:
 		return keyIsInMap;
 	}
 
-	template<typename MapType, typename KeyType, typename ValueType>
-	static std::pair<bool, bool> ContainsKeyValue(const MapType& m, const KeyType& key, const ValueType& value)
-	{
-      const typename MapType::const_iterator findIter = m.find(key);
-		if (findIter == m.end())
-		{
-			return { false, false };
-		}
-      if (findIter->second ==  value)
-      {
-         return { true, true };
-      }
-      return { true, false };
-	}
-
 	template<
       template<typename...>
       typename MapType,
