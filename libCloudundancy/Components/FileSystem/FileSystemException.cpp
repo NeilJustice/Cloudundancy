@@ -5,14 +5,14 @@
 FileSystemException::FileSystemException(
    FileSystemExceptionType fileSystemExceptionType, const fs::path& filePath)
    : _exceptionMessage(String::Concat(
-      ENUM_TO_STRING(FileSystemExceptionType, fileSystemExceptionType), " for file ", filePath.string()))
+      ENUM_TO_STRING(FileSystemExceptionType, fileSystemExceptionType), ": ", filePath.string()))
 {
 }
 
 FileSystemException::FileSystemException(
    FileSystemExceptionType fileSystemExceptionType, const fs::path& filePath, string_view exceptionMessage)
    : _exceptionMessage(String::Concat(
-      ENUM_TO_STRING(FileSystemExceptionType, fileSystemExceptionType), " for file ", filePath.string(), ": ", exceptionMessage))
+      ENUM_TO_STRING(FileSystemExceptionType, fileSystemExceptionType), ": ", filePath.string(), ": ", exceptionMessage))
 {
 }
 
