@@ -8,9 +8,9 @@ EVIDENCE
 TEST(Random_ReturnsCloudunancyIniWithAllFieldsNonDefault)
 {
    const CloudundancyIni randomCloudundancyIni = ZenUnit::Random<CloudundancyIni>();
-   //IS_NOT_DEFAULT(randomCloudundancyIni.destinationFolderPaths);
+   //IS_NOT_DEFAULT_VALUE(randomCloudundancyIni.destinationFolderPaths);
    //IS_NOT_EMPTY(randomCloudundancyIni.fileCopyInstructions);
-   //IS_NOT_DEFAULT(randomCloudundancyIni.fileSubpathsToNotCopy);
+   //IS_NOT_DEFAULT_VALUE(randomCloudundancyIni.fileSubpathsToNotCopy);
 }
 
 RUN_TESTS(RandomCloudundancyIniTests)

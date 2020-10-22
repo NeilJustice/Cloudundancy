@@ -54,8 +54,7 @@ TEST(DefaultConstructor_NewsComponents)
 
 TEST(Main_CallsTryCatchCallRunWithStringArgs_ReturnsExitCode)
 {
-   const vector<string> stringArgs = ZenUnit::RandomVector<string>();
-   ArgcArgvToStringVectorMock.Return(stringArgs);
+   const vector<string> stringArgs = ArgcArgvToStringVectorMock.ReturnRandom();
 
    int tryCatchCallReturnValue = ZenUnit::Random<int>();
    _tryCatchCallerMock->TryCatchCallMock.Return(tryCatchCallReturnValue);
