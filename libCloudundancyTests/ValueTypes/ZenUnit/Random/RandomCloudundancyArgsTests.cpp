@@ -9,7 +9,7 @@ EVIDENCE
 
 TEST(RandomCloudundancyArgs_ReturnsCloudundancyArgsWithAllNonDefaultFields)
 {
-   MetalMock::RandomGeneratorMock randomGeneratorMock;
+   ZenUnit::RandomGeneratorMock randomGeneratorMock;
    const ProgramMode programMode = static_cast<ProgramMode>(randomGeneratorMock.EnumMock.ReturnRandom());
 
    UtilsRandomGeneratorMock utilsRandomGeneratorMock;

@@ -14,7 +14,7 @@ TEST(RandomFileCopyResult_CodeCoverage)
 
 TEST(TestableRandomFileCopyResult_ReturnsFileCopyResultWithAllRandomFields)
 {
-   const MetalMock::RandomGeneratorMock randomGeneratorMock;
+   const ZenUnit::RandomGeneratorMock randomGeneratorMock;
 
    const fs::path sourceFilePath = ZenUnit::Random<fs::path>();
    const fs::path destinationFilePath = ZenUnit::Random<fs::path>();
