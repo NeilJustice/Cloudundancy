@@ -7,7 +7,7 @@
 #endif
 
 TESTS(ProcessRunnerTests)
-AFACT(Constructor_NewsOSSpecificProcessRunner)
+AFACT(DefaultConstructor_NewsOSSpecificProcessRunner)
 AFACT(Run_CallsProcessRunnerRun)
 AFACT(FailFastRun_CallsProcessRunnerFailFastRun)
 EVIDENCE
@@ -28,7 +28,7 @@ STARTUP
 #endif
 }
 
-TEST(Constructor_NewsOSSpecificProcessRunner)
+TEST(DefaultConstructor_NewsOSSpecificProcessRunner)
 {
    ProcessRunner processRunner;
    DELETE_TO_ASSERT_NEWED(processRunner._osSpecificProcessRunner);

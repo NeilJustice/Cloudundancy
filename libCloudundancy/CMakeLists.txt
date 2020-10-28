@@ -37,7 +37,7 @@ source_group("" FILES ${Sources})
 
 add_library(libCloudundancy ${Sources})
 
-EnablePrecompiledHeaders()
+IfMSVCEnablePrecompiledHeaders()
 
 if(UNIX)
    if(CodeCovMode)

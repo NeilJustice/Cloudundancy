@@ -3,6 +3,8 @@
 class String
 {
 public:
+	String() = delete;
+
    static bool Contains(string_view str, string_view substring);
    static bool CaseInsensitiveContains(string_view str, string_view substring);
    static std::string ReplaceFirst(string_view str, string_view substring, string_view replacement);

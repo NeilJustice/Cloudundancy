@@ -3,6 +3,7 @@
 #include "libCloudundancyTests/Components/Time/MetalMock/CRTWatchMock.h"
 
 TESTS(WatchTests)
+AFACT(DefaultConstructor_NewsCRTWatch)
 FACTS(MonthDayYearToDateString_ReturnsExpectedDateString)
 FACTS(DateTimeNowHoursMinutesForFileNames_ReturnsYYYYDashMMDashDDUnderscoreHHDashMM)
 FACTS(SecondsSinceMidnight_ReturnsCurrentSecondsSinceMidnight)
@@ -16,6 +17,12 @@ CRTWatchMock* _crtWatchMock = nullptr;
 STARTUP
 {
    _watch._crtWatch.reset(_crtWatchMock = new CRTWatchMock);
+}
+
+TEST(DefaultConstructor_NewsCRTWatch)
+{
+   Watch watch;
+   DELETE_TO_ASSERT_NEWED(watch._crtWatch);
 }
 
 TEST4X4(MonthDayYearToDateString_ReturnsExpectedDateString,

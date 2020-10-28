@@ -77,7 +77,7 @@ if(UNIX)
    target_link_libraries(libCloudundancyTests stdc++fs)
 endif()
 
-EnablePrecompiledHeaders()
+IfMSVCEnablePrecompiledHeaders()
 IfMSVCAddRunTestsPostBuildStep()
 
 if(UNIX)

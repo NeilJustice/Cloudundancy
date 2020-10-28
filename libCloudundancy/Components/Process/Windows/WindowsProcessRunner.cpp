@@ -5,11 +5,11 @@
 #include "libCloudundancy/Components/Process/Windows/WindowsProcessRunner.h"
 
 WindowsProcessRunner::WindowsProcessRunner()
-   // Constant Components
-   : _console(make_unique<Console>())
    // Function Callers
-   , _call_exit(::exit)
+   : _call_exit(::exit)
    , _caller_Run(make_unique<_caller_Run_Type>())
+   // Constant Components
+   , _console(make_unique<Console>())
 {
 }
 

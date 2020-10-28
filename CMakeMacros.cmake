@@ -26,7 +26,7 @@ macro(replace variable str replacement)
    string(REPLACE "${str}" "${replacement}" ${variable} ${${variable}})
 endmacro()
 
-macro(EnablePrecompiledHeaders)
+macro(IfMSVCEnablePrecompiledHeaders)
    if(MSVC)
       set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "/Yupch.h")
       set_source_files_properties(pch.cpp PROPERTIES COMPILE_FLAGS "/Yc")

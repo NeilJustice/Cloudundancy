@@ -12,11 +12,13 @@ FACTS(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessage_CallsExitWithProcess
 EVIDENCE
 
 WindowsProcessRunner _windowsProcessRunner;
+// Function Callers
+METALMOCK_VOID1_FREE(exit, int)
 using _caller_Run_MockType = NonVoidTwoArgMemberFunctionCallerMock<
    ProcessResult, WindowsProcessRunner, string_view, string_view>;
 _caller_Run_MockType* _caller_RunMock = nullptr;
+// Constant Components
 ConsoleMock* _consoleMock = nullptr;
-METALMOCK_VOID1_FREE(exit, int)
 
 STARTUP
 {

@@ -5,13 +5,15 @@ class FileOpenerCloser
 {
    friend class FileOpenerCloserTests;
 private:
-   unique_ptr<const Asserter> _asserter;
-#ifdef __linux__
-   function<FILE*(const char*, const char*)> _call_fopen;
-#elif _WIN32
-   function<FILE*(const wchar_t*, const wchar_t*)> _call_wfopen;
-#endif
+   // Function Callers
    function<int(FILE*)> _call_fclose;
+#ifdef __linux__
+   function<FILE* (const char*, const char*)> _call_fopen;
+#elif _WIN32
+   function<FILE* (const wchar_t*, const wchar_t*)> _call_wfopen;
+#endif
+   // Constant Components
+   unique_ptr<const Asserter> _asserter;
 public:
    FileOpenerCloser();
    virtual ~FileOpenerCloser();

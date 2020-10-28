@@ -11,15 +11,15 @@
 #include "libCloudundancy/Utilities/Vector.h"
 
 CloudundancyProgram::CloudundancyProgram() noexcept
+   // Function Callers
+   : _call_Exception_GetExceptionClassNameAndMessage(Exception::GetExceptionClassNameAndMessage)
+   , _call_Vector_ArgcArgvToStringVector(Vector::ArgcArgvToStringVector)
    // Constant Components
-   : _cloudundancyArgsParser(make_unique<CloudundancyArgsParser>())
+   , _cloudundancyArgsParser(make_unique<CloudundancyArgsParser>())
    , _cloudundancySubProgramFactory(make_unique<CloudundancySubProgramFactory>())
    , _console(make_unique<Console>())
    , _cloudundancyFileCopier(make_unique<CloudundancyFileCopier>())
    , _tryCatchCaller(make_unique<TryCatchCaller<CloudundancyProgram, const vector<string>&>>())
-   // Function Callers
-   , _call_Exception_GetExceptionClassNameAndMessage(Exception::GetExceptionClassNameAndMessage)
-   , _call_Vector_ArgcArgvToStringVector(Vector::ArgcArgvToStringVector)
    // Mutable Components
    , _stopwatch(make_unique<Stopwatch>())
 {

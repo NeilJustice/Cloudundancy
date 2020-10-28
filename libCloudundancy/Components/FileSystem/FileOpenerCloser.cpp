@@ -3,13 +3,15 @@
 #include "libCloudundancy/Components/FileSystem/FileOpenerCloser.h"
 
 FileOpenerCloser::FileOpenerCloser()
-   : _asserter(make_unique<Asserter>())
+   // Function Callers
+   : _call_fclose(::fclose)
 #ifdef __linux__
    , _call_fopen(::fopen)
 #elif _WIN32
    , _call_wfopen(::_wfopen)
 #endif
-   , _call_fclose(::fclose)
+   // Constant Components
+   , _asserter(make_unique<Asserter>())
 {
 }
 

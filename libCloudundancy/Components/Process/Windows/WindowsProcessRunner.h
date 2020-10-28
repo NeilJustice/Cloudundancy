@@ -11,13 +11,13 @@ class WindowsProcessRunner
 {
    friend class WindowsProcessRunnerTests;
 private:
-   // Constant Components
-   unique_ptr<const Console> _console;
    // Function Callers
    function<void(int)> _call_exit;
    using _caller_Run_Type = const NonVoidTwoArgMemberFunctionCaller<
       ProcessResult, WindowsProcessRunner, string_view, string_view>;
    unique_ptr<const _caller_Run_Type> _caller_Run;
+   // Constant Components
+   unique_ptr<const Console> _console;
 public:
    WindowsProcessRunner();
    virtual ~WindowsProcessRunner();

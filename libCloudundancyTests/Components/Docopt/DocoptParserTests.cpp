@@ -22,13 +22,17 @@ EVIDENCE
 DocoptParser _docoptParser;
 METALMOCK_NONVOID5_FREE(map<string COMMA docopt::Value>, docopt, const string&, const vector<string>&, bool, const string&, bool)
 
-map<string, docopt::Value> _docoptArgs = ZenUnit::RandomMap<string, docopt::Value>();
-const string _argName = ZenUnit::Random<string>() + "_argName";
-const string ExpectedKeyNotFoundWhat = "Key not found in map: [" + _argName + "]";
+map<string, docopt::Value> _docoptArgs;
+string _argName;
+string _expectedKeyNotFoundWhat;
 
 STARTUP
 {
    _docoptParser._call_docopt_docopt = BIND_5ARG_METALMOCK_OBJECT(docoptMock);
+
+   _docoptArgs = ZenUnit::RandomMap<string, docopt::Value>();
+   _argName = ZenUnit::Random<string>() + "_argName";
+   _expectedKeyNotFoundWhat = "Key not found in map: [" + _argName + "]";
 }
 
 TEST(Constructor_SetsDocoptFunctionPointer)
@@ -63,7 +67,8 @@ TEST(ParseArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
 
 TEST(GetRequiredString_ArgNotInMap_Throws)
 {
-   THROWS_EXCEPTION(_docoptParser.GetRequiredString(_docoptArgs, _argName), out_of_range, ExpectedKeyNotFoundWhat);
+   THROWS_EXCEPTION(_docoptParser.GetRequiredString(_docoptArgs, _argName),
+      out_of_range, _expectedKeyNotFoundWhat);
 }
 
 TEST(GetRequiredString_ArgInMap_ReturnsValue)
@@ -78,7 +83,8 @@ TEST(GetRequiredString_ArgInMap_ReturnsValue)
 
 TEST(GetRequiredBool_ArgNotInMap_Throws)
 {
-   THROWS_EXCEPTION(_docoptParser.GetRequiredBool(_docoptArgs, _argName), out_of_range, ExpectedKeyNotFoundWhat);
+   THROWS_EXCEPTION(_docoptParser.GetRequiredBool(_docoptArgs, _argName),
+      out_of_range, _expectedKeyNotFoundWhat);
 }
 
 TEST(GetRequiredBool_ArgInMap_ReturnsValue)
@@ -108,7 +114,8 @@ TEST(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgra
    const unsigned fieldIsRequiredIfModeEqualsThisValue = modeValue;
    //
    THROWS_EXCEPTION(_docoptParser.GetProgramModeSpecificRequiredString(
-      _docoptArgs, modeValue, fieldIsRequiredIfModeEqualsThisValue, _argName), out_of_range, ExpectedKeyNotFoundWhat);
+      _docoptArgs, modeValue, fieldIsRequiredIfModeEqualsThisValue, _argName),
+      out_of_range, _expectedKeyNotFoundWhat);
 }
 
 TEST(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgInMap_ReturnsValue)

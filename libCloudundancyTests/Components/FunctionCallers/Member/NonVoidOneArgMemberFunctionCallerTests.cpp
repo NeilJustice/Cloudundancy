@@ -7,10 +7,6 @@ AFACT(CallConstMemberFunction_CallsConstMemberFunctionOnce_ReturnsReturnValue)
 AFACT(CallNonConstMemberFunction_CallsNonConstMemberFunctionOnce_ReturnsReturnValue)
 EVIDENCE
 
-NonVoidOneArgMemberFunctionCallerTests()
-{
-}
-
 class Class
 {
 public:

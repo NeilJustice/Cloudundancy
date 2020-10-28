@@ -3,12 +3,12 @@
 #include "libCloudundancyTests/Components/Process/ZenUnit/ProcessResultEqualizerAndRandom.h"
 
 TESTS(ProcessResultTests)
-AFACT(Ctor_SetsFieldsTo0)
-AFACT(FiveArgCtor_SetsFields)
+AFACT(DefaultConstrructor_SetsFieldsTo0)
+AFACT(FiveArgConstructor_SetsFields)
 AFACT(ZenUnitEqualizer_ThrowsIfAnyFieldNotEqual)
 EVIDENCE
 
-TEST(Ctor_SetsFieldsTo0)
+TEST(DefaultConstrructor_SetsFieldsTo0)
 {
    const ProcessResult defaultProcessResult;
    ProcessResult expectedDefaultProcessResult;
@@ -20,7 +20,7 @@ TEST(Ctor_SetsFieldsTo0)
    ARE_EQUAL(expectedDefaultProcessResult, defaultProcessResult);
 }
 
-TEST(FiveArgCtor_SetsFields)
+TEST(FiveArgConstructor_SetsFields)
 {
    const string processName = ZenUnit::Random<string>();
    const string arguments = ZenUnit::Random<string>();

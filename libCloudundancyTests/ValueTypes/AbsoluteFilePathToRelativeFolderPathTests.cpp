@@ -21,8 +21,8 @@ TEST(FromCloudundancyIniCopyInstruction_ReturnsNewDefaultAbsoluteFilePathToRelat
    const AbsoluteFileOrFolderPathToRelativeFolderPath absoluteFileOrFolderPathToRelativeFolderPath;
    const vector<string> fileSubpathsToNotCopy;
    //
-   const AbsoluteFilePathToRelativeFolderPath returnedAbsoluteFilePathToRelativeFolderPath
-      = AbsoluteFilePathToRelativeFolderPath::FromCloudundancyIniCopyInstruction(
+   const AbsoluteFilePathToRelativeFolderPath returnedAbsoluteFilePathToRelativeFolderPath =
+      AbsoluteFilePathToRelativeFolderPath::FromCloudundancyIniCopyInstruction(
          elementIndex, absoluteFileOrFolderPathToRelativeFolderPath, fileSubpathsToNotCopy);
    //
    const AbsoluteFilePathToRelativeFolderPath expectedReturnValue;

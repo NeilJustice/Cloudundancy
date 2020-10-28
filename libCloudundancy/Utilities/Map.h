@@ -3,6 +3,8 @@
 class Map
 {
 public:
+	Map() = delete;
+
 	template<
 		template<typename...>
 		typename MapType,

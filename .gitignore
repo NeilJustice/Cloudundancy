@@ -35,6 +35,7 @@ x64/
 *.tmp
 *.psess
 *.vspx
+debug.log
 install_manifest.txt
 
 # Python

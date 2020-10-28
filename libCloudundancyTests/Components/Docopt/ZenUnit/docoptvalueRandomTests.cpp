@@ -2,10 +2,10 @@
 #include "libCloudundancyTests/Components/Docopt/ZenUnit/docoptvalueRandom.h"
 
 TESTS(docoptvalueRandomTests)
-AFACT(Random_ReturnsdocoptvalueWithAllNonDefaultFields)
+AFACT(RandomDocoptValue_ReturnsdocoptvalueWithAllNonDefaultFields)
 EVIDENCE
 
-TEST(Random_ReturnsdocoptvalueWithAllNonDefaultFields)
+TEST(RandomDocoptValue_ReturnsdocoptvalueWithAllNonDefaultFields)
 {
    const docopt::Value randomDocoptValue = ZenUnit::Random<docopt::Value>();
    IS_TRUE(randomDocoptValue.IsLong() || randomDocoptValue.IsString());

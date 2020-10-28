@@ -14,15 +14,15 @@ class CloudundancyProgram
 {
    friend class CloudundancyProgramTests;
 private:
+   // Function Callers
+   std::function<std::string(const std::exception*)> _call_Exception_GetExceptionClassNameAndMessage;
+   std::function<std::vector<std::string>(int, char* [])> _call_Vector_ArgcArgvToStringVector;
    // Constant Components
    std::unique_ptr<const CloudundancyArgsParser> _cloudundancyArgsParser;
    std::unique_ptr<const CloudundancySubProgramFactory> _cloudundancySubProgramFactory;
    std::unique_ptr<const Console> _console;
    std::unique_ptr<const CloudundancyFileCopier> _cloudundancyFileCopier;
    std::unique_ptr<const TryCatchCaller<CloudundancyProgram, const std::vector<std::string>&>> _tryCatchCaller;
-   // Function Callers
-   std::function<std::string(const std::exception*)> _call_Exception_GetExceptionClassNameAndMessage;
-   std::function<std::vector<std::string>(int, char* [])> _call_Vector_ArgcArgvToStringVector;
    // Mutable Components
    std::unique_ptr<Stopwatch> _stopwatch;
 public:

@@ -7,7 +7,7 @@
 #include "libCloudundancyTests/Components/MetalMock/RecursiveDirectoryIteratorMock.h"
 
 TESTS(CloudundancyFileCopierTests)
-AFACT(DefaultConstructor_NewsComponents)
+AFACT(DefaultConstructor_NewsComponentsAndSetsFunctions)
 AFACT(CopyFilesAndFoldersToMultipleFolders_CopiesFilesAndFoldersToFolders)
 AFACT(DeleteFolder_CallsFileSystemDelete)
 // Private Functions
@@ -77,7 +77,7 @@ STARTUP
    _cloudundancyFileCopier._stopwatch.reset(_stopwatchMock = new StopwatchMock);
 }
 
-TEST(DefaultConstructor_NewsComponents)
+TEST(DefaultConstructor_NewsComponentsAndSetsFunctions)
 {
    CloudundancyFileCopier fileCopier;
    // Constant Components

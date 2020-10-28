@@ -13,8 +13,6 @@ AFACT(ThrowIfSourceFileOrFolderDoesNotExist_SourceFileOrFolderPathDoesNotExist_T
 EVIDENCE
 
 CloudundancyIniFileReader _cloudundancyIniFile;
-// Constant Components
-FileSystemMock* _fileSystemMock = nullptr;
 
 // Function Callers
 using NonVoidOneArgMemberFunctionCallerMockMockType = NonVoidOneArgMemberFunctionCallerMock<
@@ -25,25 +23,28 @@ using VoidTwoArgMemberFunctionCallerMockType = VoidTwoArgMemberFunctionCallerMoc
    CloudundancyIniFileReader, const AbsoluteFileOrFolderPathToRelativeFolderPath&, const FilePathLineNumberLineText&>;
 VoidTwoArgMemberFunctionCallerMockType* _callerMock_ThrowIfSourceFileOrFolderDoesNotExist = nullptr;
 
+// Constant Components
+FileSystemMock* _fileSystemMock = nullptr;
+
 STARTUP
 {
-   // Constant Components
-   _cloudundancyIniFile._fileSystem.reset(_fileSystemMock = new FileSystemMock);
    // Function Callers
    _cloudundancyIniFile._caller_ParseFileCopyInstructionLine.reset(
       _callerMock_ParseFileCopyInstructionLine = new NonVoidOneArgMemberFunctionCallerMockMockType);
    _cloudundancyIniFile._caller_ThrowIfSourceFileOrFolderDoesNotExist.reset(
       _callerMock_ThrowIfSourceFileOrFolderDoesNotExist = new VoidTwoArgMemberFunctionCallerMockType);
+   // Constant Components
+   _cloudundancyIniFile._fileSystem.reset(_fileSystemMock = new FileSystemMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
 {
    CloudundancyIniFileReader cloudundancyIniFile;
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(cloudundancyIniFile._fileSystem);
    // Function Callers
    DELETE_TO_ASSERT_NEWED(cloudundancyIniFile._caller_ParseFileCopyInstructionLine);
    DELETE_TO_ASSERT_NEWED(cloudundancyIniFile._caller_ThrowIfSourceFileOrFolderDoesNotExist);
+   // Constant Components
+   DELETE_TO_ASSERT_NEWED(cloudundancyIniFile._fileSystem);
 }
 
 TEST(ReadIniFile_ParsesCloudundancyIniFile_ReturnsExpectedCloudundancyIni)

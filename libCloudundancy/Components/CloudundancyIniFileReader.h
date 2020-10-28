@@ -17,9 +17,6 @@ class CloudundancyIniFileReader
 {
    friend class CloudundancyIniFileReaderTests;
 private:
-   // Constant Components
-   unique_ptr<const FileSystem> _fileSystem;
-
    // Function Callers
    using NonVoidOneArgMemberFunctionCallerType =
       const NonVoidOneArgMemberFunctionCaller<AbsoluteFileOrFolderPathToRelativeFolderPath, CloudundancyIniFileReader, const FilePathLineNumberLineText&>;
@@ -28,6 +25,9 @@ private:
    using VoidTwoArgMemberFunctionCallerType =
       const VoidTwoArgMemberFunctionCaller<CloudundancyIniFileReader, const AbsoluteFileOrFolderPathToRelativeFolderPath&, const FilePathLineNumberLineText&>;
    unique_ptr<VoidTwoArgMemberFunctionCallerType> _caller_ThrowIfSourceFileOrFolderDoesNotExist;
+
+   // Constant Components
+   unique_ptr<const FileSystem> _fileSystem;
 public:
    CloudundancyIniFileReader() noexcept;
    virtual ~CloudundancyIniFileReader();

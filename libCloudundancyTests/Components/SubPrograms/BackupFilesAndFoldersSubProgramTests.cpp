@@ -13,7 +13,8 @@ CloudundancyFileCopierMock* _cloudundancyFileCopierMock = nullptr;
 
 STARTUP
 {
-   _backupFilesAndFoldersToMultipleFoldersSubProgram._cloudundancyFileCopier.reset(_cloudundancyFileCopierMock = new CloudundancyFileCopierMock);
+   _backupFilesAndFoldersToMultipleFoldersSubProgram._cloudundancyFileCopier.reset(
+      _cloudundancyFileCopierMock = new CloudundancyFileCopierMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)

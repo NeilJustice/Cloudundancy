@@ -14,15 +14,15 @@ class BackupCodeSubProgram : public CloudundancySubProgram
 {
    friend class BackupCodeSubProgramTests;
 private:
+   // Function Callers
+   using VoidOneArgFunctionCallerType = VoidOneArgMemberFunctionCaller<BackupCodeSubProgram, const CloudundancyArgs&>;
+   unique_ptr<const VoidOneArgFunctionCallerType> _voidOneArgFunctionCaller;
    // Constant Components
    unique_ptr<const Console> _console;
    unique_ptr<const CloudundancyFileCopier> _cloudundancyFileCopier;
    unique_ptr<const FileSystem> _fileSystem;
    unique_ptr<const ProcessRunner> _processRunner;
    unique_ptr<const Watch> _watch;
-   // Function Callers
-   using VoidOneArgFunctionCallerType = VoidOneArgMemberFunctionCaller<BackupCodeSubProgram, const CloudundancyArgs&>;
-   unique_ptr<const VoidOneArgFunctionCallerType> _voidOneArgFunctionCaller;
    // Mutable Components
    unique_ptr<Stopwatch> _stopwatch;
 public:

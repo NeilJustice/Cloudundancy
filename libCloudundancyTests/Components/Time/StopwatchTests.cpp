@@ -2,7 +2,7 @@
 #include "libCloudundancy/Components/Time/Stopwatch.h"
 
 TESTS(StopwatchTests)
-AFACT(Ctor_SetsNowFunction)
+AFACT(DefaultConstructor_SetsNowFunction)
 AFACT(Start_SetsStartTimeToNow)
 AFACT(StopAndGetElapsedMilliseconds_StartNotPreviouslyCalled_Returns0)
 AFACT(StopAndGetElapsedMilliseconds_StartPreviouslyCalled_ReturnsElapsedMilliseconds)
@@ -19,7 +19,7 @@ STARTUP
    _stopwatch._call_high_resolution_clock_now = BIND_0ARG_METALMOCK_OBJECT(nowMock);
 }
 
-TEST(Ctor_SetsNowFunction)
+TEST(DefaultConstructor_SetsNowFunction)
 {
    const Stopwatch stopwatch;
    STD_FUNCTION_TARGETS(chrono::high_resolution_clock::now, stopwatch._call_high_resolution_clock_now);

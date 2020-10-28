@@ -8,9 +8,11 @@
 #include "libCloudundancy/ValueTypes/FilePathLineNumberLineText.h"
 
 CloudundancyIniFileReader::CloudundancyIniFileReader() noexcept
-   : _fileSystem(make_unique<FileSystem>())
-   , _caller_ParseFileCopyInstructionLine(make_unique<NonVoidOneArgMemberFunctionCallerType>())
+   // Function Callers
+   : _caller_ParseFileCopyInstructionLine(make_unique<NonVoidOneArgMemberFunctionCallerType>())
    , _caller_ThrowIfSourceFileOrFolderDoesNotExist(make_unique<VoidTwoArgMemberFunctionCallerType>())
+   // Constant Components
+   , _fileSystem(make_unique<FileSystem>())
 {
 }
 

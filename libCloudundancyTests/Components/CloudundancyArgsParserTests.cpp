@@ -2,7 +2,7 @@
 #include "libCloudundancy/Components/CloudundancyArgsParser.h"
 
 TESTS(CloudundancyArgsParserTests)
-AFACT(DefaultConstructor_NewsDocoptParser)
+AFACT(DefaultConstructor_NewsComponents)
 AFACT(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs)
 AFACT(GetProgramMode_IsBackupFilesAndFoldersModeIsTrue_ReturnsProgramModeBackupFilesAndFolders);
 AFACT(GetProgramMode_Is7zBackupModeIsTrue_ReturnsProgramModeBackupFilesAndFolders)
@@ -25,7 +25,7 @@ STARTUP
    _cloudundancyArgsParser._call_GetProgramMode = BIND_2ARG_METALMOCK_OBJECT(GetProgramModeMock);
 }
 
-TEST(DefaultConstructor_NewsDocoptParser)
+TEST(DefaultConstructor_NewsComponents)
 {
    CloudundancyArgsParser cloudundancyArgsParser;
    STD_FUNCTION_TARGETS(CloudundancyArgsParser::GetProgramMode, cloudundancyArgsParser._call_GetProgramMode);

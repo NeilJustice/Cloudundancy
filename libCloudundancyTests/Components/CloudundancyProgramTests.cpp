@@ -18,37 +18,46 @@ AFACT(ExceptionHandler_PrintsExceptionGetExceptionClassNameAndMessage_Returns1)
 EVIDENCE
 
 CloudundancyProgram _cloudundancyProgram;
+// Function Callers
 METALMOCK_NONVOID2_STATIC(vector<string>, Vector, ArgcArgvToStringVector, int, char**)
 METALMOCK_NONVOID1_STATIC(string, Exception, GetExceptionClassNameAndMessage, const exception*)
+// Constant Components
 CloudundancyArgsParserMock* _cloudundancyArgsParserMock = nullptr;
 CloudundancySubProgramFactoryMock* _cloudundancySubProgramFactoryMock = nullptr;
 ConsoleMock* _consoleMock = nullptr;
 CloudundancyFileCopierMock* _cloudundancyFileCopierMock = nullptr;
 TryCatchCallerMock<CloudundancyProgram, const vector<string>&>* _tryCatchCallerMock = nullptr;
+// Mutable Components
 StopwatchMock* _stopwatchMock = nullptr;
 
 STARTUP
 {
+   // Function Callers
    _cloudundancyProgram._call_Exception_GetExceptionClassNameAndMessage = BIND_1ARG_METALMOCK_OBJECT(GetExceptionClassNameAndMessageMock);
    _cloudundancyProgram._call_Vector_ArgcArgvToStringVector = BIND_2ARG_METALMOCK_OBJECT(ArgcArgvToStringVectorMock);
+   // Constant Components
    _cloudundancyProgram._cloudundancyArgsParser.reset(_cloudundancyArgsParserMock = new CloudundancyArgsParserMock);
    _cloudundancyProgram._cloudundancySubProgramFactory.reset(_cloudundancySubProgramFactoryMock = new CloudundancySubProgramFactoryMock);
    _cloudundancyProgram._console.reset(_consoleMock = new ConsoleMock);
    _cloudundancyProgram._cloudundancyFileCopier.reset(_cloudundancyFileCopierMock = new CloudundancyFileCopierMock);
    _cloudundancyProgram._tryCatchCaller.reset(_tryCatchCallerMock = new TryCatchCallerMock<CloudundancyProgram, const vector<string>&>);
+   // Mutable Components
    _cloudundancyProgram._stopwatch.reset(_stopwatchMock = new StopwatchMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
 {
    CloudundancyProgram cloudundancyProgram;
+   // Function Callers
    STD_FUNCTION_TARGETS(Exception::GetExceptionClassNameAndMessage, cloudundancyProgram._call_Exception_GetExceptionClassNameAndMessage);
    STD_FUNCTION_TARGETS(Vector::ArgcArgvToStringVector, cloudundancyProgram._call_Vector_ArgcArgvToStringVector);
+   // Constant Components
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._cloudundancyArgsParser);
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._cloudundancySubProgramFactory);
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._console);
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._cloudundancyFileCopier);
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._tryCatchCaller);
+   // Mutable Components
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._stopwatch);
 }
 

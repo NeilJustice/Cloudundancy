@@ -2,11 +2,11 @@
 #include "libCloudundancyTests/Components/Time/ZenUnit/tmZenUnitEqualizerAndRandom.h"
 
 TESTS(tmZenUnitEqualizerAndRandomTests)
-AFACT(Equalizer_ThrowsIfAnyFieldNotEqual)
+AFACT(tmEqualizer_ThrowsIfAnyFieldNotEqual)
 AFACT(TestableTmRandom_ReturnsTmWithAllRandomFields)
 EVIDENCE
 
-TEST(Equalizer_ThrowsIfAnyFieldNotEqual)
+TEST(tmEqualizer_ThrowsIfAnyFieldNotEqual)
 {
    SETUP_EQUALIZER_TEST(tm);
    EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_sec, ZenUnit::RandomNon0<int>());

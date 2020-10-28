@@ -14,23 +14,27 @@ AFACT(ThrowFileOpenExceptionIfFileOpenFailed_FileHandleIsNotNullptr_DoesNotThrow
 EVIDENCE
 
 FileOpenerCloser _fileOpenerCloser;
-AsserterMock* _asserterMock = nullptr;
+// Function Callers
 METALMOCK_NONVOID1_FREE(int, fclose, FILE*)
 #ifdef __linux__
 METALMOCK_NONVOID2_FREE(FILE*, fopen, const char*, const char*)
 #elif _WIN32
 METALMOCK_NONVOID2_FREE(FILE*, _wfopen, const wchar_t*, const wchar_t*)
 #endif
+// Constant Components
+AsserterMock* _asserterMock = nullptr;
 
 STARTUP
 {
-   _fileOpenerCloser._asserter.reset(_asserterMock = new AsserterMock);
+   // Function Callers
    _fileOpenerCloser._call_fclose = BIND_1ARG_METALMOCK_OBJECT(fcloseMock);
 #ifdef __linux__
    _fileOpenerCloser._call_fopen = BIND_2ARG_METALMOCK_OBJECT(fopenMock);
 #elif _WIN32
    _fileOpenerCloser._call_wfopen = BIND_2ARG_METALMOCK_OBJECT(_wfopenMock);
 #endif
+   // Constant Components
+   _fileOpenerCloser._asserter.reset(_asserterMock = new AsserterMock);
 }
 
 TEST(DefaultConstructor_SetsFunctionPointers)

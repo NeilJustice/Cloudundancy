@@ -10,14 +10,14 @@
 #include "libCloudundancy/Components/Time/Watch.h"
 
 BackupFilesAndFoldersWith7ZipSubProgram::BackupFilesAndFoldersWith7ZipSubProgram()
+   // Function Callers
+   : _voidOneArgFunctionCaller(make_unique<VoidOneArgFunctionCallerType>())
    // Constant Components
-   : _console(std::make_unique<Console>())
+   , _console(std::make_unique<Console>())
    , _cloudundancyFileCopier(std::make_unique<CloudundancyFileCopier>())
    , _fileSystem(make_unique<FileSystem>())
    , _processRunner(std::make_unique<ProcessRunner>())
    , _watch(std::make_unique<Watch>())
-   // Function Callers
-   , _voidOneArgFunctionCaller(make_unique<VoidOneArgFunctionCallerType>())
    // Mutable Components
    , _stopwatch(std::make_unique<Stopwatch>())
 {
