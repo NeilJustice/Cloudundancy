@@ -5,7 +5,6 @@
 #define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
 #endif
 
-#include <assert.h>
 #if defined __linux__
    #include <experimental/filesystem>
    namespace fs = std::experimental::filesystem;
@@ -14,18 +13,17 @@
    namespace fs = std::filesystem;
 #endif
 #include <regex>
-#include <unordered_set>
 using namespace std;
-
-#ifdef _WIN32
-#include <io.h> // _isatty()
-#endif
 
 #include "ZenUnit.h"
 #include "MetalMock.h"
 
-#include "libCloudundancy/Components/Strings/StringUtil.h"
+// libCloudundancy Enums
 #include "libCloudundancy/Enums/FileSystemExceptionType.h"
+
+// libCloudundancy Utilities
+#include "libCloudundancy/Utilities/ReleaseAssert.h"
+#include "libCloudundancy/Utilities/StringUtil.h"
 
 // ZenUnit Equalizers
 #include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/CloudundancyArgsEqualizer.h"

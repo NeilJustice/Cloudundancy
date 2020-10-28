@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "libCloudundancy/Components/Assertion/Asserter.h"
-#include "libCloudundancy/Components/Strings/StringUtil.h"
 
 Asserter::~Asserter()
 {

@@ -5,7 +5,6 @@
 #include "libCloudundancy/Components/FileSystem/FileSystem.h"
 #include "libCloudundancy/Components/FileSystem/FileSystemException.h"
 #include "libCloudundancy/Components/Memory/CharVectorAllocator.h"
-#include "libCloudundancy/Components/Strings/StringUtil.h"
 #include "libCloudundancy/Components/Time/Stopwatch.h"
 #include "libCloudundancy/Components/Function/Member/NonVoidOneArgMemberFunctionCaller.h"
 

@@ -1145,7 +1145,7 @@ namespace docopt
 
    inline bool OneOrMoreBranchPattern::Match(std::vector<std::shared_ptr<Pattern>>& left, std::vector<std::shared_ptr<LeafPattern>>& collected) const
    {
-      assert(fChildren.size() == 1);
+      release_assert(fChildren.size() == 1);
       auto l = left;
       auto c = collected;
       bool matched = true;
@@ -1383,7 +1383,7 @@ namespace docopt
       std::string longOpt, equal;
       Value val;
       std::tie(longOpt, equal, val) = partition(tokens.pop(), "=");
-      assert(starts_with(longOpt, "--"));
+      release_assert(starts_with(longOpt, "--"));
       if (equal.empty())
       {
          val = Value{};
@@ -1469,8 +1469,8 @@ namespace docopt
    {
       // shorts ::= '-' ( chars )* [ [ ' ' ] chars ] ;
       auto token = tokens.pop();
-      assert(starts_with(token, "-"));
-      assert(!starts_with(token, "--"));
+      release_assert(starts_with(token, "-"));
+      release_assert(!starts_with(token, "--"));
       auto i = token.begin();
       ++i; // skip the leading '-'
       std::vector<std::shared_ptr<Pattern>> ret;
@@ -1659,7 +1659,7 @@ namespace docopt
       {
          throw DocoptLanguageError("Unexpected ending: '" + tokens.the_rest() + "'");
       }
-      assert(result.size() == 1 && "top level is always one big");
+      release_assert(result.size() == 1 && "top level is always one big");
       return RequiredBranchPattern{ std::move(result) };
    }
 

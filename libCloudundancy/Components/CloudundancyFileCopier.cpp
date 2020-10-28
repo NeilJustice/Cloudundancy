@@ -7,7 +7,6 @@
 #include "libCloudundancy/Components/Function/Member/VoidTwoArgMemberFunctionCaller.h"
 #include "libCloudundancy/Components/Iteration/ForEach/OneExtraArgMemberForEacher.h"
 #include "libCloudundancy/Components/RecursiveDirectoryIterator.h"
-#include "libCloudundancy/Components/Strings/StringUtil.h"
 #include "libCloudundancy/Components/Time/Stopwatch.h"
 
 CloudundancyFileCopier::CloudundancyFileCopier() noexcept

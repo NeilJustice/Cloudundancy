@@ -6,7 +6,6 @@
 #include "libCloudundancy/Components/Function/Member/VoidOneArgMemberFunctionCaller.h"
 #include "libCloudundancy/Components/Process/ProcessRunner.h"
 #include "libCloudundancy/Components/SubPrograms/BackupCodeSubProgram.h"
-#include "libCloudundancy/Components/Strings/StringUtil.h"
 #include "libCloudundancy/Components/Time/Stopwatch.h"
 #include "libCloudundancy/Components/Time/Watch.h"
 

@@ -10,10 +10,6 @@
 #define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
 #endif
 
-#include <algorithm>
-#include <array>
-#include <assert.h>
-
 #if defined __linux__
    #include <experimental/filesystem>
    namespace fs = std::experimental::filesystem;
@@ -52,4 +48,11 @@ using namespace std;
 #include "Windows.h"
 #endif
 
+// CppUtils
+#include "libCloudundancy/Utilities/ReleaseAssert.h"
+
+// libCloudundancy Enums
 #include "libCloudundancy/Enums/FileSystemExceptionType.h"
+
+// libCloudundancy Utilities
+#include "libCloudundancy/Utilities/StringUtil.h"

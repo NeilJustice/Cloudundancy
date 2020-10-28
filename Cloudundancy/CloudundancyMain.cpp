@@ -1,15 +1,8 @@
 #include "libCloudundancy/Components/Compiler/MSVCIgnoredWallWarnings.h"
-#include <assert.h>
-#include <ctime>
 #include <functional>
-#include <iostream>
-#include <map>
 #ifdef __linux__
 #include <memory> // unique_ptr
 #endif
-#include <sstream>
-#include <unordered_set>
-#include <vector>
 #include "libCloudundancy/Components/CloudundancyProgram.h"
 
 // backup-files-and-folders --ini-file=C:\Code\dotfiles\HomeWindowsCloudundancy.ini
