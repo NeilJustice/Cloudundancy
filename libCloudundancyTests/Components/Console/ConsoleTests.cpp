@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/Components/Console/Console.h"
 #include "libCloudundancy/Components/Console/ConsoleColorer.h"
-#include "libCloudundancy/Components/FunctionCallers/Member/VoidZeroArgMemberFunctionCaller.h"
 
 TESTS(ConsoleTests)
 AFACT(DefaultConstructor_NewsComponents)

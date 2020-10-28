@@ -52,7 +52,6 @@ using namespace std;
 #include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/VoidOneArgMemberFunctionCallerMock.h"
 #include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
 #include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/VoidThreeArgMemberFunctionCallerMock.h"
-#include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/VoidZeroArgMemberFunctionCallerMock.h"
 #include "libCloudundancyTests/Components/Iteration/ForEach/MetalMock/OneExtraArgMemberForEacherMock.h"
 #include "libCloudundancyTests/Components/Iteration/Transform/MetalMock/OneExtraArgTransformerMock.h"
 #include "libCloudundancyTests/Components/Process/MetalMock/ProcessRunnerMock.h"
