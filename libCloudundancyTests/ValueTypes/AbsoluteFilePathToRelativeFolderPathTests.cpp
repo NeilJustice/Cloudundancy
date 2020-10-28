@@ -3,12 +3,12 @@
 #include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/AbsoluteFilePathToRelativeFolderPathEqualizer.h"
 
 TESTS(AbsoluteFilePathToRelativeFolderPathTests)
-AFACT(Constructor_SetsFieldsToDefaults)
+AFACT(DefaultConstructor_SetsFieldsToDefaults)
 AFACT(FromCloudundancyIniCopyInstruction_ReturnsNewDefaultAbsoluteFilePathToRelativeFolderPath)
 AFACT(ZenUnitEqualizer_ThrowsIfAnyFieldNotEqual)
 EVIDENCE
 
-TEST(Constructor_SetsFieldsToDefaults)
+TEST(DefaultConstructor_SetsFieldsToDefaults)
 {
    AbsoluteFilePathToRelativeFolderPath absoluteFilePathAndRelativeFolderPath;
    ARE_EQUAL(fs::path(), absoluteFilePathAndRelativeFolderPath.absoluteSourceFilePath);
@@ -18,7 +18,7 @@ TEST(Constructor_SetsFieldsToDefaults)
 TEST(FromCloudundancyIniCopyInstruction_ReturnsNewDefaultAbsoluteFilePathToRelativeFolderPath)
 {
    const size_t elementIndex = ZenUnit::Random<size_t>();
-   const AbsoluteFileOrFolderPathToRelativeFolderPath absoluteFileOrFolderPathToRelativeFolderPath;
+   const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath absoluteFileOrFolderPathToRelativeFolderPath;
    const vector<string> fileSubpathsToNotCopy;
    //
    const AbsoluteFilePathToRelativeFolderPath returnedAbsoluteFilePathToRelativeFolderPath =

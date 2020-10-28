@@ -1,5 +1,5 @@
 #pragma once
-struct AbsoluteFileOrFolderPathToRelativeFolderPath;
+struct AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath;
 
 struct AbsoluteFilePathToRelativeFolderPath
 {
@@ -8,6 +8,6 @@ struct AbsoluteFilePathToRelativeFolderPath
 
    static AbsoluteFilePathToRelativeFolderPath FromCloudundancyIniCopyInstruction(
       size_t elementIndex,
-      const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction,
+      const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath& cloudundancyIniCopyInstruction,
       const vector<string>& fileSubpathsToNotCopy);
 };

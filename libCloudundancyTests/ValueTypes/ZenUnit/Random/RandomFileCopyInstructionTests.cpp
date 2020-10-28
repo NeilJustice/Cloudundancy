@@ -7,7 +7,7 @@ EVIDENCE
 
 TEST(Random_ReturnsFileCopyInstructionWithAllFieldsNonDefault)
 {
-   const AbsoluteFileOrFolderPathToRelativeFolderPath randomFileCopyInstruction = ZenUnit::Random<AbsoluteFileOrFolderPathToRelativeFolderPath>();
+   const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath randomFileCopyInstruction = ZenUnit::Random<AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath>();
    IS_NOT_DEFAULT_VALUE(randomFileCopyInstruction.absoluteSourceFileOrFolderPath);
    IS_NOT_DEFAULT_VALUE(randomFileCopyInstruction.relativeDestinationFolderPath);
 }

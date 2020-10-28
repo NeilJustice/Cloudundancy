@@ -1,6 +1,6 @@
 #pragma once
 #include "libCloudundancy/ValueTypes/AbsoluteFilePathToRelativeFolderPath.h"
-#include "libCloudundancy/ValueTypes/AbsoluteFileOrFolderPathToRelativeFolderPath.h"
+#include "libCloudundancy/ValueTypes/AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath.h"
 struct CloudundancyIni;
 template<
    typename TransformedContainerType,
@@ -16,8 +16,8 @@ private:
    // Function Callers
    using OneExtraArgTransformerType = OneExtraArgTransformer<
       vector<AbsoluteFilePathToRelativeFolderPath>,
-      vector<AbsoluteFileOrFolderPathToRelativeFolderPath>,
-      AbsoluteFilePathToRelativeFolderPath(*)(size_t, const AbsoluteFileOrFolderPathToRelativeFolderPath&, const vector<string>&),
+      vector<AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath>,
+      AbsoluteFilePathToRelativeFolderPath(*)(size_t, const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath&, const vector<string>&),
       const vector<string>&>;
    unique_ptr<const OneExtraArgTransformerType> _oneExtraArgTransformer;
 

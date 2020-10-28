@@ -5,9 +5,9 @@
 namespace ZenUnit
 {
    template<>
-   AbsoluteFileOrFolderPathToRelativeFolderPath Random<AbsoluteFileOrFolderPathToRelativeFolderPath>()
+   AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath Random<AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath>()
    {
-      AbsoluteFileOrFolderPathToRelativeFolderPath randomFileCopyInstruction;
+      AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath randomFileCopyInstruction;
       randomFileCopyInstruction.absoluteSourceFileOrFolderPath = RandomRelativeFilePath() / RandomRelativeFilePath();
       randomFileCopyInstruction.relativeDestinationFolderPath = RandomRelativeFilePath() / RandomRelativeFilePath();
       return randomFileCopyInstruction;

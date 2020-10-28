@@ -16,11 +16,11 @@ CloudundancyIniFileReader _cloudundancyIniFile;
 
 // Function Callers
 using NonVoidOneArgMemberFunctionCallerMockMockType = NonVoidOneArgMemberFunctionCallerMock<
-   AbsoluteFileOrFolderPathToRelativeFolderPath, CloudundancyIniFileReader, const FilePathLineNumberLineText&>;
+   AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath, CloudundancyIniFileReader, const FilePathLineNumberLineText&>;
 NonVoidOneArgMemberFunctionCallerMockMockType* _callerMock_ParseFileCopyInstructionLine = nullptr;
 
 using VoidTwoArgMemberFunctionCallerMockType = VoidTwoArgMemberFunctionCallerMock<
-   CloudundancyIniFileReader, const AbsoluteFileOrFolderPathToRelativeFolderPath&, const FilePathLineNumberLineText&>;
+   CloudundancyIniFileReader, const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath&, const FilePathLineNumberLineText&>;
 VoidTwoArgMemberFunctionCallerMockType* _callerMock_ThrowIfSourceFileOrFolderDoesNotExist = nullptr;
 
 // Constant Components
@@ -74,10 +74,10 @@ TEST(ReadIniFile_ParsesCloudundancyIniFile_ReturnsExpectedCloudundancyIni)
    };
    _fileSystemMock->ReadAsciiFileLinesWhichMustBeNonEmptyMock.Return(lines);
 
-   const AbsoluteFileOrFolderPathToRelativeFolderPath fileCopyInstruction1
-      = ZenUnit::Random<AbsoluteFileOrFolderPathToRelativeFolderPath>();
-   const AbsoluteFileOrFolderPathToRelativeFolderPath fileCopyInstruction2
-      = ZenUnit::Random<AbsoluteFileOrFolderPathToRelativeFolderPath>();
+   const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath fileCopyInstruction1
+      = ZenUnit::Random<AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath>();
+   const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath fileCopyInstruction2
+      = ZenUnit::Random<AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath>();
    _callerMock_ParseFileCopyInstructionLine->CallConstMemberFunctionMock.ReturnValues(fileCopyInstruction1, fileCopyInstruction2);
 
    const fs::path cloudundancyIniPath = ZenUnit::Random<string>();
@@ -144,10 +144,10 @@ TEST1X1(ParseFileCopyInstructionLine_LineContainsOneSpaceArrowSpace_ReturnsExpec
    const string relativeDestinationFolderPath = ZenUnit::Random<string>();
    filePathLineNumberLineText.lineText = sourceFilePath + middleArrowPart + relativeDestinationFolderPath;
    //
-   const AbsoluteFileOrFolderPathToRelativeFolderPath cloudundancyIniCopyInstruction =
+   const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath cloudundancyIniCopyInstruction =
       _cloudundancyIniFile.ParseFileCopyInstructionLine(filePathLineNumberLineText);
    //
-   AbsoluteFileOrFolderPathToRelativeFolderPath expectedFileCopyInstruction;
+   AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath expectedFileCopyInstruction;
    expectedFileCopyInstruction.absoluteSourceFileOrFolderPath = sourceFilePath;
    expectedFileCopyInstruction.relativeDestinationFolderPath = relativeDestinationFolderPath;
    METALMOCK(_callerMock_ThrowIfSourceFileOrFolderDoesNotExist->ConstCallMock.CalledOnceWith(
@@ -159,8 +159,8 @@ TEST1X1(ParseFileCopyInstructionLine_LineContainsOneSpaceArrowSpace_ReturnsExpec
 TEST(ThrowIfSourceFileOrFolderDoesNotExist_SourceFileOrFolderPathExists_DoesNotThrowException)
 {
    _fileSystemMock->FileOrFolderExistsMock.Return(true);
-   const AbsoluteFileOrFolderPathToRelativeFolderPath cloudundancyIniCopyInstruction =
-      ZenUnit::Random<AbsoluteFileOrFolderPathToRelativeFolderPath>();
+   const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath cloudundancyIniCopyInstruction =
+      ZenUnit::Random<AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath>();
    const FilePathLineNumberLineText filePathLineNumberLineText = ZenUnit::Random<FilePathLineNumberLineText>();
    //
    _cloudundancyIniFile.ThrowIfSourceFileOrFolderDoesNotExist(cloudundancyIniCopyInstruction, filePathLineNumberLineText);
@@ -172,8 +172,8 @@ TEST(ThrowIfSourceFileOrFolderDoesNotExist_SourceFileOrFolderPathDoesNotExist_Th
 {
    _fileSystemMock->FileOrFolderExistsMock.Return(false);
 
-   const AbsoluteFileOrFolderPathToRelativeFolderPath cloudundancyIniCopyInstruction =
-      ZenUnit::Random<AbsoluteFileOrFolderPathToRelativeFolderPath>();
+   const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath cloudundancyIniCopyInstruction =
+      ZenUnit::Random<AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath>();
 
    FileSystemException expectedFileSystemException(FileSystemExceptionType::FileOrFolderDoesNotExist,
       cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath);

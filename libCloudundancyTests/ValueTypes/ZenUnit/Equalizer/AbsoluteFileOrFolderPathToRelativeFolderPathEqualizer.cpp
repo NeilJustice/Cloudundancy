@@ -3,8 +3,8 @@
 
 namespace ZenUnit
 {
-   void Equalizer<AbsoluteFileOrFolderPathToRelativeFolderPath>::AssertEqual(
-      const AbsoluteFileOrFolderPathToRelativeFolderPath& expectedFileCopyInstruction, const AbsoluteFileOrFolderPathToRelativeFolderPath& actualFileCopyInstruction)
+   void Equalizer<AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath>::AssertEqual(
+      const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath& expectedFileCopyInstruction, const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath& actualFileCopyInstruction)
    {
       ARE_EQUAL(expectedFileCopyInstruction.absoluteSourceFileOrFolderPath, actualFileCopyInstruction.absoluteSourceFileOrFolderPath);
       ARE_EQUAL(expectedFileCopyInstruction.relativeDestinationFolderPath, actualFileCopyInstruction.relativeDestinationFolderPath);

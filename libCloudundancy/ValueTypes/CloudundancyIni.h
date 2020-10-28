@@ -1,9 +1,9 @@
 #pragma once
-#include "libCloudundancy/ValueTypes/AbsoluteFileOrFolderPathToRelativeFolderPath.h"
+#include "libCloudundancy/ValueTypes/AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath.h"
 
 struct CloudundancyIni
 {
    vector<fs::path> destinationFolderPaths;
-   vector<AbsoluteFileOrFolderPathToRelativeFolderPath> absoluteFileOrFolderPathAndRelativeFolderPaths;
+   vector<AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath> absoluteFileOrFolderPathAndRelativeFolderPaths;
    vector<string> fileSubpathsToNotCopy;
 };

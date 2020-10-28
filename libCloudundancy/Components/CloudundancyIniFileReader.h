@@ -19,11 +19,11 @@ class CloudundancyIniFileReader
 private:
    // Function Callers
    using NonVoidOneArgMemberFunctionCallerType =
-      const NonVoidOneArgMemberFunctionCaller<AbsoluteFileOrFolderPathToRelativeFolderPath, CloudundancyIniFileReader, const FilePathLineNumberLineText&>;
+      const NonVoidOneArgMemberFunctionCaller<AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath, CloudundancyIniFileReader, const FilePathLineNumberLineText&>;
    unique_ptr<NonVoidOneArgMemberFunctionCallerType> _caller_ParseFileCopyInstructionLine;
 
    using VoidTwoArgMemberFunctionCallerType =
-      const VoidTwoArgMemberFunctionCaller<CloudundancyIniFileReader, const AbsoluteFileOrFolderPathToRelativeFolderPath&, const FilePathLineNumberLineText&>;
+      const VoidTwoArgMemberFunctionCaller<CloudundancyIniFileReader, const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath&, const FilePathLineNumberLineText&>;
    unique_ptr<VoidTwoArgMemberFunctionCallerType> _caller_ThrowIfSourceFileOrFolderDoesNotExist;
 
    // Constant Components
@@ -33,9 +33,9 @@ public:
    virtual ~CloudundancyIniFileReader();
    virtual CloudundancyIni ReadIniFile(const fs::path& cloudundancyIniPath) const;
 private:
-   AbsoluteFileOrFolderPathToRelativeFolderPath ParseFileCopyInstructionLine(
+   AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath ParseFileCopyInstructionLine(
       const FilePathLineNumberLineText& fileCopyInstructionLine) const;
    void ThrowIfSourceFileOrFolderDoesNotExist(
-      const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction,
+      const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath& cloudundancyIniCopyInstruction,
       const FilePathLineNumberLineText& filePathLineNumberLineText) const;
 };
