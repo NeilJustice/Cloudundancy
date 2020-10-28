@@ -2,12 +2,12 @@
 #include "libCloudundancy/Components/Console/Console.h"
 #include "libCloudundancy/Components/CloudundancyArgsParser.h"
 #include "libCloudundancy/Components/CloudundancyProgram.h"
-#include "libCloudundancy/Components/Exception/Exception.h"
 #include "libCloudundancy/Components/Exception/TryCatchCaller.h"
 #include "libCloudundancy/Components/CloudundancyFileCopier.h"
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgramFactory.h"
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgram.h"
 #include "libCloudundancy/Components/Time/Stopwatch.h"
+#include "libCloudundancy/Utilities/Exception.h"
 #include "libCloudundancy/Utilities/Vector.h"
 
 CloudundancyProgram::CloudundancyProgram() noexcept

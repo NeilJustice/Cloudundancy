@@ -1,8 +1,7 @@
 #include "pch.h"
 #include "libCloudundancy/Components/Console/Console.h"
 #include "libCloudundancy/Components/Console/ConsoleColorer.h"
-#include "libCloudundancy/Components/Exception/Exception.h"
-#include "libCloudundancy/Components/FunctionCallers/Member/VoidZeroArgMemberFunctionCaller.h"
+#include "libCloudundancy/Utilities/Exception.h"
 
 Console::Console()
    : _consoleColorer(make_unique<ConsoleColorer>())
