@@ -4,8 +4,6 @@ template<typename T, typename ClassType, typename MemberFunctionType, typename E
 class OneExtraArgMemberForEacher
 {
 public:
-   OneExtraArgMemberForEacher() noexcept = default;
-
    virtual void OneExtraArgMemberForEach(
       const std::vector<T>& elements,
       const ClassType* constClassPointer,

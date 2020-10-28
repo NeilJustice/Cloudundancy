@@ -4,8 +4,6 @@ template<typename CollectionType, typename FunctionType>
 class ForEacher
 {
 public:
-   virtual ~ForEacher() = default;
-
    virtual void ForEach(const CollectionType& collection, FunctionType func) const
    {
       const auto collectionConstEnd = collection.cend();
@@ -15,4 +13,6 @@ public:
          func(element);
       }
    }
+
+   virtual ~ForEacher() = default;
 };

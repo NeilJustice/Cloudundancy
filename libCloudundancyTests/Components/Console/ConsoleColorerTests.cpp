@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "libCloudundancy/Components/Console/ConsoleColorer.h"
-#include "libCloudundancy/Components/Console/Windows/WindowsColor.h"
 
 TESTS(ConsoleColorerTests)
 AFACT(DefaultConstructor_SetsFunctionPointers_SetsBoolFieldsToFalse)
@@ -19,13 +18,11 @@ TEST(DefaultConstructor_SetsFunctionPointers_SetsBoolFieldsToFalse)
 #ifdef _WIN32
    STD_FUNCTION_TARGETS(::_fileno, consoleColorer._call_fileno);
    STD_FUNCTION_TARGETS(::_isatty, consoleColorer._call_isatty);
+   STD_FUNCTION_TARGETS(::GetStdHandle, consoleColorer._call_GetStdHandle);
+   STD_FUNCTION_TARGETS(::SetConsoleTextAttribute, consoleColorer._call_SetConsoleTextAttribute);
 #else
    STD_FUNCTION_TARGETS(::fileno, consoleColorer._call_fileno);
    STD_FUNCTION_TARGETS(::isatty, consoleColorer._call_isatty);
-#endif
-#ifdef _WIN32
-   STD_FUNCTION_TARGETS(::GetStdHandle, consoleColorer._call_GetStdHandle);
-   STD_FUNCTION_TARGETS(::SetConsoleTextAttribute, consoleColorer._call_SetConsoleTextAttribute);
 #endif
    IS_FALSE(consoleColorer._supportsColor);
    IS_FALSE(consoleColorer._supportsColorSet);

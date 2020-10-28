@@ -1,11 +1,9 @@
 #pragma once
-#include "libCloudundancy/Components/Console/Color.h"
-class ConsoleColorerTests;
 enum class WindowsColor;
 
 class ConsoleColorer
 {
-   friend class ::ConsoleColorerTests;
+   friend class ConsoleColorerTests;
 private:
    std::function<int(FILE*)> _call_fileno;
    std::function<int(int)> _call_isatty;

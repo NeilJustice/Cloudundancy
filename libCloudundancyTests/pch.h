@@ -19,7 +19,9 @@ using namespace std;
 #include "MetalMock.h"
 
 // libCloudundancy Enums
+#include "libCloudundancy/Enums/Color.h"
 #include "libCloudundancy/Enums/FileSystemExceptionType.h"
+#include "libCloudundancy/Enums/WindowsColor.h"
 
 // libCloudundancy Utilities
 #include "libCloudundancy/Utilities/ReleaseAssert.h"
@@ -45,11 +47,11 @@ using namespace std;
 #include "libCloudundancyTests/Components/Docopt/MetalMock/DocoptParserMock.h"
 #include "libCloudundancyTests/Components/Exception/MetalMock/TryCatchCallerMock.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/FileSystemMock.h"
-#include "libCloudundancyTests/Components/Function/Member/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
-#include "libCloudundancyTests/Components/Function/Member/MetalMock/VoidOneArgMemberFunctionCallerMock.h"
-#include "libCloudundancyTests/Components/Function/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
-#include "libCloudundancyTests/Components/Function/Member/MetalMock/VoidThreeArgMemberFunctionCallerMock.h"
-#include "libCloudundancyTests/Components/Function/Member/MetalMock/VoidZeroArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/VoidOneArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/VoidThreeArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/VoidZeroArgMemberFunctionCallerMock.h"
 #include "libCloudundancyTests/Components/Iteration/ForEach/MetalMock/OneExtraArgMemberForEacherMock.h"
 #include "libCloudundancyTests/Components/Iteration/Transform/MetalMock/OneExtraArgTransformerMock.h"
 #include "libCloudundancyTests/Components/Process/MetalMock/ProcessRunnerMock.h"

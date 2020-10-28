@@ -52,7 +52,9 @@ using namespace std;
 #include "libCloudundancy/Utilities/ReleaseAssert.h"
 
 // libCloudundancy Enums
+#include "libCloudundancy/Enums/Color.h"
 #include "libCloudundancy/Enums/FileSystemExceptionType.h"
+#include "libCloudundancy/Enums/WindowsColor.h"
 
 // libCloudundancy Utilities
 #include "libCloudundancy/Utilities/StringUtil.h"

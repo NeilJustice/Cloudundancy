@@ -1,10 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/Components/Assertion/Asserter.h"
 
-Asserter::~Asserter()
-{
-}
-
 void Asserter::ThrowIfNotEqual(size_t expected, size_t actual, string_view message) const
 {
    if (actual != expected)

@@ -2,9 +2,9 @@
 #include "libCloudundancy/Components/CloudundancyIniFileReader.h"
 #include "libCloudundancy/Components/FileSystem/FileSystem.h"
 #include "libCloudundancy/Components/FileSystem/FileSystemException.h"
-#include "libCloudundancy/Components/Function/Member/NonVoidOneArgMemberFunctionCaller.h"
-#include "libCloudundancy/Components/Function/Member/VoidThreeArgMemberFunctionCaller.h"
-#include "libCloudundancy/Components/Function/Member/VoidTwoArgMemberFunctionCaller.h"
+#include "libCloudundancy/Components/FunctionCallers/Member/NonVoidOneArgMemberFunctionCaller.h"
+#include "libCloudundancy/Components/FunctionCallers/Member/VoidThreeArgMemberFunctionCaller.h"
+#include "libCloudundancy/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
 #include "libCloudundancy/ValueTypes/FilePathLineNumberLineText.h"
 
 CloudundancyIniFileReader::CloudundancyIniFileReader() noexcept

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libCloudundancy/Components/Console/Console.h"
 #include "libCloudundancy/Components/Console/ConsoleColorer.h"
-#include "libCloudundancy/Components/Function/Member/VoidZeroArgMemberFunctionCaller.h"
+#include "libCloudundancy/Components/FunctionCallers/Member/VoidZeroArgMemberFunctionCaller.h"
 
 TESTS(ConsoleTests)
 AFACT(DefaultConstructor_NewsComponents)
@@ -11,19 +11,11 @@ AFACT(WriteLineColor_CodeCoverage)
 EVIDENCE
 
 Console _console;
-VoidZeroArgMemberFunctionCallerMock<Console>* _voidZeroArgMemberFunctionCallerMock = nullptr;
-
-STARTUP
-{
-   _console._voidZeroArgMemberFunctionCaller.reset(
-      _voidZeroArgMemberFunctionCallerMock = new VoidZeroArgMemberFunctionCallerMock<Console>);
-}
 
 TEST(DefaultConstructor_NewsComponents)
 {
    Console console;
    DELETE_TO_ASSERT_NEWED(console._consoleColorer);
-   DELETE_TO_ASSERT_NEWED(console._voidZeroArgMemberFunctionCaller);
 }
 
 TEST(Write_CodeCoverage)

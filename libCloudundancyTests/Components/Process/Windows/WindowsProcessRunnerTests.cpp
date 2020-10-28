@@ -3,7 +3,7 @@
 #include "libCloudundancyTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libCloudundancy/Components/Process/Windows/WindowsProcessRunner.h"
 #include "libCloudundancyTests/Components/Process/ZenUnit/ProcessResultEqualizerAndRandom.h"
-#include "libCloudundancyTests/Components/Function/Member/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
 
 TESTS(WindowsProcessRunnerTests)
 AFACT(DefaultConstructor_NewsComponents)
