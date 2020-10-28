@@ -1,7 +1,7 @@
 #pragma once
 #include "libCloudundancy/Utilities/Errno.h"
 
-struct ExpectedExceptionWhat
+struct ExpectedExceptionMessage
 {
 	static string ErrorCreatingFolder(const string& folderPath, int errnoValue)
 	{

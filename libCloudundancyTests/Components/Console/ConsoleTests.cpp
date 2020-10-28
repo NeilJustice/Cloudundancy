@@ -3,42 +3,40 @@
 #include "libCloudundancy/Components/Console/ConsoleColorer.h"
 
 TESTS(ConsoleTests)
-AFACT(DefaultConstructor_NewsComponents)
-AFACT(Write_CodeCoverage)
-AFACT(WriteLine_CodeCoverage)
-AFACT(WriteLineColor_CodeCoverage)
+AFACT(DefaultConstructor_NewsConsoleColorer)
+AFACT(Write_DoesNotThrow)
+AFACT(WriteLine_DoesNotThrow)
+AFACT(WriteLineColor_DoesNotThrow)
 EVIDENCE
 
 Console _console;
 
-TEST(DefaultConstructor_NewsComponents)
+TEST(DefaultConstructor_NewsConsoleColorer)
 {
    Console console;
    DELETE_TO_ASSERT_NEWED(console._consoleColorer);
 }
 
-TEST(Write_CodeCoverage)
+TEST(Write_DoesNotThrow)
 {
-   _console.Write("");
-   _console.Write(ZenUnit::Random<string>());
+   DOES_NOT_THROW(_console.Write(ZenUnit::Random<string>()));
    const string_view stringView;
-   _console.Write(stringView);
+   DOES_NOT_THROW(_console.Write(stringView));
 }
 
-TEST(WriteLine_CodeCoverage)
+TEST(WriteLine_DoesNotThrow)
 {
-   _console.WriteLine("");
-   _console.WriteLine(ZenUnit::Random<string>());
+   DOES_NOT_THROW(_console.WriteLine(ZenUnit::Random<string>()));
    const string_view stringView;
-   _console.WriteLine(stringView);
+   DOES_NOT_THROW(_console.WriteLine(stringView));
 }
 
-TEST(WriteLineColor_CodeCoverage)
+TEST(WriteLineColor_DoesNotThrow)
 {
    const string message = ZenUnit::Random<string>();
    const Color color = ZenUnit::RandomEnum<Color>(Color::MaxValue);
    //
-   _console.WriteLineColor(message, color);
+   DOES_NOT_THROW(_console.WriteLineColor(message, color));
 }
 
 RUN_TESTS(ConsoleTests)

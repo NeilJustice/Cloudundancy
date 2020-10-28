@@ -1,9 +1,9 @@
 #pragma once
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgram.h"
+struct CloudundancyArgs;
 class Console;
 class CloudundancyFileCopier;
 class FileSystem;
-struct CloudundancyArgs;
 class ProcessRunner;
 class Stopwatch;
 template<typename ClassType, typename ArgType>

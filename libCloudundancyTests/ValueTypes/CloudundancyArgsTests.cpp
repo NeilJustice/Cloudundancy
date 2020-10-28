@@ -30,10 +30,12 @@ Usage:
 TEST(DefaultConstructor_SetsFieldsToDefaults)
 {
    const CloudundancyArgs cloudundancyArgs;
-   ARE_EQUAL(ProgramMode::Unset, cloudundancyArgs.programMode);
-   ARE_EQUAL("", cloudundancyArgs.iniFilePath);
-   ARE_EQUAL("", cloudundancyArgs.sevenZipIniFilePath);
-   ARE_EQUAL("", cloudundancyArgs.backupStagingFolderPath);
+   CloudundancyArgs expectedCloudundancyArgs;
+   expectedCloudundancyArgs.programMode = ProgramMode::Unset;
+   expectedCloudundancyArgs.iniFilePath = "";
+   expectedCloudundancyArgs.sevenZipIniFilePath = "";
+   expectedCloudundancyArgs.backupStagingFolderPath = "";
+   ARE_EQUAL(expectedCloudundancyArgs, cloudundancyArgs);
 }
 
 RUN_TESTS(CloudundancyArgsTests)
