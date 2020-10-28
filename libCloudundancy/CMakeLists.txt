@@ -1,4 +1,3 @@
-
 project(libCloudundancy)
 include(${CMAKE_SOURCE_DIR}/CMakeMacros.cmake)
 
@@ -13,8 +12,6 @@ folder_source_group_subfolder(Components Assertion)
 folder_source_group_subfolder(Components Compiler)
 folder_source_group_subfolder(Components Console)
 folder_source_group_subsubfolder(Components Console Windows)
-folder_source_group_subfolder(Components Conversion)
-folder_source_group_subfolder(Components DataStructure)
 folder_source_group_subfolder(Components Docopt)
 folder_source_group_subfolder(Components Exception)
 folder_source_group_subfolder(Components FileSystem)

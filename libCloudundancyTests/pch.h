@@ -21,6 +21,7 @@ using namespace std;
 // libCloudundancy Enums
 #include "libCloudundancy/Enums/Color.h"
 #include "libCloudundancy/Enums/FileSystemExceptionType.h"
+#include "libCloudundancy/Enums/ProgramMode.h"
 #include "libCloudundancy/Enums/WindowsColor.h"
 
 // libCloudundancy Utilities

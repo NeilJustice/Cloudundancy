@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Components/DataStructure/Vector.h"
+#include "libCloudundancy/Utilities/Vector.h"
 
 vector<string> Vector::ArgcArgvToStringVector(int argc, char** argv)
 {

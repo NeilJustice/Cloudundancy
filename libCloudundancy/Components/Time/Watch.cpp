@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/Components/Time/Watch.h"
-#include "libCloudundancy/Components/Conversion/Chars.h"
+#include "libCloudundancy/Utilities/Chars.h"
 #include "libCloudundancy/Components/Time/CRTWatch.h"
 
 Watch::Watch()

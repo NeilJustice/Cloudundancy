@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Components/Conversion/Chars.h"
+#include "libCloudundancy/Utilities/Chars.h"
 
 void Chars::OneOrTwoDigitUnsignedToTwoChars(unsigned value, char* outChars)
 {

@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "libCloudundancy/Enums/ProgramMode.h"
 #include "libCloudundancy/ValueTypes/CloudundancyArgs.h"
 
 TESTS(CloudundancyArgsTests)
