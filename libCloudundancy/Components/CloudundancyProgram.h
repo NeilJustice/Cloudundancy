@@ -9,6 +9,7 @@ template<typename ClassType, typename ArgumentType>
 class TryCatchCaller;
 template<typename ClassType, typename ArgumentType>
 class VoidOneArgMemberFunctionCaller;
+class Watch;
 
 class CloudundancyProgram
 {
@@ -23,6 +24,7 @@ private:
    std::unique_ptr<const Console> _console;
    std::unique_ptr<const CloudundancyFileCopier> _cloudundancyFileCopier;
    std::unique_ptr<const TryCatchCaller<CloudundancyProgram, const std::vector<std::string>&>> _tryCatchCaller;
+   std::unique_ptr<const Watch> _watch;
    // Mutable Components
    std::unique_ptr<Stopwatch> _stopwatch;
 public:

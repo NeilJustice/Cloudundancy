@@ -27,12 +27,13 @@ BackupFilesAndFoldersTo7zFileSubProgram::~BackupFilesAndFoldersTo7zFileSubProgra
 {
 }
 
-void BackupFilesAndFoldersTo7zFileSubProgram::Run(const CloudundancyArgs& args)
+int BackupFilesAndFoldersTo7zFileSubProgram::Run(const CloudundancyArgs& args)
 {
    _voidOneArgFunctionCaller->ConstCall(this, &BackupFilesAndFoldersTo7zFileSubProgram::DeleteBackupStagingFolder, args);
    _voidOneArgFunctionCaller->ConstCall(this, &BackupFilesAndFoldersTo7zFileSubProgram::CopyFilesAndFoldersToBackupStagingFolder, args);
    _voidOneArgFunctionCaller->ConstCall(this, &BackupFilesAndFoldersTo7zFileSubProgram::SevenZipBackupStagingFolder, args);
    _voidOneArgFunctionCaller->ConstCall(this, &BackupFilesAndFoldersTo7zFileSubProgram::Copy7zFileToDestinationFolders, args);
+   return 0;
 }
 
 // Private Functions

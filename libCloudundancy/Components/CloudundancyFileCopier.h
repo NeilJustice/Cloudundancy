@@ -19,11 +19,6 @@ class CloudundancyFileCopier
 {
    friend class CloudundancyFileCopierTests;
 private:
-   // Constant Components
-   unique_ptr<const CloudundancyIniFileReader> _cloudundancyIniFileReader;
-   unique_ptr<const Console> _console;
-   unique_ptr<const FileSystem> _fileSystem;
-
    // Function Callers
    function<string(const string&, const string&, const string&)> _call_String_ReplaceFirst;
 
@@ -51,6 +46,11 @@ private:
       CloudundancyFileCopier, const fs::path&, const fs::path&>;
    unique_ptr<const VoidTryCopyFileCallerType> _caller_TryCopyFile;
 
+   // Constant Components
+   unique_ptr<const CloudundancyIniFileReader> _cloudundancyIniFileReader;
+   unique_ptr<const Console> _console;
+   unique_ptr<const FileSystem> _fileSystem;
+
    // Mutable Components
    unique_ptr<RecursiveDirectoryIterator> _recursiveDirectoryIterator;
    unique_ptr<Stopwatch> _stopwatch;
@@ -60,14 +60,15 @@ public:
    virtual void CopyFilesAndFoldersToMultipleFolders(const fs::path& cloudundancyIniFilePath) const;
    virtual void DeleteFolder(const fs::path& folderPath) const;
 private:
-   void CopyFilesAndFoldersToSingleFolder(
-      const fs::path& destinationFolderPath, const CloudundancyIni& cloudundancyIni) const;
+   void CopyFilesAndFoldersToSingleFolder(const fs::path& destinationFolderPath, const CloudundancyIni& cloudundancyIni) const;
 
    void CopyFileOrFolderToFolder(
-      const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction, const fs::path& destinationFolderPath) const;
+      const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction,
+      const fs::path& destinationFolderPath) const;
 
    void TryCopyFileToFolder(
-      const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction, const fs::path& destinationFolderPath) const;
+      const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction,
+      const fs::path& destinationFolderPath) const;
 
    void CopyNestedFileToFolder(
       const fs::path& sourceFilePath,
@@ -75,7 +76,8 @@ private:
       const fs::path& destinationFolderPath) const;
 
    void CopyNonIgnoredFilesInAndBelowFolderToFolder(
-      const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction, const fs::path& destinationFolderPath) const;
+      const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction,
+      const fs::path& destinationFolderPath) const;
 
    void TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const;
 };

@@ -4,6 +4,6 @@ struct CloudundancyArgs;
 class CloudundancySubProgram
 {
 public:
-   virtual void Run(const CloudundancyArgs& args);
+   virtual int Run(const CloudundancyArgs& args);
    virtual ~CloudundancySubProgram();
 };

@@ -4,7 +4,7 @@
 
 TESTS(BackupFilesAndFoldersTo7zFileSubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
-AFACT(Run_DeletesCodeBackupFolder_CopiesCodeToBackupStagingFolder_SevenZipsBackupStagingFolder_Copies7zFileToDestinationFolders)
+AFACT(Run_DeletesCodeBackupFolder_CopiesCodeToBackupStagingFolder_SevenZipsBackupStagingFolder_Copies7zFileToDestinationFolders_Returns0)
 AFACT(DeleteBackupStagingFolder_PrintsDeleting_DeletesBackupStagingFolder_PrintsDeletedInElapsedSeconds)
 AFACT(CopyFilesAndFoldersToBackupStagingFolder_CopiesSourceFilesAndFoldersToBackupStagingFolder_PrintsElapsedSeconds)
 AFACT(SevenZipBackupStagingFolder_Writes7zFileToFolder7zFileBackslashSourceFilesAndFolders_PrintsElapsedSeconds)
@@ -53,12 +53,12 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(backupCodeRunner._watch);
 }
 
-TEST(Run_DeletesCodeBackupFolder_CopiesCodeToBackupStagingFolder_SevenZipsBackupStagingFolder_Copies7zFileToDestinationFolders)
+TEST(Run_DeletesCodeBackupFolder_CopiesCodeToBackupStagingFolder_SevenZipsBackupStagingFolder_Copies7zFileToDestinationFolders_Returns0)
 {
    _voidOneArgFunctionCallerMock->ConstCallMock.Expect();
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
-   _backupCodeRunner.Run(args);
+   const int exitCode = _backupCodeRunner.Run(args);
    //
    METALMOCK(_voidOneArgFunctionCallerMock->ConstCallMock.CalledAsFollows(
    {
@@ -67,6 +67,7 @@ TEST(Run_DeletesCodeBackupFolder_CopiesCodeToBackupStagingFolder_SevenZipsBackup
       { &_backupCodeRunner, &BackupFilesAndFoldersTo7zFileSubProgram::SevenZipBackupStagingFolder, args },
       { &_backupCodeRunner, &BackupFilesAndFoldersTo7zFileSubProgram::Copy7zFileToDestinationFolders, args }
    }));
+   IS_ZERO(exitCode);
 }
 
 TEST(DeleteBackupStagingFolder_PrintsDeleting_DeletesBackupStagingFolder_PrintsDeletedInElapsedSeconds)

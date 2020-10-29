@@ -5,7 +5,7 @@
 
 TESTS(BackupFilesAndFoldersSubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
-AFACT(Run_SetsArgs_CallsCopyFilesAndFoldersToMultipleFolders)
+AFACT(Run_SetsArgs_CallsCopyFilesAndFoldersToMultipleFolders_Returns0)
 EVIDENCE
 
 BackupFilesAndFoldersSubProgram _backupFilesAndFoldersToMultipleFoldersSubProgram;
@@ -22,14 +22,15 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(_backupFilesAndFoldersToMultipleFoldersSubProgram._cloudundancyFileCopier);
 }
 
-TEST(Run_SetsArgs_CallsCopyFilesAndFoldersToMultipleFolders)
+TEST(Run_SetsArgs_CallsCopyFilesAndFoldersToMultipleFolders_Returns0)
 {
    _cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleFoldersMock.Expect();
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
-   _backupFilesAndFoldersToMultipleFoldersSubProgram.Run(args);
+   const int exitCode = _backupFilesAndFoldersToMultipleFoldersSubProgram.Run(args);
    //
    METALMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleFoldersMock.CalledOnceWith(args.iniFilePath));
+   IS_ZERO(exitCode);
 }
 
 RUN_TESTS(BackupFilesAndFoldersSubProgramTests)

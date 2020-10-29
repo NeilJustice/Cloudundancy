@@ -12,7 +12,8 @@ BackupFilesAndFoldersSubProgram::~BackupFilesAndFoldersSubProgram()
 {
 }
 
-void BackupFilesAndFoldersSubProgram::Run(const CloudundancyArgs& args)
+int BackupFilesAndFoldersSubProgram::Run(const CloudundancyArgs& args)
 {
    _cloudundancyFileCopier->CopyFilesAndFoldersToMultipleFolders(args.iniFilePath);
+   return 0;
 }

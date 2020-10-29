@@ -7,9 +7,9 @@ class BackupFilesAndFoldersSubProgram : public CloudundancySubProgram
 {
    friend class BackupFilesAndFoldersSubProgramTests;
 private:
-   unique_ptr<CloudundancyFileCopier> _cloudundancyFileCopier;
+   unique_ptr<const CloudundancyFileCopier> _cloudundancyFileCopier;
 public:
    BackupFilesAndFoldersSubProgram();
    virtual ~BackupFilesAndFoldersSubProgram();
-   virtual void Run(const CloudundancyArgs& args);
+   virtual int Run(const CloudundancyArgs& args);
 };

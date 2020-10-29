@@ -12,9 +12,9 @@
 TESTS(CloudundancyProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
 AFACT(Main_CallsTryCatchCallRunWithStringArgs_ReturnsExitCode)
-AFACT(Run_ParsesArgsWithDocopt_CopiesCode_CallsCodeFolderBackupperIfBackupCodeFolderMode_Returns0)
+AFACT(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSubProgram_PrintsEndTimeAndElapsedTime_ExitsWithSubProgramExitCode)
 // Private Functions
-AFACT(ExceptionHandler_PrintsExceptionGetExceptionClassNameAndMessage_Returns1)
+AFACT(ExceptionHandler_PrintsExceptionClassNameAndMessage_Returns1)
 EVIDENCE
 
 CloudundancyProgram _cloudundancyProgram;
@@ -27,6 +27,7 @@ CloudundancySubProgramFactoryMock* _cloudundancySubProgramFactoryMock = nullptr;
 ConsoleMock* _consoleMock = nullptr;
 CloudundancyFileCopierMock* _cloudundancyFileCopierMock = nullptr;
 TryCatchCallerMock<CloudundancyProgram, const vector<string>&>* _tryCatchCallerMock = nullptr;
+WatchMock* _watchMock = nullptr;
 // Mutable Components
 StopwatchMock* _stopwatchMock = nullptr;
 
@@ -41,6 +42,7 @@ STARTUP
    _cloudundancyProgram._console.reset(_consoleMock = new ConsoleMock);
    _cloudundancyProgram._cloudundancyFileCopier.reset(_cloudundancyFileCopierMock = new CloudundancyFileCopierMock);
    _cloudundancyProgram._tryCatchCaller.reset(_tryCatchCallerMock = new TryCatchCallerMock<CloudundancyProgram, const vector<string>&>);
+   _cloudundancyProgram._watch.reset(_watchMock = new WatchMock);
    // Mutable Components
    _cloudundancyProgram._stopwatch.reset(_stopwatchMock = new StopwatchMock);
 }
@@ -57,6 +59,7 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._console);
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._cloudundancyFileCopier);
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._tryCatchCaller);
+   DELETE_TO_ASSERT_NEWED(cloudundancyProgram._watch);
    // Mutable Components
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._stopwatch);
 }
@@ -81,7 +84,7 @@ TEST(Main_CallsTryCatchCallRunWithStringArgs_ReturnsExitCode)
    ARE_EQUAL(tryCatchCallReturnValue, exitCode);
 }
 
-TEST(Run_ParsesArgsWithDocopt_CopiesCode_CallsCodeFolderBackupperIfBackupCodeFolderMode_Returns0)
+TEST(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSubProgram_PrintsEndTimeAndElapsedTime_ExitsWithSubProgramExitCode)
 {
    _consoleMock->WriteLineMock.Expect();
 
@@ -94,7 +97,7 @@ TEST(Run_ParsesArgsWithDocopt_CopiesCode_CallsCodeFolderBackupperIfBackupCodeFol
    _stopwatchMock->StopAndGetElapsedSecondsMock.Return(elapsedSeconds);
 
    const shared_ptr<CloudundancySubProgramMock> cloudundancySubProgramMock = make_shared<CloudundancySubProgramMock>();
-   cloudundancySubProgramMock->RunMock.Expect();
+   const int subProgramExitCode = cloudundancySubProgramMock->RunMock.ReturnRandom();
    _cloudundancySubProgramFactoryMock->NewCloudundancySubProgramMock.Return(cloudundancySubProgramMock);
 
    const map<string, docopt::Value> docoptArgs;
@@ -113,15 +116,15 @@ TEST(Run_ParsesArgsWithDocopt_CopiesCode_CallsCodeFolderBackupperIfBackupCodeFol
       string_view(expectedRunningMessage),
       string_view("[Cloudundancy] OverallBackupResult: All non-ignored files and folders successfully copied to all destination folders."),
       string_view("[Cloudundancy]  OverallElapsedTime: " + elapsedSeconds + " seconds"),
-      string_view("[Cloudundancy]            ExitCode: 0")
+      string_view("[Cloudundancy]            ExitCode: " + to_string(subProgramExitCode))
    }));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
-   ARE_EQUAL(0, exitCode);
+   ARE_EQUAL(subProgramExitCode, exitCode);
 }
 
 // Private Functions
 
-TEST(ExceptionHandler_PrintsExceptionGetExceptionClassNameAndMessage_Returns1)
+TEST(ExceptionHandler_PrintsExceptionClassNameAndMessage_Returns1)
 {
    const string exceptionTypeNameAndMessage = GetExceptionClassNameAndMessageMock.ReturnRandom();
    _consoleMock->WriteLineMock.Expect();

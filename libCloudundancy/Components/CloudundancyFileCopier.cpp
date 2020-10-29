@@ -10,17 +10,17 @@
 #include "libCloudundancy/Components/Time/Stopwatch.h"
 
 CloudundancyFileCopier::CloudundancyFileCopier() noexcept
-   // Constant Components
-   : _cloudundancyIniFileReader(make_unique<CloudundancyIniFileReader>())
-   , _console(make_unique<Console>())
-   , _fileSystem(make_unique<FileSystem>())
    // Function Callers
-   , _call_String_ReplaceFirst(String::ReplaceFirst)
+   : _call_String_ReplaceFirst(String::ReplaceFirst)
    , _caller_CopyEachFileOrFolderToFolder(make_unique<OneExtraArgMemberForEacherOfCopyInstructionsType>())
    , _caller_CopyFileOrFolderToFolder(make_unique<OneExtraArgMemberForEacherOfDestinationFolderPathsType>())
    , _caller_CopyFileFunctions(make_unique<VoidTwoArgMemberFunctionCallerType>())
    , _caller_CopyNestedFileToFolder(make_unique<CallerType_CopyNestedFileToFolder>())
    , _caller_TryCopyFile(make_unique<VoidTryCopyFileCallerType>())
+   // Constant Components
+   , _cloudundancyIniFileReader(make_unique<CloudundancyIniFileReader>())
+   , _console(make_unique<Console>())
+   , _fileSystem(make_unique<FileSystem>())
    // Mutable Components
    , _recursiveDirectoryIterator(make_unique<RecursiveDirectoryIterator>())
    , _stopwatch(make_unique<Stopwatch>())

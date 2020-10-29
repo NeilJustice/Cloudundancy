@@ -2,14 +2,18 @@
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgram.h"
 
 TESTS(CloudundancySubProgramTests)
-AFACT(DefaultConstructorAndRun_DoesNothing)
+AFACT(Run_Returns0)
 EVIDENCE
 
-TEST(DefaultConstructorAndRun_DoesNothing)
+CloudundancySubProgram _cloudundancySubProgram;
+
+TEST(Run_Returns0)
 {
-   CloudundancySubProgram cloudundancySubProgram;
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
-   DOES_NOT_THROW(cloudundancySubProgram.Run(args));
+   //
+   const int exitCode = _cloudundancySubProgram.Run(args);
+   //
+   IS_ZERO(exitCode);
 }
 
 RUN_TESTS(CloudundancySubProgramTests)

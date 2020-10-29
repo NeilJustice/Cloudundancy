@@ -11,12 +11,12 @@
 // Acceptance Testing
 // backup-files-and-folders --ini-file=C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\CompletelyBlankIniFile.ini
 // backup-files-and-folders --ini-file=C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\AllThreeHeadingsPresentButBlankIniFile.ini
-// C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\DestinationFolderExistsButNoWriteAccess.ini
-// C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\NonExistentDestinationFolder.ini
-// C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\NonExistentSourceFile.ini
-// C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\NonExistentSourceFolder.ini
-// C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\SourceFileExistsButNoReadAccess.ini
-// C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\SourceFolderExistsButNoReadAccess.ini
+// backup-files-and-folders C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\DestinationFolderExistsButNoWriteAccess.ini
+// backup-files-and-folders C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\NonExistentDestinationFolder.ini
+// backup-files-and-folders C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\NonExistentSourceFile.ini
+// backup-files-and-folders C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\NonExistentSourceFolder.ini
+// backup-files-and-folders C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\SourceFileExistsButNoReadAccess.ini
+// backup-files-and-folders C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\SourceFolderExistsButNoReadAccess.ini
 
 int main(int argc, char* argv[])
 {

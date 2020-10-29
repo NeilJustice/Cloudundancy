@@ -29,7 +29,7 @@ private:
 public:
    BackupFilesAndFoldersTo7zFileSubProgram();
    virtual ~BackupFilesAndFoldersTo7zFileSubProgram();
-   virtual void Run(const CloudundancyArgs& args);
+   virtual int Run(const CloudundancyArgs& args);
 private:
    void Copy7zFileToDestinationFolders(const CloudundancyArgs& args) const;
    void CopyFilesAndFoldersToBackupStagingFolder(const CloudundancyArgs& args) const;

@@ -23,11 +23,6 @@ AFACT(TryCopyFileToFolder_RelativeDestinationFolderPathIsNotADot_JoinsRelativeDe
 EVIDENCE
 
 CloudundancyFileCopier _cloudundancyFileCopier;
-// Constant Components
-CloudundancyIniFileReaderMock* _cloudundancyIniFileReaderMock = nullptr;
-ConsoleMock* _consoleMock = nullptr;
-FileSystemMock* _fileSystemMock = nullptr;
-
 // Function Callers
 METALMOCK_NONVOID3_STATIC(string, String, ReplaceFirst, const string&, const string&, const string&)
 
@@ -55,16 +50,17 @@ using VoidTryCopyFileCallerMockType = const VoidTwoArgMemberFunctionCallerMock<
    CloudundancyFileCopier, const fs::path&, const fs::path&>;
 VoidTryCopyFileCallerMockType* _callerMock_TryCopyFile = nullptr;
 
+// Constant Components
+CloudundancyIniFileReaderMock* _cloudundancyIniFileReaderMock = nullptr;
+ConsoleMock* _consoleMock = nullptr;
+FileSystemMock* _fileSystemMock = nullptr;
+
 // Mutable Components
 RecursiveDirectoryIteratorMock* _recursiveDirectoryIteratorMock = nullptr;
 StopwatchMock* _stopwatchMock = nullptr;
 
 STARTUP
 {
-   // Components
-   _cloudundancyFileCopier._cloudundancyIniFileReader.reset(_cloudundancyIniFileReaderMock = new CloudundancyIniFileReaderMock);
-   _cloudundancyFileCopier._console.reset(_consoleMock = new ConsoleMock);
-   _cloudundancyFileCopier._fileSystem.reset(_fileSystemMock = new FileSystemMock);
    // Function Callers
    _cloudundancyFileCopier._call_String_ReplaceFirst = BIND_3ARG_METALMOCK_OBJECT(ReplaceFirstMock);
    _cloudundancyFileCopier._caller_CopyEachFileOrFolderToFolder.reset(_callerMock_CopyEachFileOrFolderToFolder = new OneExtraArgMemberForEacherOfCopyInstructionsMockType);
@@ -72,6 +68,10 @@ STARTUP
    _cloudundancyFileCopier._caller_CopyFileFunctions.reset(_callerMock_CopyFileFunctions = new VoidTwoArgMemberFunctionCallerMockType);
    _cloudundancyFileCopier._caller_CopyNestedFileToFolder.reset(_callerMock_CopyNestedFileToFolder = new CallerMockType_CopyNestedFileToFolder);
    _cloudundancyFileCopier._caller_TryCopyFile.reset(_callerMock_TryCopyFile = new VoidTryCopyFileCallerMockType);
+   // Components
+   _cloudundancyFileCopier._cloudundancyIniFileReader.reset(_cloudundancyIniFileReaderMock = new CloudundancyIniFileReaderMock);
+   _cloudundancyFileCopier._console.reset(_consoleMock = new ConsoleMock);
+   _cloudundancyFileCopier._fileSystem.reset(_fileSystemMock = new FileSystemMock);
    // Mutable Components
    _cloudundancyFileCopier._recursiveDirectoryIterator.reset(_recursiveDirectoryIteratorMock = new RecursiveDirectoryIteratorMock);
    _cloudundancyFileCopier._stopwatch.reset(_stopwatchMock = new StopwatchMock);
@@ -80,10 +80,6 @@ STARTUP
 TEST(DefaultConstructor_NewsComponentsAndSetsFunctions)
 {
    CloudundancyFileCopier fileCopier;
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(fileCopier._cloudundancyIniFileReader);
-   DELETE_TO_ASSERT_NEWED(fileCopier._console);
-   DELETE_TO_ASSERT_NEWED(fileCopier._fileSystem);
    // Function Callers
    STD_FUNCTION_TARGETS(String::ReplaceFirst, fileCopier._call_String_ReplaceFirst);
    DELETE_TO_ASSERT_NEWED(fileCopier._caller_CopyEachFileOrFolderToFolder);
@@ -91,6 +87,10 @@ TEST(DefaultConstructor_NewsComponentsAndSetsFunctions)
    DELETE_TO_ASSERT_NEWED(fileCopier._caller_CopyFileFunctions);
    DELETE_TO_ASSERT_NEWED(fileCopier._caller_CopyNestedFileToFolder);
    DELETE_TO_ASSERT_NEWED(fileCopier._caller_TryCopyFile);
+   // Constant Components
+   DELETE_TO_ASSERT_NEWED(fileCopier._cloudundancyIniFileReader);
+   DELETE_TO_ASSERT_NEWED(fileCopier._console);
+   DELETE_TO_ASSERT_NEWED(fileCopier._fileSystem);
    // Mutable Components
    DELETE_TO_ASSERT_NEWED(fileCopier._recursiveDirectoryIterator);
    DELETE_TO_ASSERT_NEWED(fileCopier._stopwatch);
