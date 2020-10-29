@@ -9,10 +9,12 @@ EVIDENCE
 
 TEST(DefaultConstructor_SetsFieldsToDefaults)
 {
-   const FilePathLineNumberLineText filePathLineNumberLineText;
-   ARE_EQUAL(fs::path(), filePathLineNumberLineText.filePath);
-   ARE_EQUAL(0, filePathLineNumberLineText.lineNumber);
-   ARE_EQUAL("", filePathLineNumberLineText.lineText);
+   const FilePathLineNumberLineText defaultFilePathLineNumberLineText;
+   FilePathLineNumberLineText expectedDefaultFilePathLineNumberLineText;
+   expectedDefaultFilePathLineNumberLineText.filePath = fs::path();
+   expectedDefaultFilePathLineNumberLineText.lineNumber = 0;
+   expectedDefaultFilePathLineNumberLineText.lineText = "";
+   ARE_EQUAL(expectedDefaultFilePathLineNumberLineText, defaultFilePathLineNumberLineText);
 }
 
 TEST(ThreeArgumentConstructor_SetsFields)
@@ -23,9 +25,11 @@ TEST(ThreeArgumentConstructor_SetsFields)
    //
    const FilePathLineNumberLineText filePathLineNumberLineText(filePath, lineNumber, lineText);
    //
-   ARE_EQUAL(filePath, filePathLineNumberLineText.filePath);
-   ARE_EQUAL(lineNumber, filePathLineNumberLineText.lineNumber);
-   ARE_EQUAL(lineText, filePathLineNumberLineText.lineText);
+   FilePathLineNumberLineText expectedFilePathLineNumberLineText;
+   expectedFilePathLineNumberLineText.filePath = filePath;
+   expectedFilePathLineNumberLineText.lineNumber = lineNumber;
+   expectedFilePathLineNumberLineText.lineText = lineText;
+   ARE_EQUAL(expectedFilePathLineNumberLineText, filePathLineNumberLineText);
 }
 
 TEST(Equalizer_ThrowsIfAnyFieldNotEqual)

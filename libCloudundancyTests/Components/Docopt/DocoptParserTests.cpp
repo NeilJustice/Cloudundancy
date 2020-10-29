@@ -4,14 +4,14 @@
 
 TESTS(DocoptParserTests)
 AFACT(Constructor_SetsDocoptFunctionPointer)
-AFACT(ParseArgs_ArgvVectorEmpty_Throws)
+AFACT(ParseArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
 AFACT(ParseArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
-AFACT(GetRequiredString_ArgNotInMap_Throws)
+AFACT(GetRequiredString_ArgNotInMap_ThrowsOutOfRange)
 AFACT(GetRequiredString_ArgInMap_ReturnsValue)
-AFACT(GetRequiredBool_ArgNotInMap_Throws)
+AFACT(GetRequiredBool_ArgNotInMap_ThrowsOutOfRange)
 AFACT(GetRequiredBool_ArgInMap_ReturnsValue)
 AFACT(GetProgramModeSpecificRequiredString_ProgramModeValueDoesNotEqualComparisonProgramModeValue_ReturnsEmptyString)
-AFACT(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgNotInMap_Throws)
+AFACT(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgNotInMap_ThrowsOutOfRange)
 AFACT(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgInMap_ReturnsValue)
 AFACT(GetOptionalBool_ArgNotInMap_ReturnsFalse)
 AFACT(GetOptionalBool_ArgInMap_ReturnsTrue)
@@ -41,12 +41,13 @@ TEST(Constructor_SetsDocoptFunctionPointer)
    STD_FUNCTION_TARGETS(docopt::docopt, docoptParser._call_docopt_docopt);
 }
 
-TEST(ParseArgs_ArgvVectorEmpty_Throws)
+TEST(ParseArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
 {
    const string usage = ZenUnit::Random<string>();
    const vector<string> emptyArgv;
    //
-   THROWS_EXCEPTION(const auto args = _docoptParser.ParseArgs(usage, emptyArgv), invalid_argument, "argv cannot be empty");
+   THROWS_EXCEPTION(const auto args = _docoptParser.ParseArgs(usage, emptyArgv),
+      invalid_argument, "argv cannot be empty");
 }
 
 TEST(ParseArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
@@ -65,7 +66,7 @@ TEST(ParseArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
    ARE_EQUAL(docoptReturnValue, docoptValues);
 }
 
-TEST(GetRequiredString_ArgNotInMap_Throws)
+TEST(GetRequiredString_ArgNotInMap_ThrowsOutOfRange)
 {
    THROWS_EXCEPTION(_docoptParser.GetRequiredString(_docoptArgs, _argName),
       out_of_range, _expectedKeyNotFoundWhat);
@@ -81,7 +82,7 @@ TEST(GetRequiredString_ArgInMap_ReturnsValue)
    ARE_EQUAL(stringValue, returnedStringValue);
 }
 
-TEST(GetRequiredBool_ArgNotInMap_Throws)
+TEST(GetRequiredBool_ArgNotInMap_ThrowsOutOfRange)
 {
    THROWS_EXCEPTION(_docoptParser.GetRequiredBool(_docoptArgs, _argName),
       out_of_range, _expectedKeyNotFoundWhat);
@@ -108,7 +109,7 @@ TEST(GetProgramModeSpecificRequiredString_ProgramModeValueDoesNotEqualComparison
    ARE_EQUAL(string(), argValue);
 }
 
-TEST(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgNotInMap_Throws)
+TEST(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgNotInMap_ThrowsOutOfRange)
 {
    const unsigned modeValue = ZenUnit::Random<unsigned>();
    const unsigned fieldIsRequiredIfModeEqualsThisValue = modeValue;
