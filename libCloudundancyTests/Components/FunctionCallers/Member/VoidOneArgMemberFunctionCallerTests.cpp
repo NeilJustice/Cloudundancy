@@ -7,8 +7,9 @@ AFACT(ConstCall_CallsConstMemberFunction)
 AFACT(NonConstCall_CallsNonConstMemberFunction)
 EVIDENCE
 
-struct C
+class Class
 {
+public:
    mutable vector<ArgType> calls;
 
    void ConstMemberVoidFunction(ArgType arg) const
@@ -24,30 +25,30 @@ struct C
 
 TEST(ConstCall_CallsConstMemberFunction)
 {
-   C c;
-   VoidOneArgMemberFunctionCaller<C, ArgType> oneArgVoidMemberFunctionCaller;
+   Class c;
+   VoidOneArgMemberFunctionCaller<Class, ArgType> oneArgVoidMemberFunctionCaller;
    IS_EMPTY(c.calls);
    //
-   oneArgVoidMemberFunctionCaller.ConstCall(&c, &C::ConstMemberVoidFunction, ArgType{ 1 });
+   oneArgVoidMemberFunctionCaller.ConstCall(&c, &Class::ConstMemberVoidFunction, ArgType{ 1 });
    //
    VECTORS_ARE_EQUAL(vector<ArgType>{ 1 }, c.calls);
    //
-   oneArgVoidMemberFunctionCaller.ConstCall(&c, &C::ConstMemberVoidFunction, ArgType{ 2 });
+   oneArgVoidMemberFunctionCaller.ConstCall(&c, &Class::ConstMemberVoidFunction, ArgType{ 2 });
    //
    VECTORS_ARE_EQUAL((vector<ArgType>{ 1, 2 }), c.calls);
 }
 
 TEST(NonConstCall_CallsNonConstMemberFunction)
 {
-   C c;
-   VoidOneArgMemberFunctionCaller<C, ArgType> oneArgVoidMemberFunctionCaller;
+   Class c;
+   VoidOneArgMemberFunctionCaller<Class, ArgType> oneArgVoidMemberFunctionCaller;
    IS_EMPTY(c.calls);
    //
-   oneArgVoidMemberFunctionCaller.NonConstCall(&c, &C::NonConstMemberVoidFunction, ArgType{ 1 });
+   oneArgVoidMemberFunctionCaller.NonConstCall(&c, &Class::NonConstMemberVoidFunction, ArgType{ 1 });
    //
    VECTORS_ARE_EQUAL(vector<ArgType>{ 1 }, c.calls);
    //
-   oneArgVoidMemberFunctionCaller.NonConstCall(&c, &C::NonConstMemberVoidFunction, ArgType{ 2 });
+   oneArgVoidMemberFunctionCaller.NonConstCall(&c, &Class::NonConstMemberVoidFunction, ArgType{ 2 });
    //
    VECTORS_ARE_EQUAL((vector<ArgType>{ 1, 2 }), c.calls);
 }

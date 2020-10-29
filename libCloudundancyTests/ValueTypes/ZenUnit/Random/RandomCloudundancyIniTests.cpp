@@ -2,15 +2,15 @@
 #include "libCloudundancyTests/ValueTypes/ZenUnit/Random/RandomCloudundancyIni.h"
 
 TESTS(RandomCloudundancyIniTests)
-AFACT(Random_ReturnsCloudunancyIniWithAllFieldsNonDefault)
+AFACT(RandomCloudundancyIni_ReturnsCloudunancyIniWithAllFieldsNonDefault)
 EVIDENCE
 
-TEST(Random_ReturnsCloudunancyIniWithAllFieldsNonDefault)
+TEST(RandomCloudundancyIni_ReturnsCloudunancyIniWithAllFieldsNonDefault)
 {
    const CloudundancyIni randomCloudundancyIni = ZenUnit::Random<CloudundancyIni>();
    //IS_NOT_DEFAULT_VALUE(randomCloudundancyIni.destinationFolderPaths);
-   //IS_NOT_EMPTY(randomCloudundancyIni.fileCopyInstructions);
-   //IS_NOT_DEFAULT_VALUE(randomCloudundancyIni.fileSubpathsToNotCopy);
+   IS_NOT_EMPTY(randomCloudundancyIni.absoluteFileOrFolderPathAndRelativeFolderPaths);
+   IS_NOT_EMPTY(randomCloudundancyIni.fileSubpathsToNotCopy);
 }
 
 RUN_TESTS(RandomCloudundancyIniTests)

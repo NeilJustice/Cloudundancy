@@ -10,8 +10,9 @@ namespace ZenUnit
    {
       CloudundancyIni randomCloudundancyIni;
       randomCloudundancyIni.destinationFolderPaths = RandomRelativeFolderPaths();
-      randomCloudundancyIni.absoluteFileOrFolderPathAndRelativeFolderPaths = ZenUnit::RandomVector<AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath>();
-      randomCloudundancyIni.fileSubpathsToNotCopy = ZenUnit::RandomVector<string>();
+      randomCloudundancyIni.absoluteFileOrFolderPathAndRelativeFolderPaths =
+         ZenUnit::RandomNonEmptyVector<AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath>();
+      randomCloudundancyIni.fileSubpathsToNotCopy = ZenUnit::RandomNonEmptyVector<string>();
       return randomCloudundancyIni;
    }
 }
