@@ -9,3 +9,11 @@ struct FileCopyResult
    unsigned long long durationInMilliseconds = 0;
 	std::string errorMessage;
 };
+
+#ifdef _WIN32
+   #ifdef _DEBUG
+      static_assert(sizeof(FileCopyResult) == 144);
+   #else
+      static_assert(sizeof(FileCopyResult) == 120);
+   #endif
+#endif
