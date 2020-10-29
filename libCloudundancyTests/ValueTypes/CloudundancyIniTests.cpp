@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/ValueTypes/CloudundancyIni.h"
+#include "libCloudundancy/ValueTypes/AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath.h"
 
 TESTS(CloudundancyIniTests)
 AFACT(DefaultConstructor_DefaultInitializesFields)
@@ -8,10 +9,12 @@ EVIDENCE
 
 TEST(DefaultConstructor_DefaultInitializesFields)
 {
-   CloudundancyIni cloudundancyIni;
-   IS_EMPTY(cloudundancyIni.destinationFolderPaths);
-   IS_EMPTY(cloudundancyIni.absoluteFileOrFolderPathAndRelativeFolderPaths);
-   IS_EMPTY(cloudundancyIni.fileSubpathsToNotCopy);
+   CloudundancyIni defaultCloudundancyIni;
+   CloudundancyIni expectedDefaultCloudundancyIni;
+   expectedDefaultCloudundancyIni.destinationFolderPaths = vector<fs::path>{};
+   expectedDefaultCloudundancyIni.absoluteFileOrFolderPathAndRelativeFolderPaths = vector<AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath>{};
+   expectedDefaultCloudundancyIni.fileSubpathsToNotCopy = vector<string>{};
+   ARE_EQUAL(expectedDefaultCloudundancyIni, defaultCloudundancyIni);
 }
 
 TEST(ZenUnitEqualizer_ThrowsIfAnyFieldNotEqual)

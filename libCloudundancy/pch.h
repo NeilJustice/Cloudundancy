@@ -48,13 +48,11 @@ using namespace std;
 #include "Windows.h"
 #endif
 
-// CppUtils
-#include "libCloudundancy/Utilities/ReleaseAssert.h"
-
 // libCloudundancy Enums
 #include "libCloudundancy/Enums/Color.h"
 #include "libCloudundancy/Enums/FileSystemExceptionType.h"
 #include "libCloudundancy/Enums/WindowsColor.h"
 
 // libCloudundancy Utilities
+#include "libCloudundancy/Utilities/ReleaseAssert.h"
 #include "libCloudundancy/Utilities/StringUtil.h"

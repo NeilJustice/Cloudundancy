@@ -4,10 +4,8 @@ struct FileCopyResult
 {
    fs::path sourceFilePath;
    fs::path destinationFilePath;
-	bool copySucceeded;
-   unsigned long long numberOfBytesCopied;
-   unsigned long long durationInMilliseconds;
+	bool copySucceeded = false;
+   unsigned long long numberOfBytesCopied = 0;
+   unsigned long long durationInMilliseconds = 0;
 	std::string errorMessage;
-
-   FileCopyResult();
 };

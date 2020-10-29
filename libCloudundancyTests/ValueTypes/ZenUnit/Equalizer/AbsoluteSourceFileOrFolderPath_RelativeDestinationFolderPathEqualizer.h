@@ -8,7 +8,7 @@ namespace ZenUnit
    {
    public:
       static void AssertEqual(
-         const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath& expectedFileCopyInstruction,
-         const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath& actualFileCopyInstruction);
+         const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath& expected,
+         const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath& actual);
    };
 }

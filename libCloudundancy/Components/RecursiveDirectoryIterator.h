@@ -1,5 +1,5 @@
 #pragma once
-#include "libCloudundancy/ValueTypes/AbsoluteFilePathToRelativeFolderPath.h"
+#include "libCloudundancy/ValueTypes/AbsoluteSourceFilePath_RelativeDestinationFolderPath.h"
 #include "libCloudundancy/ValueTypes/AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath.h"
 struct CloudundancyIni;
 template<
@@ -15,9 +15,9 @@ class RecursiveDirectoryIterator
 private:
    // Function Callers
    using OneExtraArgTransformerType = OneExtraArgTransformer<
-      vector<AbsoluteFilePathToRelativeFolderPath>,
+      vector<AbsoluteSourceFilePath_RelativeDestinationFolderPath>,
       vector<AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath>,
-      AbsoluteFilePathToRelativeFolderPath(*)(size_t, const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath&, const vector<string>&),
+      AbsoluteSourceFilePath_RelativeDestinationFolderPath(*)(size_t, const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath&, const vector<string>&),
       const vector<string>&>;
    unique_ptr<const OneExtraArgTransformerType> _oneExtraArgTransformer;
 

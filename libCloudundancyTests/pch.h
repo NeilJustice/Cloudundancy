@@ -31,7 +31,8 @@ using namespace std;
 // ZenUnit Equalizers
 #include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/CloudundancyArgsEqualizer.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/CloudundancyIniEqualizer.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/AbsoluteFileOrFolderPathToRelativeFolderPathEqualizer.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/AbsoluteSourceFilePath_RelativeDestinationFolderPathEqualizer.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPathEqualizer.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/FilePathLineNumberLineTextEqualizer.h"
 
 // ZenUnit Randoms
