@@ -1,14 +1,14 @@
 #pragma once
-#include "libCloudundancy/ValueTypes/AbsoluteSourceFilePath_RelativeDestinationFolderPath.h"
+#include "libCloudundancy/ValueTypes/AbsoluteFilePathToRelativeDestinationFolderPath.h"
 
 namespace ZenUnit
 {
    template<>
-   class Equalizer<AbsoluteSourceFilePath_RelativeDestinationFolderPath>
+   class Equalizer<AbsoluteFilePathToRelativeDestinationFolderPath>
    {
    public:
       static void AssertEqual(
-         const AbsoluteSourceFilePath_RelativeDestinationFolderPath& expected,
-         const AbsoluteSourceFilePath_RelativeDestinationFolderPath& actual);
+         const AbsoluteFilePathToRelativeDestinationFolderPath& expected,
+         const AbsoluteFilePathToRelativeDestinationFolderPath& actual);
    };
 }

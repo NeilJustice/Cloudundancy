@@ -61,7 +61,7 @@ void CloudundancyFileCopier::CopyFilesAndFoldersToSingleFolder(
 }
 
 void CloudundancyFileCopier::CopyFileOrFolderToFolder(
-   const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath& cloudundancyIniCopyInstruction,
+   const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction,
    const fs::path& destinationFolderPath) const
 {
    const char lastPathChar = cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath.string().back();
@@ -79,7 +79,7 @@ void CloudundancyFileCopier::CopyFileOrFolderToFolder(
 }
 
 void CloudundancyFileCopier::TryCopyFileToFolder(
-   const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath& cloudundancyIniCopyInstruction,
+   const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction,
    const fs::path& destinationFolderPath) const
 {
    const fs::path& sourceFilePath = cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath;
@@ -100,7 +100,7 @@ void CloudundancyFileCopier::TryCopyFileToFolder(
 
 void CloudundancyFileCopier::CopyNestedFileToFolder(
    const fs::path& sourceFilePath,
-   const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath& cloudundancyIniCopyInstruction,
+   const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction,
    const fs::path& destinationFolderPath) const
 {
    const fs::path sourceFilePathRelativeToSourceFolderPath = _call_String_ReplaceFirst(
@@ -123,7 +123,7 @@ void CloudundancyFileCopier::CopyNestedFileToFolder(
 }
 
 void CloudundancyFileCopier::CopyNonIgnoredFilesInAndBelowFolderToFolder(
-   const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath& cloudundancyIniCopyInstruction,
+   const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction,
    const fs::path& destinationFolderPath) const
 {
    _recursiveDirectoryIterator->InitializeIteratorAtFolderPath(cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath);

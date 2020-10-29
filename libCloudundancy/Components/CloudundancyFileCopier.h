@@ -1,5 +1,5 @@
 #pragma once
-struct AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath;
+struct AbsoluteFileOrFolderPathToRelativeFolderPath;
 class Console;
 struct CloudundancyArgs;
 struct CloudundancyIni;
@@ -34,17 +34,17 @@ private:
    unique_ptr<const OneExtraArgMemberForEacherOfCopyInstructionsType> _caller_CopyEachFileOrFolderToFolder;
 
    using OneExtraArgMemberForEacherOfDestinationFolderPathsType = const OneExtraArgMemberForEacher<
-      AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath, CloudundancyFileCopier,
-      void(CloudundancyFileCopier::*)(const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath&, const fs::path&) const,
+      AbsoluteFileOrFolderPathToRelativeFolderPath, CloudundancyFileCopier,
+      void(CloudundancyFileCopier::*)(const AbsoluteFileOrFolderPathToRelativeFolderPath&, const fs::path&) const,
       const fs::path&>;
    unique_ptr<const OneExtraArgMemberForEacherOfDestinationFolderPathsType> _caller_CopyFileOrFolderToFolder;
 
    using VoidTwoArgMemberFunctionCallerType = const VoidTwoArgMemberFunctionCaller<
-      CloudundancyFileCopier, const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath&, const fs::path&>;
+      CloudundancyFileCopier, const AbsoluteFileOrFolderPathToRelativeFolderPath&, const fs::path&>;
    unique_ptr<const VoidTwoArgMemberFunctionCallerType> _caller_CopyFileFunctions;
 
    using CallerType_CopyNestedFileToFolder = const VoidThreeArgMemberFunctionCaller<
-      CloudundancyFileCopier, const fs::path&, const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath&, const fs::path&>;
+      CloudundancyFileCopier, const fs::path&, const AbsoluteFileOrFolderPathToRelativeFolderPath&, const fs::path&>;
    unique_ptr<const CallerType_CopyNestedFileToFolder> _caller_CopyNestedFileToFolder;
 
    using VoidTryCopyFileCallerType = const VoidTwoArgMemberFunctionCaller<
@@ -64,18 +64,18 @@ private:
       const fs::path& destinationFolderPath, const CloudundancyIni& cloudundancyIni) const;
 
    void CopyFileOrFolderToFolder(
-      const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath& cloudundancyIniCopyInstruction, const fs::path& destinationFolderPath) const;
+      const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction, const fs::path& destinationFolderPath) const;
 
    void TryCopyFileToFolder(
-      const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath& cloudundancyIniCopyInstruction, const fs::path& destinationFolderPath) const;
+      const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction, const fs::path& destinationFolderPath) const;
 
    void CopyNestedFileToFolder(
       const fs::path& sourceFilePath,
-      const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath& cloudundancyIniCopyInstruction,
+      const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction,
       const fs::path& destinationFolderPath) const;
 
    void CopyNonIgnoredFilesInAndBelowFolderToFolder(
-      const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath& cloudundancyIniCopyInstruction, const fs::path& destinationFolderPath) const;
+      const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction, const fs::path& destinationFolderPath) const;
 
    void TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const;
 };

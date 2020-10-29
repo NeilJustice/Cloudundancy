@@ -1,8 +1,8 @@
 #pragma once
-#include "libCloudundancy/ValueTypes/AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath.h"
+#include "libCloudundancy/ValueTypes/AbsoluteFileOrFolderPathToRelativeFolderPath.h"
 
 namespace ZenUnit
 {
    template<>
-   AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath Random<AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath>();
+   AbsoluteFileOrFolderPathToRelativeFolderPath Random<AbsoluteFileOrFolderPathToRelativeFolderPath>();
 }

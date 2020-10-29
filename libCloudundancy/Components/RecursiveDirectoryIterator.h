@@ -1,6 +1,6 @@
 #pragma once
-#include "libCloudundancy/ValueTypes/AbsoluteSourceFilePath_RelativeDestinationFolderPath.h"
-#include "libCloudundancy/ValueTypes/AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath.h"
+#include "libCloudundancy/ValueTypes/AbsoluteFilePathToRelativeDestinationFolderPath.h"
+#include "libCloudundancy/ValueTypes/AbsoluteFileOrFolderPathToRelativeFolderPath.h"
 struct CloudundancyIni;
 template<
    typename TransformedContainerType,
@@ -15,9 +15,9 @@ class RecursiveDirectoryIterator
 private:
    // Function Callers
    using OneExtraArgTransformerType = OneExtraArgTransformer<
-      vector<AbsoluteSourceFilePath_RelativeDestinationFolderPath>,
-      vector<AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath>,
-      AbsoluteSourceFilePath_RelativeDestinationFolderPath(*)(size_t, const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath&, const vector<string>&),
+      vector<AbsoluteFilePathToRelativeDestinationFolderPath>,
+      vector<AbsoluteFileOrFolderPathToRelativeFolderPath>,
+      AbsoluteFilePathToRelativeDestinationFolderPath(*)(size_t, const AbsoluteFileOrFolderPathToRelativeFolderPath&, const vector<string>&),
       const vector<string>&>;
    unique_ptr<const OneExtraArgTransformerType> _oneExtraArgTransformer;
 

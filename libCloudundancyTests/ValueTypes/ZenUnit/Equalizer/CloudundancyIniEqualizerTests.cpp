@@ -11,7 +11,7 @@ TEST(Test)
    EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(
       CloudundancyIni, destinationFolderPaths, vector<fs::path> { fs::path() });
    EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(
-      CloudundancyIni, absoluteFileOrFolderPathAndRelativeFolderPaths, vector<AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath> { ZenUnit::Random<AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath>() });
+      CloudundancyIni, absoluteFileOrFolderPathAndRelativeFolderPaths, vector<AbsoluteFileOrFolderPathToRelativeFolderPath> { ZenUnit::Random<AbsoluteFileOrFolderPathToRelativeFolderPath>() });
    EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(
       CloudundancyIni, fileSubpathsToNotCopy, vector<string> { ZenUnit::Random<string>() });
 }

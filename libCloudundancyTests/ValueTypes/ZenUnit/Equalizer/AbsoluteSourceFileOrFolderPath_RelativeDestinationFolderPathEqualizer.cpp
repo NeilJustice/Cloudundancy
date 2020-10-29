@@ -3,9 +3,9 @@
 
 namespace ZenUnit
 {
-   void Equalizer<AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath>::AssertEqual(
-      const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath& expected,
-      const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath& actual)
+   void Equalizer<AbsoluteFileOrFolderPathToRelativeFolderPath>::AssertEqual(
+      const AbsoluteFileOrFolderPathToRelativeFolderPath& expected,
+      const AbsoluteFileOrFolderPathToRelativeFolderPath& actual)
    {
       ARE_EQUAL(expected.absoluteSourceFileOrFolderPath, actual.absoluteSourceFileOrFolderPath);
       ARE_EQUAL(expected.relativeDestinationFolderPath, actual.relativeDestinationFolderPath);

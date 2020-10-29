@@ -63,7 +63,7 @@ CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudunda
       else if (inSourceFilesAndFoldersToCopySection)
       {
          const FilePathLineNumberLineText fileCopyInstructionLine(cloudundancyIniPath, lineNumber, iniFileLine);
-         const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath cloudundancyIniCopyInstruction =
+         const AbsoluteFileOrFolderPathToRelativeFolderPath cloudundancyIniCopyInstruction =
             _caller_ParseFileCopyInstructionLine->CallConstMemberFunction(
                &CloudundancyIniFileReader::ParseFileCopyInstructionLine, this, fileCopyInstructionLine);
          cloudundancyIni.absoluteFileOrFolderPathAndRelativeFolderPaths.push_back(cloudundancyIniCopyInstruction);
@@ -77,7 +77,7 @@ CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudunda
    return cloudundancyIni;
 }
 
-AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath CloudundancyIniFileReader::ParseFileCopyInstructionLine(
+AbsoluteFileOrFolderPathToRelativeFolderPath CloudundancyIniFileReader::ParseFileCopyInstructionLine(
    const FilePathLineNumberLineText& fileCopyInstructionLine) const
 {
    const string pipeReplacedLine = String::RegexReplace(fileCopyInstructionLine.lineText, R"(\s+->\s+)", "|");
@@ -88,7 +88,7 @@ AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath CloudundancyIniFile
       throw FileSystemException(FileSystemExceptionType::MalformedFile,
          fileCopyInstructionLine.filePath, fileCopyInstructionLine.lineNumber, exceptionMessage);
    }
-   AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath cloudundancyIniCopyInstruction;
+   AbsoluteFileOrFolderPathToRelativeFolderPath cloudundancyIniCopyInstruction;
    cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath = pipeSplitLine[0];
    cloudundancyIniCopyInstruction.relativeDestinationFolderPath = pipeSplitLine[1];
    _caller_ThrowIfSourceFileOrFolderDoesNotExist->ConstCall(
@@ -97,7 +97,7 @@ AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath CloudundancyIniFile
 }
 
 void CloudundancyIniFileReader::ThrowIfSourceFileOrFolderDoesNotExist(
-   const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath& cloudundancyIniCopyInstruction,
+   const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction,
    const FilePathLineNumberLineText& /*filePathLineNumberLineText*/) const
 {
    bool sourceFileOrFolderExists = _fileSystem->FileOrFolderExists(cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath);
