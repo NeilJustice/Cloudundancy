@@ -56,7 +56,7 @@ int CloudundancyProgram::Run(const std::vector<std::string>& stringArgs)
 
 // Private Functions
 
-int CloudundancyProgram::ExceptionHandler(const exception& ex, const vector<string>& stringArgs)
+int CloudundancyProgram::ExceptionHandler(const exception& ex, const vector<string>& /*stringArgs*/)
 {
    const string exceptionTypeNameAndMessage = _call_Exception_GetExceptionClassNameAndMessage(&ex);
    const string fullExceptionMessage = "\n[Cloudundancy] Error: Exception thrown: " + exceptionTypeNameAndMessage;

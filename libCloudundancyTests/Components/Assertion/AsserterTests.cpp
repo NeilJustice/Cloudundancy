@@ -2,33 +2,59 @@
 #include "libCloudundancy/Components/Assertion/Asserter.h"
 
 TESTS(AsserterTests)
-AFACT(ThrowIfNotEqual_SizeTAreEqual_DoesNotThrowException)
-AFACT(ThrowIfNotEqual_SizeTAreNotEqual_ThrowsRuntimeError)
+AFACT(ThrowIfIntsNotEqual_SizeTAreEqual_DoesNotThrowException)
+AFACT(ThrowIfIntsNotEqual_SizeTAreNotEqual_ThrowsRuntimeError)
+AFACT(ThrowIfSizeTsNotEqual_SizeTAreEqual_DoesNotThrowException)
+AFACT(ThrowIfSizeTsNotEqual_SizeTAreNotEqual_ThrowsRuntimeError)
 EVIDENCE
 
 Asserter _asserter;
 
-TEST(ThrowIfNotEqual_SizeTAreEqual_DoesNotThrowException)
+TEST(ThrowIfIntsNotEqual_SizeTAreEqual_DoesNotThrowException)
+{
+	const int expected = ZenUnit::Random<int>();
+	const int actual = expected;
+	const string message = ZenUnit::Random<string>();
+	//
+	_asserter.ThrowIfIntsNotEqual(expected, actual, message);
+}
+
+TEST(ThrowIfIntsNotEqual_SizeTAreNotEqual_ThrowsRuntimeError)
+{
+	const int expected = ZenUnit::RandomNon0<int>();
+	const int actual = expected - 1;
+	const string message = ZenUnit::Random<string>();
+	//
+	const string expectedExceptionMessage = String::Concat(
+		"Asserter::ThrowIfIntsNotEqual(expected, actual, message) failed due to expected != actual.\n",
+		" expected=", expected, '\n',
+		"   actual=", actual, '\n',
+		"  message=\"", message, "\"");
+	THROWS_EXCEPTION(_asserter.ThrowIfIntsNotEqual(expected, actual, message),
+		runtime_error, expectedExceptionMessage);
+}
+
+TEST(ThrowIfSizeTsNotEqual_SizeTAreEqual_DoesNotThrowException)
 {
 	const size_t expected = ZenUnit::Random<size_t>();
 	const size_t actual = expected;
 	const string message = ZenUnit::Random<string>();
 	//
-	_asserter.ThrowIfNotEqual(expected, actual, message);
+	_asserter.ThrowIfSizeTsNotEqual(expected, actual, message);
 }
 
-TEST(ThrowIfNotEqual_SizeTAreNotEqual_ThrowsRuntimeError)
+TEST(ThrowIfSizeTsNotEqual_SizeTAreNotEqual_ThrowsRuntimeError)
 {
 	const size_t expected = ZenUnit::RandomNon0<size_t>();
 	const size_t actual = expected - 1;
 	const string message = ZenUnit::Random<string>();
 	//
 	const string expectedExceptionMessage = String::Concat(
-		"Asserter::ThrowIfNotEqual(expected, actual, message) failed due to expected != actual.\n",
+		"Asserter::ThrowIfSizeTsNotEqual(expected, actual, message) failed due to expected != actual.\n",
 		" expected=", expected, '\n',
 		"   actual=", actual, '\n',
 		"  message=\"", message, "\"");
-	THROWS_EXCEPTION(_asserter.ThrowIfNotEqual(expected, actual, message),
+	THROWS_EXCEPTION(_asserter.ThrowIfSizeTsNotEqual(expected, actual, message),
 		runtime_error, expectedExceptionMessage);
 }
 

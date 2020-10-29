@@ -40,7 +40,7 @@ public:
 		std::ostringstream oss;
 		for (int i = static_cast<int>(vectorSize - 1); i >= 0; --i)
 		{
-			const T& element = vec[i];
+			const T& element = vec[static_cast<size_t>(i)];
 			oss << element;
 			if (i > 0)
 			{

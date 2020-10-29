@@ -1,4 +1,4 @@
-#include "libCloudundancy/Components/Compiler/MSVCIgnoredWallWarnings.h"
+#include "libCloudundancy/CompilerWarnings/IfWindowsIgnoreTheseWarningsGlobally.h"
 #include <functional>
 #ifdef __linux__
 #include <memory> // unique_ptr

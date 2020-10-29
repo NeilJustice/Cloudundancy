@@ -98,7 +98,7 @@ AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath CloudundancyIniFile
 
 void CloudundancyIniFileReader::ThrowIfSourceFileOrFolderDoesNotExist(
    const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath& cloudundancyIniCopyInstruction,
-   const FilePathLineNumberLineText& filePathLineNumberLineText) const
+   const FilePathLineNumberLineText& /*filePathLineNumberLineText*/) const
 {
    bool sourceFileOrFolderExists = _fileSystem->FileOrFolderExists(cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath);
    if (!sourceFileOrFolderExists)

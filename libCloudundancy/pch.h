@@ -1,5 +1,6 @@
 #pragma once
-#include "libCloudundancy/Components/Compiler/MSVCIgnoredWallWarnings.h"
+#include "libCloudundancy/CompilerWarnings/IfWindowsIgnoreTheseWarningsGlobally.h"
+#include "libCloudundancy/CompilerWarnings/IfWindowsPushIgnoredPrecompiledHeaderWarnings.h"
 
 #if defined __linux__
    #include <experimental/filesystem>
@@ -40,6 +41,8 @@ using namespace std;
 #include "libCloudundancy/Enums/Color.h"
 #include "libCloudundancy/Enums/FileSystemExceptionType.h"
 #include "libCloudundancy/Enums/WindowsColor.h"
+
+#include "libCloudundancy/CompilerWarnings/IfWindowsPopIgnoredPrecompiledHeaderWarnings.h"
 
 // libCloudundancy Utilities
 #include "libCloudundancy/Utilities/ReleaseAssert.h"

@@ -1,5 +1,6 @@
 #pragma once
-#include "libCloudundancy/Components/Compiler/MSVCIgnoredWallWarnings.h"
+#include "libCloudundancy/CompilerWarnings/IfWindowsIgnoreTheseWarningsGlobally.h"
+#include "libCloudundancy/CompilerWarnings/IfWindowsPushIgnoredPrecompiledHeaderWarnings.h"
 
 #ifdef _WIN32
 #define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
@@ -58,3 +59,5 @@ using namespace std;
 #include "libCloudundancyTests/Components/Process/MetalMock/ProcessRunnerMock.h"
 #include "libCloudundancyTests/Components/Time/MetalMock/StopwatchMock.h"
 #include "libCloudundancyTests/Components/Time/MetalMock/WatchMock.h"
+
+#include "libCloudundancy/CompilerWarnings/IfWindowsPopIgnoredPrecompiledHeaderWarnings.h"

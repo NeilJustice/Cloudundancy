@@ -22,7 +22,7 @@ FileOpenerCloser::~FileOpenerCloser()
 void FileOpenerCloser::CloseFile(FILE* filePointer) const
 {
    const int fcloseReturnValue = _call_fclose(filePointer);
-   _asserter->ThrowIfNotEqual(0, fcloseReturnValue,
+   _asserter->ThrowIfIntsNotEqual(0, fcloseReturnValue,
       "fclose(filePointer) in FileOpenerCloser::CloseFile() unexpectedly returned a non-0 value");
 }
 

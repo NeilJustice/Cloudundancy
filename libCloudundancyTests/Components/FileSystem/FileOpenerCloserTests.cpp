@@ -127,13 +127,13 @@ TEST(CreateBinaryFileInWriteMode_ReturnsFilePointerOpenedInBinaryWriteMode)
 TEST(CloseFile_CallsFCloseOnFileHandle)
 {
    const int fcloseReturnValue = fcloseMock.ReturnRandom();
-   _asserterMock->ThrowIfNotEqualMock.Expect();
+   _asserterMock->ThrowIfIntsNotEqualMock.Expect();
    FILE fileHandle{};
    //
    _fileOpenerCloser.CloseFile(&fileHandle);
    //
    METALMOCK(fcloseMock.CalledOnceWith(&fileHandle));
-   METALMOCK(_asserterMock->ThrowIfNotEqualMock.CalledOnceWith(0, fcloseReturnValue,
+   METALMOCK(_asserterMock->ThrowIfIntsNotEqualMock.CalledOnceWith(0, fcloseReturnValue,
       "fclose(filePointer) in FileOpenerCloser::CloseFile() unexpectedly returned a non-0 value"));
 }
 

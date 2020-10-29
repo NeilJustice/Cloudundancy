@@ -72,7 +72,7 @@ vector<char> FileSystem::ReadFileBytes(const fs::path& filePath) const
    }
    const unique_ptr<vector<char>> fileBytesBuffer(_charVectorAllocator->NewCharVector(fileSizeInBytes));
    const size_t numberOfBytesRead = _call_fread(&(*fileBytesBuffer)[0], 1, fileSizeInBytes, readModeBinaryFilePointer);
-   _asserter->ThrowIfNotEqual(fileSizeInBytes, numberOfBytesRead,
+   _asserter->ThrowIfSizeTsNotEqual(fileSizeInBytes, numberOfBytesRead,
       "fread() in FileSystem::ReadBytes() unexpectedly did not return fileSizeInBytes");
    _fileOpenerCloser->CloseFile(readModeBinaryFilePointer);
    const vector<char> fileBytes(*fileBytesBuffer);
@@ -164,7 +164,7 @@ FileCopyResult FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs:
    const size_t sourceFileSizeInBytes = _sourceFileBytes.size();
    const size_t numberOfBytesWritten = _call_fwrite(
       &_sourceFileBytes[0], 1, sourceFileSizeInBytes, writeModeDestinationBinaryFilePointer);
-   _asserter->ThrowIfNotEqual(sourceFileSizeInBytes, numberOfBytesWritten,
+   _asserter->ThrowIfSizeTsNotEqual(sourceFileSizeInBytes, numberOfBytesWritten,
       "fwrite() in FileSystem::TryCopyFile() unexpectedly returned numberOfBytesWritten != sourceFileSizeInBytes");
    _fileOpenerCloser->CloseFile(writeModeDestinationBinaryFilePointer);
    FileCopyResult successFileCopyResult;
@@ -182,7 +182,7 @@ void FileSystem::WriteTextFile(const fs::path& filePath, string_view fileText) c
    FILE* const writeModeTextFilePointer = _fileOpenerCloser->CreateTextFileInWriteMode(filePath);
    const size_t fileTextSize = fileText.size();
    const size_t numberOfBytesWritten = _call_fwrite(fileText.data(), 1, fileTextSize, writeModeTextFilePointer);
-   _asserter->ThrowIfNotEqual(fileTextSize, numberOfBytesWritten,
+   _asserter->ThrowIfSizeTsNotEqual(fileTextSize, numberOfBytesWritten,
       "fwrite() in FileSystem::CreateTextFile() unexpectedly did not return fileText.size() number of bytes written");
    _fileOpenerCloser->CloseFile(writeModeTextFilePointer);
 }
@@ -192,11 +192,11 @@ void FileSystem::WriteTextFile(const fs::path& filePath, string_view fileText) c
 size_t FileSystem::ReadFileSize(FILE* filePointer) const
 {
    const int fseekEndReturnValue = _call_fseek(filePointer, 0, SEEK_END);
-   _asserter->ThrowIfNotEqual(0, fseekEndReturnValue,
+   _asserter->ThrowIfIntsNotEqual(0, fseekEndReturnValue,
       "fseek(filePointer, 0, SEEK_END) in FileSystem::ReadFileSize() unexpectedly did not return 0");
    const long ftellReturnValue = _call_ftell(filePointer);
    const int fseekSetReturnValue = _call_fseek(filePointer, 0, SEEK_SET);
-   _asserter->ThrowIfNotEqual(0, fseekSetReturnValue,
+   _asserter->ThrowIfIntsNotEqual(0, fseekSetReturnValue,
       "fseek(filePointer, 0, SEEK_SET) in FileSystem::ReadFileSize() unexpectedly did not return 0");
    const size_t fileSizeInBytes = static_cast<size_t>(ftellReturnValue);
    return fileSizeInBytes;

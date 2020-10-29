@@ -26,7 +26,7 @@ TEST(DefaultConstructor_NewsCRTWatch)
 }
 
 TEST4X4(MonthDayYearToDateString_ReturnsExpectedDateString,
-   int month, int day, int year, const string& expectedDateString,
+   unsigned month, unsigned day, unsigned year, const string& expectedDateString,
    1, 1, 1900, "01-01-1900",
    1, 2, 1901, "01-02-1901",
    2, 3, 1902, "02-03-1902",

@@ -11,7 +11,7 @@ AFACT(GetRequiredString_ArgInMap_ReturnsValue)
 AFACT(GetRequiredBool_ArgNotInMap_ThrowsOutOfRange)
 AFACT(GetRequiredBool_ArgInMap_ReturnsValue)
 AFACT(GetProgramModeSpecificRequiredString_ProgramModeValueDoesNotEqualComparisonProgramModeValue_ReturnsEmptyString)
-AFACT(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgNotInMap_ThrowsOutOfRange)
+AFACT(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgIsNotInMap_ThrowsOutOfRange)
 AFACT(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgInMap_ReturnsValue)
 AFACT(GetOptionalBool_ArgNotInMap_ReturnsFalse)
 AFACT(GetOptionalBool_ArgInMap_ReturnsTrue)
@@ -24,7 +24,7 @@ METALMOCK_NONVOID5_FREE(map<string COMMA docopt::Value>, docopt, const string&, 
 
 map<string, docopt::Value> _docoptArgs;
 string _argName;
-string _expectedKeyNotFoundWhat;
+string _expectedOutOfRangeExceptionMessage;
 
 STARTUP
 {
@@ -32,7 +32,7 @@ STARTUP
 
    _docoptArgs = ZenUnit::RandomMap<string, docopt::Value>();
    _argName = ZenUnit::Random<string>() + "_argName";
-   _expectedKeyNotFoundWhat = "Key not found in map: [" + _argName + "]";
+   _expectedOutOfRangeExceptionMessage = "Key not found in map: [" + _argName + "]";
 }
 
 TEST(Constructor_SetsDocoptFunctionPointer)
@@ -69,7 +69,7 @@ TEST(ParseArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
 TEST(GetRequiredString_ArgNotInMap_ThrowsOutOfRange)
 {
    THROWS_EXCEPTION(_docoptParser.GetRequiredString(_docoptArgs, _argName),
-      out_of_range, _expectedKeyNotFoundWhat);
+      out_of_range, _expectedOutOfRangeExceptionMessage);
 }
 
 TEST(GetRequiredString_ArgInMap_ReturnsValue)
@@ -85,7 +85,7 @@ TEST(GetRequiredString_ArgInMap_ReturnsValue)
 TEST(GetRequiredBool_ArgNotInMap_ThrowsOutOfRange)
 {
    THROWS_EXCEPTION(_docoptParser.GetRequiredBool(_docoptArgs, _argName),
-      out_of_range, _expectedKeyNotFoundWhat);
+      out_of_range, _expectedOutOfRangeExceptionMessage);
 }
 
 TEST(GetRequiredBool_ArgInMap_ReturnsValue)
@@ -100,34 +100,34 @@ TEST(GetRequiredBool_ArgInMap_ReturnsValue)
 
 TEST(GetProgramModeSpecificRequiredString_ProgramModeValueDoesNotEqualComparisonProgramModeValue_ReturnsEmptyString)
 {
-   const unsigned modeValue = ZenUnit::Random<unsigned>();
-   const unsigned fieldIsRequiredIfModeEqualsThisValue = modeValue + 1;
+   const int programModeAsInt = ZenUnit::Random<int>();
+   const int fieldIsRequiredIfProgramModeIntEqualsThisValue = programModeAsInt + 1;
    //
    const string argValue = _docoptParser.GetProgramModeSpecificRequiredString(
-      _docoptArgs, modeValue, fieldIsRequiredIfModeEqualsThisValue, _argName);
+      _docoptArgs, programModeAsInt, fieldIsRequiredIfProgramModeIntEqualsThisValue, _argName);
    //
    ARE_EQUAL(string(), argValue);
 }
 
-TEST(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgNotInMap_ThrowsOutOfRange)
+TEST(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgIsNotInMap_ThrowsOutOfRange)
 {
-   const unsigned modeValue = ZenUnit::Random<unsigned>();
-   const unsigned fieldIsRequiredIfModeEqualsThisValue = modeValue;
+   const int programModeAsInt = ZenUnit::Random<int>();
+   const int fieldIsRequiredIfProgramModeIntEqualsThisValue = programModeAsInt;
    //
    THROWS_EXCEPTION(_docoptParser.GetProgramModeSpecificRequiredString(
-      _docoptArgs, modeValue, fieldIsRequiredIfModeEqualsThisValue, _argName),
-      out_of_range, _expectedKeyNotFoundWhat);
+      _docoptArgs, programModeAsInt, fieldIsRequiredIfProgramModeIntEqualsThisValue, _argName),
+      out_of_range, _expectedOutOfRangeExceptionMessage);
 }
 
 TEST(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgInMap_ReturnsValue)
 {
-   const unsigned modeValue = ZenUnit::Random<unsigned>();
-   const unsigned fieldIsRequiredIfModeEqualsThisValue = modeValue;
+   const int programModeAsInt = ZenUnit::Random<int>();
+   const int fieldIsRequiredIfProgramModeIntEqualsThisValue = programModeAsInt;
    const string argValue = ZenUnit::Random<string>();
    _docoptArgs[_argName] = argValue;
    //
    const string returnedArgValue = _docoptParser.GetProgramModeSpecificRequiredString(
-      _docoptArgs, modeValue, fieldIsRequiredIfModeEqualsThisValue, _argName);
+      _docoptArgs, programModeAsInt, fieldIsRequiredIfProgramModeIntEqualsThisValue, _argName);
    //
    ARE_EQUAL(argValue, returnedArgValue);
 }

@@ -11,11 +11,11 @@ AFACT(ForEach_OneElementCollection_CallsFunctionWithElement)
 AFACT(ForEach_TwoElementCollection_CallsFunctionWithEachElement)
 EVIDENCE
 
-static void Function(const T& element)
+static void Function(const T& /*element*/)
 {
 }
 
-static void ThrowsIfCalled(const T& element)
+static void ThrowsIfCalled(const T& /*element*/)
 {
    throw runtime_error("Unexpectedly called");
 }

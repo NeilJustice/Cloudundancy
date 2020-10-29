@@ -60,7 +60,7 @@ std::string Stopwatch::StopAndGetElapsedSeconds()
    const size_t numberOfLeadingMillisecondZeros =
       elapsedMillisecondsMod1000 < 10 ? 2 : // 3 -> 0.003
       elapsedMillisecondsMod1000 < 100 ? 1 : // 33 -> 0.033
-      0; // 333 -> 0.333
+      0ull; // 333 -> 0.333
 
    // Example leadingZeros: "00"
    const std::string leadingZeros(numberOfLeadingMillisecondZeros, '0');
