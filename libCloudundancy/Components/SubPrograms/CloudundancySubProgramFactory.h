@@ -1,6 +1,5 @@
 #pragma once
 class CloudundancySubProgram;
-enum class ProgramMode;
 
 class CloudundancySubProgramFactory
 {

@@ -1,7 +1,7 @@
 #pragma once
 #include "libCloudundancy/Utilities/STRING_ENUM_MAP.h"
 
-enum class FileSystemExceptionType
+enum class FileSystemExceptionType : unsigned char
 {
    Unset,
    CloseFileFailed,

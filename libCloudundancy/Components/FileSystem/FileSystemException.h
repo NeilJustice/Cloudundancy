@@ -1,5 +1,4 @@
 #pragma once
-enum class FileSystemExceptionType;
 
 class FileSystemException : public exception
 {

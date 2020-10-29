@@ -1,6 +1,6 @@
 #pragma once
 
-enum class ProgramMode
+enum class ProgramMode : unsigned char
 {
    Unset,
    BackupFilesAndFolders,

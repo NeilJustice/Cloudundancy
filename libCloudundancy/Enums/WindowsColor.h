@@ -1,6 +1,6 @@
 #pragma once
 
-enum class WindowsColor
+enum class WindowsColor : unsigned char
 {
 	Black,
 	DarkBlue,
