@@ -5,11 +5,11 @@
 #include "libCloudundancy/Components/FileSystem/FileSystem.h"
 #include "libCloudundancy/Components/FunctionCallers/Member/VoidOneArgMemberFunctionCaller.h"
 #include "libCloudundancy/Components/Process/ProcessRunner.h"
-#include "libCloudundancy/Components/SubPrograms/BackupCodeSubProgram.h"
+#include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersTo7zFileSubProgram.h"
 #include "libCloudundancy/Components/Time/Stopwatch.h"
 #include "libCloudundancy/Components/Time/Watch.h"
 
-BackupCodeSubProgram::BackupCodeSubProgram()
+BackupFilesAndFoldersTo7zFileSubProgram::BackupFilesAndFoldersTo7zFileSubProgram()
    // Function Callers
    : _voidOneArgFunctionCaller(make_unique<VoidOneArgFunctionCallerType>())
    // Constant Components
@@ -23,21 +23,21 @@ BackupCodeSubProgram::BackupCodeSubProgram()
 {
 }
 
-BackupCodeSubProgram::~BackupCodeSubProgram()
+BackupFilesAndFoldersTo7zFileSubProgram::~BackupFilesAndFoldersTo7zFileSubProgram()
 {
 }
 
-void BackupCodeSubProgram::Run(const CloudundancyArgs& args)
+void BackupFilesAndFoldersTo7zFileSubProgram::Run(const CloudundancyArgs& args)
 {
-   _voidOneArgFunctionCaller->ConstCall(this, &BackupCodeSubProgram::DeleteBackupStagingFolder, args);
-   _voidOneArgFunctionCaller->ConstCall(this, &BackupCodeSubProgram::CopyFilesAndFoldersToBackupStagingFolder, args);
-   _voidOneArgFunctionCaller->ConstCall(this, &BackupCodeSubProgram::SevenZipBackupStagingFolder, args);
-   _voidOneArgFunctionCaller->ConstCall(this, &BackupCodeSubProgram::Copy7zFileToDestinationFolders, args);
+   _voidOneArgFunctionCaller->ConstCall(this, &BackupFilesAndFoldersTo7zFileSubProgram::DeleteBackupStagingFolder, args);
+   _voidOneArgFunctionCaller->ConstCall(this, &BackupFilesAndFoldersTo7zFileSubProgram::CopyFilesAndFoldersToBackupStagingFolder, args);
+   _voidOneArgFunctionCaller->ConstCall(this, &BackupFilesAndFoldersTo7zFileSubProgram::SevenZipBackupStagingFolder, args);
+   _voidOneArgFunctionCaller->ConstCall(this, &BackupFilesAndFoldersTo7zFileSubProgram::Copy7zFileToDestinationFolders, args);
 }
 
 // Private Functions
 
-void BackupCodeSubProgram::Copy7zFileToDestinationFolders(const CloudundancyArgs& args) const
+void BackupFilesAndFoldersTo7zFileSubProgram::Copy7zFileToDestinationFolders(const CloudundancyArgs& args) const
 {
    _console->WriteLine("[Cloudundancy] Copying .7z File To Backup Folders.");
    _stopwatch->Start();
@@ -48,7 +48,7 @@ void BackupCodeSubProgram::Copy7zFileToDestinationFolders(const CloudundancyArgs
    _console->WriteLine("[Cloudundancy] Copied .7z File To Backup Folders in " + elapsedSeconds + " seconds\n");
 }
 
-void BackupCodeSubProgram::CopyFilesAndFoldersToBackupStagingFolder(const CloudundancyArgs& args) const
+void BackupFilesAndFoldersTo7zFileSubProgram::CopyFilesAndFoldersToBackupStagingFolder(const CloudundancyArgs& args) const
 {
    _console->WriteLine("[Cloudundancy] Copying Code Folder To " + args.backupStagingFolderPath.string());
    _stopwatch->Start();
@@ -59,7 +59,7 @@ void BackupCodeSubProgram::CopyFilesAndFoldersToBackupStagingFolder(const Cloudu
    _console->WriteLine("[Cloudundancy] Copied Code Folder To " + args.backupStagingFolderPath.string() + " in " + elapsedSeconds + " seconds\n");
 }
 
-void BackupCodeSubProgram::DeleteBackupStagingFolder(const CloudundancyArgs& args) const
+void BackupFilesAndFoldersTo7zFileSubProgram::DeleteBackupStagingFolder(const CloudundancyArgs& args) const
 {
    _console->WriteLine("[Cloudundancy] Deleting " + args.backupStagingFolderPath.string());
    _stopwatch->Start();
@@ -70,7 +70,7 @@ void BackupCodeSubProgram::DeleteBackupStagingFolder(const CloudundancyArgs& arg
    _console->WriteLine("[Cloudundancy] Deleted " + args.backupStagingFolderPath.string() + " in " + elapsedSeconds + " seconds\n");
 }
 
-void BackupCodeSubProgram::SevenZipBackupStagingFolder(const CloudundancyArgs& args) const
+void BackupFilesAndFoldersTo7zFileSubProgram::SevenZipBackupStagingFolder(const CloudundancyArgs& args) const
 {
    const string sevenZippingMessage = String::Concat("[Cloudundancy] 7-zipping ", args.backupStagingFolderPath.string());
    _console->WriteLine(sevenZippingMessage);

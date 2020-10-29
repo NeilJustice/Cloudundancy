@@ -10,12 +10,13 @@ template<typename ClassType, typename ArgType>
 class VoidOneArgMemberFunctionCaller;
 class Watch;
 
-class BackupCodeSubProgram : public CloudundancySubProgram
+class BackupFilesAndFoldersTo7zFileSubProgram : public CloudundancySubProgram
 {
-   friend class BackupCodeSubProgramTests;
+   friend class BackupFilesAndFoldersTo7zFileSubProgramTests;
 private:
    // Function Callers
-   using VoidOneArgFunctionCallerType = VoidOneArgMemberFunctionCaller<BackupCodeSubProgram, const CloudundancyArgs&>;
+   using VoidOneArgFunctionCallerType =
+      VoidOneArgMemberFunctionCaller<BackupFilesAndFoldersTo7zFileSubProgram, const CloudundancyArgs&>;
    unique_ptr<const VoidOneArgFunctionCallerType> _voidOneArgFunctionCaller;
    // Constant Components
    unique_ptr<const Console> _console;
@@ -26,8 +27,8 @@ private:
    // Mutable Components
    unique_ptr<Stopwatch> _stopwatch;
 public:
-   BackupCodeSubProgram();
-   virtual ~BackupCodeSubProgram();
+   BackupFilesAndFoldersTo7zFileSubProgram();
+   virtual ~BackupFilesAndFoldersTo7zFileSubProgram();
    virtual void Run(const CloudundancyArgs& args);
 private:
    void Copy7zFileToDestinationFolders(const CloudundancyArgs& args) const;

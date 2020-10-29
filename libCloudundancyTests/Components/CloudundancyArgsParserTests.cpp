@@ -67,8 +67,8 @@ TEST(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs)
    METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptArgs, "--ini-file"));
    METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledAsFollows(
    {
-      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::BackupFilesAndFoldersWith7Zip), "--7z-ini-file" },
-      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::BackupFilesAndFoldersWith7Zip), "--backup-staging-folder" }
+      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7zFile), "--7z-ini-file" },
+      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7zFile), "--backup-staging-folder" }
    }));
    METALMOCK(_fileSystemMock->ThrowIfFilePathIsNotEmptyAndDoesNotExistMock.CalledAsFollows(
    {
@@ -92,7 +92,7 @@ TEST(GetProgramMode_IsBackupFilesAndFoldersModeIsTrue_ReturnsProgramModeBackupFi
 TEST(GetProgramMode_Is7zBackupModeIsTrue_ReturnsProgramModeBackupFilesAndFolders)
 {
    const ProgramMode programMode = CloudundancyArgsParser::GetProgramMode(false, true);
-   ARE_EQUAL(ProgramMode::BackupFilesAndFoldersWith7Zip, programMode);
+   ARE_EQUAL(ProgramMode::BackupFilesAndFoldersTo7zFile, programMode);
 }
 
 TEST(GetProgramMode_BothBoolsAreFalse_ThrowsInvalidArgument)

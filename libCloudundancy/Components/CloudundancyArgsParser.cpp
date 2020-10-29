@@ -26,10 +26,10 @@ CloudundancyArgs CloudundancyArgsParser::ParseStringArgs(const vector<string>& s
    cloudundancyArgs.iniFilePath = _docoptParser->GetRequiredString(docoptArgs, "--ini-file");
    cloudundancyArgs.sevenZipIniFilePath = _docoptParser->GetProgramModeSpecificRequiredString(docoptArgs,
       static_cast<int>(cloudundancyArgs.programMode),
-      static_cast<int>(ProgramMode::BackupFilesAndFoldersWith7Zip), "--7z-ini-file");
+      static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7zFile), "--7z-ini-file");
    cloudundancyArgs.backupStagingFolderPath = _docoptParser->GetProgramModeSpecificRequiredString(docoptArgs,
       static_cast<int>(cloudundancyArgs.programMode),
-      static_cast<int>(ProgramMode::BackupFilesAndFoldersWith7Zip), "--backup-staging-folder");
+      static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7zFile), "--backup-staging-folder");
    _fileSystem->ThrowIfFilePathIsNotEmptyAndDoesNotExist(cloudundancyArgs.iniFilePath);
    _fileSystem->ThrowIfFilePathIsNotEmptyAndDoesNotExist(cloudundancyArgs.sevenZipIniFilePath);
    return cloudundancyArgs;
@@ -45,7 +45,7 @@ ProgramMode CloudundancyArgsParser::GetProgramMode(bool isBackupFilesAndFoldersM
    if (is7ZipBackupMode)
    {
       release_assert(!isBackupFilesAndFoldersMode);
-      return ProgramMode::BackupFilesAndFoldersWith7Zip;
+      return ProgramMode::BackupFilesAndFoldersTo7zFile;
    }
    throw invalid_argument("CloudundancyArgsParser::GetProgramMode(): isBackupFilesAndFoldersMode and is7ZipBackupMode are unexpectedly both false");
 }

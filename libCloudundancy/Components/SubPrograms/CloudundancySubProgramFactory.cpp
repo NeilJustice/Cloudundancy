@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Components/SubPrograms/BackupCodeSubProgram.h"
+#include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersTo7zFileSubProgram.h"
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgramFactory.h"
 #include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersSubProgram.h"
 #include "libCloudundancy/Enums/ProgramMode.h"
@@ -12,9 +12,9 @@ shared_ptr<CloudundancySubProgram> CloudundancySubProgramFactory::NewCloudundanc
    {
       return make_shared<BackupFilesAndFoldersSubProgram>();
    }
-   case ProgramMode::BackupFilesAndFoldersWith7Zip:
+   case ProgramMode::BackupFilesAndFoldersTo7zFile:
    {
-      return make_shared<BackupCodeSubProgram>();
+      return make_shared<BackupFilesAndFoldersTo7zFileSubProgram>();
    }
    default:
    {

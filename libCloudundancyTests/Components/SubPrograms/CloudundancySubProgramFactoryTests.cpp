@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Components/SubPrograms/BackupCodeSubProgram.h"
+#include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersTo7zFileSubProgram.h"
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgramFactory.h"
 #include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersSubProgram.h"
 #include "libCloudundancy/Enums/ProgramMode.h"
@@ -22,8 +22,8 @@ TEST(NewCloudundancySubProgram_ProgramModeIsBackupFilesAndFolders_ReturnsMakeSha
 TEST(NewCloudundancySubProgram_ProgramModeIsBackupFilesAndFoldersWith7Zip_ReturnsMakeSharedSevenZipSubProgram)
 {
    const shared_ptr<CloudundancySubProgram> cloudundancySubProgram =
-      _cloudundancyRunnerFactory.NewCloudundancySubProgram(ProgramMode::BackupFilesAndFoldersWith7Zip);
-   POINTEE_IS_EXACT_TYPE(BackupCodeSubProgram, cloudundancySubProgram);
+      _cloudundancyRunnerFactory.NewCloudundancySubProgram(ProgramMode::BackupFilesAndFoldersTo7zFile);
+   POINTEE_IS_EXACT_TYPE(BackupFilesAndFoldersTo7zFileSubProgram, cloudundancySubProgram);
 }
 
 TEST1X1(NewCloudundancySubProgram_ProgramModeIsUnset_ThrowsInvalidArgumentException,

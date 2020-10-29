@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "libCloudundancy/Components/SubPrograms/BackupCodeSubProgram.h"
+#include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersTo7zFileSubProgram.h"
 #include "libCloudundancyTests/Components/MetalMock/CloudundancyFileCopierMock.h"
 
-TESTS(BackupCodeSubProgramTests)
+TESTS(BackupFilesAndFoldersTo7zFileSubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
 AFACT(Run_DeletesCodeBackupFolder_CopiesCodeToBackupStagingFolder_SevenZipsBackupStagingFolder_Copies7zFileToDestinationFolders)
 AFACT(DeleteBackupStagingFolder_PrintsDeleting_DeletesBackupStagingFolder_PrintsDeletedInElapsedSeconds)
@@ -11,9 +11,9 @@ AFACT(SevenZipBackupStagingFolder_Writes7zFileToFolder7zFileBackslashSourceFiles
 AFACT(Copy7zFileToDestinationFolders_DoesSo_PrintsElapsedSeconds)
 EVIDENCE
 
-BackupCodeSubProgram _backupCodeRunner;
+BackupFilesAndFoldersTo7zFileSubProgram _backupCodeRunner;
 // Function Callers
-using VoidOneArgFunctionCallerMockType = VoidOneArgMemberFunctionCallerMock<BackupCodeSubProgram, const CloudundancyArgs&>;
+using VoidOneArgFunctionCallerMockType = VoidOneArgMemberFunctionCallerMock<BackupFilesAndFoldersTo7zFileSubProgram, const CloudundancyArgs&>;
 VoidOneArgFunctionCallerMockType* _voidOneArgFunctionCallerMock = nullptr;
 // Constant Components
 ConsoleMock* _consoleMock = nullptr;
@@ -40,7 +40,7 @@ STARTUP
 
 TEST(DefaultConstructor_NewsComponents)
 {
-   BackupCodeSubProgram backupCodeRunner;
+   BackupFilesAndFoldersTo7zFileSubProgram backupCodeRunner;
    // Function Callers
    DELETE_TO_ASSERT_NEWED(backupCodeRunner._voidOneArgFunctionCaller);
    // Constant Components
@@ -62,10 +62,10 @@ TEST(Run_DeletesCodeBackupFolder_CopiesCodeToBackupStagingFolder_SevenZipsBackup
    //
    METALMOCK(_voidOneArgFunctionCallerMock->ConstCallMock.CalledAsFollows(
    {
-      { &_backupCodeRunner, &BackupCodeSubProgram::DeleteBackupStagingFolder, args },
-      { &_backupCodeRunner, &BackupCodeSubProgram::CopyFilesAndFoldersToBackupStagingFolder, args },
-      { &_backupCodeRunner, &BackupCodeSubProgram::SevenZipBackupStagingFolder, args },
-      { &_backupCodeRunner, &BackupCodeSubProgram::Copy7zFileToDestinationFolders, args }
+      { &_backupCodeRunner, &BackupFilesAndFoldersTo7zFileSubProgram::DeleteBackupStagingFolder, args },
+      { &_backupCodeRunner, &BackupFilesAndFoldersTo7zFileSubProgram::CopyFilesAndFoldersToBackupStagingFolder, args },
+      { &_backupCodeRunner, &BackupFilesAndFoldersTo7zFileSubProgram::SevenZipBackupStagingFolder, args },
+      { &_backupCodeRunner, &BackupFilesAndFoldersTo7zFileSubProgram::Copy7zFileToDestinationFolders, args }
    }));
 }
 
@@ -158,4 +158,4 @@ TEST(Copy7zFileToDestinationFolders_DoesSo_PrintsElapsedSeconds)
    }));
 }
 
-RUN_TESTS(BackupCodeSubProgramTests)
+RUN_TESTS(BackupFilesAndFoldersTo7zFileSubProgramTests)

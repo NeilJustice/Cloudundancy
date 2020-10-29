@@ -4,6 +4,6 @@ enum class ProgramMode
 {
    Unset,
    BackupFilesAndFolders,
-   BackupFilesAndFoldersWith7Zip,
+   BackupFilesAndFoldersTo7zFile,
    MaxValue
 };
