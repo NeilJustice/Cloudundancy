@@ -2,6 +2,9 @@
 #include "libCloudundancy/Components/CloudundancyIniFileReader.h"
 #include "libCloudundancy/ValueTypes/FilePathLineNumberLineText.h"
 #include "libCloudundancy/Components/FileSystem/FileSystemException.h"
+#include "libCloudundancyTests/Components/FileSystem/MetalMock/FileSystemMock.h"
+#include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
 
 TESTS(CloudundancyIniFileReaderTests)
 AFACT(DefaultConstructor_NewsComponents)

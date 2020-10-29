@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "libCloudundancy/Components/CloudundancyArgsParser.h"
+#include "libCloudundancyTests/Components/Docopt/MetalMock/DocoptParserMock.h"
+#include "libCloudundancyTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 
 TESTS(CloudundancyArgsParserTests)
 AFACT(DefaultConstructor_NewsComponents)

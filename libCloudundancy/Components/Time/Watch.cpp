@@ -1,55 +1,81 @@
 #include "pch.h"
+#include "libCloudundancy/Components/Time/CRTWatch.h"
 #include "libCloudundancy/Components/Time/Watch.h"
 #include "libCloudundancy/Utilities/Chars.h"
-#include "libCloudundancy/Components/Time/CRTWatch.h"
 
 Watch::Watch()
-   : _crtWatch(make_unique<CRTWatch>())
+   : _crtWatch(new CRTWatch)
 {
 }
 
-string Watch::SecondsToHHMMSS(unsigned seconds) const
+string Watch::DateTodayString() const
 {
-   const unsigned totalHours = seconds / 3600;
-   release_assert(totalHours <= 99);
-   const unsigned totalMinutes = seconds / 60;
-   const unsigned minutesPart = totalMinutes % 60;
-   const unsigned secondsPart = seconds % 60;
-   array<char, 8> hhmmssChars { 0, 0, ':', 0, 0, ':', 0, 0 };
-   Chars::OneOrTwoDigitUnsignedToTwoChars(totalHours, hhmmssChars.data());
-   Chars::OneOrTwoDigitUnsignedToTwoChars(minutesPart, hhmmssChars.data() + 3);
-   Chars::OneOrTwoDigitUnsignedToTwoChars(secondsPart, hhmmssChars.data() + 6);
-   const string hhmmssString(hhmmssChars.data(), hhmmssChars.size());
-   return hhmmssString;
+   const tm tmNow = _crtWatch->TmNow();
+   const unsigned month = static_cast<unsigned>(tmNow.tm_mon + 1);
+   const unsigned day = static_cast<unsigned>(tmNow.tm_mday);
+   const unsigned year = static_cast<unsigned>(1900 + tmNow.tm_year);
+   const string dateString = MonthDayYearToDateString(month, day, year);
+   return dateString;
+}
+
+string Watch::YearMonthDayToDateString(const date::year_month_day& yearMonthDay)
+{
+   const unsigned month = static_cast<unsigned>(yearMonthDay.month());
+   const unsigned day = static_cast<unsigned>(yearMonthDay.day());
+   const unsigned year = static_cast<unsigned>(static_cast<int>(yearMonthDay.year()));
+   const string dateString = MonthDayYearToDateString(month, day, year);
+   return dateString;
 }
 
 // Writes MM/DD/YYYY to outChars
-string Watch::MonthDayYearToDateString(unsigned month, unsigned day, unsigned year)
+string Watch::MonthDayYearToDateString(size_t month, size_t day, size_t year)
 {
    char dateChars[10]; // 10 == strlen("MM/DD/YYYY")
-   Chars::OneOrTwoDigitUnsignedToTwoChars(month, dateChars);
+   Chars::OneOrTwoDigitSizeTToTwoChars(month, dateChars);
    dateChars[2] = '-';
-   Chars::OneOrTwoDigitUnsignedToTwoChars(day, dateChars + 3);
+   Chars::OneOrTwoDigitSizeTToTwoChars(day, dateChars + 3);
    dateChars[5] = '-';
-   Chars::FourDigitUnsignedToFourChars(year, dateChars + 6);
+   Chars::FourDigitSizeTToFourChars(year, dateChars + 6);
    const string dateString(dateChars, sizeof(dateChars));
    return dateString;
+}
+
+string Watch::DateTimeNow() const
+{
+   return string(FastDateTimeNow().data());
 }
 
 string Watch::DateTimeNowHoursMinutesForFileNames() const
 {
    const tm tmNow = _crtWatch->TmNow();
-   // 16 == strlen("2100-01-01_00-00")
+   // 16 == strlen("2100-01-01 00:00")
    //               0123456789012345
    array<char, 17> chars;
    Write8601Date(tmNow, chars.data());
    chars[10] = '_';
-   Chars::OneOrTwoDigitUnsignedToTwoChars(static_cast<unsigned>(tmNow.tm_hour), chars.data() + 11);
+   Chars::OneOrTwoDigitSizeTToTwoChars(static_cast<size_t>(tmNow.tm_hour), chars.data() + 11);
    chars[13] = '-';
-   Chars::OneOrTwoDigitUnsignedToTwoChars(static_cast<unsigned>(tmNow.tm_min), chars.data() + 14);
+   Chars::OneOrTwoDigitSizeTToTwoChars(static_cast<size_t>(tmNow.tm_min), chars.data() + 14);
    chars[16] = 0;
    const string dateTimeNowForFileNames(chars.data());
    return dateTimeNowForFileNames;
+}
+
+array<char, 20> Watch::FastDateTimeNow() const
+{
+   const tm tmNow = _crtWatch->TmNow();
+   // 19 == strlen("2100-01-01 00:00:00")
+   //               0123456789012345678
+   array<char, 20> iso8601DateTime;
+   Write8601Date(tmNow, iso8601DateTime.data());
+   iso8601DateTime[10] = ' ';
+   Chars::OneOrTwoDigitSizeTToTwoChars(static_cast<size_t>(tmNow.tm_hour), iso8601DateTime.data() + 11);
+   iso8601DateTime[13] = ':';
+   Chars::OneOrTwoDigitSizeTToTwoChars(static_cast<size_t>(tmNow.tm_min), iso8601DateTime.data() + 14);
+   iso8601DateTime[16] = ':';
+   Chars::OneOrTwoDigitSizeTToTwoChars(static_cast<size_t>(tmNow.tm_sec), iso8601DateTime.data() + 17);
+   iso8601DateTime[19] = 0;
+   return iso8601DateTime;
 }
 
 unsigned Watch::SecondsSinceMidnight() const
@@ -59,25 +85,16 @@ unsigned Watch::SecondsSinceMidnight() const
    return static_cast<unsigned>(secondsSinceMidnight);
 }
 
-int Watch::DaysBetweenDates(const date::year_month_day& yearMonthDay1, const date::year_month_day& yearMonthDay2) const
-{
-   const date::sys_days days2 = date::sys_days(yearMonthDay2);
-   const date::sys_days days1 = date::sys_days(yearMonthDay1);
-   const std::common_type_t<date::days, date::days> sysDaysDifference = days2 - days1;
-   const int daysDifference = sysDaysDifference.count();
-   return daysDifference;
-}
-
 void Watch::Write8601Date(const tm& tmValue, char* outChars)
 {
    const unsigned year = 1900u + static_cast<unsigned>(tmValue.tm_year);
-   Chars::FourDigitUnsignedToFourChars(year, outChars);
+   Chars::FourDigitSizeTToFourChars(year, outChars);
    outChars[4] = '-';
-   const unsigned zeroBasedMonth = static_cast<unsigned>(tmValue.tm_mon);
-   Chars::OneOrTwoDigitUnsignedToTwoChars(zeroBasedMonth + 1, outChars + 5);
+   const size_t zeroBasedMonth = static_cast<size_t>(tmValue.tm_mon);
+   Chars::OneOrTwoDigitSizeTToTwoChars(zeroBasedMonth + 1, outChars + 5);
    outChars[7] = '-';
-   const unsigned day = static_cast<unsigned>(tmValue.tm_mday);
-   Chars::OneOrTwoDigitUnsignedToTwoChars(day, outChars + 8);
+   const size_t day = static_cast<size_t>(tmValue.tm_mday);
+   Chars::OneOrTwoDigitSizeTToTwoChars(day, outChars + 8);
 }
 
 Watch::~Watch()

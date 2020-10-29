@@ -1,9 +1,12 @@
 #include "pch.h"
 #include "libCloudundancy/Components/FileSystem/FileSystem.h"
 #include "libCloudundancy/Components/FileSystem/FileSystemException.h"
+#include "libCloudundancyTests/Components/Assertion/MetalMock/AsserterMock.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/FileOpenerCloserMock.h"
 #include "libCloudundancyTests/Components/Memory/MetalMock/CharVectorAllocatorMock.h"
+#include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/FileCopyResultEqualizer.h"
+#include "libCloudundancyTests/Components/Time/MetalMock/StopwatchMock.h"
 
 TESTS(FileSystemTests)
 #ifdef __linux__

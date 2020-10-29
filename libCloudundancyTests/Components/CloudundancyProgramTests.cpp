@@ -3,11 +3,15 @@
 #include "libCloudundancy/Utilities/Exception.h"
 #include "libCloudundancy/Utilities/Vector.h"
 #include "libCloudundancy/ValueTypes/CloudundancyArgs.h"
-#include "libCloudundancyTests/Components/SubPrograms/MetalMock/CloudundancySubProgramFactoryMock.h"
-#include "libCloudundancyTests/Components/SubPrograms/MetalMock/CloudundancySubProgramMock.h"
+#include "libCloudundancyTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libCloudundancyTests/Components/Exception/MetalMock/TryCatchCallerMock.h"
 #include "libCloudundancyTests/Components/MetalMock/CloudundancyArgsParserMock.h"
 #include "libCloudundancyTests/Components/MetalMock/CloudundancyIniFileReaderMock.h"
 #include "libCloudundancyTests/Components/MetalMock/CloudundancyFileCopierMock.h"
+#include "libCloudundancyTests/Components/SubPrograms/MetalMock/CloudundancySubProgramFactoryMock.h"
+#include "libCloudundancyTests/Components/SubPrograms/MetalMock/CloudundancySubProgramMock.h"
+#include "libCloudundancyTests/Components/Time/MetalMock/StopwatchMock.h"
+#include "libCloudundancyTests/Components/Time/MetalMock/WatchMock.h"
 
 TESTS(CloudundancyProgramTests)
 AFACT(DefaultConstructor_NewsComponents)

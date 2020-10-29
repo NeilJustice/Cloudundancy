@@ -15,7 +15,8 @@ class BackupFilesAndFoldersWith7ZipSubProgram : public CloudundancySubProgram
    friend class BackupFilesAndFoldersWith7ZipSubProgramTests;
 private:
    // Function Callers
-   using VoidOneArgFunctionCallerType = VoidOneArgMemberFunctionCaller<BackupFilesAndFoldersWith7ZipSubProgram, const CloudundancyArgs&>;
+   using VoidOneArgFunctionCallerType = VoidOneArgMemberFunctionCaller<
+      BackupFilesAndFoldersWith7ZipSubProgram, const CloudundancyArgs&>;
    unique_ptr<const VoidOneArgFunctionCallerType> _voidOneArgFunctionCaller;
    // Constant Components
    unique_ptr<const Console> _console;

@@ -25,6 +25,14 @@ using namespace std;
 #include "libCloudundancy/Enums/ProgramMode.h"
 #include "libCloudundancy/Enums/WindowsColor.h"
 
+// libCloudundancy Value Types
+#include "libCloudundancy/ValueTypes/AbsoluteFileOrFolderPathToRelativeFolderPath.h"
+#include "libCloudundancy/ValueTypes/AbsoluteFilePathToRelativeDestinationFolderPath.h"
+#include "libCloudundancy/ValueTypes/CloudundancyArgs.h"
+#include "libCloudundancy/ValueTypes/CloudundancyIni.h"
+#include "libCloudundancy/ValueTypes/FileCopyResult.h"
+#include "libCloudundancy/ValueTypes/FilePathLineNumberLineText.h"
+
 // libCloudundancy Utilities
 #include "libCloudundancy/Utilities/ReleaseAssert.h"
 #include "libCloudundancy/Utilities/StringUtil.h"
@@ -43,21 +51,5 @@ using namespace std;
 #include "libCloudundancyTests/ValueTypes/ZenUnit/Random/RandomFileCopyInstruction.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/Random/RandomFilePathLineNumberLineText.h"
 #include "libCloudundancyTests/Components/FileSystem/ZenUnit/FilesystemPathRandom.h"
-
-// MetalMock Mocks
-#include "libCloudundancyTests/Components/Assertion/MetalMock/AsserterMock.h"
-#include "libCloudundancyTests/Components/Console/MetalMock/ConsoleMock.h"
-#include "libCloudundancyTests/Components/Docopt/MetalMock/DocoptParserMock.h"
-#include "libCloudundancyTests/Components/Exception/MetalMock/TryCatchCallerMock.h"
-#include "libCloudundancyTests/Components/FileSystem/MetalMock/FileSystemMock.h"
-#include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
-#include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/VoidOneArgMemberFunctionCallerMock.h"
-#include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
-#include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/VoidThreeArgMemberFunctionCallerMock.h"
-#include "libCloudundancyTests/Components/Iteration/ForEach/MetalMock/OneExtraArgMemberForEacherMock.h"
-#include "libCloudundancyTests/Components/Iteration/Transform/MetalMock/OneExtraArgTransformerMock.h"
-#include "libCloudundancyTests/Components/Process/MetalMock/ProcessRunnerMock.h"
-#include "libCloudundancyTests/Components/Time/MetalMock/StopwatchMock.h"
-#include "libCloudundancyTests/Components/Time/MetalMock/WatchMock.h"
 
 #include "libCloudundancy/CompilerWarnings/IfWindowsPopIgnoredPrecompiledHeaderWarnings.h"

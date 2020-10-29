@@ -1,8 +1,8 @@
 #pragma once
-#include <array>
 #include "libCloudundancy/Components/Time/date.h"
-class CRTWatch;
 class WatchTests;
+
+class CRTWatch;
 
 class Watch
 {
@@ -11,12 +11,16 @@ private:
    unique_ptr<const CRTWatch> _crtWatch;
 public:
    Watch();
+   Watch(const Watch&) = delete;
+   Watch& operator=(const Watch&) = delete;
    virtual ~Watch();
+   virtual string DateTodayString() const;
+   virtual string DateTimeNow() const;
    virtual string DateTimeNowHoursMinutesForFileNames() const;
+   virtual array<char, 20> FastDateTimeNow() const;
    virtual unsigned SecondsSinceMidnight() const;
-   virtual int DaysBetweenDates(const date::year_month_day& yearMonthDay1, const date::year_month_day& yearMonthDay2) const;
-   virtual string SecondsToHHMMSS(unsigned seconds) const;
+   static string YearMonthDayToDateString(const date::year_month_day& yearMonthDay);
 private:
-   static string MonthDayYearToDateString(unsigned month, unsigned day, unsigned year);
+   static string MonthDayYearToDateString(size_t month, size_t day, size_t year);
    static void Write8601Date(const tm& tmValue, char* outChars);
 };

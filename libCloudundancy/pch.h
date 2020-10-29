@@ -5,6 +5,7 @@
 #if defined __linux__
    #include <experimental/filesystem>
    namespace fs = std::experimental::filesystem;
+   #include <memory>
    #include <unistd.h>
 #elif defined _WIN32 || defined __APPLE__
    #define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
@@ -12,16 +13,11 @@
    namespace fs = std::filesystem;
 #endif
 
+#include <array>
 #include <functional>
 #include <fstream>
-#ifdef _WIN32
-#include <io.h> // _isatty()
-#endif
 #include <iostream>
 #include <map>
-#ifdef __linux__
-#include <memory>
-#endif
 #include <regex>
 #include <sstream>
 #include <unordered_map>
@@ -32,6 +28,7 @@ using namespace std;
 #define WIN32_LEAN_AND_MEAN
 #define NOGDI
 #define NOMINMAX
+#include <io.h> // _isatty()
 #include "Windows.h" // Windows process running of 7z.exe and console colors
 #endif
 

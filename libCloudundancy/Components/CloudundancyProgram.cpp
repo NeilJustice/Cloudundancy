@@ -63,6 +63,7 @@ int CloudundancyProgram::ExceptionHandler(const exception& ex, const vector<stri
    const string exceptionTypeNameAndMessage = _call_Exception_GetExceptionClassNameAndMessage(&ex);
    const string fullExceptionMessage = "\n[Cloudundancy] Error: Exception thrown: " + exceptionTypeNameAndMessage;
    _console->WriteLine(fullExceptionMessage);
+   //const string stopTime = _watch->
    _console->WriteLine("[Cloudundancy] ExitCode: 1");
    return 1;
 }

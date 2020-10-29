@@ -23,13 +23,17 @@ CloudundancyArgs CloudundancyArgsParser::ParseStringArgs(const vector<string>& s
    const bool isBackupFilesAndFoldersMode = _docoptParser->GetRequiredBool(docoptArgs, "backup-files-and-folders");
    const bool is7ZipBackupMode = _docoptParser->GetRequiredBool(docoptArgs, "backup-files-and-folders-to-7z-file");
    cloudundancyArgs.programMode = _call_GetProgramMode(isBackupFilesAndFoldersMode, is7ZipBackupMode);
+
    cloudundancyArgs.iniFilePath = _docoptParser->GetRequiredString(docoptArgs, "--ini-file");
+
    cloudundancyArgs.sevenZipIniFilePath = _docoptParser->GetProgramModeSpecificRequiredString(docoptArgs,
       static_cast<int>(cloudundancyArgs.programMode),
       static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7zFile), "--7z-ini-file");
+
    cloudundancyArgs.backupStagingFolderPath = _docoptParser->GetProgramModeSpecificRequiredString(docoptArgs,
       static_cast<int>(cloudundancyArgs.programMode),
       static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7zFile), "--backup-staging-folder");
+
    _fileSystem->ThrowIfFilePathIsNotEmptyAndDoesNotExist(cloudundancyArgs.iniFilePath);
    _fileSystem->ThrowIfFilePathIsNotEmptyAndDoesNotExist(cloudundancyArgs.sevenZipIniFilePath);
    return cloudundancyArgs;

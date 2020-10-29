@@ -3,8 +3,14 @@
 #include "libCloudundancy/ValueTypes/AbsoluteFilePathToRelativeDestinationFolderPath.h"
 #include "libCloudundancy/ValueTypes/CloudundancyArgs.h"
 #include "libCloudundancy/ValueTypes/CloudundancyIni.h"
+#include "libCloudundancyTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libCloudundancyTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 #include "libCloudundancyTests/Components/MetalMock/CloudundancyIniFileReaderMock.h"
 #include "libCloudundancyTests/Components/MetalMock/RecursiveDirectoryIteratorMock.h"
+#include "libCloudundancyTests/Components/Iteration/ForEach/MetalMock/OneExtraArgMemberForEacherMock.h"
+#include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/VoidThreeArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/Components/Time/MetalMock/StopwatchMock.h"
 
 TESTS(CloudundancyFileCopierTests)
 AFACT(DefaultConstructor_NewsComponentsAndSetsFunctions)
