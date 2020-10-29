@@ -18,12 +18,16 @@ class CloudundancyIniFileReader
    friend class CloudundancyIniFileReaderTests;
 private:
    // Function Callers
-   using NonVoidOneArgMemberFunctionCallerType =
-      const NonVoidOneArgMemberFunctionCaller<AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath, CloudundancyIniFileReader, const FilePathLineNumberLineText&>;
+   using NonVoidOneArgMemberFunctionCallerType = const NonVoidOneArgMemberFunctionCaller<
+      AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath,
+      CloudundancyIniFileReader,
+      const FilePathLineNumberLineText&>;
    unique_ptr<NonVoidOneArgMemberFunctionCallerType> _caller_ParseFileCopyInstructionLine;
 
-   using VoidTwoArgMemberFunctionCallerType =
-      const VoidTwoArgMemberFunctionCaller<CloudundancyIniFileReader, const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath&, const FilePathLineNumberLineText&>;
+   using VoidTwoArgMemberFunctionCallerType = const VoidTwoArgMemberFunctionCaller<
+      CloudundancyIniFileReader,
+      const AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPath&,
+      const FilePathLineNumberLineText&>;
    unique_ptr<VoidTwoArgMemberFunctionCallerType> _caller_ThrowIfSourceFileOrFolderDoesNotExist;
 
    // Constant Components
