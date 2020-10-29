@@ -19,7 +19,13 @@ string String::ToLower(string_view str)
 {
    string lowercaseStr;
    lowercaseStr.resize(str.size());
+#ifdef _WIN32
+#pragma warning(push)
+#pragma warning(disable: 4242) // conversion from 'int' to 'char', possible loss of data
+#pragma warning(disable: 4244) // '=': conversion from 'int' to 'char', possible loss of data
    std::transform(str.begin(), str.end(), lowercaseStr.begin(), ::tolower);
+#pragma warning(pop)
+#endif
    return lowercaseStr;
 }
 

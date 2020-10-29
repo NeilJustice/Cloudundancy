@@ -1,15 +1,6 @@
 #pragma once
 #include "libCloudundancy/Components/Compiler/MSVCIgnoredWallWarnings.h"
 
-#ifdef _WIN32
-#pragma warning(push)
-#pragma warning(disable: 4242) // conversion from 'int' to 'char', possible loss of data
-#pragma warning(disable: 4244) // '=': conversion from 'int' to 'char', possible loss of data
-#pragma warning(disable: 4365) // signed / unsigned mismatch
-#pragma warning(disable: 5045) // Compiler will insert Spectre mitigation for memory load if / Qspectre switch specified
-#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
-#endif
-
 #if defined __linux__
    #include <experimental/filesystem>
    namespace fs = std::experimental::filesystem;
@@ -32,9 +23,6 @@
 #endif
 #include <regex>
 #include <sstream>
-#ifdef _WIN32
-#pragma warning(pop)
-#endif
 #ifdef __linux__
 #include <unordered_map>
 #endif
