@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "libCloudundancy/Enums/FileSystemExceptionType.h"
 
 ostream& operator<<(ostream& os, FileSystemExceptionType fileSystemExceptionType)
 {

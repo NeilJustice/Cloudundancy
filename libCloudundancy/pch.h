@@ -12,8 +12,8 @@
    namespace fs = std::filesystem;
 #endif
 
+#include <functional>
 #include <fstream>
-#include <future>
 #ifdef _WIN32
 #include <io.h> // _isatty()
 #endif
@@ -24,9 +24,7 @@
 #endif
 #include <regex>
 #include <sstream>
-#ifdef __linux__
 #include <unordered_map>
-#endif
 #include <unordered_set>
 using namespace std;
 
@@ -34,7 +32,7 @@ using namespace std;
 #define WIN32_LEAN_AND_MEAN
 #define NOGDI
 #define NOMINMAX
-#include "Windows.h"
+#include "Windows.h" // Windows process running of 7z.exe and console colors
 #endif
 
 // libCloudundancy Enums

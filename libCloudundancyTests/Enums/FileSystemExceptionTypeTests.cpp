@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "libCloudundancy/Enums/FileSystemExceptionType.h"
 
 TESTS(FileSystemExceptionTypeTests)
 AFACT(OStreamLeftShiftOperator_FileSystemExceptionTypeValueIsWithinRange_WritesFileSystemExceptionTypeAsString)
