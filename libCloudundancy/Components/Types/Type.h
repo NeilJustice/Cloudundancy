@@ -1,6 +1,6 @@
 #pragma once
 #ifdef __linux__
-#include "libCloudundancy/Components/Assertion/ReleaseAssert.h"
+#include "libCloudundancy/Utilities/ReleaseAssert.h"
 #include <atomic>
 #include <cxxabi.h>
 #endif
