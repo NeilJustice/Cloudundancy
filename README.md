@@ -12,19 +12,20 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
 
 * [Command Line Usage](#command-line-usage)
 * [Cloudundancy Program Modes](#cloudundancy-program-modes)
-   * [backup-files-and-folders](#backup-files-and-folders)
-   * [backup-files-and-folders-to-7z-file](#backup-files-and-folders-to-7z-file)
    * [example-linux-ini-file](#example-linux-ini-file)
    * [example-windows-ini-file](#example-windows-ini-file)
+   * [backup-files-and-folders](#backup-files-and-folders)
+   * [backup-files-and-folders-to-7z-file](#backup-files-and-folders-to-7z-file)
 * [Linux Jenkins Jobs Which Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize Cloudundancy](#linux-jenkins-jobs-which-compile-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-cloudundancy)
 * [Windows Jenkins Jobs Which Compile Cloudundancy](#windows-jenkins-jobs-which-compile-cloudundancy)
 * [4 Commands To Build And Install Cloudundancy On Linux](#4-commands-to-build-and-install-cloudundancy-on-linux)
 * [4 Commands To Build And Install Cloudundancy On Windows](#4-commands-to-build-and-install-cloudundancy-on-windows)
+* [Cloudundancy Future Features Roadmap](#cloudundancy-features-roadmap)
 
 ## Command Line Usage
 
 ```
-Cloudundancy v0.7.0
+Cloudundancy v0.8.0
 https://github.com/NeilJustice/Cloudundancy
 
 Cloudundancy quickly copies files and folders to multiple configurable destination folders
@@ -34,32 +35,24 @@ a Google Drive folder, a Microsoft OneDrive folder, two USB drives, and a networ
 to achieve cloud-redundant and device-redundant backups of key files.
 
 Usage:
+   Cloudundancy example-linux-ini-file
+   Cloudundancy example-windows-ini-file
    Cloudundancy backup-files-and-folders --ini-file=<CloudundancyIniFilePath>
    Cloudundancy backup-files-and-folders-to-7z-file
       --ini-file=<CloudundancyIniFilePath>
       --7z-ini-file=<CloudundancyIniFilePath>
       --backup-staging-folder=<FolderPath>
-   Cloudundancy example-linux-ini-file
-   Cloudundancy example-windows-ini-file
 ```
 
 ## Cloudundancy Program Modes
 
-### backup-files-and-folders
-
-10/30/2020 work in progress.
-
-### backup-files-and-folders-to-7z-file
-
-10/30/2020 work in progress.
-
 ### example-linux-ini-file
 
-10/30/2020 work in progress.
+10/30/2020: Work in progress.
 
 ### example-windows-ini-file
 
-Cloudundancy program mode `example-windows-ini-file` prints an example Cloudundancy .ini file for backing up two key files and two key folders to `C:\GoogleDrive\CloudundancyBackups`, `C:\OneDrive\CloudundancyBackups`, first USB drive `D:\CloudundancyBackups`, second USB drive `E:\CloudundancyBackups`, and Git repo folder `C:\Repos\CloudundancyBackups`, thereby achieving peace of mind data security by way of quintuple backups to two clouds, two USB drives, and GitHub.
+Cloudundancy program mode `example-windows-ini-file` prints an example Windows Cloudundancy .ini file for achieving data security peace of mind by way of quintuple backups of critical files and folders to three clouds and two USB drives.
 
 ![Example Windows Cloudundancy .ini File](Screenshots/ExampleWindowsCloudundancyIniFile.png)
 
@@ -108,11 +101,19 @@ nextBuildNumber
 scm-polling.log
 ```
 
+### backup-files-and-folders
+
+10/30/2020: Work in progress.
+
+### backup-files-and-folders-to-7z-file
+
+10/30/2020: Work in progress.
+
 ### Linux Jenkins Jobs Which Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize Cloudundancy
 
 A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Fedora 33:
 
-10/30/2020 work in progress.
+10/30/2020: Work in progress.
 
 ### Windows Jenkins Jobs Which Compile Cloudundancy
 
@@ -135,3 +136,7 @@ cd Cloudundancy
 cmake . -G"Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
 cmake --build . --config Release --target install
 ```
+
+## Cloudundancy Future Features Roadmap
+
+10/30/2020: Work in progress.

@@ -36,12 +36,12 @@ TEST(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs)
    const map<string, docopt::Value> docoptArgs = ZenUnit::RandomMap<string, docopt::Value>();
    _docoptParserMock->ParseArgsMock.Return(docoptArgs);
 
-   const bool isBackupFilesAndFoldersMode = ZenUnit::Random<bool>();
-   const bool isBackupFilesAndFoldersTo7zFileMode = ZenUnit::Random<bool>();
    const bool isExampleLinuxIniFileMode = ZenUnit::Random<bool>();
    const bool isExampleWindowsIniFileMode = ZenUnit::Random<bool>();
+   const bool isBackupFilesAndFoldersMode = ZenUnit::Random<bool>();
+   const bool isBackupFilesAndFoldersTo7zFileMode = ZenUnit::Random<bool>();
    _docoptParserMock->GetRequiredBoolMock.ReturnValues(
-      isBackupFilesAndFoldersMode, isBackupFilesAndFoldersTo7zFileMode, isExampleLinuxIniFileMode, isExampleWindowsIniFileMode);
+      isExampleLinuxIniFileMode, isExampleWindowsIniFileMode, isBackupFilesAndFoldersMode, isBackupFilesAndFoldersTo7zFileMode);
 
    const ProgramMode programMode = _programModeDeterminerMock->DetermineProgramModeMock.ReturnRandom();
 
@@ -60,13 +60,13 @@ TEST(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs)
    METALMOCK(_docoptParserMock->ParseArgsMock.CalledOnceWith(CloudundancyArgs::CommandLineUsage, stringArgs));
    METALMOCK(_docoptParserMock->GetRequiredBoolMock.CalledAsFollows(
    {
-      { docoptArgs, "backup-files-and-folders" },
-      { docoptArgs, "backup-files-and-folders-to-7z-file" },
       { docoptArgs, "example-linux-ini-file" },
-      { docoptArgs, "example-windows-ini-file" }
+      { docoptArgs, "example-windows-ini-file" },
+      { docoptArgs, "backup-files-and-folders" },
+      { docoptArgs, "backup-files-and-folders-to-7z-file" }
    }));
    METALMOCK(_programModeDeterminerMock->DetermineProgramModeMock.CalledOnceWith(
-      isBackupFilesAndFoldersMode, isBackupFilesAndFoldersTo7zFileMode, isExampleLinuxIniFileMode, isExampleWindowsIniFileMode));
+      isExampleLinuxIniFileMode, isExampleWindowsIniFileMode, isBackupFilesAndFoldersMode, isBackupFilesAndFoldersTo7zFileMode));
    METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptArgs, "--ini-file"));
    METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledAsFollows(
    {

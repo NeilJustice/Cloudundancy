@@ -4,9 +4,9 @@ class ProgramModeDeterminer
 {
 public:
    virtual ProgramMode DetermineProgramMode(
-      bool isBackupFilesAndFoldersMode,
-      bool isBackupFilesAndFoldersTo7zFileMode,
       bool isExampleLinuxIniFileMode,
-      bool isExampleWindowsIniFileMode) const;
+      bool isExampleWindowsIniFileMode,
+      bool isBackupFilesAndFoldersMode,
+      bool isBackupFilesAndFoldersTo7zFileMode) const;
    virtual ~ProgramModeDeterminer() = default;
 };

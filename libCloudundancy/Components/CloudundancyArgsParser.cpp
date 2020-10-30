@@ -20,12 +20,12 @@ CloudundancyArgs CloudundancyArgsParser::ParseStringArgs(const vector<string>& s
 {
    const map<string, docopt::Value> docoptArgs = _docoptParser->ParseArgs(CloudundancyArgs::CommandLineUsage, stringArgs);
    CloudundancyArgs cloudundancyArgs;
-   const bool isBackupFilesAndFoldersMode = _docoptParser->GetRequiredBool(docoptArgs, "backup-files-and-folders");
-   const bool isBackupFilesAndFoldersTo7zFileMode = _docoptParser->GetRequiredBool(docoptArgs, "backup-files-and-folders-to-7z-file");
    const bool isExampleLinuxIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "example-linux-ini-file");
    const bool isExampleWindowsIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "example-windows-ini-file");
+   const bool isBackupFilesAndFoldersMode = _docoptParser->GetRequiredBool(docoptArgs, "backup-files-and-folders");
+   const bool isBackupFilesAndFoldersTo7zFileMode = _docoptParser->GetRequiredBool(docoptArgs, "backup-files-and-folders-to-7z-file");
    cloudundancyArgs.programMode = _programModeDeterminer->DetermineProgramMode(
-      isBackupFilesAndFoldersMode, isBackupFilesAndFoldersTo7zFileMode, isExampleLinuxIniFileMode, isExampleWindowsIniFileMode);
+      isExampleLinuxIniFileMode, isExampleWindowsIniFileMode, isBackupFilesAndFoldersMode, isBackupFilesAndFoldersTo7zFileMode);
 
    cloudundancyArgs.iniFilePath = _docoptParser->GetRequiredString(docoptArgs, "--ini-file");
 

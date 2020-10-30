@@ -2,19 +2,11 @@
 #include "libCloudundancy/Components/Args/ProgramModeDeterminer.h"
 
 ProgramMode ProgramModeDeterminer::DetermineProgramMode(
-   bool isBackupFilesAndFoldersMode,
-   bool isBackupFilesAndFoldersTo7zFileMode,
    bool isExampleLinuxIniFileMode,
-   bool isExampleWindowsIniFileMode) const
+   bool isExampleWindowsIniFileMode,
+   bool isBackupFilesAndFoldersMode,
+   bool isBackupFilesAndFoldersTo7zFileMode) const
 {
-   if (isBackupFilesAndFoldersMode)
-   {
-      return ProgramMode::BackupFilesAndFolders;
-   }
-   if (isBackupFilesAndFoldersTo7zFileMode)
-   {
-      return ProgramMode::BackupFilesAndFoldersTo7zFile;
-   }
    if (isExampleLinuxIniFileMode)
    {
       return ProgramMode::ExampleLinuxIniFile;
@@ -22,6 +14,14 @@ ProgramMode ProgramModeDeterminer::DetermineProgramMode(
    if (isExampleWindowsIniFileMode)
    {
       return ProgramMode::ExampleWindowsIniFile;
+   }
+   if (isBackupFilesAndFoldersMode)
+   {
+      return ProgramMode::BackupFilesAndFolders;
+   }
+   if (isBackupFilesAndFoldersTo7zFileMode)
+   {
+      return ProgramMode::BackupFilesAndFoldersTo7zFile;
    }
    throw invalid_argument("ProgramModeDeterminer::DetermineProgramMode(bool, bool, bool, bool): All four ProgramMode bools are unexpectedly false");
 }

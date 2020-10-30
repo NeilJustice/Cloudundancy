@@ -9,7 +9,7 @@ EVIDENCE
 TEST(CommandLineUsage_IsExpectedString)
 {
    ARE_EQUAL(
-R"(Cloudundancy v0.7.0
+R"(Cloudundancy v0.8.0
 https://github.com/NeilJustice/Cloudundancy
 
 Cloudundancy quickly copies files and folders to multiple configurable destination folders
@@ -19,13 +19,13 @@ a Google Drive folder, a Microsoft OneDrive folder, two USB drives, and a networ
 to achieve cloud-redundant and device-redundant backups of key files.
 
 Usage:
+   Cloudundancy example-linux-ini-file
+   Cloudundancy example-windows-ini-file
    Cloudundancy backup-files-and-folders --ini-file=<CloudundancyIniFilePath>
    Cloudundancy backup-files-and-folders-to-7z-file
       --ini-file=<CloudundancyIniFilePath>
       --7z-ini-file=<CloudundancyIniFilePath>
       --backup-staging-folder=<FolderPath>
-   Cloudundancy example-linux-ini-file
-   Cloudundancy example-windows-ini-file
 )", CloudundancyArgs::CommandLineUsage);
 }
 
