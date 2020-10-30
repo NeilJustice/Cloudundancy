@@ -2,7 +2,7 @@
 #include "libCloudundancy/ValueTypes/CloudundancyArgs.h"
 
 const string CloudundancyArgs::CommandLineUsage =
-R"(Cloudundancy v0.6.0
+R"(Cloudundancy v0.7.0
 https://github.com/NeilJustice/Cloudundancy
 
 Cloudundancy quickly copies files and folders to multiple configurable destination folders

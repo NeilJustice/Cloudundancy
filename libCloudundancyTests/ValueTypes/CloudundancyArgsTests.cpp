@@ -9,7 +9,7 @@ EVIDENCE
 TEST(CommandLineUsage_IsExpectedString)
 {
    ARE_EQUAL(
-R"(Cloudundancy v0.6.0
+R"(Cloudundancy v0.7.0
 https://github.com/NeilJustice/Cloudundancy
 
 Cloudundancy quickly copies files and folders to multiple configurable destination folders
