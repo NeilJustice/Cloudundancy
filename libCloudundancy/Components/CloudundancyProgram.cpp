@@ -67,10 +67,11 @@ int CloudundancyProgram::Run(const std::vector<std::string>& stringArgs)
 int CloudundancyProgram::ExceptionHandler(const exception& ex, const vector<string>& /*stringArgs*/)
 {
    const string exceptionTypeNameAndMessage = _call_Exception_GetExceptionClassNameAndMessage(&ex);
-   const string fullExceptionMessage = "\n[Cloudundancy] Error: Exception thrown: " + exceptionTypeNameAndMessage;
+   const string fullExceptionMessage =
+      "\n[Cloudundancy]     Error: Exception thrown: " + exceptionTypeNameAndMessage;
    _console->WriteLine(fullExceptionMessage);
-   const string stopTime = _watch->DateTimeNow();
-   _console->WriteLine("[Cloudundancy]  StopTime: " + stopTime);
+   const string endTime = _watch->DateTimeNow();
+   _console->WriteLine("[Cloudundancy]   EndTime: " + endTime);
    _console->WriteLine("[Cloudundancy]  ExitCode: 1");
    return 1;
 }

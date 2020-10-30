@@ -139,7 +139,7 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndMessage_Returns1)
 
    _consoleMock->WriteLineMock.Expect();
 
-   const string stopTime = _watchMock->DateTimeNowMock.ReturnRandom();
+   const string endTime = _watchMock->DateTimeNowMock.ReturnRandom();
 
    const exception ex;
    const vector<string> stringArgs = ZenUnit::RandomVector<string>();
@@ -147,11 +147,12 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndMessage_Returns1)
    const int exitCode = _cloudundancyProgram.ExceptionHandler(ex, stringArgs);
    //
    METALMOCK(GetExceptionClassNameAndMessageMock.CalledOnceWith(&ex));
-   const string expectedFullExceptionErrorMessage = "\n[Cloudundancy] Error: Exception thrown: " + exceptionTypeNameAndMessage;
+   const string expectedFullExceptionErrorMessage =
+      "\n[Cloudundancy]     Error: Exception thrown: " + exceptionTypeNameAndMessage;
    METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
       string_view(expectedFullExceptionErrorMessage),
-      string_view("[Cloudundancy]  StopTime: " + stopTime),
+      string_view("[Cloudundancy]   EndTime: " + endTime),
       string_view("[Cloudundancy]  ExitCode: 1")
    }));
    METALMOCK(_watchMock->DateTimeNowMock.CalledOnce());
