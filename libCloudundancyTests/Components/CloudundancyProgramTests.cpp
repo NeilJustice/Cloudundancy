@@ -90,9 +90,11 @@ TEST(Main_CallsTryCatchCallRunWithStringArgs_ReturnsExitCode)
 
 TEST(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSubProgram_PrintsEndTimeAndElapsedTime_ExitsWithSubProgramExitCode)
 {
+   _stopwatchMock->StartMock.Expect();
+
    _consoleMock->WriteLineMock.Expect();
 
-   _stopwatchMock->StartMock.Expect();
+   const string startTime = _watchMock->DateTimeNowMock.ReturnRandom();
 
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    _cloudundancyArgsParserMock->ParseStringArgsMock.Return(args);
@@ -109,15 +111,18 @@ TEST(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSubPr
    //
    const int exitCode = _cloudundancyProgram.Run(stringArgs);
    //
-   METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    const string expectedSpaceJoinedArgs = Vector::Join(stringArgs, ' ');
-   const string expectedRunningMessage = "[Cloudundancy] Running: " + expectedSpaceJoinedArgs;
+   const string expectedRunningMessage = "[Cloudundancy]   Running: " + expectedSpaceJoinedArgs;
+
+   METALMOCK(_stopwatchMock->StartMock.CalledOnce());
+   METALMOCK(_watchMock->DateTimeNowMock.CalledOnce());
    METALMOCK(_cloudundancyArgsParserMock->ParseStringArgsMock.CalledOnceWith(stringArgs));
    METALMOCK(_cloudundancySubProgramFactoryMock->NewCloudundancySubProgramMock.CalledOnceWith(args.programMode));
    METALMOCK(cloudundancySubProgramMock->RunMock.CalledOnceWith(args));
    METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
       string_view(expectedRunningMessage),
+      string_view("[Cloudundancy] StartTime: " + startTime),
       string_view("[Cloudundancy] OverallBackupResult: All non-ignored files and folders successfully copied to all destination folders."),
       string_view("[Cloudundancy]  OverallElapsedTime: " + elapsedSeconds + " seconds"),
       string_view("[Cloudundancy]            ExitCode: " + to_string(subProgramExitCode))
@@ -131,7 +136,11 @@ TEST(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSubPr
 TEST(ExceptionHandler_PrintsExceptionClassNameAndMessage_Returns1)
 {
    const string exceptionTypeNameAndMessage = GetExceptionClassNameAndMessageMock.ReturnRandom();
+
    _consoleMock->WriteLineMock.Expect();
+
+   const string stopTime = _watchMock->DateTimeNowMock.ReturnRandom();
+
    const exception ex;
    const vector<string> stringArgs = ZenUnit::RandomVector<string>();
    //
@@ -142,8 +151,10 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndMessage_Returns1)
    METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
       string_view(expectedFullExceptionErrorMessage),
-      string_view("[Cloudundancy] ExitCode: 1")
+      string_view("[Cloudundancy]  StopTime: " + stopTime),
+      string_view("[Cloudundancy]  ExitCode: 1")
    }));
+   METALMOCK(_watchMock->DateTimeNowMock.CalledOnce());
    ARE_EQUAL(1, exitCode);
 }
 

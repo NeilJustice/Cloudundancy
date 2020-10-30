@@ -122,7 +122,7 @@ TEST(SevenZipCodeBackupFolder_DoesSo_PrintsElapsedSeconds)
    _consoleMock->WriteLineMock.Expect();
    _stopwatchMock->StartMock.Expect();
    _fileSystemMock->SetCurrentPathMock.Expect();
-   const string dateTimeNowHoursMinutes = _watchMock->DateTimeNowHoursMinutesForFileNamesMock.ReturnRandom();
+   const string dateTimeNowForFileNames = _watchMock->DateTimeNowForFileNamesMock.ReturnRandom();
    _processRunnerMock->FailFastRunMock.ReturnRandom();
    const string elapsedSeconds = _stopwatchMock->StopAndGetElapsedSecondsMock.ReturnRandom();
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
@@ -131,8 +131,8 @@ TEST(SevenZipCodeBackupFolder_DoesSo_PrintsElapsedSeconds)
    //
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    METALMOCK(_fileSystemMock->SetCurrentPathMock.CalledOnceWith(args.backupStagingFolderPath));
-   METALMOCK(_watchMock->DateTimeNowHoursMinutesForFileNamesMock.CalledOnce());
-   const string expectedSevenZipCommandLineArguments = "a -r -mx9 7zFile\\SourceFilesAndFolders_" + dateTimeNowHoursMinutes + ".7z";
+   METALMOCK(_watchMock->DateTimeNowForFileNamesMock.CalledOnce());
+   const string expectedSevenZipCommandLineArguments = "a -r -mx9 7zFile\\SourceFilesAndFolders_" + dateTimeNowForFileNames + ".7z";
    METALMOCK(_processRunnerMock->FailFastRunMock.CalledOnceWith(
       "7z.exe", expectedSevenZipCommandLineArguments));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());

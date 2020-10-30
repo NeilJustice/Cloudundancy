@@ -3,56 +3,35 @@
 #include "libCloudundancy/Components/Time/Watch.h"
 #include "libCloudundancy/Utilities/Chars.h"
 
-Watch::Watch()
-   : _crtWatch(new CRTWatch)
+Watch::Watch() noexcept
+   : _crtWatch(make_unique<CRTWatch>())
 {
 }
 
-string Watch::DateTodayString() const
+Watch::~Watch()
 {
-   const tm tmNow = _crtWatch->TmNow();
-   const unsigned month = static_cast<unsigned>(tmNow.tm_mon + 1);
-   const unsigned day = static_cast<unsigned>(tmNow.tm_mday);
-   const unsigned year = static_cast<unsigned>(1900 + tmNow.tm_year);
-   const string dateString = MonthDayYearToDateString(month, day, year);
-   return dateString;
 }
 
-string Watch::YearMonthDayToDateString(const date::year_month_day& yearMonthDay)
+// Returns the current local time in format "YYYY-MM-DD 00:00:00 TimeZone"
+std::string Watch::DateTimeNow() const
 {
-   const unsigned month = static_cast<unsigned>(yearMonthDay.month());
-   const unsigned day = static_cast<unsigned>(yearMonthDay.day());
-   const unsigned year = static_cast<unsigned>(static_cast<int>(yearMonthDay.year()));
-   const string dateString = MonthDayYearToDateString(month, day, year);
-   return dateString;
+   const tm tmNow = TMNow();
+   const std::string timeZone = GetTimeZone(tmNow);
+   char localTimeWithTimezoneChars[128];
+   strftime(localTimeWithTimezoneChars, sizeof(localTimeWithTimezoneChars), "%F %r ", &tmNow);
+   const std::string localTimeWithTimezone = std::string(localTimeWithTimezoneChars) + timeZone;
+   return localTimeWithTimezone;
 }
 
-// Writes MM/DD/YYYY to outChars
-string Watch::MonthDayYearToDateString(size_t month, size_t day, size_t year)
-{
-   char dateChars[10]; // 10 == strlen("MM/DD/YYYY")
-   Chars::OneOrTwoDigitSizeTToTwoChars(month, dateChars);
-   dateChars[2] = '-';
-   Chars::OneOrTwoDigitSizeTToTwoChars(day, dateChars + 3);
-   dateChars[5] = '-';
-   Chars::FourDigitSizeTToFourChars(year, dateChars + 6);
-   const string dateString(dateChars, sizeof(dateChars));
-   return dateString;
-}
-
-string Watch::DateTimeNow() const
-{
-   return string(FastDateTimeNow().data());
-}
-
-string Watch::DateTimeNowHoursMinutesForFileNames() const
+// Returns the current local time in format "YYYY-MM-DD 00:00:00 TimeZone"
+string Watch::DateTimeNowForFileNames() const
 {
    const tm tmNow = _crtWatch->TmNow();
    // 16 == strlen("2100-01-01 00:00")
    //               0123456789012345
    array<char, 17> chars;
    Write8601Date(tmNow, chars.data());
-   chars[10] = '_';
+   chars[10] = '@';
    Chars::OneOrTwoDigitSizeTToTwoChars(static_cast<size_t>(tmNow.tm_hour), chars.data() + 11);
    chars[13] = '-';
    Chars::OneOrTwoDigitSizeTToTwoChars(static_cast<size_t>(tmNow.tm_min), chars.data() + 14);
@@ -61,28 +40,31 @@ string Watch::DateTimeNowHoursMinutesForFileNames() const
    return dateTimeNowForFileNames;
 }
 
-array<char, 20> Watch::FastDateTimeNow() const
+// Private Functions
+
+std::string Watch::GetTimeZone(const tm& tmNow) const
 {
-   const tm tmNow = _crtWatch->TmNow();
-   // 19 == strlen("2100-01-01 00:00:00")
-   //               0123456789012345678
-   array<char, 20> iso8601DateTime;
-   Write8601Date(tmNow, iso8601DateTime.data());
-   iso8601DateTime[10] = ' ';
-   Chars::OneOrTwoDigitSizeTToTwoChars(static_cast<size_t>(tmNow.tm_hour), iso8601DateTime.data() + 11);
-   iso8601DateTime[13] = ':';
-   Chars::OneOrTwoDigitSizeTToTwoChars(static_cast<size_t>(tmNow.tm_min), iso8601DateTime.data() + 14);
-   iso8601DateTime[16] = ':';
-   Chars::OneOrTwoDigitSizeTToTwoChars(static_cast<size_t>(tmNow.tm_sec), iso8601DateTime.data() + 17);
-   iso8601DateTime[19] = 0;
-   return iso8601DateTime;
+   char timeZoneChars[64];
+   strftime(timeZoneChars, sizeof(timeZoneChars), "%Z", &tmNow);
+   const std::string timeZone(timeZoneChars);
+   return timeZone;
 }
 
-unsigned Watch::SecondsSinceMidnight() const
+tm Watch::TMNow() const
 {
-   const tm nowTm = _crtWatch->TmNow();
-   const int secondsSinceMidnight = nowTm.tm_hour * 60 * 60 + nowTm.tm_min * 60 + nowTm.tm_sec;
-   return static_cast<unsigned>(secondsSinceMidnight);
+   const std::chrono::time_point<std::chrono::system_clock> nowTimePoint = std::chrono::system_clock::now();
+#if defined __linux__ || defined __APPLE__
+   tm* tmNow = nullptr;
+   long nowTimeT = std::chrono::system_clock::to_time_t(nowTimePoint);
+   tmNow = localtime(&nowTimeT);
+   return *tmNow;
+#elif defined _WIN32
+   const __time64_t nowTimeT = std::chrono::system_clock::to_time_t(nowTimePoint);
+   tm tmNow;
+   const errno_t localtimeResult = localtime_s(&tmNow, &nowTimeT);
+   release_assert(localtimeResult == 0);
+   return tmNow;
+#endif
 }
 
 void Watch::Write8601Date(const tm& tmValue, char* outChars)
@@ -95,8 +77,4 @@ void Watch::Write8601Date(const tm& tmValue, char* outChars)
    outChars[7] = '-';
    const size_t day = static_cast<size_t>(tmValue.tm_mday);
    Chars::OneOrTwoDigitSizeTToTwoChars(day, outChars + 8);
-}
-
-Watch::~Watch()
-{
 }

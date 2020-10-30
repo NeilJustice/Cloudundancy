@@ -42,13 +42,19 @@ int CloudundancyProgram::Main(int argc, char* argv[])
 int CloudundancyProgram::Run(const std::vector<std::string>& stringArgs)
 {
    _stopwatch->Start();
+
    const string spaceJoinedArgs = Vector::Join(stringArgs, ' ');
-   const string runningMessage = "[Cloudundancy] Running: " + spaceJoinedArgs;
+   const string runningMessage = "[Cloudundancy]   Running: " + spaceJoinedArgs;
    _console->WriteLine(runningMessage);
+
+   const string startTime = _watch->DateTimeNow();
+   _console->WriteLine("[Cloudundancy] StartTime: " + startTime);
+
    const CloudundancyArgs args = _cloudundancyArgsParser->ParseStringArgs(stringArgs);
    const shared_ptr<CloudundancySubProgram> cloudundancySubProgram =
       _cloudundancySubProgramFactory->NewCloudundancySubProgram(args.programMode);
    const int exitCode = cloudundancySubProgram->Run(args);
+
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    _console->WriteLine("[Cloudundancy] OverallBackupResult: All non-ignored files and folders successfully copied to all destination folders.");
    _console->WriteLine("[Cloudundancy]  OverallElapsedTime: "  + elapsedSeconds + " seconds");
@@ -63,7 +69,8 @@ int CloudundancyProgram::ExceptionHandler(const exception& ex, const vector<stri
    const string exceptionTypeNameAndMessage = _call_Exception_GetExceptionClassNameAndMessage(&ex);
    const string fullExceptionMessage = "\n[Cloudundancy] Error: Exception thrown: " + exceptionTypeNameAndMessage;
    _console->WriteLine(fullExceptionMessage);
-   //const string stopTime = _watch->
-   _console->WriteLine("[Cloudundancy] ExitCode: 1");
+   const string stopTime = _watch->DateTimeNow();
+   _console->WriteLine("[Cloudundancy]  StopTime: " + stopTime);
+   _console->WriteLine("[Cloudundancy]  ExitCode: 1");
    return 1;
 }

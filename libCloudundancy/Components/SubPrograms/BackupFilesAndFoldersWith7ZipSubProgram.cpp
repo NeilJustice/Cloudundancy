@@ -77,8 +77,8 @@ void BackupFilesAndFoldersWith7ZipSubProgram::SevenZipCodeBackupFolder(const Clo
    _stopwatch->Start();
 
    _fileSystem->SetCurrentPath(args.backupStagingFolderPath);
-   const string dateTimeNowHoursMinutes = _watch->DateTimeNowHoursMinutesForFileNames();
-   const string sevenZipCommandLineArguments = "a -r -mx9 7zFile\\SourceFilesAndFolders_" + dateTimeNowHoursMinutes + ".7z";
+   const string dateTimeNowForFileNames = _watch->DateTimeNowForFileNames();
+   const string sevenZipCommandLineArguments = "a -r -mx9 7zFile\\SourceFilesAndFolders_" + dateTimeNowForFileNames + ".7z";
    _processRunner->FailFastRun("7z.exe", sevenZipCommandLineArguments);
 
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
