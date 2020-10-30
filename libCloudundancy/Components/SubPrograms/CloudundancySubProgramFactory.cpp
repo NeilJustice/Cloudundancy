@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersTo7zFileSubProgram.h"
-#include "libCloudundancy/Components/SubPrograms/CloudundancySubProgramFactory.h"
 #include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersSubProgram.h"
+#include "libCloudundancy/Components/SubPrograms/CloudundancySubProgramFactory.h"
+#include "libCloudundancy/Components/SubPrograms/ExampleLinuxIniFileSubProgram.h"
+#include "libCloudundancy/Components/SubPrograms/ExampleWindowsIniFileSubProgram.h"
 
 shared_ptr<CloudundancySubProgram> CloudundancySubProgramFactory::NewCloudundancySubProgram(ProgramMode programMode) const
 {
@@ -14,6 +16,14 @@ shared_ptr<CloudundancySubProgram> CloudundancySubProgramFactory::NewCloudundanc
    case ProgramMode::BackupFilesAndFoldersTo7zFile:
    {
       return make_shared<BackupFilesAndFoldersTo7zFileSubProgram>();
+   }
+   case ProgramMode::ExampleLinuxIniFile:
+   {
+      return make_shared<ExampleLinuxIniFileSubProgram>();
+   }
+   case ProgramMode::ExampleWindowsIniFile:
+   {
+      return make_shared<ExampleWindowsIniFileSubProgram>();
    }
    default:
    {

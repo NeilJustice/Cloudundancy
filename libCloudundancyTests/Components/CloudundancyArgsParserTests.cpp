@@ -1,38 +1,34 @@
 #include "pch.h"
 #include "libCloudundancy/Components/CloudundancyArgsParser.h"
+#include "libCloudundancyTests/Components/Args/MetalMock/ProgramModeDeterminerMock.h"
 #include "libCloudundancyTests/Components/Docopt/MetalMock/DocoptParserMock.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 
 TESTS(CloudundancyArgsParserTests)
 AFACT(DefaultConstructor_NewsComponents)
 AFACT(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs)
-AFACT(GetProgramMode_IsBackupFilesAndFoldersModeIsTrue_ReturnsProgramModeBackupFilesAndFolders);
-AFACT(GetProgramMode_Is7zBackupModeIsTrue_ReturnsProgramModeBackupFilesAndFolders)
-AFACT(GetProgramMode_BothBoolsAreFalse_ThrowsInvalidArgument)
 EVIDENCE
 
 CloudundancyArgsParser _cloudundancyArgsParser;
 // Constant Components
 DocoptParserMock* _docoptParserMock = nullptr;
 FileSystemMock* _fileSystemMock = nullptr;
-// Function Callers
-METALMOCK_NONVOID2_STATIC(ProgramMode, CloudundancyArgsParser, GetProgramMode, bool, bool)
+ProgramModeDeterminerMock* _programModeDeterminerMock = nullptr;
 
 STARTUP
 {
    // Constant Components
    _cloudundancyArgsParser._docoptParser.reset(_docoptParserMock = new DocoptParserMock);
    _cloudundancyArgsParser._fileSystem.reset(_fileSystemMock = new FileSystemMock);
-   // Function Callers
-   _cloudundancyArgsParser._call_GetProgramMode = BIND_2ARG_METALMOCK_OBJECT(GetProgramModeMock);
+   _cloudundancyArgsParser._programModeDeterminer.reset(_programModeDeterminerMock = new ProgramModeDeterminerMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
 {
    CloudundancyArgsParser cloudundancyArgsParser;
-   STD_FUNCTION_TARGETS(CloudundancyArgsParser::GetProgramMode, cloudundancyArgsParser._call_GetProgramMode);
    DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._docoptParser);
    DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._fileSystem);
+   DELETE_TO_ASSERT_NEWED(_cloudundancyArgsParser._programModeDeterminer);
 }
 
 TEST(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs)
@@ -41,11 +37,13 @@ TEST(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs)
    _docoptParserMock->ParseArgsMock.Return(docoptArgs);
 
    const bool isBackupFilesAndFoldersMode = ZenUnit::Random<bool>();
-   const bool is7ZipBackupMode = ZenUnit::Random<bool>();
-   _docoptParserMock->GetRequiredBoolMock.ReturnValues(isBackupFilesAndFoldersMode, is7ZipBackupMode);
+   const bool isBackupFilesAndFoldersTo7zFileMode = ZenUnit::Random<bool>();
+   const bool isExampleLinuxIniFileMode = ZenUnit::Random<bool>();
+   const bool isExampleWindowsIniFileMode = ZenUnit::Random<bool>();
+   _docoptParserMock->GetRequiredBoolMock.ReturnValues(
+      isBackupFilesAndFoldersMode, isBackupFilesAndFoldersTo7zFileMode, isExampleLinuxIniFileMode, isExampleWindowsIniFileMode);
 
-   const ProgramMode programMode = ZenUnit::RandomEnum<ProgramMode>(ProgramMode::MaxValue);
-   GetProgramModeMock.Return(programMode);
+   const ProgramMode programMode = _programModeDeterminerMock->DetermineProgramModeMock.ReturnRandom();
 
    const string iniFilePath = _docoptParserMock->GetRequiredStringMock.ReturnRandom();
 
@@ -63,9 +61,12 @@ TEST(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs)
    METALMOCK(_docoptParserMock->GetRequiredBoolMock.CalledAsFollows(
    {
       { docoptArgs, "backup-files-and-folders" },
-      { docoptArgs, "backup-files-and-folders-to-7z-file" }
+      { docoptArgs, "backup-files-and-folders-to-7z-file" },
+      { docoptArgs, "example-linux-ini-file" },
+      { docoptArgs, "example-windows-ini-file" }
    }));
-   METALMOCK(GetProgramModeMock.CalledOnceWith(isBackupFilesAndFoldersMode, is7ZipBackupMode));
+   METALMOCK(_programModeDeterminerMock->DetermineProgramModeMock.CalledOnceWith(
+      isBackupFilesAndFoldersMode, isBackupFilesAndFoldersTo7zFileMode, isExampleLinuxIniFileMode, isExampleWindowsIniFileMode));
    METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptArgs, "--ini-file"));
    METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledAsFollows(
    {
@@ -83,24 +84,6 @@ TEST(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs)
    expectedArgs.backupStagingFolderPath = backupStagingFolderPath;
    expectedArgs.sevenZipIniFilePath = sevenZipIniFilePath;
    ARE_EQUAL(expectedArgs, args);
-}
-
-TEST(GetProgramMode_IsBackupFilesAndFoldersModeIsTrue_ReturnsProgramModeBackupFilesAndFolders)
-{
-   const ProgramMode programMode = CloudundancyArgsParser::GetProgramMode(true, false);
-   ARE_EQUAL(ProgramMode::BackupFilesAndFolders, programMode);
-}
-
-TEST(GetProgramMode_Is7zBackupModeIsTrue_ReturnsProgramModeBackupFilesAndFolders)
-{
-   const ProgramMode programMode = CloudundancyArgsParser::GetProgramMode(false, true);
-   ARE_EQUAL(ProgramMode::BackupFilesAndFoldersTo7zFile, programMode);
-}
-
-TEST(GetProgramMode_BothBoolsAreFalse_ThrowsInvalidArgument)
-{
-   THROWS_EXCEPTION(CloudundancyArgsParser::GetProgramMode(false, false),
-      invalid_argument, "CloudundancyArgsParser::GetProgramMode(): isBackupFilesAndFoldersMode and is7ZipBackupMode are unexpectedly both false");
 }
 
 RUN_TESTS(CloudundancyArgsParserTests)

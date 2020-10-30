@@ -12,7 +12,7 @@ int* GetLinuxErrno();
 
 class FileSystem
 {
-	friend class ::FileSystemTests;
+	friend class FileSystemTests;
 private:
    // Constant Components
    unique_ptr<const Asserter> _asserter;

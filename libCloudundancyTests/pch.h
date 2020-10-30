@@ -33,9 +33,12 @@ using namespace std;
 #include "libCloudundancy/ValueTypes/FileCopyResult.h"
 #include "libCloudundancy/ValueTypes/FilePathLineNumberLineText.h"
 
-// libCloudundancy Utilities
+// libCloudundancy Utility Functions
 #include "libCloudundancy/Utilities/ReleaseAssert.h"
 #include "libCloudundancy/Utilities/StringUtil.h"
+
+// libCloudundancy Utility Component Mocks
+#include "libCloudundancyTests/Components/Console/MetalMock/ConsoleMock.h"
 
 // ZenUnit Equalizers
 #include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/CloudundancyArgsEqualizer.h"

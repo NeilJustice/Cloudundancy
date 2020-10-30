@@ -158,8 +158,8 @@ TEST(Copy7zFileToDestinationFolders_DoesSo_PrintsElapsedSeconds)
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
    METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
-      { "[Cloudundancy] Copying .7z File To Backup Folders." },
-      { "[Cloudundancy] Copied .7z File To Backup Folders in " + elapsedSeconds + " seconds\n" }
+      { "[Cloudundancy] Copying .7z file to backup folders." },
+      { "[Cloudundancy] Copied .7z file to backup folders in " + elapsedSeconds + " seconds\n" }
    }));
 }
 

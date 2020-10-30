@@ -101,7 +101,9 @@ TEST(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSubPr
    const string machineName = _environmentalistMock->MachineNameMock.ReturnRandom();
    const string userName = _environmentalistMock->UserNameMock.ReturnRandom();
 
-   const string startTime = _watchMock->DateTimeNowMock.ReturnRandom();
+   const string startTime = ZenUnit::Random<string>();
+   const string endTime = ZenUnit::Random<string>();
+   _watchMock->DateTimeNowMock.ReturnValues(startTime, endTime);
 
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    _cloudundancyArgsParserMock->ParseStringArgsMock.Return(args);
@@ -126,7 +128,7 @@ TEST(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSubPr
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    METALMOCK(_environmentalistMock->MachineNameMock.CalledOnce());
    METALMOCK(_environmentalistMock->UserNameMock.CalledOnce());
-   METALMOCK(_watchMock->DateTimeNowMock.CalledOnce());
+   METALMOCK(_watchMock->DateTimeNowMock.CalledNTimes(2));
    METALMOCK(_cloudundancyArgsParserMock->ParseStringArgsMock.CalledOnceWith(stringArgs));
    METALMOCK(_cloudundancySubProgramFactoryMock->NewCloudundancySubProgramMock.CalledOnceWith(args.programMode));
    METALMOCK(cloudundancySubProgramMock->RunMock.CalledOnceWith(args));
@@ -136,9 +138,9 @@ TEST(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSubPr
       string_view(expectedMachineNameLine),
       string_view(expectedUserNameLine),
       string_view("[Cloudundancy]   StartTime: " + startTime),
-      string_view("[Cloudundancy]  OverallBackupResult: All non-ignored files and folders successfully copied to all destination folders."),
-      string_view("[Cloudundancy]      OverallDuration: " + elapsedSeconds + " seconds"),
-      string_view("[Cloudundancy]             ExitCode: " + to_string(subProgramExitCode))
+      string_view("[Cloudundancy]  EndTime: " + endTime),
+      string_view("[Cloudundancy] Duration: " + elapsedSeconds + " seconds"),
+      string_view("[Cloudundancy] ExitCode: " + to_string(subProgramExitCode))
    }));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
    ARE_EQUAL(subProgramExitCode, exitCode);

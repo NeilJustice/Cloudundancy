@@ -40,6 +40,9 @@ using namespace std;
 
 #include "libCloudundancy/CompilerWarnings/IfWindowsPopIgnoredPrecompiledHeaderWarnings.h"
 
-// libCloudundancy Utilities
+// libCloudundancy Utility Components
+#include "libCloudundancy/Components/Console/Console.h"
+
+// libCloudundancy Utility Functions
 #include "libCloudundancy/Utilities/ReleaseAssert.h"
 #include "libCloudundancy/Utilities/StringUtil.h"

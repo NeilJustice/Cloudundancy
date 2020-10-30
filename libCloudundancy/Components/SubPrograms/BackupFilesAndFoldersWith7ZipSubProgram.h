@@ -19,7 +19,6 @@ private:
       BackupFilesAndFoldersWith7ZipSubProgram, const CloudundancyArgs&>;
    unique_ptr<const VoidOneArgFunctionCallerType> _voidOneArgFunctionCaller;
    // Constant Components
-   unique_ptr<const Console> _console;
    unique_ptr<const CloudundancyFileCopier> _cloudundancyFileCopier;
    unique_ptr<const FileSystem> _fileSystem;
    unique_ptr<const ProcessRunner> _processRunner;
@@ -28,7 +27,7 @@ private:
    unique_ptr<Stopwatch> _stopwatch;
 public:
    BackupFilesAndFoldersWith7ZipSubProgram();
-   virtual ~BackupFilesAndFoldersWith7ZipSubProgram();
+   virtual ~BackupFilesAndFoldersWith7ZipSubProgram() = default;
    virtual int Run(const CloudundancyArgs& args);
 private:
    void Copy7zFileToDestinationFolders(const CloudundancyArgs& args) const;

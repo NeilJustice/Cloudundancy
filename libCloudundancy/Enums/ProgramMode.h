@@ -1,9 +1,11 @@
 #pragma once
 
-enum class ProgramMode : unsigned char
+enum ProgramMode : unsigned char
 {
    Unset,
    BackupFilesAndFolders,
    BackupFilesAndFoldersTo7zFile,
+   ExampleLinuxIniFile,
+   ExampleWindowsIniFile,
    MaxValue
 };

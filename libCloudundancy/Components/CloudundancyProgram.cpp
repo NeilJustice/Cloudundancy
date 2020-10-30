@@ -66,10 +66,13 @@ int CloudundancyProgram::Run(const std::vector<std::string>& stringArgs)
       _cloudundancySubProgramFactory->NewCloudundancySubProgram(args.programMode);
    const int exitCode = cloudundancySubProgram->Run(args);
 
+   const string endTime = _watch->DateTimeNow();
+   const string endTimeLine = "[Cloudundancy]  EndTime: " + endTime;
+   _console->WriteLine(endTimeLine);
+
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
-   _console->WriteLine("[Cloudundancy]  OverallBackupResult: All non-ignored files and folders successfully copied to all destination folders.");
-   _console->WriteLine("[Cloudundancy]      OverallDuration: "  + elapsedSeconds + " seconds");
-   _console->WriteLine("[Cloudundancy]             ExitCode: " + to_string(exitCode));
+   _console->WriteLine("[Cloudundancy] Duration: "  + elapsedSeconds + " seconds");
+   _console->WriteLine("[Cloudundancy] ExitCode: " + to_string(exitCode));
    return exitCode;
 }
 

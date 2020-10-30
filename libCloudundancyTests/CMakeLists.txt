@@ -9,6 +9,8 @@ include_directories(${ZenUnitIncludeDirectory})
 include_directories(${MetalMockIncludeDirectory})
 
 folder_source_group(Components)
+folder_source_group_subfolder(Components Args)
+folder_source_group_subsubfolder(Components Args MetalMock)
 folder_source_group_subfolder(Components Assertion)
 folder_source_group_subsubfolder(Components Assertion MetalMock)
 folder_source_group_subfolder(Components Compiler)

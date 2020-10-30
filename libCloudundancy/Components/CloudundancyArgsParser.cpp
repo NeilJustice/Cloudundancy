@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "libCloudundancy/Components/Args/ProgramModeDeterminer.h"
 #include "libCloudundancy/Components/CloudundancyArgsParser.h"
 #include "libCloudundancy/Components/Docopt/DocoptParser.h"
 #include "libCloudundancy/Components/FileSystem/FileSystem.h"
@@ -7,8 +8,7 @@ CloudundancyArgsParser::CloudundancyArgsParser()
    // Constant Components
    : _docoptParser(make_unique<DocoptParser>())
    , _fileSystem(make_unique<FileSystem>())
-   // Function Callers
-   , _call_GetProgramMode(CloudundancyArgsParser::GetProgramMode)
+   , _programModeDeterminer(make_unique<ProgramModeDeterminer>())
 {
 }
 
@@ -21,8 +21,11 @@ CloudundancyArgs CloudundancyArgsParser::ParseStringArgs(const vector<string>& s
    const map<string, docopt::Value> docoptArgs = _docoptParser->ParseArgs(CloudundancyArgs::CommandLineUsage, stringArgs);
    CloudundancyArgs cloudundancyArgs;
    const bool isBackupFilesAndFoldersMode = _docoptParser->GetRequiredBool(docoptArgs, "backup-files-and-folders");
-   const bool is7ZipBackupMode = _docoptParser->GetRequiredBool(docoptArgs, "backup-files-and-folders-to-7z-file");
-   cloudundancyArgs.programMode = _call_GetProgramMode(isBackupFilesAndFoldersMode, is7ZipBackupMode);
+   const bool isBackupFilesAndFoldersTo7zFileMode = _docoptParser->GetRequiredBool(docoptArgs, "backup-files-and-folders-to-7z-file");
+   const bool isExampleLinuxIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "example-linux-ini-file");
+   const bool isExampleWindowsIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "example-windows-ini-file");
+   cloudundancyArgs.programMode = _programModeDeterminer->DetermineProgramMode(
+      isBackupFilesAndFoldersMode, isBackupFilesAndFoldersTo7zFileMode, isExampleLinuxIniFileMode, isExampleWindowsIniFileMode);
 
    cloudundancyArgs.iniFilePath = _docoptParser->GetRequiredString(docoptArgs, "--ini-file");
 
@@ -37,19 +40,4 @@ CloudundancyArgs CloudundancyArgsParser::ParseStringArgs(const vector<string>& s
    _fileSystem->ThrowIfFilePathIsNotEmptyAndDoesNotExist(cloudundancyArgs.iniFilePath);
    _fileSystem->ThrowIfFilePathIsNotEmptyAndDoesNotExist(cloudundancyArgs.sevenZipIniFilePath);
    return cloudundancyArgs;
-}
-
-ProgramMode CloudundancyArgsParser::GetProgramMode(bool isBackupFilesAndFoldersMode, bool is7ZipBackupMode)
-{
-   if (isBackupFilesAndFoldersMode)
-   {
-      release_assert(!is7ZipBackupMode);
-      return ProgramMode::BackupFilesAndFolders;
-   }
-   if (is7ZipBackupMode)
-   {
-      release_assert(!isBackupFilesAndFoldersMode);
-      return ProgramMode::BackupFilesAndFoldersTo7zFile;
-   }
-   throw invalid_argument("CloudundancyArgsParser::GetProgramMode(): isBackupFilesAndFoldersMode and is7ZipBackupMode are unexpectedly both false");
 }

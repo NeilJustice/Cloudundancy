@@ -13,17 +13,12 @@ BackupFilesAndFoldersWith7ZipSubProgram::BackupFilesAndFoldersWith7ZipSubProgram
    // Function Callers
    : _voidOneArgFunctionCaller(make_unique<VoidOneArgFunctionCallerType>())
    // Constant Components
-   , _console(std::make_unique<Console>())
    , _cloudundancyFileCopier(std::make_unique<CloudundancyFileCopier>())
    , _fileSystem(make_unique<FileSystem>())
    , _processRunner(std::make_unique<ProcessRunner>())
    , _watch(std::make_unique<Watch>())
    // Mutable Components
    , _stopwatch(std::make_unique<Stopwatch>())
-{
-}
-
-BackupFilesAndFoldersWith7ZipSubProgram::~BackupFilesAndFoldersWith7ZipSubProgram()
 {
 }
 
@@ -40,13 +35,13 @@ int BackupFilesAndFoldersWith7ZipSubProgram::Run(const CloudundancyArgs& args)
 
 void BackupFilesAndFoldersWith7ZipSubProgram::Copy7zFileToDestinationFolders(const CloudundancyArgs& args) const
 {
-   _console->WriteLine("[Cloudundancy] Copying .7z File To Backup Folders.");
+   _console->WriteLine("[Cloudundancy] Copying .7z file to backup folders.");
    _stopwatch->Start();
 
    _cloudundancyFileCopier->CopyFilesAndFoldersToMultipleFolders(args.sevenZipIniFilePath);
 
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
-   _console->WriteLine("[Cloudundancy] Copied .7z File To Backup Folders in " + elapsedSeconds + " seconds\n");
+   _console->WriteLine("[Cloudundancy] Copied .7z file to backup folders in " + elapsedSeconds + " seconds\n");
 }
 
 void BackupFilesAndFoldersWith7ZipSubProgram::CopyFilesAndFoldersToBackupStagingFolder(const CloudundancyArgs& args) const

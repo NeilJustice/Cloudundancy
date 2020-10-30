@@ -8,7 +8,7 @@ https://github.com/NeilJustice/Cloudundancy
 Cloudundancy quickly copies files and folders to multiple configurable destination folders
 to achieve cloud-redundant and device-redundant backups of key files.
 For example, destination folders could be configured to be
-a Google Drive folder, a Microsoft OneDrive folder, two USB sticks, and a network share
+a Google Drive folder, a Microsoft OneDrive folder, two USB drives, and a network share
 to achieve cloud-redundant and device-redundant backups of key files.
 
 Usage:
@@ -17,4 +17,6 @@ Usage:
       --ini-file=<CloudundancyIniFilePath>
       --7z-ini-file=<CloudundancyIniFilePath>
       --backup-staging-folder=<FolderPath>
+   Cloudundancy example-linux-ini-file
+   Cloudundancy example-windows-ini-file
 )";
