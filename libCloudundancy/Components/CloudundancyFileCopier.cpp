@@ -55,8 +55,8 @@ void CloudundancyFileCopier::CopyFilesAndFoldersToSingleFolder(
       this, &CloudundancyFileCopier::CopyFileOrFolderToFolder, destinationFolderPath);
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string folderBackedUpMessage =
-      "[Cloudundancy]  FolderBackupResult: All files copied to " + destinationFolderPath.string() + "\n" +
-      "[Cloudundancy]   FolderElapsedTime: " + elapsedSeconds + " seconds\n";
+      "[Cloudundancy]   FolderBackupResult: All files copied to " + destinationFolderPath.string() + "\n" +
+      "[Cloudundancy] FolderBackupDuration: " + elapsedSeconds + " seconds\n";
    _console->WriteLine(folderBackedUpMessage);
 }
 

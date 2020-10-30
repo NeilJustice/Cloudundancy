@@ -56,9 +56,9 @@ int CloudundancyProgram::Run(const std::vector<std::string>& stringArgs)
    const int exitCode = cloudundancySubProgram->Run(args);
 
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
-   _console->WriteLine("[Cloudundancy] OverallBackupResult: All non-ignored files and folders successfully copied to all destination folders.");
-   _console->WriteLine("[Cloudundancy]  OverallElapsedTime: "  + elapsedSeconds + " seconds");
-   _console->WriteLine("[Cloudundancy]            ExitCode: " + to_string(exitCode));
+   _console->WriteLine("[Cloudundancy]  OverallBackupResult: All non-ignored files and folders successfully copied to all destination folders.");
+   _console->WriteLine("[Cloudundancy]      OverallDuration: "  + elapsedSeconds + " seconds");
+   _console->WriteLine("[Cloudundancy]             ExitCode: " + to_string(exitCode));
    return exitCode;
 }
 

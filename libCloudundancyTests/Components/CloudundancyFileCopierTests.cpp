@@ -149,8 +149,8 @@ TEST(CopyFilesAndFoldersToSingleFolder_CopiesNonSkippedSourceFilesToDestinationF
       cloudundancyIni.absoluteFileOrFolderPathAndRelativeFolderPaths, &_cloudundancyFileCopier, &CloudundancyFileCopier::CopyFileOrFolderToFolder, destinationFolderPath));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
    const string expectedFolderBackedUpMessage =
-      "[Cloudundancy]  FolderBackupResult: All files copied to " + destinationFolderPath.string() + "\n" +
-      "[Cloudundancy]   FolderElapsedTime: " + elapsedSeconds + " seconds\n";
+      "[Cloudundancy]   FolderBackupResult: All files copied to " + destinationFolderPath.string() + "\n" +
+      "[Cloudundancy] FolderBackupDuration: " + elapsedSeconds + " seconds\n";
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedFolderBackedUpMessage));
 }
 

@@ -123,9 +123,9 @@ TEST(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSubPr
    {
       string_view(expectedRunningMessage),
       string_view("[Cloudundancy] StartTime: " + startTime),
-      string_view("[Cloudundancy] OverallBackupResult: All non-ignored files and folders successfully copied to all destination folders."),
-      string_view("[Cloudundancy]  OverallElapsedTime: " + elapsedSeconds + " seconds"),
-      string_view("[Cloudundancy]            ExitCode: " + to_string(subProgramExitCode))
+      string_view("[Cloudundancy]  OverallBackupResult: All non-ignored files and folders successfully copied to all destination folders."),
+      string_view("[Cloudundancy]      OverallDuration: " + elapsedSeconds + " seconds"),
+      string_view("[Cloudundancy]             ExitCode: " + to_string(subProgramExitCode))
    }));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
    ARE_EQUAL(subProgramExitCode, exitCode);
