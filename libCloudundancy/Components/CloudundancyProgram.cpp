@@ -2,6 +2,7 @@
 #include "libCloudundancy/Components/Console/Console.h"
 #include "libCloudundancy/Components/CloudundancyArgsParser.h"
 #include "libCloudundancy/Components/CloudundancyProgram.h"
+#include "libCloudundancy/Components/Environment/Environmentalist.h"
 #include "libCloudundancy/Components/Exception/TryCatchCaller.h"
 #include "libCloudundancy/Components/CloudundancyFileCopier.h"
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgramFactory.h"
@@ -20,6 +21,7 @@ CloudundancyProgram::CloudundancyProgram() noexcept
    , _cloudundancySubProgramFactory(make_unique<CloudundancySubProgramFactory>())
    , _console(make_unique<Console>())
    , _cloudundancyFileCopier(make_unique<CloudundancyFileCopier>())
+   , _environmentalist(make_unique<Environmentalist>())
    , _tryCatchCaller(make_unique<TryCatchCaller<CloudundancyProgram, const vector<string>&>>())
    , _watch(make_unique<Watch>())
    // Mutable Components
@@ -44,11 +46,20 @@ int CloudundancyProgram::Run(const std::vector<std::string>& stringArgs)
    _stopwatch->Start();
 
    const string spaceJoinedArgs = Vector::Join(stringArgs, ' ');
-   const string runningMessage = "[Cloudundancy]   Running: " + spaceJoinedArgs;
-   _console->WriteLine(runningMessage);
+   const string runningLine = "[Cloudundancy]     Running: " + spaceJoinedArgs;
+   _console->WriteLine(runningLine);
+
+   const string machineName = _environmentalist->MachineName();
+   const string machineNameLine = "[Cloudundancy] MachineName: " + machineName;
+   _console->WriteLine(machineNameLine);
+
+   const string userName = _environmentalist->UserName();
+   const string userNameLine = "[Cloudundancy]    UserName: " + userName;
+   _console->WriteLine(userNameLine);
 
    const string startTime = _watch->DateTimeNow();
-   _console->WriteLine("[Cloudundancy] StartTime: " + startTime);
+   const string startTimeLine = "[Cloudundancy]   StartTime: " + startTime;
+   _console->WriteLine(startTimeLine);
 
    const CloudundancyArgs args = _cloudundancyArgsParser->ParseStringArgs(stringArgs);
    const shared_ptr<CloudundancySubProgram> cloudundancySubProgram =

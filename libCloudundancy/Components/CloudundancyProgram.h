@@ -4,6 +4,7 @@ class CloudundancySubProgramFactory;
 struct CloudundancyArgs;
 class Console;
 class CloudundancyFileCopier;
+class Environmentalist;
 class Stopwatch;
 template<typename ClassType, typename ArgumentType>
 class TryCatchCaller;
@@ -23,6 +24,7 @@ private:
    std::unique_ptr<const CloudundancySubProgramFactory> _cloudundancySubProgramFactory;
    std::unique_ptr<const Console> _console;
    std::unique_ptr<const CloudundancyFileCopier> _cloudundancyFileCopier;
+   std::unique_ptr<const Environmentalist> _environmentalist;
    std::unique_ptr<const TryCatchCaller<CloudundancyProgram, const std::vector<std::string>&>> _tryCatchCaller;
    std::unique_ptr<const Watch> _watch;
    // Mutable Components

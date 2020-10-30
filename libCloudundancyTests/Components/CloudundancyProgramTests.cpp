@@ -4,6 +4,7 @@
 #include "libCloudundancy/Utilities/Vector.h"
 #include "libCloudundancy/ValueTypes/CloudundancyArgs.h"
 #include "libCloudundancyTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libCloudundancyTests/Components/Environment/MetalMock/EnvironmentalistMock.h"
 #include "libCloudundancyTests/Components/Exception/MetalMock/TryCatchCallerMock.h"
 #include "libCloudundancyTests/Components/MetalMock/CloudundancyArgsParserMock.h"
 #include "libCloudundancyTests/Components/MetalMock/CloudundancyIniFileReaderMock.h"
@@ -30,6 +31,7 @@ CloudundancyArgsParserMock* _cloudundancyArgsParserMock = nullptr;
 CloudundancySubProgramFactoryMock* _cloudundancySubProgramFactoryMock = nullptr;
 ConsoleMock* _consoleMock = nullptr;
 CloudundancyFileCopierMock* _cloudundancyFileCopierMock = nullptr;
+EnvironmentalistMock* _environmentalistMock = nullptr;
 TryCatchCallerMock<CloudundancyProgram, const vector<string>&>* _tryCatchCallerMock = nullptr;
 WatchMock* _watchMock = nullptr;
 // Mutable Components
@@ -43,6 +45,7 @@ STARTUP
    // Constant Components
    _cloudundancyProgram._cloudundancyArgsParser.reset(_cloudundancyArgsParserMock = new CloudundancyArgsParserMock);
    _cloudundancyProgram._cloudundancySubProgramFactory.reset(_cloudundancySubProgramFactoryMock = new CloudundancySubProgramFactoryMock);
+   _cloudundancyProgram._environmentalist.reset(_environmentalistMock = new EnvironmentalistMock);
    _cloudundancyProgram._console.reset(_consoleMock = new ConsoleMock);
    _cloudundancyProgram._cloudundancyFileCopier.reset(_cloudundancyFileCopierMock = new CloudundancyFileCopierMock);
    _cloudundancyProgram._tryCatchCaller.reset(_tryCatchCallerMock = new TryCatchCallerMock<CloudundancyProgram, const vector<string>&>);
@@ -62,6 +65,7 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._cloudundancySubProgramFactory);
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._console);
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._cloudundancyFileCopier);
+   DELETE_TO_ASSERT_NEWED(cloudundancyProgram._environmentalist);
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._tryCatchCaller);
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._watch);
    // Mutable Components
@@ -94,6 +98,9 @@ TEST(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSubPr
 
    _consoleMock->WriteLineMock.Expect();
 
+   const string machineName = _environmentalistMock->MachineNameMock.ReturnRandom();
+   const string userName = _environmentalistMock->UserNameMock.ReturnRandom();
+
    const string startTime = _watchMock->DateTimeNowMock.ReturnRandom();
 
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
@@ -112,17 +119,23 @@ TEST(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSubPr
    const int exitCode = _cloudundancyProgram.Run(stringArgs);
    //
    const string expectedSpaceJoinedArgs = Vector::Join(stringArgs, ' ');
-   const string expectedRunningMessage = "[Cloudundancy]   Running: " + expectedSpaceJoinedArgs;
+   const string expectedRunningLine = "[Cloudundancy]     Running: " + expectedSpaceJoinedArgs;
+   const string expectedMachineNameLine = "[Cloudundancy] MachineName: " + machineName;
+   const string expectedUserNameLine = "[Cloudundancy]    UserName: " + userName;
 
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
+   METALMOCK(_environmentalistMock->MachineNameMock.CalledOnce());
+   METALMOCK(_environmentalistMock->UserNameMock.CalledOnce());
    METALMOCK(_watchMock->DateTimeNowMock.CalledOnce());
    METALMOCK(_cloudundancyArgsParserMock->ParseStringArgsMock.CalledOnceWith(stringArgs));
    METALMOCK(_cloudundancySubProgramFactoryMock->NewCloudundancySubProgramMock.CalledOnceWith(args.programMode));
    METALMOCK(cloudundancySubProgramMock->RunMock.CalledOnceWith(args));
    METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
-      string_view(expectedRunningMessage),
-      string_view("[Cloudundancy] StartTime: " + startTime),
+      string_view(expectedRunningLine),
+      string_view(expectedMachineNameLine),
+      string_view(expectedUserNameLine),
+      string_view("[Cloudundancy]   StartTime: " + startTime),
       string_view("[Cloudundancy]  OverallBackupResult: All non-ignored files and folders successfully copied to all destination folders."),
       string_view("[Cloudundancy]      OverallDuration: " + elapsedSeconds + " seconds"),
       string_view("[Cloudundancy]             ExitCode: " + to_string(subProgramExitCode))
