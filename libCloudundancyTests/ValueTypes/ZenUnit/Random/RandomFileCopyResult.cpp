@@ -12,8 +12,8 @@ namespace ZenUnit
    FileCopyResult TestableRandomFileCopyResult(const RandomGenerator* randomGenerator)
    {
       FileCopyResult randomFileCopyResult;
-      randomFileCopyResult.sourceFilePath = randomGenerator->Path();
-      randomFileCopyResult.destinationFilePath = randomGenerator->Path();
+      randomFileCopyResult.sourceFilePath = randomGenerator->FilesystemPath();
+      randomFileCopyResult.destinationFilePath = randomGenerator->FilesystemPath();
       randomFileCopyResult.copySucceeded = randomGenerator->Bool();
       randomFileCopyResult.numberOfBytesCopied = randomGenerator->UnsignedLongLong();
       randomFileCopyResult.durationInMilliseconds = randomGenerator->UnsignedLongLong();
