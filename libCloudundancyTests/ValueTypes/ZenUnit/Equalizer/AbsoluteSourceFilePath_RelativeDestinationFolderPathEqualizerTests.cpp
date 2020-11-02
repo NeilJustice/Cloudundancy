@@ -8,10 +8,10 @@ EVIDENCE
 
 TEST(AssertEqual_ThrowsIfAnyFieldNotEqual)
 {
-   SETUP_EQUALIZER_TEST(AbsoluteFilePathToRelativeDestinationFolderPath);
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(
+   ZENUNIT_EQUALIZER_TEST_SETUP(AbsoluteFilePathToRelativeDestinationFolderPath);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(
       AbsoluteFilePathToRelativeDestinationFolderPath, absoluteSourceFilePath, ZenUnit::Random<fs::path>());
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(
       AbsoluteFilePathToRelativeDestinationFolderPath, relativeDestinationFolderPath, ZenUnit::Random<fs::path>());
 }
 

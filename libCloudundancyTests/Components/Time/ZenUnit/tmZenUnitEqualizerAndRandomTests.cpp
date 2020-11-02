@@ -8,16 +8,16 @@ EVIDENCE
 
 TEST(tmEqualizer_ThrowsIfAnyFieldNotEqual)
 {
-   SETUP_EQUALIZER_TEST(tm);
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_sec, ZenUnit::RandomNon0<int>());
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_min, ZenUnit::RandomNon0<int>());
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_hour, ZenUnit::RandomNon0<int>());
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_mday, ZenUnit::RandomNon0<int>());
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_mon, ZenUnit::RandomNon0<int>());
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_year, ZenUnit::RandomNon0<int>());
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_wday, ZenUnit::RandomNon0<int>());
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_yday, ZenUnit::RandomNon0<int>());
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_isdst, ZenUnit::RandomNon0<int>());
+   ZENUNIT_EQUALIZER_TEST_SETUP(tm);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_sec, ZenUnit::RandomNon0<int>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_min, ZenUnit::RandomNon0<int>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_hour, ZenUnit::RandomNon0<int>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_mday, ZenUnit::RandomNon0<int>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_mon, ZenUnit::RandomNon0<int>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_year, ZenUnit::RandomNon0<int>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_wday, ZenUnit::RandomNon0<int>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_yday, ZenUnit::RandomNon0<int>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_isdst, ZenUnit::RandomNon0<int>());
 }
 
 TEST(TestableTmRandom_ReturnsTmWithAllRandomFields)
