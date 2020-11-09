@@ -7,7 +7,7 @@ https://github.com/NeilJustice/Cloudundancy
 
 Cloudundancy quickly copies files and folders to multiple configurable destination folders
 to achieve cloud-redundant and device-redundant backups of key files.
-For example, destination folders could be configured to be
+For example, destination folders can be configured to be
 a Google Drive folder, a Microsoft OneDrive folder, two USB drives, and a network share
 to achieve cloud-redundant and device-redundant backups of key files.
 
