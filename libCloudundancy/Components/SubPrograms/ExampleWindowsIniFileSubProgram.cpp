@@ -5,6 +5,8 @@ int ExampleWindowsIniFileSubProgram::Run(const CloudundancyArgs&)
 {
    const string exampleWindowsIniFileText =
 R"(
+Example Windows Cloudundancy .ini file:
+
 [DestinationFolders]
 # Cloud-redundant backups to Google's cloud, Microsoft's cloud, and GitHub's cloud
 C:\GoogleDrive\CloudundancyBackups

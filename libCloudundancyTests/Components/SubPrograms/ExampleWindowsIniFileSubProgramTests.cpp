@@ -22,6 +22,8 @@ TEST(Run_PrintsExampleWindowsIniFile_Returns0)
    //
    const string expectedExampleWindowsIniFileText =
       R"(
+Example Windows Cloudundancy .ini file:
+
 [DestinationFolders]
 # Cloud-redundant backups to Google's cloud, Microsoft's cloud, and GitHub's cloud
 C:\GoogleDrive\CloudundancyBackups
