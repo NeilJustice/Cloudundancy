@@ -25,9 +25,10 @@ ProcessResult WindowsProcessRunner::Run(string_view processName, string_view arg
    securityAttrs.lpSecurityDescriptor = NULL;
    HANDLE stdOutReadHandle{};
    HANDLE stdOutWriteHandle{};
-   if (!CreatePipe(&stdOutReadHandle, &stdOutWriteHandle, &securityAttrs, 0))
+   const BOOL createPipeSucceeded = CreatePipe(&stdOutReadHandle, &stdOutWriteHandle, &securityAttrs, 0);
+   if (!createPipeSucceeded)
    {
-      cerr << "CreatePipe() failed\n";
+      _console->WriteLine("[Cloudundancy] Error: WindowsProcessRunner::Run(processName, arguments) failed because CreatePipe(&stdOutReadHandle, &stdOutWriteHandle, &securityAttrs, 0) returned FALSE");
       _call_exit(1);
    }
    const size_t SpaceSize = 1;
@@ -48,19 +49,19 @@ ProcessResult WindowsProcessRunner::Run(string_view processName, string_view arg
    startupInfo.dwFlags = STARTF_USESTDHANDLES;
    PROCESS_INFORMATION processInformation{};
    const auto beginTime = chrono::high_resolution_clock::now();
-   if (!CreateProcessA(nullptr, commandLineChars.get(), nullptr, nullptr,
-      TRUE, CREATE_NO_WINDOW, nullptr, nullptr, &startupInfo, &processInformation))
+   const BOOL createProcessSucceeded = CreateProcessA(nullptr, commandLineChars.get(), nullptr, nullptr, TRUE, CREATE_NO_WINDOW, nullptr, nullptr, &startupInfo, &processInformation);
+   if (!createProcessSucceeded)
    {
       const DWORD lastError = GetLastError();
-      cerr << "CreateProcessA() failed. Last error: " << lastError << '\n';
+      _console->WriteLine("[Cloudundancy] Error: WindowsProcessRunner::Run(processName, arguments) failed because CreateProcessA(nullptr, commandLineChars.get(), nullptr, nullptr, TRUE, CREATE_NO_WINDOW, nullptr, nullptr, &startupInfo, &processInformation) returned FALSE. GetLastError()=" + to_string(lastError));
       _call_exit(1);
    }
-   DWORD processWaitResult = WaitForSingleObject(processInformation.hProcess, INFINITE);
+   const DWORD processWaitResult = WaitForSingleObject(processInformation.hProcess, INFINITE);
    auto endTime = chrono::high_resolution_clock::now();
    if (processWaitResult != 0)
    {
       const DWORD lastError = GetLastError();
-      cerr << "WaitForSingleObject() failed. Last error: " << lastError << '\n';
+      _console->WriteLine("[Cloudundancy] Error: WindowsProcessRunner::Run(processName, arguments) failed because WaitForSingleObject(processInformation.hProcess, INFINITE) failed. GetLastError()=" + to_string(lastError));
       _call_exit(1);
    }
    DWORD threadExitCode = 0;
