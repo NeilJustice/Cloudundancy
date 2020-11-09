@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Utilities/Vector.h"
+#include "libCloudundancy/StaticUtilities/Vector.h"
 
 TESTS(VectorTests)
 AFACT(ArgcArgvToStringVector_ReturnsArgsAsStringVector)

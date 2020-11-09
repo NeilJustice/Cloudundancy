@@ -1,5 +1,5 @@
 #pragma once
-#include "libCloudundancy/Utilities/Errno.h"
+#include "libCloudundancy/StaticUtilities/Errno.h"
 
 struct ExpectedExceptionMessage
 {

@@ -1,5 +1,5 @@
 #pragma once
-#include "libCloudundancy/Utilities/STRING_ENUM_MAP.h"
+#include "libCloudundancy/StaticUtilities/STRING_ENUM_MAP.h"
 
 enum class FileSystemExceptionType : unsigned char
 {

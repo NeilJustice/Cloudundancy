@@ -34,8 +34,8 @@ using namespace std;
 #include "libCloudundancy/ValueTypes/FilePathLineNumberLineText.h"
 
 // libCloudundancy Utility Functions
-#include "libCloudundancy/Utilities/ReleaseAssert.h"
-#include "libCloudundancy/Utilities/StringUtil.h"
+#include "libCloudundancy/StaticUtilities/ReleaseAssert.h"
+#include "libCloudundancy/StaticUtilities/StringUtil.h"
 
 // libCloudundancy Utility Component Mocks
 #include "libCloudundancyTests/Components/Console/MetalMock/ConsoleMock.h"

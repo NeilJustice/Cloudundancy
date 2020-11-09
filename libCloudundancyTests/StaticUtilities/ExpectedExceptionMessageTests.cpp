@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "libCloudundancy/Utilities/Errno.h"
-#include "libCloudundancyTests/Utilities/ExpectedExceptionMessage.h"
+#include "libCloudundancy/StaticUtilities/Errno.h"
+#include "libCloudundancyTests/StaticUtilities/ExpectedExceptionMessage.h"
 
 TESTS(ExpectedExceptionMessageTests)
 AFACT(ErrorOpeningFile_ReturnsExpectedExceptionMessage)

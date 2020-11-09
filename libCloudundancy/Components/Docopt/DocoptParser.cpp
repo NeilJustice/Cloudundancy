@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/Components/Docopt/DocoptParser.h"
-#include "libCloudundancy/Utilities/Map.h"
+#include "libCloudundancy/StaticUtilities/Map.h"
 
 DocoptParser::DocoptParser()
    : _call_docopt_docopt(docopt::docopt)

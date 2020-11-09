@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libCloudundancy/Components/Time/CRTWatch.h"
 #include "libCloudundancy/Components/Time/Watch.h"
-#include "libCloudundancy/Utilities/Chars.h"
+#include "libCloudundancy/StaticUtilities/Chars.h"
 
 Watch::Watch() noexcept
    : _crtWatch(make_unique<CRTWatch>())

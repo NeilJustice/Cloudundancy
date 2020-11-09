@@ -9,8 +9,8 @@
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgramFactory.h"
 #include "libCloudundancy/Components/Time/Stopwatch.h"
 #include "libCloudundancy/Components/Time/Watch.h"
-#include "libCloudundancy/Utilities/Exception.h"
-#include "libCloudundancy/Utilities/Vector.h"
+#include "libCloudundancy/StaticUtilities/Exception.h"
+#include "libCloudundancy/StaticUtilities/Vector.h"
 
 CloudundancyProgram::CloudundancyProgram() noexcept
    // Function Callers

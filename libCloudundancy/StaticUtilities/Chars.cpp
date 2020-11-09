@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Utilities/Chars.h"
+#include "libCloudundancy/StaticUtilities/Chars.h"
 
 void Chars::OneOrTwoDigitSizeTToTwoChars(size_t value, char* outChars)
 {

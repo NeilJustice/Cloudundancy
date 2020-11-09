@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Utilities/Chars.h"
+#include "libCloudundancy/StaticUtilities/Chars.h"
 
 TESTS(CharsTests)
 AFACT(OneOrTwoDigitSizeTToTwoChars_ValueIs0_Writes00)

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Utilities/StringUtil.h"
+#include "libCloudundancy/StaticUtilities/StringUtil.h"
 
 bool String::Contains(string_view str, string_view substring)
 {

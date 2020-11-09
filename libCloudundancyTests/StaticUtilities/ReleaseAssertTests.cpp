@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Utilities/ReleaseAssert.h"
+#include "libCloudundancy/StaticUtilities/ReleaseAssert.h"
 
 TESTS(ReleaseAssertTests)
 AFACT(release_assert_IsTrue_DoesNothing)

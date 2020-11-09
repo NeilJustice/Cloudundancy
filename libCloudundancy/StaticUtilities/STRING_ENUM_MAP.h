@@ -1,5 +1,5 @@
 #pragma once
-#include "libCloudundancy/Utilities/Map.h"
+#include "libCloudundancy/StaticUtilities/Map.h"
 
 #define BEGIN_STRING_ENUM_MAP(enumTypeName) \
 	class StringEnumMap_##enumTypeName \

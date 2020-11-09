@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Utilities/StringUtil.h"
+#include "libCloudundancy/StaticUtilities/StringUtil.h"
 
 TESTS(StringTests)
 FACTS(Contains_ReturnsTrueIfStringContainsSubstring)

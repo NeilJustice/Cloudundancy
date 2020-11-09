@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Utilities/Exception.h"
+#include "libCloudundancy/StaticUtilities/Exception.h"
 
 TESTS(ExceptionTests)
 AFACT(GetClassNameAndMessage_ReturnsExceptionClassNameColonSpaceExceptionMessage__DefaultExceptionTestCase)

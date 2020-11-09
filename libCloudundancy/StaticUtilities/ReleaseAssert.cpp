@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "libCloudundancy/Utilities/ReleaseAssert.h"
-#include "libCloudundancy/Utilities/StringUtil.h"
+#include "libCloudundancy/StaticUtilities/ReleaseAssert.h"
+#include "libCloudundancy/StaticUtilities/StringUtil.h"
 
 void ThrowLogicError(
    const char* predicateExpressionText,

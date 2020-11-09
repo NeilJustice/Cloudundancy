@@ -30,7 +30,7 @@ folder_source_group_subsubfolder(Components Process Windows)
 folder_source_group_subfolder(Components Time)
 folder_source_group_subfolder(Components Types)
 folder_source_group(Enums)
-folder_source_group(Utilities)
+folder_source_group(StaticUtilities)
 folder_source_group(ValueTypes)
 
 file(GLOB_RECURSE Sources *.h *.cpp *.ui)

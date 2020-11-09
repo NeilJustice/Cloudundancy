@@ -59,6 +59,20 @@ bool ConsoleColorer::SupportsColor() const
    return supportsColor;
 }
 
+void ConsoleColorer::SetTextColor(Color color) const
+{
+#if defined __linux__
+   const char* linuxColor = ColorToLinuxColor(color);
+   std::cout << linuxColor;
+#elif _WIN32
+   const HANDLE stdOutHandle = _call_GetStdHandle(STD_OUTPUT_HANDLE);
+   const WindowsColor windowsColor = ColorToWindowsColor(color);
+   const BOOL didSetConsoleTextAttr = _call_SetConsoleTextAttribute(
+      stdOutHandle, static_cast<WORD>(windowsColor));
+   release_assert(didSetConsoleTextAttr == TRUE);
+#endif
+}
+
 WindowsColor ConsoleColorer::ColorToWindowsColor(Color color) noexcept
 {
    switch (color)
@@ -84,19 +98,5 @@ const char* ConsoleColorer::ColorToLinuxColor(Color color) noexcept
    case Color::Yellow: return "\033[33m";
    case Color::Unset:
    default: return "\033[0m";
-   };
-}
-
-void ConsoleColorer::SetTextColor(Color color) const
-{
-#if defined __linux__
-   const char* linuxColor = ColorToLinuxColor(color);
-   std::cout << linuxColor;
-#elif _WIN32
-   const HANDLE stdOutHandle = _call_GetStdHandle(STD_OUTPUT_HANDLE);
-   const WindowsColor windowsColor = ColorToWindowsColor(color);
-   const BOOL didSetConsoleTextAttr = _call_SetConsoleTextAttribute(
-      stdOutHandle, static_cast<WORD>(windowsColor));
-   release_assert(didSetConsoleTextAttr == TRUE);
-#endif
+   }
 }
