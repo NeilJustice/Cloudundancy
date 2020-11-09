@@ -1877,7 +1877,7 @@ namespace docopt
          const string leftover = join(argv.begin(), argv.end(), " ");
          throw DocoptArgumentError("Unexpected argument: " + leftover);
       }
-      throw DocoptArgumentError("Error: Invalid command line arguments. See program usage below for valid command line arguments:\n");
+      throw DocoptArgumentError("Error: Invalid command line arguments. See program usage:\n");
    }
 
    map<string, Value> docopt(
