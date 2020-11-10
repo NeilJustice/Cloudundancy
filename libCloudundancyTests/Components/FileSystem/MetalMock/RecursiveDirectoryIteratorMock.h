@@ -5,6 +5,6 @@ class RecursiveDirectoryIteratorMock : public Metal::Mock<RecursiveDirectoryIter
 {
 public:
    METALMOCK_VOID1(SetFileSubpathsToNotCopy, const vector<string>&)
-   METALMOCK_VOID1(SetRecursiveDirectoryIterator, const fs::path&)
+   METALMOCK_VOID1(InitializeIteratorAtFolderPath, const fs::path&)
    METALMOCK_NONVOID0(fs::path, NextNonIgnoredFilePath)
 };

@@ -1,17 +1,17 @@
 #include "pch.h"
-#include "libCloudundancy/Components/CloudundancyIniFileReader.h"
 #include "libCloudundancy/Components/FileSystem/FileSystem.h"
-#include "libCloudundancy/Components/FileSystem/FileSystemException.h"
 #include "libCloudundancy/Components/FunctionCallers/Member/NonVoidOneArgMemberFunctionCaller.h"
 #include "libCloudundancy/Components/FunctionCallers/Member/VoidThreeArgMemberFunctionCaller.h"
 #include "libCloudundancy/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
-#include "libCloudundancy/ValueTypes/FilePathLineNumberLineText.h"
+#include "libCloudundancy/Components/IniFile/CloudundancyIniFileReader.h"
+#include "libCloudundancy/Components/IniFile/CloudundancyIniValidator.h"
 
 CloudundancyIniFileReader::CloudundancyIniFileReader() noexcept
    // Function Callers
    : _caller_ParseFileCopyInstructionLine(make_unique<NonVoidOneArgMemberFunctionCallerType>())
    , _caller_ThrowIfSourceFileOrFolderDoesNotExist(make_unique<VoidTwoArgMemberFunctionCallerType>())
    // Constant Components
+   , _cloudundancyIniValidator(make_unique<CloudundancyIniValidator>())
    , _fileSystem(make_unique<FileSystem>())
 {
 }
@@ -74,6 +74,7 @@ CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudunda
          cloudundancyIni.fileSubpathsToNotCopy.push_back(iniFileLine);
       }
    }
+   _cloudundancyIniValidator->ValidateCloudundancyIni(cloudundancyIni, cloudundancyIniPath);
    return cloudundancyIni;
 }
 

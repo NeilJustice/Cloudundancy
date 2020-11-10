@@ -1,8 +1,4 @@
 #pragma once
-#include "libCloudundancy/ValueTypes/CloudundancyIni.h"
-
-struct FilePathLineNumberLineText;
-class FileSystem;
 
 template<typename CollectionType, typename ClassType, typename FunctionType>
 class MemberForEacher;
@@ -12,6 +8,10 @@ class NonVoidOneArgMemberFunctionCaller;
 
 template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgMemberFunctionCaller;
+
+class CloudundancyIniValidator;
+class FileSystem;
+struct FilePathLineNumberLineText;
 
 class CloudundancyIniFileReader
 {
@@ -31,6 +31,7 @@ private:
    unique_ptr<VoidTwoArgMemberFunctionCallerType> _caller_ThrowIfSourceFileOrFolderDoesNotExist;
 
    // Constant Components
+   unique_ptr<const CloudundancyIniValidator> _cloudundancyIniValidator;
    unique_ptr<const FileSystem> _fileSystem;
 public:
    CloudundancyIniFileReader() noexcept;

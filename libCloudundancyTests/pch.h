@@ -32,6 +32,7 @@ using namespace std;
 #include "libCloudundancy/ValueTypes/CloudundancyIni.h"
 #include "libCloudundancy/ValueTypes/FileCopyResult.h"
 #include "libCloudundancy/ValueTypes/FilePathLineNumberLineText.h"
+#include "libCloudundancy/ValueTypes/FileSystemException.h"
 
 // libCloudundancy Utility Functions
 #include "libCloudundancy/StaticUtilities/ReleaseAssert.h"

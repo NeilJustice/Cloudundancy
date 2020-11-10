@@ -1,14 +1,14 @@
 #include "pch.h"
-#include "libCloudundancy/Components/CloudundancyIniFileReader.h"
 #include "libCloudundancy/ValueTypes/FilePathLineNumberLineText.h"
-#include "libCloudundancy/Components/FileSystem/FileSystemException.h"
+#include "libCloudundancy/Components/IniFile/CloudundancyIniFileReader.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 #include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
 #include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/Components/IniFile/MetalMock/CloudundancyIniValidatorMock.h"
 
 TESTS(CloudundancyIniFileReaderTests)
 AFACT(DefaultConstructor_NewsComponents)
-AFACT(ReadIniFile_ParsesCloudundancyIniFile_ReturnsExpectedCloudundancyIni)
+AFACT(ReadIniFile_ParsesCloudundancyIniFile_ValidatesCloudundancyIni_ReturnsExpectedCloudundancyIni)
 FACTS(ParseFileCopyInstructionLine_LineDoesNotContainSpaceArrowSpace_OrLineContainsMoreThanOneSpaceArrowSpace_ThrowsFileSystemException)
 FACTS(ParseFileCopyInstructionLine_LineContainsOneSpaceArrowSpace_ReturnsExpectedFileCopyInstruction)
 AFACT(ThrowIfSourceFileOrFolderDoesNotExist_SourceFileOrFolderPathExists_DoesNotThrowException)
@@ -27,6 +27,7 @@ using VoidTwoArgMemberFunctionCallerMockType = VoidTwoArgMemberFunctionCallerMoc
 VoidTwoArgMemberFunctionCallerMockType* _callerMock_ThrowIfSourceFileOrFolderDoesNotExist = nullptr;
 
 // Constant Components
+CloudundancyIniValidatorMock* _cloudundancyIniValidatorMock = nullptr;
 FileSystemMock* _fileSystemMock = nullptr;
 
 STARTUP
@@ -37,6 +38,7 @@ STARTUP
    _cloudundancyIniFile._caller_ThrowIfSourceFileOrFolderDoesNotExist.reset(
       _callerMock_ThrowIfSourceFileOrFolderDoesNotExist = new VoidTwoArgMemberFunctionCallerMockType);
    // Constant Components
+   _cloudundancyIniFile._cloudundancyIniValidator.reset(_cloudundancyIniValidatorMock = new CloudundancyIniValidatorMock);
    _cloudundancyIniFile._fileSystem.reset(_fileSystemMock = new FileSystemMock);
 }
 
@@ -47,10 +49,11 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(cloudundancyIniFile._caller_ParseFileCopyInstructionLine);
    DELETE_TO_ASSERT_NEWED(cloudundancyIniFile._caller_ThrowIfSourceFileOrFolderDoesNotExist);
    // Constant Components
+   DELETE_TO_ASSERT_NEWED(cloudundancyIniFile._cloudundancyIniValidator);
    DELETE_TO_ASSERT_NEWED(cloudundancyIniFile._fileSystem);
 }
 
-TEST(ReadIniFile_ParsesCloudundancyIniFile_ReturnsExpectedCloudundancyIni)
+TEST(ReadIniFile_ParsesCloudundancyIniFile_ValidatesCloudundancyIni_ReturnsExpectedCloudundancyIni)
 {
    const string folderPathA = ZenUnit::Random<string>();
    const string folderPathC = ZenUnit::Random<string>();
@@ -83,6 +86,8 @@ TEST(ReadIniFile_ParsesCloudundancyIniFile_ReturnsExpectedCloudundancyIni)
       = ZenUnit::Random<AbsoluteFileOrFolderPathToRelativeFolderPath>();
    _callerMock_ParseFileCopyInstructionLine->CallConstMemberFunctionMock.ReturnValues(fileCopyInstruction1, fileCopyInstruction2);
 
+   _cloudundancyIniValidatorMock->ValidateCloudundancyIniMock.Expect();
+
    const fs::path cloudundancyIniPath = ZenUnit::Random<string>();
    //
    const CloudundancyIni cloudundancyIni = _cloudundancyIniFile.ReadIniFile(cloudundancyIniPath);
@@ -111,6 +116,7 @@ TEST(ReadIniFile_ParsesCloudundancyIniFile_ReturnsExpectedCloudundancyIni)
       { &CloudundancyIniFileReader::ParseFileCopyInstructionLine, &_cloudundancyIniFile, expectedFilePathLineNumberLineText1 },
       { &CloudundancyIniFileReader::ParseFileCopyInstructionLine, &_cloudundancyIniFile, expectedFilePathLineNumberLineText2 }
    }));
+   METALMOCK(_cloudundancyIniValidatorMock->ValidateCloudundancyIniMock.CalledOnceWith(cloudundancyIni, cloudundancyIniPath));
    ARE_EQUAL(expectedCloudundancyIni, cloudundancyIni);
 }
 

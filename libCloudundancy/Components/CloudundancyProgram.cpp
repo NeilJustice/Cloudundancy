@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "libCloudundancy/Components/CloudundancyArgsParser.h"
-#include "libCloudundancy/Components/CloudundancyFileCopier.h"
+#include "libCloudundancy/Components/Args/CloudundancyArgsParser.h"
+#include "libCloudundancy/Components/FileSystem/CloudundancyFileCopier.h"
 #include "libCloudundancy/Components/CloudundancyProgram.h"
 #include "libCloudundancy/Components/Console/Console.h"
 #include "libCloudundancy/Components/Environment/Environmentalist.h"

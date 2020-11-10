@@ -38,6 +38,15 @@ using namespace std;
 #include "libCloudundancy/Enums/ProgramMode.h"
 #include "libCloudundancy/Enums/WindowsColor.h"
 
+// libCloudundancy ValueTypes
+#include "libCloudundancy/ValueTypes/AbsoluteFilePathToRelativeDestinationFolderPath.h"
+#include "libCloudundancy/ValueTypes/AbsoluteFileOrFolderPathToRelativeFolderPath.h"
+#include "libCloudundancy/ValueTypes/CloudundancyArgs.h"
+#include "libCloudundancy/ValueTypes/CloudundancyIni.h"
+#include "libCloudundancy/ValueTypes/FileCopyResult.h"
+#include "libCloudundancy/ValueTypes/FilePathLineNumberLineText.h"
+#include "libCloudundancy/ValueTypes/FileSystemException.h"
+
 #include "libCloudundancy/CompilerWarnings/IfWindowsPopIgnoredPrecompiledHeaderWarnings.h"
 
 // libCloudundancy Utility Components

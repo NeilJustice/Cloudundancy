@@ -1,5 +1,4 @@
 #pragma once
-#include "libCloudundancy/ValueTypes/FileCopyResult.h"
 class Asserter;
 class CharVectorAllocator;
 class FileSystemTests;

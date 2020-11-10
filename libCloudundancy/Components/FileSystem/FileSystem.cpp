@@ -2,7 +2,6 @@
 #include "libCloudundancy/Components/Assertion/Asserter.h"
 #include "libCloudundancy/Components/FileSystem/FileOpenerCloser.h"
 #include "libCloudundancy/Components/FileSystem/FileSystem.h"
-#include "libCloudundancy/Components/FileSystem/FileSystemException.h"
 #include "libCloudundancy/Components/Memory/CharVectorAllocator.h"
 #include "libCloudundancy/Components/Time/Stopwatch.h"
 #include "libCloudundancy/Components/FunctionCallers/Member/NonVoidOneArgMemberFunctionCaller.h"
