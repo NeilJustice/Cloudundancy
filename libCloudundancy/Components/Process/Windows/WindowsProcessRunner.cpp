@@ -6,8 +6,7 @@
 
 WindowsProcessRunner::WindowsProcessRunner()
    // Function Callers
-   : _call_exit(::exit)
-   , _caller_Run(make_unique<_caller_Run_Type>())
+   : _caller_Run(make_unique<_caller_Run_Type>())
    // Constant Components
    , _console(make_unique<Console>())
 {
@@ -28,8 +27,8 @@ ProcessResult WindowsProcessRunner::Run(string_view processName, string_view arg
    const BOOL createPipeSucceeded = CreatePipe(&stdOutReadHandle, &stdOutWriteHandle, &securityAttrs, 0);
    if (!createPipeSucceeded)
    {
-      _console->WriteLine("[Cloudundancy] Error: WindowsProcessRunner::Run(processName, arguments) failed because CreatePipe(&stdOutReadHandle, &stdOutWriteHandle, &securityAttrs, 0) returned FALSE");
-      _call_exit(1);
+      _console->WriteLineAndExit(
+         "[Cloudundancy] Error: WindowsProcessRunner::Run(processName, arguments) failed because CreatePipe(&stdOutReadHandle, &stdOutWriteHandle, &securityAttrs, 0) returned FALSE", 1);
    }
    const size_t SpaceSize = 1;
    const size_t NullSize = 1;
@@ -53,16 +52,16 @@ ProcessResult WindowsProcessRunner::Run(string_view processName, string_view arg
    if (!createProcessSucceeded)
    {
       const DWORD lastError = GetLastError();
-      _console->WriteLine("[Cloudundancy] Error: WindowsProcessRunner::Run(processName, arguments) failed because CreateProcessA(nullptr, commandLineChars.get(), nullptr, nullptr, TRUE, CREATE_NO_WINDOW, nullptr, nullptr, &startupInfo, &processInformation) returned FALSE. GetLastError()=" + to_string(lastError));
-      _call_exit(1);
+      _console->WriteLineAndExit(
+         "[Cloudundancy] Error: WindowsProcessRunner::Run(processName, arguments) failed because CreateProcessA(nullptr, commandLineChars.get(), nullptr, nullptr, TRUE, CREATE_NO_WINDOW, nullptr, nullptr, &startupInfo, &processInformation) returned FALSE. GetLastError()=" + to_string(lastError), 1);
    }
    const DWORD processWaitResult = WaitForSingleObject(processInformation.hProcess, INFINITE);
    auto endTime = chrono::high_resolution_clock::now();
    if (processWaitResult != 0)
    {
       const DWORD lastError = GetLastError();
-      _console->WriteLine("[Cloudundancy] Error: WindowsProcessRunner::Run(processName, arguments) failed because WaitForSingleObject(processInformation.hProcess, INFINITE) failed. GetLastError()=" + to_string(lastError));
-      _call_exit(1);
+      _console->WriteLineAndExit(
+         "[Cloudundancy] Error: WindowsProcessRunner::Run(processName, arguments) failed because WaitForSingleObject(processInformation.hProcess, INFINITE) failed. GetLastError()=" + to_string(lastError), 1);
    }
    DWORD threadExitCode = 0;
    const BOOL didGetThreadExitCode = GetExitCodeThread(processInformation.hThread, &threadExitCode);
@@ -106,9 +105,8 @@ ProcessResult WindowsProcessRunner::FailFastRun(string_view processName, string_
    if (processResult.exitCode != 0)
    {
       const string processFailedErrorMessage = String::Concat(
-         "Process \"", processName, " ", arguments, "\" failed to return exit code 0 by returning exit code ", processResult.exitCode, '.');
-      _console->WriteLine(processFailedErrorMessage);
-      _call_exit(processResult.exitCode);
+         "Process \"", processName, ' ', arguments, "\" failed to return exit code 0 by returning exit code ", processResult.exitCode, '.');
+      _console->WriteLineAndExit(processFailedErrorMessage, processResult.exitCode);
    }
    return processResult;
 }

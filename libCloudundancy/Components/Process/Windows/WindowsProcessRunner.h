@@ -12,7 +12,6 @@ class WindowsProcessRunner
    friend class WindowsProcessRunnerTests;
 private:
    // Function Callers
-   function<void(int)> _call_exit;
    using _caller_Run_Type = const NonVoidTwoArgMemberFunctionCaller<
       ProcessResult, WindowsProcessRunner, string_view, string_view>;
    unique_ptr<const _caller_Run_Type> _caller_Run;
