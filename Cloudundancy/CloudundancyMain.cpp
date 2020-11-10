@@ -12,14 +12,14 @@
 // backup-files-and-folders-to-7z-file --ini-file=C:\Code\dotfiles\HomeWindowsCloudundancy_CodeFolderBackups.ini --7z-ini-file=C:\Code\dotfiles\HomeWindowsCloudundancy_CodeFolderBackups_7zFileCopyStep.ini --backup-staging-folder=C:\CodeFolderBackupStaging
 
 // Acceptance Testing
-// backup-files-and-folders --ini-file=C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\CompletelyBlankIniFile.ini
-// backup-files-and-folders --ini-file=C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\AllThreeHeadingsPresentButBlankIniFile.ini
-// backup-files-and-folders C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\DestinationFolderExistsButNoWriteAccess.ini
-// backup-files-and-folders C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\NonExistentDestinationFolder.ini
-// backup-files-and-folders C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\NonExistentSourceFile.ini
-// backup-files-and-folders C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\NonExistentSourceFolder.ini
-// backup-files-and-folders C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\SourceFileExistsButNoReadAccess.ini
-// backup-files-and-folders C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\SourceFolderExistsButNoReadAccess.ini
+// backup-files-and-folders --ini-file=C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\BlankIniFile.ini
+// backup-files-and-folders --ini-file=C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\AllThreeHeadingsPresentButBlank.ini
+// backup-files-and-folders --ini-file=C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\DestinationFolderExistsButNoWriteAccess.ini
+// backup-files-and-folders --ini-file=C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\NonExistentDestinationFolder.ini
+// backup-files-and-folders --ini-file=C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\NonExistentSourceFile.ini
+// backup-files-and-folders --ini-file=C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\NonExistentSourceFolder.ini
+// backup-files-and-folders --ini-file=C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\SourceFileExistsButNoReadAccess.ini
+// backup-files-and-folders --ini-file=C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\SourceFolderExistsButNoReadAccess.ini
 
 int main(int argc, char* argv[])
 {
