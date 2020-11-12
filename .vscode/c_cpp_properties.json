@@ -4,7 +4,6 @@
             "name": "Linux",
             "includePath": [
                 "/usr/include",
-                "/usr/local/include/CppUtils",
                 "/usr/local/include/ZenUnit",
                 "${workspaceFolder}"
             ],
@@ -13,7 +12,6 @@
                 "databaseFilename": "",
                 "path": [
                     "/usr/include",
-                    "/usr/local/include/CppUtils",
                     "/usr/local/include/ZenUnit",
                     "/usr/local/include/MetalMock",
                     "${workspaceRoot}"

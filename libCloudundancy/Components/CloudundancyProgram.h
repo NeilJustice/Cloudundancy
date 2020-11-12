@@ -8,8 +8,6 @@ class Environmentalist;
 class Stopwatch;
 template<typename ClassType, typename ArgumentType>
 class TryCatchCaller;
-template<typename ClassType, typename ArgumentType>
-class VoidOneArgMemberFunctionCaller;
 class Watch;
 
 class CloudundancyProgram

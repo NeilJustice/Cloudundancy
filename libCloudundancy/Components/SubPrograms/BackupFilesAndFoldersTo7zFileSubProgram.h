@@ -27,7 +27,7 @@ private:
    unique_ptr<Stopwatch> _stopwatch;
 public:
    BackupFilesAndFoldersTo7zFileSubProgram();
-   virtual ~BackupFilesAndFoldersTo7zFileSubProgram() = default;
+   virtual ~BackupFilesAndFoldersTo7zFileSubProgram();
    virtual int Run(const CloudundancyArgs& args);
 private:
    void Copy7zFileToDestinationFolders(const CloudundancyArgs& args) const;

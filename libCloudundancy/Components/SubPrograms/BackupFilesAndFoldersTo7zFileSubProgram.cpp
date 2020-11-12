@@ -21,6 +21,10 @@ BackupFilesAndFoldersTo7zFileSubProgram::BackupFilesAndFoldersTo7zFileSubProgram
 {
 }
 
+BackupFilesAndFoldersTo7zFileSubProgram::~BackupFilesAndFoldersTo7zFileSubProgram()
+{
+}
+
 int BackupFilesAndFoldersTo7zFileSubProgram::Run(const CloudundancyArgs& args)
 {
    _voidOneArgFunctionCaller->ConstCall(this, &BackupFilesAndFoldersTo7zFileSubProgram::DeleteBackupStagingFolder, args);

@@ -17,6 +17,7 @@ class EnvironmentalistSelfMocked : public Metal::Mock<Environmentalist>
 public:
 #if defined __linux__
    METALMOCK_NONVOID0_CONST(string, LinuxMachineName)
+   METALMOCK_NONVOID0_CONST(string, LinuxUserName)
 #elif defined _WIN32
    METALMOCK_NONVOID0_CONST(string, WindowsMachineName)
    METALMOCK_NONVOID0_CONST(string, WindowsUserName)
