@@ -56,8 +56,8 @@ TEST(OneOrTwoDigitSizeTToTwoChars_ValueIs99_Writes99)
 
 TEST1X1(OneOrTwoDigitSizeTToTwoChars_ValueIsGreaterThan99_ThrowsOutOfRangeException,
    size_t value,
-   100,
-   101)
+   100ull,
+   101ull)
 {
    const string expectedExceptionMessage = "Argument error calling Utils::Chars::OneOrTwoDigitSizeTToTwoChars(size_t value, char* outChars): value must be <= 99: value=" + to_string(value);
    THROWS_EXCEPTION(Chars::OneOrTwoDigitSizeTToTwoChars(value, nullptr),

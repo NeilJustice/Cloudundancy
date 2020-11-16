@@ -16,6 +16,8 @@
 #include <regex>
 using namespace std;
 
+#include "libCloudundancy/CompilerWarnings/IfWindowsPopIgnoredPrecompiledHeaderWarnings.h"
+
 #include "ZenUnit/ZenUnit.h"
 #include "ZenUnit/MetalMock.h"
 
@@ -57,4 +59,3 @@ using namespace std;
 #include "libCloudundancyTests/ValueTypes/ZenUnit/Random/RandomFileCopyInstruction.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/Random/RandomFilePathLineNumberLineText.h"
 
-#include "libCloudundancy/CompilerWarnings/IfWindowsPopIgnoredPrecompiledHeaderWarnings.h"
