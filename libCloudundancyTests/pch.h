@@ -16,8 +16,8 @@
 #include <regex>
 using namespace std;
 
-#include "ZenUnit.h"
-#include "MetalMock.h"
+#include "ZenUnit/ZenUnit.h"
+#include "ZenUnit/MetalMock.h"
 
 // libCloudundancy Enums
 #include "libCloudundancy/Enums/Color.h"
