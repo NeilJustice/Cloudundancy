@@ -20,7 +20,7 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
 * [Windows Jenkins Jobs Which Compile Cloudundancy](#windows-jenkins-jobs-which-compile-cloudundancy)
 * [4 Commands To Build And Install Cloudundancy On Linux](#4-commands-to-build-and-install-cloudundancy-on-linux)
 * [4 Commands To Build And Install Cloudundancy On Windows](#4-commands-to-build-and-install-cloudundancy-on-windows)
-* [Cloudundancy Future Features Roadmap](#cloudundancy-features-roadmap)
+* [Cloudundancy Future Features Roadmap](#cloudundancy-future-features-roadmap)
 
 ## Command Line Usage
 
@@ -48,7 +48,7 @@ Usage:
 
 ### example-linux-ini-file
 
-10/30/2020: Work in progress.
+11/16/2020: Work in progress.
 
 ### example-windows-ini-file
 
@@ -103,21 +103,23 @@ scm-polling.log
 
 ### backup-files-and-folders
 
-10/30/2020: Work in progress.
+11/16/2020: Work in progress.
 
 ### backup-files-and-folders-to-7z-file
 
-10/30/2020: Work in progress.
+11/16/2020: Work in progress.
 
 ### Linux Jenkins Jobs Which Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize Cloudundancy
 
 A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Fedora 33:
 
-10/30/2020: Work in progress.
+11/16/2020: Work in progress.
 
 ### Windows Jenkins Jobs Which Compile Cloudundancy
 
 A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Windows 10:
+
+11/16/2020: Work in progress.
 
 ## 4 Commands To Build And Install Cloudundancy On Linux
 
@@ -139,4 +141,10 @@ cmake --build . --config Release --target install
 
 ## Cloudundancy Future Features Roadmap
 
-10/30/2020: Work in progress.
+|Prioritized List Of Future Cloudundancy Features As Of 11/16/2020|
+|-----------------------------------------------------------------|
+|Confirmation step before any copying begins that all destination folders are writeable permissions-wise|
+|`backup-files-and-folders-to-7z-file` working on Linux|
+|SonarCloud static analysis badge|
+|Coverity static analysis badge|
+|Parallel copying to multiple destination folders|
