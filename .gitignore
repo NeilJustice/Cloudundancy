@@ -10,6 +10,9 @@ ReleaseCI/
 !CMakeMacros.cmake
 CMakeCache.txt
 
+# Linux
+*.o
+
 # Windows
 .axoCover/
 .vs/
@@ -42,3 +45,4 @@ install_manifest.txt
 __pycache__/
 htmlcov/
 coverage.xml
+

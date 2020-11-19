@@ -5,7 +5,9 @@
             "includePath": [
                 "/usr/include",
                 "/usr/local/include/ZenUnit",
-                "${workspaceFolder}"
+                "${workspaceFolder}",
+                "${workspaceFolder}/libCloudundancy",
+                "${workspaceFolder}/libCloudundancyTests"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
@@ -13,7 +15,6 @@
                 "path": [
                     "/usr/include",
                     "/usr/local/include/ZenUnit",
-                    "/usr/local/include/MetalMock",
                     "${workspaceRoot}"
                 ]
             },
