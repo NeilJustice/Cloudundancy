@@ -11,6 +11,7 @@ ReleaseCI/
 CMakeCache.txt
 
 # Linux
+build.ninja
 *.o
 
 # Windows

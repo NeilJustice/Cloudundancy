@@ -2,17 +2,18 @@
    "version": "0.2.0",
    "configurations": [
    {
-         "name": "clang++ - Build and debug active file",
+         "name": "Debug libCloudundancyTests",
          "type": "cppdbg",
          "request": "launch",
-         "program": "${workspaceRoot}/Debug/Cloudundancy/Cloudundancy",
-         //"program": "${workspaceRoot}/Debug/libCloudundancyTests/libCloudundancyTests",
+         //"program": "${workspaceRoot}/Debug/Cloudundancy/Cloudundancy",
+         "program": "${workspaceRoot}/Debug/libCloudundancyTests/libCloudundancyTests",
          "args": [],
-         "stopAtEntry": true,
+         "stopAtEntry": false,
          "cwd": "${workspaceFolder}",
          "environment": [],
          "externalConsole": false,
-         "MIMode": "lldb",
+         "MIMode": "gdb",
+         "miDebuggerPath": "/usr/bin/gdb",
          "preLaunchTask": "Build Debug"
       }
    ]
