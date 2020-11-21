@@ -6,7 +6,9 @@
 TESTS(RecursiveDirectoryIteratorIntegrationTests)
 AFACT(DefaultConstructor_NewsOneExtraArgTransformer_SetsFieldsToDefaultValues)
 AFACT(IntegrationTest_RecursiveDirectoryIterator_EmptyFilePathIgnoreSubstrings_ReturnsAllFilePathsInAndBelowFolderPath)
+#ifdef _WIN32
 AFACT(IntegrationTest_RecursiveDirectoryIterator_NonEmptyFilePathIgnoreSubstrings_ReturnsAllNonIgnoredFilePathsInAndBelowFolderPath)
+#endif
 EVIDENCE
 
 RecursiveDirectoryIterator _recursiveDirectoryIterator;
@@ -127,6 +129,7 @@ TEST(IntegrationTest_RecursiveDirectoryIterator_EmptyFilePathIgnoreSubstrings_Re
    INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedFilePaths, actualFilePaths);
 }
 
+#ifdef _WIN32
 TEST(IntegrationTest_RecursiveDirectoryIterator_NonEmptyFilePathIgnoreSubstrings_ReturnsAllNonIgnoredFilePathsInAndBelowFolderPath)
 {
    const vector<string> emptyFilePathIgnoreSubstrings =
@@ -177,5 +180,6 @@ TEST(IntegrationTest_RecursiveDirectoryIterator_NonEmptyFilePathIgnoreSubstrings
    };
    INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedFilePaths, actualFilePaths);
 }
+#endif
 
 RUN_TESTS(RecursiveDirectoryIteratorIntegrationTests)

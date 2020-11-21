@@ -46,7 +46,6 @@ TEST3X3(CaseInsensitiveContains_ReturnsTrueIfStringCaseInsensitiveContainsSubstr
    true, " ", "",
    true, " ", " ",
    true, "  ", " ",
-   false, "", " ",
    true, "abc", "abc",
    true, "ABC", "abc",
    true, "abc", "ABC",
