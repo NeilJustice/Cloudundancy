@@ -32,6 +32,8 @@ using namespace std;
 #include "Windows.h" // Windows process running of 7z.exe and console colors
 #endif
 
+#include "libCloudundancy/CompilerWarnings/IfWindowsPopIgnoredPrecompiledHeaderWarnings.h"
+
 // libCloudundancy Enums
 #include "libCloudundancy/Enums/Color.h"
 #include "libCloudundancy/Enums/FileSystemExceptionType.h"
@@ -46,8 +48,6 @@ using namespace std;
 #include "libCloudundancy/ValueTypes/FileCopyResult.h"
 #include "libCloudundancy/ValueTypes/FilePathLineNumberLineText.h"
 #include "libCloudundancy/ValueTypes/FileSystemException.h"
-
-#include "libCloudundancy/CompilerWarnings/IfWindowsPopIgnoredPrecompiledHeaderWarnings.h"
 
 // libCloudundancy Utility Components
 #include "libCloudundancy/Components/Console/Console.h"
