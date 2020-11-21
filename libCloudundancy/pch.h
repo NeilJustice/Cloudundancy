@@ -1,6 +1,5 @@
 #pragma once
 #include "libCloudundancy/CompilerWarnings/IfWindowsIgnoreTheseWarningsGlobally.h"
-#include "libCloudundancy/CompilerWarnings/IfWindowsPushIgnoredPrecompiledHeaderWarnings.h"
 
 #if defined __linux__
    #include <experimental/filesystem>
@@ -8,9 +7,12 @@
    #include <memory>
    #include <unistd.h>
 #elif defined _WIN32 || defined __APPLE__
+   #pragma warning(push)
+   #pragma warning(disable: 4365) // signed/unsigned mismatch
    #define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
    #include <filesystem>
    namespace fs = std::filesystem;
+   #pragma warning(pop)
 #endif
 
 #include <array>
@@ -31,8 +33,6 @@ using namespace std;
 #include <io.h> // _isatty()
 #include "Windows.h" // Windows process running of 7z.exe and console colors
 #endif
-
-#include "libCloudundancy/CompilerWarnings/IfWindowsPopIgnoredPrecompiledHeaderWarnings.h"
 
 // libCloudundancy Enums
 #include "libCloudundancy/Enums/Color.h"
