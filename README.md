@@ -44,7 +44,9 @@ Usage:
       --backup-staging-folder=<FolderPath>
 ```
 
-Cloudundancy command line arguments are parsed using the excellent single-header library [docopt.cpp](https://github.com/docopt/docopt.cpp).
+Cloudundancy command line arguments are parsed using the excellent single-header library [docopt.cpp](https://github.com/docopt/docopt.cpp):
+
+![CloudundancyArgsParser](Screenshots/CloudundancyArgsParser.png)
 
 ## Cloudundancy Program Modes
 
