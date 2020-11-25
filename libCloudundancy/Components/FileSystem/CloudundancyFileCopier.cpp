@@ -141,7 +141,8 @@ void CloudundancyFileCopier::CopyNonIgnoredFilesInAndBelowFolderToFolder(
 void CloudundancyFileCopier::TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const
 {
    const string copyingFileMessage = String::Concat(
-      "Copying ", sourceFilePath.string(), "\n     to ", destinationFilePath.string(), ". ");
+      "Copying ", sourceFilePath.string(), '\n',
+      "     to ", destinationFilePath.string(), ". ");
    _console->Write(copyingFileMessage);
    const FileCopyResult fileCopyResult = _fileSystem->TryCopyFile(sourceFilePath, destinationFilePath);
    const string durationInMilliseconds = to_string(fileCopyResult.durationInMilliseconds);
