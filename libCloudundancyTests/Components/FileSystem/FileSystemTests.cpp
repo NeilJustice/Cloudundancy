@@ -199,9 +199,9 @@ TEST(ReadFileBytes_OpensFileInBinaryReadMode_FileSizeIsNot0_ReadsFileBytes_Close
       &FileSystem::ReadFileSize, &_fileSystem, &readModeBinaryFilePointer));
    METALMOCK(_charVectorAllocatorMock->NewCharVectorMock.CalledOnceWith(fileSizeInBytes));
    METALMOCK(freadMock.CalledOnceWith(expected0thBytesBufferByte, 1, fileSizeInBytes, &readModeBinaryFilePointer));
+   METALMOCK(_fileOpenerCloserMock->CloseFileMock.CalledOnceWith(&readModeBinaryFilePointer));
    METALMOCK(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(fileSizeInBytes, numberOfBytesRead,
       "fread() in FileSystem::ReadBytes() unexpectedly did not return fileSizeInBytes"));
-   METALMOCK(_fileOpenerCloserMock->CloseFileMock.CalledOnceWith(&readModeBinaryFilePointer));
    const vector<char> expectedFileBytes(fileSizeInBytes);
    VECTORS_ARE_EQUAL(expectedFileBytes, fileBytes);
 }

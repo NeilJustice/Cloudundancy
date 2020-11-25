@@ -162,9 +162,9 @@ FileCopyResult FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs:
    const size_t sourceFileBytesSize = sourceFileBytes.size();
    const size_t numberOfBytesWritten = _call_fwrite(
       &sourceFileBytes[0], 1, sourceFileBytesSize, writeModeDestinationBinaryFilePointer);
+   _fileOpenerCloser->CloseFile(writeModeDestinationBinaryFilePointer);
    _asserter->ThrowIfSizeTsNotEqual(sourceFileBytesSize, numberOfBytesWritten,
       "fwrite() in FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) unexpectedly returned numberOfBytesWritten != sourceFileBytesSize");
-   _fileOpenerCloser->CloseFile(writeModeDestinationBinaryFilePointer);
    FileCopyResult successFileCopyResult;
    successFileCopyResult.sourceFilePath = sourceFilePath;
    successFileCopyResult.destinationFilePath = destinationFilePath;
