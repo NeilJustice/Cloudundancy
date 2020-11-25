@@ -158,13 +158,12 @@ FileCopyResult FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs:
       failedFileCopyResult.durationInMilliseconds = _stopwatch->StopAndGetElapsedMilliseconds();
       return failedFileCopyResult;
    }
-   _sourceFileBytes = std::move(sourceFileBytes);
    FILE* const writeModeDestinationBinaryFilePointer = _fileOpenerCloser->CreateBinaryFileInWriteMode(destinationFilePath);
-   const size_t sourceFileSizeInBytes = _sourceFileBytes.size();
+   const size_t sourceFileBytesSize = sourceFileBytes.size();
    const size_t numberOfBytesWritten = _call_fwrite(
-      &_sourceFileBytes[0], 1, sourceFileSizeInBytes, writeModeDestinationBinaryFilePointer);
-   _asserter->ThrowIfSizeTsNotEqual(sourceFileSizeInBytes, numberOfBytesWritten,
-      "fwrite() in FileSystem::TryCopyFile() unexpectedly returned numberOfBytesWritten != sourceFileSizeInBytes");
+      &sourceFileBytes[0], 1, sourceFileBytesSize, writeModeDestinationBinaryFilePointer);
+   _asserter->ThrowIfSizeTsNotEqual(sourceFileBytesSize, numberOfBytesWritten,
+      "fwrite() in FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) unexpectedly returned numberOfBytesWritten != sourceFileBytesSize");
    _fileOpenerCloser->CloseFile(writeModeDestinationBinaryFilePointer);
    FileCopyResult successFileCopyResult;
    successFileCopyResult.sourceFilePath = sourceFilePath;

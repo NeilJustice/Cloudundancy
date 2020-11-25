@@ -129,8 +129,6 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
    DELETE_TO_ASSERT_NEWED(fileSystem._caller_ReadFileSize);
    // Mutable Components
    DELETE_TO_ASSERT_NEWED(fileSystem._stopwatch);
-   // Mutable Fields
-   IS_EMPTY(fileSystem._sourceFileBytes);
 }
 
 TEST(DeleteFolder_CallsStdFileSystemRemoveAllOnFolderPath)
@@ -378,12 +376,50 @@ TEST(TryCopyFile_SourceFileIsNotEmpty_CreateParentFolderOfDestinationFilePathThr
    ARE_EQUAL(expectedReturnValue, fileCopyResult);
 }
 
+struct fwriteCallHistory
+{
+   size_t numberOfCalls = 0;
+   size_t returnValue_numberOfBytesWritten = 0;
+   const void* sourceBytesArgument = nullptr;
+   size_t elementSizeArgument = 0;
+   size_t countArgument = 0;
+   FILE* fileArgument = nullptr;
+
+   size_t RecordFunctionCall(const void* sourceBytes, size_t elementSize, size_t count, FILE* file)
+   {
+      ++numberOfCalls;
+      sourceBytesArgument = sourceBytes;
+      elementSizeArgument = elementSize;
+      countArgument = count;
+      fileArgument = file;
+      return returnValue_numberOfBytesWritten;
+   }
+
+   void AssertCalledOnceWith(
+      size_t expectedElementSizeArgument,
+      size_t expectedCountArgument,
+      FILE* expectedFileArgument)
+   {
+      IS_NOT_NULLPTR(sourceBytesArgument);
+      ARE_EQUAL(expectedElementSizeArgument, elementSizeArgument);
+      ARE_EQUAL(expectedCountArgument, countArgument);
+      ARE_EQUAL(expectedFileArgument, fileArgument);
+   }
+} _fwriteCallHistory;
+
+size_t fwriteCallInstead(const void* sourceBytesArgument, size_t elementSizeArgument, size_t countArgument, FILE* fileArgument)
+{
+   const size_t numberOfBytesWritten = _fwriteCallHistory.RecordFunctionCall(
+      sourceBytesArgument, elementSizeArgument, countArgument, fileArgument);
+   return numberOfBytesWritten;
+}
+
 TEST(TryCopyFile_SourceFileIsNotEmpty_CreateParentFolderOfDestinationFilePathSucceeds_WritesSourceFileBytesToDestinationFilePath_ReturnsTrueFileCopyResult)
 {
    _stopwatchMock->StartMock.Expect();
 
-   const vector<char> nonEmptySourceFileBytes = ZenUnit::RandomNonEmptyVector<char>();
-   _caller_ReadFileBytesMock->CallConstMemberFunctionMock.Return(nonEmptySourceFileBytes);
+   const vector<char> sourceFileBytes = ZenUnit::RandomNonEmptyVector<char>();
+   _caller_ReadFileBytesMock->CallConstMemberFunctionMock.Return(sourceFileBytes);
 
    create_directoriesMock.ReturnRandom();
 
@@ -394,7 +430,9 @@ TEST(TryCopyFile_SourceFileIsNotEmpty_CreateParentFolderOfDestinationFilePathSuc
 
    _fileOpenerCloserMock->CloseFileMock.Expect();
 
-   const size_t numberOfBytesWritten = fwriteMock.ReturnRandom();
+   _fwriteCallHistory.returnValue_numberOfBytesWritten = ZenUnit::Random<size_t>();
+   fwriteMock.CallInstead(std::bind(&FileSystemTests::fwriteCallInstead, this,
+      std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
 
    const unsigned long long elapsedMilliseconds = _stopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
 
@@ -403,16 +441,18 @@ TEST(TryCopyFile_SourceFileIsNotEmpty_CreateParentFolderOfDestinationFilePathSuc
    //
    const FileCopyResult fileCopyResult = _fileSystem.TryCopyFile(sourceFilePath, destinationFilePath);
    //
-   const size_t expectedSourceFileSizeInBytes = nonEmptySourceFileBytes.size();
+   const size_t expectedSourceFileBytesSize = sourceFileBytes.size();
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
-   METALMOCK(_caller_ReadFileBytesMock->CallConstMemberFunctionMock.CalledOnceWith(&FileSystem::ReadFileBytes, &_fileSystem, sourceFilePath));
+   METALMOCK(_caller_ReadFileBytesMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &FileSystem::ReadFileBytes, &_fileSystem, sourceFilePath));
    const fs::path expectedParentPathOfDestinationFilePath = destinationFilePath.parent_path();
    METALMOCK(create_directoriesMock.CalledOnceWith(expectedParentPathOfDestinationFilePath));
    METALMOCK(_fileOpenerCloserMock->CreateBinaryFileInWriteModeMock.CalledOnceWith(destinationFilePath));
-   METALMOCK(fwriteMock.CalledOnceWith(
-      &_fileSystem._sourceFileBytes[0], 1, expectedSourceFileSizeInBytes, &writeModeDestinationBinaryFilePointer));
-   METALMOCK(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(expectedSourceFileSizeInBytes, numberOfBytesWritten,
-      "fwrite() in FileSystem::TryCopyFile() unexpectedly returned numberOfBytesWritten != sourceFileSizeInBytes"));
+   _fwriteCallHistory.AssertCalledOnceWith(
+      1, expectedSourceFileBytesSize, &writeModeDestinationBinaryFilePointer);
+   METALMOCK(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(
+      expectedSourceFileBytesSize, _fwriteCallHistory.returnValue_numberOfBytesWritten,
+      "fwrite() in FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) unexpectedly returned numberOfBytesWritten != sourceFileBytesSize"));
    METALMOCK(_fileOpenerCloserMock->CloseFileMock.CalledOnceWith(&writeModeDestinationBinaryFilePointer));
    METALMOCK(_stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
    FileCopyResult expectedReturnValue;

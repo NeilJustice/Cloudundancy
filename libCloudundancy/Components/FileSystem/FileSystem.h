@@ -43,9 +43,6 @@ private:
 
    // Mutable Components
    unique_ptr<Stopwatch> _stopwatch;
-
-   // Mutable Fields
-   mutable vector<char> _sourceFileBytes;
 public:
    FileSystem();
    virtual ~FileSystem();
