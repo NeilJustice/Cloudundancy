@@ -83,18 +83,16 @@ void CloudundancyFileCopier::TryCopyFileToFolder(
    const fs::path& destinationFolderPath) const
 {
    const fs::path& sourceFilePath = cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath;
-   const fs::path destinationFilePath = [&]()
+   const fs::path sourceFileName = cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath.filename();
+   fs::path destinationFilePath;
+   if (cloudundancyIniCopyInstruction.relativeDestinationFolderPath == ".")
    {
-      const fs::path sourceFileName = cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath.filename();
-      if (cloudundancyIniCopyInstruction.relativeDestinationFolderPath == ".")
-      {
-         const fs::path destinationFilePath = destinationFolderPath / sourceFileName;
-         return destinationFilePath;
-      }
-      const fs::path destinationFilePath =
-         destinationFolderPath / cloudundancyIniCopyInstruction.relativeDestinationFolderPath / sourceFileName;
-      return destinationFilePath;
-   }();
+      destinationFilePath = destinationFolderPath / sourceFileName;
+   }
+   else
+   {
+      destinationFilePath = destinationFolderPath / cloudundancyIniCopyInstruction.relativeDestinationFolderPath / sourceFileName;
+   }
    _caller_TryCopyFile->ConstCall(this, &CloudundancyFileCopier::TryCopyFile, sourceFilePath, destinationFilePath);
 }
 
