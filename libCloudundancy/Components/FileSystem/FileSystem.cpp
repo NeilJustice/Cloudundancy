@@ -15,55 +15,68 @@ int* GetLinuxErrno()
 #endif
 
 FileSystem::FileSystem()
-   // Constant Components
-   : _asserter(make_unique<Asserter>())
-   , _charVectorAllocator(make_unique<CharVectorAllocator>())
-   , _fileOpenerCloser(make_unique<FileOpenerCloser>())
-   // Function Pointers
+   // C File Function Pointers
 #ifdef __linux__
-   , _call_errno(GetLinuxErrno)
+   : _call_errno(GetLinuxErrno)
 #elif _WIN32
-   , _call_errno(::_errno)
+   : _call_errno(::_errno)
 #endif
    , _call_fread(::fread)
    , _call_fseek(::fseek)
+   , _call_ftell(::ftell)
+   , _call_fwrite(::fwrite)
+   // std::filesystem Function Pointers
    , _call_fs_current_path(static_cast<void(*)(const fs::path&)>(fs::current_path))
    , _call_fs_create_directories_as_assignable_function_overload_pointer(fs::create_directories)
-   , _call_fwrite(::fwrite)
-   , _call_ftell(::ftell)
-   , _call_std_filesystem_remove_all(static_cast<uintmax_t(*)(const fs::path&)>(fs::remove_all))
-   , _call_std_filesystem_exists_as_assignable_function_overload_pointer(fs::exists)
+   , _call_fs_exists_as_assignable_function_overload_pointer(fs::exists)
+   , _call_fs_file_size(static_cast<FileSizeOverloadType>(fs::file_size))
+   , _call_fs_remove_all(static_cast<RemoveAllOverloadType>(fs::remove_all))
    // Function Callers
-   , _caller_ReadFileText(make_unique< _caller_ReadFileText_Type>())
+   , _caller_FileSize(make_unique<_caller_FileSize_Type>())
    , _caller_ReadFileBytes(make_unique<_caller_ReadFileBytes_Type>())
-   , _caller_ReadFileSize(make_unique<_caller_ReadFileSize_Type>())
+   , _caller_ReadFileText(make_unique< _caller_ReadFileText_Type>())
+   // Constant Components
+   , _asserter(make_unique<Asserter>())
+   , _charVectorAllocator(make_unique<CharVectorAllocator>())
+   , _fileOpenerCloser(make_unique<FileOpenerCloser>())
    // Mutable Components
    , _stopwatch(make_unique<Stopwatch>())
 {
    _call_fs_create_directories = _call_fs_create_directories_as_assignable_function_overload_pointer;
-   _call_std_filesystem_exists = _call_std_filesystem_exists_as_assignable_function_overload_pointer;
+   _call_fs_exists = _call_fs_exists_as_assignable_function_overload_pointer;
 }
 
 FileSystem::~FileSystem()
 {
 }
 
-void FileSystem::DeleteFolder(const fs::path& folderPath) const
-{
-   _call_std_filesystem_remove_all(folderPath);
-}
+// File Or Folder Existence Checks
 
 bool FileSystem::FileOrFolderExists(const fs::path& fileOrFolderPath) const
 {
-   const bool fileOrFolderExists = _call_std_filesystem_exists(fileOrFolderPath);
+   const bool fileOrFolderExists = _call_fs_exists(fileOrFolderPath);
    return fileOrFolderExists;
 }
+
+void FileSystem::ThrowIfFilePathIsNotEmptyAndDoesNotExist(const fs::path& filePath) const
+{
+   if (!filePath.empty())
+   {
+      const bool filePathExists = _call_fs_exists(filePath);
+      if (!filePathExists)
+      {
+         throw FileSystemException(FileSystemExceptionType::FileDoesNotExist, filePath);
+      }
+   }
+}
+
+// File Reads
 
 vector<char> FileSystem::ReadFileBytes(const fs::path& filePath) const
 {
    FILE* const readModeBinaryFilePointer = _fileOpenerCloser->OpenBinaryFileInReadMode(filePath);
-   const size_t fileSizeInBytes = _caller_ReadFileSize->CallConstMemberFunction(
-      &FileSystem::ReadFileSize, this, readModeBinaryFilePointer);
+   const size_t fileSizeInBytes = _caller_FileSize->CallConstMemberFunction(
+      &FileSystem::FileSize, this, readModeBinaryFilePointer);
    if (fileSizeInBytes == 0)
    {
       _fileOpenerCloser->CloseFile(readModeBinaryFilePointer);
@@ -76,6 +89,23 @@ vector<char> FileSystem::ReadFileBytes(const fs::path& filePath) const
    _fileOpenerCloser->CloseFile(readModeBinaryFilePointer);
    const vector<char> fileBytes(*fileBytesBuffer);
    return fileBytes;
+}
+
+string FileSystem::ReadFileText(const fs::path& filePath) const
+{
+   FILE* const readModeTextFilePointer = _fileOpenerCloser->OpenTextFileInReadMode(filePath);
+   const size_t fileSizeInBytes = _caller_FileSize->CallConstMemberFunction(
+      &FileSystem::FileSize, this, readModeTextFilePointer);
+   if (fileSizeInBytes == 0)
+   {
+      _fileOpenerCloser->CloseFile(readModeTextFilePointer);
+      return {};
+   }
+   const unique_ptr<vector<char>> fileTextBuffer(_charVectorAllocator->NewCharVector(fileSizeInBytes));
+   _call_fread(&(*fileTextBuffer)[0], 1, fileSizeInBytes, readModeTextFilePointer);
+   _fileOpenerCloser->CloseFile(readModeTextFilePointer);
+   const string fileText(&(*fileTextBuffer)[0]);
+   return fileText;
 }
 
 vector<string> FileSystem::ReadFileLinesWhichMustBeNonEmpty(const fs::path& filePath) const
@@ -95,39 +125,7 @@ vector<string> FileSystem::ReadFileLinesWhichMustBeNonEmpty(const fs::path& file
    return fileLines;
 }
 
-string FileSystem::ReadFileText(const fs::path& filePath) const
-{
-   FILE* const readModeTextFilePointer = _fileOpenerCloser->OpenTextFileInReadMode(filePath);
-   const size_t fileSizeInBytes = _caller_ReadFileSize->CallConstMemberFunction(
-      &FileSystem::ReadFileSize, this, readModeTextFilePointer);
-   if (fileSizeInBytes == 0)
-   {
-      _fileOpenerCloser->CloseFile(readModeTextFilePointer);
-      return {};
-   }
-   const unique_ptr<vector<char>> fileTextBuffer(_charVectorAllocator->NewCharVector(fileSizeInBytes));
-   _call_fread(&(*fileTextBuffer)[0], 1, fileSizeInBytes, readModeTextFilePointer);
-   _fileOpenerCloser->CloseFile(readModeTextFilePointer);
-   const string fileText(&(*fileTextBuffer)[0]);
-   return fileText;
-}
-
-void FileSystem::SetCurrentPath(const fs::path& folderPath) const
-{
-   _call_fs_current_path(folderPath);
-}
-
-void FileSystem::ThrowIfFilePathIsNotEmptyAndDoesNotExist(const fs::path& filePath) const
-{
-   if (!filePath.empty())
-   {
-      const bool filePathExists = _call_std_filesystem_exists(filePath);
-      if (!filePathExists)
-      {
-         throw FileSystemException(FileSystemExceptionType::FileDoesNotExist, filePath);
-      }
-   }
-}
+// File Copiies
 
 FileCopyResult FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const
 {
@@ -173,6 +171,19 @@ FileCopyResult FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs:
    return successFileCopyResult;
 }
 
+bool FileSystem::IsFileSizeGreaterThan2GB(const fs::path& filePath) const
+{
+   const size_t fileSize = _call_fs_file_size(filePath);
+   constexpr size_t TwoGigabytes = 2ull * 1024ull * 1024ull * 1024ull;
+   if (fileSize > TwoGigabytes)
+   {
+      return true;
+   }
+   return false;
+}
+
+// File Writes
+
 void FileSystem::WriteTextFile(const fs::path& filePath, string_view fileText) const
 {
    const fs::path parentFolderPath = filePath.parent_path();
@@ -185,17 +196,29 @@ void FileSystem::WriteTextFile(const fs::path& filePath, string_view fileText) c
    _fileOpenerCloser->CloseFile(writeModeTextFilePointer);
 }
 
+// Misc
+
+void FileSystem::DeleteFolder(const fs::path& folderPath) const
+{
+   _call_fs_remove_all(folderPath);
+}
+
+void FileSystem::SetCurrentPath(const fs::path& folderPath) const
+{
+   _call_fs_current_path(folderPath);
+}
+
 // Private Functions
 
-size_t FileSystem::ReadFileSize(FILE* filePointer) const
+size_t FileSystem::FileSize(FILE* filePointer) const
 {
    const int fseekEndReturnValue = _call_fseek(filePointer, 0, SEEK_END);
    _asserter->ThrowIfIntsNotEqual(0, fseekEndReturnValue,
-      "fseek(filePointer, 0, SEEK_END) in FileSystem::ReadFileSize() unexpectedly did not return 0");
+      "fseek(filePointer, 0, SEEK_END) in FileSystem::FileSize() unexpectedly did not return 0");
    const long ftellReturnValue = _call_ftell(filePointer);
    const int fseekSetReturnValue = _call_fseek(filePointer, 0, SEEK_SET);
    _asserter->ThrowIfIntsNotEqual(0, fseekSetReturnValue,
-      "fseek(filePointer, 0, SEEK_SET) in FileSystem::ReadFileSize() unexpectedly did not return 0");
+      "fseek(filePointer, 0, SEEK_SET) in FileSystem::FileSize() unexpectedly did not return 0");
    const size_t fileSizeInBytes = static_cast<size_t>(ftellReturnValue);
    return fileSizeInBytes;
 }

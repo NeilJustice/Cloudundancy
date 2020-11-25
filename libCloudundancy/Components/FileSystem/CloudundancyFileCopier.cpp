@@ -144,14 +144,21 @@ void CloudundancyFileCopier::TryCopyFile(const fs::path& sourceFilePath, const f
       "Copying ", sourceFilePath.string(), '\n',
       "     to ", destinationFilePath.string(), ". ");
    _console->Write(copyingFileMessage);
+
+   //const bool sourceFileTooLargeToCopyWithFastCStyleFileCopy =
+   //   _fileSystem->IsFileTooLargeToCopyWithFastCStyleFileCopy(sourceFilePath);
+
    const FileCopyResult fileCopyResult = _fileSystem->TryCopyFile(sourceFilePath, destinationFilePath);
+
    const string durationInMilliseconds = to_string(fileCopyResult.durationInMilliseconds);
    if (fileCopyResult.copySucceeded)
    {
-      _console->WriteLineColor("Copied [" + durationInMilliseconds + "ms]\n", Color::Green);
+      const string copiedMessage = "Copied [" + durationInMilliseconds + "ms]\n";
+      _console->WriteLineColor(copiedMessage, Color::Green);
    }
    else
    {
-      _console->WriteLineColor("Copy failed [" + durationInMilliseconds + "ms]\n", Color::Red);
+      const string copyFailedMessage = "Copy failed [" + durationInMilliseconds + "ms]\n";
+      _console->WriteLineColor(copyFailedMessage, Color::Red);
    }
 }
