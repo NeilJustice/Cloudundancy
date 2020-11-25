@@ -34,7 +34,7 @@ FileSystem::FileSystem()
    , _call_std_filesystem_remove_all(static_cast<uintmax_t(*)(const fs::path&)>(fs::remove_all))
    , _call_std_filesystem_exists_as_assignable_function_overload_pointer(fs::exists)
    // Function Callers
-   , _caller_ReadAsciiFileText(make_unique< _caller_ReadAsciiFileText_Type>())
+   , _caller_ReadFileText(make_unique< _caller_ReadFileText_Type>())
    , _caller_ReadFileBytes(make_unique<_caller_ReadFileBytes_Type>())
    , _caller_ReadFileSize(make_unique<_caller_ReadFileSize_Type>())
    // Mutable Components
@@ -78,9 +78,9 @@ vector<char> FileSystem::ReadFileBytes(const fs::path& filePath) const
    return fileBytes;
 }
 
-vector<string> FileSystem::ReadAsciiFileLinesWhichMustBeNonEmpty(const fs::path& filePath) const
+vector<string> FileSystem::ReadFileLinesWhichMustBeNonEmpty(const fs::path& filePath) const
 {
-   const string fileText = _caller_ReadAsciiFileText->CallConstMemberFunction(&FileSystem::ReadAsciiFileText, this, filePath);
+   const string fileText = _caller_ReadFileText->CallConstMemberFunction(&FileSystem::ReadFileText, this, filePath);
    if (fileText.empty())
    {
       throw FileSystemException(FileSystemExceptionType::FileCannotBeEmpty, filePath);
@@ -95,7 +95,7 @@ vector<string> FileSystem::ReadAsciiFileLinesWhichMustBeNonEmpty(const fs::path&
    return fileLines;
 }
 
-string FileSystem::ReadAsciiFileText(const fs::path& filePath) const
+string FileSystem::ReadFileText(const fs::path& filePath) const
 {
    FILE* const readModeTextFilePointer = _fileOpenerCloser->OpenTextFileInReadMode(filePath);
    const size_t fileSizeInBytes = _caller_ReadFileSize->CallConstMemberFunction(

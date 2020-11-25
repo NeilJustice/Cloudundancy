@@ -22,7 +22,7 @@ CloudundancyIniFileReader::~CloudundancyIniFileReader()
 
 CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudundancyIniPath) const
 {
-   vector<string> iniFileLines = _fileSystem->ReadAsciiFileLinesWhichMustBeNonEmpty(cloudundancyIniPath);
+   vector<string> iniFileLines = _fileSystem->ReadFileLinesWhichMustBeNonEmpty(cloudundancyIniPath);
    bool inDestinationFoldersSection = false;
    bool inSourceFilesAndFoldersToCopySection = false;
    bool inFileSubpathsToNotCopySection = false;

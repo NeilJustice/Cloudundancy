@@ -78,7 +78,7 @@ TEST(ReadIniFile_ParsesCloudundancyIniFile_ValidatesCloudundancyIni_ReturnsExpec
       filePathIgnoreSubstring1,
       filePathIgnoreSubstring2
    };
-   _fileSystemMock->ReadAsciiFileLinesWhichMustBeNonEmptyMock.Return(lines);
+   _fileSystemMock->ReadFileLinesWhichMustBeNonEmptyMock.Return(lines);
 
    const AbsoluteFileOrFolderPathToRelativeFolderPath fileCopyInstruction1
       = ZenUnit::Random<AbsoluteFileOrFolderPathToRelativeFolderPath>();
@@ -92,7 +92,7 @@ TEST(ReadIniFile_ParsesCloudundancyIniFile_ValidatesCloudundancyIni_ReturnsExpec
    //
    const CloudundancyIni cloudundancyIni = _cloudundancyIniFile.ReadIniFile(cloudundancyIniPath);
    //
-   METALMOCK(_fileSystemMock->ReadAsciiFileLinesWhichMustBeNonEmptyMock.CalledOnceWith(cloudundancyIniPath));
+   METALMOCK(_fileSystemMock->ReadFileLinesWhichMustBeNonEmptyMock.CalledOnceWith(cloudundancyIniPath));
    CloudundancyIni expectedCloudundancyIni;
    expectedCloudundancyIni.destinationFolderPaths =
    {

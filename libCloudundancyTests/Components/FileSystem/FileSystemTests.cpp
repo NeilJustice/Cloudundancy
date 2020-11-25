@@ -16,10 +16,10 @@ AFACT(DeleteFolder_CallsStdFileSystemRemoveAllOnFolderPath)
 AFACT(FileOrFolderExists_ReturnsResultOfCallingStdFileSystemExists)
 AFACT(ReadFileBytes_OpensFileInBinaryReadMode_FileSizeIs0_ClosesFile_ReturnsEmptyCharVector)
 AFACT(ReadFileBytes_OpensFileInBinaryReadMode_FileSizeIsNot0_ReadsFileBytes_ClosesFile_ReturnsFileBytes)
-AFACT(ReadAsciiFileText_OpensFileInTextReadMode_FileSizeIs0_ClosesFile_ReturnsEmptyCharVector)
-AFACT(ReadAsciiFileText_OpensFileInTextReadMode_FileSizeIsNot0_ReadsFileText_ClosesFile_ReturnsFileBytes)
-AFACT(ReadAsciiFileLinesWhichMustBeNonEmpty_FileTextIsEmpty_ThrowsFileSystemException)
-FACTS(ReadAsciiFileLinesWhichMustBeNonEmpty_FileTextIsNotEmpty_ReturnsFileTextSplitOnNewlines)
+AFACT(ReadFileText_OpensFileInTextReadMode_FileSizeIs0_ClosesFile_ReturnsEmptyCharVector)
+AFACT(ReadFileText_OpensFileInTextReadMode_FileSizeIsNot0_ReadsFileText_ClosesFile_ReturnsFileBytes)
+AFACT(ReadFileLinesWhichMustBeNonEmpty_FileTextIsEmpty_ThrowsFileSystemException)
+FACTS(ReadFileLinesWhichMustBeNonEmpty_FileTextIsNotEmpty_ReturnsFileTextSplitOnNewlines)
 AFACT(SetCurrentPath_CallsFsCurrentPathWithFolderPath)
 AFACT(ThrowIfFilePathIsNotEmptyAndDoesNotExist_FilePathIsEmpty_DoesNothing)
 AFACT(ThrowIfFilePathIsNotEmptyAndDoesNotExist_FilePathIsNotEmpty_FilePathExists_DoesNothing)
@@ -51,8 +51,8 @@ METALMOCK_NONVOID1_NAMESPACED_FREE(uintmax_t, std::filesytem, remove_all, const 
 METALMOCK_NONVOID1_NAMESPACED_FREE(bool, std::filesystem, exists, const fs::path&)
 
 // Function Callers
-using _caller_ReadAsciiFileText_MockType = NonVoidOneArgMemberFunctionCallerMock<string, FileSystem, const fs::path&>;
-_caller_ReadAsciiFileText_MockType* _caller_ReadAsciiFileTextMock = nullptr;
+using _caller_ReadFileText_MockType = NonVoidOneArgMemberFunctionCallerMock<string, FileSystem, const fs::path&>;
+_caller_ReadFileText_MockType* _caller_ReadFileTextMock = nullptr;
 
 using _caller_ReadFileBytes_MockType = NonVoidOneArgMemberFunctionCallerMock<vector<char>, FileSystem, const fs::path&>;
 _caller_ReadFileBytes_MockType* _caller_ReadFileBytesMock = nullptr;
@@ -82,7 +82,7 @@ STARTUP
    // Function Callers
    _fileSystem._caller_ReadFileBytes.reset(_caller_ReadFileBytesMock = new _caller_ReadFileBytes_MockType);
    _fileSystem._caller_ReadFileSize.reset(_caller_ReadFileSizeMock = new _caller_ReadFileSize_MockType);
-   _fileSystem._caller_ReadAsciiFileText.reset(_caller_ReadAsciiFileTextMock = new _caller_ReadAsciiFileText_MockType);
+   _fileSystem._caller_ReadFileText.reset(_caller_ReadFileTextMock = new _caller_ReadFileText_MockType);
    // Mutable Components
    _fileSystem._stopwatch.reset(_stopwatchMock = new StopwatchMock);
 }
@@ -124,7 +124,7 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
    STD_FUNCTION_TARGETS_OVERLOAD(StdFilesystemExistsOverloadType, fs::exists, fileSystem._call_std_filesystem_exists);
 #endif
    // Function Callers
-   DELETE_TO_ASSERT_NEWED(fileSystem._caller_ReadAsciiFileText);
+   DELETE_TO_ASSERT_NEWED(fileSystem._caller_ReadFileText);
    DELETE_TO_ASSERT_NEWED(fileSystem._caller_ReadFileBytes);
    DELETE_TO_ASSERT_NEWED(fileSystem._caller_ReadFileSize);
    // Mutable Components
@@ -208,7 +208,7 @@ TEST(ReadFileBytes_OpensFileInBinaryReadMode_FileSizeIsNot0_ReadsFileBytes_Close
    VECTORS_ARE_EQUAL(expectedFileBytes, fileBytes);
 }
 
-TEST(ReadAsciiFileText_OpensFileInTextReadMode_FileSizeIs0_ClosesFile_ReturnsEmptyCharVector)
+TEST(ReadFileText_OpensFileInTextReadMode_FileSizeIs0_ClosesFile_ReturnsEmptyCharVector)
 {
    FILE readModeTextFilePointer;
    _fileOpenerCloserMock->OpenTextFileInReadModeMock.Return(&readModeTextFilePointer);
@@ -219,7 +219,7 @@ TEST(ReadAsciiFileText_OpensFileInTextReadMode_FileSizeIs0_ClosesFile_ReturnsEmp
 
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
-   const string fileText = _fileSystem.ReadAsciiFileText(filePath);
+   const string fileText = _fileSystem.ReadFileText(filePath);
    //
    METALMOCK(_fileOpenerCloserMock->OpenTextFileInReadModeMock.CalledOnceWith(filePath));
    METALMOCK(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(
@@ -228,7 +228,7 @@ TEST(ReadAsciiFileText_OpensFileInTextReadMode_FileSizeIs0_ClosesFile_ReturnsEmp
    ARE_EQUAL("", fileText);
 }
 
-TEST(ReadAsciiFileText_OpensFileInTextReadMode_FileSizeIsNot0_ReadsFileText_ClosesFile_ReturnsFileBytes)
+TEST(ReadFileText_OpensFileInTextReadMode_FileSizeIsNot0_ReadsFileText_ClosesFile_ReturnsFileBytes)
 {
    FILE readModeTextFilePointer;
    _fileOpenerCloserMock->OpenTextFileInReadModeMock.Return(&readModeTextFilePointer);
@@ -247,7 +247,7 @@ TEST(ReadAsciiFileText_OpensFileInTextReadMode_FileSizeIsNot0_ReadsFileText_Clos
 
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
-   const string fileText = _fileSystem.ReadAsciiFileText(filePath);
+   const string fileText = _fileSystem.ReadFileText(filePath);
    //
    METALMOCK(_fileOpenerCloserMock->OpenTextFileInReadModeMock.CalledOnceWith(filePath));
    METALMOCK(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(
@@ -258,30 +258,30 @@ TEST(ReadAsciiFileText_OpensFileInTextReadMode_FileSizeIsNot0_ReadsFileText_Clos
    ARE_EQUAL(expectedFileText, fileText);
 }
 
-TEST(ReadAsciiFileLinesWhichMustBeNonEmpty_FileTextIsEmpty_ThrowsFileSystemException)
+TEST(ReadFileLinesWhichMustBeNonEmpty_FileTextIsEmpty_ThrowsFileSystemException)
 {
-   _caller_ReadAsciiFileTextMock->CallConstMemberFunctionMock.Return("");
+   _caller_ReadFileTextMock->CallConstMemberFunctionMock.Return("");
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
    FileSystemException expectedFileSystemException(FileSystemExceptionType::FileCannotBeEmpty, filePath);
-   THROWS_EXCEPTION(_fileSystem.ReadAsciiFileLinesWhichMustBeNonEmpty(filePath),
+   THROWS_EXCEPTION(_fileSystem.ReadFileLinesWhichMustBeNonEmpty(filePath),
       FileSystemException, expectedFileSystemException.what());
    //
-   METALMOCK(_caller_ReadAsciiFileTextMock->CallConstMemberFunctionMock.CalledOnceWith(&FileSystem::ReadAsciiFileText, &_fileSystem, filePath));
+   METALMOCK(_caller_ReadFileTextMock->CallConstMemberFunctionMock.CalledOnceWith(&FileSystem::ReadFileText, &_fileSystem, filePath));
 }
 
-TEST2X2(ReadAsciiFileLinesWhichMustBeNonEmpty_FileTextIsNotEmpty_ReturnsFileTextSplitOnNewlines,
+TEST2X2(ReadFileLinesWhichMustBeNonEmpty_FileTextIsNotEmpty_ReturnsFileTextSplitOnNewlines,
    string_view fileText, const vector<string>& expectedReturnValue,
    " ", vector<string>{ " " },
    "Line1\nLine2\nLine3", vector<string>{ "Line1", "Line2", "Line3" },
    "Line1\n\n\n", vector<string>{ "Line1", "", "" })
 {
-   _caller_ReadAsciiFileTextMock->CallConstMemberFunctionMock.Return(fileText);
+   _caller_ReadFileTextMock->CallConstMemberFunctionMock.Return(fileText);
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
-   const vector<string> fileLines = _fileSystem.ReadAsciiFileLinesWhichMustBeNonEmpty(filePath);
+   const vector<string> fileLines = _fileSystem.ReadFileLinesWhichMustBeNonEmpty(filePath);
    //
-   METALMOCK(_caller_ReadAsciiFileTextMock->CallConstMemberFunctionMock.CalledOnceWith(&FileSystem::ReadAsciiFileText, &_fileSystem, filePath));
+   METALMOCK(_caller_ReadFileTextMock->CallConstMemberFunctionMock.CalledOnceWith(&FileSystem::ReadFileText, &_fileSystem, filePath));
    VECTORS_ARE_EQUAL(expectedReturnValue, fileLines);
 }
 

@@ -32,8 +32,8 @@ private:
    function<bool(const fs::path&)> _call_std_filesystem_exists;
 
    // Function Callers
-   using _caller_ReadAsciiFileText_Type = NonVoidOneArgMemberFunctionCaller<string, FileSystem, const fs::path&>;
-   unique_ptr<const _caller_ReadAsciiFileText_Type> _caller_ReadAsciiFileText;
+   using _caller_ReadFileText_Type = NonVoidOneArgMemberFunctionCaller<string, FileSystem, const fs::path&>;
+   unique_ptr<const _caller_ReadFileText_Type> _caller_ReadFileText;
 
    using _caller_ReadFileBytes_Type = NonVoidOneArgMemberFunctionCaller<vector<char>, FileSystem, const fs::path&>;
    unique_ptr<const _caller_ReadFileBytes_Type> _caller_ReadFileBytes;
@@ -51,8 +51,8 @@ public:
    virtual ~FileSystem();
    virtual void DeleteFolder(const fs::path& folderPath) const;
    virtual bool FileOrFolderExists(const fs::path& fileOrFolderPath) const;
-   virtual vector<string> ReadAsciiFileLinesWhichMustBeNonEmpty(const fs::path& filePath) const;
-   virtual string ReadAsciiFileText(const fs::path& filePath) const;
+   virtual vector<string> ReadFileLinesWhichMustBeNonEmpty(const fs::path& filePath) const;
+   virtual string ReadFileText(const fs::path& filePath) const;
    virtual vector<char> ReadFileBytes(const fs::path& filePath) const;
    virtual void SetCurrentPath(const fs::path& folderPath) const;
    virtual void ThrowIfFilePathIsNotEmptyAndDoesNotExist(const fs::path& filePath) const;
