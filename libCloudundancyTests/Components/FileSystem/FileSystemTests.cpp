@@ -348,8 +348,8 @@ TEST(TryCopyFile_SourceFileIsNotEmpty_CreateParentFolderOfDestinationFilePathThr
 {
    _stopwatchMock->StartMock.Expect();
 
-   const vector<char> nonEmptySourceFileBytes = ZenUnit::RandomNonEmptyVector<char>();
-   _caller_ReadFileBytesMock->CallConstMemberFunctionMock.Return(nonEmptySourceFileBytes);
+   const vector<char> sourceFileBytes = ZenUnit::RandomNonEmptyVector<char>();
+   _caller_ReadFileBytesMock->CallConstMemberFunctionMock.Return(sourceFileBytes);
 
    const string exceptionMessage = ZenUnit::Random<string>();
    const error_code errorCode = ZenUnit::Random<error_code>();

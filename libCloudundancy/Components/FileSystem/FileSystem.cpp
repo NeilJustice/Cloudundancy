@@ -132,9 +132,9 @@ void FileSystem::ThrowIfFilePathIsNotEmptyAndDoesNotExist(const fs::path& filePa
 FileCopyResult FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const
 {
    _stopwatch->Start();
-   vector<char> readFileBytesReturnValue =
+   const vector<char> sourceFileBytes =
       _caller_ReadFileBytes->CallConstMemberFunction(&FileSystem::ReadFileBytes, this, sourceFilePath);
-   if (readFileBytesReturnValue.empty())
+   if (sourceFileBytes.empty())
    {
       FileCopyResult emptyFileNotCopiedResult;
       emptyFileNotCopiedResult.sourceFilePath = sourceFilePath;
@@ -158,7 +158,7 @@ FileCopyResult FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs:
       failedFileCopyResult.durationInMilliseconds = _stopwatch->StopAndGetElapsedMilliseconds();
       return failedFileCopyResult;
    }
-   _sourceFileBytes = std::move(readFileBytesReturnValue);
+   _sourceFileBytes = std::move(sourceFileBytes);
    FILE* const writeModeDestinationBinaryFilePointer = _fileOpenerCloser->CreateBinaryFileInWriteMode(destinationFilePath);
    const size_t sourceFileSizeInBytes = _sourceFileBytes.size();
    const size_t numberOfBytesWritten = _call_fwrite(
