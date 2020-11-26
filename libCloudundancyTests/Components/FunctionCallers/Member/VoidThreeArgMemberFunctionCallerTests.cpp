@@ -27,17 +27,16 @@ TEST(ConstCall_CallsConstMemberFunctionOnce)
 {
    Class classInstance;
    VoidThreeArgMemberFunctionCaller<Class, Arg1Type, Arg2Type, Arg3Type> voidThreeArgMemberFunctionCaller;
-   IS_EMPTY(classInstance.calls);
    //
    voidThreeArgMemberFunctionCaller.ConstCall(
-      &classInstance, &Class::ConstMemberFunction, Arg1Type{ 1 }, Arg2Type{ 2 }, Arg3Type{ 3 });
+      &Class::ConstMemberFunction, &classInstance, Arg1Type{ 1 }, Arg2Type{ 2 }, Arg3Type{ 3 });
    //
    vector<tuple<Arg1Type, Arg2Type, Arg3Type>> expectedCalls = { { Arg1Type{ 1 }, Arg2Type{ 2 }, Arg3Type{ 3 } } };
    VECTORS_ARE_EQUAL(expectedCalls, classInstance.calls);
 
 
    voidThreeArgMemberFunctionCaller.ConstCall(
-      &classInstance, &Class::ConstMemberFunction, Arg1Type{ 3 }, Arg2Type{ 4 }, Arg3Type{ 5 });
+      &Class::ConstMemberFunction, &classInstance, Arg1Type{ 3 }, Arg2Type{ 4 }, Arg3Type{ 5 });
    //
    expectedCalls.emplace_back(Arg1Type{ 3 }, Arg2Type{ 4 }, Arg3Type{ 5 });
    VECTORS_ARE_EQUAL(expectedCalls, classInstance.calls);
@@ -47,17 +46,16 @@ TEST(NonConstCall_CallsNonConstMemberFunctionOnce)
 {
    Class classInstance;
    VoidThreeArgMemberFunctionCaller<Class, Arg1Type, Arg2Type, Arg3Type> voidThreeArgMemberFunctionCaller;
-   IS_EMPTY(classInstance.calls);
    //
    voidThreeArgMemberFunctionCaller.NonConstCall(
-      &classInstance, &Class::NonConstMemberFunction, Arg1Type{ 1 }, Arg2Type{ 2 }, Arg3Type{ 3 });
+      &Class::NonConstMemberFunction, &classInstance, Arg1Type{ 1 }, Arg2Type{ 2 }, Arg3Type{ 3 });
    //
    vector<tuple<Arg1Type, Arg2Type, Arg3Type>> expectedCalls = { { Arg1Type{ 1 }, Arg2Type{ 2 }, Arg3Type{ 3 } } };
    VECTORS_ARE_EQUAL(expectedCalls, classInstance.calls);
 
 
    voidThreeArgMemberFunctionCaller.NonConstCall(
-      &classInstance, &Class::NonConstMemberFunction, Arg1Type{ 3 }, Arg2Type{ 4 }, Arg3Type{ 5 });
+      &Class::NonConstMemberFunction, &classInstance, Arg1Type{ 3 }, Arg2Type{ 4 }, Arg3Type{ 5 });
    //
    expectedCalls.emplace_back(Arg1Type{ 3 }, Arg2Type{ 4 }, Arg3Type{ 5 });
    VECTORS_ARE_EQUAL(expectedCalls, classInstance.calls);

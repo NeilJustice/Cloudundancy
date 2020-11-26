@@ -219,8 +219,8 @@ TEST(CopyNonIgnoredFilesInAndBelowFolderToFolder_CopiesNonIgnoredFilesToFolderUn
    METALMOCK(_recursiveDirectoryIteratorMock->NextNonIgnoredFilePathMock.CalledNTimes(3));
    METALMOCK(_caller_CopyNestedFileToFolderMock->ConstCallMock.CalledAsFollows(
    {
-      { &_cloudundancyFileCopier, &CloudundancyFileCopier::CopyNestedFileToFolder, nonIgnoredSourceFilePath1, cloudundancyIniCopyInstruction, destinationFolderPath },
-      { &_cloudundancyFileCopier, &CloudundancyFileCopier::CopyNestedFileToFolder, nonIgnoredSourceFilePath2, cloudundancyIniCopyInstruction, destinationFolderPath }
+      { &CloudundancyFileCopier::CopyNestedFileToFolder, &_cloudundancyFileCopier, nonIgnoredSourceFilePath1, cloudundancyIniCopyInstruction, destinationFolderPath },
+      { &CloudundancyFileCopier::CopyNestedFileToFolder, &_cloudundancyFileCopier, nonIgnoredSourceFilePath2, cloudundancyIniCopyInstruction, destinationFolderPath }
    }));
 }
 

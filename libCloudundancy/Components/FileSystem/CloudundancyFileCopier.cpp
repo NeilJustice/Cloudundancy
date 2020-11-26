@@ -120,8 +120,8 @@ void CloudundancyFileCopier::CopyNonIgnoredFilesInAndBelowFolderToFolder(
          break;
       }
       _caller_CopyNestedFileToFolder->ConstCall(
-         this, &CloudundancyFileCopier::CopyNestedFileToFolder,
-         nonIgnoredSourceFilePath, cloudundancyIniCopyInstruction, destinationFolderPath);
+         &CloudundancyFileCopier::CopyNestedFileToFolder,
+         this, nonIgnoredSourceFilePath, cloudundancyIniCopyInstruction, destinationFolderPath);
    }
 }
 
