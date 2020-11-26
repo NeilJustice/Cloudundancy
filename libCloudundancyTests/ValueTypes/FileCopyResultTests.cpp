@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "libCloudundancy/ValueTypes/FileCopyResult.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/FileCopyResultEqualizer.h"
 
 TESTS(FileCopyResultTests)
 AFACT(DefaultConstructor_SetsFieldsTo0)

@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/ValueTypes/FilePathLineNumberLineText.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/FilePathLineNumberLineTextEqualizer.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/FilePathLineNumberLineTextEqualizer.h"
 
 TESTS(FilePathLineNumberLineTextEqualizerTests)
 AFACT(AssertEqual_ThrowsIfAnyFieldNotEqual)

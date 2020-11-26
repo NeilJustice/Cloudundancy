@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/CloudundancyIniEqualizer.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/CloudundancyIniEqualizer.h"
 
 namespace ZenUnit
 {

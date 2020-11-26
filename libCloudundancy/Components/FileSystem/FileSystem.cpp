@@ -26,6 +26,7 @@ FileSystem::FileSystem()
    , _call_ftell(::ftell)
    , _call_fwrite(::fwrite)
    // std::filesystem Function Pointers
+   , _call_fs_copy_file(static_cast<CopyFileOverloadType>(fs::copy_file))
    , _call_fs_current_path(static_cast<void(*)(const fs::path&)>(fs::current_path))
    , _call_fs_create_directories_as_assignable_function_overload_pointer(fs::create_directories)
    , _call_fs_exists_as_assignable_function_overload_pointer(fs::exists)
@@ -127,7 +128,8 @@ vector<string> FileSystem::ReadFileLinesWhichMustBeNonEmpty(const fs::path& file
 
 // File Copiies
 
-FileCopyResult FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const
+FileCopyResult FileSystem::TryCopyFile(
+   const fs::path& sourceFilePath, const fs::path& destinationFilePath) const
 {
    _stopwatch->Start();
    const vector<char> sourceFileBytes =
@@ -169,6 +171,22 @@ FileCopyResult FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs:
    successFileCopyResult.copySucceeded = true;
    successFileCopyResult.durationInMilliseconds = _stopwatch->StopAndGetElapsedMilliseconds();
    return successFileCopyResult;
+}
+
+FileCopyResult FileSystem::TryCopyFileWithStdFilesystemCopyFile(
+   const fs::path& sourceFilePath, const fs::path& destinationFilePath) const
+{
+   _stopwatch->Start();
+   FileCopyResult fileCopyResult;
+   fileCopyResult.sourceFilePath = sourceFilePath;
+   fileCopyResult.destinationFilePath = destinationFilePath;
+   // try
+   fileCopyResult.copySucceeded = _call_fs_copy_file(
+      sourceFilePath, destinationFilePath, fs::copy_options::overwrite_existing);
+   // catch (const fs::filesystem_error& ex)
+   // fileCopyResult.errorMessage
+   fileCopyResult.durationInMilliseconds = _stopwatch->StopAndGetElapsedMilliseconds();
+   return fileCopyResult;
 }
 
 bool FileSystem::IsFileSizeGreaterThan2GB(const fs::path& filePath) const

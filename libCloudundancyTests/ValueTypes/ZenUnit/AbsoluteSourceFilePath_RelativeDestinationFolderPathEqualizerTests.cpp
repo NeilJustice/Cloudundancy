@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/ValueTypes/AbsoluteFilePathToRelativeDestinationFolderPath.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/AbsoluteSourceFilePath_RelativeDestinationFolderPathEqualizer.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/AbsoluteSourceFilePath_RelativeDestinationFolderPathEqualizer.h"
 
 TESTS(AbsoluteSourceFilePath_RelativeDestinationFolderPathEqualizerTests)
 AFACT(AssertEqual_ThrowsIfAnyFieldNotEqual)

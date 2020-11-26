@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Random/RandomFileCopyInstruction.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/RandomFileCopyInstruction.h"
 
 TESTS(RandomFileCopyInstructionTests)
 AFACT(Random_ReturnsFileCopyInstructionWithAllFieldsNonDefault)

@@ -61,17 +61,17 @@ TEST(DefaultConstructor_NewsComponents)
 
 TEST(Run_DeletesCodeBackupFolder_CopiesCodeToBackupStagingFolder_SevenZipsBackupStagingFolder_Copies7zFileToDestinationFolders_Returns0)
 {
-   _voidOneArgFunctionCallerMock->ConstCallMock.Expect();
+   _voidOneArgFunctionCallerMock->CallConstMemberFunctionMock.Expect();
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
    const int exitCode = _backupCodeRunner.Run(args);
    //
-   METALMOCK(_voidOneArgFunctionCallerMock->ConstCallMock.CalledAsFollows(
+   METALMOCK(_voidOneArgFunctionCallerMock->CallConstMemberFunctionMock.CalledAsFollows(
    {
-      { &_backupCodeRunner, &BackupFilesAndFoldersTo7zFileSubProgram::DeleteBackupStagingFolder, args },
-      { &_backupCodeRunner, &BackupFilesAndFoldersTo7zFileSubProgram::CopyFilesAndFoldersToBackupStagingFolder, args },
-      { &_backupCodeRunner, &BackupFilesAndFoldersTo7zFileSubProgram::SevenZipBackupStagingFolder, args },
-      { &_backupCodeRunner, &BackupFilesAndFoldersTo7zFileSubProgram::Copy7zFileToDestinationFolders, args }
+      { &BackupFilesAndFoldersTo7zFileSubProgram::DeleteBackupStagingFolder, &_backupCodeRunner, args },
+      { &BackupFilesAndFoldersTo7zFileSubProgram::CopyFilesAndFoldersToBackupStagingFolder, &_backupCodeRunner, args },
+      { &BackupFilesAndFoldersTo7zFileSubProgram::SevenZipBackupStagingFolder, &_backupCodeRunner, args },
+      { &BackupFilesAndFoldersTo7zFileSubProgram::Copy7zFileToDestinationFolders, &_backupCodeRunner, args }
    }));
    IS_ZERO(exitCode);
 }

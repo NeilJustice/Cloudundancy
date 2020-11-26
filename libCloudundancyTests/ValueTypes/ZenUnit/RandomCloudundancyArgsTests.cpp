@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Random/RandomCloudundancyArgs.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/RandomCloudundancyArgs.h"
 #include "libCloudundancyTests/Components/Random/MetalMock/UtilsRandomGeneratorMock.h"
 
 TESTS(RandomCloudundancyArgsTests)

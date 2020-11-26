@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Random/RandomFilePathLineNumberLineText.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/RandomFilePathLineNumberLineText.h"
 
 TESTS(RandomFilePathLineNumberLineTextTests)
 AFACT(Random_ReturnsFilePathLineNumberWithAllFieldsNonDefault)

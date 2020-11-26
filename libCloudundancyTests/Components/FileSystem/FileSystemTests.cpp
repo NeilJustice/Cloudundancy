@@ -4,7 +4,6 @@
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/FileOpenerCloserMock.h"
 #include "libCloudundancyTests/Components/Memory/MetalMock/CharVectorAllocatorMock.h"
 #include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/FileCopyResultEqualizer.h"
 #include "libCloudundancyTests/Components/Time/MetalMock/StopwatchMock.h"
 
 TESTS(FileSystemTests)
@@ -30,6 +29,7 @@ FACTS(IsFileSizeGreaterThan2GB_FileSizeIsLessThanOrEqualTo2GB_ReturnsFalse)
 AFACT(TryCopyFile_SourceFileIsEmpty_ReturnsFalseFileCopyResult)
 AFACT(TryCopyFile_SourceFileIsNotEmpty_CreateParentFolderOfDestinationFilePathThrowsFilesystemError_ReturnsFalseFileCopyResult)
 AFACT(TryCopyFile_SourceFileIsNotEmpty_CreateParentFolderOfDestinationFilePathSucceeds_WritesSourceFileBytesToDestinationFilePath_ReturnsTrueFileCopyResult)
+AFACT(TryCopyFileWithStdFilesystemCopyFile_CallsStdFilesystemCopyFile)
 // File Writes
 AFACT(WriteTextFile_CreatesDirectoriesLeadingUpToFilePath_CreatesFileInTextWriteMode_WritesFileTextToFile_ClosesFile)
 // Misc
@@ -47,6 +47,7 @@ METALMOCK_NONVOID3_FREE(int, fseek, FILE*, long, int)
 METALMOCK_NONVOID1_FREE(long, ftell, FILE*)
 METALMOCK_NONVOID4_FREE(size_t, fwrite, const void*, size_t, size_t, FILE*)
 // std::filesystem Function Pointers
+METALMOCK_NONVOID3_NAMESPACED_FREE(bool, std::filesystem, copy_file, const fs::path&, const fs::path&, fs::copy_options)
 METALMOCK_VOID1_NAMESPACED_FREE(std::filesystem, current_path, const fs::path&)
 METALMOCK_NONVOID1_NAMESPACED_FREE(bool, std::filesystem, create_directories, const fs::path&)
 METALMOCK_NONVOID1_NAMESPACED_FREE(bool, std::filesystem, exists, const fs::path&)
@@ -79,6 +80,7 @@ STARTUP
    _fileSystem._call_ftell = BIND_1ARG_METALMOCK_OBJECT(ftellMock);
    _fileSystem._call_fwrite = BIND_4ARG_METALMOCK_OBJECT(fwriteMock);
    // std::filesystem Function Pointers
+   _fileSystem._call_fs_copy_file = BIND_3ARG_METALMOCK_OBJECT(copy_fileMock);
    _fileSystem._call_fs_current_path = BIND_1ARG_METALMOCK_OBJECT(current_pathMock);
    _fileSystem._call_fs_create_directories = BIND_1ARG_METALMOCK_OBJECT(create_directoriesMock);
    _fileSystem._call_fs_file_size = BIND_1ARG_METALMOCK_OBJECT(file_sizeMock);
@@ -118,6 +120,7 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
    STD_FUNCTION_TARGETS(::ftell, fileSystem._call_ftell);
    STD_FUNCTION_TARGETS(::fwrite, fileSystem._call_fwrite);
    // std::filesystem Function Pointers
+   STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::CopyFileOverloadType, fs::copy_file, fileSystem._call_fs_copy_file);
    STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::CurrentPathOverloadType, fs::current_path, fileSystem._call_fs_current_path);
    STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::CreateDirectoriesOverloadType, fs::create_directories, fileSystem._call_fs_create_directories);
    STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::ExistsOverloadType, fs::exists, fileSystem._call_fs_exists);
@@ -483,6 +486,28 @@ TEST(TryCopyFile_SourceFileIsNotEmpty_CreateParentFolderOfDestinationFilePathSuc
    expectedReturnValue.copySucceeded = true;
    expectedReturnValue.durationInMilliseconds = elapsedMilliseconds;
    ARE_EQUAL(expectedReturnValue, fileCopyResult);
+}
+
+TEST(TryCopyFileWithStdFilesystemCopyFile_CallsStdFilesystemCopyFile)
+{
+   _stopwatchMock->StartMock.Expect();
+   const unsigned long long elapsedMilliseconds = _stopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
+   const bool copyFileReturnValue = copy_fileMock.ReturnRandom();
+   const fs::path sourceFilePath = ZenUnit::Random<fs::path>();
+   const fs::path destinationFilePath = ZenUnit::Random<fs::path>();
+   //
+   const FileCopyResult fileCopyResult =
+      _fileSystem.TryCopyFileWithStdFilesystemCopyFile(sourceFilePath, destinationFilePath);
+   //
+   METALMOCK(_stopwatchMock->StartMock.CalledOnce());
+   METALMOCK(copy_fileMock.CalledOnceWith(sourceFilePath, destinationFilePath, fs::copy_options::overwrite_existing));
+   METALMOCK(_stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
+   FileCopyResult expectedFileCopyResult;
+   expectedFileCopyResult.sourceFilePath = sourceFilePath;
+   expectedFileCopyResult.destinationFilePath = destinationFilePath;
+   expectedFileCopyResult.copySucceeded = copyFileReturnValue;
+   expectedFileCopyResult.durationInMilliseconds = elapsedMilliseconds;
+   ARE_EQUAL(expectedFileCopyResult, fileCopyResult);
 }
 
 // File Writes

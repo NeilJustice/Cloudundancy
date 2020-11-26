@@ -1,15 +1,21 @@
 #include "pch.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/FileCopyResultEqualizer.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Random/RandomFileCopyResult.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/FileCopyResultEqualizerAndRandom.h"
 
-TESTS(RandomFileCopyResultTests)
-AFACT(RandomFileCopyResult_CodeCoverage)
+TESTS(FileCopyResultEqualizerAndRandomTests)
+AFACT(ZenUnitEqualizer_ThrowsIfAnyFieldNotEqual)
 AFACT(TestableRandomFileCopyResult_ReturnsFileCopyResultWithAllRandomFields)
+AFACT(ZenUnitRandomFileCopyResult_DoesNotThrowException)
 EVIDENCE
 
-TEST(RandomFileCopyResult_CodeCoverage)
+TEST(ZenUnitEqualizer_ThrowsIfAnyFieldNotEqual)
 {
-   ZenUnit::Random<FileCopyResult>();
+   ZENUNIT_EQUALIZER_TEST_SETUP(FileCopyResult);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileCopyResult, sourceFilePath, ZenUnit::Random<fs::path>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileCopyResult, destinationFilePath, ZenUnit::Random<fs::path>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileCopyResult, copySucceeded, true);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileCopyResult, numberOfBytesCopied, ZenUnit::RandomNon0<unsigned long long>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileCopyResult, durationInMilliseconds, ZenUnit::RandomNon0<unsigned long long>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileCopyResult, errorMessage, ZenUnit::Random<string>());
 }
 
 TEST(TestableRandomFileCopyResult_ReturnsFileCopyResultWithAllRandomFields)
@@ -44,4 +50,9 @@ TEST(TestableRandomFileCopyResult_ReturnsFileCopyResultWithAllRandomFields)
    ARE_EQUAL(expectedRandomFileCopyResult, randomFileCopyResult);
 }
 
-RUN_TESTS(RandomFileCopyResultTests)
+TEST(ZenUnitRandomFileCopyResult_DoesNotThrowException)
+{
+   ZenUnit::Random<FileCopyResult>();
+}
+
+RUN_TESTS(FileCopyResultEqualizerAndRandomTests)

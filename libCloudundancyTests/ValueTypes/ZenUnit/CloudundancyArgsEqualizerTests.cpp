@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/CloudundancyArgsEqualizer.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/CloudundancyArgsEqualizer.h"
 
 TESTS(CloudundancyArgsEqualizerTests)
 AFACT(AssertEqual_ThrowsIfAnyFieldNotEqual)

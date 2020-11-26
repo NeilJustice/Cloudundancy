@@ -21,12 +21,14 @@ private:
    function<size_t(const void*, size_t, size_t, FILE*)> _call_fwrite;
 
    // std::filesystem Function Pointers
+   using CopyFileOverloadType = bool(*)(const fs::path&, const fs::path&, fs::copy_options);
    using CurrentPathOverloadType = void(*)(const fs::path&);
    using CreateDirectoriesOverloadType = bool(*)(const fs::path&);
    using ExistsOverloadType = bool(*)(const fs::path&);
    using FileSizeOverloadType = size_t(*)(const fs::path&);
    using RemoveAllOverloadType = uintmax_t(*)(const fs::path&);
 
+   function<bool(const fs::path&, const fs::path&, fs::copy_options)> _call_fs_copy_file;
    function<void(const fs::path&)> _call_fs_current_path;
    bool(*_call_fs_create_directories_as_assignable_function_overload_pointer)(const fs::path&);
    function<bool(const fs::path&)> _call_fs_create_directories;
@@ -67,6 +69,7 @@ public:
 
    // File Copies
    virtual FileCopyResult TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const;
+   virtual FileCopyResult TryCopyFileWithStdFilesystemCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const;
    virtual bool IsFileSizeGreaterThan2GB(const fs::path& filePath) const;
 
    // File Writes

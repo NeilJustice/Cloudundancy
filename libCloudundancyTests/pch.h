@@ -44,17 +44,18 @@ using namespace std;
 #include "libCloudundancyTests/Components/Console/MetalMock/ConsoleMock.h"
 
 // ZenUnit Equalizers
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/CloudundancyArgsEqualizer.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/CloudundancyIniEqualizer.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/AbsoluteSourceFilePath_RelativeDestinationFolderPathEqualizer.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPathEqualizer.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/FilePathLineNumberLineTextEqualizer.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/CloudundancyArgsEqualizer.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/CloudundancyIniEqualizer.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/AbsoluteSourceFilePath_RelativeDestinationFolderPathEqualizer.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPathEqualizer.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/FileCopyResultEqualizerAndRandom.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/FilePathLineNumberLineTextEqualizer.h"
 
 // ZenUnit Randoms
 #include "libCloudundancyTests/Components/Docopt/ZenUnit/docoptvalueRandom.h"
 #include "libCloudundancyTests/Components/FileSystem/ZenUnit/FilesystemPathRandom.h"
 #include "libCloudundancyTests/Components/Time/ZenUnit/tmZenUnitEqualizerAndRandom.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Random/RandomCloudundancyArgs.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Random/RandomCloudundancyIni.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Random/RandomFileCopyInstruction.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Random/RandomFilePathLineNumberLineText.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/RandomCloudundancyArgs.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/RandomCloudundancyIni.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/RandomFileCopyInstruction.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/RandomFilePathLineNumberLineText.h"

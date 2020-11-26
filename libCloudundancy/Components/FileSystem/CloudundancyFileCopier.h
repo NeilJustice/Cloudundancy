@@ -9,10 +9,12 @@ class OneExtraArgMemberForEacher;
 class FileSystem;
 class RecursiveDirectoryIterator;
 class Stopwatch;
-template<typename ClassType, typename Arg1Type, typename Arg2Type, typename Arg3Type>
-class VoidThreeArgMemberFunctionCaller;
+template<typename ClassType, typename Arg1Type>
+class VoidOneArgMemberFunctionCaller;
 template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgMemberFunctionCaller;
+template<typename ClassType, typename Arg1Type, typename Arg2Type, typename Arg3Type>
+class VoidThreeArgMemberFunctionCaller;
 class Watch;
 
 class CloudundancyFileCopier
@@ -22,29 +24,33 @@ private:
    // Function Callers
    function<string(const string&, const string&, const string&)> _call_String_ReplaceFirst;
 
-   using OneExtraArgMemberForEacherOfCopyInstructionsType = const OneExtraArgMemberForEacher<
+   using OneExtraArgMemberForEacherOfCopyInstructionsType = OneExtraArgMemberForEacher<
       fs::path, CloudundancyFileCopier,
       void(CloudundancyFileCopier::*)(const fs::path&, const CloudundancyIni&) const,
       const CloudundancyIni&>;
    unique_ptr<const OneExtraArgMemberForEacherOfCopyInstructionsType> _caller_CopyEachFileOrFolderToFolder;
 
-   using OneExtraArgMemberForEacherOfDestinationFolderPathsType = const OneExtraArgMemberForEacher<
+   using OneExtraArgMemberForEacherOfDestinationFolderPathsType = OneExtraArgMemberForEacher<
       AbsoluteFileOrFolderPathToRelativeFolderPath, CloudundancyFileCopier,
       void(CloudundancyFileCopier::*)(const AbsoluteFileOrFolderPathToRelativeFolderPath&, const fs::path&) const,
       const fs::path&>;
    unique_ptr<const OneExtraArgMemberForEacherOfDestinationFolderPathsType> _caller_CopyFileOrFolderToFolder;
 
-   using VoidTwoArgMemberFunctionCallerType = const VoidTwoArgMemberFunctionCaller<
+   using VoidTwoArgMemberFunctionCallerType = VoidTwoArgMemberFunctionCaller<
       CloudundancyFileCopier, const AbsoluteFileOrFolderPathToRelativeFolderPath&, const fs::path&>;
    unique_ptr<const VoidTwoArgMemberFunctionCallerType> _caller_CopyFileFunctions;
 
-   using CallerType_CopyNestedFileToFolder = const VoidThreeArgMemberFunctionCaller<
+   using CallerType_CopyNestedFileToFolder = VoidThreeArgMemberFunctionCaller<
       CloudundancyFileCopier, const fs::path&, const AbsoluteFileOrFolderPathToRelativeFolderPath&, const fs::path&>;
    unique_ptr<const CallerType_CopyNestedFileToFolder> _caller_CopyNestedFileToFolder;
 
-   using VoidTryCopyFileCallerType = const VoidTwoArgMemberFunctionCaller<
+   using VoidTryCopyFileCallerType = VoidTwoArgMemberFunctionCaller<
       CloudundancyFileCopier, const fs::path&, const fs::path&>;
    unique_ptr<const VoidTryCopyFileCallerType> _caller_TryCopyFile;
+
+   using _caller_WriteCopiedOrCopyFailedMessageType = VoidOneArgMemberFunctionCaller<
+      CloudundancyFileCopier, const FileCopyResult&>;
+   unique_ptr<const _caller_WriteCopiedOrCopyFailedMessageType> _caller_WriteCopiedOrCopyFailedMessage;
 
    // Constant Components
    unique_ptr<const CloudundancyIniFileReader> _cloudundancyIniFileReader;
@@ -61,23 +67,19 @@ public:
    virtual void DeleteFolder(const fs::path& folderPath) const;
 private:
    void CopyFilesAndFoldersToSingleFolder(const fs::path& destinationFolderPath, const CloudundancyIni& cloudundancyIni) const;
-
    void CopyFileOrFolderToFolder(
       const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction,
       const fs::path& destinationFolderPath) const;
-
-   void TryCopyFileToFolder(
-      const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction,
-      const fs::path& destinationFolderPath) const;
-
    void CopyNestedFileToFolder(
       const fs::path& sourceFilePath,
       const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction,
       const fs::path& destinationFolderPath) const;
-
    void CopyNonIgnoredFilesInAndBelowFolderToFolder(
       const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction,
       const fs::path& destinationFolderPath) const;
-
    void TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const;
+   void TryCopyFileToFolder(
+      const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction,
+      const fs::path& destinationFolderPath) const;
+   void WriteCopiedOrCopyFailedMessage(const FileCopyResult& fileCopyResult) const;
 };

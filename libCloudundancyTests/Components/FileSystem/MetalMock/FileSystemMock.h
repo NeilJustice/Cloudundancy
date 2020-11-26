@@ -16,6 +16,7 @@ public:
    // File Copies
    METALMOCK_NONVOID1_CONST(bool, IsFileSizeGreaterThan2GB, const fs::path&)
    METALMOCK_NONVOID2_CONST(FileCopyResult, TryCopyFile, const fs::path&, const fs::path&)
+   METALMOCK_NONVOID2_CONST(FileCopyResult, TryCopyFileWithStdFilesystemCopyFile, const fs::path&, const fs::path&)
 
    // File Writes
    METALMOCK_VOID2_CONST(WriteTextFile, const fs::path&, string_view)

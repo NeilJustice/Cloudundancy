@@ -3,8 +3,8 @@
 
 template<typename ArgType>
 TEMPLATE_TESTS(VoidOneArgMemberFunctionCallerTests, ArgType)
-AFACT(ConstCall_CallsConstMemberFunction)
-AFACT(NonConstCall_CallsNonConstMemberFunction)
+AFACT(CallConstMemberFunction_CallsConstMemberFunction)
+AFACT(CallNonConstCallMemberFunction_CallsNonConstMemberFunction)
 EVIDENCE
 
 class Class
@@ -23,32 +23,32 @@ public:
    }
 };
 
-TEST(ConstCall_CallsConstMemberFunction)
+TEST(CallConstMemberFunction_CallsConstMemberFunction)
 {
    Class c;
    VoidOneArgMemberFunctionCaller<Class, ArgType> oneArgVoidMemberFunctionCaller;
    IS_EMPTY(c.calls);
    //
-   oneArgVoidMemberFunctionCaller.ConstCall(&c, &Class::ConstMemberVoidFunction, ArgType{ 1 });
+   oneArgVoidMemberFunctionCaller.CallConstMemberFunction(&Class::ConstMemberVoidFunction, &c, ArgType{ 1 });
    //
    VECTORS_ARE_EQUAL(vector<ArgType>{ 1 }, c.calls);
    //
-   oneArgVoidMemberFunctionCaller.ConstCall(&c, &Class::ConstMemberVoidFunction, ArgType{ 2 });
+   oneArgVoidMemberFunctionCaller.CallConstMemberFunction(&Class::ConstMemberVoidFunction, &c, ArgType{ 2 });
    //
    VECTORS_ARE_EQUAL((vector<ArgType>{ 1, 2 }), c.calls);
 }
 
-TEST(NonConstCall_CallsNonConstMemberFunction)
+TEST(CallNonConstCallMemberFunction_CallsNonConstMemberFunction)
 {
    Class c;
    VoidOneArgMemberFunctionCaller<Class, ArgType> oneArgVoidMemberFunctionCaller;
    IS_EMPTY(c.calls);
    //
-   oneArgVoidMemberFunctionCaller.NonConstCall(&c, &Class::NonConstMemberVoidFunction, ArgType{ 1 });
+   oneArgVoidMemberFunctionCaller.CallNonConstCallMemberFunction(&Class::NonConstMemberVoidFunction, &c, ArgType{ 1 });
    //
    VECTORS_ARE_EQUAL(vector<ArgType>{ 1 }, c.calls);
    //
-   oneArgVoidMemberFunctionCaller.NonConstCall(&c, &Class::NonConstMemberVoidFunction, ArgType{ 2 });
+   oneArgVoidMemberFunctionCaller.CallNonConstCallMemberFunction(&Class::NonConstMemberVoidFunction, &c, ArgType{ 2 });
    //
    VECTORS_ARE_EQUAL((vector<ArgType>{ 1, 2 }), c.calls);
 }

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Equalizer/AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPathEqualizer.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPathEqualizer.h"
 
 namespace ZenUnit
 {

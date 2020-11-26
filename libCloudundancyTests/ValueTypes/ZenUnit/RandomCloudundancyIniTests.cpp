@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/Random/RandomCloudundancyIni.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/RandomCloudundancyIni.h"
 
 TESTS(RandomCloudundancyIniTests)
 AFACT(RandomCloudundancyIni_ReturnsCloudunancyIniWithAllFieldsNonDefault)
