@@ -24,14 +24,14 @@ public:
 };
 
 using OneExtraArgMemberForEacherType = OneExtraArgMemberForEacher<
-   ElementType, ClassType, void (ClassType::*)(ElementType, Arg2Type) const, Arg2Type>;
+   ElementType, void (ClassType::*)(ElementType, Arg2Type) const, ClassType, Arg2Type>;
 
 OneExtraArgMemberForEacherType _oneExtraArgMemberForEacher;
 
 TEST(TwoArgMemberForEach_EmptyCollection_DoesNotCallFunc)
 {
    const ClassTypeMock classInstance{};
-   _oneExtraArgMemberForEacher.OneExtraArgMemberForEach(classInstance.vec, &classInstance, &ClassType::TwoArgFunction, 0);
+   _oneExtraArgMemberForEacher.OneExtraArgMemberForEach(classInstance.vec, &ClassType::TwoArgFunction, &classInstance, 0);
 }
 
 TEST(TwoArgMemberForEach_OneItemCollection_CallsThisPointerBoundFuncOnce)
@@ -40,7 +40,7 @@ TEST(TwoArgMemberForEach_OneItemCollection_CallsThisPointerBoundFuncOnce)
    classInstance.vec = { 1 };
    classInstance.TwoArgFunctionMock.Expect();
    //
-   _oneExtraArgMemberForEacher.OneExtraArgMemberForEach(classInstance.vec, &classInstance, &ClassType::TwoArgFunction, 10);
+   _oneExtraArgMemberForEacher.OneExtraArgMemberForEach(classInstance.vec, &ClassType::TwoArgFunction, &classInstance, 10);
    //
    classInstance.TwoArgFunctionMock.CalledOnceWith(1, 10);
 }
@@ -51,7 +51,7 @@ TEST(TwoArgMemberForEach_TwoItemCollection_CallsThisPointerBoundFuncTwice)
    classInstance.vec = { 1, 2 };
    classInstance.TwoArgFunctionMock.Expect();
    //
-   _oneExtraArgMemberForEacher.OneExtraArgMemberForEach(classInstance.vec, &classInstance, &ClassType::TwoArgFunction, 20);
+   _oneExtraArgMemberForEacher.OneExtraArgMemberForEach(classInstance.vec, &ClassType::TwoArgFunction, &classInstance, 20);
    //
    classInstance.TwoArgFunctionMock.CalledAsFollows(
    {

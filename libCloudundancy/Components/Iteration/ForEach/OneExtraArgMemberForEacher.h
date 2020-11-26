@@ -1,13 +1,13 @@
 #pragma once
 
-template<typename T, typename ClassType, typename MemberFunctionType, typename ExtraArgType>
+template<typename T, typename MemberFunctionType, typename ClassType, typename ExtraArgType>
 class OneExtraArgMemberForEacher
 {
 public:
    virtual void OneExtraArgMemberForEach(
       const std::vector<T>& elements,
-      const ClassType* constClassPointer,
       MemberFunctionType constMemberFunction,
+      const ClassType* constClassPointer,
       ExtraArgType extraArg) const
    {
       const typename std::vector<T>::const_iterator elementsEnd = elements.cend();

@@ -38,7 +38,8 @@ void CloudundancyFileCopier::CopyFilesAndFoldersToMultipleFolders(const fs::path
    const CloudundancyIni cloudundancyIni = _cloudundancyIniFileReader->ReadIniFile(cloudundancyIniFilePath);
    _recursiveDirectoryIterator->SetFileSubpathsToNotCopy(cloudundancyIni.fileSubpathsToNotCopy);
    _caller_CopyEachFileOrFolderToFolder->OneExtraArgMemberForEach(
-      cloudundancyIni.destinationFolderPaths, this, &CloudundancyFileCopier::CopyFilesAndFoldersToSingleFolder, cloudundancyIni);
+      cloudundancyIni.destinationFolderPaths,
+      &CloudundancyFileCopier::CopyFilesAndFoldersToSingleFolder, this, cloudundancyIni);
 }
 
 void CloudundancyFileCopier::DeleteFolder(const fs::path& folderPath) const
@@ -54,7 +55,7 @@ void CloudundancyFileCopier::CopyFilesAndFoldersToSingleFolder(
    _stopwatch->Start();
    _caller_CopyFileOrFolderToFolder->OneExtraArgMemberForEach(
       cloudundancyIni.absoluteFileOrFolderPathAndRelativeFolderPaths,
-      this, &CloudundancyFileCopier::CopyFileOrFolderToFolder, destinationFolderPath);
+      &CloudundancyFileCopier::CopyFileOrFolderToFolder, this, destinationFolderPath);
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string folderBackedUpMessage =
       "[Cloudundancy]   FolderBackupResult: All files copied to " + destinationFolderPath.string() + "\n" +

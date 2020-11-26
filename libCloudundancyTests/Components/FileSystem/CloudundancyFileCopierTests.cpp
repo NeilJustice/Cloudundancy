@@ -36,14 +36,14 @@ CloudundancyFileCopier _cloudundancyFileCopier;
 METALMOCK_NONVOID3_STATIC(string, String, ReplaceFirst, const string&, const string&, const string&)
 
 using OneExtraArgMemberForEacherOfCopyInstructionsMockType = const OneExtraArgMemberForEacherMock<
-   fs::path, CloudundancyFileCopier,
-   void(CloudundancyFileCopier::*)(const fs::path&, const CloudundancyIni&) const,
-   const CloudundancyIni&>;
+   fs::path, void(CloudundancyFileCopier::*)(const fs::path&, const CloudundancyIni&) const,
+   CloudundancyFileCopier, const CloudundancyIni&>;
 OneExtraArgMemberForEacherOfCopyInstructionsMockType* _caller_CopyEachFileOrFolderToFolderMock = nullptr;
 
 using OneExtraArgMemberForEacherOfDestinationFolderPathsMockType = const OneExtraArgMemberForEacherMock<
-   AbsoluteFileOrFolderPathToRelativeFolderPath, CloudundancyFileCopier,
+   AbsoluteFileOrFolderPathToRelativeFolderPath,
    void(CloudundancyFileCopier::*)(const AbsoluteFileOrFolderPathToRelativeFolderPath&, const fs::path&) const,
+   CloudundancyFileCopier,
    const fs::path&>;
 OneExtraArgMemberForEacherOfDestinationFolderPathsMockType* _caller_CopyFileOrFolderToFolderMock = nullptr;
 
@@ -122,8 +122,9 @@ TEST(CopyFilesAndFoldersToMultipleFolders_CopiesFilesAndFoldersToFolders)
    METALMOCK(_cloudundancyIniFileReaderMock->ReadIniFileMock.CalledOnceWith(args.iniFilePath));
    METALMOCK(_recursiveDirectoryIteratorMock->SetFileSubpathsToNotCopyMock.CalledOnceWith(cloudundancyIni.fileSubpathsToNotCopy));
    METALMOCK(_caller_CopyEachFileOrFolderToFolderMock->OneExtraArgMemberForEachMock.CalledOnceWith(
-      cloudundancyIni.destinationFolderPaths, &_cloudundancyFileCopier,
-      &CloudundancyFileCopier::CopyFilesAndFoldersToSingleFolder, cloudundancyIni));
+      cloudundancyIni.destinationFolderPaths,
+      &CloudundancyFileCopier::CopyFilesAndFoldersToSingleFolder,
+      &_cloudundancyFileCopier, cloudundancyIni));
 }
 
 TEST(DeleteFolder_CallsFileSystemDeleteFolderOnFolderPath)
@@ -155,7 +156,9 @@ TEST(CopyFilesAndFoldersToSingleFolder_CopiesNonSkippedSourceFilesToDestinationF
    //
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    METALMOCK(_caller_CopyFileOrFolderToFolderMock->OneExtraArgMemberForEachMock.CalledOnceWith(
-      cloudundancyIni.absoluteFileOrFolderPathAndRelativeFolderPaths, &_cloudundancyFileCopier, &CloudundancyFileCopier::CopyFileOrFolderToFolder, destinationFolderPath));
+      cloudundancyIni.absoluteFileOrFolderPathAndRelativeFolderPaths,
+      &CloudundancyFileCopier::CopyFileOrFolderToFolder,
+      &_cloudundancyFileCopier, destinationFolderPath));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
    const string expectedFolderBackedUpMessage =
       "[Cloudundancy]   FolderBackupResult: All files copied to " + destinationFolderPath.string() + "\n" +

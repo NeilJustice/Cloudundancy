@@ -25,14 +25,15 @@ private:
    function<string(const string&, const string&, const string&)> _call_String_ReplaceFirst;
 
    using OneExtraArgMemberForEacherOfCopyInstructionsType = OneExtraArgMemberForEacher<
-      fs::path, CloudundancyFileCopier,
+      fs::path,
       void(CloudundancyFileCopier::*)(const fs::path&, const CloudundancyIni&) const,
-      const CloudundancyIni&>;
+      CloudundancyFileCopier, const CloudundancyIni&>;
    unique_ptr<const OneExtraArgMemberForEacherOfCopyInstructionsType> _caller_CopyEachFileOrFolderToFolder;
 
    using OneExtraArgMemberForEacherOfDestinationFolderPathsType = OneExtraArgMemberForEacher<
-      AbsoluteFileOrFolderPathToRelativeFolderPath, CloudundancyFileCopier,
+      AbsoluteFileOrFolderPathToRelativeFolderPath,
       void(CloudundancyFileCopier::*)(const AbsoluteFileOrFolderPathToRelativeFolderPath&, const fs::path&) const,
+      CloudundancyFileCopier,
       const fs::path&>;
    unique_ptr<const OneExtraArgMemberForEacherOfDestinationFolderPathsType> _caller_CopyFileOrFolderToFolder;
 
