@@ -176,7 +176,8 @@ TEST(CopyFileOrFolderToFolder_SourcePathHasAFileName_CallsCopyFileToFolder)
    _cloudundancyFileCopier.CopyFileOrFolderToFolder(cloudundancyIniCopyInstruction, destinationFolderPath);
    //
    METALMOCK(_caller_CopyFileFunctionsMock->ConstCallMock.CalledOnceWith(
-      &_cloudundancyFileCopier, &CloudundancyFileCopier::TryCopyFileToFolder, cloudundancyIniCopyInstruction, destinationFolderPath));
+      &CloudundancyFileCopier::TryCopyFileToFolder,
+      &_cloudundancyFileCopier, cloudundancyIniCopyInstruction, destinationFolderPath));
 }
 
 TEST1X1(CopyFileOrFolderToFolder_SourcePathDoesNotHaveAFileNameMeaningItIsAFolder_CallsRecursivelyCopyNonIgnoredFilesToFolder,
@@ -192,8 +193,8 @@ TEST1X1(CopyFileOrFolderToFolder_SourcePathDoesNotHaveAFileNameMeaningItIsAFolde
    _cloudundancyFileCopier.CopyFileOrFolderToFolder(cloudundancyIniCopyInstruction, destinationFolderPath);
    //
    METALMOCK(_caller_CopyFileFunctionsMock->ConstCallMock.CalledOnceWith(
-      &_cloudundancyFileCopier, &CloudundancyFileCopier::CopyNonIgnoredFilesInAndBelowFolderToFolder,
-      cloudundancyIniCopyInstruction, destinationFolderPath));
+      &CloudundancyFileCopier::CopyNonIgnoredFilesInAndBelowFolderToFolder,
+      &_cloudundancyFileCopier, cloudundancyIniCopyInstruction, destinationFolderPath));
 }
 
 TEST(CopyNonIgnoredFilesInAndBelowFolderToFolder_CopiesNonIgnoredFilesToFolderUntilRecursiveDirectoryIteratorReturnsNoMoreFiles)
@@ -242,7 +243,7 @@ TEST(CopyNestedFileToFolder_RelativeDestinationFolderPathIsDot_CopiesNestedFileT
       destinationFolderPath /
       sourceFilePathRelativeToSourceFolderPath;
    METALMOCK(_caller_TryCopyFileMock->ConstCallMock.CalledOnceWith(
-      &_cloudundancyFileCopier, &CloudundancyFileCopier::TryCopyFile, sourceFilePath, expectedDestinationFilePath));
+      &CloudundancyFileCopier::TryCopyFile, &_cloudundancyFileCopier, sourceFilePath, expectedDestinationFilePath));
 }
 
 TEST(CopyNestedFileToFolder_RelativeDestinationFolderPathIsNotDot_CopiesNestedFileToFolderWithRelativeDestinationFolderPathPresentInTheDestinationFilePath)
@@ -264,7 +265,7 @@ TEST(CopyNestedFileToFolder_RelativeDestinationFolderPathIsNotDot_CopiesNestedFi
       cloudundancyIniCopyInstruction.relativeDestinationFolderPath /
       sourceFilePathRelativeToSourceFolderPath;
    METALMOCK(_caller_TryCopyFileMock->ConstCallMock.CalledOnceWith(
-      &_cloudundancyFileCopier, &CloudundancyFileCopier::TryCopyFile, sourceFilePath, expectedDestinationFilePath));
+      &CloudundancyFileCopier::TryCopyFile, &_cloudundancyFileCopier, sourceFilePath, expectedDestinationFilePath));
 }
 
 TEST(TryCopyFile_FileSizeIsGreaterThan2GB_CopiesFileWithStdFilesystemCopyFile_WritesCopiedIfCopySucceeded_WritesCopyFailedIfCopyFailed)
@@ -332,7 +333,7 @@ TEST(TryCopyFileToFolder_RelativeDestinationFolderPathIsADot_DoesNotJoinDotChara
    const fs::path expectedSourceFileName = cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath.filename();
    const fs::path expectedDestinationFilePath = destinationFolderPath / expectedSourceFileName;
    METALMOCK(_caller_TryCopyFileMock->ConstCallMock.CalledOnceWith(
-      &_cloudundancyFileCopier, &CloudundancyFileCopier::TryCopyFile, expectedSourceFilePath, expectedDestinationFilePath));
+      &CloudundancyFileCopier::TryCopyFile, &_cloudundancyFileCopier, expectedSourceFilePath, expectedDestinationFilePath));
 }
 
 TEST(TryCopyFileToFolder_RelativeDestinationFolderPathIsNotADot_JoinsRelativeDestinationFolder_CallsTryCopyFile)
@@ -348,7 +349,7 @@ TEST(TryCopyFileToFolder_RelativeDestinationFolderPathIsNotADot_JoinsRelativeDes
    const fs::path expectedDestinationFilePath =
       destinationFolderPath / cloudundancyIniCopyInstruction.relativeDestinationFolderPath / expectedSourceFileName;
    METALMOCK(_caller_TryCopyFileMock->ConstCallMock.CalledOnceWith(
-      &_cloudundancyFileCopier, &CloudundancyFileCopier::TryCopyFile, expectedSourceFilePath, expectedDestinationFilePath));
+      &CloudundancyFileCopier::TryCopyFile, &_cloudundancyFileCopier, expectedSourceFilePath, expectedDestinationFilePath));
 }
 
 TEST3X3(WriteCopiedOrCopyFailedMessage_WritesCopiedIfCopySucceeded_WritesCopyFailedIfCopyFailed,

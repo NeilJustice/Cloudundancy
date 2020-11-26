@@ -93,7 +93,8 @@ AbsoluteFileOrFolderPathToRelativeFolderPath CloudundancyIniFileReader::ParseFil
    cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath = pipeSplitLine[0];
    cloudundancyIniCopyInstruction.relativeDestinationFolderPath = pipeSplitLine[1];
    _caller_ThrowIfSourceFileOrFolderDoesNotExist->ConstCall(
-      this, &CloudundancyIniFileReader::ThrowIfSourceFileOrFolderDoesNotExist, cloudundancyIniCopyInstruction, fileCopyInstructionLine);
+      &CloudundancyIniFileReader::ThrowIfSourceFileOrFolderDoesNotExist,
+      this, cloudundancyIniCopyInstruction, fileCopyInstructionLine);
    return cloudundancyIniCopyInstruction;
 }
 

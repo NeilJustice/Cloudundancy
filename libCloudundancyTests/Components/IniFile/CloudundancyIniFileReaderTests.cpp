@@ -160,8 +160,8 @@ TEST1X1(ParseFileCopyInstructionLine_LineContainsOneSpaceArrowSpace_ReturnsExpec
    expectedFileCopyInstruction.absoluteSourceFileOrFolderPath = sourceFilePath;
    expectedFileCopyInstruction.relativeDestinationFolderPath = relativeDestinationFolderPath;
    METALMOCK(_callerMock_ThrowIfSourceFileOrFolderDoesNotExist->ConstCallMock.CalledOnceWith(
-      &_cloudundancyIniFile, &CloudundancyIniFileReader::ThrowIfSourceFileOrFolderDoesNotExist,
-      cloudundancyIniCopyInstruction, filePathLineNumberLineText));
+      &CloudundancyIniFileReader::ThrowIfSourceFileOrFolderDoesNotExist,
+      &_cloudundancyIniFile, cloudundancyIniCopyInstruction, filePathLineNumberLineText));
    ARE_EQUAL(expectedFileCopyInstruction, cloudundancyIniCopyInstruction);
 }
 

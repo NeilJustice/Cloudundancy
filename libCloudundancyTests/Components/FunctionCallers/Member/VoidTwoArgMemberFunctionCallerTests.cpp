@@ -28,13 +28,13 @@ TEST(ConstCall_CallsConstMemberFunctionOnce)
    const Class constClassInstance;
    VoidTwoArgMemberFunctionCaller<Class, Arg1Type, Arg2Type> voidTwoArgMemberFunctionCaller;
    //
-   voidTwoArgMemberFunctionCaller.ConstCall(&constClassInstance, &Class::ConstMemberFunction, Arg1Type{ 1 }, Arg2Type{ 2 });
+   voidTwoArgMemberFunctionCaller.ConstCall(&Class::ConstMemberFunction, &constClassInstance, Arg1Type{ 1 }, Arg2Type{ 2 });
    //
    vector<pair<Arg1Type, Arg2Type>> expectedFunctionCallArguments = { { Arg1Type{ 1 }, Arg2Type{ 2 } } };
    VECTORS_ARE_EQUAL(expectedFunctionCallArguments, constClassInstance.functionCallArguments);
 
 
-   voidTwoArgMemberFunctionCaller.ConstCall(&constClassInstance, &Class::ConstMemberFunction, Arg1Type{ 3 }, Arg2Type{ 4 });
+   voidTwoArgMemberFunctionCaller.ConstCall(&Class::ConstMemberFunction, &constClassInstance, Arg1Type{ 3 }, Arg2Type{ 4 });
    //
    expectedFunctionCallArguments.emplace_back(Arg1Type{ 3 }, Arg2Type{ 4 });
    VECTORS_ARE_EQUAL(expectedFunctionCallArguments, constClassInstance.functionCallArguments);
@@ -45,13 +45,13 @@ TEST(NonConstCall_CallsNonConstMemberFunctionOnce)
    Class classInstance;
    VoidTwoArgMemberFunctionCaller<Class, Arg1Type, Arg2Type> voidTwoArgMemberFunctionCaller;
    //
-   voidTwoArgMemberFunctionCaller.NonConstCall(&classInstance, &Class::NonConstMemberFunction, Arg1Type{ 1 }, Arg2Type{ 2 });
+   voidTwoArgMemberFunctionCaller.NonConstCall(&Class::NonConstMemberFunction, &classInstance, Arg1Type{ 1 }, Arg2Type{ 2 });
    //
    vector<pair<Arg1Type, Arg2Type>> expectedFunctionCallArguments = { { Arg1Type{ 1 }, Arg2Type{ 2 } } };
    VECTORS_ARE_EQUAL(expectedFunctionCallArguments, classInstance.functionCallArguments);
 
 
-   voidTwoArgMemberFunctionCaller.NonConstCall(&classInstance, &Class::NonConstMemberFunction, Arg1Type{ 3 }, Arg2Type{ 4 });
+   voidTwoArgMemberFunctionCaller.NonConstCall(&Class::NonConstMemberFunction, &classInstance, Arg1Type{ 3 }, Arg2Type{ 4 });
    //
    expectedFunctionCallArguments.emplace_back(Arg1Type{ 3 }, Arg2Type{ 4 });
    VECTORS_ARE_EQUAL(expectedFunctionCallArguments, classInstance.functionCallArguments);

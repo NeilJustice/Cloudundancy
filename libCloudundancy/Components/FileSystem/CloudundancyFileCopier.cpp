@@ -72,12 +72,14 @@ void CloudundancyFileCopier::CopyFileOrFolderToFolder(
    if (sourcePathIsAFile)
    {
       _caller_CopyFileFunctions->ConstCall(
-         this, &CloudundancyFileCopier::TryCopyFileToFolder, cloudundancyIniCopyInstruction, destinationFolderPath);
+         &CloudundancyFileCopier::TryCopyFileToFolder,
+         this, cloudundancyIniCopyInstruction, destinationFolderPath);
    }
    else
    {
       _caller_CopyFileFunctions->ConstCall(
-         this, &CloudundancyFileCopier::CopyNonIgnoredFilesInAndBelowFolderToFolder, cloudundancyIniCopyInstruction, destinationFolderPath);
+         &CloudundancyFileCopier::CopyNonIgnoredFilesInAndBelowFolderToFolder,
+         this, cloudundancyIniCopyInstruction, destinationFolderPath);
    }
 }
 
@@ -102,7 +104,7 @@ void CloudundancyFileCopier::CopyNestedFileToFolder(
          cloudundancyIniCopyInstruction.relativeDestinationFolderPath /
          sourceFilePathRelativeToSourceFolderPath;
    }
-   _caller_TryCopyFile->ConstCall(this, &CloudundancyFileCopier::TryCopyFile, sourceFilePath, destinationFilePath);
+   _caller_TryCopyFile->ConstCall(&CloudundancyFileCopier::TryCopyFile, this, sourceFilePath, destinationFilePath);
 }
 
 void CloudundancyFileCopier::CopyNonIgnoredFilesInAndBelowFolderToFolder(
@@ -158,7 +160,7 @@ void CloudundancyFileCopier::TryCopyFileToFolder(
    {
       destinationFilePath = destinationFolderPath / cloudundancyIniCopyInstruction.relativeDestinationFolderPath / sourceFileName;
    }
-   _caller_TryCopyFile->ConstCall(this, &CloudundancyFileCopier::TryCopyFile, sourceFilePath, destinationFilePath);
+   _caller_TryCopyFile->ConstCall(&CloudundancyFileCopier::TryCopyFile, this, sourceFilePath, destinationFilePath);
 }
 
 void CloudundancyFileCopier::WriteCopiedOrCopyFailedMessage(const FileCopyResult& fileCopyResult) const
