@@ -7,8 +7,7 @@ public:
    virtual void OneExtraArgMemberForEach(
       const std::vector<T>& elements,
       MemberFunctionType constMemberFunction,
-      const ClassType* constClassPointer,
-      ExtraArgType extraArg) const
+      const ClassType* constClassPointer, ExtraArgType extraArg) const
    {
       const typename std::vector<T>::const_iterator elementsEnd = elements.cend();
       for (typename std::vector<T>::const_iterator iter = elements.cbegin(); iter != elementsEnd; ++iter)

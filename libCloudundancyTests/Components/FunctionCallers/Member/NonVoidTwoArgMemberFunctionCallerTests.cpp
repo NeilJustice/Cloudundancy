@@ -28,8 +28,7 @@ public:
    }
 };
 
-NonVoidTwoArgMemberFunctionCaller<
-   ReturnType, Class, Arg1Type, Arg2Type> _nonVoidTwoArgMemberFunctionCaller;
+NonVoidTwoArgMemberFunctionCaller<ReturnType, Class, Arg1Type, Arg2Type> _nonVoidTwoArgMemberFunctionCaller;
 Arg1Type _arg1 = {};
 Arg2Type _arg2 = {};
 
@@ -44,7 +43,7 @@ TEST(ConstCall_CallsNonVoidConstMemberFunctionOnce_ReturnsReturnValue)
    const Class classInstance;
    //
    const ReturnType returnValue = _nonVoidTwoArgMemberFunctionCaller.ConstCall(
-      &classInstance, &Class::NonVoidConstMemberFunction, _arg1, _arg2);
+      &Class::NonVoidConstMemberFunction, &classInstance, _arg1, _arg2);
    //
    const vector<pair<Arg1Type, Arg2Type>> expectedCalls =
    {
@@ -59,7 +58,7 @@ TEST(NonConstCall_CallsNonVoidNonConstMemberFunctionOnce_ReturnsReturnValue)
    Class classInstance;
    //
    const ReturnType returnValue = _nonVoidTwoArgMemberFunctionCaller.NonConstCall(
-      &classInstance, &Class::NonVoidNonConstMemberFunction, _arg1, _arg2);
+      &Class::NonVoidNonConstMemberFunction, &classInstance, _arg1, _arg2);
    //
    const vector<pair<Arg1Type, Arg2Type>> expectedCalls =
    {

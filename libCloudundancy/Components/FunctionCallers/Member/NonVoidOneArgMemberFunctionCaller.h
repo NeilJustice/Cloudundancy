@@ -6,8 +6,7 @@ class NonVoidOneArgMemberFunctionCaller
 public:
    virtual ReturnType CallConstMemberFunction(
       ReturnType(ClassType::* constMemberFunction)(ArgType) const,
-      const ClassType* constClassPointer,
-      ArgType arg) const
+      const ClassType* constClassPointer, ArgType arg) const
    {
       const ReturnType returnValue = (constClassPointer->*constMemberFunction)(arg);
       return returnValue;
@@ -15,8 +14,7 @@ public:
 
 	virtual ReturnType CallNonConstMemberFunction(
       ReturnType(ClassType::*nonConstMemberFunction)(ArgType),
-      ClassType* nonConstClassPointer,
-      ArgType arg) const
+      ClassType* nonConstClassPointer, ArgType arg) const
    {
       const ReturnType returnValue = (nonConstClassPointer->*nonConstMemberFunction)(arg);
       return returnValue;

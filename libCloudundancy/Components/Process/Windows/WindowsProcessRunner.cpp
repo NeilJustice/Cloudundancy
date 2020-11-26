@@ -100,7 +100,7 @@ ProcessResult WindowsProcessRunner::FailFastRun(string_view processName, string_
 {
    const string runningMessage = String::Concat("[Cloudundancy] Running: \"", processName, ' ', arguments, "\"");
    _console->WriteLine(runningMessage);
-   const ProcessResult processResult = _caller_Run->ConstCall(this, &WindowsProcessRunner::Run, processName, arguments);
+   const ProcessResult processResult = _caller_Run->ConstCall(&WindowsProcessRunner::Run, this, processName, arguments);
    _console->WriteLine(processResult.standardOutputAndError);
    if (processResult.exitCode != 0)
    {

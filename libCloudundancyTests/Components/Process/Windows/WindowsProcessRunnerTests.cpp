@@ -50,7 +50,8 @@ TEST(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
       string_view(String::Concat("[Cloudundancy] Running: \"", processName, ' ', arguments, "\"")),
       string_view(runReturnValue.standardOutputAndError)
    }));
-   METALMOCK(_caller_RunMock->ConstCallMock.CalledOnceWith(&_windowsProcessRunner, &WindowsProcessRunner::Run, processName, arguments));
+   METALMOCK(_caller_RunMock->ConstCallMock.CalledOnceWith(
+      &WindowsProcessRunner::Run, &_windowsProcessRunner, processName, arguments));
    ARE_EQUAL(runReturnValue, processResult);
 }
 
@@ -68,7 +69,8 @@ TEST(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessage_CallsExitWithProcessE
    //
    const ProcessResult processResult = _windowsProcessRunner.FailFastRun(processName, arguments);
    //
-   METALMOCK(_caller_RunMock->ConstCallMock.CalledOnceWith(&_windowsProcessRunner, &WindowsProcessRunner::Run, processName, arguments));
+   METALMOCK(_caller_RunMock->ConstCallMock.CalledOnceWith(
+      &WindowsProcessRunner::Run, &_windowsProcessRunner, processName, arguments));
    METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
       string_view(String::Concat("[Cloudundancy] Running: \"", processName, ' ', arguments, "\"")),
