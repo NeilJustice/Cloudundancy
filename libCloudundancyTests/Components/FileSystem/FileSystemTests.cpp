@@ -120,12 +120,14 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
    STD_FUNCTION_TARGETS(::ftell, fileSystem._call_ftell);
    STD_FUNCTION_TARGETS(::fwrite, fileSystem._call_fwrite);
    // std::filesystem Function Pointers
+#ifdef _WIN32
    STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::CopyFileOverloadType, fs::copy_file, fileSystem._call_fs_copy_file);
    STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::CurrentPathOverloadType, fs::current_path, fileSystem._call_fs_current_path);
    STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::CreateDirectoriesOverloadType, fs::create_directories, fileSystem._call_fs_create_directories);
    STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::ExistsOverloadType, fs::exists, fileSystem._call_fs_exists);
    STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::FileSizeOverloadType, fs::file_size, fileSystem._call_fs_file_size);
    STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::RemoveAllOverloadType, fs::remove_all, fileSystem._call_fs_remove_all);
+#endif
    // Function Callers
    DELETE_TO_ASSERT_NEWED(fileSystem._caller_FileSize);
    DELETE_TO_ASSERT_NEWED(fileSystem._caller_ReadFileBytes);
