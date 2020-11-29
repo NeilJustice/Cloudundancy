@@ -1,5 +1,4 @@
 #pragma once
-#include "libCloudundancy/Components/Process/ProcessResult.h"
 class ProcessRunnerTests;
 
 #ifdef __linux__

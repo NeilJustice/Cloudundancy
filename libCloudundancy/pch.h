@@ -48,6 +48,7 @@ using namespace std;
 #include "libCloudundancy/ValueTypes/FileCopyResult.h"
 #include "libCloudundancy/ValueTypes/FilePathLineNumberLineText.h"
 #include "libCloudundancy/ValueTypes/FileSystemException.h"
+#include "libCloudundancy/ValueTypes/ProcessResult.h"
 
 // libCloudundancy Utility Components
 #include "libCloudundancy/Components/Console/Console.h"

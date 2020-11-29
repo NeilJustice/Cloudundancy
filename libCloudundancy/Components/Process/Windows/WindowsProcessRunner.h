@@ -1,6 +1,5 @@
 #pragma once
 #ifdef _WIN32
-#include "libCloudundancy/Components/Process/ProcessResult.h"
 #include "libCloudundancy/Components/Process/ProcessRunner.h"
 class Console;
 template<typename ReturnType, typename ClassType, typename Arg1Type, typename Arg2Type>

@@ -1,6 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Components/Process/ProcessResult.h"
-#include "libCloudundancyTests/Components/Process/ZenUnit/ProcessResultEqualizerAndRandom.h"
+#include "libCloudundancy/ValueTypes/ProcessResult.h"
 
 TESTS(ProcessResultTests)
 AFACT(DefaultConstrructor_SetsFieldsTo0)

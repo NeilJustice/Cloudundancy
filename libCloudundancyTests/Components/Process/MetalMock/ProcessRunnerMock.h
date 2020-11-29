@@ -1,6 +1,5 @@
 #pragma once
 #include "libCloudundancy/Components/Process/ProcessRunner.h"
-#include "libCloudundancyTests/Components/Process/ZenUnit/ProcessResultEqualizerAndRandom.h"
 
 class ProcessRunnerMock : public Metal::Mock<ProcessRunner>
 {

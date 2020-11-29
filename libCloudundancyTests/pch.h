@@ -35,6 +35,7 @@ using namespace std;
 #include "libCloudundancy/ValueTypes/FileCopyResult.h"
 #include "libCloudundancy/ValueTypes/FilePathLineNumberLineText.h"
 #include "libCloudundancy/ValueTypes/FileSystemException.h"
+#include "libCloudundancy/ValueTypes/ProcessResult.h"
 
 // libCloudundancy Utility Functions
 #include "libCloudundancy/StaticUtilities/ReleaseAssert.h"
@@ -43,19 +44,18 @@ using namespace std;
 // libCloudundancy Utility Component Mocks
 #include "libCloudundancyTests/Components/Console/MetalMock/ConsoleMock.h"
 
-// ZenUnit Equalizers
+// ZenUnit Equalizers And Randoms
+#include "libCloudundancyTests/Components/Docopt/ZenUnit/docoptvalueRandom.h"
+#include "libCloudundancyTests/Components/FileSystem/ZenUnit/FilesystemPathRandom.h"
+#include "libCloudundancyTests/Components/Time/ZenUnit/tmZenUnitEqualizerAndRandom.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/CloudundancyArgsEqualizer.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/CloudundancyIniEqualizer.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/AbsoluteSourceFilePath_RelativeDestinationFolderPathEqualizer.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPathEqualizer.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/FileCopyResultEqualizerAndRandom.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/FilePathLineNumberLineTextEqualizer.h"
-
-// ZenUnit Randoms
-#include "libCloudundancyTests/Components/Docopt/ZenUnit/docoptvalueRandom.h"
-#include "libCloudundancyTests/Components/FileSystem/ZenUnit/FilesystemPathRandom.h"
-#include "libCloudundancyTests/Components/Time/ZenUnit/tmZenUnitEqualizerAndRandom.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/RandomCloudundancyArgs.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/RandomCloudundancyIni.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/RandomFileCopyInstruction.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/RandomFilePathLineNumberLineText.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/ProcessResultEqualizerAndRandom.h"

@@ -1,6 +1,5 @@
 #include "pch.h"
-#include "libCloudundancyTests/Components/Process/ZenUnit/ProcessResultEqualizerAndRandom.h"
-#include "libCloudundancy/Components/Process/ProcessResult.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/ProcessResultEqualizerAndRandom.h"
 
 namespace ZenUnit
 {

@@ -2,7 +2,6 @@
 #ifdef _WIN32
 #include "libCloudundancyTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libCloudundancy/Components/Process/Windows/WindowsProcessRunner.h"
-#include "libCloudundancyTests/Components/Process/ZenUnit/ProcessResultEqualizerAndRandom.h"
 #include "libCloudundancyTests/Components/FunctionCallers/MemberFunctions/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
 
 TESTS(WindowsProcessRunnerTests)

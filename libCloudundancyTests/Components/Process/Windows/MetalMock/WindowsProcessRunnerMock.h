@@ -1,7 +1,6 @@
 #pragma once
 #ifdef _WIN32
 #include "libCloudundancy/Components/Process/Windows/WindowsProcessRunner.h"
-#include "libCloudundancyTests/Components/Process/ZenUnit/ProcessResultEqualizerAndRandom.h"
 
 class WindowsProcessRunnerMock : public Metal::Mock<WindowsProcessRunner>
 {
