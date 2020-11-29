@@ -14,8 +14,8 @@ CloudundancyFileCopier::CloudundancyFileCopier() noexcept
    // Function Callers
    : _call_String_ReplaceFirst(String::ReplaceFirst)
    , _caller_CopyEachFileOrFolderToFolder(make_unique<OneExtraArgMemberFunctionForEacherOfCopyInstructionsType>())
-   , _caller_CopyFileOrFolderToFolder(make_unique<OneExtraArgMemberFunctionForEacherOfDestinationFolderPathsType>())
    , _caller_CopyFileFunctions(make_unique<VoidTwoArgMemberFunctionCallerType>())
+   , _caller_CopyFileOrFolderToFolder(make_unique<OneExtraArgMemberFunctionForEacherOfDestinationFolderPathsType>())
    , _caller_CopyNestedFileToFolder(make_unique<CallerType_CopyNestedFileToFolder>())
    , _caller_TryCopyFile(make_unique<VoidTryCopyFileCallerType>())
    , _caller_WriteCopiedOrCopyFailedMessage(make_unique<_caller_WriteCopiedOrCopyFailedMessageType>())

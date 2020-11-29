@@ -30,16 +30,16 @@ private:
       CloudundancyFileCopier, const CloudundancyIni&>;
    unique_ptr<const OneExtraArgMemberFunctionForEacherOfCopyInstructionsType> _caller_CopyEachFileOrFolderToFolder;
 
+   using VoidTwoArgMemberFunctionCallerType = VoidTwoArgMemberFunctionCaller<
+      CloudundancyFileCopier, const AbsoluteFileOrFolderPathToRelativeFolderPath&, const fs::path&>;
+   unique_ptr<const VoidTwoArgMemberFunctionCallerType> _caller_CopyFileFunctions;
+
    using OneExtraArgMemberFunctionForEacherOfDestinationFolderPathsType = OneExtraArgMemberFunctionForEacher<
       AbsoluteFileOrFolderPathToRelativeFolderPath,
       void(CloudundancyFileCopier::*)(const AbsoluteFileOrFolderPathToRelativeFolderPath&, const fs::path&) const,
       CloudundancyFileCopier,
       const fs::path&>;
    unique_ptr<const OneExtraArgMemberFunctionForEacherOfDestinationFolderPathsType> _caller_CopyFileOrFolderToFolder;
-
-   using VoidTwoArgMemberFunctionCallerType = VoidTwoArgMemberFunctionCaller<
-      CloudundancyFileCopier, const AbsoluteFileOrFolderPathToRelativeFolderPath&, const fs::path&>;
-   unique_ptr<const VoidTwoArgMemberFunctionCallerType> _caller_CopyFileFunctions;
 
    using CallerType_CopyNestedFileToFolder = VoidThreeArgMemberFunctionCaller<
       CloudundancyFileCopier, const fs::path&, const AbsoluteFileOrFolderPathToRelativeFolderPath&, const fs::path&>;

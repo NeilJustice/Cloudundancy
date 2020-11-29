@@ -41,16 +41,16 @@ using OneExtraArgMemberFunctionForEacherOfCopyInstructionsMockType = const OneEx
    CloudundancyFileCopier, const CloudundancyIni&>;
 OneExtraArgMemberFunctionForEacherOfCopyInstructionsMockType* _caller_CopyEachFileOrFolderToFolderMock = nullptr;
 
+using VoidTwoArgMemberFunctionCallerMockType = const VoidTwoArgMemberFunctionCallerMock<
+   CloudundancyFileCopier, const AbsoluteFileOrFolderPathToRelativeFolderPath&, const fs::path&>;
+VoidTwoArgMemberFunctionCallerMockType* _caller_CopyFileFunctionsMock = nullptr;
+
 using OneExtraArgMemberFunctionForEacherOfDestinationFolderPathsMockType = const OneExtraArgMemberFunctionForEacherMock<
    AbsoluteFileOrFolderPathToRelativeFolderPath,
    void(CloudundancyFileCopier::*)(const AbsoluteFileOrFolderPathToRelativeFolderPath&, const fs::path&) const,
    CloudundancyFileCopier,
    const fs::path&>;
 OneExtraArgMemberFunctionForEacherOfDestinationFolderPathsMockType* _caller_CopyFileOrFolderToFolderMock = nullptr;
-
-using VoidTwoArgMemberFunctionCallerMockType = const VoidTwoArgMemberFunctionCallerMock<
-   CloudundancyFileCopier, const AbsoluteFileOrFolderPathToRelativeFolderPath&, const fs::path&>;
-VoidTwoArgMemberFunctionCallerMockType* _caller_CopyFileFunctionsMock = nullptr;
 
 using CallerMockType_CopyNestedFileToFolder = const VoidThreeArgMemberFunctionCallerMock<
    CloudundancyFileCopier, const fs::path&, const AbsoluteFileOrFolderPathToRelativeFolderPath&, const fs::path&>;
@@ -98,10 +98,11 @@ TEST(DefaultConstructor_SetsFunctionsAndNewsComponents)
    // Function Callers
    STD_FUNCTION_TARGETS(String::ReplaceFirst, fileCopier._call_String_ReplaceFirst);
    DELETE_TO_ASSERT_NEWED(fileCopier._caller_CopyEachFileOrFolderToFolder);
-   DELETE_TO_ASSERT_NEWED(fileCopier._caller_CopyFileOrFolderToFolder);
    DELETE_TO_ASSERT_NEWED(fileCopier._caller_CopyFileFunctions);
+   DELETE_TO_ASSERT_NEWED(fileCopier._caller_CopyFileOrFolderToFolder);
    DELETE_TO_ASSERT_NEWED(fileCopier._caller_CopyNestedFileToFolder);
    DELETE_TO_ASSERT_NEWED(fileCopier._caller_TryCopyFile);
+   DELETE_TO_ASSERT_NEWED(fileCopier._caller_WriteCopiedOrCopyFailedMessage);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(fileCopier._cloudundancyIniFileReader);
    DELETE_TO_ASSERT_NEWED(fileCopier._console);
