@@ -28,7 +28,8 @@ AFACT(TryCopyFile_FileSizeIsGreaterThanOrEqualTo2GB_CopiesFileWithStdFilesystemC
 AFACT(TryCopyFile_FileSizeIsLessThan2GB_CopiesFileWithCStyleCopyFile_WritesCopiedIfCopySucceeded_WritesCopyFailedIfCopyFailed)
 AFACT(TryCopyFileToFolder_RelativeDestinationFolderPathIsADot_DoesNotJoinDotCharacter_CallsTryCopyFile)
 AFACT(TryCopyFileToFolder_RelativeDestinationFolderPathIsNotADot_JoinsRelativeDestinationFolder_CallsTryCopyFile)
-FACTS(WriteCopiedOrCopyFailedMessage_WritesCopiedIfCopySucceeded_WritesCopyFailedIfCopyFailed)
+AFACT(WriteCopiedOrCopyFailedMessage_CopySucceeded_WritesCopiedAndDurationInMilliseconds)
+AFACT(WriteCopiedOrCopyFailedMessage_CopyFailed_WritesCopyFailedAndDurationInMillisecondsAndCopyFailureReason)
 EVIDENCE
 
 CloudundancyFileCopier _cloudundancyFileCopier;
@@ -352,20 +353,28 @@ TEST(TryCopyFileToFolder_RelativeDestinationFolderPathIsNotADot_JoinsRelativeDes
       &CloudundancyFileCopier::TryCopyFile, &_cloudundancyFileCopier, expectedSourceFilePath, expectedDestinationFilePath));
 }
 
-TEST3X3(WriteCopiedOrCopyFailedMessage_WritesCopiedIfCopySucceeded_WritesCopyFailedIfCopyFailed,
-   bool copySucceeded, string_view expectedWriteLine, Color expectedColor,
-   true, "Copied [durationInMillisecondsms]\n", Color::Green,
-   false, "Copy failed [durationInMillisecondsms]\n", Color::Red)
+TEST(WriteCopiedOrCopyFailedMessage_CopySucceeded_WritesCopiedAndDurationInMilliseconds)
 {
    _consoleMock->WriteLineColorMock.Expect();
    FileCopyResult fileCopyResult = ZenUnit::Random<FileCopyResult>();
-   fileCopyResult.copySucceeded = copySucceeded;
+   fileCopyResult.copySucceeded = true;
    //
    _cloudundancyFileCopier.WriteCopiedOrCopyFailedMessage(fileCopyResult);
    //
-   const string expectedWriteLineWithMilliseconds =
-      String::ReplaceFirst(expectedWriteLine, "durationInMilliseconds", to_string(fileCopyResult.durationInMilliseconds));
-   METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedWriteLineWithMilliseconds, expectedColor));
+   const string expectedCopiedMessage = String::Concat("Copied [", fileCopyResult.durationInMilliseconds, "ms]\n");
+   METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedCopiedMessage, Color::Green));
+}
+
+TEST(WriteCopiedOrCopyFailedMessage_CopyFailed_WritesCopyFailedAndDurationInMillisecondsAndCopyFailureReason)
+{
+   _consoleMock->WriteLineColorMock.Expect();
+   FileCopyResult fileCopyResult = ZenUnit::Random<FileCopyResult>();
+   fileCopyResult.copySucceeded = false;
+   //
+   _cloudundancyFileCopier.WriteCopiedOrCopyFailedMessage(fileCopyResult);
+   //
+   const string expectedCopyFailedMessage = String::Concat("Copy failed [", fileCopyResult.durationInMilliseconds, "ms]\n");
+   METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedCopyFailedMessage, Color::Red));
 }
 
 RUN_TESTS(CloudundancyFileCopierTests)
