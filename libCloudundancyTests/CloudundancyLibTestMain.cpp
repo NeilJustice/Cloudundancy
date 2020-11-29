@@ -2,6 +2,6 @@
 
 int main(int argc, char* argv[])
 {
-   const int zenUnitExitCode = ZenUnit::RunTests(argc, argv);
-   return zenUnitExitCode;
+   const int exitCode = ZenUnit::RunTests(argc, argv);
+   return exitCode;
 }
