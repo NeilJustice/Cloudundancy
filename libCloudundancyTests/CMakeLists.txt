@@ -29,6 +29,7 @@ folder_source_group_subsubsubfolder(Components FunctionCallers MemberFunctions M
 folder_source_group_subsubfolder(Components FunctionCallers StaticAndFreeFunctions)
 folder_source_group_subsubsubfolder(Components FunctionCallers StaticAndFreeFunctions MetalMock)
 folder_source_group_subfolder(Components IniFile)
+folder_source_group_subsubfolder(Components IniFile MetalMock)
 folder_source_group_subsubfolder(Components IniFile ForEach)
 folder_source_group_subfolder(Components Iteration)
 folder_source_group_subsubfolder(Components Iteration ForEach)
