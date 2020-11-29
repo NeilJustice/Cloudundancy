@@ -132,16 +132,8 @@ FileCopyResult FileSystem::TryCopyFile(
    const fs::path& sourceFilePath, const fs::path& destinationFilePath) const
 {
    _stopwatch->Start();
-   const vector<char> sourceFileBytes =
-      _caller_ReadFileBytes->CallConstMemberFunction(&FileSystem::ReadFileBytes, this, sourceFilePath);
-   if (sourceFileBytes.empty())
-   {
-      FileCopyResult emptyFileNotCopiedResult;
-      emptyFileNotCopiedResult.sourceFilePath = sourceFilePath;
-      emptyFileNotCopiedResult.destinationFilePath = destinationFilePath;
-      emptyFileNotCopiedResult.copyFailureReason = "empty file";
-      return emptyFileNotCopiedResult;
-   }
+   const vector<char> sourceFileBytes = _caller_ReadFileBytes->CallConstMemberFunction(
+      &FileSystem::ReadFileBytes, this, sourceFilePath);
    try
    {
       const fs::path parentPathOfDestinationFilePath = destinationFilePath.parent_path();
@@ -150,9 +142,9 @@ FileCopyResult FileSystem::TryCopyFile(
    catch (const fs::filesystem_error& ex)
    {
       FileCopyResult failedFileCopyResult;
+      failedFileCopyResult.copySucceeded = false;
       failedFileCopyResult.sourceFilePath = sourceFilePath;
       failedFileCopyResult.destinationFilePath = destinationFilePath;
-      failedFileCopyResult.copySucceeded = false;
       const char* const copyFailureReason = ex.what();
       failedFileCopyResult.copyFailureReason = copyFailureReason;
       failedFileCopyResult.durationInMilliseconds = _stopwatch->StopAndGetElapsedMilliseconds();
@@ -160,8 +152,11 @@ FileCopyResult FileSystem::TryCopyFile(
    }
    FILE* const writeModeDestinationBinaryFilePointer = _fileOpenerCloser->CreateBinaryFileInWriteMode(destinationFilePath);
    const size_t sourceFileBytesSize = sourceFileBytes.size();
-   const size_t numberOfBytesWritten = _call_fwrite(
-      &sourceFileBytes[0], 1, sourceFileBytesSize, writeModeDestinationBinaryFilePointer);
+   size_t numberOfBytesWritten = 0;
+   if (sourceFileBytesSize > 0)
+   {
+      numberOfBytesWritten = _call_fwrite(&sourceFileBytes[0], 1, sourceFileBytesSize, writeModeDestinationBinaryFilePointer);
+   }
    _fileOpenerCloser->CloseFile(writeModeDestinationBinaryFilePointer);
    _asserter->ThrowIfSizeTsNotEqual(sourceFileBytesSize, numberOfBytesWritten,
       "fwrite() in FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) unexpectedly returned numberOfBytesWritten != sourceFileBytesSize");
