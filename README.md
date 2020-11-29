@@ -2,6 +2,8 @@
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-17-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B17) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
+Cloudundancy quickly copies files and folders to multiple configurable destination folders to achieve cloud-redundant and device-redundant backups of key files. For example, destination folders can be configured to be a Google Drive folder, a Microsoft OneDrive folder, and two USB drives to achieve the peace of mind that comes with having cloud-redundant and device-redundant backups of key files.
+
 |Build Type|Build Status|
 |----------|------------|
 |Travis CI Linux (Clang 7.0.0 and GCC 7.5.0)|<a href="https://travis-ci.org/NeilJustice/Cloudundancy"><img src="https://travis-ci.org/NeilJustice/Cloudundancy.svg?branch=main"/></a>|
@@ -25,14 +27,8 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
 ## Command Line Usage
 
 ```
-Cloudundancy v0.8.0
+Cloudundancy v0.9.0 - Makes cloud-redundant and device-redundant file backups
 https://github.com/NeilJustice/Cloudundancy
-
-Cloudundancy quickly copies files and folders to multiple configurable destination folders
-to achieve cloud-redundant and device-redundant backups of key files.
-For example, destination folders can be configured to be
-a Google Drive folder, a Microsoft OneDrive folder, two USB drives, and a network share
-to achieve cloud-redundant and device-redundant backups of key files.
 
 Usage:
    Cloudundancy example-linux-ini-file

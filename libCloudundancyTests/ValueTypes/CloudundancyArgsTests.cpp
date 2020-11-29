@@ -9,14 +9,8 @@ EVIDENCE
 TEST(CommandLineUsage_IsExpectedString)
 {
    ARE_EQUAL(
-R"(Cloudundancy v0.8.0
+R"(Cloudundancy v0.9.0 - Makes cloud-redundant and device-redundant file backups
 https://github.com/NeilJustice/Cloudundancy
-
-Cloudundancy quickly copies files and folders to multiple configurable destination folders
-to achieve cloud-redundant and device-redundant backups of key files.
-For example, destination folders can be configured to be
-a Google Drive folder, a Microsoft OneDrive folder, two USB drives, and a network share
-to achieve cloud-redundant and device-redundant backups of key files.
 
 Usage:
    Cloudundancy example-linux-ini-file

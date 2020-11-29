@@ -8,8 +8,8 @@
 // Example Cloudundancy command lines:
 // example-linux-ini-file
 // example-windows-ini-file
-// backup-files-and-folders --ini-file=C:\Code\dotfiles\HomeWindowsCloudundancy.ini
-// backup-files-and-folders-to-7z-file --ini-file=C:\Code\dotfiles\HomeWindowsCloudundancy_CodeFolderBackups.ini --7z-ini-file=C:\Code\dotfiles\HomeWindowsCloudundancy_CodeFolderBackups_7zFileCopyStep.ini --backup-staging-folder=C:\CodeFolderBackupStaging
+// backup-files-and-folders --ini-file=C:\Code\dotfiles\WindowsCloudundancy.ini
+// backup-files-and-folders-to-7z-file --ini-file=C:\Code\dotfiles\WindowsCloudundancy_CodeFolderBackups.ini --7z-ini-file=C:\Code\dotfiles\WindowsCloudundancy_CodeFolderBackups_7zFileCopyStep.ini --backup-staging-folder=C:\CodeFolderBackupStaging
 
 // Acceptance Testing
 // backup-files-and-folders --ini-file=C:\Code\Cloudundancy\AcceptanceTesting\IniFiles\BlankIniFile.ini
