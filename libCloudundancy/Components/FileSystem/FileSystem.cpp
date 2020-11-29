@@ -189,11 +189,12 @@ FileCopyResult FileSystem::TryCopyFileWithStdFilesystemCopyFile(
    return fileCopyResult;
 }
 
-bool FileSystem::IsFileSizeGreaterThan2GB(const fs::path& filePath) const
+bool FileSystem::IsFileSizeGreaterThanOrEqualTo2GB(const fs::path& filePath) const
 {
-   const size_t fileSize = _call_fs_file_size(filePath);
-   constexpr size_t TwoGigabytes = 2ull * 1024ull * 1024ull * 1024ull;
-   if (fileSize > TwoGigabytes)
+   const size_t fileSizeInBytes = _call_fs_file_size(filePath);
+   constexpr size_t NumberOfBytesIn2GB = 2ull * 1024ull * 1024ull * 1024ull;
+   static_assert(NumberOfBytesIn2GB == 2147483648);
+   if (fileSizeInBytes >= NumberOfBytesIn2GB)
    {
       return true;
    }

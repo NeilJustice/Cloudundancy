@@ -14,7 +14,7 @@ public:
    METALMOCK_NONVOID1_CONST(std::vector<std::string>, ReadFileLinesWhichMustBeNonEmpty, const fs::path&)
 
    // File Copies
-   METALMOCK_NONVOID1_CONST(bool, IsFileSizeGreaterThan2GB, const fs::path&)
+   METALMOCK_NONVOID1_CONST(bool, IsFileSizeGreaterThanOrEqualTo2GB, const fs::path&)
    METALMOCK_NONVOID2_CONST(FileCopyResult, TryCopyFile, const fs::path&, const fs::path&)
    METALMOCK_NONVOID2_CONST(FileCopyResult, TryCopyFileWithStdFilesystemCopyFile, const fs::path&, const fs::path&)
 

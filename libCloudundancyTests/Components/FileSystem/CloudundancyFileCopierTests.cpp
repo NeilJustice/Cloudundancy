@@ -24,8 +24,8 @@ FACTS(CopyFileOrFolderToFolder_SourcePathDoesNotHaveAFileNameMeaningItIsAFolder_
 AFACT(CopyNonIgnoredFilesInAndBelowFolderToFolder_CopiesNonIgnoredFilesToFolderUntilRecursiveDirectoryIteratorReturnsNoMoreFiles)
 AFACT(CopyNestedFileToFolder_RelativeDestinationFolderPathIsDot_CopiesNestedFileToFolderWithSlashDotSlashNotPresentInTheDestinationFilePath)
 AFACT(CopyNestedFileToFolder_RelativeDestinationFolderPathIsNotDot_CopiesNestedFileToFolderWithRelativeDestinationFolderPathPresentInTheDestinationFilePath)
-AFACT(TryCopyFile_FileSizeIsGreaterThan2GB_CopiesFileWithStdFilesystemCopyFile_WritesCopiedIfCopySucceeded_WritesCopyFailedIfCopyFailed)
-AFACT(TryCopyFile_FileSizeIsLessThanOrEqualTo2GB_CopiesFileWithCStyleCopyFile_WritesCopiedIfCopySucceeded_WritesCopyFailedIfCopyFailed)
+AFACT(TryCopyFile_FileSizeIsGreaterThanOrEqualTo2GB_CopiesFileWithStdFilesystemCopyFile_WritesCopiedIfCopySucceeded_WritesCopyFailedIfCopyFailed)
+AFACT(TryCopyFile_FileSizeIsLessThan2GB_CopiesFileWithCStyleCopyFile_WritesCopiedIfCopySucceeded_WritesCopyFailedIfCopyFailed)
 AFACT(TryCopyFileToFolder_RelativeDestinationFolderPathIsADot_DoesNotJoinDotCharacter_CallsTryCopyFile)
 AFACT(TryCopyFileToFolder_RelativeDestinationFolderPathIsNotADot_JoinsRelativeDestinationFolder_CallsTryCopyFile)
 FACTS(WriteCopiedOrCopyFailedMessage_WritesCopiedIfCopySucceeded_WritesCopyFailedIfCopyFailed)
@@ -268,11 +268,11 @@ TEST(CopyNestedFileToFolder_RelativeDestinationFolderPathIsNotDot_CopiesNestedFi
       &CloudundancyFileCopier::TryCopyFile, &_cloudundancyFileCopier, sourceFilePath, expectedDestinationFilePath));
 }
 
-TEST(TryCopyFile_FileSizeIsGreaterThan2GB_CopiesFileWithStdFilesystemCopyFile_WritesCopiedIfCopySucceeded_WritesCopyFailedIfCopyFailed)
+TEST(TryCopyFile_FileSizeIsGreaterThanOrEqualTo2GB_CopiesFileWithStdFilesystemCopyFile_WritesCopiedIfCopySucceeded_WritesCopyFailedIfCopyFailed)
 {
    _consoleMock->WriteMock.Expect();
 
-   _fileSystemMock->IsFileSizeGreaterThan2GBMock.Return(true);
+   _fileSystemMock->IsFileSizeGreaterThanOrEqualTo2GBMock.Return(true);
 
    const FileCopyResult fileCopyResult = ZenUnit::Random<FileCopyResult>();
    _fileSystemMock->TryCopyFileWithStdFilesystemCopyFileMock.Return(fileCopyResult);
@@ -288,17 +288,17 @@ TEST(TryCopyFile_FileSizeIsGreaterThan2GB_CopiesFileWithStdFilesystemCopyFile_Wr
       "Copying ", sourceFilePath.string(), '\n',
       "     to ", destinationFilePath.string(), ". ");
    METALMOCK(_consoleMock->WriteMock.CalledOnceWith(expectedCopyingFileMessage));
-   METALMOCK(_fileSystemMock->IsFileSizeGreaterThan2GBMock.CalledOnceWith(sourceFilePath));
+   METALMOCK(_fileSystemMock->IsFileSizeGreaterThanOrEqualTo2GBMock.CalledOnceWith(sourceFilePath));
    METALMOCK(_fileSystemMock->TryCopyFileWithStdFilesystemCopyFileMock.CalledOnceWith(sourceFilePath, destinationFilePath));
    METALMOCK(_caller_WriteCopiedOrCopyFailedMessageMock->CallConstMemberFunctionMock.CalledOnceWith(
       &CloudundancyFileCopier::WriteCopiedOrCopyFailedMessage, &_cloudundancyFileCopier, fileCopyResult));
 }
 
-TEST(TryCopyFile_FileSizeIsLessThanOrEqualTo2GB_CopiesFileWithCStyleCopyFile_WritesCopiedIfCopySucceeded_WritesCopyFailedIfCopyFailed)
+TEST(TryCopyFile_FileSizeIsLessThan2GB_CopiesFileWithCStyleCopyFile_WritesCopiedIfCopySucceeded_WritesCopyFailedIfCopyFailed)
 {
    _consoleMock->WriteMock.Expect();
 
-   _fileSystemMock->IsFileSizeGreaterThan2GBMock.Return(false);
+   _fileSystemMock->IsFileSizeGreaterThanOrEqualTo2GBMock.Return(false);
 
    const FileCopyResult fileCopyResult = ZenUnit::Random<FileCopyResult>();
    _fileSystemMock->TryCopyFileMock.Return(fileCopyResult);
@@ -314,7 +314,7 @@ TEST(TryCopyFile_FileSizeIsLessThanOrEqualTo2GB_CopiesFileWithCStyleCopyFile_Wri
       "Copying ", sourceFilePath.string(), '\n',
       "     to ", destinationFilePath.string(), ". ");
    METALMOCK(_consoleMock->WriteMock.CalledOnceWith(expectedCopyingFileMessage));
-   METALMOCK(_fileSystemMock->IsFileSizeGreaterThan2GBMock.CalledOnceWith(sourceFilePath));
+   METALMOCK(_fileSystemMock->IsFileSizeGreaterThanOrEqualTo2GBMock.CalledOnceWith(sourceFilePath));
    METALMOCK(_fileSystemMock->TryCopyFileMock.CalledOnceWith(sourceFilePath, destinationFilePath));
    METALMOCK(_caller_WriteCopiedOrCopyFailedMessageMock->CallConstMemberFunctionMock.CalledOnceWith(
       &CloudundancyFileCopier::WriteCopiedOrCopyFailedMessage, &_cloudundancyFileCopier, fileCopyResult));

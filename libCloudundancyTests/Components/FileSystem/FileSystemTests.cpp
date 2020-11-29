@@ -24,8 +24,8 @@ AFACT(ReadFileBytes_OpensFileInBinaryReadMode_FileSizeIsNot0_ReadsFileBytes_Clos
 AFACT(ReadFileLinesWhichMustBeNonEmpty_FileTextIsEmpty_ThrowsFileSystemException)
 FACTS(ReadFileLinesWhichMustBeNonEmpty_FileTextIsNotEmpty_ReturnsFileTextSplitOnNewlines)
 // File Copies
-FACTS(IsFileSizeGreaterThan2GB_FileSizeIsGreaterThan2GB_ReturnsTrue)
-FACTS(IsFileSizeGreaterThan2GB_FileSizeIsLessThanOrEqualTo2GB_ReturnsFalse)
+FACTS(IsFileSizeGreaterThanOrEqualTo2GB_FileSizeIsGreaterThanOrEqualTo2GB_ReturnsTrue)
+FACTS(IsFileSizeGreaterThanOrEqualTo2GB_FileSizeIsLessThan2GB_ReturnsFalse)
 AFACT(TryCopyFile_SourceFileIsEmpty_ReturnsFalseFileCopyResult)
 AFACT(TryCopyFile_SourceFileIsNotEmpty_CreateParentFolderOfDestinationFilePathThrowsFilesystemError_ReturnsFalseFileCopyResult)
 AFACT(TryCopyFile_SourceFileIsNotEmpty_CreateParentFolderOfDestinationFilePathSucceeds_WritesSourceFileBytesToDestinationFilePath_ReturnsTrueFileCopyResult)
@@ -318,8 +318,9 @@ TEST(ReadFileBytes_OpensFileInBinaryReadMode_FileSizeIsNot0_ReadsFileBytes_Close
 
 // File Copies
 
-TEST1X1(IsFileSizeGreaterThan2GB_FileSizeIsGreaterThan2GB_ReturnsTrue,
+TEST1X1(IsFileSizeGreaterThanOrEqualTo2GB_FileSizeIsGreaterThanOrEqualTo2GB_ReturnsTrue,
    size_t fileSize,
+   2ull * 1024ull * 1024ull * 1024ull,
    2ull * 1024ull * 1024ull * 1024ull + 1,
    2ull * 1024ull * 1024ull * 1024ull + 2,
    10ull * 1024ull * 1024ull * 1024ull)
@@ -327,26 +328,26 @@ TEST1X1(IsFileSizeGreaterThan2GB_FileSizeIsGreaterThan2GB_ReturnsTrue,
    file_sizeMock.Return(fileSize);
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
-   const bool isFileSizeGreaterThan2GB = _fileSystem.IsFileSizeGreaterThan2GB(filePath);
+   const bool isFileSizeGreaterThanOrEqualTo2GB = _fileSystem.IsFileSizeGreaterThanOrEqualTo2GB(filePath);
    //
    METALMOCK(file_sizeMock.CalledOnceWith(filePath));
-   IS_TRUE(isFileSizeGreaterThan2GB);
+   IS_TRUE(isFileSizeGreaterThanOrEqualTo2GB);
 }
 
-TEST1X1(IsFileSizeGreaterThan2GB_FileSizeIsLessThanOrEqualTo2GB_ReturnsFalse,
+TEST1X1(IsFileSizeGreaterThanOrEqualTo2GB_FileSizeIsLessThan2GB_ReturnsFalse,
    size_t fileSize,
    0ull,
    1ull,
-   2ull * 1024ull * 1024ull * 1024ull - 1,
-   2ull * 1024ull * 1024ull * 1024ull)
+   2ull * 1024ull * 1024ull * 1024ull - 2,
+   2ull * 1024ull * 1024ull * 1024ull - 1)
 {
    file_sizeMock.Return(fileSize);
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
-   const bool isFileSizeGreaterThan2GB = _fileSystem.IsFileSizeGreaterThan2GB(filePath);
+   const bool isFileSizeGreaterThanOrEqualTo2GB = _fileSystem.IsFileSizeGreaterThanOrEqualTo2GB(filePath);
    //
    METALMOCK(file_sizeMock.CalledOnceWith(filePath));
-   IS_FALSE(isFileSizeGreaterThan2GB);
+   IS_FALSE(isFileSizeGreaterThanOrEqualTo2GB);
 }
 
 TEST(TryCopyFile_SourceFileIsEmpty_ReturnsFalseFileCopyResult)

@@ -132,8 +132,8 @@ void CloudundancyFileCopier::TryCopyFile(const fs::path& sourceFilePath, const f
       "     to ", destinationFilePath.string(), ". ");
    _console->Write(copyingFileMessage);
    FileCopyResult fileCopyResult;
-   const bool sourceFileSizeIsGreaterThan2GB = _fileSystem->IsFileSizeGreaterThan2GB(sourceFilePath);
-   if (sourceFileSizeIsGreaterThan2GB)
+   const bool sourceFileSizeIsGreaterThanOrEqualTo2GB = _fileSystem->IsFileSizeGreaterThanOrEqualTo2GB(sourceFilePath);
+   if (sourceFileSizeIsGreaterThanOrEqualTo2GB)
    {
       fileCopyResult = _fileSystem->TryCopyFileWithStdFilesystemCopyFile(sourceFilePath, destinationFilePath);
    }

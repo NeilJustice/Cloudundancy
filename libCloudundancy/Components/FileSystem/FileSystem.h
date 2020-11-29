@@ -70,7 +70,7 @@ public:
    // File Copies
    virtual FileCopyResult TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const;
    virtual FileCopyResult TryCopyFileWithStdFilesystemCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const;
-   virtual bool IsFileSizeGreaterThan2GB(const fs::path& filePath) const;
+   virtual bool IsFileSizeGreaterThanOrEqualTo2GB(const fs::path& filePath) const;
 
    // File Writes
    virtual void WriteTextFile(const fs::path& filePath, string_view text) const;
