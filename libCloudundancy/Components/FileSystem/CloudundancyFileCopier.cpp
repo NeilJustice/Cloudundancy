@@ -12,7 +12,8 @@
 
 CloudundancyFileCopier::CloudundancyFileCopier() noexcept
    // Function Callers
-   : _call_String_ReplaceFirst(String::ReplaceFirst)
+   : _call_exit(exit)
+   , _call_String_ReplaceFirst(String::ReplaceFirst)
    , _caller_CopyEachFileOrFolderToFolder(make_unique<OneExtraArgMemberFunctionForEacherOfCopyInstructionsType>())
    , _caller_CopyFileFunctions(make_unique<VoidTwoArgMemberFunctionCallerType>())
    , _caller_CopyFileOrFolderToFolder(make_unique<OneExtraArgMemberFunctionForEacherOfDestinationFolderPathsType>())
@@ -176,6 +177,6 @@ void CloudundancyFileCopier::WriteCopiedOrCopyFailedMessage(const FileCopyResult
       const string copyFailedMessage = String::Concat(
          "Copy failed [", durationInMilliseconds, "ms]: ", fileCopyResult.copyFailureReason, '\n');
       _console->WriteLineColor(copyFailedMessage, Color::Red);
-
+      _call_exit(1);
    }
 }

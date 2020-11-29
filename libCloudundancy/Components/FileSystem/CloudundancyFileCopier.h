@@ -22,6 +22,7 @@ class CloudundancyFileCopier
    friend class CloudundancyFileCopierTests;
 private:
    // Function Callers
+   function<void(int)> _call_exit;
    function<string(const string&, const string&, const string&)> _call_String_ReplaceFirst;
 
    using OneExtraArgMemberFunctionForEacherOfCopyInstructionsType = OneExtraArgMemberFunctionForEacher<
