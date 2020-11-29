@@ -29,7 +29,7 @@ FACTS(IsFileSizeGreaterThanOrEqualTo2GB_FileSizeIsLessThan2GB_ReturnsFalse)
 AFACT(TryCopyFile_SourceFileIsNotEmpty_CreationOfParentFolderOfDestinationFilePathThrowsFilesystemError_ReturnsFalseFileCopyResult)
 AFACT(TryCopyFile_SourceFileIsEmpty_CreationOfParentFolderOfDestinationFilePathSucceeds_CreatesEmptyDestinationFile_ReturnsCopySucceededFileCopyResult)
 AFACT(TryCopyFile_SourceFileIsNotEmpty_CreationOfParentFolderOfDestinationFilePathSucceeds_WritesSourceFileBytesToDestinationFilePath_ReturnsCopySucceededFileCopyResult)
-AFACT(TryCopyFileWithStdFilesystemCopyFile_CallsStdFilesystemCopyFile)
+AFACT(TryCopyFileWithStdFilesystemCopyFile_CreatesParentFoldersForDestinationFile_CopiesSourceFileToDestinationFileByCallingStdFilesystemCopyFile)
 // File Writes
 AFACT(WriteTextFile_CreatesDirectoriesLeadingUpToFilePath_CreatesFileInTextWriteMode_WritesFileTextToFile_ClosesFile)
 // Misc
@@ -511,18 +511,22 @@ TEST(TryCopyFile_SourceFileIsNotEmpty_CreationOfParentFolderOfDestinationFilePat
    ARE_EQUAL(expectedReturnValue, fileCopyResult);
 }
 
-TEST(TryCopyFileWithStdFilesystemCopyFile_CallsStdFilesystemCopyFile)
+TEST(TryCopyFileWithStdFilesystemCopyFile_CreatesParentFoldersForDestinationFile_CopiesSourceFileToDestinationFileByCallingStdFilesystemCopyFile)
 {
    _stopwatchMock->StartMock.Expect();
+   create_directoriesMock.ReturnRandom();
    const unsigned long long elapsedMilliseconds = _stopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
    const bool copyFileReturnValue = copy_fileMock.ReturnRandom();
+
    const fs::path sourceFilePath = ZenUnit::Random<fs::path>();
    const fs::path destinationFilePath = ZenUnit::Random<fs::path>();
    //
    const FileCopyResult fileCopyResult =
       _fileSystem.TryCopyFileWithStdFilesystemCopyFile(sourceFilePath, destinationFilePath);
    //
+   const fs::path expectedParentPathOfDestinationFilePath = destinationFilePath.parent_path();
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
+   METALMOCK(create_directoriesMock.CalledOnceWith(expectedParentPathOfDestinationFilePath));
    METALMOCK(copy_fileMock.CalledOnceWith(sourceFilePath, destinationFilePath, fs::copy_options::overwrite_existing));
    METALMOCK(_stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
    FileCopyResult expectedFileCopyResult;

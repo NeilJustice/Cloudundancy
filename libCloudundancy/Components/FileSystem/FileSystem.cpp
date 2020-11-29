@@ -172,6 +172,8 @@ FileCopyResult FileSystem::TryCopyFileWithStdFilesystemCopyFile(
    const fs::path& sourceFilePath, const fs::path& destinationFilePath) const
 {
    _stopwatch->Start();
+   const fs::path parentFolderPathForDestinationFile = destinationFilePath.parent_path();
+   _call_fs_create_directories(parentFolderPathForDestinationFile);
    FileCopyResult fileCopyResult;
    fileCopyResult.sourceFilePath = sourceFilePath;
    fileCopyResult.destinationFilePath = destinationFilePath;
