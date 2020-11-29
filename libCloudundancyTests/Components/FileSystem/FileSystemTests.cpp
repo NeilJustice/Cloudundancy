@@ -368,7 +368,7 @@ TEST(TryCopyFile_SourceFileIsEmpty_ReturnsFalseFileCopyResult)
    FileCopyResult expectedReturnValue;
    expectedReturnValue.sourceFilePath = sourceFilePath;
    expectedReturnValue.destinationFilePath = destinationFilePath;
-   expectedReturnValue.errorMessage = "empty file";
+   expectedReturnValue.copyFailureReason = "empty file";
    ARE_EQUAL(expectedReturnValue, fileCopyResult);
 }
 
@@ -402,7 +402,7 @@ TEST(TryCopyFile_SourceFileIsNotEmpty_CreateParentFolderOfDestinationFilePathThr
    expectedReturnValue.copySucceeded = false;
    const fs::filesystem_error expectedException(exceptionMessage, errorCode);
    const char* const expectedExceptionMessage = expectedException.what();
-   expectedReturnValue.errorMessage = expectedExceptionMessage;
+   expectedReturnValue.copyFailureReason = expectedExceptionMessage;
    expectedReturnValue.durationInMilliseconds = elapsedMilliseconds;
    ARE_EQUAL(expectedReturnValue, fileCopyResult);
 }

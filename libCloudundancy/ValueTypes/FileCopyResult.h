@@ -7,7 +7,7 @@ struct FileCopyResult
 	bool copySucceeded = false;
    unsigned long long numberOfBytesCopied = 0;
    unsigned long long durationInMilliseconds = 0;
-	std::string errorMessage;
+	std::string copyFailureReason;
 };
 
 #ifdef _WIN32

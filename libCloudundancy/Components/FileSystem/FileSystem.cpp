@@ -139,7 +139,7 @@ FileCopyResult FileSystem::TryCopyFile(
       FileCopyResult emptyFileNotCopiedResult;
       emptyFileNotCopiedResult.sourceFilePath = sourceFilePath;
       emptyFileNotCopiedResult.destinationFilePath = destinationFilePath;
-      emptyFileNotCopiedResult.errorMessage = "empty file";
+      emptyFileNotCopiedResult.copyFailureReason = "empty file";
       return emptyFileNotCopiedResult;
    }
    try
@@ -153,8 +153,8 @@ FileCopyResult FileSystem::TryCopyFile(
       failedFileCopyResult.sourceFilePath = sourceFilePath;
       failedFileCopyResult.destinationFilePath = destinationFilePath;
       failedFileCopyResult.copySucceeded = false;
-      const char* const errorMessage = ex.what();
-      failedFileCopyResult.errorMessage = errorMessage;
+      const char* const copyFailureReason = ex.what();
+      failedFileCopyResult.copyFailureReason = copyFailureReason;
       failedFileCopyResult.durationInMilliseconds = _stopwatch->StopAndGetElapsedMilliseconds();
       return failedFileCopyResult;
    }

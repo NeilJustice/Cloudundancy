@@ -173,7 +173,9 @@ void CloudundancyFileCopier::WriteCopiedOrCopyFailedMessage(const FileCopyResult
    }
    else
    {
-      const string copyFailedMessage = String::Concat("Copy failed [", durationInMilliseconds, "ms]\n");
+      const string copyFailedMessage = String::Concat(
+         "Copy failed [", durationInMilliseconds, "ms]: ", fileCopyResult.copyFailureReason, '\n');
       _console->WriteLineColor(copyFailedMessage, Color::Red);
+
    }
 }

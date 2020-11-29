@@ -11,7 +11,7 @@ namespace ZenUnit
       ARE_EQUAL(expectedFileCopyResult.copySucceeded, actualFileCopyResult.copySucceeded);
       ARE_EQUAL(expectedFileCopyResult.numberOfBytesCopied, actualFileCopyResult.numberOfBytesCopied);
       ARE_EQUAL(expectedFileCopyResult.durationInMilliseconds, actualFileCopyResult.durationInMilliseconds);
-      ARE_EQUAL(expectedFileCopyResult.errorMessage, actualFileCopyResult.errorMessage);
+      ARE_EQUAL(expectedFileCopyResult.copyFailureReason, actualFileCopyResult.copyFailureReason);
    }
 
    FileCopyResult TestableRandomFileCopyResult(const RandomGenerator* randomGenerator)
@@ -22,7 +22,7 @@ namespace ZenUnit
       randomFileCopyResult.copySucceeded = randomGenerator->Bool();
       randomFileCopyResult.numberOfBytesCopied = randomGenerator->UnsignedLongLong();
       randomFileCopyResult.durationInMilliseconds = randomGenerator->UnsignedLongLong();
-      randomFileCopyResult.errorMessage = randomGenerator->String();
+      randomFileCopyResult.copyFailureReason = randomGenerator->String();
       return randomFileCopyResult;
    }
 

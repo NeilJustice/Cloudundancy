@@ -15,7 +15,7 @@ TEST(ZenUnitEqualizer_ThrowsIfAnyFieldNotEqual)
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileCopyResult, copySucceeded, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileCopyResult, numberOfBytesCopied, ZenUnit::RandomNon0<unsigned long long>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileCopyResult, durationInMilliseconds, ZenUnit::RandomNon0<unsigned long long>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileCopyResult, errorMessage, ZenUnit::Random<string>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileCopyResult, copyFailureReason, ZenUnit::Random<string>());
 }
 
 TEST(TestableRandomFileCopyResult_ReturnsFileCopyResultWithAllRandomFields)
@@ -32,7 +32,7 @@ TEST(TestableRandomFileCopyResult_ReturnsFileCopyResultWithAllRandomFields)
    unsigned long long durationInMilliseconds = ZenUnit::Random<unsigned long long>();
    randomGeneratorMock.UnsignedLongLongMock.ReturnValues(numberOfBytesCopied, durationInMilliseconds);
 
-   const string errorMessage = randomGeneratorMock.StringMock.ReturnRandom();
+   const string copyFailureReason = randomGeneratorMock.StringMock.ReturnRandom();
    //
    const FileCopyResult randomFileCopyResult = ZenUnit::TestableRandomFileCopyResult(&randomGeneratorMock);
    //
@@ -46,7 +46,7 @@ TEST(TestableRandomFileCopyResult_ReturnsFileCopyResultWithAllRandomFields)
    expectedRandomFileCopyResult.copySucceeded = copySucceeded;
    expectedRandomFileCopyResult.numberOfBytesCopied = numberOfBytesCopied;
    expectedRandomFileCopyResult.durationInMilliseconds = durationInMilliseconds;
-   expectedRandomFileCopyResult.errorMessage = errorMessage;
+   expectedRandomFileCopyResult.copyFailureReason = copyFailureReason;
    ARE_EQUAL(expectedRandomFileCopyResult, randomFileCopyResult);
 }
 

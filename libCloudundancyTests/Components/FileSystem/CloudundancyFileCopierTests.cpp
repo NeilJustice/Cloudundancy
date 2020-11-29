@@ -373,7 +373,8 @@ TEST(WriteCopiedOrCopyFailedMessage_CopyFailed_WritesCopyFailedAndDurationInMill
    //
    _cloudundancyFileCopier.WriteCopiedOrCopyFailedMessage(fileCopyResult);
    //
-   const string expectedCopyFailedMessage = String::Concat("Copy failed [", fileCopyResult.durationInMilliseconds, "ms]\n");
+   const string expectedCopyFailedMessage = String::Concat(
+      "Copy failed [", fileCopyResult.durationInMilliseconds, "ms]: ", fileCopyResult.copyFailureReason, '\n');
    METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedCopyFailedMessage, Color::Red));
 }
 
