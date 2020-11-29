@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "libCloudundancy/Components/Time/CRTWatch.h"
-#include "libCloudundancyTests/Components/Time/ZenUnit/tmZenUnitEqualizerAndRandom.h"
 
 TESTS(CRTWatchTests)
 AFACT(DefaultConstructor_SetsFunctions)

@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/RandomFileCopyInstruction.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/RandomAbsoluteFileOrFolderPathToRelativeFolderPath.h"
 
-TESTS(RandomFileCopyInstructionTests)
+TESTS(RandomAbsoluteFileOrFolderPathToRelativeFolderPathTests)
 AFACT(Random_ReturnsFileCopyInstructionWithAllFieldsNonDefault)
 EVIDENCE
 
@@ -13,4 +13,4 @@ TEST(Random_ReturnsFileCopyInstructionWithAllFieldsNonDefault)
    IS_NOT_DEFAULT_VALUE(randomFileCopyInstruction.relativeDestinationFolderPath);
 }
 
-RUN_TESTS(RandomFileCopyInstructionTests)
+RUN_TESTS(RandomAbsoluteFileOrFolderPathToRelativeFolderPathTests)

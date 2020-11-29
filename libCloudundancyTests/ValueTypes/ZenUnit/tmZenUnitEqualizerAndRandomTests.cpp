@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancyTests/Components/Time/ZenUnit/tmZenUnitEqualizerAndRandom.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/tmZenUnitEqualizerAndRandom.h"
 
 TESTS(tmZenUnitEqualizerAndRandomTests)
 AFACT(tmEqualizer_ThrowsIfAnyFieldNotEqual)

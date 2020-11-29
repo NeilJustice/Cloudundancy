@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancyTests/Components/Docopt/ZenUnit/docoptvalueRandom.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/docoptvalueRandom.h"
 
 TESTS(docoptvalueRandomTests)
 AFACT(RandomDocoptValue_ReturnsdocoptvalueWithAllNonDefaultFields)
