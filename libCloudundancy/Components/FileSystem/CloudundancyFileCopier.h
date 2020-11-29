@@ -5,7 +5,7 @@ struct CloudundancyArgs;
 struct CloudundancyIni;
 class CloudundancyIniFileReader;
 template<typename T, typename ClassType, typename ConstMemberFunctionType, typename ExtraArgType>
-class OneExtraArgMemberForEacher;
+class OneExtraArgMemberFunctionForEacher;
 class FileSystem;
 class RecursiveDirectoryIterator;
 class Stopwatch;
@@ -24,18 +24,18 @@ private:
    // Function Callers
    function<string(const string&, const string&, const string&)> _call_String_ReplaceFirst;
 
-   using OneExtraArgMemberForEacherOfCopyInstructionsType = OneExtraArgMemberForEacher<
+   using OneExtraArgMemberFunctionForEacherOfCopyInstructionsType = OneExtraArgMemberFunctionForEacher<
       fs::path,
       void(CloudundancyFileCopier::*)(const fs::path&, const CloudundancyIni&) const,
       CloudundancyFileCopier, const CloudundancyIni&>;
-   unique_ptr<const OneExtraArgMemberForEacherOfCopyInstructionsType> _caller_CopyEachFileOrFolderToFolder;
+   unique_ptr<const OneExtraArgMemberFunctionForEacherOfCopyInstructionsType> _caller_CopyEachFileOrFolderToFolder;
 
-   using OneExtraArgMemberForEacherOfDestinationFolderPathsType = OneExtraArgMemberForEacher<
+   using OneExtraArgMemberFunctionForEacherOfDestinationFolderPathsType = OneExtraArgMemberFunctionForEacher<
       AbsoluteFileOrFolderPathToRelativeFolderPath,
       void(CloudundancyFileCopier::*)(const AbsoluteFileOrFolderPathToRelativeFolderPath&, const fs::path&) const,
       CloudundancyFileCopier,
       const fs::path&>;
-   unique_ptr<const OneExtraArgMemberForEacherOfDestinationFolderPathsType> _caller_CopyFileOrFolderToFolder;
+   unique_ptr<const OneExtraArgMemberFunctionForEacherOfDestinationFolderPathsType> _caller_CopyFileOrFolderToFolder;
 
    using VoidTwoArgMemberFunctionCallerType = VoidTwoArgMemberFunctionCaller<
       CloudundancyFileCopier, const AbsoluteFileOrFolderPathToRelativeFolderPath&, const fs::path&>;

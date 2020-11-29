@@ -3,7 +3,7 @@
 #include "libCloudundancyTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/CloudundancyFileCopierMock.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/FileSystemMock.h"
-#include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/VoidOneArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/Components/FunctionCallers/MemberFunctions/MetalMock/VoidOneArgMemberFunctionCallerMock.h"
 #include "libCloudundancyTests/Components/Process/MetalMock/ProcessRunnerMock.h"
 #include "libCloudundancyTests/Components/Time/MetalMock/StopwatchMock.h"
 #include "libCloudundancyTests/Components/Time/MetalMock/WatchMock.h"

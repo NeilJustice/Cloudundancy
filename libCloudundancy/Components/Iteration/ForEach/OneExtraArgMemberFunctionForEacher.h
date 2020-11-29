@@ -1,10 +1,10 @@
 #pragma once
 
 template<typename T, typename MemberFunctionType, typename ClassType, typename ExtraArgType>
-class OneExtraArgMemberForEacher
+class OneExtraArgMemberFunctionForEacher
 {
 public:
-   virtual void OneExtraArgMemberForEach(
+   virtual void OneExtraArgMemberFunctionForEach(
       const std::vector<T>& elements,
       MemberFunctionType constMemberFunction,
       const ClassType* constClassPointer, ExtraArgType extraArg) const
@@ -17,5 +17,5 @@ public:
       }
    }
 
-   virtual ~OneExtraArgMemberForEacher() = default;
+   virtual ~OneExtraArgMemberFunctionForEacher() = default;
 };

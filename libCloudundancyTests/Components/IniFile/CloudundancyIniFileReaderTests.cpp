@@ -2,8 +2,8 @@
 #include "libCloudundancy/ValueTypes/FilePathLineNumberLineText.h"
 #include "libCloudundancy/Components/IniFile/CloudundancyIniFileReader.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/FileSystemMock.h"
-#include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
-#include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/Components/FunctionCallers/MemberFunctions/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/Components/FunctionCallers/MemberFunctions/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
 #include "libCloudundancyTests/Components/IniFile/MetalMock/CloudundancyIniValidatorMock.h"
 
 TESTS(CloudundancyIniFileReaderTests)

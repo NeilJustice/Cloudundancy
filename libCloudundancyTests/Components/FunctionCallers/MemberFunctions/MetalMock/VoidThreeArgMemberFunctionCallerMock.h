@@ -1,5 +1,5 @@
 #pragma once
-#include "libCloudundancy/Components/FunctionCallers/Member/VoidThreeArgMemberFunctionCaller.h"
+#include "libCloudundancy/Components/FunctionCallers/MemberFunctions/VoidThreeArgMemberFunctionCaller.h"
 
 template<typename ClassType, typename Arg1Type, typename Arg2Type, typename Arg3Type>
 class VoidThreeArgMemberFunctionCallerMock : public Metal::Mock<VoidThreeArgMemberFunctionCaller<ClassType, Arg1Type, Arg2Type, Arg3Type>>

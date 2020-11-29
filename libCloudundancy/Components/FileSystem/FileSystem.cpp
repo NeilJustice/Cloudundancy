@@ -4,7 +4,7 @@
 #include "libCloudundancy/Components/FileSystem/FileSystem.h"
 #include "libCloudundancy/Components/Memory/CharVectorAllocator.h"
 #include "libCloudundancy/Components/Time/Stopwatch.h"
-#include "libCloudundancy/Components/FunctionCallers/Member/NonVoidOneArgMemberFunctionCaller.h"
+#include "libCloudundancy/Components/FunctionCallers/MemberFunctions/NonVoidOneArgMemberFunctionCaller.h"
 #include "libCloudundancy/StaticUtilities/Errno.h"
 
 #ifdef __linux__

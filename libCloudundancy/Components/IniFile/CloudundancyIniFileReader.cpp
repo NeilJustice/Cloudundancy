@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "libCloudundancy/Components/FileSystem/FileSystem.h"
-#include "libCloudundancy/Components/FunctionCallers/Member/NonVoidOneArgMemberFunctionCaller.h"
-#include "libCloudundancy/Components/FunctionCallers/Member/VoidThreeArgMemberFunctionCaller.h"
-#include "libCloudundancy/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
+#include "libCloudundancy/Components/FunctionCallers/MemberFunctions/NonVoidOneArgMemberFunctionCaller.h"
+#include "libCloudundancy/Components/FunctionCallers/MemberFunctions/VoidThreeArgMemberFunctionCaller.h"
+#include "libCloudundancy/Components/FunctionCallers/MemberFunctions/VoidTwoArgMemberFunctionCaller.h"
 #include "libCloudundancy/Components/IniFile/CloudundancyIniFileReader.h"
 #include "libCloudundancy/Components/IniFile/CloudundancyIniValidator.h"
 

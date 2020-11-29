@@ -4,17 +4,17 @@
 #include "libCloudundancy/Components/FileSystem/CloudundancyFileCopier.h"
 #include "libCloudundancy/Components/FileSystem/FileSystem.h"
 #include "libCloudundancy/Components/FileSystem/RecursiveDirectoryIterator.h"
-#include "libCloudundancy/Components/FunctionCallers/Member/VoidOneArgMemberFunctionCaller.h"
-#include "libCloudundancy/Components/FunctionCallers/Member/VoidThreeArgMemberFunctionCaller.h"
-#include "libCloudundancy/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
-#include "libCloudundancy/Components/Iteration/ForEach/OneExtraArgMemberForEacher.h"
+#include "libCloudundancy/Components/FunctionCallers/MemberFunctions/VoidOneArgMemberFunctionCaller.h"
+#include "libCloudundancy/Components/FunctionCallers/MemberFunctions/VoidThreeArgMemberFunctionCaller.h"
+#include "libCloudundancy/Components/FunctionCallers/MemberFunctions/VoidTwoArgMemberFunctionCaller.h"
+#include "libCloudundancy/Components/Iteration/ForEach/OneExtraArgMemberFunctionForEacher.h"
 #include "libCloudundancy/Components/Time/Stopwatch.h"
 
 CloudundancyFileCopier::CloudundancyFileCopier() noexcept
    // Function Callers
    : _call_String_ReplaceFirst(String::ReplaceFirst)
-   , _caller_CopyEachFileOrFolderToFolder(make_unique<OneExtraArgMemberForEacherOfCopyInstructionsType>())
-   , _caller_CopyFileOrFolderToFolder(make_unique<OneExtraArgMemberForEacherOfDestinationFolderPathsType>())
+   , _caller_CopyEachFileOrFolderToFolder(make_unique<OneExtraArgMemberFunctionForEacherOfCopyInstructionsType>())
+   , _caller_CopyFileOrFolderToFolder(make_unique<OneExtraArgMemberFunctionForEacherOfDestinationFolderPathsType>())
    , _caller_CopyFileFunctions(make_unique<VoidTwoArgMemberFunctionCallerType>())
    , _caller_CopyNestedFileToFolder(make_unique<CallerType_CopyNestedFileToFolder>())
    , _caller_TryCopyFile(make_unique<VoidTryCopyFileCallerType>())
@@ -37,7 +37,7 @@ void CloudundancyFileCopier::CopyFilesAndFoldersToMultipleFolders(const fs::path
 {
    const CloudundancyIni cloudundancyIni = _cloudundancyIniFileReader->ReadIniFile(cloudundancyIniFilePath);
    _recursiveDirectoryIterator->SetFileSubpathsToNotCopy(cloudundancyIni.fileSubpathsToNotCopy);
-   _caller_CopyEachFileOrFolderToFolder->OneExtraArgMemberForEach(
+   _caller_CopyEachFileOrFolderToFolder->OneExtraArgMemberFunctionForEach(
       cloudundancyIni.destinationFolderPaths,
       &CloudundancyFileCopier::CopyFilesAndFoldersToSingleFolder, this, cloudundancyIni);
 }
@@ -53,7 +53,7 @@ void CloudundancyFileCopier::CopyFilesAndFoldersToSingleFolder(
    const fs::path& destinationFolderPath, const CloudundancyIni& cloudundancyIni) const
 {
    _stopwatch->Start();
-   _caller_CopyFileOrFolderToFolder->OneExtraArgMemberForEach(
+   _caller_CopyFileOrFolderToFolder->OneExtraArgMemberFunctionForEach(
       cloudundancyIni.absoluteFileOrFolderPathAndRelativeFolderPaths,
       &CloudundancyFileCopier::CopyFileOrFolderToFolder, this, destinationFolderPath);
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();

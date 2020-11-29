@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Components/FunctionCallers/Member/VoidOneArgMemberFunctionCaller.h"
+#include "libCloudundancy/Components/FunctionCallers/MemberFunctions/VoidOneArgMemberFunctionCaller.h"
 
 template<typename ArgType>
 TEMPLATE_TESTS(VoidOneArgMemberFunctionCallerTests, ArgType)
