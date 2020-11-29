@@ -26,9 +26,8 @@ FACTS(ReadFileLinesWhichMustBeNonEmpty_FileTextIsNotEmpty_ReturnsFileTextSplitOn
 // File Copies
 FACTS(IsFileSizeGreaterThanOrEqualTo2GB_FileSizeIsGreaterThanOrEqualTo2GB_ReturnsTrue)
 FACTS(IsFileSizeGreaterThanOrEqualTo2GB_FileSizeIsLessThan2GB_ReturnsFalse)
-AFACT(TryCopyFile_SourceFileIsNotEmpty_CreationOfParentFolderOfDestinationFilePathThrowsFilesystemError_ReturnsFalseFileCopyResult)
-AFACT(TryCopyFile_SourceFileIsEmpty_CreationOfParentFolderOfDestinationFilePathSucceeds_CreatesEmptyDestinationFile_ReturnsCopySucceededFileCopyResult)
-AFACT(TryCopyFile_SourceFileIsNotEmpty_CreationOfParentFolderOfDestinationFilePathSucceeds_WritesSourceFileBytesToDestinationFilePath_ReturnsCopySucceededFileCopyResult)
+AFACT(TryCopyFile_SourceFileIsEmpty_CreatesParentFoldersForDestinationFile_CreatesEmptyDestinationFile_ReturnsCopySucceededFileCopyResult)
+AFACT(TryCopyFile_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile_WritesSourceFileBytesToDestinationFilePath_ReturnsCopySucceededFileCopyResult)
 AFACT(TryCopyFileWithStdFilesystemCopyFile_CreatesParentFoldersForDestinationFile_CopiesSourceFileToDestinationFileByCallingStdFilesystemCopyFile)
 // File Writes
 AFACT(WriteTextFile_CreatesDirectoriesLeadingUpToFilePath_CreatesFileInTextWriteMode_WritesFileTextToFile_ClosesFile)
@@ -385,42 +384,7 @@ TEST1X1(IsFileSizeGreaterThanOrEqualTo2GB_FileSizeIsLessThan2GB_ReturnsFalse,
    IS_FALSE(isFileSizeGreaterThanOrEqualTo2GB);
 }
 
-TEST(TryCopyFile_SourceFileIsNotEmpty_CreationOfParentFolderOfDestinationFilePathThrowsFilesystemError_ReturnsFalseFileCopyResult)
-{
-   _stopwatchMock->StartMock.Expect();
-
-   const vector<char> sourceFileBytes = ZenUnit::RandomNonEmptyVector<char>();
-   _caller_ReadFileBytesMock->CallConstMemberFunctionMock.Return(sourceFileBytes);
-
-   const string exceptionMessage = ZenUnit::Random<string>();
-   const error_code errorCode = ZenUnit::Random<error_code>();
-   create_directoriesMock.ThrowExceptionWhenCalled<fs::filesystem_error>(exceptionMessage, errorCode);
-
-   const unsigned long long elapsedMilliseconds = _stopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
-
-   const fs::path sourceFilePath = ZenUnit::Random<fs::path>();
-   const fs::path destinationFilePath = ZenUnit::Random<fs::path>();
-   //
-   const FileCopyResult fileCopyResult = _fileSystem.TryCopyFile(sourceFilePath, destinationFilePath);
-   //
-   METALMOCK(_stopwatchMock->StartMock.CalledOnce());
-   METALMOCK(_caller_ReadFileBytesMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &FileSystem::ReadFileBytes, &_fileSystem, sourceFilePath));
-   const fs::path expectedParentPathOfDestinationFilePath = destinationFilePath.parent_path();
-   METALMOCK(create_directoriesMock.CalledOnceWith(expectedParentPathOfDestinationFilePath));
-   METALMOCK(_stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
-   FileCopyResult expectedReturnValue;
-   expectedReturnValue.copySucceeded = false;
-   expectedReturnValue.sourceFilePath = sourceFilePath;
-   expectedReturnValue.destinationFilePath = destinationFilePath;
-   const fs::filesystem_error expectedException(exceptionMessage, errorCode);
-   const char* const expectedExceptionMessage = expectedException.what();
-   expectedReturnValue.copyFailureReason = expectedExceptionMessage;
-   expectedReturnValue.durationInMilliseconds = elapsedMilliseconds;
-   ARE_EQUAL(expectedReturnValue, fileCopyResult);
-}
-
-TEST(TryCopyFile_SourceFileIsEmpty_CreationOfParentFolderOfDestinationFilePathSucceeds_CreatesEmptyDestinationFile_ReturnsCopySucceededFileCopyResult)
+TEST(TryCopyFile_SourceFileIsEmpty_CreatesParentFoldersForDestinationFile_CreatesEmptyDestinationFile_ReturnsCopySucceededFileCopyResult)
 {
    _stopwatchMock->StartMock.Expect();
 
@@ -462,7 +426,7 @@ TEST(TryCopyFile_SourceFileIsEmpty_CreationOfParentFolderOfDestinationFilePathSu
    ARE_EQUAL(expectedReturnValue, fileCopyResult);
 }
 
-TEST(TryCopyFile_SourceFileIsNotEmpty_CreationOfParentFolderOfDestinationFilePathSucceeds_WritesSourceFileBytesToDestinationFilePath_ReturnsCopySucceededFileCopyResult)
+TEST(TryCopyFile_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile_WritesSourceFileBytesToDestinationFilePath_ReturnsCopySucceededFileCopyResult)
 {
    _stopwatchMock->StartMock.Expect();
 

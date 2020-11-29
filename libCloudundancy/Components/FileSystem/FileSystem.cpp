@@ -128,28 +128,13 @@ vector<string> FileSystem::ReadFileLinesWhichMustBeNonEmpty(const fs::path& file
 
 // File Copiies
 
-FileCopyResult FileSystem::TryCopyFile(
-   const fs::path& sourceFilePath, const fs::path& destinationFilePath) const
+FileCopyResult FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const
 {
    _stopwatch->Start();
    const vector<char> sourceFileBytes = _caller_ReadFileBytes->CallConstMemberFunction(
       &FileSystem::ReadFileBytes, this, sourceFilePath);
-   try
-   {
-      const fs::path parentPathOfDestinationFilePath = destinationFilePath.parent_path();
-      _call_fs_create_directories(parentPathOfDestinationFilePath);
-   }
-   catch (const fs::filesystem_error& ex)
-   {
-      FileCopyResult failedFileCopyResult;
-      failedFileCopyResult.copySucceeded = false;
-      failedFileCopyResult.sourceFilePath = sourceFilePath;
-      failedFileCopyResult.destinationFilePath = destinationFilePath;
-      const char* const copyFailureReason = ex.what();
-      failedFileCopyResult.copyFailureReason = copyFailureReason;
-      failedFileCopyResult.durationInMilliseconds = _stopwatch->StopAndGetElapsedMilliseconds();
-      return failedFileCopyResult;
-   }
+   const fs::path parentPathOfDestinationFilePath = destinationFilePath.parent_path();
+   _call_fs_create_directories(parentPathOfDestinationFilePath);
    FILE* const writeModeDestinationBinaryFilePointer = _fileOpenerCloser->CreateBinaryFileInWriteMode(destinationFilePath);
    const size_t sourceFileBytesSize = sourceFileBytes.size();
    size_t numberOfBytesWritten = 0;
@@ -177,11 +162,8 @@ FileCopyResult FileSystem::TryCopyFileWithStdFilesystemCopyFile(
    FileCopyResult fileCopyResult;
    fileCopyResult.sourceFilePath = sourceFilePath;
    fileCopyResult.destinationFilePath = destinationFilePath;
-   // try
    fileCopyResult.copySucceeded = _call_fs_copy_file(
       sourceFilePath, destinationFilePath, fs::copy_options::overwrite_existing);
-   // catch (const fs::filesystem_error& ex)
-   // fileCopyResult.errorMessage
    fileCopyResult.durationInMilliseconds = _stopwatch->StopAndGetElapsedMilliseconds();
    return fileCopyResult;
 }
