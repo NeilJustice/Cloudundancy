@@ -143,7 +143,7 @@ cmake --build . --config Release --target install
 
 |Prioritized List Of Future Cloudundancy Features As Of 11/16/2020|
 |-----------------------------------------------------------------|
-|Add automatic check that all destination folders are writeable permissions-wise before starting copying to destination folders|
+|Cloudundancy.log with timestamps of when backups were performed|
 |`backup-files-and-folders-to-7z-file` working on Linux|
 |SonarCloud static analysis badge|
 |Coverity static analysis badge|
