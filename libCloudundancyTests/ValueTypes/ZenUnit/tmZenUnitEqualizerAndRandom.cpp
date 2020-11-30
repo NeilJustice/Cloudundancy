@@ -16,13 +16,7 @@ namespace ZenUnit
       ARE_EQUAL(expectedTm.tm_isdst, actualTm.tm_isdst);
    }
 
-   template<>
-   tm Random<tm>()
-   {
-      return TestableTmRandom(RandomGenerator::Instance());
-   }
-
-   tm TestableTmRandom(const RandomGenerator* randomGenerator)
+   tm TestableRandomtm(const RandomGenerator* randomGenerator)
    {
       tm randomTm;
       randomTm.tm_sec = randomGenerator->Int();
@@ -35,5 +29,11 @@ namespace ZenUnit
       randomTm.tm_yday = randomGenerator->Int();
       randomTm.tm_isdst = randomGenerator->Int();
       return randomTm;
+   }
+
+   template<>
+   tm Random<tm>()
+   {
+      return TestableTmRandom(RandomGenerator::Instance());
    }
 }

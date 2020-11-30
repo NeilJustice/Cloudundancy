@@ -2,11 +2,12 @@
 #include "libCloudundancyTests/ValueTypes/ZenUnit/tmZenUnitEqualizerAndRandom.h"
 
 TESTS(tmZenUnitEqualizerAndRandomTests)
-AFACT(tmEqualizer_ThrowsIfAnyFieldNotEqual)
-AFACT(TestableTmRandom_ReturnsTmWithAllRandomFields)
+AFACT(tmEqualizer_ThrowsZenUnitAnomalyIfAnyFieldNotEqual)
+AFACT(TestableRandomtm_ReturnsTmWithAllRandomFields)
+AFACT(ZenUnitRandomtm_ReturnsResultOfCallingTestableRandomtm)
 EVIDENCE
 
-TEST(tmEqualizer_ThrowsIfAnyFieldNotEqual)
+TEST(tmEqualizer_ThrowsZenUnitAnomalyIfAnyFieldNotEqual)
 {
    ZENUNIT_EQUALIZER_TEST_SETUP(tm);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_sec, ZenUnit::RandomNon0<int>());
@@ -20,7 +21,7 @@ TEST(tmEqualizer_ThrowsIfAnyFieldNotEqual)
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_isdst, ZenUnit::RandomNon0<int>());
 }
 
-TEST(TestableTmRandom_ReturnsTmWithAllRandomFields)
+TEST(TestableRandomtm_ReturnsTmWithAllRandomFields)
 {
    const int tm_sec = ZenUnit::Random<int>();
    const int tm_min = ZenUnit::Random<int>();
@@ -35,7 +36,7 @@ TEST(TestableTmRandom_ReturnsTmWithAllRandomFields)
    randomGeneratorMock.IntMock.ReturnValues(
       tm_sec, tm_min, tm_hour, tm_mday, tm_mon, tm_year, tm_wday, tm_yday, tm_isdst);
    //
-   const tm randomTm = TestableTmRandom(&randomGeneratorMock);
+   const tm randomTm = TestableRandomtm(&randomGeneratorMock);
    //
    METALMOCK(randomGeneratorMock.IntMock.CalledNTimes(9));
    tm expectedRandomTm;
@@ -49,6 +50,11 @@ TEST(TestableTmRandom_ReturnsTmWithAllRandomFields)
    expectedRandomTm.tm_yday = tm_yday;
    expectedRandomTm.tm_isdst = tm_isdst;
    ARE_EQUAL(expectedRandomTm, randomTm);
+}
+
+TEST(ZenUnitRandomtm_ReturnsResultOfCallingTestableRandomtm)
+{
+   ZenUnit::Random<tm>();
 }
 
 RUN_TESTS(tmZenUnitEqualizerAndRandomTests)

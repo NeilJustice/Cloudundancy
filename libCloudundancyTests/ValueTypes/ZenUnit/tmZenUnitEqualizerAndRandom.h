@@ -9,8 +9,7 @@ namespace ZenUnit
       static void AssertEqual(const tm& expectedTm, const tm& actualTm);
    };
 
+   tm TestableRandomtm(const RandomGenerator* randomGenerator);
    template<>
    tm Random();
-
-   tm TestableTmRandom(const RandomGenerator* randomGenerator);
 }
