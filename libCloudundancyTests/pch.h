@@ -43,18 +43,18 @@ using namespace std;
 
 // libCloudundancy Utility Component Mocks
 #include "libCloudundancyTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libCloudundancyTests/Components/Random/MetalMock/UtilsRandomGeneratorMock.h"
 
 // ZenUnit Equalizers And Randoms
 #include "libCloudundancyTests/ValueTypes/ZenUnit/AbsoluteSourceFilePath_RelativeDestinationFolderPathEqualizer.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/AbsoluteSourceFileOrFolderPath_RelativeDestinationFolderPathEqualizer.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/CloudundancyArgsEqualizer.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/CloudundancyArgsEqualizerAndRandom.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/CloudundancyIniEqualizer.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/docoptvalueRandom.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/FileCopyResultEqualizerAndRandom.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/FilePathLineNumberLineTextEqualizerAndRandom.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/FilesystemPathRandom.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/ProcessResultEqualizerAndRandom.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/RandomCloudundancyArgs.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/RandomCloudundancyIni.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/RandomAbsoluteFileOrFolderPathToRelativeFolderPath.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/tmZenUnitEqualizerAndRandom.h"

@@ -9,4 +9,9 @@ namespace ZenUnit
    public:
       static void AssertEqual(const CloudundancyArgs& expectedCloudundancyArgs, const CloudundancyArgs& actualCloudundancyArgs);
    };
+
+   CloudundancyArgs TestableRandomCloudundancyArgs(
+      const ZenUnit::RandomGenerator* randomGenerator, const UtilsRandomGenerator* utilsRandomGenerator);
+   template<>
+   CloudundancyArgs Random();
 }

@@ -1,6 +1,12 @@
 #include "pch.h"
 #include "libCloudundancyTests/Components/Random/UtilsRandomGenerator.h"
 
+const UtilsRandomGenerator* UtilsRandomGenerator::Instance()
+{
+   static const UtilsRandomGenerator utilsRandomGenerator;
+   return &utilsRandomGenerator;
+}
+
 fs::path UtilsRandomGenerator::RelativeFilePath() const
 {
    const fs::path randomRelativeFilePath = ZenUnit::RandomRelativeFilePath();
