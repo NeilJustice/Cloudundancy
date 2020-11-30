@@ -36,7 +36,7 @@ TEST(Run_SetsArgs_CallsCopyFilesAndFoldersToMultipleFolders_Returns0)
    //
    METALMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleFoldersMock.CalledOnceWith(args.iniFilePath));
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(
-      "[Cloudundancy] OverallBackupResult: Successfully backed up all files and folders to all destination folders."));
+      "[Cloudundancy] OverallBackupResult: Successfully backed up all files and folders to all destination folders"));
    IS_ZERO(exitCode);
 }
 

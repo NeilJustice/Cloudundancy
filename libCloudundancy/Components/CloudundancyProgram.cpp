@@ -58,7 +58,7 @@ int CloudundancyProgram::Run(const std::vector<std::string>& stringArgs)
    _console->WriteLine(userNameLine);
 
    const string startTime = _watch->DateTimeNow();
-   const string startTimeLine = "[Cloudundancy]   StartTime: " + startTime;
+   const string startTimeLine = "[Cloudundancy]   StartTime: " + startTime + "\n";
    _console->WriteLine(startTimeLine);
 
    const CloudundancyArgs args = _cloudundancyArgsParser->ParseStringArgs(stringArgs);

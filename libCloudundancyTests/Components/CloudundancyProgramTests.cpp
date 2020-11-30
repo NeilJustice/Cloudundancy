@@ -137,7 +137,7 @@ TEST(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSubPr
       string_view(expectedRunningLine),
       string_view(expectedMachineNameLine),
       string_view(expectedUserNameLine),
-      string_view("[Cloudundancy]   StartTime: " + startTime),
+      string_view("[Cloudundancy]   StartTime: " + startTime + "\n"),
       string_view("[Cloudundancy]  EndTime: " + endTime),
       string_view("[Cloudundancy] Duration: " + elapsedSeconds + " seconds"),
       string_view("[Cloudundancy] ExitCode: " + to_string(subProgramExitCode))
