@@ -12,3 +12,12 @@ namespace ZenUnit
          const AbsoluteFilePathToRelativeDestinationFolderPath& actual);
    };
 }
+
+#pragma once
+#include "libCloudundancy/ValueTypes/CloudundancyIniCopyInstruction.h"
+
+namespace ZenUnit
+{
+   template<>
+   CloudundancyIniCopyInstruction Random<CloudundancyIniCopyInstruction>();
+}

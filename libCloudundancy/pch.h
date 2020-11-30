@@ -42,7 +42,7 @@ using namespace std;
 
 // libCloudundancy ValueTypes
 #include "libCloudundancy/ValueTypes/AbsoluteFilePathToRelativeDestinationFolderPath.h"
-#include "libCloudundancy/ValueTypes/AbsoluteFileOrFolderPathToRelativeFolderPath.h"
+#include "libCloudundancy/ValueTypes/CloudundancyIniCopyInstruction.h"
 #include "libCloudundancy/ValueTypes/CloudundancyArgs.h"
 #include "libCloudundancy/ValueTypes/CloudundancyIni.h"
 #include "libCloudundancy/ValueTypes/FileCopyResult.h"

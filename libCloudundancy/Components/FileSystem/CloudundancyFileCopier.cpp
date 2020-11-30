@@ -55,7 +55,7 @@ void CloudundancyFileCopier::CopyFilesAndFoldersToSingleFolder(
 {
    _stopwatch->Start();
    _caller_CopyFileOrFolderToFolder->OneExtraArgMemberFunctionForEach(
-      cloudundancyIni.absoluteFileOrFolderPathAndRelativeFolderPaths,
+      cloudundancyIni.cloudundancyIniCopyInstructions,
       &CloudundancyFileCopier::CopyFileOrFolderToFolder, this, destinationFolderPath);
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string folderBackedUpMessage =
@@ -65,7 +65,7 @@ void CloudundancyFileCopier::CopyFilesAndFoldersToSingleFolder(
 }
 
 void CloudundancyFileCopier::CopyFileOrFolderToFolder(
-   const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction,
+   const CloudundancyIniCopyInstruction& cloudundancyIniCopyInstruction,
    const fs::path& destinationFolderPath) const
 {
    const char lastPathChar = cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath.string().back();
@@ -86,7 +86,7 @@ void CloudundancyFileCopier::CopyFileOrFolderToFolder(
 
 void CloudundancyFileCopier::CopyNestedFileToFolder(
    const fs::path& sourceFilePath,
-   const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction,
+   const CloudundancyIniCopyInstruction& cloudundancyIniCopyInstruction,
    const fs::path& destinationFolderPath) const
 {
    const fs::path sourceFilePathRelativeToSourceFolderPath = _call_String_ReplaceFirst(
@@ -109,7 +109,7 @@ void CloudundancyFileCopier::CopyNestedFileToFolder(
 }
 
 void CloudundancyFileCopier::CopyNonIgnoredFilesInAndBelowFolderToFolder(
-   const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction,
+   const CloudundancyIniCopyInstruction& cloudundancyIniCopyInstruction,
    const fs::path& destinationFolderPath) const
 {
    _recursiveDirectoryIterator->InitializeIteratorAtFolderPath(cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath);
@@ -147,7 +147,7 @@ void CloudundancyFileCopier::TryCopyFile(const fs::path& sourceFilePath, const f
 }
 
 void CloudundancyFileCopier::TryCopyFileToFolder(
-   const AbsoluteFileOrFolderPathToRelativeFolderPath& cloudundancyIniCopyInstruction,
+   const CloudundancyIniCopyInstruction& cloudundancyIniCopyInstruction,
    const fs::path& destinationFolderPath) const
 {
    const fs::path& sourceFilePath = cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath;

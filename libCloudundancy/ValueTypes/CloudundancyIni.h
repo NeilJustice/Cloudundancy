@@ -3,7 +3,7 @@
 struct CloudundancyIni
 {
    vector<fs::path> destinationFolderPaths;
-   vector<AbsoluteFileOrFolderPathToRelativeFolderPath> absoluteFileOrFolderPathAndRelativeFolderPaths;
+   vector<CloudundancyIniCopyInstruction> cloudundancyIniCopyInstructions;
    vector<string> fileSubpathsToNotCopy;
 };
 

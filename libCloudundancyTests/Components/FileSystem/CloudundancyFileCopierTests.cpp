@@ -43,18 +43,18 @@ using OneExtraArgMemberFunctionForEacherOfCopyInstructionsMockType = const OneEx
 OneExtraArgMemberFunctionForEacherOfCopyInstructionsMockType* _caller_CopyEachFileOrFolderToFolderMock = nullptr;
 
 using VoidTwoArgMemberFunctionCallerMockType = const VoidTwoArgMemberFunctionCallerMock<
-   CloudundancyFileCopier, const AbsoluteFileOrFolderPathToRelativeFolderPath&, const fs::path&>;
+   CloudundancyFileCopier, const CloudundancyIniCopyInstruction&, const fs::path&>;
 VoidTwoArgMemberFunctionCallerMockType* _caller_CopyFileFunctionsMock = nullptr;
 
 using OneExtraArgMemberFunctionForEacherOfDestinationFolderPathsMockType = const OneExtraArgMemberFunctionForEacherMock<
-   AbsoluteFileOrFolderPathToRelativeFolderPath,
-   void(CloudundancyFileCopier::*)(const AbsoluteFileOrFolderPathToRelativeFolderPath&, const fs::path&) const,
+   CloudundancyIniCopyInstruction,
+   void(CloudundancyFileCopier::*)(const CloudundancyIniCopyInstruction&, const fs::path&) const,
    CloudundancyFileCopier,
    const fs::path&>;
 OneExtraArgMemberFunctionForEacherOfDestinationFolderPathsMockType* _caller_CopyFileOrFolderToFolderMock = nullptr;
 
 using CallerMockType_CopyNestedFileToFolder = const VoidThreeArgMemberFunctionCallerMock<
-   CloudundancyFileCopier, const fs::path&, const AbsoluteFileOrFolderPathToRelativeFolderPath&, const fs::path&>;
+   CloudundancyFileCopier, const fs::path&, const CloudundancyIniCopyInstruction&, const fs::path&>;
 CallerMockType_CopyNestedFileToFolder* _caller_CopyNestedFileToFolderMock = nullptr;
 
 using VoidTryCopyFileCallerMockType = const VoidTwoArgMemberFunctionCallerMock<
@@ -135,7 +135,7 @@ TEST(CopyFilesAndFoldersToMultipleFolders_CopiesFilesAndFoldersToFolders)
 TEST(DeleteFolder_CallsFileSystemDeleteFolderOnFolderPath)
 {
    _fileSystemMock->DeleteFolderMock.Expect();
-   const fs::path folderPath = ZenUnit::RandomRelativeFilePath();
+   const fs::path folderPath = ZenUnit::Random<fs::path>();
    //
    _cloudundancyFileCopier.DeleteFolder(folderPath);
    //
@@ -161,7 +161,7 @@ TEST(CopyFilesAndFoldersToSingleFolder_CopiesNonSkippedSourceFilesToDestinationF
    //
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    METALMOCK(_caller_CopyFileOrFolderToFolderMock->OneExtraArgMemberFunctionForEachMock.CalledOnceWith(
-      cloudundancyIni.absoluteFileOrFolderPathAndRelativeFolderPaths,
+      cloudundancyIni.cloudundancyIniCopyInstructions,
       &CloudundancyFileCopier::CopyFileOrFolderToFolder,
       &_cloudundancyFileCopier, destinationFolderPath));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
@@ -174,9 +174,9 @@ TEST(CopyFilesAndFoldersToSingleFolder_CopiesNonSkippedSourceFilesToDestinationF
 TEST(CopyFileOrFolderToFolder_SourcePathHasAFileName_CallsCopyFileToFolder)
 {
    _caller_CopyFileFunctionsMock->ConstCallMock.Expect();
-   const fs::path destinationFolderPath = ZenUnit::RandomRelativeFilePath();
-   const AbsoluteFileOrFolderPathToRelativeFolderPath cloudundancyIniCopyInstruction =
-      ZenUnit::Random<AbsoluteFileOrFolderPathToRelativeFolderPath>();
+   const fs::path destinationFolderPath = ZenUnit::Random<fs::path>();
+   const CloudundancyIniCopyInstruction cloudundancyIniCopyInstruction =
+      ZenUnit::Random<CloudundancyIniCopyInstruction>();
    //
    _cloudundancyFileCopier.CopyFileOrFolderToFolder(cloudundancyIniCopyInstruction, destinationFolderPath);
    //
@@ -191,8 +191,8 @@ TEST1X1(CopyFileOrFolderToFolder_SourcePathDoesNotHaveAFileNameMeaningItIsAFolde
    "FolderNameB\\")
 {
    _caller_CopyFileFunctionsMock->ConstCallMock.Expect();
-   const fs::path destinationFolderPath = ZenUnit::RandomRelativeFilePath();
-   AbsoluteFileOrFolderPathToRelativeFolderPath cloudundancyIniCopyInstruction = ZenUnit::Random<AbsoluteFileOrFolderPathToRelativeFolderPath>();
+   const fs::path destinationFolderPath = ZenUnit::Random<fs::path>();
+   CloudundancyIniCopyInstruction cloudundancyIniCopyInstruction = ZenUnit::Random<CloudundancyIniCopyInstruction>();
    cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath = sourceFileOrFolderPath;
    //
    _cloudundancyFileCopier.CopyFileOrFolderToFolder(cloudundancyIniCopyInstruction, destinationFolderPath);
@@ -206,16 +206,16 @@ TEST(CopyNonIgnoredFilesInAndBelowFolderToFolder_CopiesNonIgnoredFilesToFolderUn
 {
    _recursiveDirectoryIteratorMock->InitializeIteratorAtFolderPathMock.Expect();
 
-   const fs::path nonIgnoredSourceFilePath1 = ZenUnit::RandomRelativeFilePath();
-   const fs::path nonIgnoredSourceFilePath2 = ZenUnit::RandomRelativeFilePath();
+   const fs::path nonIgnoredSourceFilePath1 = ZenUnit::Random<fs::path>();
+   const fs::path nonIgnoredSourceFilePath2 = ZenUnit::Random<fs::path>();
    const fs::path terminatorFilePath;
    _recursiveDirectoryIteratorMock->NextNonIgnoredFilePathMock.ReturnValues(
       nonIgnoredSourceFilePath1, nonIgnoredSourceFilePath2, terminatorFilePath);
 
    _caller_CopyNestedFileToFolderMock->ConstCallMock.Expect();
 
-   const AbsoluteFileOrFolderPathToRelativeFolderPath cloudundancyIniCopyInstruction = ZenUnit::Random<AbsoluteFileOrFolderPathToRelativeFolderPath>();
-   const fs::path destinationFolderPath = ZenUnit::RandomRelativeFilePath();
+   const CloudundancyIniCopyInstruction cloudundancyIniCopyInstruction = ZenUnit::Random<CloudundancyIniCopyInstruction>();
+   const fs::path destinationFolderPath = ZenUnit::Random<fs::path>();
    //
    _cloudundancyFileCopier.CopyNonIgnoredFilesInAndBelowFolderToFolder(cloudundancyIniCopyInstruction, destinationFolderPath);
    //
@@ -235,10 +235,10 @@ TEST(CopyNestedFileToFolder_RelativeDestinationFolderPathIsDot_CopiesNestedFileT
 
    _caller_TryCopyFileMock->ConstCallMock.Expect();
 
-   const fs::path sourceFilePath = ZenUnit::RandomRelativeFilePath();
-   AbsoluteFileOrFolderPathToRelativeFolderPath cloudundancyIniCopyInstruction = ZenUnit::Random<AbsoluteFileOrFolderPathToRelativeFolderPath>();
+   const fs::path sourceFilePath = ZenUnit::Random<fs::path>();
+   CloudundancyIniCopyInstruction cloudundancyIniCopyInstruction = ZenUnit::Random<CloudundancyIniCopyInstruction>();
    cloudundancyIniCopyInstruction.relativeDestinationFolderPath = ".";
-   const fs::path destinationFolderPath = ZenUnit::RandomRelativeFilePath();
+   const fs::path destinationFolderPath = ZenUnit::Random<fs::path>();
    //
    _cloudundancyFileCopier.CopyNestedFileToFolder(sourceFilePath, cloudundancyIniCopyInstruction, destinationFolderPath);
    //
@@ -257,9 +257,9 @@ TEST(CopyNestedFileToFolder_RelativeDestinationFolderPathIsNotDot_CopiesNestedFi
 
    _caller_TryCopyFileMock->ConstCallMock.Expect();
 
-   const fs::path sourceFilePath = ZenUnit::RandomRelativeFilePath();
-   const AbsoluteFileOrFolderPathToRelativeFolderPath cloudundancyIniCopyInstruction = ZenUnit::Random<AbsoluteFileOrFolderPathToRelativeFolderPath>();
-   const fs::path destinationFolderPath = ZenUnit::RandomRelativeFilePath();
+   const fs::path sourceFilePath = ZenUnit::Random<fs::path>();
+   const CloudundancyIniCopyInstruction cloudundancyIniCopyInstruction = ZenUnit::Random<CloudundancyIniCopyInstruction>();
+   const fs::path destinationFolderPath = ZenUnit::Random<fs::path>();
    //
    _cloudundancyFileCopier.CopyNestedFileToFolder(sourceFilePath, cloudundancyIniCopyInstruction, destinationFolderPath);
    //
@@ -284,8 +284,8 @@ TEST(TryCopyFile_FileSizeIsGreaterThanOrEqualTo2GB_CopiesFileWithStdFilesystemCo
 
    _caller_WriteCopiedOrCopyFailedMessageMock->CallConstMemberFunctionMock.Expect();
 
-   const fs::path sourceFilePath = ZenUnit::RandomRelativeFilePath();
-   const fs::path destinationFilePath = ZenUnit::RandomRelativeFilePath();
+   const fs::path sourceFilePath = ZenUnit::Random<fs::path>();
+   const fs::path destinationFilePath = ZenUnit::Random<fs::path>();
    //
    _cloudundancyFileCopier.TryCopyFile(sourceFilePath, destinationFilePath);
    //
@@ -310,8 +310,8 @@ TEST(TryCopyFile_FileSizeIsLessThan2GB_CopiesFileWithCStyleCopyFile_WritesCopied
 
    _caller_WriteCopiedOrCopyFailedMessageMock->CallConstMemberFunctionMock.Expect();
 
-   const fs::path sourceFilePath = ZenUnit::RandomRelativeFilePath();
-   const fs::path destinationFilePath = ZenUnit::RandomRelativeFilePath();
+   const fs::path sourceFilePath = ZenUnit::Random<fs::path>();
+   const fs::path destinationFilePath = ZenUnit::Random<fs::path>();
    //
    _cloudundancyFileCopier.TryCopyFile(sourceFilePath, destinationFilePath);
    //
@@ -328,9 +328,9 @@ TEST(TryCopyFile_FileSizeIsLessThan2GB_CopiesFileWithCStyleCopyFile_WritesCopied
 TEST(TryCopyFileToFolder_RelativeDestinationFolderPathIsADot_DoesNotJoinDotCharacter_CallsTryCopyFile)
 {
    _caller_TryCopyFileMock->ConstCallMock.Expect();
-   AbsoluteFileOrFolderPathToRelativeFolderPath cloudundancyIniCopyInstruction = ZenUnit::Random<AbsoluteFileOrFolderPathToRelativeFolderPath>();
+   CloudundancyIniCopyInstruction cloudundancyIniCopyInstruction = ZenUnit::Random<CloudundancyIniCopyInstruction>();
    cloudundancyIniCopyInstruction.relativeDestinationFolderPath = ".";
-   const fs::path destinationFolderPath = ZenUnit::RandomRelativeFilePath();
+   const fs::path destinationFolderPath = ZenUnit::Random<fs::path>();
    //
    _cloudundancyFileCopier.TryCopyFileToFolder(cloudundancyIniCopyInstruction, destinationFolderPath);
    //
@@ -344,8 +344,8 @@ TEST(TryCopyFileToFolder_RelativeDestinationFolderPathIsADot_DoesNotJoinDotChara
 TEST(TryCopyFileToFolder_RelativeDestinationFolderPathIsNotADot_JoinsRelativeDestinationFolder_CallsTryCopyFile)
 {
    _caller_TryCopyFileMock->ConstCallMock.Expect();
-   const AbsoluteFileOrFolderPathToRelativeFolderPath cloudundancyIniCopyInstruction = ZenUnit::Random<AbsoluteFileOrFolderPathToRelativeFolderPath>();
-   const fs::path destinationFolderPath = ZenUnit::RandomRelativeFilePath();
+   const CloudundancyIniCopyInstruction cloudundancyIniCopyInstruction = ZenUnit::Random<CloudundancyIniCopyInstruction>();
+   const fs::path destinationFolderPath = ZenUnit::Random<fs::path>();
    //
    _cloudundancyFileCopier.TryCopyFileToFolder(cloudundancyIniCopyInstruction, destinationFolderPath);
    //

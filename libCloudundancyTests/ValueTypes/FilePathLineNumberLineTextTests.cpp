@@ -4,7 +4,6 @@
 TESTS(FilePathLineNumberLineTextTests)
 AFACT(DefaultConstructor_SetsFieldsToDefaults)
 AFACT(ThreeArgumentConstructor_SetsFields)
-AFACT(Equalizer_ThrowsIfAnyFieldNotEqual)
 EVIDENCE
 
 TEST(DefaultConstructor_SetsFieldsToDefaults)
@@ -19,7 +18,7 @@ TEST(DefaultConstructor_SetsFieldsToDefaults)
 
 TEST(ThreeArgumentConstructor_SetsFields)
 {
-   const fs::path filePath = ZenUnit::RandomRelativeFilePath();
+   const fs::path filePath = ZenUnit::Random<fs::path>();
    const size_t lineNumber = ZenUnit::Random<size_t>();
    const string lineText = ZenUnit::Random<string>();
    //
@@ -30,14 +29,6 @@ TEST(ThreeArgumentConstructor_SetsFields)
    expectedFilePathLineNumberLineText.lineNumber = lineNumber;
    expectedFilePathLineNumberLineText.lineText = lineText;
    ARE_EQUAL(expectedFilePathLineNumberLineText, filePathLineNumberLineText);
-}
-
-TEST(Equalizer_ThrowsIfAnyFieldNotEqual)
-{
-   ZENUNIT_EQUALIZER_TEST_SETUP(FilePathLineNumberLineText);
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FilePathLineNumberLineText, filePath, ZenUnit::Random<fs::path>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FilePathLineNumberLineText, lineNumber, ZenUnit::RandomNon0<size_t>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FilePathLineNumberLineText, lineText, ZenUnit::Random<string>());
 }
 
 RUN_TESTS(FilePathLineNumberLineTextTests)

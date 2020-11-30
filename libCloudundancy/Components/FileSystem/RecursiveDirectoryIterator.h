@@ -14,8 +14,8 @@ private:
    // Function Callers
    using OneExtraArgTransformerType = OneExtraArgTransformer<
       vector<AbsoluteFilePathToRelativeDestinationFolderPath>,
-      vector<AbsoluteFileOrFolderPathToRelativeFolderPath>,
-      AbsoluteFilePathToRelativeDestinationFolderPath(*)(size_t, const AbsoluteFileOrFolderPathToRelativeFolderPath&, const vector<string>&),
+      vector<CloudundancyIniCopyInstruction>,
+      AbsoluteFilePathToRelativeDestinationFolderPath(*)(size_t, const CloudundancyIniCopyInstruction&, const vector<string>&),
       const vector<string>&>;
    unique_ptr<const OneExtraArgTransformerType> _oneExtraArgTransformer;
 
