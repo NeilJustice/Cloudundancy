@@ -38,7 +38,8 @@ void CloudundancyIniValidator::AppendBackupStartedToCloudundancyLogFilesInAllDes
 // Private Functions
 
 void CloudundancyIniValidator::AppendBackupStartedToCloudundancyLogFileInDestinationFolder(
-   const fs::path& /*folderPath*/, const fs::path& /*cloudundancyIniPath*/) const
+   const fs::path& destinationFolderPath, const fs::path& /*cloudundancyIniPath*/) const
 {
-
+   const fs::path cloudundancyLogFilePath = destinationFolderPath / "Cloudundancy.log";
+   _fileSystem->AppendTimestampedText(cloudundancyLogFilePath, "Cloudundancy backup started\n");
 }

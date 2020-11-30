@@ -23,5 +23,5 @@ public:
       const CloudundancyIni& cloudundancyIni, const fs::path& cloudundancyIniPath) const;
 private:
    void AppendBackupStartedToCloudundancyLogFileInDestinationFolder(
-      const fs::path& folderPath, const fs::path& cloudundancyIniPath) const;
+      const fs::path& destinationFolderPath, const fs::path& cloudundancyIniPath) const;
 };

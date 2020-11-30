@@ -27,7 +27,6 @@ private:
    using ExistsOverloadType = bool(*)(const fs::path&);
    using FileSizeOverloadType = size_t(*)(const fs::path&);
    using RemoveAllOverloadType = uintmax_t(*)(const fs::path&);
-
    function<bool(const fs::path&, const fs::path&, fs::copy_options)> _call_fs_copy_file;
    function<void(const fs::path&)> _call_fs_current_path;
    bool(*_call_fs_create_directories_as_assignable_function_overload_pointer)(const fs::path&);
@@ -73,6 +72,7 @@ public:
    virtual bool IsFileSizeGreaterThanOrEqualTo2GB(const fs::path& filePath) const;
 
    // File Writes
+   virtual void AppendTimestampedText(const fs::path& filePath, string_view text) const;
    virtual void WriteTextFile(const fs::path& filePath, string_view text) const;
 
    // Misc

@@ -30,7 +30,8 @@ AFACT(TryCopyFile_SourceFileIsEmpty_CreatesParentFoldersForDestinationFile_Creat
 AFACT(TryCopyFile_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile_WritesSourceFileBytesToDestinationFilePath_ReturnsCopySucceededFileCopyResult)
 AFACT(TryCopyFileWithStdFilesystemCopyFile_CreatesParentFoldersForDestinationFile_CopiesSourceFileToDestinationFileByCallingStdFilesystemCopyFile)
 // File Writes
-AFACT(WriteTextFile_CreatesDirectoriesLeadingUpToFilePath_CreatesFileInTextWriteMode_WritesFileTextToFile_ClosesFile)
+AFACT(AppendTimestampedText_CreatesParentDirectoryToFilePath_AppendsTextAndNewlineToFile)
+AFACT(WriteTextFile_CreatesParentDirectoryToFilePath_CreatesFileInTextWriteMode_WritesFileTextToFile_ClosesFile)
 // Misc
 AFACT(DeleteFolder_CallsStdFileSystemRemoveAllOnFolderPath)
 AFACT(SetCurrentPath_CallsFsCurrentPathWithFolderPath)
@@ -503,7 +504,19 @@ TEST(TryCopyFileWithStdFilesystemCopyFile_CreatesParentFoldersForDestinationFile
 
 // File Writes
 
-TEST(WriteTextFile_CreatesDirectoriesLeadingUpToFilePath_CreatesFileInTextWriteMode_WritesFileTextToFile_ClosesFile)
+TEST(AppendTimestampedText_CreatesParentDirectoryToFilePath_AppendsTextAndNewlineToFile)
+{
+   create_directoriesMock.ReturnRandom();
+   const fs::path filePath = ZenUnit::Random<fs::path>();
+   const string text = ZenUnit::Random<string>();
+   //
+   _fileSystem.AppendTimestampedText(filePath, text);
+   //
+   const fs::path expectedParentFolderPath = filePath.parent_path();
+   METALMOCK(create_directoriesMock.CalledOnceWith(expectedParentFolderPath));
+}
+
+TEST(WriteTextFile_CreatesParentDirectoryToFilePath_CreatesFileInTextWriteMode_WritesFileTextToFile_ClosesFile)
 {
    create_directoriesMock.ReturnRandom();
 

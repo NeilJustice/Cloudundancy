@@ -182,6 +182,17 @@ bool FileSystem::IsFileSizeGreaterThanOrEqualTo2GB(const fs::path& filePath) con
 
 // File Writes
 
+void FileSystem::AppendTimestampedText(const fs::path& filePath, string_view /*text*/) const
+{
+   const fs::path parentFolderPath = filePath.parent_path();
+   _call_fs_create_directories(parentFolderPath);
+
+   //FILE* const appendModeTextFileHandle = _fileOpenerCloser->OpenTextFileInAppendMode(filePath);
+   //const size_t textSize = text.size();
+   //const size_t numberOfBytesWritten = _call_fwrite(text.data(), 1, textSize, appendModeTextFileHandle);
+   //_fileOpenerCloser->CloseFile(appendModeTextFileHandle);
+}
+
 void FileSystem::WriteTextFile(const fs::path& filePath, string_view fileText) const
 {
    const fs::path parentFolderPath = filePath.parent_path();
