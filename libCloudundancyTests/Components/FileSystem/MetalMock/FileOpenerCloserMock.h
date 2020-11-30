@@ -9,4 +9,5 @@ public:
    METALMOCK_NONVOID1_CONST(FILE*, CreateTextFileInWriteMode, const fs::path&)
    METALMOCK_NONVOID1_CONST(FILE*, OpenBinaryFileInReadMode, const fs::path&)
    METALMOCK_NONVOID1_CONST(FILE*, OpenTextFileInReadMode, const fs::path&)
+   METALMOCK_NONVOID1_CONST(FILE*, OpenTextFileInAppendMode, const fs::path&)
 };

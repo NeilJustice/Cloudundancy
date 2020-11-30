@@ -19,51 +19,61 @@ FileOpenerCloser::~FileOpenerCloser()
 {
 }
 
-void FileOpenerCloser::CloseFile(FILE* filePointer) const
-{
-   const int fcloseReturnValue = _call_fclose(filePointer);
-   _asserter->ThrowIfIntsNotEqual(0, fcloseReturnValue,
-      "fclose(filePointer) in FileOpenerCloser::CloseFile() unexpectedly returned a non-0 value");
-}
-
-FILE* FileOpenerCloser::OpenTextFileInReadMode(const fs::path& filePath) const
+FILE* FileOpenerCloser::CreateBinaryFileInWriteMode(const fs::path& filePath) const
 {
 #ifdef __linux__
-   FILE* const filePointer = OpenFileOnLinux(filePath, "r");
+   FILE* const writeModeBinaryFileHandle = OpenFileOnLinux(filePath, "wb");
 #elif _WIN32
-   FILE* const filePointer = OpenFileOnWindows(filePath, L"r");
+   FILE* const writeModeBinaryFileHandle = OpenFileOnWindows(filePath, L"wb");
 #endif
-   return filePointer;
+   return writeModeBinaryFileHandle;
 }
 
 FILE* FileOpenerCloser::CreateTextFileInWriteMode(const fs::path& filePath) const
 {
 #ifdef __linux__
-   FILE* const filePointer = OpenFileOnLinux(filePath, "w");
+   FILE* const writeModeTextFileHandle = OpenFileOnLinux(filePath, "w");
 #elif _WIN32
-   FILE* const filePointer = OpenFileOnWindows(filePath, L"w");
+   FILE* const writeModeTextFileHandle = OpenFileOnWindows(filePath, L"w");
 #endif
-   return filePointer;
+   return writeModeTextFileHandle;
 }
 
 FILE* FileOpenerCloser::OpenBinaryFileInReadMode(const fs::path& filePath) const
 {
 #ifdef __linux__
-   FILE* const filePointer = OpenFileOnLinux(filePath, "rb");
+   FILE* const readModeBinaryFileHandle = OpenFileOnLinux(filePath, "rb");
 #elif _WIN32
-   FILE* const filePointer = OpenFileOnWindows(filePath, L"rb");
+   FILE* const readModeBinaryFileHandle = OpenFileOnWindows(filePath, L"rb");
 #endif
-   return filePointer;
+   return readModeBinaryFileHandle;
 }
 
-FILE* FileOpenerCloser::CreateBinaryFileInWriteMode(const fs::path& filePath) const
+FILE* FileOpenerCloser::OpenTextFileInReadMode(const fs::path& filePath) const
 {
 #ifdef __linux__
-   FILE* const filePointer = OpenFileOnLinux(filePath, "wb");
+   FILE* const readModeTextFileHandle = OpenFileOnLinux(filePath, "r");
 #elif _WIN32
-   FILE* const filePointer = OpenFileOnWindows(filePath, L"wb");
+   FILE* const readModeTextFileHandle = OpenFileOnWindows(filePath, L"r");
 #endif
-   return filePointer;
+   return readModeTextFileHandle;
+}
+
+FILE* FileOpenerCloser::OpenTextFileInAppendMode(const fs::path& filePath) const
+{
+#ifdef __linux__
+   FILE* const appendModeTextFileHandle = OpenFileOnLinux(filePath, "a");
+#elif _WIN32
+   FILE* const appendModeTextFileHandle = OpenFileOnWindows(filePath, L"a");
+#endif
+   return appendModeTextFileHandle;
+}
+
+void FileOpenerCloser::CloseFile(FILE* fileHandle) const
+{
+   const int fcloseReturnValue = _call_fclose(fileHandle);
+   _asserter->ThrowIfIntsNotEqual(0, fcloseReturnValue,
+      "fclose(fileHandle) in FileOpenerCloser::CloseFile() unexpectedly returned a non-0 value");
 }
 
 // Private Functions
@@ -72,25 +82,25 @@ FILE* FileOpenerCloser::CreateBinaryFileInWriteMode(const fs::path& filePath) co
 
 FILE* FileOpenerCloser::OpenFileOnLinux(const fs::path& filePath, const char* fileOpenMode) const
 {
-   FILE* const filePointer = _call_fopen(filePath.c_str(), fileOpenMode);
-   ThrowFileOpenExceptionIfFileOpenFailed(filePointer, filePath);
-   return filePointer;
+   FILE* const fileHandle = _call_fopen(filePath.c_str(), fileOpenMode);
+   ThrowFileOpenExceptionIfFileOpenFailed(fileHandle, filePath);
+   return fileHandle;
 }
 
 #elif _WIN32
 
 FILE* FileOpenerCloser::OpenFileOnWindows(const fs::path& filePath, const wchar_t* fileOpenMode) const
 {
-   FILE* const filePointer = _call_wfopen(filePath.c_str(), fileOpenMode);
-   ThrowFileOpenExceptionIfFileOpenFailed(filePointer, filePath);
-   return filePointer;
+   FILE* const fileHandle = _call_wfopen(filePath.c_str(), fileOpenMode);
+   ThrowFileOpenExceptionIfFileOpenFailed(fileHandle, filePath);
+   return fileHandle;
 }
 
 #endif
 
-void FileOpenerCloser::ThrowFileOpenExceptionIfFileOpenFailed(FILE* filePointer, const fs::path& filePath) const
+void FileOpenerCloser::ThrowFileOpenExceptionIfFileOpenFailed(FILE* fileHandle, const fs::path& filePath) const
 {
-   if (filePointer == nullptr)
+   if (fileHandle == nullptr)
    {
       const string exceptionMessage = "fopen() returned nullptr. filePath=\"" + filePath.string() + "\"";
       throw runtime_error(exceptionMessage);

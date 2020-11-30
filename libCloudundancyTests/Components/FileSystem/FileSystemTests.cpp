@@ -507,6 +507,12 @@ TEST(TryCopyFileWithStdFilesystemCopyFile_CreatesParentFoldersForDestinationFile
 TEST(AppendTimestampedText_CreatesParentDirectoryToFilePath_AppendsTextAndNewlineToFile)
 {
    create_directoriesMock.ReturnRandom();
+
+   FILE appendModeTextFileHandle{};
+   _fileOpenerCloserMock->OpenTextFileInAppendModeMock.Return(&appendModeTextFileHandle);
+
+   const size_t numberOfBytesWritten = fwriteMock.ReturnRandom();
+
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const string text = ZenUnit::Random<string>();
    //
@@ -514,6 +520,8 @@ TEST(AppendTimestampedText_CreatesParentDirectoryToFilePath_AppendsTextAndNewlin
    //
    const fs::path expectedParentFolderPath = filePath.parent_path();
    METALMOCK(create_directoriesMock.CalledOnceWith(expectedParentFolderPath));
+   METALMOCK(_fileOpenerCloserMock->OpenTextFileInAppendModeMock.CalledOnceWith(filePath));
+   METALMOCK(fwriteMock.CalledOnceWith(text.data(), 1, text.size(), &appendModeTextFileHandle));
 }
 
 TEST(WriteTextFile_CreatesParentDirectoryToFilePath_CreatesFileInTextWriteMode_WritesFileTextToFile_ClosesFile)

@@ -17,11 +17,12 @@ private:
 public:
    FileOpenerCloser();
    virtual ~FileOpenerCloser();
-   virtual void CloseFile(FILE* filePointer) const;
-   virtual FILE* OpenTextFileInReadMode(const fs::path& filePath) const;
+   virtual FILE* CreateBinaryFileInWriteMode(const fs::path& filePath) const;
    virtual FILE* CreateTextFileInWriteMode(const fs::path& filePath) const;
    virtual FILE* OpenBinaryFileInReadMode(const fs::path& filePath) const;
-   virtual FILE* CreateBinaryFileInWriteMode(const fs::path& filePath) const;
+   virtual FILE* OpenTextFileInReadMode(const fs::path& filePath) const;
+   virtual FILE* OpenTextFileInAppendMode(const fs::path& filePath) const;
+   virtual void CloseFile(FILE* filePointer) const;
 private:
 #ifdef __linux__
    FILE* OpenFileOnLinux(const fs::path& filePath, const char* fileOpenMode) const;
