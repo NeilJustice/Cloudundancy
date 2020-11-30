@@ -11,13 +11,9 @@ namespace ZenUnit
          const AbsoluteFilePathToRelativeDestinationFolderPath& expected,
          const AbsoluteFilePathToRelativeDestinationFolderPath& actual);
    };
-}
 
-#pragma once
-#include "libCloudundancy/ValueTypes/CloudundancyIniCopyInstruction.h"
-
-namespace ZenUnit
-{
+   AbsoluteFilePathToRelativeDestinationFolderPath TestableRandomAbsoluteFilePathToRelativeDestinationFolderPath(
+      const ZenUnit::RandomGenerator* randomGenerator, const UtilsRandomGenerator* utilsRandomGenerator);
    template<>
-   CloudundancyIniCopyInstruction Random<CloudundancyIniCopyInstruction>();
+   AbsoluteFilePathToRelativeDestinationFolderPath Random<AbsoluteFilePathToRelativeDestinationFolderPath>();
 }
