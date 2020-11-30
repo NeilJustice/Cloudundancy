@@ -52,6 +52,7 @@ using namespace std;
 
 // libCloudundancy Utility Components
 #include "libCloudundancy/Components/Console/Console.h"
+#include "libCloudundancy/Components/FileSystem/FileSystem.h"
 
 // libCloudundancy Utility Functions
 #include "libCloudundancy/StaticUtilities/ReleaseAssert.h"

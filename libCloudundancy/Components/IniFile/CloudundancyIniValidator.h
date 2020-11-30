@@ -5,16 +5,23 @@ class OneExtraArgMemberFunctionForEacher;
 
 class CloudundancyIniValidator
 {
+   friend class CloudundancyIniValidatorTests;
 private:
-   using _memberForEach_ThrowIfFolderNotWritableType = OneExtraArgMemberFunctionForEacher<
-      CloudundancyIniValidator, const fs::path&, const fs::path&>;
-   //unique_ptr<const OneExtraArgMemberFunctionForEacher> _memberForEach_ThrowIfFolderNotWritable;
+   // Function Callers
+   using _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderType =
+      OneExtraArgMemberFunctionForEacher<CloudundancyIniValidator, fs::path, fs::path>;
+   unique_ptr<const _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderType>
+      _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolder;
+   // Constant Components
+   unique_ptr<const FileSystem> _fileSystem;
 public:
-   virtual ~CloudundancyIniValidator() = default;
+   CloudundancyIniValidator();
+   virtual ~CloudundancyIniValidator();
    virtual void ThrowIfZeroDestinationFolderPaths(
       const CloudundancyIni& cloudundancyIni, const fs::path& cloudundancyIniPath) const;
-   virtual void ThrowIfAnyDestinationFoldersNotWritable(
+   virtual void AppendBackupStartedToCloudundancyLogFilesInAllDestinationFolders(
       const CloudundancyIni& cloudundancyIni, const fs::path& cloudundancyIniPath) const;
 private:
-   void ThrowIfFolderNotWritable(const fs::path& folderPath, const fs::path& cloudundancyIniPath) const;
+   void AppendBackupStartedToCloudundancyLogFileInDestinationFolder(
+      const fs::path& folderPath, const fs::path& cloudundancyIniPath) const;
 };

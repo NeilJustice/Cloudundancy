@@ -2,6 +2,19 @@
 #include "libCloudundancy/Components/IniFile/CloudundancyIniValidator.h"
 #include "libCloudundancy/Components/Iteration/ForEach/OneExtraArgMemberFunctionForEacher.h"
 
+CloudundancyIniValidator::CloudundancyIniValidator()
+   // Function Callers
+   : _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolder(
+      make_unique<_memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderType>())
+   // Constant Components
+   , _fileSystem(make_unique<FileSystem>())
+{
+}
+
+CloudundancyIniValidator::~CloudundancyIniValidator()
+{
+}
+
 void CloudundancyIniValidator::ThrowIfZeroDestinationFolderPaths(
    const CloudundancyIni& cloudundancyIni, const fs::path& cloudundancyIniPath) const
 {
@@ -13,16 +26,18 @@ void CloudundancyIniValidator::ThrowIfZeroDestinationFolderPaths(
    }
 }
 
-void CloudundancyIniValidator::ThrowIfAnyDestinationFoldersNotWritable(
-   const CloudundancyIni& /*cloudundancyIni*/, const fs::path& /*cloudundancyIniPath*/) const
+void CloudundancyIniValidator::AppendBackupStartedToCloudundancyLogFilesInAllDestinationFolders(
+   const CloudundancyIni& cloudundancyIni, const fs::path& cloudundancyIniPath) const
 {
-   // _forEacher_ThrowIfFolderIsNotWritable->MemberFunctionForEach(
-   //  cloudundancyIni.destinationFolderPaths, &CloudundancyIniValidator::ThrowIfFolderIsNotWritable, this, cloudundancyIniPath);
+   _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolder->CallConstMemberFunctionForEachElement(
+      cloudundancyIni.destinationFolderPaths,
+      &CloudundancyIniValidator::AppendBackupStartedToCloudundancyLogFileInDestinationFolder,
+      this, cloudundancyIniPath);
 }
 
 // Private Functions
 
-void CloudundancyIniValidator::ThrowIfFolderNotWritable(
+void CloudundancyIniValidator::AppendBackupStartedToCloudundancyLogFileInDestinationFolder(
    const fs::path& /*folderPath*/, const fs::path& /*cloudundancyIniPath*/) const
 {
 

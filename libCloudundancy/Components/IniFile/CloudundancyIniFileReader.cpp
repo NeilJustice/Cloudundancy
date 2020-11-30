@@ -75,7 +75,7 @@ CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudunda
       }
    }
    _cloudundancyIniValidator->ThrowIfZeroDestinationFolderPaths(cloudundancyIni, cloudundancyIniPath);
-   _cloudundancyIniValidator->ThrowIfAnyDestinationFoldersNotWritable(cloudundancyIni, cloudundancyIniPath);
+   _cloudundancyIniValidator->AppendBackupStartedToCloudundancyLogFilesInAllDestinationFolders(cloudundancyIni, cloudundancyIniPath);
    return cloudundancyIni;
 }
 
