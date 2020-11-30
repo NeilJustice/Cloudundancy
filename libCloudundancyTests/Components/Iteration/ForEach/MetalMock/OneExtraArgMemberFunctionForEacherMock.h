@@ -1,9 +1,12 @@
 #pragma once
 #include "libCloudundancy/Components/Iteration/ForEach/OneExtraArgMemberFunctionForEacher.h"
 
-template<typename T, typename MemberFunctionType, typename ClassType, typename ExtraArgType>
-class OneExtraArgMemberFunctionForEacherMock : public Metal::Mock<OneExtraArgMemberFunctionForEacher<T, MemberFunctionType, ClassType, ExtraArgType>>
+template<typename ClassType, typename ElementType, typename ExtraArgType>
+class OneExtraArgMemberFunctionForEacherMock :
+   public Metal::Mock<OneExtraArgMemberFunctionForEacher<ClassType, ElementType, ExtraArgType>>
 {
 public:
-   METALMOCK_VOID4_CONST(OneExtraArgMemberFunctionForEach, const vector<T>&, MemberFunctionType, const ClassType*, ExtraArgType)
+   using ConstMemberFunctionType = void(ClassType::*)(const ElementType&, const ExtraArgType&) const;
+   METALMOCK_VOID4_CONST(CallConstMemberFunctionForEachElement,
+      const vector<ElementType>&, ConstMemberFunctionType, const ClassType*, const ExtraArgType&)
 };

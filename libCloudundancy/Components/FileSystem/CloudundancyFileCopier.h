@@ -1,58 +1,58 @@
 #pragma once
-struct CloudundancyIniCopyInstruction;
 class Console;
-struct CloudundancyArgs;
-struct CloudundancyIni;
 class CloudundancyIniFileReader;
-template<typename T, typename ClassType, typename ConstMemberFunctionType, typename ExtraArgType>
-class OneExtraArgMemberFunctionForEacher;
 class FileSystem;
 class RecursiveDirectoryIterator;
 class Stopwatch;
+class Watch;
+struct CloudundancyArgs;
+struct CloudundancyIni;
+struct CloudundancyIniCopyInstruction;
+
+template<typename ClassType, typename ElementType, typename ExtraArgType>
+class OneExtraArgMemberFunctionForEacher;
+
 template<typename ClassType, typename Arg1Type>
 class VoidOneArgMemberFunctionCaller;
+
 template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgMemberFunctionCaller;
+
 template<typename ClassType, typename Arg1Type, typename Arg2Type, typename Arg3Type>
 class VoidThreeArgMemberFunctionCaller;
-class Watch;
 
 class CloudundancyFileCopier
 {
    friend class CloudundancyFileCopierTests;
 private:
-   // Function Callers
+   // Function Pointers
    function<void(int)> _call_exit;
    function<string(const string&, const string&, const string&)> _call_String_ReplaceFirst;
 
-   using OneExtraArgMemberFunctionForEacherOfCopyInstructionsType = OneExtraArgMemberFunctionForEacher<
-      fs::path,
-      void(CloudundancyFileCopier::*)(const fs::path&, const CloudundancyIni&) const,
-      CloudundancyFileCopier, const CloudundancyIni&>;
-   unique_ptr<const OneExtraArgMemberFunctionForEacherOfCopyInstructionsType> _caller_CopyEachFileOrFolderToFolder;
-
-   using VoidTwoArgMemberFunctionCallerType = VoidTwoArgMemberFunctionCaller<
+   // Function Callers
+   using _caller_CopyFileFunctionsType = VoidTwoArgMemberFunctionCaller<
       CloudundancyFileCopier, const CloudundancyIniCopyInstruction&, const fs::path&>;
-   unique_ptr<const VoidTwoArgMemberFunctionCallerType> _caller_CopyFileFunctions;
+   unique_ptr<const _caller_CopyFileFunctionsType> _memberCaller_CopyFileFunctions;
 
-   using OneExtraArgMemberFunctionForEacherOfDestinationFolderPathsType = OneExtraArgMemberFunctionForEacher<
-      CloudundancyIniCopyInstruction,
-      void(CloudundancyFileCopier::*)(const CloudundancyIniCopyInstruction&, const fs::path&) const,
-      CloudundancyFileCopier,
-      const fs::path&>;
-   unique_ptr<const OneExtraArgMemberFunctionForEacherOfDestinationFolderPathsType> _caller_CopyFileOrFolderToFolder;
-
-   using CallerType_CopyNestedFileToFolder = VoidThreeArgMemberFunctionCaller<
+   using _memberCaller_CopyNestedFileToFolderType = VoidThreeArgMemberFunctionCaller<
       CloudundancyFileCopier, const fs::path&, const CloudundancyIniCopyInstruction&, const fs::path&>;
-   unique_ptr<const CallerType_CopyNestedFileToFolder> _caller_CopyNestedFileToFolder;
+   unique_ptr<const _memberCaller_CopyNestedFileToFolderType> _memberCaller_CopyNestedFileToFolder;
 
-   using VoidTryCopyFileCallerType = VoidTwoArgMemberFunctionCaller<
+   using _memberCaller_TryCopyFileType = VoidTwoArgMemberFunctionCaller<
       CloudundancyFileCopier, const fs::path&, const fs::path&>;
-   unique_ptr<const VoidTryCopyFileCallerType> _caller_TryCopyFile;
+   unique_ptr<const _memberCaller_TryCopyFileType> _memberCaller_TryCopyFile;
 
-   using _caller_WriteCopiedOrCopyFailedMessageType = VoidOneArgMemberFunctionCaller<
+   using _memberForEacher_CopyEachFileOrFolderToFolderType = OneExtraArgMemberFunctionForEacher<
+      CloudundancyFileCopier, fs::path, CloudundancyIni>;
+   unique_ptr<const _memberForEacher_CopyEachFileOrFolderToFolderType> _memberForEacher_CopyEachFileOrFolderToFolder;
+
+   using _memberForEacher_CopyFileOrFolderToFolderType = OneExtraArgMemberFunctionForEacher<
+      CloudundancyFileCopier, CloudundancyIniCopyInstruction, fs::path>;
+   unique_ptr<const _memberForEacher_CopyFileOrFolderToFolderType> _memberForEacher_CopyFileOrFolderToFolder;
+
+   using _memberCaller_WriteCopiedOrCopyFailedMessageType = VoidOneArgMemberFunctionCaller<
       CloudundancyFileCopier, const FileCopyResult&>;
-   unique_ptr<const _caller_WriteCopiedOrCopyFailedMessageType> _caller_WriteCopiedOrCopyFailedMessage;
+   unique_ptr<const _memberCaller_WriteCopiedOrCopyFailedMessageType> _memberCaller_WriteCopiedOrCopyFailedMessage;
 
    // Constant Components
    unique_ptr<const CloudundancyIniFileReader> _cloudundancyIniFileReader;

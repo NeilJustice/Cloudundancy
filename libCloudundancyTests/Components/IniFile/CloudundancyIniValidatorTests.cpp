@@ -2,12 +2,12 @@
 #include "libCloudundancy/Components/IniFile/CloudundancyIniValidator.h"
 
 TESTS(CloudundancyIniValidatorTests)
-AFACT(ValidateCloudundancyIni_DestinationFolderPathsIsEmpty_ThrowsFileSystemExceptionWithReasonMalformedFile)
+AFACT(ThrowIfZeroDestinationFolderPaths_DestinationFolderPathsIsEmpty_ThrowsFileSystemExceptionWithReasonMalformedFile)
 EVIDENCE
 
 CloudundancyIniValidator _cloudundancyIniValidator;
 
-TEST(ValidateCloudundancyIni_DestinationFolderPathsIsEmpty_ThrowsFileSystemExceptionWithReasonMalformedFile)
+TEST(ThrowIfZeroDestinationFolderPaths_DestinationFolderPathsIsEmpty_ThrowsFileSystemExceptionWithReasonMalformedFile)
 {
    CloudundancyIni cloudundancyIni = ZenUnit::Random<CloudundancyIni>();
    cloudundancyIni.destinationFolderPaths = {};
@@ -16,7 +16,7 @@ TEST(ValidateCloudundancyIni_DestinationFolderPathsIsEmpty_ThrowsFileSystemExcep
    const FileSystemException expectedFileSystemException(
       FileSystemExceptionType::MalformedFile, cloudundancyIniPath, "cloudundancyIni.destinationFolderPaths cannot be empty");
    const string expectedExceptionMessage = expectedFileSystemException.what();
-   THROWS_EXCEPTION(_cloudundancyIniValidator.ValidateCloudundancyIni(cloudundancyIni, cloudundancyIniPath),
+   THROWS_EXCEPTION(_cloudundancyIniValidator.ThrowIfZeroDestinationFolderPaths(cloudundancyIni, cloudundancyIniPath),
       FileSystemException, expectedExceptionMessage);
 }
 

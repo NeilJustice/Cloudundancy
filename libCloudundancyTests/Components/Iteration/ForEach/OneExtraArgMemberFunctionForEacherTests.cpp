@@ -1,69 +1,61 @@
 #include "pch.h"
 #include "libCloudundancy/Components/Iteration/ForEach/OneExtraArgMemberFunctionForEacher.h"
 
-template<typename ElementType, typename Arg2Type>
-TEMPLATE_TESTS(OneExtraArgMemberFunctionForEacherTests, ElementType, Arg2Type)
-AFACT(TwoArgMemberFunctionForEach_EmptyCollection_DoesNotCallFunc)
-AFACT(TwoArgMemberFunctionForEach_OneItemCollection_CallsThisPointerBoundFuncOnce)
-AFACT(TwoArgMemberFunctionForEach_TwoItemCollection_CallsThisPointerBoundFuncTwice)
-AFACT(CodeCoverage_ClassTypeTwoArgFunction)
+template<typename ElementType, typename ExtraArgType>
+TEMPLATE_TESTS(OneExtraArgMemberFunctionForEacherTests, ElementType, ExtraArgType)
+AFACT(CallConstMemberFunctionForEachElement_EmptyElementsVector_DoesNotCallMemberFunction)
+AFACT(CallConstMemberFunctionForEachElement_TwoElementsVector_CallsThisPointerBoundFuncTwice)
+AFACT(CodeCoverage_ClassType_TwoArgConstMemberFunctionFunction)
 EVIDENCE
 
 class ClassType
 {
 public:
-   virtual void TwoArgFunction(ElementType, Arg2Type) const {}
+   virtual void TwoArgConstMemberFunctionFunction(const ElementType&, const ExtraArgType&) const
+   {
+   }
    virtual ~ClassType() = default;
 };
 
 class ClassTypeMock : public Metal::Mock<ClassType>
 {
 public:
-   vector<ElementType> vec;
-   METALMOCK_VOID2_CONST(TwoArgFunction, ElementType, Arg2Type)
+   vector<ElementType> elements;
+   METALMOCK_VOID2_CONST(TwoArgConstMemberFunctionFunction, const ElementType&, const ExtraArgType&)
 };
 
-using OneExtraArgMemberFunctionForEacherType = OneExtraArgMemberFunctionForEacher<
-   ElementType, void (ClassType::*)(ElementType, Arg2Type) const, ClassType, Arg2Type>;
+OneExtraArgMemberFunctionForEacher<ClassType, ElementType, ExtraArgType> _oneExtraArgMemberFunctionForEacher;
 
-OneExtraArgMemberFunctionForEacherType _oneExtraArgMemberFunctionForEacher;
-
-TEST(TwoArgMemberFunctionForEach_EmptyCollection_DoesNotCallFunc)
+TEST(CallConstMemberFunctionForEachElement_EmptyElementsVector_DoesNotCallMemberFunction)
 {
    const ClassTypeMock classInstance{};
-   _oneExtraArgMemberFunctionForEacher.OneExtraArgMemberFunctionForEach(classInstance.vec, &ClassType::TwoArgFunction, &classInstance, 0);
+   _oneExtraArgMemberFunctionForEacher.CallConstMemberFunctionForEachElement(
+      classInstance.elements, &ClassType::TwoArgConstMemberFunctionFunction, &classInstance, ZenUnit::Random<ExtraArgType>());
 }
 
-TEST(TwoArgMemberFunctionForEach_OneItemCollection_CallsThisPointerBoundFuncOnce)
+TEST(CallConstMemberFunctionForEachElement_TwoElementsVector_CallsThisPointerBoundFuncTwice)
 {
    ClassTypeMock classInstance;
-   classInstance.vec = { 1 };
-   classInstance.TwoArgFunctionMock.Expect();
+   const ElementType element1 = ZenUnit::Random<ElementType>();
+   const ElementType element2 = ZenUnit::Random<ElementType>();
+   classInstance.elements = { element1, element2 };
+   classInstance.TwoArgConstMemberFunctionFunctionMock.Expect();
+   const ExtraArgType extraArg = ZenUnit::Random<ExtraArgType>();
    //
-   _oneExtraArgMemberFunctionForEacher.OneExtraArgMemberFunctionForEach(classInstance.vec, &ClassType::TwoArgFunction, &classInstance, 10);
+   _oneExtraArgMemberFunctionForEacher.CallConstMemberFunctionForEachElement(
+      classInstance.elements, &ClassType::TwoArgConstMemberFunctionFunction, &classInstance, extraArg);
    //
-   classInstance.TwoArgFunctionMock.CalledOnceWith(1, 10);
-}
-
-TEST(TwoArgMemberFunctionForEach_TwoItemCollection_CallsThisPointerBoundFuncTwice)
-{
-   ClassTypeMock classInstance;
-   classInstance.vec = { 1, 2 };
-   classInstance.TwoArgFunctionMock.Expect();
-   //
-   _oneExtraArgMemberFunctionForEacher.OneExtraArgMemberFunctionForEach(classInstance.vec, &ClassType::TwoArgFunction, &classInstance, 20);
-   //
-   classInstance.TwoArgFunctionMock.CalledAsFollows(
+   classInstance.TwoArgConstMemberFunctionFunctionMock.CalledAsFollows(
    {
-      { 1, 20 },
-      { 2, 20 }
+      { element1, extraArg },
+      { element2, extraArg }
    });
 }
 
-TEST(CodeCoverage_ClassTypeTwoArgFunction)
+TEST(CodeCoverage_ClassType_TwoArgConstMemberFunctionFunction)
 {
    const ClassType classType;
-   classType.TwoArgFunction(ElementType{}, Arg2Type{});
+   classType.TwoArgConstMemberFunctionFunction(ElementType{}, ExtraArgType{});
 };
 
 RUN_TEMPLATE_TESTS(OneExtraArgMemberFunctionForEacherTests, int, int)

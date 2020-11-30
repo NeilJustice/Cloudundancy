@@ -1,18 +1,19 @@
 #pragma once
 
-template<typename T, typename MemberFunctionType, typename ClassType, typename ExtraArgType>
+template<typename ClassType, typename ElementType, typename ExtraArgType>
 class OneExtraArgMemberFunctionForEacher
 {
 public:
-   virtual void OneExtraArgMemberFunctionForEach(
-      const std::vector<T>& elements,
-      MemberFunctionType constMemberFunction,
-      const ClassType* constClassPointer, ExtraArgType extraArg) const
+   using ConstMemberFunctionType = void(ClassType::*)(const ElementType&, const ExtraArgType&) const;
+
+   virtual void CallConstMemberFunctionForEachElement(
+      const std::vector<ElementType>& elements,
+      ConstMemberFunctionType constMemberFunction,
+      const ClassType* constClassPointer,
+      const ExtraArgType& extraArg) const
    {
-      const typename std::vector<T>::const_iterator elementsEnd = elements.cend();
-      for (typename std::vector<T>::const_iterator iter = elements.cbegin(); iter != elementsEnd; ++iter)
+      for (const ElementType& element : elements)
       {
-         const T& element = *iter;
          (constClassPointer->*constMemberFunction)(element, extraArg);
       }
    }

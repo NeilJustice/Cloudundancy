@@ -74,7 +74,8 @@ CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudunda
          cloudundancyIni.fileSubpathsToNotCopy.push_back(iniFileLine);
       }
    }
-   _cloudundancyIniValidator->ValidateCloudundancyIni(cloudundancyIni, cloudundancyIniPath);
+   _cloudundancyIniValidator->ThrowIfZeroDestinationFolderPaths(cloudundancyIni, cloudundancyIniPath);
+   _cloudundancyIniValidator->ThrowIfAnyDestinationFoldersNotWritable(cloudundancyIni, cloudundancyIniPath);
    return cloudundancyIni;
 }
 
