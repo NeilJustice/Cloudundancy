@@ -11,20 +11,23 @@ namespace ZenUnit
       VECTORS_ARE_EQUAL(expectedCloudundancyIni.fileSubpathsToNotCopy, actualCloudundancyIni.fileSubpathsToNotCopy);
    }
 
-   CloudundancyIni TestableRandomCloudundancyIni(
-      const ZenUnit::RandomGenerator* /*randomGenerator*/, const UtilsRandomGenerator* /*utilsRandomGenerator*/)
+   CloudundancyIni TestableRandomCloudundancyIni(const ZenUnit::RandomGenerator* randomGenerator)
    {
       CloudundancyIni randomCloudundancyIni;
-      //randomCloudundancyIni.destinationFolderPaths = RandomRelativeFolderPaths();
-      //randomCloudundancyIni.cloudundancyIniCopyInstructions =
-      //   ZenUnit::RandomNonEmptyVector<CloudundancyIniCopyInstruction>();
-      //randomCloudundancyIni.fileSubpathsToNotCopy = randomGenerator->StringVector();
+      randomCloudundancyIni.destinationFolderPaths = randomGenerator->FilesystemPathVector();
+      const size_t cloudundancyIniCopyInstructionsSize = randomGenerator->SizeTBetween(0, 2);
+      randomCloudundancyIni.cloudundancyIniCopyInstructions.resize(cloudundancyIniCopyInstructionsSize);
+      for (size_t i = 0; i < randomCloudundancyIni.cloudundancyIniCopyInstructions.size(); ++i)
+      {
+         randomCloudundancyIni.cloudundancyIniCopyInstructions[i] = ZenUnit::Random<CloudundancyIniCopyInstruction>();
+      }
+      randomCloudundancyIni.fileSubpathsToNotCopy = randomGenerator->StringVector();
       return randomCloudundancyIni;
    }
 
    template<>
    CloudundancyIni Random()
    {
-      return TestableRandomCloudundancyIni(ZenUnit::RandomGenerator::Instance(), UtilsRandomGenerator::Instance());
+      return TestableRandomCloudundancyIni(ZenUnit::RandomGenerator::Instance());
    }
 }
