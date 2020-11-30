@@ -15,7 +15,7 @@ TEST(DefaultConstrructor_SetsFieldsTo0)
    expectedDefaultProcessResult.arguments = "";
    expectedDefaultProcessResult.exitCode = 0;
    expectedDefaultProcessResult.standardOutputAndError = "";
-   expectedDefaultProcessResult.milliseconds = 0;
+   expectedDefaultProcessResult.durationInMilliseconds = 0;
    ARE_EQUAL(expectedDefaultProcessResult, defaultProcessResult);
 }
 
@@ -25,16 +25,16 @@ TEST(FiveArgConstructor_SetsFields)
    const string arguments = ZenUnit::Random<string>();
    const int exitCode = ZenUnit::Random<int>();
    const string standardOutputAndError = ZenUnit::Random<string>();
-   const unsigned milliseconds = ZenUnit::Random<unsigned>();
+   const unsigned durationInMilliseconds = ZenUnit::Random<unsigned>();
    //
-   const ProcessResult processResult(processName, arguments, exitCode, standardOutputAndError, milliseconds);
+   const ProcessResult processResult(processName, arguments, exitCode, standardOutputAndError, durationInMilliseconds);
    //
    ProcessResult expectedProcessResult;
    expectedProcessResult.processName = processName;
    expectedProcessResult.arguments = arguments;
    expectedProcessResult.exitCode = exitCode;
    expectedProcessResult.standardOutputAndError = standardOutputAndError;
-   expectedProcessResult.milliseconds = milliseconds;
+   expectedProcessResult.durationInMilliseconds = durationInMilliseconds;
    ARE_EQUAL(expectedProcessResult, processResult);
 }
 

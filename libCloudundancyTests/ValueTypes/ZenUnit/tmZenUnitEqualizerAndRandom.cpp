@@ -34,6 +34,6 @@ namespace ZenUnit
    template<>
    tm Random<tm>()
    {
-      return TestableTmRandom(RandomGenerator::Instance());
+      return TestableRandomtm(RandomGenerator::Instance());
    }
 }

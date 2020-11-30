@@ -6,7 +6,7 @@ struct ProcessResult
 	string arguments;
 	int exitCode;
 	string standardOutputAndError;
-	unsigned milliseconds;
+	unsigned durationInMilliseconds;
 
    ProcessResult();
    ProcessResult(
@@ -14,5 +14,5 @@ struct ProcessResult
       string_view arguments,
       int exitCode,
       string_view standardOutputAndError,
-      unsigned milliseconds);
+      unsigned durationInMilliseconds);
 };

@@ -3,7 +3,7 @@
 
 ProcessResult::ProcessResult()
    : exitCode(0)
-   , milliseconds(0)
+   , durationInMilliseconds(0)
 {
 }
 
@@ -12,11 +12,11 @@ ProcessResult::ProcessResult(
    string_view arguments,
    int exitCode,
    string_view standardOutputAndError,
-   unsigned milliseconds)
+   unsigned durationInMilliseconds)
    : processName(processName)
    , arguments(arguments)
    , exitCode(exitCode)
    , standardOutputAndError(standardOutputAndError)
-   , milliseconds(milliseconds)
+   , durationInMilliseconds(durationInMilliseconds)
 {
 }

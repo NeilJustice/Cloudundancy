@@ -10,18 +10,23 @@ namespace ZenUnit
       ARE_EQUAL(expectedProcessResult.arguments, actualProcessResult.arguments);
       ARE_EQUAL(expectedProcessResult.exitCode, actualProcessResult.exitCode);
       ARE_EQUAL(expectedProcessResult.standardOutputAndError, actualProcessResult.standardOutputAndError);
-      ARE_EQUAL(expectedProcessResult.milliseconds, actualProcessResult.milliseconds);
+      ARE_EQUAL(expectedProcessResult.durationInMilliseconds, actualProcessResult.durationInMilliseconds);
+   }
+
+   ProcessResult TestableRandomProcessResult(const ZenUnit::RandomGenerator* randomGenerator)
+   {
+      ProcessResult randomProcessResult;
+      randomProcessResult.processName = randomGenerator->String();
+      randomProcessResult.arguments = randomGenerator->String();
+      randomProcessResult.exitCode = randomGenerator->Int();
+      randomProcessResult.standardOutputAndError = randomGenerator->String();
+      randomProcessResult.durationInMilliseconds = randomGenerator->UnsignedInt();
+      return randomProcessResult;
    }
 
    template<>
    ProcessResult Random<ProcessResult>()
    {
-      ProcessResult randomProcessResult;
-      randomProcessResult.processName = ZenUnit::Random<string>();
-      randomProcessResult.arguments = ZenUnit::Random<string>();
-      randomProcessResult.exitCode = ZenUnit::Random<int>();
-      randomProcessResult.standardOutputAndError = ZenUnit::Random<string>();
-      randomProcessResult.milliseconds = ZenUnit::Random<unsigned>();
-      return randomProcessResult;
+      return TestableRandomProcessResult(ZenUnit::RandomGenerator::Instance());
    }
 }
