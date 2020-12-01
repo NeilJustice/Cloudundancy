@@ -2,6 +2,7 @@
 #include "libCloudundancy/Components/Console/Console.h"
 #include "libCloudundancy/Components/IniFile/CloudundancyIniFileReader.h"
 #include "libCloudundancy/Components/FileSystem/CloudundancyFileCopier.h"
+#include "libCloudundancy/Components/FileSystem/CloudundancyLogFileAppender.h"
 #include "libCloudundancy/Components/FileSystem/FileSystem.h"
 #include "libCloudundancy/Components/FileSystem/RecursiveDirectoryIterator.h"
 #include "libCloudundancy/Components/FunctionCallers/MemberFunctions/VoidOneArgMemberFunctionCaller.h"
@@ -23,6 +24,7 @@ CloudundancyFileCopier::CloudundancyFileCopier() noexcept
    , _memberCaller_WriteCopiedOrCopyFailedMessage(make_unique<_memberCaller_WriteCopiedOrCopyFailedMessageType>())
    // Constant Components
    , _cloudundancyIniFileReader(make_unique<CloudundancyIniFileReader>())
+   , _cloudundancyLogFileAppender(make_unique<CloudundancyLogFileAppender>())
    , _console(make_unique<Console>())
    , _fileSystem(make_unique<FileSystem>())
    // Mutable Components
@@ -63,6 +65,8 @@ void CloudundancyFileCopier::CopyFilesAndFoldersToSingleFolder(
       "[Cloudundancy]   FolderBackupResult: All files copied to " + destinationFolderPath.string() + "\n" +
       "[Cloudundancy] FolderBackupDuration: " + elapsedSeconds + " seconds\n";
    _console->WriteLine(folderBackedUpMessage);
+   // _cloudundancyLogFileAppender->AppendTextToCloudundancyDotLogInFolder(
+   // destinationFolderPath, "Successful backup in " + elapsedSeconds + " seconds\n");
 }
 
 void CloudundancyFileCopier::CopyFileOrFolderToFolder(

@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "libCloudundancy/Components/FileSystem/CloudundancyLogFileAppender.h"
 #include "libCloudundancy/Components/FileSystem/FileSystem.h"
 #include "libCloudundancy/Components/FunctionCallers/MemberFunctions/NonVoidOneArgMemberFunctionCaller.h"
 #include "libCloudundancy/Components/FunctionCallers/MemberFunctions/VoidThreeArgMemberFunctionCaller.h"
@@ -12,6 +13,7 @@ CloudundancyIniFileReader::CloudundancyIniFileReader() noexcept
    , _caller_ThrowIfSourceFileOrFolderDoesNotExist(make_unique<VoidTwoArgMemberFunctionCallerType>())
    // Constant Components
    , _cloudundancyIniValidator(make_unique<CloudundancyIniValidator>())
+   , _cloudundancyLogFileAppender(make_unique<CloudundancyLogFileAppender>())
    , _fileSystem(make_unique<FileSystem>())
 {
 }
@@ -75,7 +77,8 @@ CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudunda
       }
    }
    _cloudundancyIniValidator->ThrowIfZeroDestinationFolderPaths(cloudundancyIni, cloudundancyIniPath);
-   _cloudundancyIniValidator->AppendBackupStartedToCloudundancyLogFilesInAllDestinationFolders(cloudundancyIni);
+   _cloudundancyLogFileAppender->AppendBackupStartedToCloudundancyLogFilesInAllDestinationFolders(
+      cloudundancyIni.destinationFolderPaths);
    return cloudundancyIni;
 }
 

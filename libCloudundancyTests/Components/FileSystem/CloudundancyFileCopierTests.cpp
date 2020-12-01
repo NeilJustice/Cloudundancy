@@ -5,6 +5,7 @@
 #include "libCloudundancy/Components/FileSystem/CloudundancyFileCopier.h"
 #include "libCloudundancyTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/FileSystemMock.h"
+#include "libCloudundancyTests/Components/FileSystem/MetalMock/CloudundancyLogFileAppenderMock.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/RecursiveDirectoryIteratorMock.h"
 #include "libCloudundancyTests/Components/IniFile/MetalMock/CloudundancyIniFileReaderMock.h"
 #include "libCloudundancyTests/Components/FunctionCallers/MemberFunctions/MetalMock/VoidOneArgMemberFunctionCallerMock.h"
@@ -64,6 +65,7 @@ _memberCaller_WriteCopiedOrCopyFailedMessageMockType* _memberCaller_WriteCopiedO
 
 // Constant Components
 CloudundancyIniFileReaderMock* _cloudundancyIniFileReaderMock = nullptr;
+CloudundancyLogFileAppender* _cloudundancyLogFileAppenderMock = nullptr;
 ConsoleMock* _consoleMock = nullptr;
 FileSystemMock* _fileSystemMock = nullptr;
 
@@ -85,6 +87,7 @@ STARTUP
    _cloudundancyFileCopier._memberCaller_WriteCopiedOrCopyFailedMessage.reset(_memberCaller_WriteCopiedOrCopyFailedMessageMock = new _memberCaller_WriteCopiedOrCopyFailedMessageMockType);
    // Components
    _cloudundancyFileCopier._cloudundancyIniFileReader.reset(_cloudundancyIniFileReaderMock = new CloudundancyIniFileReaderMock);
+   _cloudundancyFileCopier._cloudundancyLogFileAppender.reset(_cloudundancyLogFileAppenderMock = new CloudundancyLogFileAppenderMock);
    _cloudundancyFileCopier._console.reset(_consoleMock = new ConsoleMock);
    _cloudundancyFileCopier._fileSystem.reset(_fileSystemMock = new FileSystemMock);
    // Mutable Components

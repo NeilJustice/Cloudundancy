@@ -1,6 +1,7 @@
 #pragma once
 class Console;
 class CloudundancyIniFileReader;
+class CloudundancyLogFileAppender;
 class FileSystem;
 class RecursiveDirectoryIterator;
 class Stopwatch;
@@ -56,6 +57,7 @@ private:
 
    // Constant Components
    unique_ptr<const CloudundancyIniFileReader> _cloudundancyIniFileReader;
+   unique_ptr<const CloudundancyLogFileAppender> _cloudundancyLogFileAppender;
    unique_ptr<const Console> _console;
    unique_ptr<const FileSystem> _fileSystem;
 

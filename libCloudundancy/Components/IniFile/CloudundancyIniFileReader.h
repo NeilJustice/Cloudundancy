@@ -7,6 +7,7 @@ template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgMemberFunctionCaller;
 
 class CloudundancyIniValidator;
+class CloudundancyLogFileAppender;
 class FileSystem;
 struct FilePathLineNumberLineText;
 
@@ -29,6 +30,7 @@ private:
 
    // Constant Components
    unique_ptr<const CloudundancyIniValidator> _cloudundancyIniValidator;
+   unique_ptr<const CloudundancyLogFileAppender> _cloudundancyLogFileAppender;
    unique_ptr<const FileSystem> _fileSystem;
 public:
    CloudundancyIniFileReader() noexcept;
