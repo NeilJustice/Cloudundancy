@@ -43,7 +43,7 @@ void CloudundancyIniValidator::AppendBackupStartedToCloudundancyLogFileInDestina
    const fs::path& destinationFolderPath, const fs::path& /*cloudundancyIniPath*/) const
 {
    const string dateTimeNow = _watch->DateTimeNow();
-   const string timestampedBackupStartedMessage = dateTimeNow + "Cloudundancy backup started\n";
+   const string timestampedBackupStartedMessage = dateTimeNow + " Cloudundancy backup started\n";
    const fs::path cloudundancyLogFilePath = destinationFolderPath / "Cloudundancy.log";
    _fileSystem->AppendText(cloudundancyLogFilePath, timestampedBackupStartedMessage);
 }
