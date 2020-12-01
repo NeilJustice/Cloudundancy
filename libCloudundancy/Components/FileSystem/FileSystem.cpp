@@ -6,7 +6,6 @@
 #include "libCloudundancy/Components/Memory/CharVectorAllocator.h"
 #include "libCloudundancy/Components/Time/Stopwatch.h"
 #include "libCloudundancy/Components/Time/Watch.h"
-#include "libCloudundancy/StaticUtilities/Errno.h"
 
 #ifdef __linux__
 int* GetLinuxErrno()
