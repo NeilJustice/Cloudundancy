@@ -42,6 +42,7 @@ using namespace std;
 #include "libCloudundancy/StaticUtilities/StringUtil.h"
 
 // libCloudundancy Components Mocks
+#include "libCloudundancyTests/Components/Assertion/MetalMock/AsserterMock.h"
 #include "libCloudundancyTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 #include "libCloudundancyTests/Components/Iteration/ForEach/MetalMock/MemberFunctionForEacherMock.h"

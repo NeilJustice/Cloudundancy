@@ -28,6 +28,7 @@ void CloudundancyIniValidator::ThrowIfZeroDestinationFolderPaths(
    }
 }
 
+// Confirms that all destination folders are writable
 void CloudundancyIniValidator::AppendBackupStartedToCloudundancyLogFilesInAllDestinationFolders(
    const CloudundancyIni& cloudundancyIni) const
 {
