@@ -72,41 +72,6 @@ FileOpenerCloserMock* _fileOpenerCloserMock = nullptr;
 // Mutable Fields
 StopwatchMock* _stopwatchMock = nullptr;
 
-struct fwriteCallHistory
-{
-   size_t numberOfCalls = 0;
-   size_t returnValue_numberOfBytesWritten = 0;
-   const void* sourceBytesArgument = nullptr;
-   size_t elementSizeArgument = 0;
-   size_t countArgument = 0;
-   FILE* fileArgument = nullptr;
-
-   size_t RecordFunctionCall(const void* sourceBytes, size_t elementSize, size_t count, FILE* file)
-   {
-      ++numberOfCalls;
-      sourceBytesArgument = sourceBytes;
-      elementSizeArgument = elementSize;
-      countArgument = count;
-      fileArgument = file;
-      return returnValue_numberOfBytesWritten;
-   }
-
-   void AssertCalledOnceWith(size_t expectedElementSizeArgument, size_t expectedCountArgument, FILE* expectedFileArgument)
-   {
-      IS_NOT_NULLPTR(sourceBytesArgument);
-      ARE_EQUAL(expectedElementSizeArgument, elementSizeArgument);
-      ARE_EQUAL(expectedCountArgument, countArgument);
-      ARE_EQUAL(expectedFileArgument, fileArgument);
-   }
-} _fwriteCallHistory;
-
-size_t fwriteCallInstead(const void* sourceBytesArgument, size_t elementSizeArgument, size_t countArgument, FILE* fileArgument)
-{
-   const size_t numberOfBytesWritten = _fwriteCallHistory.RecordFunctionCall(
-      sourceBytesArgument, elementSizeArgument, countArgument, fileArgument);
-   return numberOfBytesWritten;
-}
-
 STARTUP
 {
    // C File Function Pointers
@@ -415,8 +380,7 @@ TEST(TryCopyFile_SourceFileIsEmpty_CreatesParentFoldersForDestinationFile_Create
    METALMOCK(_caller_ReadFileBytesMock->CallConstMemberFunctionMock.CalledOnceWith(
       &FileSystem::ReadFileBytes, &_fileSystem, sourceFilePath));
    METALMOCK(_fileOpenerCloserMock->CreateWriteModeBinaryFileMock.CalledOnceWith(destinationFilePath));
-   METALMOCK(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(
-      0, _fwriteCallHistory.returnValue_numberOfBytesWritten,
+   METALMOCK(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(0, 0,
       "fwrite() in FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) unexpectedly returned numberOfBytesWritten != sourceFileBytesSize"));
    METALMOCK(_fileOpenerCloserMock->CloseFileMock.CalledOnceWith(&writeModeDestinationBinaryFileHandle));
    METALMOCK(_stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
@@ -444,9 +408,7 @@ TEST(TryCopyFile_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile_Wri
 
    _fileOpenerCloserMock->CloseFileMock.Expect();
 
-   _fwriteCallHistory.returnValue_numberOfBytesWritten = ZenUnit::Random<size_t>();
-   fwriteMock.CallInstead(std::bind(&FileSystemTests::fwriteCallInstead, this,
-      std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
+   const size_t numberOfBytesWritten = fwriteMock.ReturnRandom();
 
    const unsigned long long elapsedMilliseconds = _stopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
 
@@ -462,10 +424,8 @@ TEST(TryCopyFile_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile_Wri
    const fs::path expectedParentPathOfDestinationFilePath = destinationFilePath.parent_path();
    METALMOCK(create_directoriesMock.CalledOnceWith(expectedParentPathOfDestinationFilePath));
    METALMOCK(_fileOpenerCloserMock->CreateWriteModeBinaryFileMock.CalledOnceWith(destinationFilePath));
-   _fwriteCallHistory.AssertCalledOnceWith(
-      1, expectedSourceFileBytesSize, &writeModeDestinationBinaryFileHandle);
-   METALMOCK(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(
-      expectedSourceFileBytesSize, _fwriteCallHistory.returnValue_numberOfBytesWritten,
+   METALMOCK(fwriteMock.CalledOnceWith(sourceFileBytes->data(), 1, expectedSourceFileBytesSize, &writeModeDestinationBinaryFileHandle));
+   METALMOCK(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(expectedSourceFileBytesSize, numberOfBytesWritten,
       "fwrite() in FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) unexpectedly returned numberOfBytesWritten != sourceFileBytesSize"));
    METALMOCK(_fileOpenerCloserMock->CloseFileMock.CalledOnceWith(&writeModeDestinationBinaryFileHandle));
    METALMOCK(_stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
