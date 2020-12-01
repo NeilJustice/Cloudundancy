@@ -54,6 +54,8 @@ using namespace std;
 #include "libCloudundancy/Components/Assertion/Asserter.h"
 #include "libCloudundancy/Components/Console/Console.h"
 #include "libCloudundancy/Components/FileSystem/FileSystem.h"
+#include "libCloudundancy/Components/Iteration/ForEach/OneExtraArgMemberFunctionForEacher.h"
+#include "libCloudundancy/Components/Time/Watch.h"
 
 // libCloudundancy Utility Functions
 #include "libCloudundancy/StaticUtilities/ReleaseAssert.h"

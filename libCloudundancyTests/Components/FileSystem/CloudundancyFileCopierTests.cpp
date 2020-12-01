@@ -52,11 +52,11 @@ using _memberCaller_TryCopyFileMockType = VoidTwoArgMemberFunctionCallerMock<
 _memberCaller_TryCopyFileMockType* _memberCaller_TryCopyFileMock = nullptr;
 
 using _memberForEacher_CopyEachFileOrFolderToFolderMockType = OneExtraArgMemberFunctionForEacherMock<
-   CloudundancyFileCopier, fs::path, CloudundancyIni>;
+   CloudundancyFileCopier, fs::path, const CloudundancyIni&>;
 _memberForEacher_CopyEachFileOrFolderToFolderMockType* _memberForEacher_CopyEachFileOrFolderToFolderMock = nullptr;
 
 using _memberForEacher_CopyFileOrFolderToFolderMockType = OneExtraArgMemberFunctionForEacherMock<
-   CloudundancyFileCopier, CloudundancyIniCopyInstruction, fs::path>;
+   CloudundancyFileCopier, CloudundancyIniCopyInstruction, const fs::path&>;
 _memberForEacher_CopyFileOrFolderToFolderMockType* _memberForEacher_CopyFileOrFolderToFolderMock = nullptr;
 
 using _memberCaller_WriteCopiedOrCopyFailedMessageMockType = VoidOneArgMemberFunctionCallerMock<

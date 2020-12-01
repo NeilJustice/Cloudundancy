@@ -1,12 +1,10 @@
 #include "pch.h"
 #include "libCloudundancy/Components/FileSystem/CloudundancyLogFileAppender.h"
-#include "libCloudundancy/Components/Iteration/ForEach/MemberFunctionForEacher.h"
-#include "libCloudundancy/Components/Time/Watch.h"
 
 CloudundancyLogFileAppender::CloudundancyLogFileAppender()
    // Function Callers
-   : _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolder(
-      make_unique<_memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderType>())
+   : _oneExtraArgMemberForEacher_AppendTextToCloudundancyLogFileInDestinationFolder(
+      make_unique<_oneExtraArgMemberForEacher_AppendTextToCloudundancyLogFileInDestinationFolderType>())
    // Constant Components
    , _fileSystem(make_unique<FileSystem>())
    , _watch(make_unique<Watch>())
@@ -22,20 +20,13 @@ CloudundancyLogFileAppender::~CloudundancyLogFileAppender()
 void CloudundancyLogFileAppender::AppendBackupStartedToCloudundancyLogFilesInAllDestinationFolders(
    const vector<fs::path>& destinationFolderPaths) const
 {
-   _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolder->CallConstMemberFunctionForEachElement(
-      destinationFolderPaths, &CloudundancyLogFileAppender::AppendBackupStartedToCloudundancyLogFileInDestinationFolder, this);
+   _oneExtraArgMemberForEacher_AppendTextToCloudundancyLogFileInDestinationFolder->CallConstMemberFunctionForEachElement(
+      destinationFolderPaths,
+      &CloudundancyLogFileAppender::AppendTextToCloudundancyLogFileInDestinationFolder,
+      this, "Cloudundancy backup started");
 }
 
 // Private Functions
-
-void CloudundancyLogFileAppender::AppendBackupStartedToCloudundancyLogFileInDestinationFolder(
-   const fs::path& destinationFolderPath) const
-{
-   const string dateTimeNow = _watch->DateTimeNow();
-   const string timestampedBackupStartedMessage = dateTimeNow + " Cloudundancy backup started\n";
-   const fs::path cloudundancyLogFilePath = destinationFolderPath / "Cloudundancy.log";
-   _fileSystem->AppendText(cloudundancyLogFilePath, timestampedBackupStartedMessage);
-}
 
 void CloudundancyLogFileAppender::AppendTextToCloudundancyLogFileInDestinationFolder(
    const fs::path& destinationFolderPath, string_view text) const

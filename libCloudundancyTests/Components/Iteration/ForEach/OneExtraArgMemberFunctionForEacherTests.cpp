@@ -11,7 +11,7 @@ EVIDENCE
 class ClassType
 {
 public:
-   virtual void TwoArgConstMemberFunctionFunction(const ElementType&, const ExtraArgType&) const
+   virtual void TwoArgConstMemberFunctionFunction(const ElementType&, ExtraArgType) const
    {
    }
    virtual ~ClassType() = default;
@@ -21,7 +21,7 @@ class ClassTypeMock : public Metal::Mock<ClassType>
 {
 public:
    vector<ElementType> elements;
-   METALMOCK_VOID2_CONST(TwoArgConstMemberFunctionFunction, const ElementType&, const ExtraArgType&)
+   METALMOCK_VOID2_CONST(TwoArgConstMemberFunctionFunction, const ElementType&, ExtraArgType)
 };
 
 OneExtraArgMemberFunctionForEacher<ClassType, ElementType, ExtraArgType> _oneExtraArgMemberFunctionForEacher;

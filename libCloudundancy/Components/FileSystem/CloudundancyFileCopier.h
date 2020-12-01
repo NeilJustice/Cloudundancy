@@ -44,11 +44,11 @@ private:
    unique_ptr<const _memberCaller_TryCopyFileType> _memberCaller_TryCopyFile;
 
    using _memberForEacher_CopyEachFileOrFolderToFolderType = OneExtraArgMemberFunctionForEacher<
-      CloudundancyFileCopier, fs::path, CloudundancyIni>;
+      CloudundancyFileCopier, fs::path, const CloudundancyIni&>;
    unique_ptr<const _memberForEacher_CopyEachFileOrFolderToFolderType> _memberForEacher_CopyEachFileOrFolderToFolder;
 
    using _memberForEacher_CopyFileOrFolderToFolderType = OneExtraArgMemberFunctionForEacher<
-      CloudundancyFileCopier, CloudundancyIniCopyInstruction, fs::path>;
+      CloudundancyFileCopier, CloudundancyIniCopyInstruction, const fs::path&>;
    unique_ptr<const _memberForEacher_CopyFileOrFolderToFolderType> _memberForEacher_CopyFileOrFolderToFolder;
 
    using _memberCaller_WriteCopiedOrCopyFailedMessageType = VoidOneArgMemberFunctionCaller<

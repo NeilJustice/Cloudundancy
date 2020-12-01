@@ -4,16 +4,15 @@
 
 TESTS(CloudundancyLogFileAppenderTests)
 AFACT(DefaultConstructor_NewsComponents)
-AFACT(AppendBackupStartedToCloudundancyLogFilesInAllDestinationFolders_CallsThrowIfFolderIsNotWritableOnEachDestinationFolderPath)
 AFACT(AppendTimestampedTextToCloudundancyLogFileInDestinationFolder_AppendsTimestampedTextToCloudundancyDotLogInDestinationFolder)
 EVIDENCE
 
 CloudundancyLogFileAppender _cloudundancyLogFileAppender;
 // Function Callers
-using _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMockType =
-MemberFunctionForEacherMock<CloudundancyLogFileAppender, fs::path>;
-_memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMockType*
-   _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMock = nullptr;
+using _oneExtraArgMemberForEacher_AppendTextToCloudundancyLogFileInDestinationFolderMockType =
+   OneExtraArgMemberFunctionForEacherMock<CloudundancyLogFileAppender, fs::path, string_view>;
+_oneExtraArgMemberForEacher_AppendTextToCloudundancyLogFileInDestinationFolderMockType*
+   _oneExtraArgMemberForEacher_AppendTextToCloudundancyLogFileInDestinationFolderMock = nullptr;
 // Constant Components
 FileSystemMock* _fileSystemMock = nullptr;
 WatchMock* _watchMock = nullptr;
@@ -21,9 +20,9 @@ WatchMock* _watchMock = nullptr;
 STARTUP
 {
    // Function Callers
-   _cloudundancyLogFileAppender._memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolder.reset(
-      _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMock =
-         new _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMockType);
+   _cloudundancyLogFileAppender._oneExtraArgMemberForEacher_AppendTextToCloudundancyLogFileInDestinationFolder.reset(
+      _oneExtraArgMemberForEacher_AppendTextToCloudundancyLogFileInDestinationFolderMock =
+         new _oneExtraArgMemberForEacher_AppendTextToCloudundancyLogFileInDestinationFolderMockType);
    // Constant Components
    _cloudundancyLogFileAppender._fileSystem.reset(_fileSystemMock = new FileSystemMock);
    _cloudundancyLogFileAppender._watch.reset(_watchMock = new WatchMock);
@@ -33,37 +32,23 @@ TEST(DefaultConstructor_NewsComponents)
 {
    CloudundancyLogFileAppender cloudundancyLogFileAppender;
    // Function Callers
-   DELETE_TO_ASSERT_NEWED(cloudundancyLogFileAppender._memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolder);
+   DELETE_TO_ASSERT_NEWED(cloudundancyLogFileAppender._oneExtraArgMemberForEacher_AppendTextToCloudundancyLogFileInDestinationFolder);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(cloudundancyLogFileAppender._fileSystem);
 }
 
 TEST(AppendBackupStartedToCloudundancyLogFilesInAllDestinationFolders_CallsThrowIfFolderIsNotWritableOnEachDestinationFolderPath)
 {
-   _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMock->
-      CallConstMemberFunctionForEachElementMock.Expect();
+   _oneExtraArgMemberForEacher_AppendTextToCloudundancyLogFileInDestinationFolderMock->CallConstMemberFunctionForEachElementMock.Expect();
    const vector<fs::path> destinationFolderPaths = ZenUnit::RandomVector<fs::path>();
    //
    _cloudundancyLogFileAppender.AppendBackupStartedToCloudundancyLogFilesInAllDestinationFolders(destinationFolderPaths);
    //
-   METALMOCK(_memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMock->
+   METALMOCK(_oneExtraArgMemberForEacher_AppendTextToCloudundancyLogFileInDestinationFolderMock->
       CallConstMemberFunctionForEachElementMock.CalledOnceWith(
-         destinationFolderPaths, &CloudundancyLogFileAppender::AppendBackupStartedToCloudundancyLogFileInDestinationFolder, &_cloudundancyLogFileAppender));
-}
-
-TEST(AppendBackupStartedToCloudundancyLogFileInDestinationFolder_AppendsTimestampedCloudundancyBackupStartedMessageToCloudundancyDotLogInDestinationFolder)
-{
-   const string dateTimeNow = _watchMock->DateTimeNowMock.ReturnRandom();
-   _fileSystemMock->AppendTextMock.Expect();
-   const fs::path destinationFolderPath = ZenUnit::Random<fs::path>();
-   //
-   _cloudundancyLogFileAppender.AppendBackupStartedToCloudundancyLogFileInDestinationFolder(destinationFolderPath);
-   //
-   METALMOCK(_watchMock->DateTimeNowMock.CalledOnce());
-   const fs::path expectedCloudundancyLogFilePath = destinationFolderPath / "Cloudundancy.log";
-   const string expectedTimestampedBackupStartedMessage = dateTimeNow + " Cloudundancy backup started\n";
-   METALMOCK(_fileSystemMock->AppendTextMock.CalledOnceWith(
-      expectedCloudundancyLogFilePath, expectedTimestampedBackupStartedMessage));
+         destinationFolderPaths,
+         &CloudundancyLogFileAppender::AppendTextToCloudundancyLogFileInDestinationFolder,
+         &_cloudundancyLogFileAppender, "Cloudundancy backup started"));
 }
 
 TEST(AppendTimestampedTextToCloudundancyLogFileInDestinationFolder_AppendsTimestampedTextToCloudundancyDotLogInDestinationFolder)
