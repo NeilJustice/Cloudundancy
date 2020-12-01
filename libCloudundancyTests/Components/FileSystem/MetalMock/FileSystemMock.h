@@ -9,9 +9,9 @@ public:
    METALMOCK_VOID1_CONST(ThrowIfFilePathIsNotEmptyAndDoesNotExist, const fs::path&)
 
    // File Reads
-   METALMOCK_NONVOID1_CONST(std::string, ReadFileText, const fs::path&)
-   METALMOCK_NONVOID1_CONST(std::vector<char>, ReadFileBytes, const fs::path&)
-   METALMOCK_NONVOID1_CONST(std::vector<std::string>, ReadFileLinesWhichMustBeNonEmpty, const fs::path&)
+   METALMOCK_NONVOID1_CONST(string, ReadFileText, const fs::path&)
+   METALMOCK_NONVOID1_CONST(shared_ptr<const vector<char>>, ReadFileBytes, const fs::path&)
+   METALMOCK_NONVOID1_CONST(vector<string>, ReadFileLinesWhichMustBeNonEmpty, const fs::path&)
 
    // File Copies
    METALMOCK_NONVOID1_CONST(bool, IsFileSizeGreaterThanOrEqualTo2GB, const fs::path&)

@@ -73,38 +73,39 @@ void FileSystem::ThrowIfFilePathIsNotEmptyAndDoesNotExist(const fs::path& filePa
 
 // File Reads
 
-vector<char> FileSystem::ReadFileBytes(const fs::path& filePath) const
+shared_ptr<const vector<char>> FileSystem::ReadFileBytes(const fs::path& filePath) const
 {
-   FILE* const readModeBinaryFilePointer = _fileOpenerCloser->OpenReadModeBinaryFile(filePath);
+   FILE* const readModeBinaryFileHandle = _fileOpenerCloser->OpenReadModeBinaryFile(filePath);
    const size_t fileSizeInBytes = _caller_FileSize->CallConstMemberFunction(
-      &FileSystem::FileSize, this, readModeBinaryFilePointer);
+      &FileSystem::FileSize, this, readModeBinaryFileHandle);
    if (fileSizeInBytes == 0)
    {
-      _fileOpenerCloser->CloseFile(readModeBinaryFilePointer);
-      return {};
+      _fileOpenerCloser->CloseFile(readModeBinaryFileHandle);
+      const shared_ptr<const vector<char>> emptyFileBytes = make_shared<vector<char>>(vector<char>{});
+      return emptyFileBytes;
    }
    const unique_ptr<vector<char>> fileBytesBuffer(_charVectorAllocator->NewCharVector(fileSizeInBytes));
-   const size_t numberOfBytesRead = _call_fread(&(*fileBytesBuffer)[0], 1, fileSizeInBytes, readModeBinaryFilePointer);
+   const size_t numberOfBytesRead = _call_fread(&(*fileBytesBuffer)[0], 1, fileSizeInBytes, readModeBinaryFileHandle);
    _asserter->ThrowIfSizeTsNotEqual(fileSizeInBytes, numberOfBytesRead,
       "fread() in FileSystem::ReadBytes() unexpectedly did not return fileSizeInBytes");
-   _fileOpenerCloser->CloseFile(readModeBinaryFilePointer);
-   const vector<char> fileBytes(*fileBytesBuffer);
+   _fileOpenerCloser->CloseFile(readModeBinaryFileHandle);
+   const shared_ptr<const vector<char>> fileBytes = make_shared<vector<char>>(*fileBytesBuffer);
    return fileBytes;
 }
 
 string FileSystem::ReadFileText(const fs::path& filePath) const
 {
-   FILE* const readModeTextFilePointer = _fileOpenerCloser->OpenReadModeTextFile(filePath);
+   FILE* const readModeTextFileHandle = _fileOpenerCloser->OpenReadModeTextFile(filePath);
    const size_t fileSizeInBytes = _caller_FileSize->CallConstMemberFunction(
-      &FileSystem::FileSize, this, readModeTextFilePointer);
+      &FileSystem::FileSize, this, readModeTextFileHandle);
    if (fileSizeInBytes == 0)
    {
-      _fileOpenerCloser->CloseFile(readModeTextFilePointer);
+      _fileOpenerCloser->CloseFile(readModeTextFileHandle);
       return {};
    }
    const unique_ptr<vector<char>> fileTextBuffer(_charVectorAllocator->NewCharVector(fileSizeInBytes));
-   _call_fread(&(*fileTextBuffer)[0], 1, fileSizeInBytes, readModeTextFilePointer);
-   _fileOpenerCloser->CloseFile(readModeTextFilePointer);
+   _call_fread(&(*fileTextBuffer)[0], 1, fileSizeInBytes, readModeTextFileHandle);
+   _fileOpenerCloser->CloseFile(readModeTextFileHandle);
    const string fileText(&(*fileTextBuffer)[0]);
    return fileText;
 }
@@ -131,18 +132,18 @@ vector<string> FileSystem::ReadFileLinesWhichMustBeNonEmpty(const fs::path& file
 FileCopyResult FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const
 {
    _stopwatch->Start();
-   const vector<char> sourceFileBytes = _caller_ReadFileBytes->CallConstMemberFunction(
+   shared_ptr<const vector<char>> sourceFileBytes = _caller_ReadFileBytes->CallConstMemberFunction(
       &FileSystem::ReadFileBytes, this, sourceFilePath);
    const fs::path parentPathOfDestinationFilePath = destinationFilePath.parent_path();
    _call_fs_create_directories(parentPathOfDestinationFilePath);
-   FILE* const writeModeDestinationBinaryFilePointer = _fileOpenerCloser->CreateWriteModeBinaryFile(destinationFilePath);
-   const size_t sourceFileBytesSize = sourceFileBytes.size();
+   FILE* const writeModeDestinationBinaryFileHandle = _fileOpenerCloser->CreateWriteModeBinaryFile(destinationFilePath);
+   const size_t sourceFileBytesSize = sourceFileBytes->size();
    size_t numberOfBytesWritten = 0;
    if (sourceFileBytesSize > 0)
    {
-      numberOfBytesWritten = _call_fwrite(&sourceFileBytes[0], 1, sourceFileBytesSize, writeModeDestinationBinaryFilePointer);
+      numberOfBytesWritten = _call_fwrite(sourceFileBytes->data(), 1, sourceFileBytesSize, writeModeDestinationBinaryFileHandle);
    }
-   _fileOpenerCloser->CloseFile(writeModeDestinationBinaryFilePointer);
+   _fileOpenerCloser->CloseFile(writeModeDestinationBinaryFileHandle);
    _asserter->ThrowIfSizeTsNotEqual(sourceFileBytesSize, numberOfBytesWritten,
       "fwrite() in FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) unexpectedly returned numberOfBytesWritten != sourceFileBytesSize");
    FileCopyResult successFileCopyResult;
@@ -198,12 +199,12 @@ void FileSystem::WriteTextFile(const fs::path& filePath, string_view fileText) c
 {
    const fs::path parentFolderPath = filePath.parent_path();
    _call_fs_create_directories(parentFolderPath);
-   FILE* const writeModeTextFilePointer = _fileOpenerCloser->CreateWriteModeTextFile(filePath);
+   FILE* const writeModeTextFileHandle = _fileOpenerCloser->CreateWriteModeTextFile(filePath);
    const size_t fileTextSize = fileText.size();
-   const size_t numberOfBytesWritten = _call_fwrite(fileText.data(), 1, fileTextSize, writeModeTextFilePointer);
+   const size_t numberOfBytesWritten = _call_fwrite(fileText.data(), 1, fileTextSize, writeModeTextFileHandle);
    _asserter->ThrowIfSizeTsNotEqual(fileTextSize, numberOfBytesWritten,
       "fwrite() in FileSystem::CreateTextFile() unexpectedly did not return fileText.size() number of bytes written");
-   _fileOpenerCloser->CloseFile(writeModeTextFilePointer);
+   _fileOpenerCloser->CloseFile(writeModeTextFileHandle);
 }
 
 // Misc

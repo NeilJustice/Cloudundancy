@@ -41,7 +41,7 @@ private:
    using _caller_FileSize_Type = NonVoidOneArgMemberFunctionCaller<size_t, FileSystem, FILE*>;
    unique_ptr<const _caller_FileSize_Type> _caller_FileSize;
 
-   using _caller_ReadFileBytes_Type = NonVoidOneArgMemberFunctionCaller<vector<char>, FileSystem, const fs::path&>;
+   using _caller_ReadFileBytes_Type = NonVoidOneArgMemberFunctionCaller<shared_ptr<const vector<char>>, FileSystem, const fs::path&>;
    unique_ptr<const _caller_ReadFileBytes_Type> _caller_ReadFileBytes;
 
    using _caller_ReadFileText_Type = NonVoidOneArgMemberFunctionCaller<string, FileSystem, const fs::path&>;
@@ -63,7 +63,7 @@ public:
    virtual void ThrowIfFilePathIsNotEmptyAndDoesNotExist(const fs::path& filePath) const;
 
    // File Reads
-   virtual vector<char> ReadFileBytes(const fs::path& filePath) const;
+   virtual shared_ptr<const vector<char>> ReadFileBytes(const fs::path& filePath) const;
    virtual string ReadFileText(const fs::path& filePath) const;
    virtual vector<string> ReadFileLinesWhichMustBeNonEmpty(const fs::path& filePath) const;
 
