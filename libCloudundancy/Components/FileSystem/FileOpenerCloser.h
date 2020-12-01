@@ -8,9 +8,9 @@ private:
    // Function Pointers
    function<int(FILE*)> _call_fclose;
 #ifdef __linux__
-   function<FILE* (const char*, const char*)> _call_fopen;
+   std::function<FILE* (const char*, const char*)> _call_fopen;
 #elif _WIN32
-   function<FILE* (const wchar_t*, const wchar_t*)> _call_wfopen;
+   std::function<FILE* (const wchar_t*, const wchar_t*, int)> _call_wfsopen;
 #endif
    // Constant Components
    unique_ptr<const Asserter> _asserter;

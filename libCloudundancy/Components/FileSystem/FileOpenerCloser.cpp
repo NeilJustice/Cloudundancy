@@ -8,7 +8,7 @@ FileOpenerCloser::FileOpenerCloser()
 #ifdef __linux__
    , _call_fopen(::fopen)
 #elif _WIN32
-   , _call_wfopen(::_wfopen)
+   , _call_wfsopen(_wfsopen)
 #endif
    // Constant Components
    , _asserter(make_unique<Asserter>())
@@ -91,7 +91,7 @@ FILE* FileOpenerCloser::OpenFileOnLinux(const fs::path& filePath, const char* fi
 
 FILE* FileOpenerCloser::OpenFileOnWindows(const fs::path& filePath, const wchar_t* fileOpenMode) const
 {
-   FILE* const fileHandle = _call_wfopen(filePath.c_str(), fileOpenMode);
+   FILE* const fileHandle = _call_wfsopen(filePath.c_str(), fileOpenMode, _SH_DENYWR);
    ThrowFileOpenExceptionIfFileOpenFailed(fileHandle, filePath);
    return fileHandle;
 }

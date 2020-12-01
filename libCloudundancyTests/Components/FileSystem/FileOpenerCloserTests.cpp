@@ -21,7 +21,7 @@ METALMOCK_NONVOID1_FREE(int, fclose, FILE*)
 #ifdef __linux__
 METALMOCK_NONVOID2_FREE(FILE*, fopen, const char*, const char*)
 #elif _WIN32
-METALMOCK_NONVOID2_FREE(FILE*, _wfopen, const wchar_t*, const wchar_t*)
+METALMOCK_NONVOID3_FREE(FILE*, _wfsopen, const wchar_t*, const wchar_t*, int)
 #endif
 // Constant Components
 AsserterMock* _asserterMock = nullptr;
@@ -33,7 +33,7 @@ STARTUP
 #ifdef __linux__
    _fileOpenerCloser._call_fopen = BIND_2ARG_METALMOCK_OBJECT(fopenMock);
 #elif _WIN32
-   _fileOpenerCloser._call_wfopen = BIND_2ARG_METALMOCK_OBJECT(_wfopenMock);
+   _fileOpenerCloser._call_wfsopen = BIND_3ARG_METALMOCK_OBJECT(_wfsopenMock);
 #endif
    // Constant Components
    _fileOpenerCloser._asserter.reset(_asserterMock = new AsserterMock);
@@ -44,9 +44,9 @@ TEST(DefaultConstructor_SetsFunctionPointers)
    const FileOpenerCloser fileOpenerCloser;
    STD_FUNCTION_TARGETS(::fclose, fileOpenerCloser._call_fclose);
 #ifdef __linux__
-   STD_FUNCTION_TARGETS(::fopen, fileOpenerCloser._call_fopen);
+   STD_FUNCTION_TARGETS(fopen, fileOpenerCloser._call_fopen);
 #elif _WIN32
-   STD_FUNCTION_TARGETS(::_wfopen, fileOpenerCloser._call_wfopen);
+   STD_FUNCTION_TARGETS(_wfsopen, fileOpenerCloser._call_wfsopen);
 #endif
 }
 
@@ -56,7 +56,7 @@ TEST(CreateWriteModeBinaryFile_ReturnsFileHandleOpenedInBinaryWriteMode)
 #ifdef __linux__
    fopenMock.Return(&writeModeBinaryFileHandle);
 #elif _WIN32
-   _wfopenMock.Return(&writeModeBinaryFileHandle);
+   _wfsopenMock.Return(&writeModeBinaryFileHandle);
 #endif
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
@@ -65,7 +65,7 @@ TEST(CreateWriteModeBinaryFile_ReturnsFileHandleOpenedInBinaryWriteMode)
 #ifdef __linux__
    METALMOCK(fopenMock.CalledOnceWith(filePath.c_str(), "wb"));
 #elif _WIN32
-   METALMOCK(_wfopenMock.CalledOnceWith(filePath.c_str(), L"wb"));
+   METALMOCK(_wfsopenMock.CalledOnceWith(filePath.c_str(), L"wb", _SH_DENYWR));
 #endif
    ARE_EQUAL(&writeModeBinaryFileHandle, returnedWriteModeBinaryFileHandle);
 }
@@ -76,7 +76,7 @@ TEST(CreateWriteModeTextFile_ReturnsFileHandleOpenedInTextWriteMode)
 #ifdef __linux__
    fopenMock.Return(&writeModeTextFileHandle);
 #elif _WIN32
-   _wfopenMock.Return(&writeModeTextFileHandle);
+   _wfsopenMock.Return(&writeModeTextFileHandle);
 #endif
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
@@ -85,7 +85,7 @@ TEST(CreateWriteModeTextFile_ReturnsFileHandleOpenedInTextWriteMode)
 #ifdef __linux__
    METALMOCK(fopenMock.CalledOnceWith(filePath.c_str(), "w"));
 #elif _WIN32
-   METALMOCK(_wfopenMock.CalledOnceWith(filePath.c_str(), L"w"));
+   METALMOCK(_wfsopenMock.CalledOnceWith(filePath.c_str(), L"w", _SH_DENYWR));
 #endif
    ARE_EQUAL(&writeModeTextFileHandle, returnedWriteModeTextFileHandle);
 }
@@ -96,7 +96,7 @@ TEST(OpenReadModeBinaryFile_ReturnsFileHandleOpenedInBinaryReadMode)
 #ifdef __linux__
    fopenMock.Return(&readModeBinaryFileHandle);
 #elif _WIN32
-   _wfopenMock.Return(&readModeBinaryFileHandle);
+   _wfsopenMock.Return(&readModeBinaryFileHandle);
 #endif
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
@@ -105,7 +105,7 @@ TEST(OpenReadModeBinaryFile_ReturnsFileHandleOpenedInBinaryReadMode)
 #ifdef __linux__
    METALMOCK(fopenMock.CalledOnceWith(filePath.c_str(), "rb"));
 #elif _WIN32
-   METALMOCK(_wfopenMock.CalledOnceWith(filePath.c_str(), L"rb"));
+   METALMOCK(_wfsopenMock.CalledOnceWith(filePath.c_str(), L"rb", _SH_DENYWR));
 #endif
    ARE_EQUAL(&readModeBinaryFileHandle, returnedReadModeBinaryFileHandle);
 }
@@ -116,7 +116,7 @@ TEST(OpenReadModeTextFile_ReturnsFileHandleOpenedInTextReadMode)
 #ifdef __linux__
    fopenMock.Return(&readModeTextFileHandle);
 #elif _WIN32
-   _wfopenMock.Return(&readModeTextFileHandle);
+   _wfsopenMock.Return(&readModeTextFileHandle);
 #endif
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
@@ -125,7 +125,7 @@ TEST(OpenReadModeTextFile_ReturnsFileHandleOpenedInTextReadMode)
 #ifdef __linux__
    METALMOCK(fopenMock.CalledOnceWith(filePath.c_str(), "r"));
 #elif _WIN32
-   METALMOCK(_wfopenMock.CalledOnceWith(filePath.c_str(), L"r"));
+   METALMOCK(_wfsopenMock.CalledOnceWith(filePath.c_str(), L"r", _SH_DENYWR));
 #endif
    ARE_EQUAL(&readModeTextFileHandle, returnedReadModeTextFileHandle);
 }
@@ -136,7 +136,7 @@ TEST(OpenAppendModeTextFile_ReturnsFileHandleOpenedInTextAppendMode)
 #ifdef __linux__
    fopenMock.Return(&appendModeTextFileHandle);
 #elif _WIN32
-   _wfopenMock.Return(&appendModeTextFileHandle);
+   _wfsopenMock.Return(&appendModeTextFileHandle);
 #endif
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
@@ -145,7 +145,7 @@ TEST(OpenAppendModeTextFile_ReturnsFileHandleOpenedInTextAppendMode)
 #ifdef __linux__
    METALMOCK(fopenMock.CalledOnceWith(filePath.c_str(), "a"));
 #elif _WIN32
-   METALMOCK(_wfopenMock.CalledOnceWith(filePath.c_str(), L"a"));
+   METALMOCK(_wfsopenMock.CalledOnceWith(filePath.c_str(), L"a", _SH_DENYWR));
 #endif
    ARE_EQUAL(&appendModeTextFileHandle, returnedAppendModeTextFileHandle);
 }
