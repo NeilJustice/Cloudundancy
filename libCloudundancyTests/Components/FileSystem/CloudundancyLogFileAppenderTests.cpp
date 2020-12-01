@@ -5,6 +5,7 @@
 TESTS(CloudundancyLogFileAppenderTests)
 AFACT(DefaultConstructor_NewsComponents)
 AFACT(AppendBackupStartedToCloudundancyLogFilesInAllDestinationFolders_CallsThrowIfFolderIsNotWritableOnEachDestinationFolderPath)
+AFACT(AppendTimestampedTextToCloudundancyLogFileInDestinationFolder_AppendsTimestampedTextToCloudundancyDotLogInDestinationFolder)
 EVIDENCE
 
 CloudundancyLogFileAppender _cloudundancyLogFileAppender;
@@ -65,6 +66,20 @@ TEST(AppendBackupStartedToCloudundancyLogFileInDestinationFolder_AppendsTimestam
       expectedCloudundancyLogFilePath, expectedTimestampedBackupStartedMessage));
 }
 
+TEST(AppendTimestampedTextToCloudundancyLogFileInDestinationFolder_AppendsTimestampedTextToCloudundancyDotLogInDestinationFolder)
+{
+   const string dateTimeNow = _watchMock->DateTimeNowMock.ReturnRandom();
+   _fileSystemMock->AppendTextMock.Expect();
+   const fs::path destinationFolderPath = ZenUnit::Random<fs::path>();
+   const string text = ZenUnit::Random<string>();
+   //
+   _cloudundancyLogFileAppender.AppendTextToCloudundancyLogFileInDestinationFolder(destinationFolderPath, text);
+   //
+   METALMOCK(_watchMock->DateTimeNowMock.CalledOnce());
+   const fs::path expectedCloudundancyLogFilePath = destinationFolderPath / "Cloudundancy.log";
+   const string expectedTimestampedBackupStartedMessage = String::Concat(dateTimeNow, '|', text, '\n');
+   METALMOCK(_fileSystemMock->AppendTextMock.CalledOnceWith(
+      expectedCloudundancyLogFilePath, expectedTimestampedBackupStartedMessage));
+}
+
 RUN_TESTS(CloudundancyLogFileAppenderTests)
-
-

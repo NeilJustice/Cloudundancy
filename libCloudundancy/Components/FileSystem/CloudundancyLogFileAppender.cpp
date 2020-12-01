@@ -36,3 +36,12 @@ void CloudundancyLogFileAppender::AppendBackupStartedToCloudundancyLogFileInDest
    const fs::path cloudundancyLogFilePath = destinationFolderPath / "Cloudundancy.log";
    _fileSystem->AppendText(cloudundancyLogFilePath, timestampedBackupStartedMessage);
 }
+
+void CloudundancyLogFileAppender::AppendTextToCloudundancyLogFileInDestinationFolder(
+   const fs::path& destinationFolderPath, string_view text) const
+{
+   const string dateTimeNow = _watch->DateTimeNow();
+   const string timestampedBackupStartedMessage = String::Concat(dateTimeNow, '|', text, '\n');
+   const fs::path cloudundancyLogFilePath = destinationFolderPath / "Cloudundancy.log";
+   _fileSystem->AppendText(cloudundancyLogFilePath, timestampedBackupStartedMessage);
+}

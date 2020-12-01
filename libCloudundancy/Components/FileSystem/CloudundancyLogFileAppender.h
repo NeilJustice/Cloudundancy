@@ -20,6 +20,8 @@ public:
    virtual ~CloudundancyLogFileAppender();
    virtual void AppendBackupStartedToCloudundancyLogFilesInAllDestinationFolders(
       const vector<fs::path>& destinationFolderPaths) const;
+   virtual void AppendTextToCloudundancyLogFileInDestinationFolder(
+      const fs::path& destinationFolderPath, string_view text) const;
 private:
    void AppendBackupStartedToCloudundancyLogFileInDestinationFolder(const fs::path& destinationFolderPath) const;
 };

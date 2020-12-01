@@ -65,8 +65,9 @@ void CloudundancyFileCopier::CopyFilesAndFoldersToSingleFolder(
       "[Cloudundancy]   FolderBackupResult: All files copied to " + destinationFolderPath.string() + "\n" +
       "[Cloudundancy] FolderBackupDuration: " + elapsedSeconds + " seconds\n";
    _console->WriteLine(folderBackedUpMessage);
-   // _cloudundancyLogFileAppender->AppendTextToCloudundancyDotLogInFolder(
-   // destinationFolderPath, "Successful backup in " + elapsedSeconds + " seconds\n");
+   const string cloudundancyLogFileText = String::Concat("Cloudundancy backup successful in ", elapsedSeconds, " seconds\n");
+   _cloudundancyLogFileAppender->AppendTextToCloudundancyLogFileInDestinationFolder(
+      destinationFolderPath, cloudundancyLogFileText);
 }
 
 void CloudundancyFileCopier::CopyFileOrFolderToFolder(
