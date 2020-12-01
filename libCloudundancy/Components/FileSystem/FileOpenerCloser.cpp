@@ -3,7 +3,7 @@
 #include "libCloudundancy/Components/FileSystem/FileOpenerCloser.h"
 
 FileOpenerCloser::FileOpenerCloser()
-   // Function Callers
+// Function Pointers
    : _call_fclose(::fclose)
 #ifdef __linux__
    , _call_fopen(::fopen)
@@ -19,7 +19,7 @@ FileOpenerCloser::~FileOpenerCloser()
 {
 }
 
-FILE* FileOpenerCloser::CreateBinaryFileInWriteMode(const fs::path& filePath) const
+FILE* FileOpenerCloser::CreateWriteModeBinaryFile(const fs::path& filePath) const
 {
 #ifdef __linux__
    FILE* const writeModeBinaryFileHandle = OpenFileOnLinux(filePath, "wb");
@@ -29,7 +29,7 @@ FILE* FileOpenerCloser::CreateBinaryFileInWriteMode(const fs::path& filePath) co
    return writeModeBinaryFileHandle;
 }
 
-FILE* FileOpenerCloser::CreateTextFileInWriteMode(const fs::path& filePath) const
+FILE* FileOpenerCloser::CreateWriteModeTextFile(const fs::path& filePath) const
 {
 #ifdef __linux__
    FILE* const writeModeTextFileHandle = OpenFileOnLinux(filePath, "w");
@@ -39,7 +39,7 @@ FILE* FileOpenerCloser::CreateTextFileInWriteMode(const fs::path& filePath) cons
    return writeModeTextFileHandle;
 }
 
-FILE* FileOpenerCloser::OpenBinaryFileInReadMode(const fs::path& filePath) const
+FILE* FileOpenerCloser::OpenReadModeBinaryFile(const fs::path& filePath) const
 {
 #ifdef __linux__
    FILE* const readModeBinaryFileHandle = OpenFileOnLinux(filePath, "rb");
@@ -49,7 +49,7 @@ FILE* FileOpenerCloser::OpenBinaryFileInReadMode(const fs::path& filePath) const
    return readModeBinaryFileHandle;
 }
 
-FILE* FileOpenerCloser::OpenTextFileInReadMode(const fs::path& filePath) const
+FILE* FileOpenerCloser::OpenReadModeTextFile(const fs::path& filePath) const
 {
 #ifdef __linux__
    FILE* const readModeTextFileHandle = OpenFileOnLinux(filePath, "r");
@@ -59,7 +59,7 @@ FILE* FileOpenerCloser::OpenTextFileInReadMode(const fs::path& filePath) const
    return readModeTextFileHandle;
 }
 
-FILE* FileOpenerCloser::OpenTextFileInAppendMode(const fs::path& filePath) const
+FILE* FileOpenerCloser::OpenAppendModeTextFile(const fs::path& filePath) const
 {
 #ifdef __linux__
    FILE* const appendModeTextFileHandle = OpenFileOnLinux(filePath, "a");

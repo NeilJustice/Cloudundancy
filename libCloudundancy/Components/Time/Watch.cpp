@@ -12,15 +12,14 @@ Watch::~Watch()
 {
 }
 
-// Returns the current local time in format "YYYY-MM-DD 00:00:00 TimeZone"
+// Returns the current local time in format "YYYY-MM-DD 00:00:00"
 std::string Watch::DateTimeNow() const
 {
    const tm tmNow = TMNow();
-   const std::string timeZone = GetTimeZone(tmNow);
-   char localTimeWithTimezoneChars[128];
-   strftime(localTimeWithTimezoneChars, sizeof(localTimeWithTimezoneChars), "%F %r ", &tmNow);
-   const std::string localTimeWithTimezone = std::string(localTimeWithTimezoneChars) + timeZone;
-   return localTimeWithTimezone;
+   char dateTimeNowChars[32];
+   strftime(dateTimeNowChars, sizeof(dateTimeNowChars), "%F %r", &tmNow);
+   const std::string dateTimeNowString(dateTimeNowChars);
+   return dateTimeNowString;
 }
 
 // Returns the current local time in format "YYYY-MM-DD 00:00:00 TimeZone"
@@ -41,14 +40,6 @@ string Watch::DateTimeNowForFileNames() const
 }
 
 // Private Functions
-
-std::string Watch::GetTimeZone(const tm& tmNow) const
-{
-   char timeZoneChars[64];
-   strftime(timeZoneChars, sizeof(timeZoneChars), "%Z", &tmNow);
-   const std::string timeZone(timeZoneChars);
-   return timeZone;
-}
 
 tm Watch::TMNow() const
 {

@@ -2,6 +2,7 @@
 struct CloudundancyIni;
 template<typename ClassType, typename ElementType, typename ExtraArgType>
 class OneExtraArgMemberFunctionForEacher;
+class Watch;
 
 class CloudundancyIniValidator
 {
@@ -14,6 +15,7 @@ private:
       _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolder;
    // Constant Components
    unique_ptr<const FileSystem> _fileSystem;
+   unique_ptr<const Watch> _watch;
 public:
    CloudundancyIniValidator();
    virtual ~CloudundancyIniValidator();

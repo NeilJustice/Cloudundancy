@@ -7,14 +7,12 @@ TESTS(WatchTests)
 AFACT(DefaultConstructor_NewsCRTWatch)
 FACTS(DateTimeNow_ReturnsLocalDateTimeNow)
 FACTS(DateTimeNowForFileNames_ReturnsYYYYDashMMDashDDUnderscoreHHDashMM)
-AFACT(GetTimeZone_ReturnTimeZoneOfExecutingProcess)
 EVIDENCE
 
 class WatchSelfMocked : public Metal::Mock<Watch>
 {
 public:
    METALMOCK_NONVOID0_CONST(tm, TMNow)
-   METALMOCK_NONVOID1_CONST(string, GetTimeZone, const tm&)
 };
 unique_ptr<WatchSelfMocked> _watchSelfMocked;
 CRTWatchMock* _crtWatchMock = nullptr;
@@ -32,23 +30,20 @@ TEST(DefaultConstructor_NewsCRTWatch)
 }
 
 TEST2X2(DateTimeNow_ReturnsLocalDateTimeNow,
-   const tm& tmNow, const string& expectedDateTimeNowPrefix,
-   Tm(0, 1, 0, 0, 0, 0), "1900-01-01 12:00:00 AM ",
-   Tm(1, 2, 1, 1, 1, 1), "1901-02-02 01:01:01 AM ",
-   Tm(2, 3, 2, 11, 11, 11), "1902-03-03 11:11:11 AM ",
-   Tm(11, 31, 99, 23, 59, 59), "1999-12-31 11:59:59 PM ",
-   Tm(0, 1, 100, 0, 0, 0), "2000-01-01 12:00:00 AM ",
-   Tm(1, 3, 101, 4, 5, 6), "2001-02-03 04:05:06 AM ")
+   const tm& tmNow, const string& expectedReturnValue,
+   Tm(0, 1, 0, 0, 0, 0), "1900-01-01 12:00:00 AM",
+   Tm(1, 2, 1, 1, 1, 1), "1901-02-02 01:01:01 AM",
+   Tm(2, 3, 2, 11, 11, 11), "1902-03-03 11:11:11 AM",
+   Tm(11, 31, 99, 23, 59, 59), "1999-12-31 11:59:59 PM",
+   Tm(0, 1, 100, 0, 0, 0), "2000-01-01 12:00:00 AM",
+   Tm(1, 3, 101, 4, 5, 6), "2001-02-03 04:05:06 AM")
 {
    _watchSelfMocked->TMNowMock.Return(tmNow);
-   const string timeZone = _watchSelfMocked->GetTimeZoneMock.ReturnRandom();
    //
    const string dateTimeNow = _watchSelfMocked->DateTimeNow();
    //
    METALMOCK(_watchSelfMocked->TMNowMock.CalledOnce());
-   METALMOCK(_watchSelfMocked->GetTimeZoneMock.CalledOnceWith(tmNow));
-   const string expectedDateTimeNow = expectedDateTimeNowPrefix + timeZone;
-   ARE_EQUAL(expectedDateTimeNow, dateTimeNow);
+   ARE_EQUAL(expectedReturnValue, dateTimeNow);
 }
 
 TEST6X6(DateTimeNowForFileNames_ReturnsYYYYDashMMDashDDUnderscoreHHDashMM,
@@ -73,19 +68,6 @@ TEST6X6(DateTimeNowForFileNames_ReturnsYYYYDashMMDashDDUnderscoreHHDashMM,
    //
    METALMOCK(_crtWatchMock->TmNowMock.CalledOnce());
    ARE_EQUAL(expectedReturnValue, dateTimeNowMinutes);
-}
-
-TEST(GetTimeZone_ReturnTimeZoneOfExecutingProcess)
-{
-   Watch watch;
-   const tm tmNow = watch.TMNow();
-   //
-   const string timeZone = watch.GetTimeZone(tmNow);
-   //
-   char expectedTimeZoneChars[64];
-   strftime(expectedTimeZoneChars, sizeof(expectedTimeZoneChars), "%Z", &tmNow);
-   const string expectedTimeZone(expectedTimeZoneChars);
-   ARE_EQUAL(expectedTimeZone, timeZone);
 }
 
 static constexpr tm Tm(int tmMonth, int tmMonthDay, int tmYear, int tmHour, int tmMin, int tmSec)

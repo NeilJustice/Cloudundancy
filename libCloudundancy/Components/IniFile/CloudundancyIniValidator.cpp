@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "libCloudundancy/Components/IniFile/CloudundancyIniValidator.h"
 #include "libCloudundancy/Components/Iteration/ForEach/OneExtraArgMemberFunctionForEacher.h"
+#include "libCloudundancy/Components/Time/Watch.h"
 
 CloudundancyIniValidator::CloudundancyIniValidator()
    // Function Callers
@@ -8,6 +9,7 @@ CloudundancyIniValidator::CloudundancyIniValidator()
       make_unique<_memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderType>())
    // Constant Components
    , _fileSystem(make_unique<FileSystem>())
+   , _watch(make_unique<Watch>())
 {
 }
 
@@ -40,6 +42,8 @@ void CloudundancyIniValidator::AppendBackupStartedToCloudundancyLogFilesInAllDes
 void CloudundancyIniValidator::AppendBackupStartedToCloudundancyLogFileInDestinationFolder(
    const fs::path& destinationFolderPath, const fs::path& /*cloudundancyIniPath*/) const
 {
+   const string dateTimeNow = _watch->DateTimeNow();
+   const string timestampedBackupStartedMessage = dateTimeNow + "Cloudundancy backup started\n";
    const fs::path cloudundancyLogFilePath = destinationFolderPath / "Cloudundancy.log";
-   _fileSystem->AppendTimestampedText(cloudundancyLogFilePath, "Cloudundancy backup started\n");
+   _fileSystem->AppendText(cloudundancyLogFilePath, timestampedBackupStartedMessage);
 }

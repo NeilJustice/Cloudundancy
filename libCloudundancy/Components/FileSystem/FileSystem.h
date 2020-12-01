@@ -6,6 +6,7 @@ class FileOpenerCloser;
 template<typename ReturnType, typename ClassType, typename ArgType>
 class NonVoidOneArgMemberFunctionCaller;
 class Stopwatch;
+class Watch;
 
 int* GetLinuxErrno();
 
@@ -72,7 +73,7 @@ public:
    virtual bool IsFileSizeGreaterThanOrEqualTo2GB(const fs::path& filePath) const;
 
    // File Writes
-   virtual void AppendTimestampedText(const fs::path& filePath, string_view text) const;
+   virtual void AppendText(const fs::path& filePath, string_view text) const;
    virtual void WriteTextFile(const fs::path& filePath, string_view text) const;
 
    // Misc

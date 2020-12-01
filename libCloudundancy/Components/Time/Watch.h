@@ -12,7 +12,6 @@ public:
    virtual string DateTimeNow() const;
    virtual string DateTimeNowForFileNames() const;
 private:
-   virtual string GetTimeZone(const tm& tmNow) const;
    virtual tm TMNow() const;
    static void Write8601Date(const tm& tmValue, char* outChars);
 };

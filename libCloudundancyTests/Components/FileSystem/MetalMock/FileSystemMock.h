@@ -19,7 +19,7 @@ public:
    METALMOCK_NONVOID2_CONST(FileCopyResult, TryCopyFileWithStdFilesystemCopyFile, const fs::path&, const fs::path&)
 
    // File Writes
-   METALMOCK_VOID2_CONST(AppendTimestampedText, const fs::path&, string_view)
+   METALMOCK_VOID2_CONST(AppendText, const fs::path&, string_view)
    METALMOCK_VOID2_CONST(WriteTextFile, const fs::path&, string_view)
 
    // Misc

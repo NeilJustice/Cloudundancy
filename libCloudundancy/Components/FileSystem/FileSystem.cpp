@@ -2,9 +2,10 @@
 #include "libCloudundancy/Components/Assertion/Asserter.h"
 #include "libCloudundancy/Components/FileSystem/FileOpenerCloser.h"
 #include "libCloudundancy/Components/FileSystem/FileSystem.h"
+#include "libCloudundancy/Components/FunctionCallers/MemberFunctions/NonVoidOneArgMemberFunctionCaller.h"
 #include "libCloudundancy/Components/Memory/CharVectorAllocator.h"
 #include "libCloudundancy/Components/Time/Stopwatch.h"
-#include "libCloudundancy/Components/FunctionCallers/MemberFunctions/NonVoidOneArgMemberFunctionCaller.h"
+#include "libCloudundancy/Components/Time/Watch.h"
 #include "libCloudundancy/StaticUtilities/Errno.h"
 
 #ifdef __linux__
@@ -75,7 +76,7 @@ void FileSystem::ThrowIfFilePathIsNotEmptyAndDoesNotExist(const fs::path& filePa
 
 vector<char> FileSystem::ReadFileBytes(const fs::path& filePath) const
 {
-   FILE* const readModeBinaryFilePointer = _fileOpenerCloser->OpenBinaryFileInReadMode(filePath);
+   FILE* const readModeBinaryFilePointer = _fileOpenerCloser->OpenReadModeBinaryFile(filePath);
    const size_t fileSizeInBytes = _caller_FileSize->CallConstMemberFunction(
       &FileSystem::FileSize, this, readModeBinaryFilePointer);
    if (fileSizeInBytes == 0)
@@ -94,7 +95,7 @@ vector<char> FileSystem::ReadFileBytes(const fs::path& filePath) const
 
 string FileSystem::ReadFileText(const fs::path& filePath) const
 {
-   FILE* const readModeTextFilePointer = _fileOpenerCloser->OpenTextFileInReadMode(filePath);
+   FILE* const readModeTextFilePointer = _fileOpenerCloser->OpenReadModeTextFile(filePath);
    const size_t fileSizeInBytes = _caller_FileSize->CallConstMemberFunction(
       &FileSystem::FileSize, this, readModeTextFilePointer);
    if (fileSizeInBytes == 0)
@@ -135,7 +136,7 @@ FileCopyResult FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs:
       &FileSystem::ReadFileBytes, this, sourceFilePath);
    const fs::path parentPathOfDestinationFilePath = destinationFilePath.parent_path();
    _call_fs_create_directories(parentPathOfDestinationFilePath);
-   FILE* const writeModeDestinationBinaryFilePointer = _fileOpenerCloser->CreateBinaryFileInWriteMode(destinationFilePath);
+   FILE* const writeModeDestinationBinaryFilePointer = _fileOpenerCloser->CreateWriteModeBinaryFile(destinationFilePath);
    const size_t sourceFileBytesSize = sourceFileBytes.size();
    size_t numberOfBytesWritten = 0;
    if (sourceFileBytesSize > 0)
@@ -182,21 +183,23 @@ bool FileSystem::IsFileSizeGreaterThanOrEqualTo2GB(const fs::path& filePath) con
 
 // File Writes
 
-void FileSystem::AppendTimestampedText(const fs::path& filePath, string_view text) const
+void FileSystem::AppendText(const fs::path& filePath, string_view text) const
 {
    const fs::path parentFolderPath = filePath.parent_path();
    _call_fs_create_directories(parentFolderPath);
-   FILE* const appendModeTextFileHandle = _fileOpenerCloser->OpenTextFileInAppendMode(filePath);
+   FILE* const appendModeTextFileHandle = _fileOpenerCloser->OpenAppendModeTextFile(filePath);
    const size_t textSize = text.size();
    const size_t numberOfBytesWritten = _call_fwrite(text.data(), 1, textSize, appendModeTextFileHandle);
-   //_fileOpenerCloser->CloseFile(appendModeTextFileHandle);
+   _asserter->ThrowIfSizeTsNotEqual(textSize, numberOfBytesWritten,
+      "fwrite(text.data(), 1, textSize, appendModeTextFileHandle) unexpectedly did not return textSize");
+   _fileOpenerCloser->CloseFile(appendModeTextFileHandle);
 }
 
 void FileSystem::WriteTextFile(const fs::path& filePath, string_view fileText) const
 {
    const fs::path parentFolderPath = filePath.parent_path();
    _call_fs_create_directories(parentFolderPath);
-   FILE* const writeModeTextFilePointer = _fileOpenerCloser->CreateTextFileInWriteMode(filePath);
+   FILE* const writeModeTextFilePointer = _fileOpenerCloser->CreateWriteModeTextFile(filePath);
    const size_t fileTextSize = fileText.size();
    const size_t numberOfBytesWritten = _call_fwrite(fileText.data(), 1, fileTextSize, writeModeTextFilePointer);
    _asserter->ThrowIfSizeTsNotEqual(fileTextSize, numberOfBytesWritten,

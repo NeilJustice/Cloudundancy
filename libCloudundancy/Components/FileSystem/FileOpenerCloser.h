@@ -5,7 +5,7 @@ class FileOpenerCloser
 {
    friend class FileOpenerCloserTests;
 private:
-   // Function Callers
+   // Function Pointers
    function<int(FILE*)> _call_fclose;
 #ifdef __linux__
    function<FILE* (const char*, const char*)> _call_fopen;
@@ -17,11 +17,11 @@ private:
 public:
    FileOpenerCloser();
    virtual ~FileOpenerCloser();
-   virtual FILE* CreateBinaryFileInWriteMode(const fs::path& filePath) const;
-   virtual FILE* CreateTextFileInWriteMode(const fs::path& filePath) const;
-   virtual FILE* OpenBinaryFileInReadMode(const fs::path& filePath) const;
-   virtual FILE* OpenTextFileInReadMode(const fs::path& filePath) const;
-   virtual FILE* OpenTextFileInAppendMode(const fs::path& filePath) const;
+   virtual FILE* CreateWriteModeBinaryFile(const fs::path& filePath) const;
+   virtual FILE* CreateWriteModeTextFile(const fs::path& filePath) const;
+   virtual FILE* OpenReadModeBinaryFile(const fs::path& filePath) const;
+   virtual FILE* OpenReadModeTextFile(const fs::path& filePath) const;
+   virtual FILE* OpenAppendModeTextFile(const fs::path& filePath) const;
    virtual void CloseFile(FILE* filePointer) const;
 private:
 #ifdef __linux__
