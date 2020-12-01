@@ -1,8 +1,5 @@
 #pragma once
 
-template<typename CollectionType, typename ClassType, typename FunctionType>
-class MemberFunctionForEacher;
-
 template<typename ReturnType, typename ClassType, typename ArgType>
 class NonVoidOneArgMemberFunctionCaller;
 

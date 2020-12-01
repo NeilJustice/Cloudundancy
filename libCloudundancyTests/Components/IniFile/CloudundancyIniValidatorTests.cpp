@@ -11,7 +11,7 @@ EVIDENCE
 CloudundancyIniValidator _cloudundancyIniValidator;
 // Function Callers
 using _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMockType =
-   OneExtraArgMemberFunctionForEacherMock<CloudundancyIniValidator, fs::path, fs::path>;
+   MemberFunctionForEacherMock<CloudundancyIniValidator, fs::path>;
 _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMockType*
    _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMock = nullptr;
 // Constant Components
@@ -56,15 +56,13 @@ TEST(AppendBackupStartedToCloudundancyLogFilesInAllDestinationFolders_CallsThrow
    _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMock->
       CallConstMemberFunctionForEachElementMock.Expect();
    const CloudundancyIni cloudundancyIni = ZenUnit::Random<CloudundancyIni>();
-   const fs::path cloudundancyIniPath = ZenUnit::Random<fs::path>();
    //
-   _cloudundancyIniValidator.AppendBackupStartedToCloudundancyLogFilesInAllDestinationFolders(cloudundancyIni, cloudundancyIniPath);
+   _cloudundancyIniValidator.AppendBackupStartedToCloudundancyLogFilesInAllDestinationFolders(cloudundancyIni);
    //
    METALMOCK(_memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMock->
       CallConstMemberFunctionForEachElementMock.CalledOnceWith(
          cloudundancyIni.destinationFolderPaths,
-         &CloudundancyIniValidator::AppendBackupStartedToCloudundancyLogFileInDestinationFolder,
-         &_cloudundancyIniValidator, cloudundancyIniPath));
+         &CloudundancyIniValidator::AppendBackupStartedToCloudundancyLogFileInDestinationFolder, &_cloudundancyIniValidator));
 }
 
 TEST(AppendBackupStartedToCloudundancyLogFileInDestinationFolder_AppendsTimestampedCloudundancyBackupStartedMessageToCloudundancyDotLogInDestinationFolder)
@@ -72,9 +70,8 @@ TEST(AppendBackupStartedToCloudundancyLogFileInDestinationFolder_AppendsTimestam
    const string dateTimeNow = _watchMock->DateTimeNowMock.ReturnRandom();
    _fileSystemMock->AppendTextMock.Expect();
    const fs::path destinationFolderPath = ZenUnit::Random<fs::path>();
-   const fs::path cloudundancyIniPath = ZenUnit::Random<fs::path>();
    //
-   _cloudundancyIniValidator.AppendBackupStartedToCloudundancyLogFileInDestinationFolder(destinationFolderPath, cloudundancyIniPath);
+   _cloudundancyIniValidator.AppendBackupStartedToCloudundancyLogFileInDestinationFolder(destinationFolderPath);
    //
    METALMOCK(_watchMock->DateTimeNowMock.CalledOnce());
    const fs::path expectedCloudundancyLogFilePath = destinationFolderPath / "Cloudundancy.log";

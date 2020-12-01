@@ -44,6 +44,7 @@ using namespace std;
 // libCloudundancy Components Mocks
 #include "libCloudundancyTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/FileSystemMock.h"
+#include "libCloudundancyTests/Components/Iteration/ForEach/MetalMock/MemberFunctionForEacherMock.h"
 #include "libCloudundancyTests/Components/Iteration/ForEach/MetalMock/OneExtraArgMemberFunctionForEacherMock.h"
 #include "libCloudundancyTests/Components/Random/MetalMock/UtilsRandomGeneratorMock.h"
 

@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/Components/IniFile/CloudundancyIniValidator.h"
-#include "libCloudundancy/Components/Iteration/ForEach/OneExtraArgMemberFunctionForEacher.h"
+#include "libCloudundancy/Components/Iteration/ForEach/MemberFunctionForEacher.h"
 #include "libCloudundancy/Components/Time/Watch.h"
 
 CloudundancyIniValidator::CloudundancyIniValidator()
@@ -29,18 +29,17 @@ void CloudundancyIniValidator::ThrowIfZeroDestinationFolderPaths(
 }
 
 void CloudundancyIniValidator::AppendBackupStartedToCloudundancyLogFilesInAllDestinationFolders(
-   const CloudundancyIni& cloudundancyIni, const fs::path& cloudundancyIniPath) const
+   const CloudundancyIni& cloudundancyIni) const
 {
    _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolder->CallConstMemberFunctionForEachElement(
       cloudundancyIni.destinationFolderPaths,
-      &CloudundancyIniValidator::AppendBackupStartedToCloudundancyLogFileInDestinationFolder,
-      this, cloudundancyIniPath);
+      &CloudundancyIniValidator::AppendBackupStartedToCloudundancyLogFileInDestinationFolder, this);
 }
 
 // Private Functions
 
 void CloudundancyIniValidator::AppendBackupStartedToCloudundancyLogFileInDestinationFolder(
-   const fs::path& destinationFolderPath, const fs::path& /*cloudundancyIniPath*/) const
+   const fs::path& destinationFolderPath) const
 {
    const string dateTimeNow = _watch->DateTimeNow();
    const string timestampedBackupStartedMessage = dateTimeNow + " Cloudundancy backup started\n";

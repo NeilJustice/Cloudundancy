@@ -120,7 +120,7 @@ TEST(ReadIniFile_ParsesCloudundancyIniFile_ValidatesCloudundancyIni_ReturnsExpec
    METALMOCK(_cloudundancyIniValidatorMock->ThrowIfZeroDestinationFolderPathsMock.
       CalledOnceWith(cloudundancyIni, cloudundancyIniPath));
    METALMOCK(_cloudundancyIniValidatorMock->AppendBackupStartedToCloudundancyLogFilesInAllDestinationFoldersMock.
-      CalledOnceWith(cloudundancyIni, cloudundancyIniPath));
+      CalledOnceWith(cloudundancyIni));
    ARE_EQUAL(expectedCloudundancyIni, cloudundancyIni);
 }
 
