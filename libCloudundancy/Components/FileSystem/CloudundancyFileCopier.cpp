@@ -182,13 +182,17 @@ void CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed(
    }
    else
    {
-      const string copyFailedConsoleMessage = String::Concat(
-         "Copy failed [", durationInMilliseconds, "ms]: ", fileCopyResult.copyFailureReason, '\n');
-      _console->WriteLineColor(copyFailedConsoleMessage, Color::Red);
       const string copyFailedLogFileMessage = String::Concat("File copy failed: ",
          fileCopyResult.sourceFilePath.string(), " -> ", fileCopyResult.destinationFilePath.string(),
          ". Reason: ", fileCopyResult.copyFailureReason);
       _cloudundancyLogFileAppender->AppendTextToCloudundancyLogFileInFolder(destinationFolderPath, copyFailedLogFileMessage);
+
+      const string copyFailedConsoleMessage = String::Concat(
+         "Copy failed [", durationInMilliseconds, "ms]: ", fileCopyResult.copyFailureReason, '\n',
+         '\n',
+         "[Cloudundancy] ExitCode: 1");
+      _console->WriteLineColor(copyFailedConsoleMessage, Color::Red);
+
       _call_exit(1);
    }
 }
