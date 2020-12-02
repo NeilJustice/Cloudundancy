@@ -142,7 +142,7 @@ TEST1X1(ParseFileCopyInstructionLine_LineContainsOneSpaceArrowSpace_ReturnsExpec
    "  ->  ",
    " \t -> \t ")
 {
-   _callerMock_ThrowIfSourceFileOrFolderDoesNotExist->ConstCallMock.Expect();
+   _callerMock_ThrowIfSourceFileOrFolderDoesNotExist->CallConstMemberFunctionMock.Expect();
    FilePathLineNumberLineText filePathLineNumberLineText;
    filePathLineNumberLineText.filePath = ZenUnit::Random<fs::path>();
    filePathLineNumberLineText.lineNumber = ZenUnit::Random<size_t>();
@@ -156,7 +156,7 @@ TEST1X1(ParseFileCopyInstructionLine_LineContainsOneSpaceArrowSpace_ReturnsExpec
    CloudundancyIniCopyInstruction expectedFileCopyInstruction;
    expectedFileCopyInstruction.absoluteSourceFileOrFolderPath = sourceFilePath;
    expectedFileCopyInstruction.relativeDestinationFolderPath = relativeDestinationFolderPath;
-   METALMOCK(_callerMock_ThrowIfSourceFileOrFolderDoesNotExist->ConstCallMock.CalledOnceWith(
+   METALMOCK(_callerMock_ThrowIfSourceFileOrFolderDoesNotExist->CallConstMemberFunctionMock.CalledOnceWith(
       &CloudundancyIniFileReader::ThrowIfSourceFileOrFolderDoesNotExist,
       &_cloudundancyIniFile, cloudundancyIniCopyInstruction, filePathLineNumberLineText));
    ARE_EQUAL(expectedFileCopyInstruction, cloudundancyIniCopyInstruction);

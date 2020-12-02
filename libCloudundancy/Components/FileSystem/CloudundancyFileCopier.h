@@ -31,8 +31,8 @@ private:
       CloudundancyFileCopier, CloudundancyIniCopyInstruction, const fs::path&>;
    unique_ptr<const _memberForEacher_CopyFileOrFolderToFolderType> _memberForEacher_CopyFileOrFolderToFolder;
 
-   using _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedType = VoidOneArgMemberFunctionCaller<
-      CloudundancyFileCopier, const FileCopyResult&>;
+   using _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedType = VoidTwoArgMemberFunctionCaller<
+      CloudundancyFileCopier, const FileCopyResult&, const fs::path&>;
    unique_ptr<const _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedType> _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailed;
 
    // Constant Components
@@ -64,5 +64,6 @@ private:
    void TryCopyFileToFolder(
       const CloudundancyIniCopyInstruction& cloudundancyIniCopyInstruction,
       const fs::path& destinationFolderPath) const;
-   void WriteCopiedMessageOrExitWithCode1IfCopyFailed(const FileCopyResult& fileCopyResult) const;
+   void WriteCopiedMessageOrExitWithCode1IfCopyFailed(
+      const FileCopyResult& fileCopyResult, const fs::path& destinationFolderPath) const;
 };

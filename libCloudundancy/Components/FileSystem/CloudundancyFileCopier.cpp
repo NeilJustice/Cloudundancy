@@ -74,13 +74,13 @@ void CloudundancyFileCopier::CopyFileOrFolderToFolder(
    const bool sourcePathIsAFile = lastPathChar != '/' && lastPathChar != '\\';
    if (sourcePathIsAFile)
    {
-      _memberCaller_CopyFileFunctions->ConstCall(
+      _memberCaller_CopyFileFunctions->CallConstMemberFunction(
          &CloudundancyFileCopier::TryCopyFileToFolder,
          this, cloudundancyIniCopyInstruction, destinationFolderPath);
    }
    else
    {
-      _memberCaller_CopyFileFunctions->ConstCall(
+      _memberCaller_CopyFileFunctions->CallConstMemberFunction(
          &CloudundancyFileCopier::CopyNonIgnoredFilesInAndBelowFolderToFolder,
          this, cloudundancyIniCopyInstruction, destinationFolderPath);
    }
@@ -107,7 +107,8 @@ void CloudundancyFileCopier::CopyNestedFileToFolder(
          cloudundancyIniCopyInstruction.relativeDestinationFolderPath /
          sourceFilePathRelativeToSourceFolderPath;
    }
-   _memberCaller_TryCopyFile->ConstCall(&CloudundancyFileCopier::TryCopyFile, this, sourceFilePath, destinationFilePath);
+   _memberCaller_TryCopyFile->CallConstMemberFunction(
+      &CloudundancyFileCopier::TryCopyFile, this, sourceFilePath, destinationFilePath);
 }
 
 void CloudundancyFileCopier::CopyNonIgnoredFilesInAndBelowFolderToFolder(
@@ -145,7 +146,7 @@ void CloudundancyFileCopier::TryCopyFile(const fs::path& sourceFilePath, const f
       fileCopyResult = _fileSystem->TryCopyFile(sourceFilePath, destinationFilePath);
    }
    _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailed->CallConstMemberFunction(
-      &CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed, this, fileCopyResult);
+      &CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed, this, fileCopyResult, fs::path());
 }
 
 void CloudundancyFileCopier::TryCopyFileToFolder(
@@ -163,10 +164,12 @@ void CloudundancyFileCopier::TryCopyFileToFolder(
    {
       destinationFilePath = destinationFolderPath / cloudundancyIniCopyInstruction.relativeDestinationFolderPath / sourceFileName;
    }
-   _memberCaller_TryCopyFile->ConstCall(&CloudundancyFileCopier::TryCopyFile, this, sourceFilePath, destinationFilePath);
+   _memberCaller_TryCopyFile->CallConstMemberFunction(
+      &CloudundancyFileCopier::TryCopyFile, this, sourceFilePath, destinationFilePath);
 }
 
-void CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed(const FileCopyResult& fileCopyResult) const
+void CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed(
+   const FileCopyResult& fileCopyResult, const fs::path& /*destinationFolderPath*/) const
 {
    const string durationInMilliseconds = to_string(fileCopyResult.durationInMilliseconds);
    if (fileCopyResult.copySucceeded)
