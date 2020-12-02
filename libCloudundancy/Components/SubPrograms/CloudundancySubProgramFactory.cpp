@@ -17,11 +17,11 @@ shared_ptr<CloudundancySubProgram> CloudundancySubProgramFactory::NewCloudundanc
    {
       return make_shared<BackupFilesAndFoldersTo7zFileSubProgram>();
    }
-   case ProgramMode::ExampleLinuxIniFile:
+   case ProgramMode::PrintExampleLinuxIniFile:
    {
       return make_shared<ExampleLinuxIniFileSubProgram>();
    }
-   case ProgramMode::ExampleWindowsIniFile:
+   case ProgramMode::PrintExampleWindowsIniFile:
    {
       return make_shared<ExampleWindowsIniFileSubProgram>();
    }

@@ -33,8 +33,8 @@ using namespace std;
 #include "libCloudundancy/Components/CloudundancyProgram.h"
 
 // Example Cloudundancy command lines:
-// example-linux-ini-file
-// example-windows-ini-file
+// print-example-linux-ini-file
+// print-example-windows-ini-file
 // backup-files-and-folders --ini-file=C:\Code\dotfiles\WindowsCloudundancy.ini
 // backup-files-and-folders-to-7z-file --ini-file=C:\Code\dotfiles\WindowsCloudundancy_CodeFolderBackups.ini --7z-ini-file=C:\Code\dotfiles\WindowsCloudundancy_CodeFolderBackups_7zFileCopyStep.ini --backup-staging-folder=C:\CodeFolderBackupStaging
 

@@ -6,14 +6,28 @@
 #include "libCloudundancy/Components/SubPrograms/ExampleWindowsIniFileSubProgram.h"
 
 TESTS(CloudundancySubProgramFactoryTests)
+AFACT(NewCloudundancySubProgram_ProgramModeIsPrintExampleLinuxIniFile_ReturnsPrintExampleLinuxIniFileSubProgram)
+AFACT(NewCloudundancySubProgram_ProgramModeIsPrintExampleWindowsIniFile_ReturnsPrintExampleWindowsIniFileSubProgram)
 AFACT(NewCloudundancySubProgram_ProgramModeIsBackupFilesAndFolders_ReturnsMakeSharedBackupFilesAndFoldersSubProgram)
 AFACT(NewCloudundancySubProgram_ProgramModeIsBackupFilesAndFoldersTo7zFile_ReturnsMakeSharedSevenZipSubProgram)
-AFACT(NewCloudundancySubProgram_ProgramModeIsExampleLinuxIniFile_ReturnsExampleLinuxIniFileSubProgram)
-AFACT(NewCloudundancySubProgram_ProgramModeIsExampleWindowsIniFile_ReturnsExampleWindowsIniFileSubProgram)
 FACTS(NewCloudundancySubProgram_ProgramModeIsUnset_ThrowsInvalidArgumentException)
 EVIDENCE
 
 CloudundancySubProgramFactory _cloudundancyRunnerFactory;
+
+TEST(NewCloudundancySubProgram_ProgramModeIsPrintExampleLinuxIniFile_ReturnsPrintExampleLinuxIniFileSubProgram)
+{
+   const shared_ptr<CloudundancySubProgram> cloudundancySubProgram =
+      _cloudundancyRunnerFactory.NewCloudundancySubProgram(ProgramMode::PrintExampleLinuxIniFile);
+   POINTEE_IS_EXACT_TYPE(ExampleLinuxIniFileSubProgram, cloudundancySubProgram);
+}
+
+TEST(NewCloudundancySubProgram_ProgramModeIsPrintExampleWindowsIniFile_ReturnsPrintExampleWindowsIniFileSubProgram)
+{
+   const shared_ptr<CloudundancySubProgram> cloudundancySubProgram =
+      _cloudundancyRunnerFactory.NewCloudundancySubProgram(ProgramMode::PrintExampleWindowsIniFile);
+   POINTEE_IS_EXACT_TYPE(ExampleWindowsIniFileSubProgram, cloudundancySubProgram);
+}
 
 TEST(NewCloudundancySubProgram_ProgramModeIsBackupFilesAndFolders_ReturnsMakeSharedBackupFilesAndFoldersSubProgram)
 {
@@ -27,20 +41,6 @@ TEST(NewCloudundancySubProgram_ProgramModeIsBackupFilesAndFoldersTo7zFile_Return
    const shared_ptr<CloudundancySubProgram> cloudundancySubProgram =
       _cloudundancyRunnerFactory.NewCloudundancySubProgram(ProgramMode::BackupFilesAndFoldersTo7zFile);
    POINTEE_IS_EXACT_TYPE(BackupFilesAndFoldersTo7zFileSubProgram, cloudundancySubProgram);
-}
-
-TEST(NewCloudundancySubProgram_ProgramModeIsExampleLinuxIniFile_ReturnsExampleLinuxIniFileSubProgram)
-{
-   const shared_ptr<CloudundancySubProgram> cloudundancySubProgram =
-      _cloudundancyRunnerFactory.NewCloudundancySubProgram(ProgramMode::ExampleLinuxIniFile);
-   POINTEE_IS_EXACT_TYPE(ExampleLinuxIniFileSubProgram, cloudundancySubProgram);
-}
-
-TEST(NewCloudundancySubProgram_ProgramModeIsExampleWindowsIniFile_ReturnsExampleWindowsIniFileSubProgram)
-{
-   const shared_ptr<CloudundancySubProgram> cloudundancySubProgram =
-      _cloudundancyRunnerFactory.NewCloudundancySubProgram(ProgramMode::ExampleWindowsIniFile);
-   POINTEE_IS_EXACT_TYPE(ExampleWindowsIniFileSubProgram, cloudundancySubProgram);
 }
 
 TEST1X1(NewCloudundancySubProgram_ProgramModeIsUnset_ThrowsInvalidArgumentException,
