@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "libCloudundancy/UtilityComponents/Assertion/Asserter.h"
 #include "libCloudundancy/UtilityComponents/FileSystem/FileOpenerCloser.h"
 
 FileOpenerCloser::FileOpenerCloser()

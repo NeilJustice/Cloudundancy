@@ -27,7 +27,7 @@ using namespace std;
 #include "libCloudundancy/Enums/ProgramMode.h"
 #include "libCloudundancy/Enums/WindowsColor.h"
 
-// libCloudundancy Value Types
+// libCloudundancy ValueTypes
 #include "libCloudundancy/ValueTypes/CloudundancyIniCopyInstruction.h"
 #include "libCloudundancy/ValueTypes/AbsoluteFilePathToRelativeDestinationFolderPath.h"
 #include "libCloudundancy/ValueTypes/CloudundancyArgs.h"
@@ -37,11 +37,11 @@ using namespace std;
 #include "libCloudundancy/ValueTypes/FileSystemException.h"
 #include "libCloudundancy/ValueTypes/ProcessResult.h"
 
-// libCloudundancy Utility Functions
+// libCloudundancy StaticUtilities
 #include "libCloudundancy/StaticUtilities/ReleaseAssert.h"
 #include "libCloudundancy/StaticUtilities/StringUtil.h"
 
-// libCloudundancy Components Mocks
+// libCloudundancy UtilityComponents Mocks
 #include "libCloudundancyTests/UtilityComponents/Assertion/MetalMock/AsserterMock.h"
 #include "libCloudundancyTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
 #include "libCloudundancyTests/UtilityComponents/FileSystem/MetalMock/FileSystemMock.h"
@@ -49,7 +49,7 @@ using namespace std;
 #include "libCloudundancyTests/UtilityComponents/Iteration/ForEach/MetalMock/OneExtraArgMemberFunctionForEacherMock.h"
 #include "libCloudundancyTests/UtilityComponents/Random/MetalMock/UtilsRandomGeneratorMock.h"
 
-// ZenUnit Equalizers And Randoms
+// libCloudundancyTests ValueTypes ZenUnit Equalizers And Randoms
 #include "libCloudundancyTests/ValueTypes/ZenUnit/AbsoluteFilePathToRelativeDestinationFolderPathEqualizerAndRandom.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/CloudundancyIniCopyInstructionEqualizerAndRandom.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/CloudundancyArgsEqualizerAndRandom.h"
