@@ -56,6 +56,9 @@ void CloudundancyFileCopier::DeleteFolder(const fs::path& folderPath) const
 void CloudundancyFileCopier::CopyFilesAndFoldersToDestinationFolder(
    const fs::path& destinationFolderPath, const CloudundancyIni& cloudundancyIni) const
 {
+   _cloudundancyLogFileAppender->AppendTextToCloudundancyLogFileInFolder(
+      destinationFolderPath, "Cloudundancy backup started");
+
    _stopwatch->Start();
    _memberForEacher_CopyFileOrFolderToFolder->CallConstMemberFunctionForEachElement(
       cloudundancyIni.cloudundancyIniCopyInstructions,
@@ -65,9 +68,11 @@ void CloudundancyFileCopier::CopyFilesAndFoldersToDestinationFolder(
       "[Cloudundancy]   FolderBackupResult: All files copied to " + destinationFolderPath.string() + "\n" +
       "[Cloudundancy] FolderBackupDuration: " + elapsedSeconds + " seconds\n";
    _console->WriteLine(folderBackedUpMessage);
-   const string cloudundancyLogFileText = String::Concat("Cloudundancy backup successful in ", elapsedSeconds, " seconds");
+
+   const string cloudundancyBackupSuccessfulMessage =
+      String::Concat("Cloudundancy backup successful in ", elapsedSeconds, " seconds");
    _cloudundancyLogFileAppender->AppendTextToCloudundancyLogFileInFolder(
-      destinationFolderPath, cloudundancyLogFileText);
+      destinationFolderPath, cloudundancyBackupSuccessfulMessage);
 }
 
 void CloudundancyFileCopier::CopyFileOrFolderToFolder(

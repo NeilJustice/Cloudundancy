@@ -18,7 +18,7 @@ AFACT(DefaultConstructor_SetsFunctionsAndNewsComponents)
 AFACT(CopyFilesAndFoldersToMultipleDestinationFolders_CopiesFilesAndFoldersToFolders)
 AFACT(DeleteFolder_CallsFileSystemDeleteFolderOnFolderPath)
 // Private Functions
-AFACT(CopyFilesAndFoldersToDestinationFolder_CopiesNonSkippedSourceFilesToDestinationFolder)
+AFACT(CopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesNonSkippedSourceFilesToDestinationFolder_AppendBackupSuccessfulToLogFile)
 AFACT(CopyFileOrFolderToFolder_SourcePathHasAFileName_CallsCopyFileToFolder)
 FACTS(CopyFileOrFolderToFolder_SourcePathDoesNotHaveAFileNameMeaningItIsAFolder_CallsRecursivelyCopyNonIgnoredFilesToFolder)
 AFACT(CopyNonIgnoredFilesInAndBelowFolderToFolder_CopiesNonIgnoredFilesToFolderUntilRecursiveDirectoryIteratorReturnsNoMoreFiles)
@@ -146,8 +146,10 @@ TEST(DeleteFolder_CallsFileSystemDeleteFolderOnFolderPath)
 
 // Private Functions
 
-TEST(CopyFilesAndFoldersToDestinationFolder_CopiesNonSkippedSourceFilesToDestinationFolder)
+TEST(CopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesNonSkippedSourceFilesToDestinationFolder_AppendBackupSuccessfulToLogFile)
 {
+   _cloudundancyLogFileAppenderMock->AppendTextToCloudundancyLogFileInFolderMock.Expect();
+
    _stopwatchMock->StartMock.Expect();
 
    _memberForEacher_CopyFileOrFolderToFolderMock->CallConstMemberFunctionForEachElementMock.Expect();
@@ -156,13 +158,19 @@ TEST(CopyFilesAndFoldersToDestinationFolder_CopiesNonSkippedSourceFilesToDestina
 
    _consoleMock->WriteLineMock.Expect();
 
-   _cloudundancyLogFileAppenderMock->AppendTextToCloudundancyLogFileInFolderMock.Expect();
-
    const fs::path destinationFolderPath = ZenUnit::Random<fs::path>();
    const CloudundancyIni cloudundancyIni = ZenUnit::Random<CloudundancyIni>();
    //
    _cloudundancyFileCopier.CopyFilesAndFoldersToDestinationFolder(destinationFolderPath, cloudundancyIni);
    //
+   const string expectedBackupSuccessfulLogFileMessage = String::Concat(
+      "Cloudundancy backup successful in ", elapsedSeconds, " seconds");
+   METALMOCK(_cloudundancyLogFileAppenderMock->AppendTextToCloudundancyLogFileInFolderMock.CalledAsFollows(
+   {
+      { destinationFolderPath, "Cloudundancy backup started" },
+      { destinationFolderPath, expectedBackupSuccessfulLogFileMessage }
+   }));
+
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    METALMOCK(_memberForEacher_CopyFileOrFolderToFolderMock->CallConstMemberFunctionForEachElementMock.CalledOnceWith(
       cloudundancyIni.cloudundancyIniCopyInstructions,
@@ -173,9 +181,6 @@ TEST(CopyFilesAndFoldersToDestinationFolder_CopiesNonSkippedSourceFilesToDestina
       "[Cloudundancy]   FolderBackupResult: All files copied to " + destinationFolderPath.string() + "\n" +
       "[Cloudundancy] FolderBackupDuration: " + elapsedSeconds + " seconds\n";
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedFolderBackedUpMessage));
-   const string expectedCloudundancyLogFileText = String::Concat("Cloudundancy backup successful in ", elapsedSeconds, " seconds");
-   METALMOCK(_cloudundancyLogFileAppenderMock->AppendTextToCloudundancyLogFileInFolderMock.CalledOnceWith(
-      destinationFolderPath, expectedCloudundancyLogFileText));
 }
 
 TEST(CopyFileOrFolderToFolder_SourcePathHasAFileName_CallsCopyFileToFolder)
