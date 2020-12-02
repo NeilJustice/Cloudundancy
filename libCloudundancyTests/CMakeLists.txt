@@ -67,7 +67,6 @@ folder_source_group_subsubsubfolder(UtilityComponents Process Windows MetalMock)
 folder_source_group_subsubfolder(UtilityComponents Process MetalMock)
 folder_source_group(ValueTypes)
 folder_source_group_subfolder(ValueTypes ZenUnit)
-folder_source_group(ZenUnitTesting)
 
 file(GLOB_RECURSE Sources *.h *.cpp)
 source_group("" FILES ${Sources})
