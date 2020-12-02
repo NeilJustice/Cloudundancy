@@ -37,13 +37,13 @@ CloudundancyFileCopier::~CloudundancyFileCopier()
 {
 }
 
-void CloudundancyFileCopier::CopyFilesAndFoldersToMultipleFolders(const fs::path& cloudundancyIniFilePath) const
+void CloudundancyFileCopier::CopyFilesAndFoldersToMultipleDestinationFolders(const fs::path& cloudundancyIniFilePath) const
 {
    const CloudundancyIni cloudundancyIni = _cloudundancyIniFileReader->ReadIniFile(cloudundancyIniFilePath);
    _recursiveDirectoryIterator->SetFileSubpathsToNotCopy(cloudundancyIni.fileSubpathsToNotCopy);
    _memberForEacher_CopyEachFileOrFolderToFolder->CallConstMemberFunctionForEachElement(
       cloudundancyIni.destinationFolderPaths,
-      &CloudundancyFileCopier::CopyFilesAndFoldersToSingleFolder, this, cloudundancyIni);
+      &CloudundancyFileCopier::CopyFilesAndFoldersToDestinationFolder, this, cloudundancyIni);
 }
 
 void CloudundancyFileCopier::DeleteFolder(const fs::path& folderPath) const
@@ -53,7 +53,7 @@ void CloudundancyFileCopier::DeleteFolder(const fs::path& folderPath) const
 
 // Private Functions
 
-void CloudundancyFileCopier::CopyFilesAndFoldersToSingleFolder(
+void CloudundancyFileCopier::CopyFilesAndFoldersToDestinationFolder(
    const fs::path& destinationFolderPath, const CloudundancyIni& cloudundancyIni) const
 {
    _stopwatch->Start();

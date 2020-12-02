@@ -45,7 +45,7 @@ void BackupFilesAndFoldersTo7zFileSubProgram::Copy7zFileToDestinationFolders(con
    _console->WriteLine("[Cloudundancy] Copying .7z file to backup folders.");
    _stopwatch->Start();
 
-   _cloudundancyFileCopier->CopyFilesAndFoldersToMultipleFolders(args.sevenZipIniFilePath);
+   _cloudundancyFileCopier->CopyFilesAndFoldersToMultipleDestinationFolders(args.sevenZipIniFilePath);
 
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    _console->WriteLine("[Cloudundancy] Copied .7z file to backup folders in " + elapsedSeconds + " seconds\n");
@@ -56,7 +56,7 @@ void BackupFilesAndFoldersTo7zFileSubProgram::CopyFilesAndFoldersToBackupStaging
    _console->WriteLine("[Cloudundancy] Copying Code Folder To " + args.backupStagingFolderPath.string());
    _stopwatch->Start();
 
-   _cloudundancyFileCopier->CopyFilesAndFoldersToMultipleFolders(args.iniFilePath);
+   _cloudundancyFileCopier->CopyFilesAndFoldersToMultipleDestinationFolders(args.iniFilePath);
 
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    _console->WriteLine("[Cloudundancy] Copied Code Folder To " + args.backupStagingFolderPath.string() + " in " + elapsedSeconds + " seconds\n");
