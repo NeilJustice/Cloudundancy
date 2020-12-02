@@ -76,7 +76,6 @@ CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudunda
       }
    }
    _cloudundancyIniValidator->ThrowIfZeroDestinationFolderPaths(cloudundancyIni, cloudundancyIniPath);
-   _cloudundancyIniValidator->ThrowIfAnyDestinationFolderIsNotWritableByTheCurrentUser(cloudundancyIni, cloudundancyIniPath);
    return cloudundancyIni;
 }
 

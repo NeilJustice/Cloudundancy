@@ -87,7 +87,6 @@ TEST(ReadIniFile_ParsesCloudundancyIniFile_ValidatesCloudundancyIni_ReturnsExpec
    _callerMock_ParseFileCopyInstructionLine->CallConstMemberFunctionMock.ReturnValues(fileCopyInstruction1, fileCopyInstruction2);
 
    _cloudundancyIniValidatorMock->ThrowIfZeroDestinationFolderPathsMock.Expect();
-   _cloudundancyIniValidatorMock->ThrowIfAnyDestinationFolderIsNotWritableByTheCurrentUserMock.Expect();
 
    const fs::path cloudundancyIniPath = ZenUnit::Random<string>();
    //
@@ -117,10 +116,7 @@ TEST(ReadIniFile_ParsesCloudundancyIniFile_ValidatesCloudundancyIni_ReturnsExpec
       { &CloudundancyIniFileReader::ParseFileCopyInstructionLine, &_cloudundancyIniFile, expectedFilePathLineNumberLineText1 },
       { &CloudundancyIniFileReader::ParseFileCopyInstructionLine, &_cloudundancyIniFile, expectedFilePathLineNumberLineText2 }
    }));
-   METALMOCK(_cloudundancyIniValidatorMock->ThrowIfZeroDestinationFolderPathsMock.
-      CalledOnceWith(cloudundancyIni, cloudundancyIniPath));
-   METALMOCK(_cloudundancyIniValidatorMock->ThrowIfAnyDestinationFolderIsNotWritableByTheCurrentUserMock.
-      CalledOnceWith(cloudundancyIni, cloudundancyIniPath));
+   METALMOCK(_cloudundancyIniValidatorMock->ThrowIfZeroDestinationFolderPathsMock.CalledOnceWith(cloudundancyIni, cloudundancyIniPath));
    ARE_EQUAL(expectedCloudundancyIni, cloudundancyIni);
 }
 
