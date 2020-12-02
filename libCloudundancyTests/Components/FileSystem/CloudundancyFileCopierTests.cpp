@@ -27,8 +27,8 @@ AFACT(TryCopyFile_FileSizeIsGreaterThanOrEqualTo2GB_CopiesFileWithStdFilesystemC
 AFACT(TryCopyFile_FileSizeIsLessThan2GB_CopiesFileWithCStyleCopyFile_WritesCopiedIfCopySucceeded_WritesCopyFailedIfCopyFailed)
 AFACT(TryCopyFileToFolder_RelativeDestinationFolderPathIsADot_DoesNotJoinDotCharacter_CallsTryCopyFile)
 AFACT(TryCopyFileToFolder_RelativeDestinationFolderPathIsNotADot_JoinsRelativeDestinationFolder_CallsTryCopyFile)
-AFACT(WriteCopiedOrCopyFailedMessage_CopySucceeded_WritesCopiedAndDurationInMilliseconds)
-AFACT(WriteCopiedOrCopyFailedMessage_CopyFailed_WritesCopyFailedAndDurationInMillisecondsAndCopyFailureReason_ExitsProgramWithCode1)
+AFACT(WriteCopiedMessageOrExitWithCode1IfCopyFailed_CopySucceeded_WritesCopiedAndDurationInMilliseconds)
+AFACT(WriteCopiedMessageOrExitWithCode1IfCopyFailed_CopyFailed_WritesCopyFailedAndDurationInMillisecondsAndCopyFailureReason_ExitsProgramWithCode1)
 EVIDENCE
 
 CloudundancyFileCopier _cloudundancyFileCopier;
@@ -58,9 +58,9 @@ using _memberForEacher_CopyFileOrFolderToFolderMockType = OneExtraArgMemberFunct
    CloudundancyFileCopier, CloudundancyIniCopyInstruction, const fs::path&>;
 _memberForEacher_CopyFileOrFolderToFolderMockType* _memberForEacher_CopyFileOrFolderToFolderMock = nullptr;
 
-using _memberCaller_WriteCopiedOrCopyFailedMessageMockType = VoidOneArgMemberFunctionCallerMock<
+using _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMockType = VoidOneArgMemberFunctionCallerMock<
    CloudundancyFileCopier, const FileCopyResult&>;
-_memberCaller_WriteCopiedOrCopyFailedMessageMockType* _memberCaller_WriteCopiedOrCopyFailedMessageMock = nullptr;
+_memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMockType* _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMock = nullptr;
 
 // Constant Components
 CloudundancyIniFileReaderMock* _cloudundancyIniFileReaderMock = nullptr;
@@ -83,7 +83,7 @@ STARTUP
    _cloudundancyFileCopier._memberCaller_TryCopyFile.reset(_memberCaller_TryCopyFileMock = new _memberCaller_TryCopyFileMockType);
    _cloudundancyFileCopier._memberForEacher_CopyEachFileOrFolderToFolder.reset(_memberForEacher_CopyEachFileOrFolderToFolderMock = new _memberForEacher_CopyEachFileOrFolderToFolderMockType);
    _cloudundancyFileCopier._memberForEacher_CopyFileOrFolderToFolder.reset(_memberForEacher_CopyFileOrFolderToFolderMock = new _memberForEacher_CopyFileOrFolderToFolderMockType);
-   _cloudundancyFileCopier._memberCaller_WriteCopiedOrCopyFailedMessage.reset(_memberCaller_WriteCopiedOrCopyFailedMessageMock = new _memberCaller_WriteCopiedOrCopyFailedMessageMockType);
+   _cloudundancyFileCopier._memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailed.reset(_memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMock = new _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMockType);
    // Components
    _cloudundancyFileCopier._cloudundancyIniFileReader.reset(_cloudundancyIniFileReaderMock = new CloudundancyIniFileReaderMock);
    _cloudundancyFileCopier._cloudundancyLogFileAppender.reset(_cloudundancyLogFileAppenderMock = new CloudundancyLogFileAppenderMock);
@@ -106,7 +106,7 @@ TEST(DefaultConstructor_SetsFunctionsAndNewsComponents)
    DELETE_TO_ASSERT_NEWED(fileCopier._memberCaller_TryCopyFile);
    DELETE_TO_ASSERT_NEWED(fileCopier._memberForEacher_CopyEachFileOrFolderToFolder);
    DELETE_TO_ASSERT_NEWED(fileCopier._memberForEacher_CopyFileOrFolderToFolder);
-   DELETE_TO_ASSERT_NEWED(fileCopier._memberCaller_WriteCopiedOrCopyFailedMessage);
+   DELETE_TO_ASSERT_NEWED(fileCopier._memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailed);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(fileCopier._cloudundancyIniFileReader);
    DELETE_TO_ASSERT_NEWED(fileCopier._console);
@@ -283,7 +283,7 @@ TEST(TryCopyFile_FileSizeIsGreaterThanOrEqualTo2GB_CopiesFileWithStdFilesystemCo
    const FileCopyResult fileCopyResult = ZenUnit::Random<FileCopyResult>();
    _fileSystemMock->TryCopyFileWithStdFilesystemCopyFileMock.Return(fileCopyResult);
 
-   _memberCaller_WriteCopiedOrCopyFailedMessageMock->CallConstMemberFunctionMock.Expect();
+   _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMock->CallConstMemberFunctionMock.Expect();
 
    const fs::path sourceFilePath = ZenUnit::Random<fs::path>();
    const fs::path destinationFilePath = ZenUnit::Random<fs::path>();
@@ -296,8 +296,8 @@ TEST(TryCopyFile_FileSizeIsGreaterThanOrEqualTo2GB_CopiesFileWithStdFilesystemCo
    METALMOCK(_consoleMock->WriteMock.CalledOnceWith(expectedCopyingFileMessage));
    METALMOCK(_fileSystemMock->IsFileSizeGreaterThanOrEqualTo2GBMock.CalledOnceWith(sourceFilePath));
    METALMOCK(_fileSystemMock->TryCopyFileWithStdFilesystemCopyFileMock.CalledOnceWith(sourceFilePath, destinationFilePath));
-   METALMOCK(_memberCaller_WriteCopiedOrCopyFailedMessageMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &CloudundancyFileCopier::WriteCopiedOrCopyFailedMessage, &_cloudundancyFileCopier, fileCopyResult));
+   METALMOCK(_memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed, &_cloudundancyFileCopier, fileCopyResult));
 }
 
 TEST(TryCopyFile_FileSizeIsLessThan2GB_CopiesFileWithCStyleCopyFile_WritesCopiedIfCopySucceeded_WritesCopyFailedIfCopyFailed)
@@ -309,7 +309,7 @@ TEST(TryCopyFile_FileSizeIsLessThan2GB_CopiesFileWithCStyleCopyFile_WritesCopied
    const FileCopyResult fileCopyResult = ZenUnit::Random<FileCopyResult>();
    _fileSystemMock->TryCopyFileMock.Return(fileCopyResult);
 
-   _memberCaller_WriteCopiedOrCopyFailedMessageMock->CallConstMemberFunctionMock.Expect();
+   _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMock->CallConstMemberFunctionMock.Expect();
 
    const fs::path sourceFilePath = ZenUnit::Random<fs::path>();
    const fs::path destinationFilePath = ZenUnit::Random<fs::path>();
@@ -322,8 +322,8 @@ TEST(TryCopyFile_FileSizeIsLessThan2GB_CopiesFileWithCStyleCopyFile_WritesCopied
    METALMOCK(_consoleMock->WriteMock.CalledOnceWith(expectedCopyingFileMessage));
    METALMOCK(_fileSystemMock->IsFileSizeGreaterThanOrEqualTo2GBMock.CalledOnceWith(sourceFilePath));
    METALMOCK(_fileSystemMock->TryCopyFileMock.CalledOnceWith(sourceFilePath, destinationFilePath));
-   METALMOCK(_memberCaller_WriteCopiedOrCopyFailedMessageMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &CloudundancyFileCopier::WriteCopiedOrCopyFailedMessage, &_cloudundancyFileCopier, fileCopyResult));
+   METALMOCK(_memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed, &_cloudundancyFileCopier, fileCopyResult));
 }
 
 TEST(TryCopyFileToFolder_RelativeDestinationFolderPathIsADot_DoesNotJoinDotCharacter_CallsTryCopyFile)
@@ -358,26 +358,26 @@ TEST(TryCopyFileToFolder_RelativeDestinationFolderPathIsNotADot_JoinsRelativeDes
       &CloudundancyFileCopier::TryCopyFile, &_cloudundancyFileCopier, expectedSourceFilePath, expectedDestinationFilePath));
 }
 
-TEST(WriteCopiedOrCopyFailedMessage_CopySucceeded_WritesCopiedAndDurationInMilliseconds)
+TEST(WriteCopiedMessageOrExitWithCode1IfCopyFailed_CopySucceeded_WritesCopiedAndDurationInMilliseconds)
 {
    _consoleMock->WriteLineColorMock.Expect();
    FileCopyResult fileCopyResult = ZenUnit::Random<FileCopyResult>();
    fileCopyResult.copySucceeded = true;
    //
-   _cloudundancyFileCopier.WriteCopiedOrCopyFailedMessage(fileCopyResult);
+   _cloudundancyFileCopier.WriteCopiedMessageOrExitWithCode1IfCopyFailed(fileCopyResult);
    //
    const string expectedCopiedMessage = String::Concat("Copied [", fileCopyResult.durationInMilliseconds, "ms]\n");
    METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedCopiedMessage, Color::Green));
 }
 
-TEST(WriteCopiedOrCopyFailedMessage_CopyFailed_WritesCopyFailedAndDurationInMillisecondsAndCopyFailureReason_ExitsProgramWithCode1)
+TEST(WriteCopiedMessageOrExitWithCode1IfCopyFailed_CopyFailed_WritesCopyFailedAndDurationInMillisecondsAndCopyFailureReason_ExitsProgramWithCode1)
 {
    _consoleMock->WriteLineColorMock.Expect();
    exitMock.Expect();
    FileCopyResult fileCopyResult = ZenUnit::Random<FileCopyResult>();
    fileCopyResult.copySucceeded = false;
    //
-   _cloudundancyFileCopier.WriteCopiedOrCopyFailedMessage(fileCopyResult);
+   _cloudundancyFileCopier.WriteCopiedMessageOrExitWithCode1IfCopyFailed(fileCopyResult);
    //
    const string expectedCopyFailedMessage = String::Concat(
       "Copy failed [", fileCopyResult.durationInMilliseconds, "ms]: ", fileCopyResult.copyFailureReason, '\n');

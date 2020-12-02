@@ -13,7 +13,7 @@ CloudundancyFileCopier::CloudundancyFileCopier() noexcept
    , _memberCaller_TryCopyFile(make_unique<_memberCaller_TryCopyFileType>())
    , _memberForEacher_CopyEachFileOrFolderToFolder(make_unique<_memberForEacher_CopyEachFileOrFolderToFolderType>())
    , _memberForEacher_CopyFileOrFolderToFolder(make_unique<_memberForEacher_CopyFileOrFolderToFolderType>())
-   , _memberCaller_WriteCopiedOrCopyFailedMessage(make_unique<_memberCaller_WriteCopiedOrCopyFailedMessageType>())
+   , _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailed(make_unique<_memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedType>())
    // Constant Components
    , _cloudundancyIniFileReader(make_unique<CloudundancyIniFileReader>())
    , _cloudundancyLogFileAppender(make_unique<CloudundancyLogFileAppender>())
@@ -140,8 +140,8 @@ void CloudundancyFileCopier::TryCopyFile(const fs::path& sourceFilePath, const f
    {
       fileCopyResult = _fileSystem->TryCopyFile(sourceFilePath, destinationFilePath);
    }
-   _memberCaller_WriteCopiedOrCopyFailedMessage->CallConstMemberFunction(
-      &CloudundancyFileCopier::WriteCopiedOrCopyFailedMessage, this, fileCopyResult);
+   _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailed->CallConstMemberFunction(
+      &CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed, this, fileCopyResult);
 }
 
 void CloudundancyFileCopier::TryCopyFileToFolder(
@@ -162,7 +162,7 @@ void CloudundancyFileCopier::TryCopyFileToFolder(
    _memberCaller_TryCopyFile->ConstCall(&CloudundancyFileCopier::TryCopyFile, this, sourceFilePath, destinationFilePath);
 }
 
-void CloudundancyFileCopier::WriteCopiedOrCopyFailedMessage(const FileCopyResult& fileCopyResult) const
+void CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed(const FileCopyResult& fileCopyResult) const
 {
    const string durationInMilliseconds = to_string(fileCopyResult.durationInMilliseconds);
    if (fileCopyResult.copySucceeded)
