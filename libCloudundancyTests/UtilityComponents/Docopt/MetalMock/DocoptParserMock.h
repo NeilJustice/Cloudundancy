@@ -1,5 +1,5 @@
 #pragma once
-#include "libCloudundancy/Components/Docopt/DocoptParser.h"
+#include "libCloudundancy/UtilityComponents/Docopt/DocoptParser.h"
 #include "libCloudundancy/Components/Time/date.h"
 
 class DocoptParserMock : public Metal::Mock<DocoptParser>

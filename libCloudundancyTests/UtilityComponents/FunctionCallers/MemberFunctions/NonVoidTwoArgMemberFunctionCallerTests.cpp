@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Components/FunctionCallers/MemberFunctions/NonVoidTwoArgMemberFunctionCaller.h"
+#include "libCloudundancy/UtilityComponents/FunctionCallers/MemberFunctions/NonVoidTwoArgMemberFunctionCaller.h"
 
 template<typename ReturnType, typename Arg1Type, typename Arg2Type>
 TEMPLATE_TESTS(NonVoidTwoArgMemberFunctionCallerTests, ReturnType, Arg1Type, Arg2Type)

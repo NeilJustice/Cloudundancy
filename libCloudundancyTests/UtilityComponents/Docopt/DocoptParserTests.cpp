@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Components/Docopt/DocoptParser.h"
+#include "libCloudundancy/UtilityComponents/Docopt/DocoptParser.h"
 
 TESTS(DocoptParserTests)
 AFACT(Constructor_SetsDocoptFunctionPointer)

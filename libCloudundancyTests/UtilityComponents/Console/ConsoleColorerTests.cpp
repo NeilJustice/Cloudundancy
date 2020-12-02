@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Components/Console/ConsoleColorer.h"
+#include "libCloudundancy/UtilityComponents/Console/ConsoleColorer.h"
 
 TESTS(ConsoleColorerTests)
 AFACT(DefaultConstructor_SetsFunctionPointers_SetsBoolFieldsToFalse)

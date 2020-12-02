@@ -1,7 +1,7 @@
 #include "pch.h"
 #ifdef _WIN32
-#include "libCloudundancy/Components/Console/Console.h"
-#include "libCloudundancy/Components/FunctionCallers/MemberFunctions/NonVoidTwoArgMemberFunctionCaller.h"
+#include "libCloudundancy/UtilityComponents/Console/Console.h"
+#include "libCloudundancy/UtilityComponents/FunctionCallers/MemberFunctions/NonVoidTwoArgMemberFunctionCaller.h"
 #include "libCloudundancy/UtilityComponents/Process/Windows/WindowsProcessRunner.h"
 
 WindowsProcessRunner::WindowsProcessRunner()

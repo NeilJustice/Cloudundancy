@@ -3,7 +3,7 @@
 #include "libCloudundancyTests/UtilityComponents/Assertion/MetalMock/AsserterMock.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/FileOpenerCloserMock.h"
 #include "libCloudundancyTests/Components/Memory/MetalMock/CharVectorAllocatorMock.h"
-#include "libCloudundancyTests/Components/FunctionCallers/MemberFunctions/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/UtilityComponents/FunctionCallers/MemberFunctions/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
 #include "libCloudundancyTests/Components/Time/MetalMock/StopwatchMock.h"
 #include "libCloudundancyTests/Components/Time/MetalMock/WatchMock.h"
 

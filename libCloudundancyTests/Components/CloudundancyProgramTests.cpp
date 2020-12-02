@@ -4,7 +4,7 @@
 #include "libCloudundancy/StaticUtilities/Vector.h"
 #include "libCloudundancy/ValueTypes/CloudundancyArgs.h"
 #include "libCloudundancyTests/Components/Args/MetalMock/CloudundancyArgsParserMock.h"
-#include "libCloudundancyTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libCloudundancyTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
 #include "libCloudundancyTests/Components/Environment/MetalMock/EnvironmentalistMock.h"
 #include "libCloudundancyTests/Components/Exception/MetalMock/TryCatchCallerMock.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/CloudundancyFileCopierMock.h"

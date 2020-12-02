@@ -2,7 +2,7 @@
 #include "libCloudundancy/Components/Args/CloudundancyArgsParser.h"
 #include "libCloudundancy/Components/FileSystem/CloudundancyFileCopier.h"
 #include "libCloudundancy/Components/CloudundancyProgram.h"
-#include "libCloudundancy/Components/Console/Console.h"
+#include "libCloudundancy/UtilityComponents/Console/Console.h"
 #include "libCloudundancy/Components/Environment/Environmentalist.h"
 #include "libCloudundancy/Components/Exception/TryCatchCaller.h"
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgram.h"

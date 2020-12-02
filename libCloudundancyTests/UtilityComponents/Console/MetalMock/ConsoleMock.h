@@ -1,5 +1,5 @@
 #pragma once
-#include "libCloudundancy/Components/Console/Console.h"
+#include "libCloudundancy/UtilityComponents/Console/Console.h"
 
 class ConsoleMock : public Metal::Mock<Console>
 {

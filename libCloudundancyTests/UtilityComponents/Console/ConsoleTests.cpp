@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "libCloudundancy/Components/Console/Console.h"
-#include "libCloudundancy/Components/Console/ConsoleColorer.h"
+#include "libCloudundancy/UtilityComponents/Console/Console.h"
+#include "libCloudundancy/UtilityComponents/Console/ConsoleColorer.h"
 
 TESTS(ConsoleTests)
 AFACT(DefaultConstructor_NewsConsoleColorer)

@@ -1,8 +1,8 @@
 #include "pch.h"
 #ifdef _WIN32
-#include "libCloudundancyTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libCloudundancyTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
 #include "libCloudundancy/UtilityComponents/Process/Windows/WindowsProcessRunner.h"
-#include "libCloudundancyTests/Components/FunctionCallers/MemberFunctions/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/UtilityComponents/FunctionCallers/MemberFunctions/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
 
 TESTS(WindowsProcessRunnerTests)
 AFACT(DefaultConstructor_NewsComponents)

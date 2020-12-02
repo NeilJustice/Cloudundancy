@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Components/Console/ConsoleColorer.h"
+#include "libCloudundancy/UtilityComponents/Console/ConsoleColorer.h"
 
 ConsoleColorer::ConsoleColorer() noexcept
 #ifdef _WIN32

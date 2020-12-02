@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libCloudundancy/Components/Args/CloudundancyArgsParser.h"
 #include "libCloudundancyTests/Components/Args/MetalMock/ProgramModeDeterminerMock.h"
-#include "libCloudundancyTests/Components/Docopt/MetalMock/DocoptParserMock.h"
+#include "libCloudundancyTests/UtilityComponents/Docopt/MetalMock/DocoptParserMock.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 
 TESTS(CloudundancyArgsParserTests)
