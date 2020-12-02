@@ -1,7 +1,7 @@
 #include "pch.h"
 #ifdef _WIN32
 #include "libCloudundancyTests/Components/Console/MetalMock/ConsoleMock.h"
-#include "libCloudundancy/Components/Process/Windows/WindowsProcessRunner.h"
+#include "libCloudundancy/UtilityComponents/Process/Windows/WindowsProcessRunner.h"
 #include "libCloudundancyTests/Components/FunctionCallers/MemberFunctions/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
 
 TESTS(WindowsProcessRunnerTests)

@@ -1,6 +1,6 @@
 #pragma once
 #ifdef _WIN32
-#include "libCloudundancy/Components/Process/Windows/WindowsProcessRunner.h"
+#include "libCloudundancy/UtilityComponents/Process/Windows/WindowsProcessRunner.h"
 
 class WindowsProcessRunnerMock : public Metal::Mock<WindowsProcessRunner>
 {

@@ -1,9 +1,9 @@
 #include "pch.h"
-#include "libCloudundancy/Components/Process/ProcessRunner.h"
+#include "libCloudundancy/UtilityComponents/Process/ProcessRunner.h"
 #ifdef __linux__
-#include "libCloudundancyTests/Components/Process/Linux/MetalMock/LinuxProcessRunnerMock.h"
+#include "libCloudundancyTests/UtilityComponents/Process/Linux/MetalMock/LinuxProcessRunnerMock.h"
 #elif _WIN32
-#include "libCloudundancyTests/Components/Process/Windows/MetalMock/WindowsProcessRunnerMock.h"
+#include "libCloudundancyTests/UtilityComponents/Process/Windows/MetalMock/WindowsProcessRunnerMock.h"
 #endif
 
 TESTS(ProcessRunnerTests)

@@ -1,5 +1,5 @@
 #pragma once
-#include "libCloudundancy/Components/Process/ProcessRunner.h"
+#include "libCloudundancy/UtilityComponents/Process/ProcessRunner.h"
 
 class ProcessRunnerMock : public Metal::Mock<ProcessRunner>
 {
