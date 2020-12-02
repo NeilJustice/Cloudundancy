@@ -1,5 +1,5 @@
 #pragma once
-#include "libCloudundancy/Components/Assertion/Asserter.h"
+#include "libCloudundancy/UtilityComponents/Assertion/Asserter.h"
 
 class AsserterMock : public Metal::Mock<Asserter>
 {

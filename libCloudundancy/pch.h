@@ -51,7 +51,7 @@ using namespace std;
 #include "libCloudundancy/ValueTypes/ProcessResult.h"
 
 // libCloudundancy Utility Components
-#include "libCloudundancy/Components/Assertion/Asserter.h"
+#include "libCloudundancy/UtilityComponents/Assertion/Asserter.h"
 #include "libCloudundancy/Components/Console/Console.h"
 #include "libCloudundancy/Components/FileSystem/FileSystem.h"
 #include "libCloudundancy/Components/Iteration/ForEach/OneExtraArgMemberFunctionForEacher.h"

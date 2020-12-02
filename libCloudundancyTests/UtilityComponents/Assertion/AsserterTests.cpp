@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Components/Assertion/Asserter.h"
+#include "libCloudundancy/UtilityComponents/Assertion/Asserter.h"
 
 TESTS(AsserterTests)
 AFACT(ThrowIfIntsNotEqual_SizeTAreEqual_DoesNotThrowException)
