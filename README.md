@@ -143,7 +143,7 @@ cmake --build . --config Release --target install
 
 |Prioritized List Of Future Cloudundancy Features As Of 11/16/2020|
 |-----------------------------------------------------------------|
-|Cloudundancy.log with timestamps of when backups were performed|
+|`[--delete-destination-folders-first]`|
 |`backup-files-and-folders-to-7z-file` working on Linux|
 |SonarCloud static analysis badge|
 |Coverity static analysis badge|
