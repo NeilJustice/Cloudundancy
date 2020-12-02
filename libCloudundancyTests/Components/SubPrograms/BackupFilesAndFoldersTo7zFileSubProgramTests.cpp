@@ -1,12 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersTo7zFileSubProgram.h"
-#include "libCloudundancyTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
-#include "libCloudundancyTests/UtilityComponents/FunctionCallers/MemberFunctions/MetalMock/VoidOneArgMemberFunctionCallerMock.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/CloudundancyFileCopierMock.h"
-#include "libCloudundancyTests/UtilityComponents/FileSystem/MetalMock/FileSystemMock.h"
-#include "libCloudundancyTests/UtilityComponents/Process/MetalMock/ProcessRunnerMock.h"
-#include "libCloudundancyTests/UtilityComponents/Time/MetalMock/StopwatchMock.h"
-#include "libCloudundancyTests/UtilityComponents/Time/MetalMock/WatchMock.h"
 
 TESTS(BackupFilesAndFoldersTo7zFileSubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)

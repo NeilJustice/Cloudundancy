@@ -1,7 +1,5 @@
 #pragma once
 #ifdef __linux__
-#include "libCloudundancy/Components/Process/ProcessResult.h"
-#include "libCloudundancy/Components/Process/ProcessRunner.h"
 
 class Console;
 template<typename ReturnType, typename ClassType, typename Arg1Type, typename Arg2Type>
