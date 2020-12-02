@@ -24,6 +24,14 @@ void Console::WriteLine(string_view message) const
    cout << message << '\n';
 }
 
+void Console::WriteLines(const vector<string>& lines) const
+{
+   for (const string& line : lines)
+   {
+      cout << line << '\n';
+   }
+}
+
 void Console::WriteLineIf(bool doPrintMessage, string_view message) const
 {
    if (doPrintMessage)

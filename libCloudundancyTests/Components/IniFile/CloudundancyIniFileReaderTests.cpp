@@ -4,7 +4,7 @@
 
 TESTS(CloudundancyIniFileReaderTests)
 AFACT(DefaultConstructor_NewsComponents)
-AFACT(ReadIniFile_ParsesCloudundancyIniFile_ValidatesCloudundancyIni_ReturnsExpectedCloudundancyIni)
+AFACT(ReadIniFile_ParsesCloudundancyIniFile_ValidatesCloudundancyIni_ReturnsCloudundancyIni)
 FACTS(ParseFileCopyInstructionLine_LineDoesNotContainSpaceArrowSpace_OrLineContainsMoreThanOneSpaceArrowSpace_ThrowsFileSystemException)
 FACTS(ParseFileCopyInstructionLine_LineContainsOneSpaceArrowSpace_ReturnsExpectedFileCopyInstruction)
 AFACT(ThrowIfSourceFileOrFolderDoesNotExist_SourceFileOrFolderPathExists_DoesNotThrowException)
@@ -49,7 +49,7 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(cloudundancyIniFile._fileSystem);
 }
 
-TEST(ReadIniFile_ParsesCloudundancyIniFile_ValidatesCloudundancyIni_ReturnsExpectedCloudundancyIni)
+TEST(ReadIniFile_ParsesCloudundancyIniFile_ValidatesCloudundancyIni_ReturnsCloudundancyIni)
 {
    const string folderPathA = ZenUnit::Random<string>();
    const string folderPathC = ZenUnit::Random<string>();
@@ -57,7 +57,7 @@ TEST(ReadIniFile_ParsesCloudundancyIniFile_ValidatesCloudundancyIni_ReturnsExpec
    const string filePathB = ZenUnit::Random<string>();
    const string filePathIgnoreSubstring1 = ZenUnit::Random<string>();
    const string filePathIgnoreSubstring2 = ZenUnit::Random<string>();
-   const vector<string> lines =
+   const vector<string> iniFileLines =
    {
       "",
       "[DestinationFolders]",
@@ -74,7 +74,7 @@ TEST(ReadIniFile_ParsesCloudundancyIniFile_ValidatesCloudundancyIni_ReturnsExpec
       filePathIgnoreSubstring1,
       filePathIgnoreSubstring2
    };
-   _fileSystemMock->ReadFileLinesWhichMustBeNonEmptyMock.Return(lines);
+   _fileSystemMock->ReadFileLinesWhichMustBeNonEmptyMock.Return(iniFileLines);
 
    const CloudundancyIniCopyInstruction fileCopyInstruction1
       = ZenUnit::Random<CloudundancyIniCopyInstruction>();
@@ -90,6 +90,7 @@ TEST(ReadIniFile_ParsesCloudundancyIniFile_ValidatesCloudundancyIni_ReturnsExpec
    //
    METALMOCK(_fileSystemMock->ReadFileLinesWhichMustBeNonEmptyMock.CalledOnceWith(cloudundancyIniPath));
    CloudundancyIni expectedCloudundancyIni;
+   expectedCloudundancyIni.iniFileLines = iniFileLines;
    expectedCloudundancyIni.destinationFolderPaths =
    {
       fs::path(folderPathA),

@@ -32,6 +32,9 @@ CloudundancyFileCopier::~CloudundancyFileCopier()
 void CloudundancyFileCopier::CopyFilesAndFoldersToMultipleDestinationFolders(const fs::path& cloudundancyIniFilePath) const
 {
    const CloudundancyIni cloudundancyIni = _cloudundancyIniFileReader->ReadIniFile(cloudundancyIniFilePath);
+
+   _console->WriteLines(cloudundancyIni.iniFileLines);
+
    _recursiveDirectoryIterator->SetFileSubpathsToNotCopy(cloudundancyIni.fileSubpathsToNotCopy);
    _memberForEacher_CopyEachFileOrFolderToFolder->CallConstMemberFunctionForEachElement(
       cloudundancyIni.destinationFolderPaths,

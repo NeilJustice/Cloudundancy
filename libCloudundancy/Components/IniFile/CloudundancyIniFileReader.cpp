@@ -19,15 +19,15 @@ CloudundancyIniFileReader::~CloudundancyIniFileReader()
 
 CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudundancyIniPath) const
 {
-   vector<string> iniFileLines = _fileSystem->ReadFileLinesWhichMustBeNonEmpty(cloudundancyIniPath);
+   CloudundancyIni cloudundancyIni;
+   cloudundancyIni.iniFileLines = _fileSystem->ReadFileLinesWhichMustBeNonEmpty(cloudundancyIniPath);
    bool inDestinationFoldersSection = false;
    bool inSourceFilesAndFoldersToCopySection = false;
    bool inFileSubpathsToNotCopySection = false;
-   CloudundancyIni cloudundancyIni;
-   const size_t numberOfIniFileLines = iniFileLines.size();
+   const size_t numberOfIniFileLines = cloudundancyIni.iniFileLines.size();
    for (size_t lineNumber = 1; lineNumber <= numberOfIniFileLines; ++lineNumber)
    {
-      const string iniFileLine = String::TrimWhitespace(iniFileLines[lineNumber - 1]);
+      const string iniFileLine = String::TrimWhitespace(cloudundancyIni.iniFileLines[lineNumber - 1]);
       if (iniFileLine.empty() || String::StartsWith(iniFileLine, "#"))
       {
          continue;

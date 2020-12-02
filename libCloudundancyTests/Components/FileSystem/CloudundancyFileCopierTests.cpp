@@ -109,6 +109,7 @@ TEST(DefaultConstructor_SetsFunctionsAndNewsComponents)
 TEST(CopyFilesAndFoldersToMultipleDestinationFolders_CopiesFilesAndFoldersToFolders)
 {
    const CloudundancyIni cloudundancyIni = _cloudundancyIniFileReaderMock->ReadIniFileMock.ReturnRandom();
+   _consoleMock->WriteLinesMock.Expect();
    _recursiveDirectoryIteratorMock->SetFileSubpathsToNotCopyMock.Expect();
    _memberForEacher_CopyEachFileOrFolderToFolderMock->CallConstMemberFunctionForEachElementMock.Expect();
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
@@ -116,6 +117,7 @@ TEST(CopyFilesAndFoldersToMultipleDestinationFolders_CopiesFilesAndFoldersToFold
    _cloudundancyFileCopier.CopyFilesAndFoldersToMultipleDestinationFolders(args.iniFilePath);
    //
    METALMOCK(_cloudundancyIniFileReaderMock->ReadIniFileMock.CalledOnceWith(args.iniFilePath));
+   METALMOCK(_consoleMock->WriteLinesMock.CalledOnceWith(cloudundancyIni.iniFileLines));
    METALMOCK(_recursiveDirectoryIteratorMock->SetFileSubpathsToNotCopyMock.CalledOnceWith(cloudundancyIni.fileSubpathsToNotCopy));
    METALMOCK(_memberForEacher_CopyEachFileOrFolderToFolderMock->CallConstMemberFunctionForEachElementMock.CalledOnceWith(
       cloudundancyIni.destinationFolderPaths,

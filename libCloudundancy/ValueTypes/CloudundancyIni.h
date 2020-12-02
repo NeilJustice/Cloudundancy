@@ -2,6 +2,7 @@
 
 struct CloudundancyIni
 {
+   vector<string> iniFileLines;
    vector<fs::path> destinationFolderPaths;
    vector<CloudundancyIniCopyInstruction> cloudundancyIniCopyInstructions;
    vector<string> fileSubpathsToNotCopy;
@@ -9,8 +10,8 @@ struct CloudundancyIni
 
 #ifdef _WIN32
    #ifdef _DEBUG
-      static_assert(sizeof(CloudundancyIni) == 96);
+      static_assert(sizeof(CloudundancyIni) == 128);
    #else
-      static_assert(sizeof(CloudundancyIni) == 72);
+      static_assert(sizeof(CloudundancyIni) == 96);
    #endif
 #endif
