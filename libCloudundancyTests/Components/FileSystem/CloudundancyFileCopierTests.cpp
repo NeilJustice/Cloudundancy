@@ -16,7 +16,6 @@
 TESTS(CloudundancyFileCopierTests)
 AFACT(DefaultConstructor_SetsFunctionsAndNewsComponents)
 AFACT(CopyFilesAndFoldersToMultipleDestinationFolders_CopiesFilesAndFoldersToFolders)
-AFACT(DeleteFolder_CallsFileSystemDeleteFolderOnFolderPath)
 // Private Functions
 AFACT(CopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesNonSkippedSourceFilesToDestinationFolder_AppendBackupSuccessfulToLogFile)
 AFACT(CopyFileOrFolderToFolder_SourcePathHasAFileName_CallsCopyFileToFolder)
@@ -132,16 +131,6 @@ TEST(CopyFilesAndFoldersToMultipleDestinationFolders_CopiesFilesAndFoldersToFold
       cloudundancyIni.destinationFolderPaths,
       &CloudundancyFileCopier::CopyFilesAndFoldersToDestinationFolder,
       &_cloudundancyFileCopier, cloudundancyIni));
-}
-
-TEST(DeleteFolder_CallsFileSystemDeleteFolderOnFolderPath)
-{
-   _fileSystemMock->DeleteFolderMock.Expect();
-   const fs::path folderPath = ZenUnit::Random<fs::path>();
-   //
-   _cloudundancyFileCopier.DeleteFolder(folderPath);
-   //
-   METALMOCK(_fileSystemMock->DeleteFolderMock.CalledOnceWith(folderPath));
 }
 
 // Private Functions

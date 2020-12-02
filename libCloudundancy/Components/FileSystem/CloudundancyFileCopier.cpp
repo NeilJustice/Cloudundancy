@@ -38,11 +38,6 @@ void CloudundancyFileCopier::CopyFilesAndFoldersToMultipleDestinationFolders(con
       &CloudundancyFileCopier::CopyFilesAndFoldersToDestinationFolder, this, cloudundancyIni);
 }
 
-void CloudundancyFileCopier::DeleteFolder(const fs::path& folderPath) const
-{
-   _fileSystem->DeleteFolder(folderPath);
-}
-
 // Private Functions
 
 void CloudundancyFileCopier::CopyFilesAndFoldersToDestinationFolder(

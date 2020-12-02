@@ -68,7 +68,7 @@ void BackupFilesAndFoldersTo7zFileSubProgram::DeleteBackupStagingFolder(const Cl
    _console->WriteLine(deletingMessage);
    _stopwatch->Start();
 
-   _cloudundancyFileCopier->DeleteFolder(args.backupStagingFolderPath);
+   _fileSystem->DeleteFolder(args.backupStagingFolderPath);
 
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string deletedMessage = String::Concat(

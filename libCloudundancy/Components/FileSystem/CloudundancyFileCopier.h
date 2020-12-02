@@ -48,7 +48,6 @@ public:
    CloudundancyFileCopier() noexcept;
    virtual ~CloudundancyFileCopier();
    virtual void CopyFilesAndFoldersToMultipleDestinationFolders(const fs::path& cloudundancyIniFilePath) const;
-   virtual void DeleteFolder(const fs::path& folderPath) const;
 private:
    void CopyFilesAndFoldersToDestinationFolder(const fs::path& destinationFolderPath, const CloudundancyIni& cloudundancyIni) const;
    void CopyFileOrFolderToFolder(
