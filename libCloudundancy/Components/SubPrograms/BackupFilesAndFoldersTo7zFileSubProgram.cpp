@@ -84,7 +84,7 @@ void BackupFilesAndFoldersTo7zFileSubProgram::SevenZipBackupStagingFolder(const 
 
    _fileSystem->SetCurrentPath(args.backupStagingFolderPath);
    const string dateTimeNowForFileNames = _watch->DateTimeNowForFileNames();
-   const string sevenZipCommandLineArguments = "a -r -mx9 7zFile\\SourceFilesAndFolders_" + dateTimeNowForFileNames + ".7z";
+   const string sevenZipCommandLineArguments = "a -r -mx9 7zFile\\CloudundancyBackup_" + dateTimeNowForFileNames + ".7z";
    _processRunner->FailFastRun("7z", sevenZipCommandLineArguments, true);
 
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
