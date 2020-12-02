@@ -1,5 +1,5 @@
 #pragma once
-#include "libCloudundancy/Components/FileSystem/RecursiveDirectoryIterator.h"
+#include "libCloudundancy/UtilityComponents/FileSystem/RecursiveDirectoryIterator.h"
 
 class RecursiveDirectoryIteratorMock : public Metal::Mock<RecursiveDirectoryIterator>
 {

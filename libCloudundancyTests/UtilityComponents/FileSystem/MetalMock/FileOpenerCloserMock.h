@@ -1,5 +1,5 @@
 #pragma once
-#include "libCloudundancy/Components/FileSystem/FileOpenerCloser.h"
+#include "libCloudundancy/UtilityComponents/FileSystem/FileOpenerCloser.h"
 
 class FileOpenerCloserMock : public Metal::Mock<FileOpenerCloser>
 {
