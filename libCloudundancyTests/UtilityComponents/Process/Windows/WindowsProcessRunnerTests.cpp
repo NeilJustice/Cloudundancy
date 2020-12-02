@@ -39,7 +39,7 @@ TEST(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
 
    ProcessResult runReturnValue = ZenUnit::Random<ProcessResult>();
    runReturnValue.exitCode = 0;
-   _caller_RunMock->ConstCallMock.Return(runReturnValue);
+   _caller_RunMock->CallConstMemberFunctionMock.Return(runReturnValue);
 
    const string processName = ZenUnit::Random<string>();
    const string arguments = ZenUnit::Random<string>();
@@ -50,7 +50,7 @@ TEST(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
    const string expectedRunningProgramMessage = String::Concat("[Cloudundancy] Running program: ", processName, ' ', arguments);
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedRunningProgramMessage));
    METALMOCK(_consoleMock->WriteLineIfMock.CalledOnceWith(doPrintStandardOutput, processResult.standardOutputAndError));
-   METALMOCK(_caller_RunMock->ConstCallMock.CalledOnceWith(
+   METALMOCK(_caller_RunMock->CallConstMemberFunctionMock.CalledOnceWith(
       &WindowsProcessRunner::Run, &_windowsProcessRunner, processName, arguments));
    ARE_EQUAL(runReturnValue, processResult);
 }
@@ -59,7 +59,7 @@ TEST(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessage_CallsExitWithProcessE
 {
    ProcessResult runReturnValue = ZenUnit::Random<ProcessResult>();
    runReturnValue.exitCode = ZenUnit::RandomNon0<int>();
-   _caller_RunMock->ConstCallMock.Return(runReturnValue);
+   _caller_RunMock->CallConstMemberFunctionMock.Return(runReturnValue);
 
    _consoleMock->WriteLineMock.Expect();
    _consoleMock->WriteLineIfMock.Expect();
@@ -71,7 +71,7 @@ TEST(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessage_CallsExitWithProcessE
    //
    const ProcessResult processResult = _windowsProcessRunner.FailFastRun(processName, arguments, doPrintStandardOutput);
    //
-   METALMOCK(_caller_RunMock->ConstCallMock.CalledOnceWith(
+   METALMOCK(_caller_RunMock->CallConstMemberFunctionMock.CalledOnceWith(
       &WindowsProcessRunner::Run, &_windowsProcessRunner, processName, arguments));
    const string expectedRunningProgramMessage = String::Concat("[Cloudundancy] Running program: ", processName, ' ', arguments);
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedRunningProgramMessage));

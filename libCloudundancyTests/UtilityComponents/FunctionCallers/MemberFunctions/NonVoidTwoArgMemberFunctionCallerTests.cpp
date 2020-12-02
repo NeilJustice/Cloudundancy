@@ -3,8 +3,8 @@
 
 template<typename ReturnType, typename Arg1Type, typename Arg2Type>
 TEMPLATE_TESTS(NonVoidTwoArgMemberFunctionCallerTests, ReturnType, Arg1Type, Arg2Type)
-AFACT(ConstCall_CallsNonVoidConstMemberFunctionOnce_ReturnsReturnValue)
-AFACT(NonConstCall_CallsNonVoidNonConstMemberFunctionOnce_ReturnsReturnValue)
+AFACT(CallConstMemberFunction_CallsNonVoidConstMemberFunctionOnce_ReturnsReturnValue)
+AFACT(CallNonConstMemberFunction_CallsNonVoidNonConstMemberFunctionOnce_ReturnsReturnValue)
 EVIDENCE
 
 class Class
@@ -38,11 +38,11 @@ STARTUP
    _arg2 = ZenUnit::Random<Arg2Type>();
 }
 
-TEST(ConstCall_CallsNonVoidConstMemberFunctionOnce_ReturnsReturnValue)
+TEST(CallConstMemberFunction_CallsNonVoidConstMemberFunctionOnce_ReturnsReturnValue)
 {
    const Class classInstance;
    //
-   const ReturnType returnValue = _nonVoidTwoArgMemberFunctionCaller.ConstCall(
+   const ReturnType returnValue = _nonVoidTwoArgMemberFunctionCaller.CallConstMemberFunction(
       &Class::NonVoidConstMemberFunction, &classInstance, _arg1, _arg2);
    //
    const vector<pair<Arg1Type, Arg2Type>> expectedCalls =
@@ -53,11 +53,11 @@ TEST(ConstCall_CallsNonVoidConstMemberFunctionOnce_ReturnsReturnValue)
    ARE_EQUAL(classInstance.returnValue, returnValue);
 }
 
-TEST(NonConstCall_CallsNonVoidNonConstMemberFunctionOnce_ReturnsReturnValue)
+TEST(CallNonConstMemberFunction_CallsNonVoidNonConstMemberFunctionOnce_ReturnsReturnValue)
 {
    Class classInstance;
    //
-   const ReturnType returnValue = _nonVoidTwoArgMemberFunctionCaller.NonConstCall(
+   const ReturnType returnValue = _nonVoidTwoArgMemberFunctionCaller.CallNonConstMemberFunction(
       &Class::NonVoidNonConstMemberFunction, &classInstance, _arg1, _arg2);
    //
    const vector<pair<Arg1Type, Arg2Type>> expectedCalls =

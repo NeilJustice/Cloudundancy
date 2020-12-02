@@ -4,7 +4,7 @@ template<typename ReturnType, typename ClassType, typename Arg1Type, typename Ar
 class NonVoidTwoArgMemberFunctionCaller
 {
 public:
-   virtual ReturnType ConstCall(
+   virtual ReturnType CallConstMemberFunction(
       ReturnType(ClassType::*constMemberFunction)(Arg1Type, Arg2Type) const,
       const ClassType* classPointer, Arg1Type arg1, Arg2Type arg2) const
    {
@@ -12,7 +12,7 @@ public:
       return returnValue;
    }
 
-   virtual ReturnType NonConstCall(
+   virtual ReturnType CallNonConstMemberFunction(
       ReturnType(ClassType::*nonConstMemberFunction)(Arg1Type, Arg2Type),
       ClassType* classPointer, Arg1Type arg1, Arg2Type arg2) const
    {

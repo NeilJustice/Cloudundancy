@@ -19,8 +19,8 @@ private:
       CloudundancyFileCopier, const fs::path&, const CloudundancyIniCopyInstruction&, const fs::path&>;
    unique_ptr<const _memberCaller_CopyNestedFileToFolderType> _memberCaller_CopyNestedFileToFolder;
 
-   using _memberCaller_TryCopyFileType = VoidTwoArgMemberFunctionCaller<
-      CloudundancyFileCopier, const fs::path&, const fs::path&>;
+   using _memberCaller_TryCopyFileType = NonVoidTwoArgMemberFunctionCaller<
+      FileCopyResult, CloudundancyFileCopier, const fs::path&, const fs::path&>;
    unique_ptr<const _memberCaller_TryCopyFileType> _memberCaller_TryCopyFile;
 
    using _memberForEacher_CopyEachFileOrFolderToFolderType = OneExtraArgMemberFunctionForEacher<
@@ -60,10 +60,10 @@ private:
    void CopyNonIgnoredFilesInAndBelowFolderToFolder(
       const CloudundancyIniCopyInstruction& cloudundancyIniCopyInstruction,
       const fs::path& destinationFolderPath) const;
-   void TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const;
    void TryCopyFileToFolder(
       const CloudundancyIniCopyInstruction& cloudundancyIniCopyInstruction,
       const fs::path& destinationFolderPath) const;
+   FileCopyResult TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const;
    void WriteCopiedMessageOrExitWithCode1IfCopyFailed(
       const FileCopyResult& fileCopyResult, const fs::path& destinationFolderPath) const;
 };
