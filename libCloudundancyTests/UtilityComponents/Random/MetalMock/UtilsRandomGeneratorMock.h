@@ -1,5 +1,5 @@
 #pragma once
-#include "libCloudundancyTests/Components/Random/UtilsRandomGenerator.h"
+#include "libCloudundancyTests/UtilityComponents/Random/UtilsRandomGenerator.h"
 
 class UtilsRandomGeneratorMock : public Metal::Mock<UtilsRandomGenerator>
 {

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancyTests/Components/Random/UtilsRandomGenerator.h"
+#include "libCloudundancyTests/UtilityComponents/Random/UtilsRandomGenerator.h"
 
 const UtilsRandomGenerator* UtilsRandomGenerator::Instance()
 {

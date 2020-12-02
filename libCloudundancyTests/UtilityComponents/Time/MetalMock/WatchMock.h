@@ -1,5 +1,5 @@
 #pragma once
-#include "libCloudundancy/Components/Time/Watch.h"
+#include "libCloudundancy/UtilityComponents/Time/Watch.h"
 
 class WatchMock : public Metal::Mock<Watch>
 {

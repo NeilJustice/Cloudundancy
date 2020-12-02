@@ -11,8 +11,8 @@
 #include "libCloudundancyTests/Components/IniFile/MetalMock/CloudundancyIniFileReaderMock.h"
 #include "libCloudundancyTests/Components/SubPrograms/MetalMock/CloudundancySubProgramFactoryMock.h"
 #include "libCloudundancyTests/Components/SubPrograms/MetalMock/CloudundancySubProgramMock.h"
-#include "libCloudundancyTests/Components/Time/MetalMock/StopwatchMock.h"
-#include "libCloudundancyTests/Components/Time/MetalMock/WatchMock.h"
+#include "libCloudundancyTests/UtilityComponents/Time/MetalMock/StopwatchMock.h"
+#include "libCloudundancyTests/UtilityComponents/Time/MetalMock/WatchMock.h"
 
 TESTS(CloudundancyProgramTests)
 AFACT(DefaultConstructor_NewsComponents)

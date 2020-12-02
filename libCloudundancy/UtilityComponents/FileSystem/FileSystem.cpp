@@ -4,8 +4,8 @@
 #include "libCloudundancy/UtilityComponents/FileSystem/FileSystem.h"
 #include "libCloudundancy/UtilityComponents/FunctionCallers/MemberFunctions/NonVoidOneArgMemberFunctionCaller.h"
 #include "libCloudundancy/UtilityComponents/Memory/CharVectorAllocator.h"
-#include "libCloudundancy/Components/Time/Stopwatch.h"
-#include "libCloudundancy/Components/Time/Watch.h"
+#include "libCloudundancy/UtilityComponents/Time/Stopwatch.h"
+#include "libCloudundancy/UtilityComponents/Time/Watch.h"
 
 #ifdef __linux__
 int* GetLinuxErrno()

@@ -50,13 +50,13 @@ using namespace std;
 #include "libCloudundancy/ValueTypes/FileSystemException.h"
 #include "libCloudundancy/ValueTypes/ProcessResult.h"
 
-// libCloudundancy Utility Components
+// libCloudundancy UtilityComponents
 #include "libCloudundancy/UtilityComponents/Assertion/Asserter.h"
 #include "libCloudundancy/UtilityComponents/Console/Console.h"
 #include "libCloudundancy/UtilityComponents/FileSystem/FileSystem.h"
 #include "libCloudundancy/UtilityComponents/Iteration/ForEach/OneExtraArgMemberFunctionForEacher.h"
-#include "libCloudundancy/Components/Time/Watch.h"
+#include "libCloudundancy/UtilityComponents/Time/Watch.h"
 
-// libCloudundancy Utility Functions
+// libCloudundancy StaticUtilities
 #include "libCloudundancy/StaticUtilities/ReleaseAssert.h"
 #include "libCloudundancy/StaticUtilities/StringUtil.h"

@@ -4,8 +4,8 @@
 #include "libCloudundancyTests/UtilityComponents/FileSystem/MetalMock/FileOpenerCloserMock.h"
 #include "libCloudundancyTests/UtilityComponents/Memory/MetalMock/CharVectorAllocatorMock.h"
 #include "libCloudundancyTests/UtilityComponents/FunctionCallers/MemberFunctions/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
-#include "libCloudundancyTests/Components/Time/MetalMock/StopwatchMock.h"
-#include "libCloudundancyTests/Components/Time/MetalMock/WatchMock.h"
+#include "libCloudundancyTests/UtilityComponents/Time/MetalMock/StopwatchMock.h"
+#include "libCloudundancyTests/UtilityComponents/Time/MetalMock/WatchMock.h"
 
 TESTS(FileSystemTests)
 #ifdef __linux__

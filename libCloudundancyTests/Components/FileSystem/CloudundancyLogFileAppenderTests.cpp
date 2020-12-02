@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/Components/FileSystem/CloudundancyLogFileAppender.h"
-#include "libCloudundancyTests/Components/Time/MetalMock/WatchMock.h"
+#include "libCloudundancyTests/UtilityComponents/Time/MetalMock/WatchMock.h"
 
 TESTS(CloudundancyLogFileAppenderTests)
 AFACT(DefaultConstructor_NewsComponents)

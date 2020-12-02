@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancyTests/Components/Random/UtilsRandomGenerator.h"
+#include "libCloudundancyTests/UtilityComponents/Random/UtilsRandomGenerator.h"
 
 TESTS(UtilsRandomGeneratorTests)
 AFACT(RelativeFilePath_ReturnsFilesystemPathWith0To2FoldersLeadingToARandomFilenameWithARandomFileExtension)

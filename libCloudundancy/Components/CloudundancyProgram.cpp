@@ -7,8 +7,8 @@
 #include "libCloudundancy/UtilityComponents/Exception/TryCatchCaller.h"
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgram.h"
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgramFactory.h"
-#include "libCloudundancy/Components/Time/Stopwatch.h"
-#include "libCloudundancy/Components/Time/Watch.h"
+#include "libCloudundancy/UtilityComponents/Time/Stopwatch.h"
+#include "libCloudundancy/UtilityComponents/Time/Watch.h"
 #include "libCloudundancy/StaticUtilities/Exception.h"
 #include "libCloudundancy/StaticUtilities/Vector.h"
 

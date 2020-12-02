@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Components/Time/CRTWatch.h"
+#include "libCloudundancy/UtilityComponents/Time/CRTWatch.h"
 
 TESTS(CRTWatchTests)
 AFACT(DefaultConstructor_SetsFunctionPointers_NewsAsserter)

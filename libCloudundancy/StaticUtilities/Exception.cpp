@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Components/Types/Type.h"
+#include "libCloudundancy/StaticUtilities/Type.h"
 #include "libCloudundancy/StaticUtilities/Exception.h"
 
 string Exception::GetExceptionClassNameAndMessage(const exception* ex)

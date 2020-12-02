@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "libCloudundancy/Components/Time/CRTWatch.h"
-#include "libCloudundancy/Components/Time/Watch.h"
-#include "libCloudundancyTests/Components/Time/MetalMock/CRTWatchMock.h"
+#include "libCloudundancy/UtilityComponents/Time/CRTWatch.h"
+#include "libCloudundancy/UtilityComponents/Time/Watch.h"
+#include "libCloudundancyTests/UtilityComponents/Time/MetalMock/CRTWatchMock.h"
 
 TESTS(WatchTests)
 AFACT(DefaultConstructor_NewsCRTWatch)

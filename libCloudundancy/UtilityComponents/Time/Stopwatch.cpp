@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Components/Time/Stopwatch.h"
+#include "libCloudundancy/UtilityComponents/Time/Stopwatch.h"
 
 Stopwatch::Stopwatch()
    : _call_high_resolution_clock_now(chrono::high_resolution_clock::now)

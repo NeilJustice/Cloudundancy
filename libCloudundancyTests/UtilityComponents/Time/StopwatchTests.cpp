@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Components/Time/Stopwatch.h"
+#include "libCloudundancy/UtilityComponents/Time/Stopwatch.h"
 
 TESTS(StopwatchTests)
 AFACT(DefaultConstructor_SetsNowFunction)
