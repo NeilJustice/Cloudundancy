@@ -29,10 +29,13 @@ CloudundancyFileCopier::~CloudundancyFileCopier()
 {
 }
 
-void CloudundancyFileCopier::CopyFilesAndFoldersToMultipleDestinationFolders(const fs::path& cloudundancyIniFilePath) const
+void CloudundancyFileCopier::CopyFilesAndFoldersToMultipleDestinationFolders(const fs::path& iniFilePath) const
 {
-   const CloudundancyIni cloudundancyIni = _cloudundancyIniFileReader->ReadIniFile(cloudundancyIniFilePath);
+   const CloudundancyIni cloudundancyIni = _cloudundancyIniFileReader->ReadIniFile(iniFilePath);
 
+   const string iniFileMessage = String::Concat(
+      "[Cloudundancy] Copying [SourceFilesAndFolders] to [DestinationFolders] as listed in ", iniFilePath.string(), ":\n");
+   _console->WriteLine(iniFileMessage);
    _console->WriteLines(cloudundancyIni.iniFileLines);
 
    _recursiveDirectoryIterator->SetFileSubpathsToNotCopy(cloudundancyIni.fileSubpathsToNotCopy);

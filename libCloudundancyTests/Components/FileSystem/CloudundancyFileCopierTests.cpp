@@ -109,14 +109,21 @@ TEST(DefaultConstructor_SetsFunctionsAndNewsComponents)
 TEST(CopyFilesAndFoldersToMultipleDestinationFolders_CopiesFilesAndFoldersToFolders)
 {
    const CloudundancyIni cloudundancyIni = _cloudundancyIniFileReaderMock->ReadIniFileMock.ReturnRandom();
+
+   _consoleMock->WriteLineMock.Expect();
    _consoleMock->WriteLinesMock.Expect();
+
    _recursiveDirectoryIteratorMock->SetFileSubpathsToNotCopyMock.Expect();
+
    _memberForEacher_CopyEachFileOrFolderToFolderMock->CallConstMemberFunctionForEachElementMock.Expect();
-   const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
+   const fs::path iniFilePath = ZenUnit::Random<fs::path>();
    //
-   _cloudundancyFileCopier.CopyFilesAndFoldersToMultipleDestinationFolders(args.iniFilePath);
+   _cloudundancyFileCopier.CopyFilesAndFoldersToMultipleDestinationFolders(iniFilePath);
    //
-   METALMOCK(_cloudundancyIniFileReaderMock->ReadIniFileMock.CalledOnceWith(args.iniFilePath));
+   METALMOCK(_cloudundancyIniFileReaderMock->ReadIniFileMock.CalledOnceWith(iniFilePath));
+   const string expectedBackingUpMessage = String::Concat(
+      "[Cloudundancy] Copying [SourceFilesAndFolders] to [DestinationFolders] as listed in ", iniFilePath.string(), ":\n");
+   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedBackingUpMessage));
    METALMOCK(_consoleMock->WriteLinesMock.CalledOnceWith(cloudundancyIni.iniFileLines));
    METALMOCK(_recursiveDirectoryIteratorMock->SetFileSubpathsToNotCopyMock.CalledOnceWith(cloudundancyIni.fileSubpathsToNotCopy));
    METALMOCK(_memberForEacher_CopyEachFileOrFolderToFolderMock->CallConstMemberFunctionForEachElementMock.CalledOnceWith(
