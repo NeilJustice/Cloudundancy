@@ -2,7 +2,6 @@
 #include "libCloudundancy/ValueTypes/FilePathLineNumberLineText.h"
 #include "libCloudundancy/Components/IniFile/CloudundancyIniFileReader.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/FileSystemMock.h"
-#include "libCloudundancyTests/Components/FileSystem/MetalMock/CloudundancyLogFileAppenderMock.h"
 #include "libCloudundancyTests/Components/FunctionCallers/MemberFunctions/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
 #include "libCloudundancyTests/Components/FunctionCallers/MemberFunctions/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
 #include "libCloudundancyTests/Components/IniFile/MetalMock/CloudundancyIniValidatorMock.h"
@@ -29,7 +28,6 @@ VoidTwoArgMemberFunctionCallerMockType* _callerMock_ThrowIfSourceFileOrFolderDoe
 
 // Constant Components
 CloudundancyIniValidatorMock* _cloudundancyIniValidatorMock = nullptr;
-CloudundancyLogFileAppenderMock* _cloudundancyLogFileAppenderMock = nullptr;
 FileSystemMock* _fileSystemMock = nullptr;
 
 STARTUP
@@ -41,7 +39,6 @@ STARTUP
       _callerMock_ThrowIfSourceFileOrFolderDoesNotExist = new VoidTwoArgMemberFunctionCallerMockType);
    // Constant Components
    _cloudundancyIniFile._cloudundancyIniValidator.reset(_cloudundancyIniValidatorMock = new CloudundancyIniValidatorMock);
-   _cloudundancyIniFile._cloudundancyLogFileAppender.reset(_cloudundancyLogFileAppenderMock = new CloudundancyLogFileAppenderMock);
    _cloudundancyIniFile._fileSystem.reset(_fileSystemMock = new FileSystemMock);
 }
 
@@ -53,7 +50,6 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(cloudundancyIniFile._caller_ThrowIfSourceFileOrFolderDoesNotExist);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(cloudundancyIniFile._cloudundancyIniValidator);
-   DELETE_TO_ASSERT_NEWED(cloudundancyIniFile._cloudundancyLogFileAppender);
    DELETE_TO_ASSERT_NEWED(cloudundancyIniFile._fileSystem);
 }
 
@@ -91,7 +87,7 @@ TEST(ReadIniFile_ParsesCloudundancyIniFile_ValidatesCloudundancyIni_ReturnsExpec
    _callerMock_ParseFileCopyInstructionLine->CallConstMemberFunctionMock.ReturnValues(fileCopyInstruction1, fileCopyInstruction2);
 
    _cloudundancyIniValidatorMock->ThrowIfZeroDestinationFolderPathsMock.Expect();
-   _cloudundancyLogFileAppenderMock->AppendBackupStartedToCloudundancyLogFilesInAllDestinationFoldersMock.Expect();
+   _cloudundancyIniValidatorMock->ThrowIfAnyDestinationFolderIsNotWritableByTheCurrentUserMock.Expect();
 
    const fs::path cloudundancyIniPath = ZenUnit::Random<string>();
    //
@@ -123,8 +119,8 @@ TEST(ReadIniFile_ParsesCloudundancyIniFile_ValidatesCloudundancyIni_ReturnsExpec
    }));
    METALMOCK(_cloudundancyIniValidatorMock->ThrowIfZeroDestinationFolderPathsMock.
       CalledOnceWith(cloudundancyIni, cloudundancyIniPath));
-   METALMOCK(_cloudundancyLogFileAppenderMock->AppendBackupStartedToCloudundancyLogFilesInAllDestinationFoldersMock.
-      CalledOnceWith(cloudundancyIni.destinationFolderPaths));
+   METALMOCK(_cloudundancyIniValidatorMock->ThrowIfAnyDestinationFolderIsNotWritableByTheCurrentUserMock.
+      CalledOnceWith(cloudundancyIni, cloudundancyIniPath));
    ARE_EQUAL(expectedCloudundancyIni, cloudundancyIni);
 }
 

@@ -13,7 +13,6 @@ CloudundancyIniFileReader::CloudundancyIniFileReader() noexcept
    , _caller_ThrowIfSourceFileOrFolderDoesNotExist(make_unique<VoidTwoArgMemberFunctionCallerType>())
    // Constant Components
    , _cloudundancyIniValidator(make_unique<CloudundancyIniValidator>())
-   , _cloudundancyLogFileAppender(make_unique<CloudundancyLogFileAppender>())
    , _fileSystem(make_unique<FileSystem>())
 {
 }
@@ -77,8 +76,7 @@ CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudunda
       }
    }
    _cloudundancyIniValidator->ThrowIfZeroDestinationFolderPaths(cloudundancyIni, cloudundancyIniPath);
-   _cloudundancyLogFileAppender->AppendBackupStartedToCloudundancyLogFilesInAllDestinationFolders(
-      cloudundancyIni.destinationFolderPaths);
+   _cloudundancyIniValidator->ThrowIfAnyDestinationFolderIsNotWritableByTheCurrentUser(cloudundancyIni, cloudundancyIniPath);
    return cloudundancyIni;
 }
 

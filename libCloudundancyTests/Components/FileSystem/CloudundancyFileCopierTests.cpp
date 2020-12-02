@@ -156,7 +156,7 @@ TEST(CopyFilesAndFoldersToSingleFolder_CopiesNonSkippedSourceFilesToDestinationF
 
    _consoleMock->WriteLineMock.Expect();
 
-   _cloudundancyLogFileAppenderMock->AppendTextToCloudundancyLogFileInDestinationFolderMock.Expect();
+   _cloudundancyLogFileAppenderMock->AppendTextToCloudundancyLogFileInFolderMock.Expect();
 
    const fs::path destinationFolderPath = ZenUnit::Random<fs::path>();
    const CloudundancyIni cloudundancyIni = ZenUnit::Random<CloudundancyIni>();
@@ -174,7 +174,7 @@ TEST(CopyFilesAndFoldersToSingleFolder_CopiesNonSkippedSourceFilesToDestinationF
       "[Cloudundancy] FolderBackupDuration: " + elapsedSeconds + " seconds\n";
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedFolderBackedUpMessage));
    const string expectedCloudundancyLogFileText = String::Concat("Cloudundancy backup successful in ", elapsedSeconds, " seconds");
-   METALMOCK(_cloudundancyLogFileAppenderMock->AppendTextToCloudundancyLogFileInDestinationFolderMock.CalledOnceWith(
+   METALMOCK(_cloudundancyLogFileAppenderMock->AppendTextToCloudundancyLogFileInFolderMock.CalledOnceWith(
       destinationFolderPath, expectedCloudundancyLogFileText));
 }
 

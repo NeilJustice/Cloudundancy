@@ -4,6 +4,5 @@
 class CloudundancyLogFileAppenderMock : public Metal::Mock<CloudundancyLogFileAppender>
 {
 public:
-   METALMOCK_VOID1_CONST(AppendBackupStartedToCloudundancyLogFilesInAllDestinationFolders, const vector<fs::path>&)
-   METALMOCK_VOID2_CONST(AppendTextToCloudundancyLogFileInDestinationFolder, const fs::path&, string_view)
+   METALMOCK_VOID2_CONST(AppendTextToCloudundancyLogFileInFolder, const fs::path&, string_view)
 };

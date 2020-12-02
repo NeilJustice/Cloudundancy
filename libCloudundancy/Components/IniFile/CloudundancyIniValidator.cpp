@@ -21,3 +21,16 @@ void CloudundancyIniValidator::ThrowIfZeroDestinationFolderPaths(
       throw fileSystemException;
    }
 }
+
+void CloudundancyIniValidator::ThrowIfAnyDestinationFolderIsNotWritableByTheCurrentUser(
+   const CloudundancyIni& /*cloudundancyIni*/, const fs::path& /*cloudundancyIniPath*/) const
+{
+
+}
+
+// Private Function
+
+void CloudundancyIniValidator::IsFolderWritableByTheCurrentUser(const fs::path& /*folderPath*/) const
+{
+
+}
