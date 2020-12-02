@@ -13,6 +13,7 @@ CloudundancyArgsParser _cloudundancyArgsParser;
 // Constant Components
 DocoptParserMock* _docoptParserMock = nullptr;
 FileSystemMock* _fileSystemMock = nullptr;
+ProcessRunnerMock* _processRunnerMock = nullptr;
 ProgramModeDeterminerMock* _programModeDeterminerMock = nullptr;
 
 STARTUP
@@ -20,15 +21,18 @@ STARTUP
    // Constant Components
    _cloudundancyArgsParser._docoptParser.reset(_docoptParserMock = new DocoptParserMock);
    _cloudundancyArgsParser._fileSystem.reset(_fileSystemMock = new FileSystemMock);
+   _cloudundancyArgsParser._processRunner.reset(_processRunnerMock = new ProcessRunnerMock);
    _cloudundancyArgsParser._programModeDeterminer.reset(_programModeDeterminerMock = new ProgramModeDeterminerMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
 {
    CloudundancyArgsParser cloudundancyArgsParser;
+   // Constant Components
    DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._docoptParser);
    DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._fileSystem);
-   DELETE_TO_ASSERT_NEWED(_cloudundancyArgsParser._programModeDeterminer);
+   DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._processRunner);
+   DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._programModeDeterminer);
 }
 
 TEST(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs)
@@ -55,6 +59,8 @@ TEST(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs)
    _docoptParserMock->GetProgramModeSpecificRequiredStringMock.ReturnValues(sevenZipIniFilePath, backupStagingFolderPath);
 
    _fileSystemMock->ThrowIfFilePathIsNotEmptyAndDoesNotExistMock.Expect();
+
+   //_processRunnerMock->ThrowIfProgramNotInPathMock.Expect();
 
    const vector<string> stringArgs = ZenUnit::RandomVector<string>();
    //
@@ -84,6 +90,7 @@ TEST(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs)
       { iniFilePath },
       { sevenZipIniFilePath }
    }));
+   //METALMOCK(_processRunnerMock->ThrowIfProgramNotInPath("7z"));
    CloudundancyArgs expectedArgs;
    expectedArgs.programMode = programMode;
    expectedArgs.iniFilePath = iniFilePath;

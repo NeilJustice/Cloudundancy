@@ -8,6 +8,7 @@ private:
    // Constant Components
    unique_ptr<const DocoptParser> _docoptParser;
    unique_ptr<const FileSystem> _fileSystem;
+   unique_ptr<const ProcessRunner> _processRunner;
    unique_ptr<const ProgramModeDeterminer> _programModeDeterminer;
 public:
    CloudundancyArgsParser();

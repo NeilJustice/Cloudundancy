@@ -46,7 +46,8 @@ ProcessResult WindowsProcessRunner::Run(string_view processName, string_view arg
    startupInfo.dwFlags = STARTF_USESTDHANDLES;
    PROCESS_INFORMATION processInformation{};
    const auto beginTime = chrono::high_resolution_clock::now();
-   const BOOL createProcessSucceeded = CreateProcessA(nullptr, commandLineChars.get(), nullptr, nullptr, TRUE, CREATE_NO_WINDOW, nullptr, nullptr, &startupInfo, &processInformation);
+   const BOOL createProcessSucceeded = CreateProcessA(
+      nullptr, commandLineChars.get(), nullptr, nullptr, TRUE, CREATE_NO_WINDOW, nullptr, nullptr, &startupInfo, &processInformation);
    if (!createProcessSucceeded)
    {
       const DWORD lastError = GetLastError();
@@ -69,11 +70,11 @@ ProcessResult WindowsProcessRunner::Run(string_view processName, string_view arg
    const BOOL didGetProcessExitCode = GetExitCodeProcess(processInformation.hProcess, &processExitCode);
    release_assert(didGetProcessExitCode == TRUE);
 
-   const BOOL didCloseProcessHandle = CloseHandle(processInformation.hProcess);
-   release_assert(didCloseProcessHandle == TRUE);
-
    const BOOL didCloseThreadHandle = CloseHandle(processInformation.hThread);
    release_assert(didCloseThreadHandle == TRUE);
+
+   const BOOL didCloseProcessHandle = CloseHandle(processInformation.hProcess);
+   release_assert(didCloseProcessHandle == TRUE);
 
    const string standardOutputAndError = ReadPipe(stdOutReadHandle);
 
@@ -96,7 +97,7 @@ ProcessResult WindowsProcessRunner::Run(string_view processName, string_view arg
 
 ProcessResult WindowsProcessRunner::FailFastRun(string_view processName, string_view arguments) const
 {
-   const string runningMessage = String::Concat("[Cloudundancy] Running: \"", processName, ' ', arguments, "\"");
+   const string runningMessage = String::Concat("[Cloudundancy] Running program: ", processName, ' ', arguments);
    _console->WriteLine(runningMessage);
    const ProcessResult processResult = _caller_Run->ConstCall(&WindowsProcessRunner::Run, this, processName, arguments);
    _console->WriteLine(processResult.standardOutputAndError);

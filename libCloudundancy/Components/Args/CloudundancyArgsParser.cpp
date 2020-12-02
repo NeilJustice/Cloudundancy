@@ -6,6 +6,7 @@ CloudundancyArgsParser::CloudundancyArgsParser()
    // Constant Components
    : _docoptParser(make_unique<DocoptParser>())
    , _fileSystem(make_unique<FileSystem>())
+   , _processRunner(make_unique<ProcessRunner>())
    , _programModeDeterminer(make_unique<ProgramModeDeterminer>())
 {
 }
@@ -40,5 +41,11 @@ CloudundancyArgs CloudundancyArgsParser::ParseStringArgs(const vector<string>& s
 
    _fileSystem->ThrowIfFilePathIsNotEmptyAndDoesNotExist(cloudundancyArgs.iniFilePath);
    _fileSystem->ThrowIfFilePathIsNotEmptyAndDoesNotExist(cloudundancyArgs.sevenZipIniFilePath);
+
+   //if (isBackupFilesAndFoldersTo7zFileMode)
+   //{
+      //_processRunner->FailFastRun("7z", "");
+   //}
+
    return cloudundancyArgs;
 }
