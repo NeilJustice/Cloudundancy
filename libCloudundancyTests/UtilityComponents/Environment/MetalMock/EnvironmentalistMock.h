@@ -1,5 +1,5 @@
 #pragma once
-#include "libCloudundancy/Components/Environment/Environmentalist.h"
+#include "libCloudundancy/UtilityComponents/Environment/Environmentalist.h"
 
 class EnvironmentalistMock : public Metal::Mock<Environmentalist>
 {

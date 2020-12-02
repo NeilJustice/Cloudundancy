@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/StaticUtilities/Exception.h"
-#include "libCloudundancy/Components/Exception/TryCatchCaller.h"
+#include "libCloudundancy/UtilityComponents/Exception/TryCatchCaller.h"
 
 template<typename ArgumentType, typename ExceptionType>
 TEMPLATE_TESTS(TryCatchCallerTests, ArgumentType, ExceptionType)

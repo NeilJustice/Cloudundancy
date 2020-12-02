@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Components/Environment/Environmentalist.h"
+#include "libCloudundancy/UtilityComponents/Environment/Environmentalist.h"
 
 TESTS(EnvironmentalistTests)
 AFACT(DefaultConstructor_SetsFunctionPointers)
