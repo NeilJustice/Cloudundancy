@@ -32,12 +32,10 @@ CloudundancyFileCopier::~CloudundancyFileCopier()
 void CloudundancyFileCopier::CopyFilesAndFoldersToMultipleDestinationFolders(const fs::path& iniFilePath) const
 {
    const CloudundancyIni cloudundancyIni = _cloudundancyIniFileReader->ReadIniFile(iniFilePath);
-
    const string iniFileMessage = String::Concat(
       "[Cloudundancy] Copying [SourceFilesAndFolders] to [DestinationFolders] as listed in ", iniFilePath.string(), ":\n");
    _console->WriteLine(iniFileMessage);
    _console->WriteLines(cloudundancyIni.iniFileLines);
-
    _recursiveDirectoryIterator->SetFileSubpathsToNotCopy(cloudundancyIni.fileSubpathsToNotCopy);
    _memberForEacher_CopyEachFileOrFolderToFolder->CallConstMemberFunctionForEachElement(
       cloudundancyIni.destinationFolderPaths,
@@ -49,9 +47,10 @@ void CloudundancyFileCopier::CopyFilesAndFoldersToMultipleDestinationFolders(con
 void CloudundancyFileCopier::CopyFilesAndFoldersToDestinationFolder(
    const fs::path& destinationFolderPath, const CloudundancyIni& cloudundancyIni) const
 {
-   _cloudundancyLogFileAppender->AppendTextToCloudundancyLogFileInFolder(
-      destinationFolderPath, "Cloudundancy backup started");
-
+   const string copyingMessage = String::Concat(
+      "\n[Cloudundancy] Copying [SourceFilesAndFolders] to destination folder ", destinationFolderPath.string(), ":\n");
+   _console->WriteLine(copyingMessage);
+   _cloudundancyLogFileAppender->AppendTextToCloudundancyLogFileInFolder(destinationFolderPath, "Cloudundancy backup started");
    _stopwatch->Start();
    _memberForEacher_CopyFileOrFolderToFolder->CallConstMemberFunctionForEachElement(
       cloudundancyIni.cloudundancyIniCopyInstructions,
@@ -59,9 +58,8 @@ void CloudundancyFileCopier::CopyFilesAndFoldersToDestinationFolder(
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string folderBackedUpMessage = String::Concat(
       "[Cloudundancy]   FolderBackupResult: Successfully copied [SourceFilesAndFolders] to ", destinationFolderPath.string(), '\n',
-      "[Cloudundancy] FolderBackupDuration: ", elapsedSeconds, " seconds\n");
+      "[Cloudundancy] FolderBackupDuration: ", elapsedSeconds, " seconds");
    _console->WriteLine(folderBackedUpMessage);
-
    const string cloudundancyBackupSuccessfulMessage =
       String::Concat("Cloudundancy backup successful in ", elapsedSeconds, " seconds");
    _cloudundancyLogFileAppender->AppendTextToCloudundancyLogFileInFolder(

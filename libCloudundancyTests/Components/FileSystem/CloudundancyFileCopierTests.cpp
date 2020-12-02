@@ -136,6 +136,8 @@ TEST(CopyFilesAndFoldersToMultipleDestinationFolders_CopiesFilesAndFoldersToFold
 
 TEST(CopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesNonSkippedSourceFilesToDestinationFolder_AppendBackupSuccessfulToLogFile)
 {
+   _consoleMock->WriteLineMock.Expect();
+
    _cloudundancyLogFileAppenderMock->AppendTextToCloudundancyLogFileInFolderMock.Expect();
 
    _stopwatchMock->StartMock.Expect();
@@ -144,13 +146,21 @@ TEST(CopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesN
 
    const string elapsedSeconds = _stopwatchMock->StopAndGetElapsedSecondsMock.ReturnRandom();
 
-   _consoleMock->WriteLineMock.Expect();
-
    const fs::path destinationFolderPath = ZenUnit::Random<fs::path>();
    const CloudundancyIni cloudundancyIni = ZenUnit::Random<CloudundancyIni>();
    //
    _cloudundancyFileCopier.CopyFilesAndFoldersToDestinationFolder(destinationFolderPath, cloudundancyIni);
    //
+   const string expectedCopyingMessage = String::Concat(
+      "\n[Cloudundancy] Copying [SourceFilesAndFolders] to destination folder ", destinationFolderPath.string(), ":\n");
+   const string expectedFolderBackedUpMessage = String::Concat(
+      "[Cloudundancy]   FolderBackupResult: Successfully copied [SourceFilesAndFolders] to ", destinationFolderPath.string(), '\n',
+      "[Cloudundancy] FolderBackupDuration: ", elapsedSeconds, " seconds");
+   METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
+   {
+      { expectedCopyingMessage },
+      { expectedFolderBackedUpMessage }
+   }));
    const string expectedBackupSuccessfulLogFileMessage = String::Concat(
       "Cloudundancy backup successful in ", elapsedSeconds, " seconds");
    METALMOCK(_cloudundancyLogFileAppenderMock->AppendTextToCloudundancyLogFileInFolderMock.CalledAsFollows(
@@ -158,17 +168,12 @@ TEST(CopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesN
       { destinationFolderPath, "Cloudundancy backup started" },
       { destinationFolderPath, expectedBackupSuccessfulLogFileMessage }
    }));
-
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    METALMOCK(_memberForEacher_CopyFileOrFolderToFolderMock->CallConstMemberFunctionForEachElementMock.CalledOnceWith(
       cloudundancyIni.cloudundancyIniCopyInstructions,
       &CloudundancyFileCopier::CopyFileOrFolderToFolder,
       &_cloudundancyFileCopier, destinationFolderPath));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
-   const string expectedFolderBackedUpMessage = String::Concat(
-      "[Cloudundancy]   FolderBackupResult: Successfully copied [SourceFilesAndFolders] to ", destinationFolderPath.string(), '\n',
-      "[Cloudundancy] FolderBackupDuration: ", elapsedSeconds, " seconds\n");
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedFolderBackedUpMessage));
 }
 
 TEST(CopyFileOrFolderToFolder_SourcePathHasAFileName_CallsCopyFileToFolder)

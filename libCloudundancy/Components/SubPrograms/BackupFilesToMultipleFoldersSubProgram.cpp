@@ -14,6 +14,6 @@ BackupFilesToMultipleFoldersSubProgram::~BackupFilesToMultipleFoldersSubProgram(
 int BackupFilesToMultipleFoldersSubProgram::Run(const CloudundancyArgs& args)
 {
    _cloudundancyFileCopier->CopyFilesAndFoldersToMultipleDestinationFolders(args.iniFilePath);
-   _console->WriteLine("[Cloudundancy] OverallBackupResult: Successfully copied all [SourceFilesAndFolders] to all [DestinationFolders]");
+   _console->WriteLine("\n[Cloudundancy] OverallBackupResult: Successfully copied all [SourceFilesAndFolders] to all [DestinationFolders]");
    return 0;
 }
