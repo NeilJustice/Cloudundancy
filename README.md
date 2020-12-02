@@ -2,7 +2,7 @@
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-17-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B17) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Cloudundancy quickly copies files and folders to multiple configurable destination folders to achieve cloud-redundant and device-redundant backups of key files. For example, destination folders can be configured to be a Google Drive folder, a Microsoft OneDrive folder, and two USB drives to achieve the peace of mind that comes with having cloud-redundant and device-redundant backups of key files.
+Cloudundancy quickly copies files and folders to multiple destination folders to achieve cloud-redundant and device-redundant backups of key files. For example, destination folders can be configured in a Cloudundancy.ini file to be a Google Drive folder, a Microsoft OneDrive folder, and two USB drives to achieve cloud-redundant and device-redundant backups of key files.
 
 |Build Type|Build Status|
 |----------|------------|
@@ -14,8 +14,8 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
 
 * [Command Line Usage](#command-line-usage)
 * [Cloudundancy Program Modes](#cloudundancy-program-modes)
-   * [example-linux-ini-file](#example-linux-ini-file)
-   * [example-windows-ini-file](#example-windows-ini-file)
+   * [example-linux-ini-file](#print-example-linux-ini-file)
+   * [example-windows-ini-file](#print-example-windows-ini-file)
    * [backup-files-and-folders](#backup-files-and-folders)
    * [backup-files-and-folders-to-7z-file](#backup-files-and-folders-to-7z-file)
 * [Linux Jenkins Jobs Which Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize Cloudundancy](#linux-jenkins-jobs-which-compile-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-cloudundancy)
@@ -31,8 +31,8 @@ Cloudundancy v0.9.0 - Makes cloud-redundant and device-redundant file backups
 https://github.com/NeilJustice/Cloudundancy
 
 Usage:
-   Cloudundancy example-linux-ini-file
-   Cloudundancy example-windows-ini-file
+   Cloudundancy print-example-linux-ini-file
+   Cloudundancy print-example-windows-ini-file
    Cloudundancy backup-files-and-folders --ini-file=<CloudundancyIniFilePath>
    Cloudundancy backup-files-and-folders-to-7z-file
       --ini-file=<CloudundancyIniFilePath>
@@ -46,17 +46,17 @@ Cloudundancy command line arguments are parsed using the excellent single-header
 
 ## Cloudundancy Program Modes
 
-### example-linux-ini-file
+### print-example-linux-ini-file
 
 11/16/2020: Work in progress.
 
-### example-windows-ini-file
+### print-example-windows-ini-file
 
-Cloudundancy program mode `example-windows-ini-file` prints an example Windows Cloudundancy .ini file for showing how to achieve data security peace of mind by way of quintuple backups of critical files and folders to three clouds (Google Drive, OneDrive, GitHub) and two USB drives (D: and E:).
+Cloudundancy program mode `print-example-windows-ini-file` prints an example Windows Cloudundancy .ini file for showing how to achieve data security peace of mind by way of quintuple backups of critical files and folders to three clouds (Google Drive, OneDrive, GitHub) and two USB drives (D: and E:).
 
 ![Example Windows Cloudundancy .ini File](Screenshots/ExampleWindowsCloudundancyIniFile.png)
 
-`example-windows-ini-file` in text format:
+`print-example-windows-ini-file` in text format:
 
 ```
 [DestinationFolders]
