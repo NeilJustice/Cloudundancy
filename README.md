@@ -16,7 +16,7 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
 * [Cloudundancy Program Modes](#cloudundancy-program-modes)
    * [example-linux-ini-file](#print-example-linux-ini-file)
    * [example-windows-ini-file](#print-example-windows-ini-file)
-   * [backup-files-and-folders](#backup-files-and-folders)
+   * [backup-files-to-multiple-folders](#backup-files-to-multiple-folders)
    * [backup-files-and-folders-to-7z-file](#backup-files-and-folders-to-7z-file)
 * [Linux Jenkins Jobs Which Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize Cloudundancy](#linux-jenkins-jobs-which-compile-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-cloudundancy)
 * [Windows Jenkins Jobs Which Compile Cloudundancy](#windows-jenkins-jobs-which-compile-cloudundancy)
@@ -33,7 +33,7 @@ https://github.com/NeilJustice/Cloudundancy
 Usage:
    Cloudundancy print-example-linux-ini-file
    Cloudundancy print-example-windows-ini-file
-   Cloudundancy backup-files-and-folders --ini-file=<CloudundancyIniFilePath>
+   Cloudundancy backup-files-to-multiple-folders --ini-file=<CloudundancyIniFilePath>
    Cloudundancy backup-files-and-folders-to-7z-file
       --ini-file=<CloudundancyIniFilePath>
       --7z-ini-file=<CloudundancyIniFilePath>
@@ -48,7 +48,7 @@ Cloudundancy command line arguments are parsed using the excellent single-header
 
 ### print-example-linux-ini-file
 
-11/16/2020: Work in progress.
+12/02/2020: Work in progress.
 
 ### print-example-windows-ini-file
 
@@ -101,19 +101,19 @@ nextBuildNumber
 scm-polling.log
 ```
 
-### backup-files-and-folders
+### backup-files-to-multiple-folders
 
-11/16/2020: Work in progress.
+12/02/2020: Work in progress.
 
 ### backup-files-and-folders-to-7z-file
 
-11/16/2020: Work in progress.
+12/02/2020: Work in progress.
 
 ### Linux Jenkins Jobs Which Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize Cloudundancy
 
 A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Fedora 33:
 
-11/16/2020: Work in progress.
+12/02/2020: Work in progress.
 
 ### Windows Jenkins Jobs Which Compile Cloudundancy
 

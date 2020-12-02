@@ -22,12 +22,12 @@ CloudundancyArgs CloudundancyArgsParser::ParseStringArgs(const vector<string>& s
    CloudundancyArgs cloudundancyArgs;
    const bool isPrintExampleLinuxIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "print-example-linux-ini-file");
    const bool isPrintExampleWindowsIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "print-example-windows-ini-file");
-   const bool isBackupFilesAndFoldersMode = _docoptParser->GetRequiredBool(docoptArgs, "backup-files-and-folders");
+   const bool isBackupFilesToMultipleFoldersMode = _docoptParser->GetRequiredBool(docoptArgs, "backup-files-to-multiple-folders");
    const bool isBackupFilesAndFoldersTo7zFileMode = _docoptParser->GetRequiredBool(docoptArgs, "backup-files-and-folders-to-7z-file");
    cloudundancyArgs.programMode = _programModeDeterminer->DetermineProgramMode(
       isPrintExampleLinuxIniFileMode,
       isPrintExampleWindowsIniFileMode,
-      isBackupFilesAndFoldersMode,
+      isBackupFilesToMultipleFoldersMode,
       isBackupFilesAndFoldersTo7zFileMode);
 
    cloudundancyArgs.iniFilePath = _docoptParser->GetRequiredString(docoptArgs, "--ini-file");

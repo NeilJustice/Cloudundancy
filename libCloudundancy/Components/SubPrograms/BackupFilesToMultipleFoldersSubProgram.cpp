@@ -1,17 +1,17 @@
 #include "pch.h"
 #include "libCloudundancy/Components/FileSystem/CloudundancyFileCopier.h"
-#include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersSubProgram.h"
+#include "libCloudundancy/Components/SubPrograms/BackupFilesToMultipleFoldersSubProgram.h"
 
-BackupFilesAndFoldersSubProgram::BackupFilesAndFoldersSubProgram()
+BackupFilesToMultipleFoldersSubProgram::BackupFilesToMultipleFoldersSubProgram()
    : _cloudundancyFileCopier(make_unique<CloudundancyFileCopier>())
 {
 }
 
-BackupFilesAndFoldersSubProgram::~BackupFilesAndFoldersSubProgram()
+BackupFilesToMultipleFoldersSubProgram::~BackupFilesToMultipleFoldersSubProgram()
 {
 }
 
-int BackupFilesAndFoldersSubProgram::Run(const CloudundancyArgs& args)
+int BackupFilesToMultipleFoldersSubProgram::Run(const CloudundancyArgs& args)
 {
    _cloudundancyFileCopier->CopyFilesAndFoldersToMultipleDestinationFolders(args.iniFilePath);
    _console->WriteLine("[Cloudundancy] OverallBackupResult: Successfully backed up all files and folders to all destination folders");

@@ -48,11 +48,11 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
 
    const bool isPrintExampleLinuxIniFileMode = ZenUnit::Random<bool>();
    const bool isPrintExampleWindowsIniFileMode = ZenUnit::Random<bool>();
-   const bool isBackupFilesAndFoldersMode = ZenUnit::Random<bool>();
+   const bool isBackupFilesToMultipleFoldersMode = ZenUnit::Random<bool>();
    _docoptParserMock->GetRequiredBoolMock.ReturnValues(
       isPrintExampleLinuxIniFileMode,
       isPrintExampleWindowsIniFileMode,
-      isBackupFilesAndFoldersMode,
+      isBackupFilesToMultipleFoldersMode,
       isBackupFilesAndFoldersTo7zFileMode);
 
    const ProgramMode programMode = _programModeDeterminerMock->DetermineProgramModeMock.ReturnRandom();
@@ -80,13 +80,13 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    {
       { docoptArgs, "print-example-linux-ini-file" },
       { docoptArgs, "print-example-windows-ini-file" },
-      { docoptArgs, "backup-files-and-folders" },
+      { docoptArgs, "backup-files-to-multiple-folders" },
       { docoptArgs, "backup-files-and-folders-to-7z-file" }
    }));
    METALMOCK(_programModeDeterminerMock->DetermineProgramModeMock.CalledOnceWith(
       isPrintExampleLinuxIniFileMode,
       isPrintExampleWindowsIniFileMode,
-      isBackupFilesAndFoldersMode,
+      isBackupFilesToMultipleFoldersMode,
       isBackupFilesAndFoldersTo7zFileMode));
    METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptArgs, "--ini-file"));
    METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledAsFollows(

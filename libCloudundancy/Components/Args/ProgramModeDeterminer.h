@@ -6,7 +6,7 @@ public:
    virtual ProgramMode DetermineProgramMode(
       bool isPrintExampleLinuxIniFileMode,
       bool isPrintExampleWindowsIniFileMode,
-      bool isBackupFilesAndFoldersMode,
+      bool isBackupFilesToMultipleFoldersMode,
       bool isBackupFilesAndFoldersTo7zFileMode) const;
    virtual ~ProgramModeDeterminer() = default;
 };

@@ -8,7 +8,7 @@ https://github.com/NeilJustice/Cloudundancy
 Usage:
    Cloudundancy print-example-linux-ini-file
    Cloudundancy print-example-windows-ini-file
-   Cloudundancy backup-files-and-folders --ini-file=<CloudundancyIniFilePath>
+   Cloudundancy backup-files-to-multiple-folders --ini-file=<CloudundancyIniFilePath>
    Cloudundancy backup-files-and-folders-to-7z-file
       --ini-file=<CloudundancyIniFilePath>
       --7z-ini-file=<CloudundancyIniFilePath>

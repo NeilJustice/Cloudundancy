@@ -11,7 +11,7 @@ ProgramModeDeterminer _programModeDeterminer;
 TEST5X5(DetermineProgramMode_ReturnsProgramModeCorrespondingToProgramModeBool,
    bool isPrintExampleLinuxIniFileMode,
    bool isPrintExampleWindowsIniFileMode,
-   bool isBackupFilesAndFoldersMode,
+   bool isBackupFilesToMultipleFoldersMode,
    bool is7ZipBackupMode,
    ProgramMode expectedReturnValue,
    true, false, false, false, ProgramMode::PrintExampleLinuxIniFile,
@@ -22,7 +22,7 @@ TEST5X5(DetermineProgramMode_ReturnsProgramModeCorrespondingToProgramModeBool,
    const ProgramMode programMode = _programModeDeterminer.DetermineProgramMode(
       isPrintExampleLinuxIniFileMode,
       isPrintExampleWindowsIniFileMode,
-      isBackupFilesAndFoldersMode,
+      isBackupFilesToMultipleFoldersMode,
       is7ZipBackupMode);
    //
    ARE_EQUAL(expectedReturnValue, programMode);

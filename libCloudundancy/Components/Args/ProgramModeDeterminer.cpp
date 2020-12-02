@@ -4,7 +4,7 @@
 ProgramMode ProgramModeDeterminer::DetermineProgramMode(
    bool isPrintExampleLinuxIniFileMode,
    bool isPrintExampleWindowsIniFileMode,
-   bool isBackupFilesAndFoldersMode,
+   bool isBackupFilesToMultipleFoldersMode,
    bool isBackupFilesAndFoldersTo7zFileMode) const
 {
    if (isPrintExampleLinuxIniFileMode)
@@ -15,7 +15,7 @@ ProgramMode ProgramModeDeterminer::DetermineProgramMode(
    {
       return ProgramMode::PrintExampleWindowsIniFile;
    }
-   if (isBackupFilesAndFoldersMode)
+   if (isBackupFilesToMultipleFoldersMode)
    {
       return ProgramMode::BackupFilesAndFolders;
    }

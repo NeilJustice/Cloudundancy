@@ -2,7 +2,7 @@
 #include "libCloudundancy/Components/SubPrograms/PrintExampleLinuxIniFileSubProgram.h"
 #include "libCloudundancy/Components/SubPrograms/PrintExampleWindowsIniFileSubProgram.h"
 #include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersTo7zFileSubProgram.h"
-#include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersSubProgram.h"
+#include "libCloudundancy/Components/SubPrograms/BackupFilesToMultipleFoldersSubProgram.h"
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgramFactory.h"
 
 shared_ptr<CloudundancySubProgram> CloudundancySubProgramFactory::NewCloudundancySubProgram(ProgramMode programMode) const
@@ -19,7 +19,7 @@ shared_ptr<CloudundancySubProgram> CloudundancySubProgramFactory::NewCloudundanc
    }
    case ProgramMode::BackupFilesAndFolders:
    {
-      return make_shared<BackupFilesAndFoldersSubProgram>();
+      return make_shared<BackupFilesToMultipleFoldersSubProgram>();
    }
    case ProgramMode::BackupFilesAndFoldersTo7zFile:
    {

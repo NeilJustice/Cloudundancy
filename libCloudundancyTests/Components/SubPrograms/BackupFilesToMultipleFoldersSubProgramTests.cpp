@@ -1,27 +1,27 @@
 #include "pch.h"
-#include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersSubProgram.h"
+#include "libCloudundancy/Components/SubPrograms/BackupFilesToMultipleFoldersSubProgram.h"
 #include "libCloudundancy/ValueTypes/CloudundancyArgs.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/CloudundancyFileCopierMock.h"
 
-TESTS(BackupFilesAndFoldersSubProgramTests)
+TESTS(BackupFilesToMultipleFoldersSubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
 AFACT(Run_SetsArgs_CallsCopyFilesAndFoldersToMultipleDestinationFolders_Returns0)
 EVIDENCE
 
-BackupFilesAndFoldersSubProgram _backupFilesAndFoldersToMultipleFoldersSubProgram;
+BackupFilesToMultipleFoldersSubProgram _backupFilesToMultipleFoldersSubProgram;
 ConsoleMock* _consoleMock = nullptr;
 CloudundancyFileCopierMock* _cloudundancyFileCopierMock = nullptr;
 
 STARTUP
 {
-   _backupFilesAndFoldersToMultipleFoldersSubProgram._cloudundancyFileCopier.reset(
+   _backupFilesToMultipleFoldersSubProgram._cloudundancyFileCopier.reset(
       _cloudundancyFileCopierMock = new CloudundancyFileCopierMock);
-   _backupFilesAndFoldersToMultipleFoldersSubProgram._console.reset(_consoleMock = new ConsoleMock);
+   _backupFilesToMultipleFoldersSubProgram._console.reset(_consoleMock = new ConsoleMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
 {
-   BackupFilesAndFoldersSubProgram backupFilesAndFoldersToMultipleFoldersSubProgram;
+   BackupFilesToMultipleFoldersSubProgram backupFilesAndFoldersToMultipleFoldersSubProgram;
    DELETE_TO_ASSERT_NEWED(backupFilesAndFoldersToMultipleFoldersSubProgram._cloudundancyFileCopier);
 }
 
@@ -32,7 +32,7 @@ TEST(Run_SetsArgs_CallsCopyFilesAndFoldersToMultipleDestinationFolders_Returns0)
 
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
-   const int exitCode = _backupFilesAndFoldersToMultipleFoldersSubProgram.Run(args);
+   const int exitCode = _backupFilesToMultipleFoldersSubProgram.Run(args);
    //
    METALMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleDestinationFoldersMock.CalledOnceWith(args.iniFilePath));
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(
@@ -40,4 +40,4 @@ TEST(Run_SetsArgs_CallsCopyFilesAndFoldersToMultipleDestinationFolders_Returns0)
    IS_ZERO(exitCode);
 }
 
-RUN_TESTS(BackupFilesAndFoldersSubProgramTests)
+RUN_TESTS(BackupFilesToMultipleFoldersSubProgramTests)
