@@ -14,6 +14,8 @@ AFACT(GetNameT_NonClassNonStructType_ReturnsTypeName)
 AFACT(GetNameT_ClassType_ReturnsTypeNameMinusClassSpace)
 AFACT(GetNameT_StructType_ReturnsTypeNameMinusStructSpace)
 AFACT(GetNameT_ThrownExceptionSubclass_ReturnsBaseClassNameAndNotSubclassName)
+AFACT(GetExceptionClassNameAndMessage_ReturnsExceptionClassNameColonSpaceExceptionMessage__DefaultExceptionTestCase)
+AFACT(GetExceptionClassNameAndMessage_ReturnsExceptionClassNameColonSpaceExceptionMessage__RuntimeErrorTestCase)
 EVIDENCE
 
 class C {};
@@ -119,7 +121,7 @@ TEST(GetNameT_ThrownExceptionSubclass_ReturnsBaseClassNameAndNotSubclassName)
    }
 #ifdef _WIN32
 #pragma warning(push)
-// Disable unreference local variable because MSVC does not count decltype(localVariable) as referencing localVariable
+   // Disable unreference local variable because MSVC does not count decltype(localVariable) as referencing localVariable
 #pragma warning(disable: 4101)
 #endif
    catch (const exception& e)
@@ -129,6 +131,27 @@ TEST(GetNameT_ThrownExceptionSubclass_ReturnsBaseClassNameAndNotSubclassName)
    {
       ARE_EQUAL("std::exception", *Type::GetName<decltype(e)>());
    }
+}
+
+TEST(GetExceptionClassNameAndMessage_ReturnsExceptionClassNameColonSpaceExceptionMessage__DefaultExceptionTestCase)
+{
+   const exception ex;
+#ifdef __linux__
+   ARE_EQUAL("std::exception: std::exception", Type::GetExceptionClassNameAndMessage(&ex));
+#elif _WIN32
+   ARE_EQUAL("std::exception: Unknown exception", Type::GetExceptionClassNameAndMessage(&ex));
+#endif
+}
+
+TEST(GetExceptionClassNameAndMessage_ReturnsExceptionClassNameColonSpaceExceptionMessage__RuntimeErrorTestCase)
+{
+   const string exceptionMessage = ZenUnit::Random<string>();
+   const runtime_error runtimeError(exceptionMessage);
+   //
+   const string exceptionClassNameAndMessage = Type::GetExceptionClassNameAndMessage(&runtimeError);
+   //
+   const string expectedReturnValue = "std::runtime_error: " + exceptionMessage;
+   ARE_EQUAL(expectedReturnValue, exceptionClassNameAndMessage);
 }
 
 RUN_TESTS(TypeTests)

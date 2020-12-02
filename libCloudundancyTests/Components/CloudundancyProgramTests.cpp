@@ -1,18 +1,10 @@
 #include "pch.h"
 #include "libCloudundancy/Components/CloudundancyProgram.h"
-#include "libCloudundancy/StaticUtilities/Exception.h"
-#include "libCloudundancy/StaticUtilities/Vector.h"
-#include "libCloudundancy/ValueTypes/CloudundancyArgs.h"
 #include "libCloudundancyTests/Components/Args/MetalMock/CloudundancyArgsParserMock.h"
-#include "libCloudundancyTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
-#include "libCloudundancyTests/UtilityComponents/Environment/MetalMock/EnvironmentalistMock.h"
-#include "libCloudundancyTests/UtilityComponents/Exception/MetalMock/TryCatchCallerMock.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/CloudundancyFileCopierMock.h"
 #include "libCloudundancyTests/Components/IniFile/MetalMock/CloudundancyIniFileReaderMock.h"
 #include "libCloudundancyTests/Components/SubPrograms/MetalMock/CloudundancySubProgramFactoryMock.h"
 #include "libCloudundancyTests/Components/SubPrograms/MetalMock/CloudundancySubProgramMock.h"
-#include "libCloudundancyTests/UtilityComponents/Time/MetalMock/StopwatchMock.h"
-#include "libCloudundancyTests/UtilityComponents/Time/MetalMock/WatchMock.h"
 
 TESTS(CloudundancyProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
@@ -40,7 +32,7 @@ StopwatchMock* _stopwatchMock = nullptr;
 STARTUP
 {
    // Function Callers
-   _cloudundancyProgram._call_Exception_GetExceptionClassNameAndMessage = BIND_1ARG_METALMOCK_OBJECT(GetExceptionClassNameAndMessageMock);
+   _cloudundancyProgram._call_Type_GetExceptionClassNameAndMessage = BIND_1ARG_METALMOCK_OBJECT(GetExceptionClassNameAndMessageMock);
    _cloudundancyProgram._call_Vector_ArgcArgvToStringVector = BIND_2ARG_METALMOCK_OBJECT(ArgcArgvToStringVectorMock);
    // Constant Components
    _cloudundancyProgram._cloudundancyArgsParser.reset(_cloudundancyArgsParserMock = new CloudundancyArgsParserMock);
@@ -58,7 +50,7 @@ TEST(DefaultConstructor_NewsComponents)
 {
    CloudundancyProgram cloudundancyProgram;
    // Function Callers
-   STD_FUNCTION_TARGETS(Exception::GetExceptionClassNameAndMessage, cloudundancyProgram._call_Exception_GetExceptionClassNameAndMessage);
+   STD_FUNCTION_TARGETS(Type::GetExceptionClassNameAndMessage, cloudundancyProgram._call_Type_GetExceptionClassNameAndMessage);
    STD_FUNCTION_TARGETS(Vector::ArgcArgvToStringVector, cloudundancyProgram._call_Vector_ArgcArgvToStringVector);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._cloudundancyArgsParser);

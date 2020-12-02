@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "libCloudundancy/StaticUtilities/Exception.h"
 #include "libCloudundancy/UtilityComponents/Exception/TryCatchCaller.h"
 
 template<typename ArgumentType, typename ExceptionType>
@@ -39,7 +38,7 @@ public:
 
    int ExceptionHandler(const exception& ex, ArgumentType argument)
    {
-      const string exceptionGetExceptionClassNameAndMessage = Exception::GetExceptionClassNameAndMessage(&ex);
+      const string exceptionGetExceptionClassNameAndMessage = Type::GetExceptionClassNameAndMessage(&ex);
       exceptionHandlerCalls.emplace_back(exceptionGetExceptionClassNameAndMessage, argument);
       return exceptionHandlerExitCode;
    }
@@ -70,7 +69,7 @@ TEST(TryCatchCall_CallsFunctionWhichThrowsException_CallsExceptionHandler_Return
    //
    VECTORS_ARE_EQUAL({ argument }, classInstance.calls);
    ExceptionType ex(classInstance.exceptionWhat.c_str());
-   const string exceptionGetExceptionClassNameAndMessage = Exception::GetExceptionClassNameAndMessage(&ex);
+   const string exceptionGetExceptionClassNameAndMessage = Type::GetExceptionClassNameAndMessage(&ex);
    vector<pair<string, ArgumentType>> expectedExceptionHandlerCalls =
    {
       { exceptionGetExceptionClassNameAndMessage, argument }

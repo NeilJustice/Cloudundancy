@@ -1,8 +1,35 @@
 #include "libCloudundancy/CompilerWarnings/IfWindowsIgnoreTheseWarningsGlobally.h"
+
+#if defined __linux__
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem;
+#include <memory>
+#include <unistd.h>
+#elif defined _WIN32 || defined __APPLE__
+#pragma warning(push)
+#pragma warning(disable: 4365) // signed/unsigned mismatch
+#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
+#include <filesystem>
+namespace fs = std::filesystem;
+#pragma warning(pop)
+#endif
+
 #include <functional>
 #ifdef __linux__
 #include <memory> // unique_ptr
 #endif
+#define WIN32_LEAN_AND_MEAN
+#define NOGDI
+#define NOMINMAX
+#include "Windows.h"
+using namespace std;
+
+#include "libCloudundancy/Enums/Color.h"
+#include "libCloudundancy/UtilityComponents/Console/Console.h"
+#include "libCloudundancy/UtilityComponents/Environment/Environmentalist.h"
+#include "libCloudundancy/UtilityComponents/Exception/TryCatchCaller.h"
+#include "libCloudundancy/UtilityComponents/Time/Stopwatch.h"
+#include "libCloudundancy/UtilityComponents/Time/Watch.h"
 #include "libCloudundancy/Components/CloudundancyProgram.h"
 
 // Example Cloudundancy command lines:

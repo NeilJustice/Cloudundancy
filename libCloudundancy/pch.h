@@ -52,10 +52,10 @@ using namespace std;
 
 // libCloudundancy StaticUtilities
 #include "libCloudundancy/StaticUtilities/Chars.h"
-#include "libCloudundancy/StaticUtilities/Exception.h"
 #include "libCloudundancy/StaticUtilities/Map.h"
 #include "libCloudundancy/StaticUtilities/ReleaseAssert.h"
 #include "libCloudundancy/StaticUtilities/StringUtil.h"
+#include "libCloudundancy/StaticUtilities/Type.h"
 #include "libCloudundancy/StaticUtilities/Vector.h"
 
 // libCloudundancy UtilityComponents

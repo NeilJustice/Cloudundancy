@@ -40,14 +40,26 @@ using namespace std;
 // libCloudundancy StaticUtilities
 #include "libCloudundancy/StaticUtilities/ReleaseAssert.h"
 #include "libCloudundancy/StaticUtilities/StringUtil.h"
+#include "libCloudundancy/StaticUtilities/Type.h"
+#include "libCloudundancy/StaticUtilities/Vector.h"
 
 // libCloudundancy UtilityComponents Mocks
 #include "libCloudundancyTests/UtilityComponents/Assertion/MetalMock/AsserterMock.h"
 #include "libCloudundancyTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
+#include "libCloudundancyTests/UtilityComponents/Docopt/MetalMock/DocoptParserMock.h"
+#include "libCloudundancyTests/UtilityComponents/Environment/MetalMock/EnvironmentalistMock.h"
+#include "libCloudundancyTests/UtilityComponents/Exception/MetalMock/TryCatchCallerMock.h"
 #include "libCloudundancyTests/UtilityComponents/FileSystem/MetalMock/FileSystemMock.h"
+#include "libCloudundancyTests/UtilityComponents/FileSystem/MetalMock/RecursiveDirectoryIteratorMock.h"
+#include "libCloudundancyTests/UtilityComponents/FunctionCallers/MemberFunctions/MetalMock/VoidOneArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/UtilityComponents/FunctionCallers/MemberFunctions/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/UtilityComponents/FunctionCallers/MemberFunctions/MetalMock/VoidThreeArgMemberFunctionCallerMock.h"
 #include "libCloudundancyTests/UtilityComponents/Iteration/ForEach/MetalMock/MemberFunctionForEacherMock.h"
 #include "libCloudundancyTests/UtilityComponents/Iteration/ForEach/MetalMock/OneExtraArgMemberFunctionForEacherMock.h"
+#include "libCloudundancyTests/UtilityComponents/Process/MetalMock/ProcessRunnerMock.h"
 #include "libCloudundancyTests/UtilityComponents/Random/MetalMock/UtilsRandomGeneratorMock.h"
+#include "libCloudundancyTests/UtilityComponents/Time/MetalMock/StopwatchMock.h"
+#include "libCloudundancyTests/UtilityComponents/Time/MetalMock/WatchMock.h"
 
 // libCloudundancyTests ValueTypes ZenUnit Equalizers And Randoms
 #include "libCloudundancyTests/ValueTypes/ZenUnit/AbsoluteFilePathToRelativeDestinationFolderPathEqualizerAndRandom.h"

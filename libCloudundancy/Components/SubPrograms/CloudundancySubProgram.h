@@ -1,6 +1,5 @@
 #pragma once
 class Console;
-struct CloudundancyArgs;
 
 class CloudundancySubProgram
 {

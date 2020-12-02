@@ -1,14 +1,5 @@
 #pragma once
-
-template<typename ReturnType, typename ClassType, typename ArgType>
-class NonVoidOneArgMemberFunctionCaller;
-
-template<typename ClassType, typename Arg1Type, typename Arg2Type>
-class VoidTwoArgMemberFunctionCaller;
-
 class CloudundancyIniValidator;
-class FileSystem;
-struct FilePathLineNumberLineText;
 
 class CloudundancyIniFileReader
 {

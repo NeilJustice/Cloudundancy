@@ -1,6 +1,4 @@
 #pragma once
-class DocoptParser;
-class FileSystem;
 class ProgramModeDeterminer;
 
 class CloudundancyArgsParser

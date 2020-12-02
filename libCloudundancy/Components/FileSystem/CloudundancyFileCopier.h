@@ -1,26 +1,6 @@
 #pragma once
-class Console;
 class CloudundancyIniFileReader;
 class CloudundancyLogFileAppender;
-class FileSystem;
-class RecursiveDirectoryIterator;
-class Stopwatch;
-class Watch;
-struct CloudundancyArgs;
-struct CloudundancyIni;
-struct CloudundancyIniCopyInstruction;
-
-template<typename ClassType, typename ElementType, typename ExtraArgType>
-class OneExtraArgMemberFunctionForEacher;
-
-template<typename ClassType, typename Arg1Type>
-class VoidOneArgMemberFunctionCaller;
-
-template<typename ClassType, typename Arg1Type, typename Arg2Type>
-class VoidTwoArgMemberFunctionCaller;
-
-template<typename ClassType, typename Arg1Type, typename Arg2Type, typename Arg3Type>
-class VoidThreeArgMemberFunctionCaller;
 
 class CloudundancyFileCopier
 {

@@ -7,7 +7,7 @@
 
 CloudundancyProgram::CloudundancyProgram() noexcept
    // Function Callers
-   : _call_Exception_GetExceptionClassNameAndMessage(Exception::GetExceptionClassNameAndMessage)
+   : _call_Type_GetExceptionClassNameAndMessage(Type::GetExceptionClassNameAndMessage)
    , _call_Vector_ArgcArgvToStringVector(Vector::ArgcArgvToStringVector)
    // Constant Components
    , _cloudundancyArgsParser(make_unique<CloudundancyArgsParser>())
@@ -73,7 +73,7 @@ int CloudundancyProgram::Run(const std::vector<std::string>& stringArgs)
 
 int CloudundancyProgram::ExceptionHandler(const exception& ex, const vector<string>& /*stringArgs*/)
 {
-   const string exceptionTypeNameAndMessage = _call_Exception_GetExceptionClassNameAndMessage(&ex);
+   const string exceptionTypeNameAndMessage = _call_Type_GetExceptionClassNameAndMessage(&ex);
    const string fullExceptionMessage =
       "\n[Cloudundancy]     Error: Exception thrown: " + exceptionTypeNameAndMessage;
    _console->WriteLine(fullExceptionMessage);

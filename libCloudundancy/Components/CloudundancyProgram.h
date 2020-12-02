@@ -1,21 +1,14 @@
 #pragma once
 class CloudundancyArgsParser;
 class CloudundancySubProgramFactory;
-struct CloudundancyArgs;
-class Console;
 class CloudundancyFileCopier;
-class Environmentalist;
-class Stopwatch;
-template<typename ClassType, typename ArgumentType>
-class TryCatchCaller;
-class Watch;
 
 class CloudundancyProgram
 {
    friend class CloudundancyProgramTests;
 private:
    // Function Callers
-   std::function<std::string(const std::exception*)> _call_Exception_GetExceptionClassNameAndMessage;
+   std::function<std::string(const std::exception*)> _call_Type_GetExceptionClassNameAndMessage;
    std::function<std::vector<std::string>(int, char* [])> _call_Vector_ArgcArgvToStringVector;
    // Constant Components
    std::unique_ptr<const CloudundancyArgsParser> _cloudundancyArgsParser;
