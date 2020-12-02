@@ -6,6 +6,8 @@ TESTS(ConsoleTests)
 AFACT(DefaultConstructor_NewsConsoleColorer)
 AFACT(Write_WritesMessageWithoutNewline)
 AFACT(WriteLine_WritesMessageAndNewline)
+AFACT(WriteLineIf_DoPrintMessageIsFalse_Returns)
+AFACT(WriteLineIf_DoPrintMessageIsTrue_WritesMessageToCoutWithNewline)
 AFACT(WriteLineAndExit_WritesMessageAndNewline_ExitsWithExitCode)
 AFACT(WriteLineColor_SetsConsoleColor_WritesMessageThenNewline_UnsetsColor)
 EVIDENCE
@@ -37,6 +39,16 @@ TEST(WriteLine_WritesMessageAndNewline)
    DOES_NOT_THROW(_console.WriteLine(ZenUnit::Random<string>()));
    const string_view stringView;
    DOES_NOT_THROW(_console.WriteLine(stringView));
+}
+
+TEST(WriteLineIf_DoPrintMessageIsFalse_Returns)
+{
+   _console.WriteLineIf(false, ZenUnit::Random<string>());
+}
+
+TEST(WriteLineIf_DoPrintMessageIsTrue_WritesMessageToCoutWithNewline)
+{
+   _console.WriteLineIf(true, ZenUnit::Random<string>());
 }
 
 TEST(WriteLineAndExit_WritesMessageAndNewline_ExitsWithExitCode)

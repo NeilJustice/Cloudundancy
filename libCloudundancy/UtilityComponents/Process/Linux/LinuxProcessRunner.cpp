@@ -11,7 +11,7 @@ ProcessResult LinuxProcessRunner::Run(string_view processName, string_view argum
    return ProcessResult();
 }
 
-ProcessResult LinuxProcessRunner::FailFastRun(string_view processName, string_view arguments) const
+ProcessResult LinuxProcessRunner::FailFastRun(string_view processName, string_view arguments, bool doPrintStandardOutput) const
 {
    return ProcessResult();
 }

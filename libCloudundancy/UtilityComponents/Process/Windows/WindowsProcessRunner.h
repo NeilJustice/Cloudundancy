@@ -19,7 +19,7 @@ public:
    WindowsProcessRunner();
    virtual ~WindowsProcessRunner();
    virtual ProcessResult Run(string_view processName, string_view arguments) const;
-   virtual ProcessResult FailFastRun(string_view processName, string_view arguments) const;
+   virtual ProcessResult FailFastRun(string_view processName, string_view arguments, bool doPrintStandardOutput) const;
 private:
    static string ReadPipe(HANDLE pipeHandle);
 };

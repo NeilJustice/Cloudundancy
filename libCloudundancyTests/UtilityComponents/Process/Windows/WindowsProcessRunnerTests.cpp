@@ -34,6 +34,8 @@ TEST(DefaultConstructor_NewsComponents)
 TEST(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
 {
    _consoleMock->WriteLineMock.Expect();
+   _consoleMock->WriteLineIfMock.Expect();
+   _consoleMock->WriteLineIfMock.Expect();
 
    ProcessResult runReturnValue = ZenUnit::Random<ProcessResult>();
    runReturnValue.exitCode = 0;
@@ -41,14 +43,13 @@ TEST(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
 
    const string processName = ZenUnit::Random<string>();
    const string arguments = ZenUnit::Random<string>();
+   const bool doPrintStandardOutput = ZenUnit::Random<bool>();
    //
-   const ProcessResult processResult = _windowsProcessRunner.FailFastRun(processName, arguments);
+   const ProcessResult processResult = _windowsProcessRunner.FailFastRun(processName, arguments, doPrintStandardOutput);
    //
-   METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
-   {
-      string_view(String::Concat("[Cloudundancy] Running program: ", processName, ' ', arguments)),
-      string_view(runReturnValue.standardOutputAndError)
-   }));
+   const string expectedRunningProgramMessage = String::Concat("[Cloudundancy] Running program: ", processName, ' ', arguments);
+   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedRunningProgramMessage));
+   METALMOCK(_consoleMock->WriteLineIfMock.CalledOnceWith(doPrintStandardOutput, processResult.standardOutputAndError));
    METALMOCK(_caller_RunMock->ConstCallMock.CalledOnceWith(
       &WindowsProcessRunner::Run, &_windowsProcessRunner, processName, arguments));
    ARE_EQUAL(runReturnValue, processResult);
@@ -61,20 +62,20 @@ TEST(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessage_CallsExitWithProcessE
    _caller_RunMock->ConstCallMock.Return(runReturnValue);
 
    _consoleMock->WriteLineMock.Expect();
+   _consoleMock->WriteLineIfMock.Expect();
    _consoleMock->WriteLineAndExitMock.Expect();
 
    const string processName = ZenUnit::Random<string>();
    const string arguments = ZenUnit::Random<string>();
+   const bool doPrintStandardOutput = ZenUnit::Random<bool>();
    //
-   const ProcessResult processResult = _windowsProcessRunner.FailFastRun(processName, arguments);
+   const ProcessResult processResult = _windowsProcessRunner.FailFastRun(processName, arguments, doPrintStandardOutput);
    //
    METALMOCK(_caller_RunMock->ConstCallMock.CalledOnceWith(
       &WindowsProcessRunner::Run, &_windowsProcessRunner, processName, arguments));
-   METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
-   {
-      string_view(String::Concat("[Cloudundancy] Running program: ", processName, ' ', arguments)),
-      string_view(runReturnValue.standardOutputAndError)
-   }));
+   const string expectedRunningProgramMessage = String::Concat("[Cloudundancy] Running program: ", processName, ' ', arguments);
+   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedRunningProgramMessage));
+   METALMOCK(_consoleMock->WriteLineIfMock.CalledOnceWith(doPrintStandardOutput, processResult.standardOutputAndError));
    const string expectedProcessFailedErrorMessage = String::Concat(
       "Process \"", processName, " ", arguments, "\" failed to return exit code 0 by returning exit code ", processResult.exitCode, '.');
    METALMOCK(_consoleMock->WriteLineAndExitMock.CalledOnceWith(expectedProcessFailedErrorMessage, runReturnValue.exitCode));

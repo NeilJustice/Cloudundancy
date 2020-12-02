@@ -51,10 +51,11 @@ TEST(FailFastRun_CallsProcessRunnerFailFastRun)
    const ProcessResult failFastReturnValue = _osSpecificProcessRunnerMock->FailFastRunMock.ReturnRandom();
    const string processName = ZenUnit::Random<string>();
    const string arguments = ZenUnit::Random<string>();
+   const bool doPrintStandardOutput = ZenUnit::Random<bool>();
    //
-   const ProcessResult processResult = _processRunner.FailFastRun(processName, arguments);
+   const ProcessResult processResult = _processRunner.FailFastRun(processName, arguments, doPrintStandardOutput);
    //
-   METALMOCK(_osSpecificProcessRunnerMock->FailFastRunMock.CalledOnceWith(processName, arguments));
+   METALMOCK(_osSpecificProcessRunnerMock->FailFastRunMock.CalledOnceWith(processName, arguments, doPrintStandardOutput));
    ARE_EQUAL(failFastReturnValue, processResult);
 }
 

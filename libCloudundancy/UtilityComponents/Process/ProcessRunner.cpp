@@ -19,9 +19,9 @@ ProcessRunner::~ProcessRunner()
 {
 }
 
-ProcessResult ProcessRunner::FailFastRun(string_view processName, string_view arguments) const
+ProcessResult ProcessRunner::FailFastRun(string_view processName, string_view arguments, bool doPrintStandardOutput) const
 {
-   const ProcessResult processResult = _osSpecificProcessRunner->FailFastRun(processName, arguments);
+   const ProcessResult processResult = _osSpecificProcessRunner->FailFastRun(processName, arguments, doPrintStandardOutput);
    return processResult;
 }
 

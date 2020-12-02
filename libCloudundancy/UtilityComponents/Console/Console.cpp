@@ -24,6 +24,14 @@ void Console::WriteLine(string_view message) const
    cout << message << '\n';
 }
 
+void Console::WriteLineIf(bool doPrintMessage, string_view message) const
+{
+   if (doPrintMessage)
+   {
+      cout << message << '\n';
+   }
+}
+
 void Console::WriteLineAndExit(string_view message, int exitCode) const
 {
    cout << message << '\n';

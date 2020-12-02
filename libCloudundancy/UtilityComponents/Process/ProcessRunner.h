@@ -19,6 +19,6 @@ private:
 public:
    ProcessRunner();
    virtual ~ProcessRunner();
-   virtual ProcessResult FailFastRun(string_view processName, string_view arguments) const;
+   virtual ProcessResult FailFastRun(string_view processName, string_view arguments, bool doPrintStandardOutput) const;
    virtual ProcessResult Run(string_view processName, string_view arguments) const;
 };
