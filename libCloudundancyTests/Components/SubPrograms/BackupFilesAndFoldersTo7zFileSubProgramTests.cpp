@@ -89,10 +89,13 @@ TEST(DeleteBackupStagingFolder_PrintsDeleting_DeletesBackupStagingFolder_PrintsD
    METALMOCK(_cloudundancyFileCopierMock->DeleteFolderMock.CalledOnceWith(args.backupStagingFolderPath));
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
+   const string expectedDeletingMessage = String::Concat("[Cloudundancy] Deleting ", args.backupStagingFolderPath.string());
+   const string expectedDeletedMessage = String::Concat(
+      "[Cloudundancy] Deleted ", args.backupStagingFolderPath.string(), " in ", elapsedSeconds, " seconds\n");
    METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
-      { "[Cloudundancy] Deleting " + args.backupStagingFolderPath.string() },
-      { "[Cloudundancy] Deleted " + args.backupStagingFolderPath.string() + " in " + elapsedSeconds + " seconds\n" }
+      { expectedDeletingMessage },
+      { expectedDeletedMessage }
    }));
 }
 
@@ -109,10 +112,14 @@ TEST(CopyFilesAndFoldersToBackupStagingFolder_CopiesSourceFilesAndFoldersToBacku
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    METALMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleDestinationFoldersMock.CalledOnceWith(args.iniFilePath));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
+   const string expectedCopyingMessage = String::Concat(
+      "[Cloudundancy] Copying [SourceFilesAndFolders] To " + args.backupStagingFolderPath.string());
+   const string expectedCopiedMessage = String::Concat(
+      "[Cloudundancy] Copied [SourceFilesAndFolders] To ", args.backupStagingFolderPath.string(), " in ", elapsedSeconds, " seconds\n");
    METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
-      { "[Cloudundancy] Copying Code Folder To " + args.backupStagingFolderPath.string() },
-      { "[Cloudundancy] Copied Code Folder To " + args.backupStagingFolderPath.string() + " in " + elapsedSeconds + " seconds\n" }
+      { expectedCopyingMessage },
+      { expectedCopiedMessage }
    }));
 }
 
@@ -157,10 +164,12 @@ TEST(Copy7zFileToDestinationFolders_DoesSo_PrintsElapsedSeconds)
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    METALMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleDestinationFoldersMock.CalledOnceWith(args.sevenZipIniFilePath));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
+   const string expectedCopiedMessage = String::Concat(
+      "[Cloudundancy] Copied .7z file to [DestinationFolders] in ", elapsedSeconds, " seconds\n");
    METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
-      { "[Cloudundancy] Copying .7z file to backup folders." },
-      { "[Cloudundancy] Copied .7z file to backup folders in " + elapsedSeconds + " seconds\n" }
+      { "[Cloudundancy] Copying .7z file to [DestinationFolders]..." },
+      { expectedCopiedMessage }
    }));
 }
 

@@ -36,35 +36,44 @@ int BackupFilesAndFoldersTo7zFileSubProgram::Run(const CloudundancyArgs& args)
 
 void BackupFilesAndFoldersTo7zFileSubProgram::Copy7zFileToDestinationFolders(const CloudundancyArgs& args) const
 {
-   _console->WriteLine("[Cloudundancy] Copying .7z file to backup folders.");
+   _console->WriteLine("[Cloudundancy] Copying .7z file to [DestinationFolders]...");
    _stopwatch->Start();
 
    _cloudundancyFileCopier->CopyFilesAndFoldersToMultipleDestinationFolders(args.sevenZipIniFilePath);
 
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
-   _console->WriteLine("[Cloudundancy] Copied .7z file to backup folders in " + elapsedSeconds + " seconds\n");
+   const string copiedMessage = String::Concat(
+      "[Cloudundancy] Copied .7z file to [DestinationFolders] in ", elapsedSeconds, " seconds\n");
+   _console->WriteLine(copiedMessage);
 }
 
 void BackupFilesAndFoldersTo7zFileSubProgram::CopyFilesAndFoldersToBackupStagingFolder(const CloudundancyArgs& args) const
 {
-   _console->WriteLine("[Cloudundancy] Copying Code Folder To " + args.backupStagingFolderPath.string());
+   const string copyingMessage = String::Concat(
+      "[Cloudundancy] Copying [SourceFilesAndFolders] To " + args.backupStagingFolderPath.string());
+   _console->WriteLine(copyingMessage);
    _stopwatch->Start();
 
    _cloudundancyFileCopier->CopyFilesAndFoldersToMultipleDestinationFolders(args.iniFilePath);
 
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
-   _console->WriteLine("[Cloudundancy] Copied Code Folder To " + args.backupStagingFolderPath.string() + " in " + elapsedSeconds + " seconds\n");
+   const string copiedMessage = String::Concat(
+      "[Cloudundancy] Copied [SourceFilesAndFolders] To ", args.backupStagingFolderPath.string(), " in ", elapsedSeconds, " seconds\n");
+   _console->WriteLine(copiedMessage);
 }
 
 void BackupFilesAndFoldersTo7zFileSubProgram::DeleteBackupStagingFolder(const CloudundancyArgs& args) const
 {
-   _console->WriteLine("[Cloudundancy] Deleting " + args.backupStagingFolderPath.string());
+   const string deletingMessage = String::Concat("[Cloudundancy] Deleting ", args.backupStagingFolderPath.string());
+   _console->WriteLine(deletingMessage);
    _stopwatch->Start();
 
    _cloudundancyFileCopier->DeleteFolder(args.backupStagingFolderPath);
 
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
-   _console->WriteLine("[Cloudundancy] Deleted " + args.backupStagingFolderPath.string() + " in " + elapsedSeconds + " seconds\n");
+   const string deletedMessage = String::Concat(
+      "[Cloudundancy] Deleted ", args.backupStagingFolderPath.string(), " in ", elapsedSeconds, " seconds\n");
+   _console->WriteLine(deletedMessage);
 }
 
 void BackupFilesAndFoldersTo7zFileSubProgram::SevenZipBackupStagingFolder(const CloudundancyArgs& args) const
