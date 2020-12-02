@@ -3,7 +3,7 @@
 #include "libCloudundancy/Components/FileSystem/FileOpenerCloser.h"
 #include "libCloudundancy/Components/FileSystem/FileSystem.h"
 #include "libCloudundancy/UtilityComponents/FunctionCallers/MemberFunctions/NonVoidOneArgMemberFunctionCaller.h"
-#include "libCloudundancy/Components/Memory/CharVectorAllocator.h"
+#include "libCloudundancy/UtilityComponents/Memory/CharVectorAllocator.h"
 #include "libCloudundancy/Components/Time/Stopwatch.h"
 #include "libCloudundancy/Components/Time/Watch.h"
 

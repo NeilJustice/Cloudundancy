@@ -45,8 +45,8 @@ using namespace std;
 #include "libCloudundancyTests/UtilityComponents/Assertion/MetalMock/AsserterMock.h"
 #include "libCloudundancyTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/FileSystemMock.h"
-#include "libCloudundancyTests/Components/Iteration/ForEach/MetalMock/MemberFunctionForEacherMock.h"
-#include "libCloudundancyTests/Components/Iteration/ForEach/MetalMock/OneExtraArgMemberFunctionForEacherMock.h"
+#include "libCloudundancyTests/UtilityComponents/Iteration/ForEach/MetalMock/MemberFunctionForEacherMock.h"
+#include "libCloudundancyTests/UtilityComponents/Iteration/ForEach/MetalMock/OneExtraArgMemberFunctionForEacherMock.h"
 #include "libCloudundancyTests/Components/Random/MetalMock/UtilsRandomGeneratorMock.h"
 
 // ZenUnit Equalizers And Randoms

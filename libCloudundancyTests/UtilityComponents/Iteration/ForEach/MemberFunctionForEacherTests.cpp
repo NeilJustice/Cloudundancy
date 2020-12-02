@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Components/Iteration/ForEach/MemberFunctionForEacher.h"
+#include "libCloudundancy/UtilityComponents/Iteration/ForEach/MemberFunctionForEacher.h"
 
 template<typename ElementType>
 TEMPLATE_TESTS(MemberFunctionForEacherTests, ElementType)

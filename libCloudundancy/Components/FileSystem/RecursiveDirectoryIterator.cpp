@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/Components/FileSystem/RecursiveDirectoryIterator.h"
-#include "libCloudundancy/Components/Iteration/Transform/OneExtraArgTransformer.h"
+#include "libCloudundancy/UtilityComponents/Iteration/Transform/OneExtraArgTransformer.h"
 
 RecursiveDirectoryIterator::RecursiveDirectoryIterator() noexcept
    : _oneExtraArgTransformer(make_unique<OneExtraArgTransformerType>())

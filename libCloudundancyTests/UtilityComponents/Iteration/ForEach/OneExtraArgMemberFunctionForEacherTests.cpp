@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/Components/Iteration/ForEach/OneExtraArgMemberFunctionForEacher.h"
+#include "libCloudundancy/UtilityComponents/Iteration/ForEach/OneExtraArgMemberFunctionForEacher.h"
 
 template<typename ElementType, typename ExtraArgType>
 TEMPLATE_TESTS(OneExtraArgMemberFunctionForEacherTests, ElementType, ExtraArgType)
