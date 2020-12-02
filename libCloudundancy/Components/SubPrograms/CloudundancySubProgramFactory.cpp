@@ -1,14 +1,22 @@
 #include "pch.h"
+#include "libCloudundancy/Components/SubPrograms/PrintExampleLinuxIniFileSubProgram.h"
+#include "libCloudundancy/Components/SubPrograms/PrintExampleWindowsIniFileSubProgram.h"
 #include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersTo7zFileSubProgram.h"
 #include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersSubProgram.h"
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgramFactory.h"
-#include "libCloudundancy/Components/SubPrograms/ExampleLinuxIniFileSubProgram.h"
-#include "libCloudundancy/Components/SubPrograms/ExampleWindowsIniFileSubProgram.h"
 
 shared_ptr<CloudundancySubProgram> CloudundancySubProgramFactory::NewCloudundancySubProgram(ProgramMode programMode) const
 {
    switch (programMode)
    {
+   case ProgramMode::PrintExampleLinuxIniFile:
+   {
+      return make_shared<PrintExampleLinuxIniFileSubProgram>();
+   }
+   case ProgramMode::PrintExampleWindowsIniFile:
+   {
+      return make_shared<PrintExampleWindowsIniFileSubProgram>();
+   }
    case ProgramMode::BackupFilesAndFolders:
    {
       return make_shared<BackupFilesAndFoldersSubProgram>();
@@ -16,14 +24,6 @@ shared_ptr<CloudundancySubProgram> CloudundancySubProgramFactory::NewCloudundanc
    case ProgramMode::BackupFilesAndFoldersTo7zFile:
    {
       return make_shared<BackupFilesAndFoldersTo7zFileSubProgram>();
-   }
-   case ProgramMode::PrintExampleLinuxIniFile:
-   {
-      return make_shared<ExampleLinuxIniFileSubProgram>();
-   }
-   case ProgramMode::PrintExampleWindowsIniFile:
-   {
-      return make_shared<ExampleWindowsIniFileSubProgram>();
    }
    default:
    {

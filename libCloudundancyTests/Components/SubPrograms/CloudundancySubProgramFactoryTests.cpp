@@ -2,8 +2,8 @@
 #include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersTo7zFileSubProgram.h"
 #include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersSubProgram.h"
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgramFactory.h"
-#include "libCloudundancy/Components/SubPrograms/ExampleLinuxIniFileSubProgram.h"
-#include "libCloudundancy/Components/SubPrograms/ExampleWindowsIniFileSubProgram.h"
+#include "libCloudundancy/Components/SubPrograms/PrintExampleLinuxIniFileSubProgram.h"
+#include "libCloudundancy/Components/SubPrograms/PrintExampleWindowsIniFileSubProgram.h"
 
 TESTS(CloudundancySubProgramFactoryTests)
 AFACT(NewCloudundancySubProgram_ProgramModeIsPrintExampleLinuxIniFile_ReturnsPrintExampleLinuxIniFileSubProgram)
@@ -19,14 +19,14 @@ TEST(NewCloudundancySubProgram_ProgramModeIsPrintExampleLinuxIniFile_ReturnsPrin
 {
    const shared_ptr<CloudundancySubProgram> cloudundancySubProgram =
       _cloudundancyRunnerFactory.NewCloudundancySubProgram(ProgramMode::PrintExampleLinuxIniFile);
-   POINTEE_IS_EXACT_TYPE(ExampleLinuxIniFileSubProgram, cloudundancySubProgram);
+   POINTEE_IS_EXACT_TYPE(PrintExampleLinuxIniFileSubProgram, cloudundancySubProgram);
 }
 
 TEST(NewCloudundancySubProgram_ProgramModeIsPrintExampleWindowsIniFile_ReturnsPrintExampleWindowsIniFileSubProgram)
 {
    const shared_ptr<CloudundancySubProgram> cloudundancySubProgram =
       _cloudundancyRunnerFactory.NewCloudundancySubProgram(ProgramMode::PrintExampleWindowsIniFile);
-   POINTEE_IS_EXACT_TYPE(ExampleWindowsIniFileSubProgram, cloudundancySubProgram);
+   POINTEE_IS_EXACT_TYPE(PrintExampleWindowsIniFileSubProgram, cloudundancySubProgram);
 }
 
 TEST(NewCloudundancySubProgram_ProgramModeIsBackupFilesAndFolders_ReturnsMakeSharedBackupFilesAndFoldersSubProgram)

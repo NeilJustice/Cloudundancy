@@ -4,8 +4,8 @@ class Console;
 class CloudundancySubProgram
 {
    friend class CloudundancySubProgramTests;
-   friend class ExampleLinuxIniFileSubProgramTests;
-   friend class ExampleWindowsIniFileSubProgramTests;
+   friend class PrintExampleLinuxIniFileSubProgramTests;
+   friend class PrintExampleWindowsIniFileSubProgramTests;
 protected:
    unique_ptr<const Console> _console;
 public:

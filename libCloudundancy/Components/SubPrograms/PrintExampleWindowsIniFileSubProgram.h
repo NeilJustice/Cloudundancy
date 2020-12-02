@@ -1,9 +1,9 @@
 #pragma once
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgram.h"
 
-class ExampleLinuxIniFileSubProgram : public CloudundancySubProgram
+class PrintExampleWindowsIniFileSubProgram : public CloudundancySubProgram
 {
 public:
    int Run(const CloudundancyArgs& args) override;
-   ~ExampleLinuxIniFileSubProgram() = default;
+   ~PrintExampleWindowsIniFileSubProgram() = default;
 };

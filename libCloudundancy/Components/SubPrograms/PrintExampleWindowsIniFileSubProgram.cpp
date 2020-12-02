@@ -1,27 +1,10 @@
 #include "pch.h"
-#include "libCloudundancy/Components/SubPrograms/ExampleWindowsIniFileSubProgram.h"
+#include "libCloudundancy/Components/SubPrograms/PrintExampleWindowsIniFileSubProgram.h"
 
-TESTS(ExampleWindowsIniFileSubProgramTests)
-AFACT(Run_PrintsExampleWindowsIniFile_Returns0)
-EVIDENCE
-
-ExampleWindowsIniFileSubProgram _exampleWindowsIniFileSubProgram;
-ConsoleMock* _consoleMock = nullptr;
-
-STARTUP
+int PrintExampleWindowsIniFileSubProgram::Run(const CloudundancyArgs&)
 {
-   _exampleWindowsIniFileSubProgram._console.reset(_consoleMock = new ConsoleMock);
-}
-
-TEST(Run_PrintsExampleWindowsIniFile_Returns0)
-{
-   _consoleMock->WriteLineMock.Expect();
-   const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
-   //
-   const int exitCode = _exampleWindowsIniFileSubProgram.Run(args);
-   //
-   const string expectedExampleWindowsIniFileText =
-      R"(
+   const string exampleWindowsIniFileText =
+R"(
 Example Windows Cloudundancy .ini file:
 
 [DestinationFolders]
@@ -65,8 +48,6 @@ PowerShell\Modules\
 nextBuildNumber
 scm-polling.log
 )";
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedExampleWindowsIniFileText));
-   IS_ZERO(exitCode);
+   _console->WriteLine(exampleWindowsIniFileText);
+   return 0;
 }
-
-RUN_TESTS(ExampleWindowsIniFileSubProgramTests)
