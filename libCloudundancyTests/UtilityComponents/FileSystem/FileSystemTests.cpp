@@ -35,7 +35,8 @@ AFACT(AppendText_CreatesParentDirectoryToFilePath_AppendsTimestampedTextToFile)
 AFACT(WriteTextFile_CreatesParentDirectoryToFilePath_CreatesFileInTextWriteMode_WritesFileTextToFile_ClosesFile)
 // Misc
 AFACT(DeleteFolder_CallsStdFileSystemRemoveAllOnFolderPath)
-AFACT(DeleteFolders_CallsStdFileSystemRemoveAllOnEachFolderPath_PrintsDeletedFolderMessages)
+AFACT(DeleteFolderExceptForFile_InitializedRecursiveDirectoryIteratorField_CallsRecursivelyDeleteAllFilesExceptIgnoredFileSubpaths_PrintsDeletedFolderExceptForCloudundancyDotLog)
+AFACT(DeleteFoldersExceptForFile_CallsDeleteFolderExceptForFileOnEachFolderPath_PrintsDeletedFolderMessages)
 AFACT(SetCurrentPath_CallsFsCurrentPathWithFolderPath)
 // Private Functions
 AFACT(FileSize_CallsFSeekEndThenFTellToDetermineSizeOfFileInBytes)
@@ -59,6 +60,10 @@ METALMOCK_NONVOID1_NAMESPACED_FREE(uintmax_t, std::filesytem, remove_all, const 
 using _caller_FileSize_MockType = NonVoidOneArgMemberFunctionCallerMock<size_t, FileSystem, FILE*>;
 _caller_FileSize_MockType* _caller_FileSizeMock = nullptr;
 
+using _caller_FileSystem_DeleteFolderExceptForFileMockType =
+   OneExtraArgMemberFunctionForEacherMock<FileSystem, fs::path, string_view>;
+_caller_FileSystem_DeleteFolderExceptForFileMockType* _caller_FileSystem_DeleteFolderExceptForFileMock = nullptr;
+
 using _caller_ReadFileBytes_MockType = NonVoidOneArgMemberFunctionCallerMock<shared_ptr<const vector<char>>, FileSystem, const fs::path&>;
 _caller_ReadFileBytes_MockType* _caller_ReadFileBytesMock = nullptr;
 
@@ -72,6 +77,7 @@ CharVectorAllocatorMock* _charVectorAllocatorMock = nullptr;
 FileOpenerCloserMock* _fileOpenerCloserMock = nullptr;
 
 // Mutable Fields
+RecursiveDirectoryIteratorMock* _recursiveDirectoryIteratorMock = nullptr;
 StopwatchMock* _stopwatchMock = nullptr;
 
 STARTUP
@@ -92,6 +98,7 @@ STARTUP
    // Function Callers
    _fileSystem._caller_ReadFileBytes.reset(_caller_ReadFileBytesMock = new _caller_ReadFileBytes_MockType);
    _fileSystem._caller_FileSize.reset(_caller_FileSizeMock = new _caller_FileSize_MockType);
+   _fileSystem._caller_FileSystem_DeleteFolderExceptForFile.reset(_caller_FileSystem_DeleteFolderExceptForFileMock = new _caller_FileSystem_DeleteFolderExceptForFileMockType);
    _fileSystem._caller_ReadFileText.reset(_caller_ReadFileTextMock = new _caller_ReadFileText_MockType);
    // Constant Components
    _fileSystem._asserter.reset(_asserterMock = new AsserterMock);
@@ -99,6 +106,7 @@ STARTUP
    _fileSystem._charVectorAllocator.reset(_charVectorAllocatorMock = new CharVectorAllocatorMock);
    _fileSystem._fileOpenerCloser.reset(_fileOpenerCloserMock = new FileOpenerCloserMock);
    // Mutable Components
+   _fileSystem._recursiveDirectoryIterator.reset(_recursiveDirectoryIteratorMock = new RecursiveDirectoryIteratorMock);
    _fileSystem._stopwatch.reset(_stopwatchMock = new StopwatchMock);
 }
 
@@ -141,6 +149,7 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
    DELETE_TO_ASSERT_NEWED(fileSystem._charVectorAllocator);
    DELETE_TO_ASSERT_NEWED(fileSystem._fileOpenerCloser);
    // Mutable Components
+   DELETE_TO_ASSERT_NEWED(fileSystem._recursiveDirectoryIterator);
    DELETE_TO_ASSERT_NEWED(fileSystem._stopwatch);
 }
 
@@ -535,31 +544,37 @@ TEST(DeleteFolder_CallsStdFileSystemRemoveAllOnFolderPath)
    METALMOCK(remove_allMock.CalledOnceWith(folderPath));
 }
 
-TEST(DeleteFolders_CallsStdFileSystemRemoveAllOnEachFolderPath_PrintsDeletedFolderMessages)
+TEST(DeleteFolderExceptForFile_InitializedRecursiveDirectoryIteratorField_CallsRecursivelyDeleteAllFilesExceptIgnoredFileSubpaths_PrintsDeletedFolderExceptForCloudundancyDotLog)
 {
-   remove_allMock.ReturnRandom();
+   _recursiveDirectoryIteratorMock->SetFileSubpathsToIgnoreMock.Expect();
+   _recursiveDirectoryIteratorMock->InitializeIteratorAtFolderPathMock.Expect();
+   _recursiveDirectoryIteratorMock->RecursivelyDeleteAllFilesExceptIgnoredFileSubpathsMock.Expect();
    _consoleMock->WriteLineMock.Expect();
-   const vector<fs::path>& folderPaths =
-   {
-      ZenUnit::Random<fs::path>(),
-      ZenUnit::Random<fs::path>(),
-      ZenUnit::Random<fs::path>()
-   };
+   const fs::path folderPath = ZenUnit::Random<fs::path>();
+   const string exceptFileName = ZenUnit::Random<string>();
    //
-   _fileSystem.DeleteFolders(folderPaths);
+   _fileSystem.DeleteFolderExceptForFile(folderPath, exceptFileName);
    //
-   METALMOCK(remove_allMock.CalledAsFollows(
-   {
-      { folderPaths[0] },
-      { folderPaths[1] },
-      { folderPaths[2] }
-   }));
-   METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
-   {
-      { "[Cloudundancy] Deleted folder " + folderPaths[0].string() },
-      { "[Cloudundancy] Deleted folder " + folderPaths[1].string() },
-      { "[Cloudundancy] Deleted folder " + folderPaths[2].string() }
-   }));
+   const vector<string> expectedFileSubpathsToNotIterate{ string(exceptFileName) };
+   METALMOCK(_recursiveDirectoryIteratorMock->SetFileSubpathsToIgnoreMock.CalledOnceWith(expectedFileSubpathsToNotIterate));
+   METALMOCK(_recursiveDirectoryIteratorMock->InitializeIteratorAtFolderPathMock.CalledOnceWith(folderPath));
+   METALMOCK(_recursiveDirectoryIteratorMock->RecursivelyDeleteAllFilesExceptIgnoredFileSubpathsMock.CalledOnce());
+   _recursiveDirectoryIteratorMock->InitializeIteratorAtFolderPathMock.Expect();
+   const string expectedDeletedFolderMessage = String::Concat(
+      "[Cloudundancy] Deleted folder ", folderPath.string(), " except for Cloudundancy.log");
+   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedDeletedFolderMessage));
+}
+
+TEST(DeleteFoldersExceptForFile_CallsDeleteFolderExceptForFileOnEachFolderPath_PrintsDeletedFolderMessages)
+{
+   _caller_FileSystem_DeleteFolderExceptForFileMock->CallConstMemberFunctionForEachElementMock.Expect();
+   const vector<fs::path> folderPaths = ZenUnit::RandomVector<fs::path>();
+   const string exceptFileName = ZenUnit::Random<string>();
+   //
+   _fileSystem.DeleteFoldersExceptForFile(folderPaths, exceptFileName);
+   //
+   METALMOCK(_caller_FileSystem_DeleteFolderExceptForFileMock->CallConstMemberFunctionForEachElementMock.CalledOnceWith(
+      folderPaths, &FileSystem::DeleteFolderExceptForFile, &_fileSystem, exceptFileName));
 }
 
 TEST(SetCurrentPath_CallsFsCurrentPathWithFolderPath)

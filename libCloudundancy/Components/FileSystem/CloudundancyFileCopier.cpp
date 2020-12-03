@@ -36,14 +36,14 @@ void CloudundancyFileCopier::CopyFilesAndFoldersToMultipleDestinationFolders(
    if (deleteDestinationFoldersFirst)
    {
       _console->WriteLine("[Cloudundancy] Deleting [DestinationFolders] first because --delete-destination-folders-first is specified");
-      _fileSystem->DeleteFolders(cloudundancyIni.destinationFolderPaths);
+      _fileSystem->DeleteFoldersExceptForFile(cloudundancyIni.destinationFolderPaths, "Cloudundancy.log");
       _console->WriteLine("[Cloudundancy] Destination folders deleted");
    }
    const string copyingMessage = String::Concat(
       "[Cloudundancy] Copying [SourceFilesAndFolders] to [DestinationFolders] as listed in ", iniFilePath.string(), ":\n");
    _console->WriteLine(copyingMessage);
    _console->WriteLines(cloudundancyIni.iniFileLines);
-   _recursiveDirectoryIterator->SetFileSubpathsToNotCopy(cloudundancyIni.fileSubpathsToNotCopy);
+   _recursiveDirectoryIterator->SetFileSubpathsToIgnore(cloudundancyIni.fileSubpathsToNotCopy);
    _memberForEacher_CopyEachFileOrFolderToFolder->CallConstMemberFunctionForEachElement(
       cloudundancyIni.destinationFolderPaths,
       &CloudundancyFileCopier::CopyFilesAndFoldersToDestinationFolder, this, cloudundancyIni);

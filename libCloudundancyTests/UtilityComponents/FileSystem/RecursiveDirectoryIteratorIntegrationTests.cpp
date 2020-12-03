@@ -60,7 +60,7 @@ TEST(DefaultConstructor_NewsOneExtraArgTransformer_SetsFieldsToDefaultValues)
 TEST(IntegrationTest_RecursiveDirectoryIterator_EmptyFilePathIgnoreSubstrings_ReturnsAllFilePathsInAndBelowFolderPath)
 {
    const vector<string> emptyFilePathIgnoreSubstrings;
-   _recursiveDirectoryIterator.SetFileSubpathsToNotCopy(emptyFilePathIgnoreSubstrings);
+   _recursiveDirectoryIterator.SetFileSubpathsToIgnore(emptyFilePathIgnoreSubstrings);
    _recursiveDirectoryIterator.InitializeIteratorAtFolderPath(_rootFolderPath);
    //
    const fs::path path1 = _recursiveDirectoryIterator.NextNonIgnoredFilePath();
@@ -137,7 +137,7 @@ TEST(IntegrationTest_RecursiveDirectoryIterator_NonEmptyFilePathIgnoreSubstrings
       "ignored_file_extension",
       "ignored_directory_name"
    };
-   _recursiveDirectoryIterator.SetFileSubpathsToNotCopy(emptyFilePathIgnoreSubstrings);
+   _recursiveDirectoryIterator.SetFileSubpathsToIgnore(emptyFilePathIgnoreSubstrings);
    _recursiveDirectoryIterator.InitializeIteratorAtFolderPath(_rootFolderPath);
    //
    const fs::path path1 = _recursiveDirectoryIterator.NextNonIgnoredFilePath();

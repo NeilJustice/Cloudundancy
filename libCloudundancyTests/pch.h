@@ -58,6 +58,7 @@ using namespace std;
 #include "libCloudundancyTests/UtilityComponents/FunctionCallers/MemberFunctions/MetalMock/VoidThreeArgMemberFunctionCallerMock.h"
 #include "libCloudundancyTests/UtilityComponents/Iteration/ForEach/MetalMock/MemberFunctionForEacherMock.h"
 #include "libCloudundancyTests/UtilityComponents/Iteration/ForEach/MetalMock/OneExtraArgMemberFunctionForEacherMock.h"
+#include "libCloudundancyTests/UtilityComponents/Iteration/Transform/MetalMock/OneExtraArgTransformerMock.h"
 #include "libCloudundancyTests/UtilityComponents/Process/MetalMock/ProcessRunnerMock.h"
 #include "libCloudundancyTests/UtilityComponents/Random/MetalMock/UtilsRandomGeneratorMock.h"
 #include "libCloudundancyTests/UtilityComponents/Time/MetalMock/StopwatchMock.h"

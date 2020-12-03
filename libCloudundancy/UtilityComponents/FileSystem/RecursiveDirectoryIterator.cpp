@@ -2,7 +2,10 @@
 #include "libCloudundancy/UtilityComponents/FileSystem/RecursiveDirectoryIterator.h"
 
 RecursiveDirectoryIterator::RecursiveDirectoryIterator() noexcept
-   : _oneExtraArgTransformer(make_unique<OneExtraArgTransformerType>())
+   // Function Pointers
+   : _call_fs_remove(static_cast<FilesystemRemoveOverloadFunctionType>(fs::remove))
+   // Function Callers
+   , _oneExtraArgTransformer(make_unique<OneExtraArgTransformerType>())
 {
 }
 
@@ -10,7 +13,7 @@ RecursiveDirectoryIterator::~RecursiveDirectoryIterator()
 {
 }
 
-void RecursiveDirectoryIterator::SetFileSubpathsToNotCopy(const vector<string>& fileSubpathsToNotCopy)
+void RecursiveDirectoryIterator::SetFileSubpathsToIgnore(const vector<string>& fileSubpathsToNotCopy)
 {
    _fileSubpathsToNotCopy = fileSubpathsToNotCopy;
 }
@@ -22,7 +25,7 @@ void RecursiveDirectoryIterator::InitializeIteratorAtFolderPath(const fs::path& 
 
 fs::path RecursiveDirectoryIterator::NextNonIgnoredFilePath()
 {
-   static const fs::recursive_directory_iterator zeroMoreFilesRemaining;
+   static const fs::recursive_directory_iterator zeroMoreFilesRemaining{};
    while (true)
    {
       if (_recursiveDirectoryIterator == zeroMoreFilesRemaining)
@@ -43,6 +46,19 @@ fs::path RecursiveDirectoryIterator::NextNonIgnoredFilePath()
          continue;
       }
       return nextFilePath;
+   }
+}
+
+void RecursiveDirectoryIterator::RecursivelyDeleteAllFilesExceptIgnoredFileSubpaths()
+{
+   while (true)
+   {
+      const fs::path nextNonIgnoredFilePath = NextNonIgnoredFilePath();
+      if (nextNonIgnoredFilePath == fs::path())
+      {
+         break;
+      }
+      _call_fs_remove(nextNonIgnoredFilePath);
    }
 }
 

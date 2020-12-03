@@ -28,6 +28,7 @@ FileSystem::FileSystem()
    , _call_fs_remove_all(static_cast<RemoveAllOverloadType>(fs::remove_all))
    // Function Callers
    , _caller_FileSize(make_unique<_caller_FileSize_Type>())
+   , _caller_FileSystem_DeleteFolderExceptForFile(make_unique<_caller_FileSystem_DeleteFolderExceptForFileType>())
    , _caller_ReadFileBytes(make_unique<_caller_ReadFileBytes_Type>())
    , _caller_ReadFileText(make_unique< _caller_ReadFileText_Type>())
    // Constant Components
@@ -36,6 +37,7 @@ FileSystem::FileSystem()
    , _charVectorAllocator(make_unique<CharVectorAllocator>())
    , _fileOpenerCloser(make_unique<FileOpenerCloser>())
    // Mutable Components
+   , _recursiveDirectoryIterator(make_unique<RecursiveDirectoryIterator>())
    , _stopwatch(make_unique<Stopwatch>())
 {
    _call_fs_create_directories = _call_fs_create_directories_as_assignable_function_overload_pointer;
@@ -209,14 +211,21 @@ void FileSystem::DeleteFolder(const fs::path& folderPath) const
    _call_fs_remove_all(folderPath);
 }
 
-void FileSystem::DeleteFolders(const vector<fs::path>& folderPaths) const
+void FileSystem::DeleteFolderExceptForFile(const fs::path& folderPath, string_view exceptFileName) const
 {
-   for (const fs::path& folderPath : folderPaths)
-   {
-      DeleteFolder(folderPath);
-      const string deletedFolderMessage = String::Concat("[Cloudundancy] Deleted folder ", folderPath.string());
-      _console->WriteLine(deletedFolderMessage);
-   }
+   const vector<string> fileSubpathsToNotIterate{ string(exceptFileName) };
+   _recursiveDirectoryIterator->SetFileSubpathsToIgnore(fileSubpathsToNotIterate);
+   _recursiveDirectoryIterator->InitializeIteratorAtFolderPath(folderPath);
+   _recursiveDirectoryIterator->RecursivelyDeleteAllFilesExceptIgnoredFileSubpaths();
+   const string deletedFolderMessage = String::Concat(
+      "[Cloudundancy] Deleted folder ", folderPath.string(), " except for Cloudundancy.log");
+   _console->WriteLine(deletedFolderMessage);
+}
+
+void FileSystem::DeleteFoldersExceptForFile(const vector<fs::path>& folderPaths, string_view exceptFileName) const
+{
+   _caller_FileSystem_DeleteFolderExceptForFile->CallConstMemberFunctionForEachElement(
+      folderPaths, &FileSystem::DeleteFolderExceptForFile, this, exceptFileName);
 }
 
 void FileSystem::SetCurrentPath(const fs::path& folderPath) const

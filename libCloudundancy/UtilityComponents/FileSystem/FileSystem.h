@@ -5,6 +5,9 @@ class FileSystemTests;
 class FileOpenerCloser;
 template<typename ReturnType, typename ClassType, typename ArgType>
 class NonVoidOneArgMemberFunctionCaller;
+template<typename ClassType, typename ElementType, typename ExtraArgType>
+class OneExtraArgMemberFunctionForEacher;
+class RecursiveDirectoryIterator;
 class Stopwatch;
 class Watch;
 
@@ -41,6 +44,9 @@ private:
    using _caller_FileSize_Type = NonVoidOneArgMemberFunctionCaller<size_t, FileSystem, FILE*>;
    unique_ptr<const _caller_FileSize_Type> _caller_FileSize;
 
+   using _caller_FileSystem_DeleteFolderExceptForFileType = OneExtraArgMemberFunctionForEacher<FileSystem, fs::path, string_view>;
+   unique_ptr<const _caller_FileSystem_DeleteFolderExceptForFileType> _caller_FileSystem_DeleteFolderExceptForFile;
+
    using _caller_ReadFileBytes_Type = NonVoidOneArgMemberFunctionCaller<shared_ptr<const vector<char>>, FileSystem, const fs::path&>;
    unique_ptr<const _caller_ReadFileBytes_Type> _caller_ReadFileBytes;
 
@@ -54,6 +60,7 @@ private:
    unique_ptr<const FileOpenerCloser> _fileOpenerCloser;
 
    // Mutable Components
+   unique_ptr<RecursiveDirectoryIterator> _recursiveDirectoryIterator;
    unique_ptr<Stopwatch> _stopwatch;
 public:
    FileSystem();
@@ -79,7 +86,8 @@ public:
 
    // Misc
    virtual void DeleteFolder(const fs::path& folderPath) const;
-   virtual void DeleteFolders(const vector<fs::path>& folderPaths) const;
+   virtual void DeleteFolderExceptForFile(const fs::path& folderPath, string_view exceptFileName) const;
+   virtual void DeleteFoldersExceptForFile(const vector<fs::path>& folderPaths, string_view exceptFileName) const;
    virtual void SetCurrentPath(const fs::path& folderPath) const;
 private:
    size_t FileSize(FILE* filePointer) const;
