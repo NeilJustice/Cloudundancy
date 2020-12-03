@@ -1,6 +1,6 @@
 #pragma once
 class CloudundancyIniFileReader;
-class CloudundancyLogFileAppender;
+class CloudundancyLogFileWriter;
 
 class CloudundancyFileCopier
 {
@@ -37,7 +37,7 @@ private:
 
    // Constant Components
    unique_ptr<const CloudundancyIniFileReader> _cloudundancyIniFileReader;
-   unique_ptr<const CloudundancyLogFileAppender> _cloudundancyLogFileAppender;
+   unique_ptr<const CloudundancyLogFileWriter> _cloudundancyLogFileWriter;
    unique_ptr<const Console> _console;
    unique_ptr<const FileSystem> _fileSystem;
 

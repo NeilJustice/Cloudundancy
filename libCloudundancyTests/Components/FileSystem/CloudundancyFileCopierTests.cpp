@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/Components/FileSystem/CloudundancyFileCopier.h"
-#include "libCloudundancyTests/Components/FileSystem/MetalMock/CloudundancyLogFileAppenderMock.h"
+#include "libCloudundancyTests/Components/FileSystem/MetalMock/CloudundancyLogFileWriterMock.h"
 #include "libCloudundancyTests/Components/IniFile/MetalMock/CloudundancyIniFileReaderMock.h"
 
 TESTS(CloudundancyFileCopierTests)
@@ -55,7 +55,7 @@ _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMockType* _memberCall
 
 // Constant Components
 CloudundancyIniFileReaderMock* _cloudundancyIniFileReaderMock = nullptr;
-CloudundancyLogFileAppenderMock* _cloudundancyLogFileAppenderMock = nullptr;
+CloudundancyLogFileWriterMock* _cloudundancyLogFileWriterMock = nullptr;
 ConsoleMock* _consoleMock = nullptr;
 FileSystemMock* _fileSystemMock = nullptr;
 
@@ -77,7 +77,7 @@ STARTUP
    _cloudundancyFileCopier._memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailed.reset(_memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMock = new _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMockType);
    // Components
    _cloudundancyFileCopier._cloudundancyIniFileReader.reset(_cloudundancyIniFileReaderMock = new CloudundancyIniFileReaderMock);
-   _cloudundancyFileCopier._cloudundancyLogFileAppender.reset(_cloudundancyLogFileAppenderMock = new CloudundancyLogFileAppenderMock);
+   _cloudundancyFileCopier._cloudundancyLogFileWriter.reset(_cloudundancyLogFileWriterMock = new CloudundancyLogFileWriterMock);
    _cloudundancyFileCopier._console.reset(_consoleMock = new ConsoleMock);
    _cloudundancyFileCopier._fileSystem.reset(_fileSystemMock = new FileSystemMock);
    // Mutable Components
@@ -176,7 +176,7 @@ TEST(CopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesN
 {
    _consoleMock->WriteLineMock.Expect();
 
-   _cloudundancyLogFileAppenderMock->AppendTextToCloudundancyLogFileInFolderMock.Expect();
+   _cloudundancyLogFileWriterMock->AppendTextToCloudundancyLogFileInFolderMock.Expect();
 
    _stopwatchMock->StartMock.Expect();
 
@@ -201,7 +201,7 @@ TEST(CopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesN
    }));
    const string expectedBackupSuccessfulLogFileMessage = String::Concat(
       "Cloudundancy backup successful in ", elapsedSeconds, " seconds");
-   METALMOCK(_cloudundancyLogFileAppenderMock->AppendTextToCloudundancyLogFileInFolderMock.CalledAsFollows(
+   METALMOCK(_cloudundancyLogFileWriterMock->AppendTextToCloudundancyLogFileInFolderMock.CalledAsFollows(
    {
       { destinationFolderPath, "Cloudundancy backup started" },
       { destinationFolderPath, expectedBackupSuccessfulLogFileMessage }
@@ -428,7 +428,7 @@ TEST(WriteCopiedMessageOrExitWithCode1IfCopyFailed_CopySucceeded_WritesCopiedAnd
 TEST(WriteCopiedMessageOrExitWithCode1IfCopyFailed_CopyFailed_WritesCopyFailedAndDurationInMillisecondsAndCopyFailureReason_AppendsErrorToCloudundancyLog_ExitsProgramWithCode1)
 {
    _consoleMock->WriteLineColorMock.Expect();
-   _cloudundancyLogFileAppenderMock->AppendTextToCloudundancyLogFileInFolderMock.Expect();
+   _cloudundancyLogFileWriterMock->AppendTextToCloudundancyLogFileInFolderMock.Expect();
    exitMock.Expect();
    FileCopyResult fileCopyResult = ZenUnit::Random<FileCopyResult>();
    fileCopyResult.copySucceeded = false;
@@ -439,7 +439,7 @@ TEST(WriteCopiedMessageOrExitWithCode1IfCopyFailed_CopyFailed_WritesCopyFailedAn
    const string expectedCopyFailedLogFileMessage = String::Concat("File copy failed: ",
       fileCopyResult.sourceFilePath.string(), " -> ", fileCopyResult.destinationFilePath.string(),
       ". Reason: ", fileCopyResult.copyFailureReason);
-   METALMOCK(_cloudundancyLogFileAppenderMock->AppendTextToCloudundancyLogFileInFolderMock.CalledOnceWith(
+   METALMOCK(_cloudundancyLogFileWriterMock->AppendTextToCloudundancyLogFileInFolderMock.CalledOnceWith(
       destinationFolderPath, expectedCopyFailedLogFileMessage));
 
    const string expectedCopyFailedConsoleMessage = String::Concat(

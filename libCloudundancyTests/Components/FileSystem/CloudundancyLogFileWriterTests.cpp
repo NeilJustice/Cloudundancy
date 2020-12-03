@@ -1,12 +1,12 @@
 #include "pch.h"
-#include "libCloudundancy/Components/FileSystem/CloudundancyLogFileAppender.h"
+#include "libCloudundancy/Components/FileSystem/CloudundancyLogFileWriter.h"
 
-TESTS(CloudundancyLogFileAppenderTests)
+TESTS(CloudundancyLogFileWriterTests)
 AFACT(DefaultConstructor_NewsComponents)
 AFACT(AppendTimestampedTextToCloudundancyLogFileInDestinationFolder_AppendsTimestampedTextToCloudundancyDotLogInDestinationFolder)
 EVIDENCE
 
-CloudundancyLogFileAppender _cloudundancyLogFileAppender;
+CloudundancyLogFileWriter _cloudundancyLogFileWriter;
 // Constant Components
 FileSystemMock* _fileSystemMock = nullptr;
 WatchMock* _watchMock = nullptr;
@@ -14,16 +14,16 @@ WatchMock* _watchMock = nullptr;
 STARTUP
 {
    // Constant Components
-   _cloudundancyLogFileAppender._fileSystem.reset(_fileSystemMock = new FileSystemMock);
-   _cloudundancyLogFileAppender._watch.reset(_watchMock = new WatchMock);
+   _cloudundancyLogFileWriter._fileSystem.reset(_fileSystemMock = new FileSystemMock);
+   _cloudundancyLogFileWriter._watch.reset(_watchMock = new WatchMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
 {
-   CloudundancyLogFileAppender cloudundancyLogFileAppender;
+   CloudundancyLogFileWriter cloudundancyLogFileWriter;
    // Constant Components
-   DELETE_TO_ASSERT_NEWED(cloudundancyLogFileAppender._fileSystem);
-   DELETE_TO_ASSERT_NEWED(cloudundancyLogFileAppender._watch);
+   DELETE_TO_ASSERT_NEWED(cloudundancyLogFileWriter._fileSystem);
+   DELETE_TO_ASSERT_NEWED(cloudundancyLogFileWriter._watch);
 }
 
 TEST(AppendTimestampedTextToCloudundancyLogFileInDestinationFolder_AppendsTimestampedTextToCloudundancyDotLogInDestinationFolder)
@@ -33,7 +33,7 @@ TEST(AppendTimestampedTextToCloudundancyLogFileInDestinationFolder_AppendsTimest
    const fs::path destinationFolderPath = ZenUnit::Random<fs::path>();
    const string text = ZenUnit::Random<string>();
    //
-   _cloudundancyLogFileAppender.AppendTextToCloudundancyLogFileInFolder(destinationFolderPath, text);
+   _cloudundancyLogFileWriter.AppendTextToCloudundancyLogFileInFolder(destinationFolderPath, text);
    //
    METALMOCK(_watchMock->DateTimeNowMock.CalledOnce());
    const fs::path expectedCloudundancyLogFilePath = destinationFolderPath / "Cloudundancy.log";
@@ -42,4 +42,4 @@ TEST(AppendTimestampedTextToCloudundancyLogFileInDestinationFolder_AppendsTimest
       expectedCloudundancyLogFilePath, expectedTimestampedBackupStartedMessage));
 }
 
-RUN_TESTS(CloudundancyLogFileAppenderTests)
+RUN_TESTS(CloudundancyLogFileWriterTests)

@@ -1,15 +1,15 @@
 #pragma once
 
-class CloudundancyLogFileAppender
+class CloudundancyLogFileWriter
 {
-   friend class CloudundancyLogFileAppenderTests;
+   friend class CloudundancyLogFileWriterTests;
 private:
    // Constant Comopnents
    unique_ptr<const FileSystem> _fileSystem;
    unique_ptr<const Watch> _watch;
 public:
-   CloudundancyLogFileAppender();
-   virtual ~CloudundancyLogFileAppender();
+   CloudundancyLogFileWriter();
+   virtual ~CloudundancyLogFileWriter();
    virtual void AppendTextToCloudundancyLogFileInFolder(
       const fs::path& destinationFolderPath, string_view text) const;
 };

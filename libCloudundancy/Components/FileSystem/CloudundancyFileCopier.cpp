@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libCloudundancy/Components/IniFile/CloudundancyIniFileReader.h"
 #include "libCloudundancy/Components/FileSystem/CloudundancyFileCopier.h"
-#include "libCloudundancy/Components/FileSystem/CloudundancyLogFileAppender.h"
+#include "libCloudundancy/Components/FileSystem/CloudundancyLogFileWriter.h"
 
 CloudundancyFileCopier::CloudundancyFileCopier() noexcept
    // Function Pointers
@@ -16,7 +16,7 @@ CloudundancyFileCopier::CloudundancyFileCopier() noexcept
    , _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailed(make_unique<_memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedType>())
    // Constant Components
    , _cloudundancyIniFileReader(make_unique<CloudundancyIniFileReader>())
-   , _cloudundancyLogFileAppender(make_unique<CloudundancyLogFileAppender>())
+   , _cloudundancyLogFileWriter(make_unique<CloudundancyLogFileWriter>())
    , _console(make_unique<Console>())
    , _fileSystem(make_unique<FileSystem>())
    // Mutable Components
@@ -57,7 +57,7 @@ void CloudundancyFileCopier::CopyFilesAndFoldersToDestinationFolder(
    const string copyingMessage = String::Concat(
       "\n[Cloudundancy] Copying [SourceFilesAndFolders] to destination folder ", destinationFolderPath.string(), ":\n");
    _console->WriteLine(copyingMessage);
-   _cloudundancyLogFileAppender->AppendTextToCloudundancyLogFileInFolder(destinationFolderPath, "Cloudundancy backup started");
+   _cloudundancyLogFileWriter->AppendTextToCloudundancyLogFileInFolder(destinationFolderPath, "Cloudundancy backup started");
    _stopwatch->Start();
    _memberForEacher_CopyFileOrFolderToFolder->CallConstMemberFunctionForEachElement(
       cloudundancyIni.cloudundancyIniCopyInstructions,
@@ -69,7 +69,7 @@ void CloudundancyFileCopier::CopyFilesAndFoldersToDestinationFolder(
    _console->WriteLine(folderBackedUpMessage);
    const string cloudundancyBackupSuccessfulMessage =
       String::Concat("Cloudundancy backup successful in ", elapsedSeconds, " seconds");
-   _cloudundancyLogFileAppender->AppendTextToCloudundancyLogFileInFolder(
+   _cloudundancyLogFileWriter->AppendTextToCloudundancyLogFileInFolder(
       destinationFolderPath, cloudundancyBackupSuccessfulMessage);
 }
 
@@ -192,7 +192,7 @@ void CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed(
       const string copyFailedLogFileMessage = String::Concat("File copy failed: ",
          fileCopyResult.sourceFilePath.string(), " -> ", fileCopyResult.destinationFilePath.string(),
          ". Reason: ", fileCopyResult.copyFailureReason);
-      _cloudundancyLogFileAppender->AppendTextToCloudundancyLogFileInFolder(destinationFolderPath, copyFailedLogFileMessage);
+      _cloudundancyLogFileWriter->AppendTextToCloudundancyLogFileInFolder(destinationFolderPath, copyFailedLogFileMessage);
 
       const string copyFailedConsoleMessage = String::Concat(
          "Copy failed [", durationInMilliseconds, "ms]: ", fileCopyResult.copyFailureReason, '\n',
