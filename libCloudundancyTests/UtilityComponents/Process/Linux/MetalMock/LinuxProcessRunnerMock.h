@@ -1,7 +1,6 @@
 #pragma once
 #ifdef __linux__
-#include "libCloudundancy/Components/Process/Linux/LinuxProcessRunner.h"
-#include "libCloudundancyTests/Components/Process/ZenUnit/ProcessResultEqualizerAndRandom.h"
+#include "libCloudundancy/UtilityComponents/Process/Linux/LinuxProcessRunner.h"
 
 class LinuxProcessRunnerMock : public Metal::Mock<LinuxProcessRunner>
 {
