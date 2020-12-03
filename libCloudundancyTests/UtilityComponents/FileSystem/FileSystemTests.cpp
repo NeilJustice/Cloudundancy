@@ -35,7 +35,7 @@ AFACT(AppendText_CreatesParentDirectoryToFilePath_AppendsTimestampedTextToFile)
 AFACT(WriteTextFile_CreatesParentDirectoryToFilePath_CreatesFileInTextWriteMode_WritesFileTextToFile_ClosesFile)
 // Misc
 AFACT(DeleteFolder_CallsStdFileSystemRemoveAllOnFolderPath)
-AFACT(DeleteFolders_CallsStdFileSystemRemoveAllOnEachFolderPath)
+AFACT(DeleteFolders_CallsStdFileSystemRemoveAllOnEachFolderPath_PrintsDeletedFolderMessages)
 AFACT(SetCurrentPath_CallsFsCurrentPathWithFolderPath)
 // Private Functions
 AFACT(FileSize_CallsFSeekEndThenFTellToDetermineSizeOfFileInBytes)
@@ -67,6 +67,7 @@ _caller_ReadFileText_MockType* _caller_ReadFileTextMock = nullptr;
 
 // Constant Components
 AsserterMock* _asserterMock = nullptr;
+ConsoleMock* _consoleMock = nullptr;
 CharVectorAllocatorMock* _charVectorAllocatorMock = nullptr;
 FileOpenerCloserMock* _fileOpenerCloserMock = nullptr;
 
@@ -94,6 +95,7 @@ STARTUP
    _fileSystem._caller_ReadFileText.reset(_caller_ReadFileTextMock = new _caller_ReadFileText_MockType);
    // Constant Components
    _fileSystem._asserter.reset(_asserterMock = new AsserterMock);
+   _fileSystem._console.reset(_consoleMock = new ConsoleMock);
    _fileSystem._charVectorAllocator.reset(_charVectorAllocatorMock = new CharVectorAllocatorMock);
    _fileSystem._fileOpenerCloser.reset(_fileOpenerCloserMock = new FileOpenerCloserMock);
    // Mutable Components
@@ -533,9 +535,10 @@ TEST(DeleteFolder_CallsStdFileSystemRemoveAllOnFolderPath)
    METALMOCK(remove_allMock.CalledOnceWith(folderPath));
 }
 
-TEST(DeleteFolders_CallsStdFileSystemRemoveAllOnEachFolderPath)
+TEST(DeleteFolders_CallsStdFileSystemRemoveAllOnEachFolderPath_PrintsDeletedFolderMessages)
 {
    remove_allMock.ReturnRandom();
+   _consoleMock->WriteLineMock.Expect();
    const vector<fs::path>& folderPaths =
    {
       ZenUnit::Random<fs::path>(),
@@ -550,6 +553,12 @@ TEST(DeleteFolders_CallsStdFileSystemRemoveAllOnEachFolderPath)
       { folderPaths[0] },
       { folderPaths[1] },
       { folderPaths[2] }
+   }));
+   METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
+   {
+      { "[Cloudundancy] Deleted folder " + folderPaths[0].string() },
+      { "[Cloudundancy] Deleted folder " + folderPaths[1].string() },
+      { "[Cloudundancy] Deleted folder " + folderPaths[2].string() }
    }));
 }
 

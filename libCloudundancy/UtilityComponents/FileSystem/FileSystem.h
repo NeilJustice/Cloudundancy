@@ -49,6 +49,7 @@ private:
 
    // Constant Components
    unique_ptr<const Asserter> _asserter;
+   unique_ptr<const Console> _console;
    unique_ptr<const CharVectorAllocator> _charVectorAllocator;
    unique_ptr<const FileOpenerCloser> _fileOpenerCloser;
 

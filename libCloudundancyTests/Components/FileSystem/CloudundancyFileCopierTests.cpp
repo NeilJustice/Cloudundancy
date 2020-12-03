@@ -5,8 +5,8 @@
 
 TESTS(CloudundancyFileCopierTests)
 AFACT(DefaultConstructor_SetsFunctionsAndNewsComponents)
-AFACT(CopyFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFirstIsFalse_DoesNotDeleteDestinationFolders_CopiesFilesAndFoldersToFolders)
 AFACT(CopyFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFirstIsTrue_DeletesDestinationFolders_CopiesFilesAndFoldersToFolders)
+AFACT(CopyFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFirstIsFalse_DoesNotDeleteDestinationFolders_CopiesFilesAndFoldersToFolders)
 // Private Functions
 AFACT(CopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesNonSkippedSourceFilesToDestinationFolder_AppendBackupSuccessfulToLogFile)
 AFACT(CopyFileOrFolderToFolder_SourcePathHasAFileName_CallsCopyFileToFolder)
@@ -107,32 +107,6 @@ TEST(DefaultConstructor_SetsFunctionsAndNewsComponents)
    DELETE_TO_ASSERT_NEWED(fileCopier._stopwatch);
 }
 
-TEST(CopyFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFirstIsFalse_DoesNotDeleteDestinationFolders_CopiesFilesAndFoldersToFolders)
-{
-   const CloudundancyIni cloudundancyIni = _cloudundancyIniFileReaderMock->ReadIniFileMock.ReturnRandom();
-
-   _consoleMock->WriteLineMock.Expect();
-   _consoleMock->WriteLinesMock.Expect();
-
-   _recursiveDirectoryIteratorMock->SetFileSubpathsToNotCopyMock.Expect();
-
-   _memberForEacher_CopyEachFileOrFolderToFolderMock->CallConstMemberFunctionForEachElementMock.Expect();
-   const fs::path iniFilePath = ZenUnit::Random<fs::path>();
-   //
-   _cloudundancyFileCopier.CopyFilesAndFoldersToMultipleDestinationFolders(iniFilePath, false);
-   //
-   METALMOCK(_cloudundancyIniFileReaderMock->ReadIniFileMock.CalledOnceWith(iniFilePath));
-   const string expectedBackingUpMessage = String::Concat(
-      "[Cloudundancy] Copying [SourceFilesAndFolders] to [DestinationFolders] as listed in ", iniFilePath.string(), ":\n");
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedBackingUpMessage));
-   METALMOCK(_consoleMock->WriteLinesMock.CalledOnceWith(cloudundancyIni.iniFileLines));
-   METALMOCK(_recursiveDirectoryIteratorMock->SetFileSubpathsToNotCopyMock.CalledOnceWith(cloudundancyIni.fileSubpathsToNotCopy));
-   METALMOCK(_memberForEacher_CopyEachFileOrFolderToFolderMock->CallConstMemberFunctionForEachElementMock.CalledOnceWith(
-      cloudundancyIni.destinationFolderPaths,
-      &CloudundancyFileCopier::CopyFilesAndFoldersToDestinationFolder,
-      &_cloudundancyFileCopier, cloudundancyIni));
-}
-
 TEST(CopyFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFirstIsTrue_DeletesDestinationFolders_CopiesFilesAndFoldersToFolders)
 {
    const CloudundancyIni cloudundancyIni = _cloudundancyIniFileReaderMock->ReadIniFileMock.ReturnRandom();
@@ -147,15 +121,47 @@ TEST(CopyFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFir
    _fileSystemMock->DeleteFoldersMock.Expect();
 
    const fs::path iniFilePath = ZenUnit::Random<fs::path>();
-   const bool deleteDestinationFoldersFirst = ZenUnit::Random<bool>();
    //
    _cloudundancyFileCopier.CopyFilesAndFoldersToMultipleDestinationFolders(iniFilePath, true);
    //
    METALMOCK(_cloudundancyIniFileReaderMock->ReadIniFileMock.CalledOnceWith(iniFilePath));
-   METALMOCK(_fileSystemMock->DeleteFoldersMock.CalledOnceWith(cloudundancyIni.destinationFolderPaths));
-   const string expectedBackingUpMessage = String::Concat(
+   const string expectedCopyingMessage = String::Concat(
       "[Cloudundancy] Copying [SourceFilesAndFolders] to [DestinationFolders] as listed in ", iniFilePath.string(), ":\n");
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedBackingUpMessage));
+   METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
+   {
+      { "[Cloudundancy] Deleting [DestinationFolders] first because --delete-destination-folders-first is specified" },
+      { "[Cloudundancy] Destination folders deleted" },
+      { expectedCopyingMessage }
+   }));
+   METALMOCK(_fileSystemMock->DeleteFoldersMock.CalledOnceWith(cloudundancyIni.destinationFolderPaths));
+   METALMOCK(_consoleMock->WriteLinesMock.CalledOnceWith(cloudundancyIni.iniFileLines));
+   METALMOCK(_recursiveDirectoryIteratorMock->SetFileSubpathsToNotCopyMock.CalledOnceWith(cloudundancyIni.fileSubpathsToNotCopy));
+   METALMOCK(_memberForEacher_CopyEachFileOrFolderToFolderMock->CallConstMemberFunctionForEachElementMock.CalledOnceWith(
+      cloudundancyIni.destinationFolderPaths,
+      &CloudundancyFileCopier::CopyFilesAndFoldersToDestinationFolder,
+      &_cloudundancyFileCopier, cloudundancyIni));
+}
+
+TEST(CopyFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFirstIsFalse_DoesNotDeleteDestinationFolders_CopiesFilesAndFoldersToFolders)
+{
+   const CloudundancyIni cloudundancyIni = _cloudundancyIniFileReaderMock->ReadIniFileMock.ReturnRandom();
+
+   _consoleMock->WriteLineMock.Expect();
+   _consoleMock->WriteLinesMock.Expect();
+
+   _recursiveDirectoryIteratorMock->SetFileSubpathsToNotCopyMock.Expect();
+
+   _memberForEacher_CopyEachFileOrFolderToFolderMock->CallConstMemberFunctionForEachElementMock.Expect();
+
+   const fs::path iniFilePath = ZenUnit::Random<fs::path>();
+   const bool deleteDestinationFoldersFirst = ZenUnit::Random<bool>();
+   //
+   _cloudundancyFileCopier.CopyFilesAndFoldersToMultipleDestinationFolders(iniFilePath, false);
+   //
+   METALMOCK(_cloudundancyIniFileReaderMock->ReadIniFileMock.CalledOnceWith(iniFilePath));
+   const string expectedCopyingMessage = String::Concat(
+      "[Cloudundancy] Copying [SourceFilesAndFolders] to [DestinationFolders] as listed in ", iniFilePath.string(), ":\n");
+   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedCopyingMessage));
    METALMOCK(_consoleMock->WriteLinesMock.CalledOnceWith(cloudundancyIni.iniFileLines));
    METALMOCK(_recursiveDirectoryIteratorMock->SetFileSubpathsToNotCopyMock.CalledOnceWith(cloudundancyIni.fileSubpathsToNotCopy));
    METALMOCK(_memberForEacher_CopyEachFileOrFolderToFolderMock->CallConstMemberFunctionForEachElementMock.CalledOnceWith(

@@ -32,6 +32,7 @@ FileSystem::FileSystem()
    , _caller_ReadFileText(make_unique< _caller_ReadFileText_Type>())
    // Constant Components
    , _asserter(make_unique<Asserter>())
+   , _console(make_unique<Console>())
    , _charVectorAllocator(make_unique<CharVectorAllocator>())
    , _fileOpenerCloser(make_unique<FileOpenerCloser>())
    // Mutable Components
@@ -213,6 +214,8 @@ void FileSystem::DeleteFolders(const vector<fs::path>& folderPaths) const
    for (const fs::path& folderPath : folderPaths)
    {
       DeleteFolder(folderPath);
+      const string deletedFolderMessage = String::Concat("[Cloudundancy] Deleted folder ", folderPath.string());
+      _console->WriteLine(deletedFolderMessage);
    }
 }
 
