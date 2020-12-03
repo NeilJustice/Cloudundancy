@@ -35,6 +35,7 @@ AFACT(AppendText_CreatesParentDirectoryToFilePath_AppendsTimestampedTextToFile)
 AFACT(WriteTextFile_CreatesParentDirectoryToFilePath_CreatesFileInTextWriteMode_WritesFileTextToFile_ClosesFile)
 // Misc
 AFACT(DeleteFolder_CallsStdFileSystemRemoveAllOnFolderPath)
+AFACT(DeleteFolders_CallsStdFileSystemRemoveAllOnEachFolderPath)
 AFACT(SetCurrentPath_CallsFsCurrentPathWithFolderPath)
 // Private Functions
 AFACT(FileSize_CallsFSeekEndThenFTellToDetermineSizeOfFileInBytes)
@@ -530,6 +531,26 @@ TEST(DeleteFolder_CallsStdFileSystemRemoveAllOnFolderPath)
    _fileSystem.DeleteFolder(folderPath);
    //
    METALMOCK(remove_allMock.CalledOnceWith(folderPath));
+}
+
+TEST(DeleteFolders_CallsStdFileSystemRemoveAllOnEachFolderPath)
+{
+   remove_allMock.ReturnRandom();
+   const vector<fs::path>& folderPaths =
+   {
+      ZenUnit::Random<fs::path>(),
+      ZenUnit::Random<fs::path>(),
+      ZenUnit::Random<fs::path>()
+   };
+   //
+   _fileSystem.DeleteFolders(folderPaths);
+   //
+   METALMOCK(remove_allMock.CalledAsFollows(
+   {
+      { folderPaths[0] },
+      { folderPaths[1] },
+      { folderPaths[2] }
+   }));
 }
 
 TEST(SetCurrentPath_CallsFsCurrentPathWithFolderPath)

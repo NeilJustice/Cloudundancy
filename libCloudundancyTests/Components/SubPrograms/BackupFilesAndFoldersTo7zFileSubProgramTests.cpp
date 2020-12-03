@@ -104,7 +104,8 @@ TEST(CopyFilesAndFoldersToBackupStagingFolder_CopiesSourceFilesAndFoldersToBacku
    _backupFilesAndFoldersTo7zFileSubProgram.CopyFilesAndFoldersToBackupStagingFolder(args);
    //
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
-   METALMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleDestinationFoldersMock.CalledOnceWith(args.iniFilePath));
+   METALMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleDestinationFoldersMock.
+      CalledOnceWith(args.iniFilePath, false));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
    const string expectedCopyingMessage = String::Concat(
       "[Cloudundancy] Copying [SourceFilesAndFolders] To " + args.backupStagingFolderPath.string());
@@ -156,7 +157,8 @@ TEST(Copy7zFileToDestinationFolders_DoesSo_PrintsElapsedSeconds)
    _backupFilesAndFoldersTo7zFileSubProgram.Copy7zFileToDestinationFolders(args);
    //
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
-   METALMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleDestinationFoldersMock.CalledOnceWith(args.sevenZipIniFilePath));
+   METALMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleDestinationFoldersMock.
+      CalledOnceWith(args.sevenZipIniFilePath, false));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
    const string expectedCopiedMessage = String::Concat(
       "[Cloudundancy] Copied .7z file to [DestinationFolders] in ", elapsedSeconds, " seconds\n");

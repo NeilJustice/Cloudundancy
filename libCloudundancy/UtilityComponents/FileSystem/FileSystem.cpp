@@ -208,6 +208,14 @@ void FileSystem::DeleteFolder(const fs::path& folderPath) const
    _call_fs_remove_all(folderPath);
 }
 
+void FileSystem::DeleteFolders(const vector<fs::path>& folderPaths) const
+{
+   for (const fs::path& folderPath : folderPaths)
+   {
+      DeleteFolder(folderPath);
+   }
+}
+
 void FileSystem::SetCurrentPath(const fs::path& folderPath) const
 {
    _call_fs_current_path(folderPath);

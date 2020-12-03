@@ -18,10 +18,13 @@ namespace fs = std::filesystem;
 #ifdef __linux__
 #include <memory> // unique_ptr
 #endif
+
+#ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #define NOGDI
 #define NOMINMAX
 #include "Windows.h"
+#endif
 using namespace std;
 
 #include "libCloudundancy/Enums/Color.h"

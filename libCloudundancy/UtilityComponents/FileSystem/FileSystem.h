@@ -78,6 +78,7 @@ public:
 
    // Misc
    virtual void DeleteFolder(const fs::path& folderPath) const;
+   virtual void DeleteFolders(const vector<fs::path>& folderPaths) const;
    virtual void SetCurrentPath(const fs::path& folderPath) const;
 private:
    size_t FileSize(FILE* filePointer) const;

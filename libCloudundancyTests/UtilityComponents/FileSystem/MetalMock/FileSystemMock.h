@@ -24,5 +24,6 @@ public:
 
    // Misc
    METALMOCK_VOID1_CONST(DeleteFolder, const fs::path&)
+   METALMOCK_VOID1_CONST(DeleteFolders, const vector<fs::path>&)
    METALMOCK_VOID1_CONST(SetCurrentPath, const fs::path&)
 };

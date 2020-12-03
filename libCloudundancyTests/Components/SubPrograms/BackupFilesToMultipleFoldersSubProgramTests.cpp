@@ -34,7 +34,8 @@ TEST(Run_SetsArgs_CallsCopyFilesAndFoldersToMultipleDestinationFolders_Returns0)
    //
    const int exitCode = _backupFilesToMultipleFoldersSubProgram.Run(args);
    //
-   METALMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleDestinationFoldersMock.CalledOnceWith(args.iniFilePath));
+   METALMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleDestinationFoldersMock.CalledOnceWith(
+      args.iniFilePath, args.deleteDestinationFoldersFirst));
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(
       "\n[Cloudundancy] OverallBackupResult: Successfully copied all [SourceFilesAndFolders] to all [DestinationFolders]"));
    IS_ZERO(exitCode);
