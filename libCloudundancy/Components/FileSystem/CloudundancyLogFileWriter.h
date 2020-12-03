@@ -10,6 +10,5 @@ private:
 public:
    CloudundancyLogFileWriter();
    virtual ~CloudundancyLogFileWriter();
-   virtual void AppendTextToCloudundancyLogFileInFolder(
-      const fs::path& destinationFolderPath, string_view text) const;
+   virtual void AppendTextToCloudundancyLogFileInFolder(const fs::path& folderPath, string_view text) const;
 };
