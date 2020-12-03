@@ -103,7 +103,9 @@ scm-polling.log
 
 ### backup-files-to-multiple-folders
 
-12/02/2020: Work in progress.
+Cloudundancy program mode `backup-files-to-multiple-folders` copies files and folders listed in a Cloudundancy.ini file to multiple destination folders.
+
+
 
 ### 7zip-files-then-copy-the-7zip-file-to-multiple-folders
 

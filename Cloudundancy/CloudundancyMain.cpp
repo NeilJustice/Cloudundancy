@@ -38,7 +38,7 @@ using namespace std;
 // Example Cloudundancy command lines:
 // print-example-linux-ini-file
 // print-example-windows-ini-file
-// backup-files-to-multiple-folders --ini-file=C:\Code\dotfiles\WindowsCloudundancy.ini
+// backup-files-to-multiple-folders --ini-file=C:\CloudundancyTesting\Cloudundancy.ini
 // 7zip-files-then-copy-the-7zip-file-to-multiple-folders --ini-file=C:\Code\dotfiles\WindowsCloudundancy_CodeFolderBackups.ini --7z-ini-file=C:\Code\dotfiles\WindowsCloudundancy_CodeFolderBackups_7zFileCopyStep.ini --backup-staging-folder=C:\CodeFolderBackupStaging
 
 // Testing Cloudundancy command lines:
