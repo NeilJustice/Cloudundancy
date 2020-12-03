@@ -9,7 +9,7 @@ Usage:
    Cloudundancy print-example-linux-ini-file
    Cloudundancy print-example-windows-ini-file
    Cloudundancy backup-files-to-multiple-folders --ini-file=<CloudundancyIniFilePath> [--delete-destination-folders-first]
-   Cloudundancy backup-files-and-folders-to-7z-file
+   Cloudundancy 7zip-files-then-copy-the-7zip-file-to-multiple-folders
       --ini-file=<CloudundancyIniFilePath>
       --7z-ini-file=<CloudundancyIniFilePath>
       --backup-staging-folder=<FolderPath>

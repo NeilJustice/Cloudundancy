@@ -17,7 +17,7 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
    * [example-linux-ini-file](#print-example-linux-ini-file)
    * [example-windows-ini-file](#print-example-windows-ini-file)
    * [backup-files-to-multiple-folders](#backup-files-to-multiple-folders)
-   * [backup-files-and-folders-to-7z-file](#backup-files-and-folders-to-7z-file)
+   * [7zip-files-then-copy-the-7zip-file-to-multiple-folders](#7zip-files-then-copy-the-7zip-file-to-multiple-folders)
 * [Linux Jenkins Jobs Which Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize Cloudundancy](#linux-jenkins-jobs-which-compile-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-cloudundancy)
 * [Windows Jenkins Jobs Which Compile Cloudundancy](#windows-jenkins-jobs-which-compile-cloudundancy)
 * [4 Commands To Build And Install Cloudundancy On Linux](#4-commands-to-build-and-install-cloudundancy-on-linux)
@@ -34,7 +34,7 @@ Usage:
    Cloudundancy print-example-linux-ini-file
    Cloudundancy print-example-windows-ini-file
    Cloudundancy backup-files-to-multiple-folders --ini-file=<CloudundancyIniFilePath> [--delete-destination-folders-first]
-   Cloudundancy backup-files-and-folders-to-7z-file
+   Cloudundancy 7zip-files-then-copy-the-7zip-file-to-multiple-folders
       --ini-file=<CloudundancyIniFilePath>
       --7z-ini-file=<CloudundancyIniFilePath>
       --backup-staging-folder=<FolderPath>
@@ -105,7 +105,7 @@ scm-polling.log
 
 12/02/2020: Work in progress.
 
-### backup-files-and-folders-to-7z-file
+### 7zip-files-then-copy-the-7zip-file-to-multiple-folders
 
 12/02/2020: Work in progress.
 
@@ -143,7 +143,7 @@ cmake --build . --config Release --target install
 
 |Prioritized List Of Future Cloudundancy Features As Of 11/16/2020|
 |-----------------------------------------------------------------|
-|`backup-files-and-folders-to-7z-file` working on Linux|
+|`7zip-files-then-copy-the-7zip-file-to-multiple-folders` working on Linux|
 |SonarCloud static analysis badge|
 |Coverity static analysis badge|
 |Parallel copying to multiple destination folders|

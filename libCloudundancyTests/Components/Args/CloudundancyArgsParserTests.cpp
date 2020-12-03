@@ -37,7 +37,7 @@ TEST(DefaultConstructor_NewsComponents)
 }
 
 TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
-   bool isBackupFilesAndFoldersTo7zFileMode, bool expectRun7zToConfirm7zIsInThePath,
+   bool is7ZipMode, bool expectRun7zToConfirm7zIsInThePath,
    false, false,
    true, true)
 {
@@ -51,7 +51,7 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
       isPrintExampleLinuxIniFileMode,
       isPrintExampleWindowsIniFileMode,
       isBackupFilesToMultipleFoldersMode,
-      isBackupFilesAndFoldersTo7zFileMode);
+      is7ZipMode);
 
    const ProgramMode programMode = _programModeDeterminerMock->DetermineProgramModeMock.ReturnRandom();
 
@@ -81,13 +81,13 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
       { docoptArgs, "print-example-linux-ini-file" },
       { docoptArgs, "print-example-windows-ini-file" },
       { docoptArgs, "backup-files-to-multiple-folders" },
-      { docoptArgs, "backup-files-and-folders-to-7z-file" }
+      { docoptArgs, "7zip-files-then-copy-the-7zip-file-to-multiple-folders" }
    }));
    METALMOCK(_programModeDeterminerMock->DetermineProgramModeMock.CalledOnceWith(
       isPrintExampleLinuxIniFileMode,
       isPrintExampleWindowsIniFileMode,
       isBackupFilesToMultipleFoldersMode,
-      isBackupFilesAndFoldersTo7zFileMode));
+      is7ZipMode));
    METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptArgs, "--ini-file"));
    METALMOCK(_docoptParserMock->GetOptionalBoolMock.CalledOnceWith(docoptArgs, "--delete-destination-folders-first"));
    METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledAsFollows(
@@ -104,7 +104,7 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    {
       METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
       {
-         { "[Cloudundancy] Running 7z to confirm 7z is present on the PATH" },
+         { "[Cloudundancy] Running program 7z to confirm 7z is present on the PATH" },
          { "[Cloudundancy] 7z ran and exited with code 0 and is therefore confirmed to be present on the PATH\n" }
       }));
       METALMOCK(_processRunnerMock->FailFastRunMock.CalledOnceWith("7z", "", false));
