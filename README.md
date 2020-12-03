@@ -2,7 +2,7 @@
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-17-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B17) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Cloudundancy quickly copies a configurable list of files and folders to multiple destination folders to achieve cloud-redundant and device-redundant backups. For example, in a Cloudundancy.ini file, destination folders can be configured to be a Google Drive folder, a Microsoft OneDrive folder, and two USB drives to achieve the peace of mind that comes with having cloud-redundant and device-redundant backups of business-critical files.
+Cloudundancy quickly copies a configurable list of files and folders to multiple destination folders to achieve cloud-redundant and device-redundant backups. For example, in a Cloudundancy.ini file, destination folder could be configured to be a Google Drive folder, a Microsoft OneDrive folder, and two USB drives to achieve the peace of mind that comes with having cloud-redundant and device-redundant backups of business-critical files.
 
 |Build Type|Build Status|
 |----------|------------|
