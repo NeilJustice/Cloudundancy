@@ -57,6 +57,8 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
 
    const string iniFilePath = _docoptParserMock->GetRequiredStringMock.ReturnRandom();
 
+   const bool deleteDestinationFoldersFirst = _docoptParserMock->GetOptionalBoolMock.ReturnRandom();
+
    const string sevenZipIniFilePath = ZenUnit::Random<string>();
    const string backupStagingFolderPath = ZenUnit::Random<string>();
    _docoptParserMock->GetProgramModeSpecificRequiredStringMock.ReturnValues(sevenZipIniFilePath, backupStagingFolderPath);
@@ -87,6 +89,7 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
       isBackupFilesToMultipleFoldersMode,
       isBackupFilesAndFoldersTo7zFileMode));
    METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptArgs, "--ini-file"));
+   METALMOCK(_docoptParserMock->GetOptionalBoolMock.CalledOnceWith(docoptArgs, "--delete-destination-folders-first"));
    METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledAsFollows(
    {
       { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7zFile), "--7z-ini-file" },
@@ -109,6 +112,7 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    CloudundancyArgs expectedArgs;
    expectedArgs.programMode = programMode;
    expectedArgs.iniFilePath = iniFilePath;
+   expectedArgs.deleteDestinationFoldersFirst = deleteDestinationFoldersFirst;
    expectedArgs.backupStagingFolderPath = backupStagingFolderPath;
    expectedArgs.sevenZipIniFilePath = sevenZipIniFilePath;
    ARE_EQUAL(expectedArgs, args);

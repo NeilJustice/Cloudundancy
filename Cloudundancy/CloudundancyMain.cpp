@@ -39,7 +39,7 @@ using namespace std;
 // backup-files-and-folders-to-7z-file --ini-file=C:\Code\dotfiles\WindowsCloudundancy_CodeFolderBackups.ini --7z-ini-file=C:\Code\dotfiles\WindowsCloudundancy_CodeFolderBackups_7zFileCopyStep.ini --backup-staging-folder=C:\CodeFolderBackupStaging
 
 // Testing Cloudundancy command lines:
-// backup-files-to-multiple-folders --ini-file=C:\Test\Cloudundancy.ini
+// backup-files-to-multiple-folders --ini-file=C:\Test\Cloudundancy.ini --delete-destination-folders-first
 // backup-files-and-folders-to-7z-file --ini-file=C:\Test\Cloudundancy7z1.ini --7z-ini-file=C:\Test\Cloudundancy7z2.ini --backup-staging-folder=C:\Test\BackupStagingFolder
 
 int main(int argc, char* argv[])

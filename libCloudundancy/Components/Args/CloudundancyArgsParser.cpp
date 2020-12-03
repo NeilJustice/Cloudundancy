@@ -32,6 +32,9 @@ CloudundancyArgs CloudundancyArgsParser::ParseStringArgs(const vector<string>& s
 
    cloudundancyArgs.iniFilePath = _docoptParser->GetRequiredString(docoptArgs, "--ini-file");
 
+   cloudundancyArgs.deleteDestinationFoldersFirst = _docoptParser->GetOptionalBool(
+      docoptArgs, "--delete-destination-folders-first");
+
    cloudundancyArgs.sevenZipIniFilePath = _docoptParser->GetProgramModeSpecificRequiredString(docoptArgs,
       static_cast<int>(cloudundancyArgs.programMode),
       static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7zFile), "--7z-ini-file");

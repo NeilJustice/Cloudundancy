@@ -14,6 +14,7 @@ TEST(ZenUnitEqualizer_ThrowsIfAnyFieldNotEqual)
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyArgs, iniFilePath, ZenUnit::Random<fs::path>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyArgs, sevenZipIniFilePath, ZenUnit::Random<fs::path>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyArgs, backupStagingFolderPath, ZenUnit::Random<fs::path>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyArgs, deleteDestinationFoldersFirst, true);
 }
 
 TEST(TestableRandomCloudundancyArgs_ReturnsCloudundancyArgsWithAllRandomFields)
@@ -27,17 +28,21 @@ TEST(TestableRandomCloudundancyArgs_ReturnsCloudundancyArgsWithAllRandomFields)
    utilsRandomGeneratorMock.RelativeFilePathMock.ReturnValues(iniFilePath, sevenZipIniFilePath);
 
    const fs::path backupStagingFolderPath = utilsRandomGeneratorMock.RelativeFolderPathMock.ReturnRandom();
+
+   const bool deleteDestinationFoldersFirst = randomGeneratorMock.BoolMock.ReturnRandom();
    //
    const CloudundancyArgs cloundundancyArgs = TestableRandomCloudundancyArgs(&randomGeneratorMock, &utilsRandomGeneratorMock);
    //
    METALMOCK(randomGeneratorMock.EnumMock.CalledOnceWith(static_cast<int>(ProgramMode::MaxValue)));
    METALMOCK(utilsRandomGeneratorMock.RelativeFilePathMock.CalledNTimes(2));
    METALMOCK(utilsRandomGeneratorMock.RelativeFolderPathMock.CalledOnce());
+   METALMOCK(randomGeneratorMock.BoolMock.CalledOnce());
    CloudundancyArgs expectedCloundundancyArgs;
    expectedCloundundancyArgs.programMode = programMode;
    expectedCloundundancyArgs.iniFilePath = iniFilePath;
    expectedCloundundancyArgs.sevenZipIniFilePath = sevenZipIniFilePath;
    expectedCloundundancyArgs.backupStagingFolderPath = backupStagingFolderPath;
+   expectedCloundundancyArgs.deleteDestinationFoldersFirst = deleteDestinationFoldersFirst;
    ARE_EQUAL(expectedCloundundancyArgs, cloundundancyArgs);
 }
 

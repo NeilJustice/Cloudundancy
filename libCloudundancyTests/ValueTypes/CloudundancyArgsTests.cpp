@@ -15,7 +15,7 @@ https://github.com/NeilJustice/Cloudundancy
 Usage:
    Cloudundancy print-example-linux-ini-file
    Cloudundancy print-example-windows-ini-file
-   Cloudundancy backup-files-to-multiple-folders --ini-file=<CloudundancyIniFilePath>
+   Cloudundancy backup-files-to-multiple-folders --ini-file=<CloudundancyIniFilePath> [--delete-destination-folders-first]
    Cloudundancy backup-files-and-folders-to-7z-file
       --ini-file=<CloudundancyIniFilePath>
       --7z-ini-file=<CloudundancyIniFilePath>
@@ -31,6 +31,7 @@ TEST(DefaultConstructor_SetsFieldsToDefaults)
    expectedCloudundancyArgs.iniFilePath = "";
    expectedCloudundancyArgs.sevenZipIniFilePath = "";
    expectedCloudundancyArgs.backupStagingFolderPath = "";
+   expectedCloudundancyArgs.deleteDestinationFoldersFirst = false;
    ARE_EQUAL(expectedCloudundancyArgs, cloudundancyArgs);
 }
 
