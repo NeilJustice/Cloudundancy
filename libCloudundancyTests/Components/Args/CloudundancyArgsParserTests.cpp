@@ -44,14 +44,14 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    const map<string, docopt::Value> docoptArgs = ZenUnit::RandomMap<string, docopt::Value>();
    _docoptParserMock->ParseArgsMock.Return(docoptArgs);
 
+   const bool isBackupFilesToMultipleFoldersMode = ZenUnit::Random<bool>();
    const bool isPrintExampleLinuxIniFileMode = ZenUnit::Random<bool>();
    const bool isPrintExampleWindowsIniFileMode = ZenUnit::Random<bool>();
-   const bool isBackupFilesToMultipleFoldersMode = ZenUnit::Random<bool>();
    _docoptParserMock->GetRequiredBoolMock.ReturnValues(
-      isPrintExampleLinuxIniFileMode,
-      isPrintExampleWindowsIniFileMode,
       isBackupFilesToMultipleFoldersMode,
-      is7ZipMode);
+      is7ZipMode,
+      isPrintExampleLinuxIniFileMode,
+      isPrintExampleWindowsIniFileMode);
 
    const ProgramMode programMode = _programModeDeterminerMock->DetermineProgramModeMock.ReturnRandom();
 
@@ -78,16 +78,16 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    METALMOCK(_docoptParserMock->ParseArgsMock.CalledOnceWith(CloudundancyArgs::CommandLineUsage, stringArgs));
    METALMOCK(_docoptParserMock->GetRequiredBoolMock.CalledAsFollows(
    {
-      { docoptArgs, "print-example-linux-ini-file" },
-      { docoptArgs, "print-example-windows-ini-file" },
       { docoptArgs, "backup-files-to-multiple-folders" },
-      { docoptArgs, "7zip-files-then-copy-the-7zip-file-to-multiple-folders" }
+      { docoptArgs, "7zip-files-then-copy-the-7zip-file-to-multiple-folders" },
+      { docoptArgs, "print-example-linux-ini-file" },
+      { docoptArgs, "print-example-windows-ini-file" }
    }));
    METALMOCK(_programModeDeterminerMock->DetermineProgramModeMock.CalledOnceWith(
-      isPrintExampleLinuxIniFileMode,
-      isPrintExampleWindowsIniFileMode,
       isBackupFilesToMultipleFoldersMode,
-      is7ZipMode));
+      is7ZipMode,
+      isPrintExampleLinuxIniFileMode,
+      isPrintExampleWindowsIniFileMode));
    METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptArgs, "--ini-file"));
    METALMOCK(_docoptParserMock->GetOptionalBoolMock.CalledOnceWith(docoptArgs, "--delete-destination-folders-first"));
    METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledAsFollows(

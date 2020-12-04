@@ -20,15 +20,15 @@ CloudundancyArgs CloudundancyArgsParser::ParseStringArgs(const vector<string>& s
 {
    const map<string, docopt::Value> docoptArgs = _docoptParser->ParseArgs(CloudundancyArgs::CommandLineUsage, stringArgs);
    CloudundancyArgs cloudundancyArgs;
-   const bool isPrintExampleLinuxIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "print-example-linux-ini-file");
-   const bool isPrintExampleWindowsIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "print-example-windows-ini-file");
    const bool isBackupFilesToMultipleFoldersMode = _docoptParser->GetRequiredBool(docoptArgs, "backup-files-to-multiple-folders");
    const bool is7ZipMode = _docoptParser->GetRequiredBool(docoptArgs, "7zip-files-then-copy-the-7zip-file-to-multiple-folders");
+   const bool isPrintExampleLinuxIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "print-example-linux-ini-file");
+   const bool isPrintExampleWindowsIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "print-example-windows-ini-file");
    cloudundancyArgs.programMode = _programModeDeterminer->DetermineProgramMode(
-      isPrintExampleLinuxIniFileMode,
-      isPrintExampleWindowsIniFileMode,
       isBackupFilesToMultipleFoldersMode,
-      is7ZipMode);
+      is7ZipMode,
+      isPrintExampleLinuxIniFileMode,
+      isPrintExampleWindowsIniFileMode);
 
    cloudundancyArgs.iniFilePath = _docoptParser->GetRequiredString(docoptArgs, "--ini-file");
 
@@ -45,13 +45,11 @@ CloudundancyArgs CloudundancyArgsParser::ParseStringArgs(const vector<string>& s
 
    _fileSystem->ThrowIfFilePathIsNotEmptyAndDoesNotExist(cloudundancyArgs.iniFilePath);
    _fileSystem->ThrowIfFilePathIsNotEmptyAndDoesNotExist(cloudundancyArgs.sevenZipIniFilePath);
-
    if (is7ZipMode)
    {
       _console->WriteLine("[Cloudundancy] Running program 7z to confirm 7z is present on the PATH");
       _processRunner->FailFastRun("7z", "", false);
       _console->WriteLine("[Cloudundancy] 7z ran and exited with code 0 and is therefore confirmed to be present on the PATH\n");
    }
-
    return cloudundancyArgs;
 }
