@@ -13,7 +13,8 @@ EVIDENCE
 
 BackupFilesAndFoldersTo7zFileSubProgram _backupFilesAndFoldersTo7zFileSubProgram;
 // Function Callers
-using VoidOneArgFunctionCallerMockType = VoidOneArgMemberFunctionCallerMock<BackupFilesAndFoldersTo7zFileSubProgram, const CloudundancyArgs&>;
+using VoidOneArgFunctionCallerMockType = VoidOneArgMemberFunctionCallerMock<
+   BackupFilesAndFoldersTo7zFileSubProgram, const CloudundancyArgs&>;
 VoidOneArgFunctionCallerMockType* _voidOneArgFunctionCallerMock = nullptr;
 // Constant Components
 ConsoleMock* _consoleMock = nullptr;
@@ -48,9 +49,9 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(backupCodeRunner._cloudundancyFileCopier);
    DELETE_TO_ASSERT_NEWED(backupCodeRunner._fileSystem);
    DELETE_TO_ASSERT_NEWED(backupCodeRunner._processRunner);
-   DELETE_TO_ASSERT_NEWED(backupCodeRunner._stopwatch);
-   // Mutable Componants
    DELETE_TO_ASSERT_NEWED(backupCodeRunner._watch);
+   // Mutable Componants
+   DELETE_TO_ASSERT_NEWED(backupCodeRunner._stopwatch);
 }
 
 TEST(Run_DeletesCodeBackupFolder_CopiesCodeToBackupStagingFolder_SevenZipsBackupStagingFolder_Copies7zFileToDestinationFolders_Returns0)

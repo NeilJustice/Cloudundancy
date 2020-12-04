@@ -8,8 +8,8 @@ class BackupFilesAndFoldersTo7zFileSubProgram : public CloudundancySubProgram
    friend class BackupFilesAndFoldersTo7zFileSubProgramTests;
 private:
    // Function Callers
-   using VoidOneArgFunctionCallerType =
-      VoidOneArgMemberFunctionCaller<BackupFilesAndFoldersTo7zFileSubProgram, const CloudundancyArgs&>;
+   using VoidOneArgFunctionCallerType = VoidOneArgMemberFunctionCaller<
+      BackupFilesAndFoldersTo7zFileSubProgram, const CloudundancyArgs&>;
    unique_ptr<const VoidOneArgFunctionCallerType> _voidOneArgFunctionCaller;
    // Constant Components
    unique_ptr<const CloudundancyFileCopier> _cloudundancyFileCopier;
