@@ -54,7 +54,7 @@ void BackupFilesAndFoldersTo7zFileSubProgram::CopyFilesAndFoldersToBackupStaging
    _console->WriteLine(copyingMessage);
    _stopwatch->Start();
 
-   _cloudundancyFileCopier->CopyFilesAndFoldersToMultipleDestinationFolders(args.iniFilePath, false);
+   _cloudundancyFileCopier->CopyFilesAndFoldersToMultipleDestinationFolders(args.sevenZipModeIniFilePath, false);
 
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string copiedMessage = String::Concat(
