@@ -61,7 +61,9 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
 
    const string sevenZipModeIniFilePath = ZenUnit::Random<string>();
    const string sevenZipStagingFolderPath = ZenUnit::Random<string>();
-   _docoptParserMock->GetProgramModeSpecificRequiredStringMock.ReturnValues(sevenZipModeIniFilePath, sevenZipStagingFolderPath);
+   const string sevenZipFileCopyingIniFilePath = ZenUnit::Random<string>();
+   _docoptParserMock->GetProgramModeSpecificRequiredStringMock.ReturnValues(
+      sevenZipModeIniFilePath, sevenZipStagingFolderPath, sevenZipFileCopyingIniFilePath);
 
    _fileSystemMock->ThrowIfFilePathIsNotEmptyAndDoesNotExistMock.Expect();
 
@@ -93,14 +95,17 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledAsFollows(
    {
       { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7zFile),
-        "--ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders" },
+        "--ini-file-to-copy-files-to-7zip-staging-folder" },
       { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7zFile),
-        "--7zip-staging-folder" }
+        "--7zip-staging-folder" },
+      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7zFile),
+        "--ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders" }
    }));
    METALMOCK(_fileSystemMock->ThrowIfFilePathIsNotEmptyAndDoesNotExistMock.CalledAsFollows(
    {
       { iniFilePath },
-      { sevenZipModeIniFilePath }
+      { sevenZipModeIniFilePath },
+      { sevenZipFileCopyingIniFilePath }
    }));
    if (expectRun7zToConfirm7zIsInThePath)
    {
@@ -115,8 +120,9 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    expectedArgs.programMode = programMode;
    expectedArgs.iniFilePath = iniFilePath;
    expectedArgs.deleteDestinationFoldersFirst = deleteDestinationFoldersFirst;
-   expectedArgs.sevenZipStagingFolderPath = sevenZipStagingFolderPath;
    expectedArgs.sevenZipModeIniFilePath = sevenZipModeIniFilePath;
+   expectedArgs.sevenZipStagingFolderPath = sevenZipStagingFolderPath;
+   expectedArgs.sevenZipFileCopyingIniFilePath = sevenZipFileCopyingIniFilePath;
    ARE_EQUAL(expectedArgs, args);
 }
 
