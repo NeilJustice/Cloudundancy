@@ -39,7 +39,7 @@ void BackupFilesAndFoldersTo7zFileSubProgram::Copy7zFileToDestinationFolders(con
    _console->WriteLine("[Cloudundancy] Copying .7z file to [DestinationFolders]...");
    _stopwatch->Start();
 
-   _cloudundancyFileCopier->CopyFilesAndFoldersToMultipleDestinationFolders(args.sevenZipModeIniFilePath, false);
+   _cloudundancyFileCopier->CopyFilesAndFoldersToMultipleDestinationFolders(args.sevenZipFileCopyingIniFilePath, false);
 
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string copiedMessage = String::Concat(
