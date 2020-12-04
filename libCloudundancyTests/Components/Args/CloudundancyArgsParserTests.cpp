@@ -59,9 +59,9 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
 
    const bool deleteDestinationFoldersFirst = _docoptParserMock->GetOptionalBoolMock.ReturnRandom();
 
-   const string sevenZipIniFilePath = ZenUnit::Random<string>();
-   const string backupStagingFolderPath = ZenUnit::Random<string>();
-   _docoptParserMock->GetProgramModeSpecificRequiredStringMock.ReturnValues(sevenZipIniFilePath, backupStagingFolderPath);
+   const string sevenZipModeIniFilePath = ZenUnit::Random<string>();
+   const string sevenZipStagingFolderPath = ZenUnit::Random<string>();
+   _docoptParserMock->GetProgramModeSpecificRequiredStringMock.ReturnValues(sevenZipModeIniFilePath, sevenZipStagingFolderPath);
 
    _fileSystemMock->ThrowIfFilePathIsNotEmptyAndDoesNotExistMock.Expect();
 
@@ -92,13 +92,15 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    METALMOCK(_docoptParserMock->GetOptionalBoolMock.CalledOnceWith(docoptArgs, "--delete-destination-folders-first"));
    METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledAsFollows(
    {
-      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7zFile), "--7z-ini-file" },
-      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7zFile), "--backup-staging-folder" }
+      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7zFile),
+        "--ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders" },
+      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7zFile),
+        "--7zip-staging-folder" }
    }));
    METALMOCK(_fileSystemMock->ThrowIfFilePathIsNotEmptyAndDoesNotExistMock.CalledAsFollows(
    {
       { iniFilePath },
-      { sevenZipIniFilePath }
+      { sevenZipModeIniFilePath }
    }));
    if (expectRun7zToConfirm7zIsInThePath)
    {
@@ -113,8 +115,8 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    expectedArgs.programMode = programMode;
    expectedArgs.iniFilePath = iniFilePath;
    expectedArgs.deleteDestinationFoldersFirst = deleteDestinationFoldersFirst;
-   expectedArgs.backupStagingFolderPath = backupStagingFolderPath;
-   expectedArgs.sevenZipIniFilePath = sevenZipIniFilePath;
+   expectedArgs.sevenZipStagingFolderPath = sevenZipStagingFolderPath;
+   expectedArgs.sevenZipModeIniFilePath = sevenZipModeIniFilePath;
    ARE_EQUAL(expectedArgs, args);
 }
 

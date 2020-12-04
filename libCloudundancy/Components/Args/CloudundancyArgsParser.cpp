@@ -35,16 +35,17 @@ CloudundancyArgs CloudundancyArgsParser::ParseStringArgs(const vector<string>& s
    cloudundancyArgs.deleteDestinationFoldersFirst = _docoptParser->GetOptionalBool(
       docoptArgs, "--delete-destination-folders-first");
 
-   cloudundancyArgs.sevenZipIniFilePath = _docoptParser->GetProgramModeSpecificRequiredString(docoptArgs,
+   cloudundancyArgs.sevenZipModeIniFilePath = _docoptParser->GetProgramModeSpecificRequiredString(docoptArgs,
       static_cast<int>(cloudundancyArgs.programMode),
-      static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7zFile), "--7z-ini-file");
+      static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7zFile),
+      "--ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders");
 
-   cloudundancyArgs.backupStagingFolderPath = _docoptParser->GetProgramModeSpecificRequiredString(docoptArgs,
+   cloudundancyArgs.sevenZipStagingFolderPath = _docoptParser->GetProgramModeSpecificRequiredString(docoptArgs,
       static_cast<int>(cloudundancyArgs.programMode),
-      static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7zFile), "--backup-staging-folder");
+      static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7zFile), "--7zip-staging-folder");
 
    _fileSystem->ThrowIfFilePathIsNotEmptyAndDoesNotExist(cloudundancyArgs.iniFilePath);
-   _fileSystem->ThrowIfFilePathIsNotEmptyAndDoesNotExist(cloudundancyArgs.sevenZipIniFilePath);
+   _fileSystem->ThrowIfFilePathIsNotEmptyAndDoesNotExist(cloudundancyArgs.sevenZipModeIniFilePath);
    if (is7ZipMode)
    {
       _console->WriteLine("[Cloudundancy] Running program 7z to confirm 7z is present on the PATH");

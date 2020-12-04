@@ -6,15 +6,16 @@ struct CloudundancyArgs
 
    ProgramMode programMode = ProgramMode::Unset;
    fs::path iniFilePath;
-   fs::path sevenZipIniFilePath;
-   fs::path backupStagingFolderPath;
    bool deleteDestinationFoldersFirst = false;
+   fs::path sevenZipModeIniFilePath;
+   fs::path sevenZipStagingFolderPath;
+   fs::path sevenZipFileCopyingIniFilePath;
 };
 
 #ifdef _WIN32
    #ifdef _DEBUG
-      static_assert(sizeof(CloudundancyArgs) == 136);
+      static_assert(sizeof(CloudundancyArgs) == 176);
    #else
-      static_assert(sizeof(CloudundancyArgs) == 112);
+      static_assert(sizeof(CloudundancyArgs) == 144);
    #endif
 #endif

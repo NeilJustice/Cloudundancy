@@ -33,9 +33,9 @@ https://github.com/NeilJustice/Cloudundancy
 Usage:
    Cloudundancy backup-files-to-multiple-folders --ini-file=<CloudundancyIniFilePath> [--delete-destination-folders-first]
    Cloudundancy 7zip-files-then-copy-the-7zip-file-to-multiple-folders
-      --ini-file=<CloudundancyIniFilePath>
-      --7z-ini-file=<CloudundancyIniFilePath>
-      --backup-staging-folder=<FolderPath>
+      --ini-file-to-copy-files-to-7zip-staging-folder=<CloudundancyIniFilePath>
+      --7zip-staging-folder=<FolderPath>
+      --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=<CloudundancyIniFilePath>
    Cloudundancy print-example-linux-ini-file
    Cloudundancy print-example-windows-ini-file
 ```

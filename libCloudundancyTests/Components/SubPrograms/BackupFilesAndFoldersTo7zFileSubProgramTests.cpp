@@ -81,12 +81,12 @@ TEST(DeleteBackupStagingFolder_PrintsDeleting_DeletesBackupStagingFolder_PrintsD
    //
    _backupFilesAndFoldersTo7zFileSubProgram.DeleteBackupStagingFolder(args);
    //
-   METALMOCK(_fileSystemMock->DeleteFolderMock.CalledOnceWith(args.backupStagingFolderPath));
+   METALMOCK(_fileSystemMock->DeleteFolderMock.CalledOnceWith(args.sevenZipStagingFolderPath));
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
-   const string expectedDeletingMessage = String::Concat("[Cloudundancy] Deleting ", args.backupStagingFolderPath.string());
+   const string expectedDeletingMessage = String::Concat("[Cloudundancy] Deleting ", args.sevenZipStagingFolderPath.string());
    const string expectedDeletedMessage = String::Concat(
-      "[Cloudundancy] Deleted ", args.backupStagingFolderPath.string(), " in ", elapsedSeconds, " seconds\n");
+      "[Cloudundancy] Deleted ", args.sevenZipStagingFolderPath.string(), " in ", elapsedSeconds, " seconds\n");
    METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
       { expectedDeletingMessage },
@@ -109,9 +109,9 @@ TEST(CopyFilesAndFoldersToBackupStagingFolder_CopiesSourceFilesAndFoldersToBacku
       CalledOnceWith(args.iniFilePath, false));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
    const string expectedCopyingMessage = String::Concat(
-      "[Cloudundancy] Copying [SourceFilesAndFolders] To " + args.backupStagingFolderPath.string());
+      "[Cloudundancy] Copying [SourceFilesAndFolders] To " + args.sevenZipStagingFolderPath.string());
    const string expectedCopiedMessage = String::Concat(
-      "[Cloudundancy] Copied [SourceFilesAndFolders] To ", args.backupStagingFolderPath.string(), " in ", elapsedSeconds, " seconds\n");
+      "[Cloudundancy] Copied [SourceFilesAndFolders] To ", args.sevenZipStagingFolderPath.string(), " in ", elapsedSeconds, " seconds\n");
    METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
       { expectedCopyingMessage },
@@ -132,15 +132,15 @@ TEST(SevenZipBackupStagingFolder_Writes7zFileToFolder7zFileBackslashCloudundancy
    _backupFilesAndFoldersTo7zFileSubProgram.SevenZipBackupStagingFolder(args);
    //
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
-   METALMOCK(_fileSystemMock->SetCurrentPathMock.CalledOnceWith(args.backupStagingFolderPath));
+   METALMOCK(_fileSystemMock->SetCurrentPathMock.CalledOnceWith(args.sevenZipStagingFolderPath));
    METALMOCK(_watchMock->DateTimeNowForFileNamesMock.CalledOnce());
    const string expectedSevenZipCommandLineArguments = String::Concat(
       "a -r -mx9 7zFile\\CloudundancyBackup_" + dateTimeNowForFileNames + ".7z");
    METALMOCK(_processRunnerMock->FailFastRunMock.CalledOnceWith("7z", expectedSevenZipCommandLineArguments, true));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
-   const string expectedSevenZippingMessage = String::Concat("[Cloudundancy] 7-zipping ", args.backupStagingFolderPath.string(), "...");
+   const string expectedSevenZippingMessage = String::Concat("[Cloudundancy] 7-zipping ", args.sevenZipStagingFolderPath.string(), "...");
    const string expectedSevenZippedMessage = String::Concat(
-      "[Cloudundancy] 7-zipped ", args.backupStagingFolderPath.string(), " in ", elapsedSeconds, " seconds\n");
+      "[Cloudundancy] 7-zipped ", args.sevenZipStagingFolderPath.string(), " in ", elapsedSeconds, " seconds\n");
    METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
       { expectedSevenZippingMessage },
@@ -160,7 +160,7 @@ TEST(Copy7zFileToDestinationFolders_DoesSo_PrintsElapsedSeconds)
    //
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    METALMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleDestinationFoldersMock.
-      CalledOnceWith(args.sevenZipIniFilePath, false));
+      CalledOnceWith(args.sevenZipModeIniFilePath, false));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
    const string expectedCopiedMessage = String::Concat(
       "[Cloudundancy] Copied .7z file to [DestinationFolders] in ", elapsedSeconds, " seconds\n");

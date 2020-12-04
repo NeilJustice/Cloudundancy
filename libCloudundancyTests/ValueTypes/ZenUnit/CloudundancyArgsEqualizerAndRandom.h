@@ -10,8 +10,7 @@ namespace ZenUnit
       static void AssertEqual(const CloudundancyArgs& expectedCloudundancyArgs, const CloudundancyArgs& actualCloudundancyArgs);
    };
 
-   CloudundancyArgs TestableRandomCloudundancyArgs(
-      const ZenUnit::RandomGenerator* randomGenerator, const UtilsRandomGenerator* utilsRandomGenerator);
+   CloudundancyArgs TestableRandomCloudundancyArgs(const ZenUnit::RandomGenerator* randomGenerator);
    template<>
    CloudundancyArgs Random();
 }
