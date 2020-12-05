@@ -37,17 +37,17 @@ CloudundancyArgs CloudundancyArgsParser::ParseStringArgs(const vector<string>& s
 
    cloudundancyArgs.sevenZipModeIniFilePath = _docoptParser->GetProgramModeSpecificRequiredString(docoptArgs,
       static_cast<int>(cloudundancyArgs.programMode),
-      static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7zFile),
+      static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7ZipFile),
       "--ini-file-to-copy-files-to-7zip-staging-folder");
 
    cloudundancyArgs.sevenZipStagingFolderPath = _docoptParser->GetProgramModeSpecificRequiredString(docoptArgs,
       static_cast<int>(cloudundancyArgs.programMode),
-      static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7zFile),
+      static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7ZipFile),
       "--7zip-staging-folder");
 
    cloudundancyArgs.sevenZipFileCopyingIniFilePath = _docoptParser->GetProgramModeSpecificRequiredString(docoptArgs,
       static_cast<int>(cloudundancyArgs.programMode),
-      static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7zFile),
+      static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7ZipFile),
       "--ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders");
 
    _fileSystem->ThrowIfFilePathIsNotEmptyAndDoesNotExist(cloudundancyArgs.iniFilePath);

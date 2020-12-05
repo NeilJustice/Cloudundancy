@@ -13,7 +13,7 @@ ProgramMode ProgramModeDeterminer::DetermineProgramMode(
    }
    if (is7ZipBackupMode)
    {
-      return ProgramMode::BackupFilesAndFoldersTo7zFile;
+      return ProgramMode::BackupFilesAndFoldersTo7ZipFile;
    }
    if (isPrintExampleLinuxIniFileMode)
    {

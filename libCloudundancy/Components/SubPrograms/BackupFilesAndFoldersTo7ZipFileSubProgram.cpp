@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "libCloudundancy/Components/FileSystem/CloudundancyFileCopier.h"
-#include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersTo7zFileSubProgram.h"
+#include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersTo7ZipFileSubProgram.h"
 
-BackupFilesAndFoldersTo7zFileSubProgram::BackupFilesAndFoldersTo7zFileSubProgram()
+BackupFilesAndFoldersTo7ZipFileSubProgram::BackupFilesAndFoldersTo7ZipFileSubProgram()
    // Function Callers
    : _voidOneArgFunctionCaller(make_unique<VoidOneArgFunctionCallerType>())
    // Constant Components
@@ -15,26 +15,26 @@ BackupFilesAndFoldersTo7zFileSubProgram::BackupFilesAndFoldersTo7zFileSubProgram
 {
 }
 
-BackupFilesAndFoldersTo7zFileSubProgram::~BackupFilesAndFoldersTo7zFileSubProgram()
+BackupFilesAndFoldersTo7ZipFileSubProgram::~BackupFilesAndFoldersTo7ZipFileSubProgram()
 {
 }
 
-int BackupFilesAndFoldersTo7zFileSubProgram::Run(const CloudundancyArgs& args)
+int BackupFilesAndFoldersTo7ZipFileSubProgram::Run(const CloudundancyArgs& args)
 {
    _voidOneArgFunctionCaller->CallConstMemberFunction(
-      &BackupFilesAndFoldersTo7zFileSubProgram::DeleteBackupStagingFolder, this, args);
+      &BackupFilesAndFoldersTo7ZipFileSubProgram::DeleteBackupStagingFolder, this, args);
    _voidOneArgFunctionCaller->CallConstMemberFunction(
-      &BackupFilesAndFoldersTo7zFileSubProgram::CopyFilesAndFoldersToBackupStagingFolder, this, args);
+      &BackupFilesAndFoldersTo7ZipFileSubProgram::CopyFilesAndFoldersToBackupStagingFolder, this, args);
    _voidOneArgFunctionCaller->CallConstMemberFunction(
-      &BackupFilesAndFoldersTo7zFileSubProgram::SevenZipBackupStagingFolder, this, args);
+      &BackupFilesAndFoldersTo7ZipFileSubProgram::SevenZipBackupStagingFolder, this, args);
    _voidOneArgFunctionCaller->CallConstMemberFunction(
-      &BackupFilesAndFoldersTo7zFileSubProgram::Copy7zFileToDestinationFolders, this, args);
+      &BackupFilesAndFoldersTo7ZipFileSubProgram::Copy7ZipFileToDestinationFolders, this, args);
    return 0;
 }
 
 // Private Functions
 
-void BackupFilesAndFoldersTo7zFileSubProgram::Copy7zFileToDestinationFolders(const CloudundancyArgs& args) const
+void BackupFilesAndFoldersTo7ZipFileSubProgram::Copy7ZipFileToDestinationFolders(const CloudundancyArgs& args) const
 {
    _console->WriteLine("[Cloudundancy] Copying .7z file to [DestinationFolders]...");
    _stopwatch->Start();
@@ -47,7 +47,7 @@ void BackupFilesAndFoldersTo7zFileSubProgram::Copy7zFileToDestinationFolders(con
    _console->WriteLine(copiedMessage);
 }
 
-void BackupFilesAndFoldersTo7zFileSubProgram::CopyFilesAndFoldersToBackupStagingFolder(const CloudundancyArgs& args) const
+void BackupFilesAndFoldersTo7ZipFileSubProgram::CopyFilesAndFoldersToBackupStagingFolder(const CloudundancyArgs& args) const
 {
    const string copyingMessage = String::Concat(
       "[Cloudundancy] Copying [SourceFilesAndFolders] To " + args.sevenZipStagingFolderPath.string());
@@ -62,7 +62,7 @@ void BackupFilesAndFoldersTo7zFileSubProgram::CopyFilesAndFoldersToBackupStaging
    _console->WriteLine(copiedMessage);
 }
 
-void BackupFilesAndFoldersTo7zFileSubProgram::DeleteBackupStagingFolder(const CloudundancyArgs& args) const
+void BackupFilesAndFoldersTo7ZipFileSubProgram::DeleteBackupStagingFolder(const CloudundancyArgs& args) const
 {
    const string deletingMessage = String::Concat("[Cloudundancy] Deleting ", args.sevenZipStagingFolderPath.string());
    _console->WriteLine(deletingMessage);
@@ -76,7 +76,7 @@ void BackupFilesAndFoldersTo7zFileSubProgram::DeleteBackupStagingFolder(const Cl
    _console->WriteLine(deletedMessage);
 }
 
-void BackupFilesAndFoldersTo7zFileSubProgram::SevenZipBackupStagingFolder(const CloudundancyArgs& args) const
+void BackupFilesAndFoldersTo7ZipFileSubProgram::SevenZipBackupStagingFolder(const CloudundancyArgs& args) const
 {
    const string sevenZippingMessage = String::Concat("[Cloudundancy] 7-zipping ", args.sevenZipStagingFolderPath.string(), "...");
    _console->WriteLine(sevenZippingMessage);
@@ -85,7 +85,7 @@ void BackupFilesAndFoldersTo7zFileSubProgram::SevenZipBackupStagingFolder(const 
    _fileSystem->SetCurrentPath(args.sevenZipStagingFolderPath);
    const string dateTimeNowForFileNames = _watch->DateTimeNowForFileNames();
    const string sevenZipCommandLineArguments = String::Concat(
-      "a -r -mx9 7zFile\\CloudundancyBackup_", dateTimeNowForFileNames, ".7z");
+      "a -r -mx9 7ZipFile\\CloudundancyBackup_", dateTimeNowForFileNames, ".7z");
    _processRunner->FailFastRun("7z", sevenZipCommandLineArguments, true);
 
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();

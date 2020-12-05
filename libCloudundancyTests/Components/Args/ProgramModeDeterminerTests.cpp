@@ -15,7 +15,7 @@ TEST5X5(DetermineProgramMode_ReturnsProgramModeCorrespondingToProgramModeBool,
    bool isPrintExampleWindowsIniFileMode,
    ProgramMode expectedReturnValue,
    true, false, false, false, ProgramMode::BackupFilesAndFolders,
-   false, true, false, false, ProgramMode::BackupFilesAndFoldersTo7zFile,
+   false, true, false, false, ProgramMode::BackupFilesAndFoldersTo7ZipFile,
    false, false, true, false, ProgramMode::PrintExampleLinuxIniFile,
    false, false, false, true, ProgramMode::PrintExampleWindowsIniFile)
 {
