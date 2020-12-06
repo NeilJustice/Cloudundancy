@@ -30,8 +30,8 @@ TEST(ArgcArgvToStringVector_ReturnsArgsAsStringVector)
 TEST(Join_EmptyIntVector_ReturnsEmptyStringRegardlessOfSeparator)
 {
    const vector<int> emptyIntVector = {};
-	ARE_EQUAL("", Vector::Join(emptyIntVector, ' '));
-	ARE_EQUAL("", Vector::Join(emptyIntVector, ','));
+	IS_EMPTY_STRING(Vector::Join(emptyIntVector, ' '));
+	IS_EMPTY_STRING(Vector::Join(emptyIntVector, ','));
 }
 
 TEST(Join_1ElementIntVector_ReturnsFirstElementRegardlessOfSeparator)
@@ -55,8 +55,8 @@ TEST3X3(Join_2ElementIntVector_ReturnsElementsJoinedBySeparator,
 TEST(ReverseJoin_EmptyIntVector_ReturnsEmptyStringRegardlessOfSeparator)
 {
    const vector<int> emptyIntVector = {};
-	ARE_EQUAL("", Vector::ReverseJoin(emptyIntVector, ' '));
-	ARE_EQUAL("", Vector::ReverseJoin(emptyIntVector, ','));
+	IS_EMPTY_STRING(Vector::ReverseJoin(emptyIntVector, ' '));
+	IS_EMPTY_STRING(Vector::ReverseJoin(emptyIntVector, ','));
 }
 
 TEST(ReverseJoin_1ElementIntVector_ReturnsFirstElementRegardlessOfSeparator)

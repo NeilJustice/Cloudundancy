@@ -213,7 +213,7 @@ TEST(ReadFileText_OpensFileInTextReadMode_FileSizeIs0_ClosesFile_ReturnsEmptyStr
    METALMOCK(_caller_FileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(
       &FileSystem::FileSize, &_fileSystem, &readModeTextFileHandle));
    METALMOCK(_fileOpenerCloserMock->CloseFileMock.CalledOnceWith(&readModeTextFileHandle));
-   ARE_EQUAL("", fileText);
+   IS_EMPTY_STRING(fileText);
 }
 
 TEST(ReadFileText_OpensFileInTextReadMode_FileSizeIsNot0_ReadsFileText_ClosesFile_ReturnsFileBytes)
