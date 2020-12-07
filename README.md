@@ -144,7 +144,7 @@ cmake --build . --config Release --target install
 ## Cloudundancy Future Features Roadmap
 
 |Future Cloudundancy Feature|Estimated Delivery Quarter|
-|-----------------------------------------------------------------|
+|---------------------------|--------------------------------------|
 |`7zip-files-then-copy-the-7zip-file-to-multiple-folders` working on Linux|Q4 2020|
 |SonarCloud static analysis badge|Q1 2021|
 |Coverity static analysis badge|Q1 2021|
