@@ -2,9 +2,9 @@
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-17-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B17) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Cloudundancy quickly copies a configurable list of files and folders to multiple destination folders to achieve cloud-redundant and device-redundant backups. For example, in a Cloudundancy.ini file, destination folder could be configured to be a Google Drive folder, a Microsoft OneDrive folder, and two USB drives to achieve the peace of mind that comes with having cloud-redundant and device-redundant backups of business-critical files.
+Cloudundancy is a C++ command line program which quickly copies a configurable list of files and folders to multiple destination folders to achieve cloud-redundant and device-redundant backups. For example, in a Cloudundancy.ini file, destination folders could be configured to be a Google Drive folder, a Microsoft OneDrive folder, and two USB drives to achieve the peace of mind that comes with having cloud-redundant and device-redundant backups of business-critical files.
 
-|Build Type|Build Status|
+|Cloudundancy Build Type|Build Status|
 |----------|------------|
 |Travis CI Linux (Clang 7.0.0 and GCC 7.5.0)|<a href="https://travis-ci.org/NeilJustice/Cloudundancy"><img src="https://travis-ci.org/NeilJustice/Cloudundancy.svg?branch=main"/></a>|
 |AppVeyor Windows (Visual Studio 2019 x64)|<a href="https://ci.appveyor.com/project/NeilJustice/Cloudundancy"><img src="https://ci.appveyor.com/api/projects/status/ygwr3rb9spwhy4u0?svg=true"/></a>|
@@ -14,12 +14,12 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
 
 * [Cloudundancy Command Line Usage](#cloudundancy-command-line-usage)
 * [Cloudundancy Program Modes](#cloudundancy-program-modes)
-   * [example-linux-ini-file](#print-example-linux-ini-file)
-   * [example-windows-ini-file](#print-example-windows-ini-file)
    * [backup-files-to-multiple-folders](#backup-files-to-multiple-folders)
    * [7zip-files-then-copy-the-7zip-file-to-multiple-folders](#7zip-files-then-copy-the-7zip-file-to-multiple-folders)
-* [Linux Jenkins Jobs Which Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize Cloudundancy](#linux-jenkins-jobs-which-compile-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-cloudundancy)
-* [Windows Jenkins Jobs Which Compile Cloudundancy](#windows-jenkins-jobs-which-compile-cloudundancy)
+   * [example-linux-ini-file](#print-example-linux-ini-file)
+   * [example-windows-ini-file](#print-example-windows-ini-file)
+* [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize Cloudundancy](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-cloudundancy)
+* [Windows Jenkins Jobs Which Build Cloudundancy](#windows-jenkins-jobs-which-build-cloudundancy)
 * [How To Build Cloudundancy From Source On Linux With Clang](#how-to-build-cloudundancy-from-source-on-linux-with-clang)
 * [How To Build Cloudundancy From Source On Windows With Visual Studio 2019](#how-to-build-cloudundancy-from-source-on-windows-with-visual-studio-2019)
 * [Cloudundancy Future Features Roadmap](#cloudundancy-future-features-roadmap)
@@ -28,27 +28,37 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
 
 ```
 Cloudundancy v0.9.0 - Maker of cloud-redundant and device-redundant file backups
-https://github.com/NeilJustice/Cloudundancy - MIT License
+https://github.com/NeilJustice/Cloudundancy
 
 Usage:
-   Cloudundancy print-example-linux-ini-file
-   Cloudundancy print-example-windows-ini-file
    Cloudundancy backup-files-to-multiple-folders --ini-file=<CloudundancyIniFilePath> [--delete-destination-folders-first]
    Cloudundancy 7zip-files-then-copy-the-7zip-file-to-multiple-folders
-      --ini-file=<CloudundancyIniFilePath>
-      --7z-ini-file=<CloudundancyIniFilePath>
-      --backup-staging-folder=<FolderPath>
+      --ini-file-to-copy-files-to-7zip-staging-folder=<CloudundancyIniFilePath>
+      --7zip-staging-folder=<FolderPath>
+      --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=<CloudundancyIniFilePath>
+   Cloudundancy print-example-linux-ini-file
+   Cloudundancy print-example-windows-ini-file
 ```
 
 Cloudundancy command line arguments are parsed using the excellent single-header library [docopt.cpp](https://github.com/docopt/docopt.cpp):
 
-![CloudundancyArgsParser](Screenshots/CloudundancyArgsParser.png)
+
 
 ## Cloudundancy Program Modes
 
+### backup-files-to-multiple-folders
+
+Cloudundancy program mode `backup-files-to-multiple-folders` copies files and folders listed in a Cloudundancy.ini file to multiple destination folders.
+
+12/03/2020: Work in progress.
+
+### 7zip-files-then-copy-the-7zip-file-to-multiple-folders
+
+12/03/2020: Work in progress.
+
 ### print-example-linux-ini-file
 
-12/02/2020: Work in progress.
+12/03/2020: Work in progress.
 
 ### print-example-windows-ini-file
 
@@ -101,21 +111,11 @@ nextBuildNumber
 scm-polling.log
 ```
 
-### backup-files-to-multiple-folders
-
-Cloudundancy program mode `backup-files-to-multiple-folders` copies files and folders listed in a Cloudundancy.ini file to multiple destination folders.
-
-
-
-### 7zip-files-then-copy-the-7zip-file-to-multiple-folders
-
-12/02/2020: Work in progress.
-
 ### Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize Cloudundancy
 
 A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Fedora 33 to build Cloudundancy with Clang and GCC:
 
-12/02/2020: Work in progress.
+12/03/2020: Work in progress.
 
 ### Windows Jenkins Jobs Which Build Cloudundancy
 
@@ -144,7 +144,7 @@ cmake --build . --config Release --target install
 ## Cloudundancy Future Features Roadmap
 
 |Future Cloudundancy Feature|Estimated Delivery Quarter|
-|-----------------------------------------------------------------|
+|---------------------------|--------------------------------------|
 |`7zip-files-then-copy-the-7zip-file-to-multiple-folders` working on Linux|Q4 2020|
 |SonarCloud static analysis badge|Q1 2021|
 |Coverity static analysis badge|Q1 2021|

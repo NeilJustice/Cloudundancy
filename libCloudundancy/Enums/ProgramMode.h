@@ -6,6 +6,6 @@ enum ProgramMode : unsigned char
    PrintExampleLinuxIniFile,
    PrintExampleWindowsIniFile,
    BackupFilesAndFolders,
-   BackupFilesAndFoldersTo7zFile,
+   BackupFilesAndFoldersTo7ZipFile,
    MaxValue
 };

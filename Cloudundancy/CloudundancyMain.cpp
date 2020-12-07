@@ -39,11 +39,11 @@ using namespace std;
 // print-example-linux-ini-file
 // print-example-windows-ini-file
 // backup-files-to-multiple-folders --ini-file=C:\CloudundancyTesting\Cloudundancy.ini
-// 7zip-files-then-copy-the-7zip-file-to-multiple-folders --ini-file=C:\Code\dotfiles\WindowsCloudundancy_CodeFolderBackups.ini --7z-ini-file=C:\Code\dotfiles\WindowsCloudundancy_CodeFolderBackups_7zFileCopyStep.ini --backup-staging-folder=C:\CodeFolderBackupStaging
+// 7zip-files-then-copy-the-7zip-file-to-multiple-folders --ini-file=C:\Code\dotfiles\WindowsCloudundancy_CodeFolderBackups.ini --7zip-staging-folder=C:\CodeFolderBackupStaging --7z-ini-file=C:\Code\dotfiles\WindowsCloudundancy_CodeFolderBackups_7ZipFileCopyStep.ini
 
 // Testing Cloudundancy command lines:
 // backup-files-to-multiple-folders --ini-file=C:\Test\Cloudundancy.ini --delete-destination-folders-first
-// 7zip-files-then-copy-the-7zip-file-to-multiple-folders --ini-file=C:\Test\Cloudundancy7z1.ini --7z-ini-file=C:\Test\Cloudundancy7z2.ini --backup-staging-folder=C:\Test\BackupStagingFolder
+// 7zip-files-then-copy-the-7zip-file-to-multiple-folders --ini-file-to-copy-files-to-7zip-staging-folder=C:\Test\FileCopyingToStagingFolder.ini --7zip-staging-folder=C:\Test\BackupStagingFolder --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=C:\Test\7zipCopying.ini
 
 int main(int argc, char* argv[])
 {
