@@ -53,7 +53,7 @@ TEST(DefaultConstructor_NewsOneExtraArgTransformer_SetsFieldsToDefaultValues)
    RecursiveDirectoryIterator recursiveDirectoryIterator;
    DELETE_TO_ASSERT_NEWED(recursiveDirectoryIterator._oneExtraArgTransformer);
 
-   ARE_EQUAL(fs::recursive_directory_iterator(), recursiveDirectoryIterator._recursiveDirectoryIterator);
+   IS_DEFAULT_VALUE(recursiveDirectoryIterator._recursiveDirectoryIterator);
    ARE_EQUAL(vector<string>(), recursiveDirectoryIterator._fileSubpathsToNotCopy);
 }
 
