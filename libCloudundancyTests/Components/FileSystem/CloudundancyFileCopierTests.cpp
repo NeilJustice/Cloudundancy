@@ -154,7 +154,6 @@ TEST(CopyFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFir
    _memberForEacher_CopyEachFileOrFolderToFolderMock->CallConstMemberFunctionForEachElementMock.Expect();
 
    const fs::path iniFilePath = ZenUnit::Random<fs::path>();
-   const bool deleteDestinationFoldersFirst = ZenUnit::Random<bool>();
    //
    _cloudundancyFileCopier.CopyFilesAndFoldersToMultipleDestinationFolders(iniFilePath, false);
    //
