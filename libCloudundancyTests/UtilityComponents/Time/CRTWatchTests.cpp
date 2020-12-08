@@ -89,6 +89,7 @@ TEST(TmNow_ReturnsTmNow)
    METALMOCK(nowMock.CalledOnce());
    METALMOCK(to_time_tMock.CalledOnceWith(nowTimePoint));
    _localtimeCallHistory.AssertCalledOnceWith(nowAsTimeT);
+   ARE_EQUAL(_localtimeCallHistory.returnValue, tmNow);
 }
 
 #elif _WIN32

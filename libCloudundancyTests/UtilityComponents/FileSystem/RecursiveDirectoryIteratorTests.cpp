@@ -22,9 +22,11 @@ public:
 TEST(DefaultConstructor_SetsFilesystemRemoveFunctionPointer_NewsOneExtraArgTransformer)
 {
    RecursiveDirectoryIterator recursiveDirectoryIterator;
+#ifdef _WIN32
    using FilesystemRemoveOverloadFunctionType = bool(*)(const fs::path&);
    STD_FUNCTION_TARGETS_OVERLOAD(FilesystemRemoveOverloadFunctionType, fs::remove, recursiveDirectoryIterator._call_fs_remove);
    DELETE_TO_ASSERT_NEWED(recursiveDirectoryIterator._oneExtraArgTransformer);
+#endif
 }
 
 TEST(RecursivelyDeleteAllFilesExceptIgnoredFileSubpaths_RecursivelyCallsFilesystemRemoveOnEachFilePathUntilDefaultPathReturned)
