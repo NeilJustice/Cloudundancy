@@ -2,6 +2,12 @@
 class CloudundancyArgsParser;
 class CloudundancySubProgramFactory;
 class CloudundancyFileCopier;
+class Console;
+class Environmentalist;
+class Stopwatch;
+template<typename ClassType, typename ArgumentType>
+class TryCatchCaller;
+class Watch;
 
 class CloudundancyProgram
 {

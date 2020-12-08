@@ -20,7 +20,7 @@ public:
 private:
    void SetSupportsColorIfUnset();
    bool SupportsColor() const;
-   void SetTextColor(Color color) const;
+   static void SetTextColor(Color color);
    static const char* ColorToLinuxColor(Color color) noexcept;
    static WindowsColor ColorToWindowsColor(Color color) noexcept;
 };

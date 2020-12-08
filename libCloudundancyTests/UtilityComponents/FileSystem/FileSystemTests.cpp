@@ -2,8 +2,8 @@
 #include "libCloudundancy/UtilityComponents/FileSystem/FileSystem.h"
 #include "libCloudundancyTests/UtilityComponents/Assertion/MetalMock/AsserterMock.h"
 #include "libCloudundancyTests/UtilityComponents/FileSystem/MetalMock/FileOpenerCloserMock.h"
-#include "libCloudundancyTests/UtilityComponents/Memory/MetalMock/CharVectorAllocatorMock.h"
 #include "libCloudundancyTests/UtilityComponents/FunctionCallers/MemberFunctions/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/UtilityComponents/Memory/MetalMock/CharVectorAllocatorMock.h"
 #include "libCloudundancyTests/UtilityComponents/Time/MetalMock/StopwatchMock.h"
 #include "libCloudundancyTests/UtilityComponents/Time/MetalMock/WatchMock.h"
 
@@ -333,10 +333,10 @@ TEST(ReadFileBytes_OpensFileInBinaryReadMode_FileSizeIsNot0_ReadsFileBytes_Close
 
 TEST1X1(IsFileSizeGreaterThanOrEqualTo2GB_FileSizeIsGreaterThanOrEqualTo2GB_ReturnsTrue,
    size_t fileSize,
-   2ull * 1024ull * 1024ull * 1024ull,
-   2ull * 1024ull * 1024ull * 1024ull + 1,
-   2ull * 1024ull * 1024ull * 1024ull + 2,
-   10ull * 1024ull * 1024ull * 1024ull)
+   2ULL * 1024ULL * 1024ULL * 1024ULL,
+   2ULL * 1024ULL * 1024ULL * 1024ULL + 1,
+   2ULL * 1024ULL * 1024ULL * 1024ULL + 2,
+   10ULL * 1024ULL * 1024ULL * 1024ULL)
 {
    file_sizeMock.Return(fileSize);
    const fs::path filePath = ZenUnit::Random<fs::path>();
@@ -349,10 +349,10 @@ TEST1X1(IsFileSizeGreaterThanOrEqualTo2GB_FileSizeIsGreaterThanOrEqualTo2GB_Retu
 
 TEST1X1(IsFileSizeGreaterThanOrEqualTo2GB_FileSizeIsLessThan2GB_ReturnsFalse,
    size_t fileSize,
-   0ull,
-   1ull,
-   2ull * 1024ull * 1024ull * 1024ull - 2,
-   2ull * 1024ull * 1024ull * 1024ull - 1)
+   0ULL,
+   1ULL,
+   2ULL * 1024ULL * 1024ULL * 1024ULL - 2,
+   2ULL * 1024ULL * 1024ULL * 1024ULL - 1)
 {
    file_sizeMock.Return(fileSize);
    const fs::path filePath = ZenUnit::Random<fs::path>();
@@ -599,21 +599,21 @@ TEST(FileSize_CallsFSeekEndThenFTellToDetermineSizeOfFileInBytes)
 
    const long ftellReturnValue = ftellMock.ReturnRandom();
 
-   FILE filePointer{};
+   FILE fileHandle{};
    //
-   const size_t fileSizeInBytes = _fileSystem.FileSize(&filePointer);
+   const size_t fileSizeInBytes = _fileSystem.FileSize(&fileHandle);
    //
    METALMOCK(fseekMock.CalledAsFollows(
    {
-      { &filePointer, 0, SEEK_END },
-      { &filePointer, 0, SEEK_SET }
+      { &fileHandle, 0, SEEK_END },
+      { &fileHandle, 0, SEEK_SET }
    }));
    METALMOCK(_asserterMock->ThrowIfIntsNotEqualMock.CalledAsFollows(
    {
-      { 0, fseekEndReturnValue, "fseek(filePointer, 0, SEEK_END) in FileSystem::FileSize() unexpectedly did not return 0" },
-      { 0, fseekSetReturnValue, "fseek(filePointer, 0, SEEK_SET) in FileSystem::FileSize() unexpectedly did not return 0" }
+      { 0, fseekEndReturnValue, "fseek(fileHandle, 0, SEEK_END) in FileSystem::FileSize() unexpectedly did not return 0" },
+      { 0, fseekSetReturnValue, "fseek(fileHandle, 0, SEEK_SET) in FileSystem::FileSize() unexpectedly did not return 0" }
    }));
-   METALMOCK(ftellMock.CalledOnceWith(&filePointer));
+   METALMOCK(ftellMock.CalledOnceWith(&fileHandle));
    ARE_EQUAL(static_cast<size_t>(ftellReturnValue), fileSizeInBytes);
 }
 

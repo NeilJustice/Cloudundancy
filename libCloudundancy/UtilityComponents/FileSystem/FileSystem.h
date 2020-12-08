@@ -90,5 +90,5 @@ public:
    virtual void DeleteFoldersExceptForFile(const vector<fs::path>& folderPaths, string_view exceptFileName) const;
    virtual void SetCurrentPath(const fs::path& folderPath) const;
 private:
-   size_t FileSize(FILE* filePointer) const;
+   size_t FileSize(FILE* fileHandle) const;
 };

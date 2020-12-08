@@ -15,7 +15,7 @@ TEST(release_assert_IsTrue_DoesNothing)
    release_assert(1 == 1);
 }
 
-void FailReleaseAssertFunction()
+static void FailReleaseAssertFunction()
 {
    try
    {

@@ -22,12 +22,12 @@ public:
    virtual FILE* OpenReadModeBinaryFile(const fs::path& filePath) const;
    virtual FILE* OpenReadModeTextFile(const fs::path& filePath) const;
    virtual FILE* OpenAppendModeTextFile(const fs::path& filePath) const;
-   virtual void CloseFile(FILE* filePointer) const;
+   virtual void CloseFile(FILE* fileHandle) const;
 private:
 #ifdef __linux__
    FILE* OpenFileOnLinux(const fs::path& filePath, const char* fileOpenMode) const;
 #elif _WIN32
    FILE* OpenFileOnWindows(const fs::path& filePath, const wchar_t* fileOpenMode) const;
 #endif
-   void ThrowFileOpenExceptionIfFileOpenFailed(FILE* filePointer, const fs::path& filePath) const;
+   static void ThrowFileOpenExceptionIfFileOpenFailed(FILE* fileHandle, const fs::path& filePath);
 };

@@ -58,7 +58,7 @@ tm Watch::TMNow() const
 
 void Watch::Write8601Date(const tm& tmValue, char* outChars)
 {
-   const unsigned year = 1900u + static_cast<unsigned>(tmValue.tm_year);
+   const unsigned year = 1900U + static_cast<unsigned>(tmValue.tm_year);
    Chars::FourDigitSizeTToFourChars(year, outChars);
    outChars[4] = '-';
    const size_t zeroBasedMonth = static_cast<size_t>(tmValue.tm_mon);

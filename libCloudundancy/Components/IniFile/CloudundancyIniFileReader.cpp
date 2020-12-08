@@ -39,14 +39,14 @@ CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudunda
          inFileSubpathsToNotCopySection = false;
          continue;
       }
-      else if (iniFileLine == "[SourceFilesAndFolders]")
+      if (iniFileLine == "[SourceFilesAndFolders]")
       {
          inDestinationFoldersSection = false;
          inSourceFilesAndFoldersToCopySection = true;
          inFileSubpathsToNotCopySection = false;
          continue;
       }
-      else if (iniFileLine == "[FileSubpathsToNotCopy]")
+      if (iniFileLine == "[FileSubpathsToNotCopy]")
       {
          inDestinationFoldersSection = false;
          inSourceFilesAndFoldersToCopySection = false;
@@ -55,7 +55,7 @@ CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudunda
       }
       if (inDestinationFoldersSection)
       {
-         cloudundancyIni.destinationFolderPaths.push_back(iniFileLine);
+         cloudundancyIni.destinationFolderPaths.emplace_back(iniFileLine);
       }
       else if (inSourceFilesAndFoldersToCopySection)
       {

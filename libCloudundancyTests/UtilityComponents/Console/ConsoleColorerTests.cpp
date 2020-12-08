@@ -47,7 +47,7 @@ TEST2X2(ColorToWindowsColor_ReturnsWindowsColorForColor,
    Color::Unset, WindowsColor::White,
    Color::MaxValue, WindowsColor::White)
 {
-   const WindowsColor windowsColor = _consoleColorer.ColorToWindowsColor(color);
+   const WindowsColor windowsColor = ConsoleColorer::ColorToWindowsColor(color);
    ARE_EQUAL(expectedReturnValue, windowsColor);
 }
 
@@ -60,7 +60,7 @@ TEST2X2(ColorToLinuxColor_ReturnsLinuxColorStringForColor,
    Color::Yellow, "\033[33m",
    Color::Unset, "\033[0m")
 {
-   const char* const linuxColor = _consoleColorer.ColorToLinuxColor(color);
+   const char* const linuxColor = ConsoleColorer::ColorToLinuxColor(color);
    ARE_EQUAL(expectedReturnValue, linuxColor);
 }
 

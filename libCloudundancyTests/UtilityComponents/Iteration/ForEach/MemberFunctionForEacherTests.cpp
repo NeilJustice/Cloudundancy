@@ -11,9 +11,7 @@ EVIDENCE
 class ClassType
 {
 public:
-   virtual void ConstMemberFunctionFunction(const ElementType&) const
-   {
-   }
+   virtual void ConstMemberFunctionFunction(const ElementType&) const {}
    virtual ~ClassType() = default;
 };
 

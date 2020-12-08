@@ -2,7 +2,7 @@
 #include "libCloudundancy/UtilityComponents/Iteration/ForEach/ForEacher.h"
 
 template<
-   template<typename _T, typename...>
+   template<typename TT, typename...>
    class CollectionType,
    typename T>
 TEMPLATE_TESTS(ForEacherTests, CollectionType, T)

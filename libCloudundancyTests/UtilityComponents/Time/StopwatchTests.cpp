@@ -54,7 +54,7 @@ TEST(StopAndGetElapsedMilliseconds_StartPreviouslyCalled_ReturnsElapsedMilliseco
    const long long elapsedMilliseconds = _stopwatch.StopAndGetElapsedMilliseconds();
    //
    METALMOCK(nowMock.CalledOnce());
-   ARE_EQUAL(1000ll, elapsedMilliseconds);
+   ARE_EQUAL(1000LL, elapsedMilliseconds);
 }
 
 TEST(StopAndGetElapsedMicroseconds_StartNotPreviouslyCalled_Returns0)

@@ -27,13 +27,13 @@ namespace fs = std::filesystem;
 #endif
 using namespace std;
 
+#include "libCloudundancy/Components/CloudundancyProgram.h"
 #include "libCloudundancy/Enums/Color.h"
 #include "libCloudundancy/UtilityComponents/Console/Console.h"
 #include "libCloudundancy/UtilityComponents/Environment/Environmentalist.h"
 #include "libCloudundancy/UtilityComponents/Exception/TryCatchCaller.h"
 #include "libCloudundancy/UtilityComponents/Time/Stopwatch.h"
 #include "libCloudundancy/UtilityComponents/Time/Watch.h"
-#include "libCloudundancy/Components/CloudundancyProgram.h"
 
 // Example Cloudundancy command lines:
 // print-example-linux-ini-file

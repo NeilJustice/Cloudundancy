@@ -179,7 +179,7 @@ TEST(ThrowFileOpenExceptionIfFileOpenFailed_FileHandleIsNotNullptr_DoesNotThrowE
    FILE nonNullFileHandle{};
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
-   _fileOpenerCloser.ThrowFileOpenExceptionIfFileOpenFailed(&nonNullFileHandle, filePath);
+   FileOpenerCloser::ThrowFileOpenExceptionIfFileOpenFailed(&nonNullFileHandle, filePath);
 }
 
 RUN_TESTS(FileOpenerCloserTests)

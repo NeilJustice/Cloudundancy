@@ -169,7 +169,7 @@ FileCopyResult FileSystem::TryCopyFileWithStdFilesystemCopyFile(
 bool FileSystem::IsFileSizeGreaterThanOrEqualTo2GB(const fs::path& filePath) const
 {
    const size_t fileSizeInBytes = _call_fs_file_size(filePath);
-   constexpr size_t NumberOfBytesIn2GB = 2ull * 1024ull * 1024ull * 1024ull;
+   constexpr size_t NumberOfBytesIn2GB = 2ULL * 1024ULL * 1024ULL * 1024ULL;
    static_assert(NumberOfBytesIn2GB == 2147483648);
    if (fileSizeInBytes >= NumberOfBytesIn2GB)
    {
@@ -235,15 +235,15 @@ void FileSystem::SetCurrentPath(const fs::path& folderPath) const
 
 // Private Functions
 
-size_t FileSystem::FileSize(FILE* filePointer) const
+size_t FileSystem::FileSize(FILE* fileHandle) const
 {
-   const int fseekEndReturnValue = _call_fseek(filePointer, 0, SEEK_END);
+   const int fseekEndReturnValue = _call_fseek(fileHandle, 0, SEEK_END);
    _asserter->ThrowIfIntsNotEqual(0, fseekEndReturnValue,
-      "fseek(filePointer, 0, SEEK_END) in FileSystem::FileSize() unexpectedly did not return 0");
-   const long ftellReturnValue = _call_ftell(filePointer);
-   const int fseekSetReturnValue = _call_fseek(filePointer, 0, SEEK_SET);
+      "fseek(fileHandle, 0, SEEK_END) in FileSystem::FileSize() unexpectedly did not return 0");
+   const long ftellReturnValue = _call_ftell(fileHandle);
+   const int fseekSetReturnValue = _call_fseek(fileHandle, 0, SEEK_SET);
    _asserter->ThrowIfIntsNotEqual(0, fseekSetReturnValue,
-      "fseek(filePointer, 0, SEEK_SET) in FileSystem::FileSize() unexpectedly did not return 0");
+      "fseek(fileHandle, 0, SEEK_SET) in FileSystem::FileSize() unexpectedly did not return 0");
    const size_t fileSizeInBytes = static_cast<size_t>(ftellReturnValue);
    return fileSizeInBytes;
 }
