@@ -17,7 +17,7 @@ map<string, docopt::Value> DocoptParser::ParseArgs(const string& commandLineUsag
       throw invalid_argument("argv cannot be empty");
    }
    const vector<string> argvWithoutFirstArgument(argv.data() + 1, argv.data() + argv.size());
-   const map<string, docopt::Value> argPairs =
+   map<string, docopt::Value> argPairs =
       _call_docopt_docopt(commandLineUsage, argvWithoutFirstArgument, true, "", false);
    return argPairs;
 }

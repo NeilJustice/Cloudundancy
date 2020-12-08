@@ -37,7 +37,7 @@ string Environmentalist::LinuxMachineName() const
    char hostname[65]{};
    const int gethostnameResult = _call_gethostname(hostname, sizeof(hostname));
    release_assert(gethostnameResult == 0);
-   const string linuxMachineName(hostname);
+   string linuxMachineName(hostname);
    return linuxMachineName;
 }
 
@@ -46,7 +46,7 @@ string Environmentalist::LinuxUserName() const
    char usernameChars[_SC_LOGIN_NAME_MAX];
    const int getloginReturnValue = getlogin_r(usernameChars, sizeof(usernameChars));
    release_assert(getloginReturnValue == 0);
-   const string username(usernameChars);
+   string username(usernameChars);
    return username;
 }
 
@@ -58,7 +58,7 @@ string Environmentalist::WindowsMachineName() const
    DWORD size = sizeof(computerNameChars);
    const BOOL didGetComputerName = _call_GetComputerNameA(computerNameChars, &size);
    release_assert(didGetComputerName == TRUE);
-   const string windowsMachineName(computerNameChars);
+   string windowsMachineName(computerNameChars);
    return windowsMachineName;
 }
 
@@ -68,7 +68,7 @@ string Environmentalist::WindowsUserName() const
    DWORD size = sizeof(windowsUserNameCharacters);
    const BOOL didGetUserName = _call_GetUserNameA(windowsUserNameCharacters, &size);
    release_assert(didGetUserName == TRUE);
-   const string windowsUserName(windowsUserNameCharacters);
+   string windowsUserName(windowsUserNameCharacters);
    return windowsUserName;
 }
 

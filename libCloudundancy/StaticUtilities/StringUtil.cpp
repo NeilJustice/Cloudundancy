@@ -44,7 +44,7 @@ std::string String::ReplaceFirst(string_view str, string_view substring, string_
 string String::RegexReplace(const string& str, const string& pattern, const string& replacement)
 {
    const regex regexPattern(pattern);
-   const string replacedString = regex_replace(str, regexPattern, replacement);
+   string replacedString = regex_replace(str, regexPattern, replacement);
    return replacedString;
 }
 

@@ -7,7 +7,7 @@ string Type::GetExceptionClassNameAndMessage(const exception* ex)
 {
    const string* exceptionTypeName = Type::GetName(*ex);
    const string exceptionMessage = ex->what();
-   const string exceptionClassNameAndMessage = String::Concat(*exceptionTypeName, ": ", exceptionMessage);
+   string exceptionClassNameAndMessage = String::Concat(*exceptionTypeName, ": ", exceptionMessage);
    return exceptionClassNameAndMessage;
 }
 
@@ -37,7 +37,7 @@ std::string Type::Demangle(const char* mangledTypeName)
       abi::__cxa_demangle(mangledTypeName, nullptr, nullptr, &demangleStatus),
       std::free);
    release_assert(demangleStatus == 0);
-   const std::string demangledTypeName(demangledTypeNamePointer.get());
+   std::string demangledTypeName(demangledTypeNamePointer.get());
    return demangledTypeName;
 }
 
@@ -46,8 +46,7 @@ std::string Type::Demangle(const char* mangledTypeName)
 std::string Type::Demangle(const char* mangledTypeName)
 {
    static const std::regex classStructPattern("(class |struct )");
-   const std::string typeNameMinusClassAndStruct
-      = std::regex_replace(mangledTypeName, classStructPattern, "");
+   std::string typeNameMinusClassAndStruct = std::regex_replace(mangledTypeName, classStructPattern, "");
    return typeNameMinusClassAndStruct;
 }
 

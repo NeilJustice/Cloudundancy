@@ -66,7 +66,7 @@ std::string Stopwatch::StopAndGetElapsedSeconds()
    const std::string leadingZeros(numberOfLeadingMillisecondZeros, '0');
 
    // Example elapsedSecondsWithMillisecondResolution: "0.001"
-   const std::string elapsedSecondsWithMillisecondResolution =
+   std::string elapsedSecondsWithMillisecondResolution =
       String::Concat(elapsedSeconds, '.', leadingZeros, elapsedMillisecondsMod1000);
 
    return elapsedSecondsWithMillisecondResolution;

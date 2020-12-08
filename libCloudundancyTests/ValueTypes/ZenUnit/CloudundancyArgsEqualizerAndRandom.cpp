@@ -29,7 +29,7 @@ namespace ZenUnit
    template<>
    CloudundancyArgs Random()
    {
-      const CloudundancyArgs randomCloudundancyArgs = TestableRandomCloudundancyArgs(ZenUnit::RandomGenerator::Instance());
+      CloudundancyArgs randomCloudundancyArgs = TestableRandomCloudundancyArgs(ZenUnit::RandomGenerator::Instance());
       return randomCloudundancyArgs;
    }
 }

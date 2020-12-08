@@ -16,7 +16,7 @@ std::string Watch::DateTimeNow() const
    const tm tmNow = TMNow();
    char dateTimeNowChars[32];
    strftime(dateTimeNowChars, sizeof(dateTimeNowChars), "%F %r", &tmNow);
-   const std::string dateTimeNowString(dateTimeNowChars);
+   std::string dateTimeNowString(dateTimeNowChars);
    return dateTimeNowString;
 }
 
@@ -33,7 +33,7 @@ string Watch::DateTimeNowForFileNames() const
    chars[13] = '-';
    Chars::OneOrTwoDigitSizeTToTwoChars(static_cast<size_t>(tmNow.tm_min), chars.data() + 14);
    chars[16] = 0;
-   const string dateTimeNowForFileNames(chars.data());
+   string dateTimeNowForFileNames(chars.data());
    return dateTimeNowForFileNames;
 }
 

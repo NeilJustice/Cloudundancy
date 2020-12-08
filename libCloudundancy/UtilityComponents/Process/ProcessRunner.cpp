@@ -21,12 +21,12 @@ ProcessRunner::~ProcessRunner()
 
 ProcessResult ProcessRunner::FailFastRun(string_view processName, string_view arguments, bool doPrintStandardOutput) const
 {
-   const ProcessResult processResult = _osSpecificProcessRunner->FailFastRun(processName, arguments, doPrintStandardOutput);
+   ProcessResult processResult = _osSpecificProcessRunner->FailFastRun(processName, arguments, doPrintStandardOutput);
    return processResult;
 }
 
 ProcessResult ProcessRunner::Run(string_view processName, string_view arguments) const
 {
-   const ProcessResult processResult = _osSpecificProcessRunner->Run(processName, arguments);
+   ProcessResult processResult = _osSpecificProcessRunner->Run(processName, arguments);
    return processResult;
 }

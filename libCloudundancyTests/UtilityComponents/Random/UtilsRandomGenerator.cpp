@@ -23,7 +23,7 @@ fs::path UtilsRandomGenerator::RelativeFilePath() const
       randomFilePathBuilder << "." << ZenUnit::Random<string>();
    }
    const string randomFilePathString = randomFilePathBuilder.str();
-   const fs::path randomFilePath = randomFilePathString;
+   fs::path randomFilePath = randomFilePathString;
    return randomFilePath;
 }
 
@@ -38,7 +38,7 @@ fs::path UtilsRandomGenerator::RelativeFolderPath() const
    const string folderName = ZenUnit::Random<string>();
    randomFolderPathBuilder << folderName;
    const string randomFolderPathString = randomFolderPathBuilder.str();
-   const fs::path randomFolderPath = randomFolderPathString;
+   fs::path randomFolderPath = randomFolderPathString;
    return randomFolderPath;
 }
 
