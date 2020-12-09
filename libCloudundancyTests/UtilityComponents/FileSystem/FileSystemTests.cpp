@@ -18,7 +18,7 @@ AFACT(ThrowIfFilePathIsNotEmptyAndDoesNotExist_FilePathIsEmpty_DoesNothing)
 AFACT(ThrowIfFilePathIsNotEmptyAndDoesNotExist_FilePathIsNotEmpty_FilePathExists_DoesNothing)
 AFACT(ThrowIfFilePathIsNotEmptyAndDoesNotExist_FilePathIsNotEmpty_FilePathDoesNotExist_ThrowsFileSystemException)
 // File Reads
-AFACT(ReadFileText_OpensFileInTextReadMode_FileSizeIs0_ClosesFile_ReturnsEmptyCharVector)
+AFACT(ReadFileText_OpensFileInTextReadMode_FileSizeIs0_ClosesFile_ReturnsEmptyString)
 AFACT(ReadFileText_OpensFileInTextReadMode_FileSizeIsNot0_ReadsFileText_ClosesFile_ReturnsFileBytes)
 AFACT(ReadFileBytes_OpensFileInBinaryReadMode_FileSizeIs0_ClosesFile_ReturnsSharedPtrToEmptyCharVector)
 AFACT(ReadFileBytes_OpensFileInBinaryReadMode_FileSizeIsNot0_ReadsFileBytes_ClosesFile_ReturnsSharedPtrToFileBytes)
@@ -196,7 +196,7 @@ TEST(ThrowIfFilePathIsNotEmptyAndDoesNotExist_FilePathIsNotEmpty_FilePathDoesNot
 
 // File Reads
 
-TEST(ReadFileText_OpensFileInTextReadMode_FileSizeIs0_ClosesFile_ReturnsEmptyCharVector)
+TEST(ReadFileText_OpensFileInTextReadMode_FileSizeIs0_ClosesFile_ReturnsEmptyString)
 {
    FILE readModeTextFileHandle;
    _fileOpenerCloserMock->OpenReadModeTextFileMock.Return(&readModeTextFileHandle);
@@ -213,7 +213,7 @@ TEST(ReadFileText_OpensFileInTextReadMode_FileSizeIs0_ClosesFile_ReturnsEmptyCha
    METALMOCK(_caller_FileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(
       &FileSystem::FileSize, &_fileSystem, &readModeTextFileHandle));
    METALMOCK(_fileOpenerCloserMock->CloseFileMock.CalledOnceWith(&readModeTextFileHandle));
-   ARE_EQUAL("", fileText);
+   IS_EMPTY_STRING(fileText);
 }
 
 TEST(ReadFileText_OpensFileInTextReadMode_FileSizeIsNot0_ReadsFileText_ClosesFile_ReturnsFileBytes)
