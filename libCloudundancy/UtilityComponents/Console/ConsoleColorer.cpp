@@ -59,7 +59,7 @@ bool ConsoleColorer::SupportsColor() const
    return supportsColor;
 }
 
-void ConsoleColorer::SetTextColor(Color color)
+void ConsoleColorer::SetTextColor(Color color) const
 {
 #if defined __linux__
    const char* linuxColor = ColorToLinuxColor(color);
