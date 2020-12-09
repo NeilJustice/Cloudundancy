@@ -2,7 +2,11 @@
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-17-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B17) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Cloudundancy is a C++ command line program which quickly copies a configurable list of files and folders to multiple destination folders to achieve cloud-redundant and device-redundant backups. For example, in a Cloudundancy.ini file, destination folders could be configured to be a Google Drive folder, a Microsoft OneDrive folder, and two USB drives to achieve the peace of mind that comes with having cloud-redundant and device-redundant backups of business-critical files.
+Cloudundancy is a C++ command line program which quickly copies a configurable list of files and folders to a configurable list of destination folders to achieve cloud-redundant and device-redundant backups of business-critical files.
+
+For example, in a Cloudundancy.ini file, destination folders could be configured to be a Google Drive folder, a Microsoft OneDrive folder, and two USB drives to achieve the peace of mind that comes with having cloud-redundant and device-redundant backups of business-critical files.
+
+On Windows, Google Drive and Microsoft OneDrive folders automatically upload their contents to their respective clouds. On Linux, command line invocations of Google Drive and Microsoft OneDrive command line utilities would have to be added after a command line which runs Cloudundancy.
 
 |Cloudundancy Build Type|Build Status|
 |----------|------------|
@@ -12,19 +16,19 @@ Cloudundancy is a C++ command line program which quickly copies a configurable l
 
 Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
 
-* [Cloudundancy Command Line Usage](#cloudundancy-command-line-usage)
-* [Cloudundancy Program Modes](#cloudundancy-program-modes)
+* [Command Line Usage](#command-line-usage)
+* [Program Modes](#program-modes)
    * [backup-files-to-multiple-folders](#backup-files-to-multiple-folders)
    * [7zip-files-then-copy-the-7zip-file-to-multiple-folders](#7zip-files-then-copy-the-7zip-file-to-multiple-folders)
    * [example-linux-ini-file](#print-example-linux-ini-file)
    * [example-windows-ini-file](#print-example-windows-ini-file)
-* [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize Cloudundancy](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-cloudundancy)
+* [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-undefinedbehaviorsanitize-cloudundancy)
 * [Windows Jenkins Jobs Which Build Cloudundancy](#windows-jenkins-jobs-which-build-cloudundancy)
-* [How To Build Cloudundancy From Source On Linux With Clang](#how-to-build-cloudundancy-from-source-on-linux-with-clang)
-* [How To Build Cloudundancy From Source On Windows With Visual Studio 2019](#how-to-build-cloudundancy-from-source-on-windows-with-visual-studio-2019)
+* [4 Commands To Build Cloudundancy From Source On Linux With Clang](#4-commands-to-build-cloudundancy-from-source-on-linux-with-clang)
+* [4 Commands To Build Cloudundancy From Source On Windows With Visual Studio 2019](#4-commands-to-build-cloudundancy-from-source-on-windows-with-visual-studio-2019)
 * [Cloudundancy Future Features Roadmap](#cloudundancy-future-features-roadmap)
 
-## Cloudundancy Command Line Usage
+## Command Line Usage
 
 ```
 Cloudundancy v0.9.0 - Maker of cloud-redundant and device-redundant file backups
@@ -44,7 +48,7 @@ Cloudundancy command line arguments are parsed using the excellent single-header
 
 
 
-## Cloudundancy Program Modes
+## Program Modes
 
 ### backup-files-to-multiple-folders
 
@@ -111,35 +115,37 @@ nextBuildNumber
 scm-polling.log
 ```
 
-### Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize Cloudundancy
+### Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy
 
-A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Fedora 33 to build Cloudundancy with Clang and GCC:
+A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Fedora 33 with Clang and GCC:
 
-12/03/2020: Work in progress.
+12/09/2020: Work in progress.
 
 ### Windows Jenkins Jobs Which Build Cloudundancy
 
-A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Windows 10 to build Cloudundancy with Visual Studio 2019:
+A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Windows 10 with Visual Studio 2019:
 
 ![Cloudundancy Windows Jenkins Jobs](Screenshots/CloudundancyWindowsJenkinsJobs.png)
 
-## How To Build Cloudundancy From Source On Linux With Clang
+## 4 Commands To Build Cloudundancy From Source On Linux With Clang
 
 ```
 git clone https://github.com/NeilJustice/Cloudundancy
 cd Cloudundancy && mkdir Release && cd Release
 CXX=clang++ cmake .. -DCMAKE_BUILD_TYPE=Release
-sudo cmake --build . --target install
+sudo cmake --build . --target install # Installs binary Cloudundany to /usr/local/bin/Cloudundancy
 ```
 
-## How To Build Cloudundancy From Source On Windows With Visual Studio 2019
+## 4 Commands To Build Cloudundancy From Source On Windows With Visual Studio 2019
 
 ```
 git clone https://github.com/NeilJustice/Cloudundancy
 cd Cloudundancy
 cmake . -G"Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
-cmake --build . --config Release --target install
+cmake --build . --config Release --target install # Installs Cloudundancy.exe to C:\bin\Cloudundancy.exe
 ```
+
+![Cloudundancy.exe on Windows](Screenshots/CloudundancyDotExe.png)
 
 ## Cloudundancy Future Features Roadmap
 
