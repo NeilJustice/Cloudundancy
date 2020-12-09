@@ -46,7 +46,7 @@ Usage:
 
 Cloudundancy command line arguments are parsed using the excellent single-header library [docopt.cpp](https://github.com/docopt/docopt.cpp):
 
-
+![Cloudundancy arguments parsing with docopt.cpp](Screenshots/CloudundancyArgsParser.png)
 
 ## Program Modes
 
