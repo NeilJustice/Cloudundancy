@@ -11,19 +11,19 @@ ProgramModeDeterminer _programModeDeterminer;
 TEST5X5(DetermineProgramMode_ReturnsProgramModeCorrespondingToProgramModeBool,
    bool isCopyFilesToMultipleFoldersMode,
    bool is7ZipMode,
-   bool isPrintExampleLinuxIniFileMode,
-   bool isPrintExampleWindowsIniFileMode,
+   bool isExampleLinuxIniFileMode,
+   bool isExampleWindowsIniFileMode,
    ProgramMode expectedReturnValue,
    true, false, false, false, ProgramMode::CopyFilesAndFoldersToMultipleFolders,
    false, true, false, false, ProgramMode::SevenZip,
-   false, false, true, false, ProgramMode::PrintExampleLinuxIniFile,
-   false, false, false, true, ProgramMode::PrintExampleWindowsIniFile)
+   false, false, true, false, ProgramMode::ExampleLinuxIniFile,
+   false, false, false, true, ProgramMode::ExampleWindowsIniFile)
 {
    const ProgramMode programMode = _programModeDeterminer.DetermineProgramMode(
       isCopyFilesToMultipleFoldersMode,
       is7ZipMode,
-      isPrintExampleLinuxIniFileMode,
-      isPrintExampleWindowsIniFileMode);
+      isExampleLinuxIniFileMode,
+      isExampleWindowsIniFileMode);
    ARE_EQUAL(expectedReturnValue, programMode);
 }
 

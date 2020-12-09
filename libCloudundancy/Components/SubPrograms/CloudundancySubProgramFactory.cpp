@@ -2,8 +2,8 @@
 #include "libCloudundancy/Components/SubPrograms/CopyFilesToMultipleFoldersSubProgram.h"
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgramFactory.h"
 #include "libCloudundancy/Components/SubPrograms/SevenZipSubProgram.h"
-#include "libCloudundancy/Components/SubPrograms/PrintExampleLinuxIniFileSubProgram.h"
-#include "libCloudundancy/Components/SubPrograms/PrintExampleWindowsIniFileSubProgram.h"
+#include "libCloudundancy/Components/SubPrograms/ExampleLinuxIniFileSubProgram.h"
+#include "libCloudundancy/Components/SubPrograms/ExampleWindowsIniFileSubProgram.h"
 
 shared_ptr<CloudundancySubProgram> CloudundancySubProgramFactory::NewCloudundancySubProgram(ProgramMode programMode) const
 {
@@ -17,13 +17,13 @@ shared_ptr<CloudundancySubProgram> CloudundancySubProgramFactory::NewCloudundanc
    {
       return make_shared<SevenZipSubProgram>();
    }
-   case ProgramMode::PrintExampleLinuxIniFile:
+   case ProgramMode::ExampleLinuxIniFile:
    {
-      return make_shared<PrintExampleLinuxIniFileSubProgram>();
+      return make_shared<ExampleLinuxIniFileSubProgram>();
    }
-   case ProgramMode::PrintExampleWindowsIniFile:
+   case ProgramMode::ExampleWindowsIniFile:
    {
-      return make_shared<PrintExampleWindowsIniFileSubProgram>();
+      return make_shared<ExampleWindowsIniFileSubProgram>();
    }
    default:
    {

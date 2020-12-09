@@ -4,8 +4,8 @@
 ProgramMode ProgramModeDeterminer::DetermineProgramMode(
    bool isCopyFilesToMultipleFoldersMode,
    bool is7ZipMode,
-   bool isPrintExampleLinuxIniFileMode,
-   bool isPrintExampleWindowsIniFileMode) const
+   bool isExampleLinuxIniFileMode,
+   bool isExampleWindowsIniFileMode) const
 {
    if (isCopyFilesToMultipleFoldersMode)
    {
@@ -15,13 +15,13 @@ ProgramMode ProgramModeDeterminer::DetermineProgramMode(
    {
       return ProgramMode::SevenZip;
    }
-   if (isPrintExampleLinuxIniFileMode)
+   if (isExampleLinuxIniFileMode)
    {
-      return ProgramMode::PrintExampleLinuxIniFile;
+      return ProgramMode::ExampleLinuxIniFile;
    }
-   if (isPrintExampleWindowsIniFileMode)
+   if (isExampleWindowsIniFileMode)
    {
-      return ProgramMode::PrintExampleWindowsIniFile;
+      return ProgramMode::ExampleWindowsIniFile;
    }
    throw invalid_argument("ProgramModeDeterminer::DetermineProgramMode(bool, bool, bool, bool): All four ProgramMode bools are unexpectedly false");
 }

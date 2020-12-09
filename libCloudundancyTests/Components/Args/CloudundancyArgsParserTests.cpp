@@ -45,13 +45,13 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    _docoptParserMock->ParseArgsMock.Return(docoptArgs);
 
    const bool isCopyFilesToMultipleFoldersMode = ZenUnit::Random<bool>();
-   const bool isPrintExampleLinuxIniFileMode = ZenUnit::Random<bool>();
-   const bool isPrintExampleWindowsIniFileMode = ZenUnit::Random<bool>();
+   const bool isExampleLinuxIniFileMode = ZenUnit::Random<bool>();
+   const bool isExampleWindowsIniFileMode = ZenUnit::Random<bool>();
    _docoptParserMock->GetRequiredBoolMock.ReturnValues(
       isCopyFilesToMultipleFoldersMode,
       is7ZipMode,
-      isPrintExampleLinuxIniFileMode,
-      isPrintExampleWindowsIniFileMode);
+      isExampleLinuxIniFileMode,
+      isExampleWindowsIniFileMode);
 
    const ProgramMode programMode = _programModeDeterminerMock->DetermineProgramModeMock.ReturnRandom();
 
@@ -82,14 +82,14 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    {
       { docoptArgs, "copy-files-to-multiple-folders" },
       { docoptArgs, "7zip-files-then-copy-the-7zip-file-to-multiple-folders" },
-      { docoptArgs, "print-example-linux-ini-file" },
-      { docoptArgs, "print-example-windows-ini-file" }
+      { docoptArgs, "example-linux-ini-file" },
+      { docoptArgs, "example-windows-ini-file" }
    }));
    METALMOCK(_programModeDeterminerMock->DetermineProgramModeMock.CalledOnceWith(
       isCopyFilesToMultipleFoldersMode,
       is7ZipMode,
-      isPrintExampleLinuxIniFileMode,
-      isPrintExampleWindowsIniFileMode));
+      isExampleLinuxIniFileMode,
+      isExampleWindowsIniFileMode));
    METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptArgs, "--ini-file"));
    METALMOCK(_docoptParserMock->GetOptionalBoolMock.CalledOnceWith(docoptArgs, "--delete-destination-folders-first"));
    METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledAsFollows(

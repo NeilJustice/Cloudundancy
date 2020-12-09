@@ -36,8 +36,8 @@ using namespace std;
 #include "libCloudundancy/UtilityComponents/Time/Watch.h"
 
 // Example Cloudundancy command lines:
-// print-example-linux-ini-file
-// print-example-windows-ini-file
+// example-linux-ini-file
+// example-windows-ini-file
 // copy-files-to-multiple-folders --ini-file=C:\CloudundancyTesting\Cloudundancy.ini
 // 7zip-files-then-copy-the-7zip-file-to-multiple-folders --ini-file=C:\Code\dotfiles\WindowsCloudundancy_CodeFolderBackups.ini --7zip-staging-folder=C:\CodeFolderBackupStaging --7z-ini-file=C:\Code\dotfiles\WindowsCloudundancy_CodeFolderBackups_7ZipFileCopyStep.ini
 

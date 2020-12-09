@@ -11,6 +11,6 @@ Usage:
       --ini-file-to-copy-files-to-7zip-staging-folder=<CloudundancyIniFilePath>
       --7zip-staging-folder=<FolderPath>
       --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=<CloudundancyIniFilePath>
-   Cloudundancy print-example-linux-ini-file
-   Cloudundancy print-example-windows-ini-file
+   Cloudundancy example-linux-ini-file
+   Cloudundancy example-windows-ini-file
 )";

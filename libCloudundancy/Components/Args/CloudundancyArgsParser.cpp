@@ -22,13 +22,13 @@ CloudundancyArgs CloudundancyArgsParser::ParseStringArgs(const vector<string>& s
    CloudundancyArgs cloudundancyArgs;
    const bool isCopyFilesToMultipleFoldersMode = _docoptParser->GetRequiredBool(docoptArgs, "copy-files-to-multiple-folders");
    const bool is7ZipMode = _docoptParser->GetRequiredBool(docoptArgs, "7zip-files-then-copy-the-7zip-file-to-multiple-folders");
-   const bool isPrintExampleLinuxIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "print-example-linux-ini-file");
-   const bool isPrintExampleWindowsIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "print-example-windows-ini-file");
+   const bool isExampleLinuxIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "example-linux-ini-file");
+   const bool isExampleWindowsIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "example-windows-ini-file");
    cloudundancyArgs.programMode = _programModeDeterminer->DetermineProgramMode(
       isCopyFilesToMultipleFoldersMode,
       is7ZipMode,
-      isPrintExampleLinuxIniFileMode,
-      isPrintExampleWindowsIniFileMode);
+      isExampleLinuxIniFileMode,
+      isExampleWindowsIniFileMode);
 
    cloudundancyArgs.iniFilePath = _docoptParser->GetRequiredString(docoptArgs, "--ini-file");
 

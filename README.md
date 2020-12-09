@@ -20,13 +20,13 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
 * [Program Modes](#program-modes)
    * [copy-files-to-multiple-folders](#copy-files-to-multiple-folders)
    * [7zip-files-then-copy-the-7zip-file-to-multiple-folders](#7zip-files-then-copy-the-7zip-file-to-multiple-folders)
-   * [example-linux-ini-file](#print-example-linux-ini-file)
-   * [example-windows-ini-file](#print-example-windows-ini-file)
+   * [example-linux-ini-file](#example-linux-ini-file)
+   * [example-windows-ini-file](#example-windows-ini-file)
 * [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-undefinedbehaviorsanitize-cloudundancy)
 * [Windows Jenkins Jobs Which Build Cloudundancy](#windows-jenkins-jobs-which-build-cloudundancy)
 * [4 Commands To Build Cloudundancy From Source On Linux With Clang](#4-commands-to-build-cloudundancy-from-source-on-linux-with-clang)
 * [4 Commands To Build Cloudundancy From Source On Windows With Visual Studio 2019](#4-commands-to-build-cloudundancy-from-source-on-windows-with-visual-studio-2019)
-* [Cloudundancy Features Roadmap](#cloudundancy-features-roadmap)
+* [Cloudundancy Roadmap](#cloudundancy-roadmap)
 
 ## Command Line Usage
 
@@ -40,8 +40,8 @@ Usage:
       --ini-file-to-copy-files-to-7zip-staging-folder=<CloudundancyIniFilePath>
       --7zip-staging-folder=<FolderPath>
       --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=<CloudundancyIniFilePath>
-   Cloudundancy print-example-linux-ini-file
-   Cloudundancy print-example-windows-ini-file
+   Cloudundancy example-linux-ini-file
+   Cloudundancy example-windows-ini-file
 ```
 
 Cloudundancy command line arguments are parsed using the excellent single-header library [docopt.cpp](https://github.com/docopt/docopt.cpp):
@@ -60,17 +60,19 @@ Cloudundancy program mode `copy-files-to-multiple-folders` copies files and fold
 
 12/09/2020: Work in progress.
 
-### print-example-linux-ini-file
+### example-linux-ini-file
 
 12/09/2020: Work in progress.
 
-### print-example-windows-ini-file
+### example-windows-ini-file
 
-Cloudundancy program mode `print-example-windows-ini-file` prints an example Windows Cloudundancy .ini file for showing how to achieve data security peace of mind by way of quintuple backups of critical files and folders to three clouds (Google Drive, OneDrive, GitHub) and two USB drives (D: and E:).
+Program mode `example-windows-ini-file` prints an example Windows Cloudundancy .ini file which shows how to achieve quintuple backups of business-critical files to three clouds (Google Drive, OneDrive, GitHub) and two USB drives (D: and E:).
+
+`example-windows-ini-file` console output:
 
 ![Example Windows Cloudundancy .ini File](Screenshots/ExampleWindowsCloudundancyIniFile.png)
 
-`print-example-windows-ini-file` in text format:
+`example-windows-ini-file` in text format:
 
 ```
 [DestinationFolders]
@@ -147,7 +149,7 @@ cmake --build . --config Release --target install # Installs Cloudundancy.exe to
 
 ![Cloudundancy.exe on Windows](Screenshots/CloudundancyDotExe.png)
 
-## Cloudundancy Features Roadmap
+## Cloudundancy Roadmap
 
 |Future Cloudundancy Feature|Estimated Delivery Quarter|
 |---------------------------|--------------------------------------|
