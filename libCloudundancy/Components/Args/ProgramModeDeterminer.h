@@ -4,8 +4,8 @@ class ProgramModeDeterminer
 {
 public:
    virtual ProgramMode DetermineProgramMode(
-      bool isBackupFilesToMultipleFoldersMode,
-      bool is7ZipBackupMode,
+      bool isCopyFilesToMultipleFoldersMode,
+      bool is7ZipMode,
       bool isPrintExampleLinuxIniFileMode,
       bool isPrintExampleWindowsIniFileMode) const;
    virtual ~ProgramModeDeterminer() = default;

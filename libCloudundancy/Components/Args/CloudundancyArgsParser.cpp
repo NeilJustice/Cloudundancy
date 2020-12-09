@@ -20,12 +20,12 @@ CloudundancyArgs CloudundancyArgsParser::ParseStringArgs(const vector<string>& s
 {
    const map<string, docopt::Value> docoptArgs = _docoptParser->ParseArgs(CloudundancyArgs::CommandLineUsage, stringArgs);
    CloudundancyArgs cloudundancyArgs;
-   const bool isBackupFilesToMultipleFoldersMode = _docoptParser->GetRequiredBool(docoptArgs, "backup-files-to-multiple-folders");
+   const bool isCopyFilesToMultipleFoldersMode = _docoptParser->GetRequiredBool(docoptArgs, "copy-files-to-multiple-folders");
    const bool is7ZipMode = _docoptParser->GetRequiredBool(docoptArgs, "7zip-files-then-copy-the-7zip-file-to-multiple-folders");
    const bool isPrintExampleLinuxIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "print-example-linux-ini-file");
    const bool isPrintExampleWindowsIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "print-example-windows-ini-file");
    cloudundancyArgs.programMode = _programModeDeterminer->DetermineProgramMode(
-      isBackupFilesToMultipleFoldersMode,
+      isCopyFilesToMultipleFoldersMode,
       is7ZipMode,
       isPrintExampleLinuxIniFileMode,
       isPrintExampleWindowsIniFileMode);
@@ -37,17 +37,17 @@ CloudundancyArgs CloudundancyArgsParser::ParseStringArgs(const vector<string>& s
 
    cloudundancyArgs.sevenZipModeIniFilePath = _docoptParser->GetProgramModeSpecificRequiredString(docoptArgs,
       static_cast<int>(cloudundancyArgs.programMode),
-      static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7ZipFile),
+      static_cast<int>(ProgramMode::SevenZip),
       "--ini-file-to-copy-files-to-7zip-staging-folder");
 
    cloudundancyArgs.sevenZipStagingFolderPath = _docoptParser->GetProgramModeSpecificRequiredString(docoptArgs,
       static_cast<int>(cloudundancyArgs.programMode),
-      static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7ZipFile),
+      static_cast<int>(ProgramMode::SevenZip),
       "--7zip-staging-folder");
 
    cloudundancyArgs.sevenZipFileCopyingIniFilePath = _docoptParser->GetProgramModeSpecificRequiredString(docoptArgs,
       static_cast<int>(cloudundancyArgs.programMode),
-      static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7ZipFile),
+      static_cast<int>(ProgramMode::SevenZip),
       "--ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders");
 
    _fileSystem->ThrowIfFilePathIsNotEmptyAndDoesNotExist(cloudundancyArgs.iniFilePath);

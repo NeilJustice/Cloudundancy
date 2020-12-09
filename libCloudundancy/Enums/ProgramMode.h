@@ -3,9 +3,9 @@
 enum ProgramMode : unsigned char
 {
    Unset,
+   CopyFilesAndFoldersToMultipleFolders,
+   SevenZip,
    PrintExampleLinuxIniFile,
    PrintExampleWindowsIniFile,
-   BackupFilesAndFolders,
-   BackupFilesAndFoldersTo7ZipFile,
    MaxValue
 };

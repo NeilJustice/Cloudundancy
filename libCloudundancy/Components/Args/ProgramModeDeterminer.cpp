@@ -2,18 +2,18 @@
 #include "libCloudundancy/Components/Args/ProgramModeDeterminer.h"
 
 ProgramMode ProgramModeDeterminer::DetermineProgramMode(
-   bool isBackupFilesToMultipleFoldersMode,
-   bool is7ZipBackupMode,
+   bool isCopyFilesToMultipleFoldersMode,
+   bool is7ZipMode,
    bool isPrintExampleLinuxIniFileMode,
    bool isPrintExampleWindowsIniFileMode) const
 {
-   if (isBackupFilesToMultipleFoldersMode)
+   if (isCopyFilesToMultipleFoldersMode)
    {
-      return ProgramMode::BackupFilesAndFolders;
+      return ProgramMode::CopyFilesAndFoldersToMultipleFolders;
    }
-   if (is7ZipBackupMode)
+   if (is7ZipMode)
    {
-      return ProgramMode::BackupFilesAndFoldersTo7ZipFile;
+      return ProgramMode::SevenZip;
    }
    if (isPrintExampleLinuxIniFileMode)
    {

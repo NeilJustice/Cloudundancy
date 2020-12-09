@@ -18,7 +18,7 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
 
 * [Command Line Usage](#command-line-usage)
 * [Program Modes](#program-modes)
-   * [backup-files-to-multiple-folders](#backup-files-to-multiple-folders)
+   * [copy-files-to-multiple-folders](#copy-files-to-multiple-folders)
    * [7zip-files-then-copy-the-7zip-file-to-multiple-folders](#7zip-files-then-copy-the-7zip-file-to-multiple-folders)
    * [example-linux-ini-file](#print-example-linux-ini-file)
    * [example-windows-ini-file](#print-example-windows-ini-file)
@@ -26,7 +26,7 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
 * [Windows Jenkins Jobs Which Build Cloudundancy](#windows-jenkins-jobs-which-build-cloudundancy)
 * [4 Commands To Build Cloudundancy From Source On Linux With Clang](#4-commands-to-build-cloudundancy-from-source-on-linux-with-clang)
 * [4 Commands To Build Cloudundancy From Source On Windows With Visual Studio 2019](#4-commands-to-build-cloudundancy-from-source-on-windows-with-visual-studio-2019)
-* [Cloudundancy Future Features Roadmap](#cloudundancy-future-features-roadmap)
+* [Cloudundancy Features Roadmap](#cloudundancy-features-roadmap)
 
 ## Command Line Usage
 
@@ -35,7 +35,7 @@ Cloudundancy v0.9.0 - Maker of cloud-redundant and device-redundant file backups
 https://github.com/NeilJustice/Cloudundancy
 
 Usage:
-   Cloudundancy backup-files-to-multiple-folders --ini-file=<CloudundancyIniFilePath> [--delete-destination-folders-first]
+   Cloudundancy copy-files-to-multiple-folders --ini-file=<CloudundancyIniFilePath> [--delete-destination-folders-first]
    Cloudundancy 7zip-files-then-copy-the-7zip-file-to-multiple-folders
       --ini-file-to-copy-files-to-7zip-staging-folder=<CloudundancyIniFilePath>
       --7zip-staging-folder=<FolderPath>
@@ -50,19 +50,19 @@ Cloudundancy command line arguments are parsed using the excellent single-header
 
 ## Program Modes
 
-### backup-files-to-multiple-folders
+### copy-files-to-multiple-folders
 
-Cloudundancy program mode `backup-files-to-multiple-folders` copies files and folders listed in a Cloudundancy.ini file to multiple destination folders.
+Cloudundancy program mode `copy-files-to-multiple-folders` copies files and folders listed in a Cloudundancy.ini file to multiple destination folders.
 
-12/03/2020: Work in progress.
+12/09/2020: Work in progress.
 
 ### 7zip-files-then-copy-the-7zip-file-to-multiple-folders
 
-12/03/2020: Work in progress.
+12/09/2020: Work in progress.
 
 ### print-example-linux-ini-file
 
-12/03/2020: Work in progress.
+12/09/2020: Work in progress.
 
 ### print-example-windows-ini-file
 
@@ -147,7 +147,7 @@ cmake --build . --config Release --target install # Installs Cloudundancy.exe to
 
 ![Cloudundancy.exe on Windows](Screenshots/CloudundancyDotExe.png)
 
-## Cloudundancy Future Features Roadmap
+## Cloudundancy Features Roadmap
 
 |Future Cloudundancy Feature|Estimated Delivery Quarter|
 |---------------------------|--------------------------------------|

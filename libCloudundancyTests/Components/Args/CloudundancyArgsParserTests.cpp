@@ -44,11 +44,11 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    const map<string, docopt::Value> docoptArgs = ZenUnit::RandomMap<string, docopt::Value>();
    _docoptParserMock->ParseArgsMock.Return(docoptArgs);
 
-   const bool isBackupFilesToMultipleFoldersMode = ZenUnit::Random<bool>();
+   const bool isCopyFilesToMultipleFoldersMode = ZenUnit::Random<bool>();
    const bool isPrintExampleLinuxIniFileMode = ZenUnit::Random<bool>();
    const bool isPrintExampleWindowsIniFileMode = ZenUnit::Random<bool>();
    _docoptParserMock->GetRequiredBoolMock.ReturnValues(
-      isBackupFilesToMultipleFoldersMode,
+      isCopyFilesToMultipleFoldersMode,
       is7ZipMode,
       isPrintExampleLinuxIniFileMode,
       isPrintExampleWindowsIniFileMode);
@@ -80,13 +80,13 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    METALMOCK(_docoptParserMock->ParseArgsMock.CalledOnceWith(CloudundancyArgs::CommandLineUsage, stringArgs));
    METALMOCK(_docoptParserMock->GetRequiredBoolMock.CalledAsFollows(
    {
-      { docoptArgs, "backup-files-to-multiple-folders" },
+      { docoptArgs, "copy-files-to-multiple-folders" },
       { docoptArgs, "7zip-files-then-copy-the-7zip-file-to-multiple-folders" },
       { docoptArgs, "print-example-linux-ini-file" },
       { docoptArgs, "print-example-windows-ini-file" }
    }));
    METALMOCK(_programModeDeterminerMock->DetermineProgramModeMock.CalledOnceWith(
-      isBackupFilesToMultipleFoldersMode,
+      isCopyFilesToMultipleFoldersMode,
       is7ZipMode,
       isPrintExampleLinuxIniFileMode,
       isPrintExampleWindowsIniFileMode));
@@ -94,11 +94,11 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    METALMOCK(_docoptParserMock->GetOptionalBoolMock.CalledOnceWith(docoptArgs, "--delete-destination-folders-first"));
    METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledAsFollows(
    {
-      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7ZipFile),
+      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::SevenZip),
         "--ini-file-to-copy-files-to-7zip-staging-folder" },
-      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7ZipFile),
+      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::SevenZip),
         "--7zip-staging-folder" },
-      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::BackupFilesAndFoldersTo7ZipFile),
+      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::SevenZip),
         "--ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders" }
    }));
    METALMOCK(_fileSystemMock->ThrowIfFilePathIsNotEmptyAndDoesNotExistMock.CalledAsFollows(

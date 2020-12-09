@@ -9,22 +9,21 @@ EVIDENCE
 ProgramModeDeterminer _programModeDeterminer;
 
 TEST5X5(DetermineProgramMode_ReturnsProgramModeCorrespondingToProgramModeBool,
-   bool isBackupFilesToMultipleFoldersMode,
-   bool is7ZipBackupMode,
+   bool isCopyFilesToMultipleFoldersMode,
+   bool is7ZipMode,
    bool isPrintExampleLinuxIniFileMode,
    bool isPrintExampleWindowsIniFileMode,
    ProgramMode expectedReturnValue,
-   true, false, false, false, ProgramMode::BackupFilesAndFolders,
-   false, true, false, false, ProgramMode::BackupFilesAndFoldersTo7ZipFile,
+   true, false, false, false, ProgramMode::CopyFilesAndFoldersToMultipleFolders,
+   false, true, false, false, ProgramMode::SevenZip,
    false, false, true, false, ProgramMode::PrintExampleLinuxIniFile,
    false, false, false, true, ProgramMode::PrintExampleWindowsIniFile)
 {
    const ProgramMode programMode = _programModeDeterminer.DetermineProgramMode(
-      isBackupFilesToMultipleFoldersMode,
-      is7ZipBackupMode,
+      isCopyFilesToMultipleFoldersMode,
+      is7ZipMode,
       isPrintExampleLinuxIniFileMode,
       isPrintExampleWindowsIniFileMode);
-   //
    ARE_EQUAL(expectedReturnValue, programMode);
 }
 

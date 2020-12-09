@@ -1,28 +1,28 @@
 #include "pch.h"
-#include "libCloudundancy/Components/SubPrograms/BackupFilesToMultipleFoldersSubProgram.h"
+#include "libCloudundancy/Components/SubPrograms/CopyFilesToMultipleFoldersSubProgram.h"
 #include "libCloudundancy/ValueTypes/CloudundancyArgs.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/CloudundancyFileCopierMock.h"
 
-TESTS(BackupFilesToMultipleFoldersSubProgramTests)
+TESTS(CopyFilesToMultipleFoldersSubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
 AFACT(Run_SetsArgs_CallsCopyFilesAndFoldersToMultipleDestinationFolders_Returns0)
 EVIDENCE
 
-BackupFilesToMultipleFoldersSubProgram _backupFilesToMultipleFoldersSubProgram;
+CopyFilesToMultipleFoldersSubProgram _copyFilesToMultipleFoldersSubProgram;
 ConsoleMock* _consoleMock = nullptr;
 CloudundancyFileCopierMock* _cloudundancyFileCopierMock = nullptr;
 
 STARTUP
 {
-   _backupFilesToMultipleFoldersSubProgram._cloudundancyFileCopier.reset(
+   _copyFilesToMultipleFoldersSubProgram._cloudundancyFileCopier.reset(
       _cloudundancyFileCopierMock = new CloudundancyFileCopierMock);
-   _backupFilesToMultipleFoldersSubProgram._console.reset(_consoleMock = new ConsoleMock);
+   _copyFilesToMultipleFoldersSubProgram._console.reset(_consoleMock = new ConsoleMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
 {
-   BackupFilesToMultipleFoldersSubProgram backupFilesAndFoldersToMultipleFoldersSubProgram;
-   DELETE_TO_ASSERT_NEWED(backupFilesAndFoldersToMultipleFoldersSubProgram._cloudundancyFileCopier);
+   CopyFilesToMultipleFoldersSubProgram copyFilesAndFoldersToMultipleFoldersSubProgram;
+   DELETE_TO_ASSERT_NEWED(copyFilesAndFoldersToMultipleFoldersSubProgram._cloudundancyFileCopier);
 }
 
 TEST(Run_SetsArgs_CallsCopyFilesAndFoldersToMultipleDestinationFolders_Returns0)
@@ -32,7 +32,7 @@ TEST(Run_SetsArgs_CallsCopyFilesAndFoldersToMultipleDestinationFolders_Returns0)
 
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
-   const int exitCode = _backupFilesToMultipleFoldersSubProgram.Run(args);
+   const int exitCode = _copyFilesToMultipleFoldersSubProgram.Run(args);
    //
    METALMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleDestinationFoldersMock.CalledOnceWith(
       args.iniFilePath, args.deleteDestinationFoldersFirst));
@@ -41,4 +41,4 @@ TEST(Run_SetsArgs_CallsCopyFilesAndFoldersToMultipleDestinationFolders_Returns0)
    IS_ZERO(exitCode);
 }
 
-RUN_TESTS(BackupFilesToMultipleFoldersSubProgramTests)
+RUN_TESTS(CopyFilesToMultipleFoldersSubProgramTests)

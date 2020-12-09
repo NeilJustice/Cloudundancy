@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersTo7ZipFileSubProgram.h"
-#include "libCloudundancy/Components/SubPrograms/BackupFilesToMultipleFoldersSubProgram.h"
+#include "libCloudundancy/Components/SubPrograms/CopyFilesToMultipleFoldersSubProgram.h"
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgramFactory.h"
+#include "libCloudundancy/Components/SubPrograms/SevenZipSubProgram.h"
 #include "libCloudundancy/Components/SubPrograms/PrintExampleLinuxIniFileSubProgram.h"
 #include "libCloudundancy/Components/SubPrograms/PrintExampleWindowsIniFileSubProgram.h"
 
@@ -9,6 +9,14 @@ shared_ptr<CloudundancySubProgram> CloudundancySubProgramFactory::NewCloudundanc
 {
    switch (programMode)
    {
+   case ProgramMode::CopyFilesAndFoldersToMultipleFolders:
+   {
+      return make_shared<CopyFilesToMultipleFoldersSubProgram>();
+   }
+   case ProgramMode::SevenZip:
+   {
+      return make_shared<SevenZipSubProgram>();
+   }
    case ProgramMode::PrintExampleLinuxIniFile:
    {
       return make_shared<PrintExampleLinuxIniFileSubProgram>();
@@ -16,14 +24,6 @@ shared_ptr<CloudundancySubProgram> CloudundancySubProgramFactory::NewCloudundanc
    case ProgramMode::PrintExampleWindowsIniFile:
    {
       return make_shared<PrintExampleWindowsIniFileSubProgram>();
-   }
-   case ProgramMode::BackupFilesAndFolders:
-   {
-      return make_shared<BackupFilesToMultipleFoldersSubProgram>();
-   }
-   case ProgramMode::BackupFilesAndFoldersTo7ZipFile:
-   {
-      return make_shared<BackupFilesAndFoldersTo7ZipFileSubProgram>();
    }
    default:
    {

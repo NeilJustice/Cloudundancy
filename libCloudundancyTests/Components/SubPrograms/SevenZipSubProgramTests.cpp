@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersTo7ZipFileSubProgram.h"
+#include "libCloudundancy/Components/SubPrograms/SevenZipSubProgram.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/CloudundancyFileCopierMock.h"
 
-TESTS(BackupFilesAndFoldersTo7ZipFileSubProgramTests)
+TESTS(SevenZipSubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
 AFACT(Run_DeletesCodeBackupFolder_CopiesCodeToBackupStagingFolder_SevenZipsBackupStagingFolder_Copies7ZipFileToDestinationFolders_Returns0)
 AFACT(DeleteBackupStagingFolder_PrintsDeleting_DeletesBackupStagingFolder_PrintsDeletedInElapsedSeconds)
@@ -11,10 +11,10 @@ AFACT(SevenZipBackupStagingFolder_Writes7ZipFileToFolder7ZipFileBackslashCloudun
 AFACT(Copy7ZipFileToDestinationFolders_DoesSo_PrintsElapsedSeconds)
 EVIDENCE
 
-BackupFilesAndFoldersTo7ZipFileSubProgram _backupFilesAndFoldersTo7ZipFileSubProgram;
+SevenZipSubProgram _sevenZipSubProgram;
 // Function Callers
 using VoidOneArgFunctionCallerMockType = VoidOneArgMemberFunctionCallerMock<
-   BackupFilesAndFoldersTo7ZipFileSubProgram, const CloudundancyArgs&>;
+   SevenZipSubProgram, const CloudundancyArgs&>;
 VoidOneArgFunctionCallerMockType* _voidOneArgFunctionCallerMock = nullptr;
 // Constant Components
 ConsoleMock* _consoleMock = nullptr;
@@ -28,20 +28,20 @@ WatchMock* _watchMock = nullptr;
 STARTUP
 {
    // Function Callers
-   _backupFilesAndFoldersTo7ZipFileSubProgram._voidOneArgFunctionCaller.reset(_voidOneArgFunctionCallerMock = new VoidOneArgFunctionCallerMockType);
+   _sevenZipSubProgram._voidOneArgFunctionCaller.reset(_voidOneArgFunctionCallerMock = new VoidOneArgFunctionCallerMockType);
    // Constant Components
-   _backupFilesAndFoldersTo7ZipFileSubProgram._console.reset(_consoleMock = new ConsoleMock);
-   _backupFilesAndFoldersTo7ZipFileSubProgram._cloudundancyFileCopier.reset(_cloudundancyFileCopierMock = new CloudundancyFileCopierMock);
-   _backupFilesAndFoldersTo7ZipFileSubProgram._fileSystem.reset(_fileSystemMock = new FileSystemMock);
-   _backupFilesAndFoldersTo7ZipFileSubProgram._processRunner.reset(_processRunnerMock = new ProcessRunnerMock);
-   _backupFilesAndFoldersTo7ZipFileSubProgram._stopwatch.reset(_stopwatchMock = new StopwatchMock);
+   _sevenZipSubProgram._console.reset(_consoleMock = new ConsoleMock);
+   _sevenZipSubProgram._cloudundancyFileCopier.reset(_cloudundancyFileCopierMock = new CloudundancyFileCopierMock);
+   _sevenZipSubProgram._fileSystem.reset(_fileSystemMock = new FileSystemMock);
+   _sevenZipSubProgram._processRunner.reset(_processRunnerMock = new ProcessRunnerMock);
+   _sevenZipSubProgram._stopwatch.reset(_stopwatchMock = new StopwatchMock);
    // Mutable Componants
-   _backupFilesAndFoldersTo7ZipFileSubProgram._watch.reset(_watchMock = new WatchMock);
+   _sevenZipSubProgram._watch.reset(_watchMock = new WatchMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
 {
-   BackupFilesAndFoldersTo7ZipFileSubProgram backupCodeRunner;
+   SevenZipSubProgram backupCodeRunner;
    // Function Callers
    DELETE_TO_ASSERT_NEWED(backupCodeRunner._voidOneArgFunctionCaller);
    // Constant Components
@@ -59,14 +59,14 @@ TEST(Run_DeletesCodeBackupFolder_CopiesCodeToBackupStagingFolder_SevenZipsBackup
    _voidOneArgFunctionCallerMock->CallConstMemberFunctionMock.Expect();
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
-   const int exitCode = _backupFilesAndFoldersTo7ZipFileSubProgram.Run(args);
+   const int exitCode = _sevenZipSubProgram.Run(args);
    //
    METALMOCK(_voidOneArgFunctionCallerMock->CallConstMemberFunctionMock.CalledAsFollows(
    {
-      { &BackupFilesAndFoldersTo7ZipFileSubProgram::DeleteBackupStagingFolder, &_backupFilesAndFoldersTo7ZipFileSubProgram, args },
-      { &BackupFilesAndFoldersTo7ZipFileSubProgram::CopyFilesAndFoldersToBackupStagingFolder, &_backupFilesAndFoldersTo7ZipFileSubProgram, args },
-      { &BackupFilesAndFoldersTo7ZipFileSubProgram::SevenZipBackupStagingFolder, &_backupFilesAndFoldersTo7ZipFileSubProgram, args },
-      { &BackupFilesAndFoldersTo7ZipFileSubProgram::Copy7ZipFileToDestinationFolders, &_backupFilesAndFoldersTo7ZipFileSubProgram, args }
+      { &SevenZipSubProgram::DeleteBackupStagingFolder, &_sevenZipSubProgram, args },
+      { &SevenZipSubProgram::CopyFilesAndFoldersToBackupStagingFolder, &_sevenZipSubProgram, args },
+      { &SevenZipSubProgram::SevenZipBackupStagingFolder, &_sevenZipSubProgram, args },
+      { &SevenZipSubProgram::Copy7ZipFileToDestinationFolders, &_sevenZipSubProgram, args }
    }));
    IS_ZERO(exitCode);
 }
@@ -79,7 +79,7 @@ TEST(DeleteBackupStagingFolder_PrintsDeleting_DeletesBackupStagingFolder_PrintsD
    const string elapsedSeconds = _stopwatchMock->StopAndGetElapsedSecondsMock.ReturnRandom();
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
-   _backupFilesAndFoldersTo7ZipFileSubProgram.DeleteBackupStagingFolder(args);
+   _sevenZipSubProgram.DeleteBackupStagingFolder(args);
    //
    METALMOCK(_fileSystemMock->DeleteFolderMock.CalledOnceWith(args.sevenZipStagingFolderPath));
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
@@ -102,7 +102,7 @@ TEST(CopyFilesAndFoldersToBackupStagingFolder_CopiesSourceFilesAndFoldersToBacku
    const string elapsedSeconds = _stopwatchMock->StopAndGetElapsedSecondsMock.ReturnRandom();
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
-   _backupFilesAndFoldersTo7ZipFileSubProgram.CopyFilesAndFoldersToBackupStagingFolder(args);
+   _sevenZipSubProgram.CopyFilesAndFoldersToBackupStagingFolder(args);
    //
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    METALMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleDestinationFoldersMock.
@@ -129,7 +129,7 @@ TEST(SevenZipBackupStagingFolder_Writes7ZipFileToFolder7ZipFileBackslashCloudund
    const string elapsedSeconds = _stopwatchMock->StopAndGetElapsedSecondsMock.ReturnRandom();
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
-   _backupFilesAndFoldersTo7ZipFileSubProgram.SevenZipBackupStagingFolder(args);
+   _sevenZipSubProgram.SevenZipBackupStagingFolder(args);
    //
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    METALMOCK(_fileSystemMock->SetCurrentPathMock.CalledOnceWith(args.sevenZipStagingFolderPath));
@@ -156,7 +156,7 @@ TEST(Copy7ZipFileToDestinationFolders_DoesSo_PrintsElapsedSeconds)
    _cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleDestinationFoldersMock.Expect();
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
-   _backupFilesAndFoldersTo7ZipFileSubProgram.Copy7ZipFileToDestinationFolders(args);
+   _sevenZipSubProgram.Copy7ZipFileToDestinationFolders(args);
    //
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    METALMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleDestinationFoldersMock.
@@ -171,4 +171,4 @@ TEST(Copy7ZipFileToDestinationFolders_DoesSo_PrintsElapsedSeconds)
    }));
 }
 
-RUN_TESTS(BackupFilesAndFoldersTo7ZipFileSubProgramTests)
+RUN_TESTS(SevenZipSubProgramTests)

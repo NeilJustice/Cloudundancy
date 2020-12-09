@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "libCloudundancy/Components/FileSystem/CloudundancyFileCopier.h"
-#include "libCloudundancy/Components/SubPrograms/BackupFilesAndFoldersTo7ZipFileSubProgram.h"
+#include "libCloudundancy/Components/SubPrograms/SevenZipSubProgram.h"
 
-BackupFilesAndFoldersTo7ZipFileSubProgram::BackupFilesAndFoldersTo7ZipFileSubProgram()
+SevenZipSubProgram::SevenZipSubProgram()
    // Function Callers
    : _voidOneArgFunctionCaller(make_unique<VoidOneArgFunctionCallerType>())
    // Constant Components
@@ -15,26 +15,26 @@ BackupFilesAndFoldersTo7ZipFileSubProgram::BackupFilesAndFoldersTo7ZipFileSubPro
 {
 }
 
-BackupFilesAndFoldersTo7ZipFileSubProgram::~BackupFilesAndFoldersTo7ZipFileSubProgram()
+SevenZipSubProgram::~SevenZipSubProgram()
 {
 }
 
-int BackupFilesAndFoldersTo7ZipFileSubProgram::Run(const CloudundancyArgs& args)
+int SevenZipSubProgram::Run(const CloudundancyArgs& args)
 {
    _voidOneArgFunctionCaller->CallConstMemberFunction(
-      &BackupFilesAndFoldersTo7ZipFileSubProgram::DeleteBackupStagingFolder, this, args);
+      &SevenZipSubProgram::DeleteBackupStagingFolder, this, args);
    _voidOneArgFunctionCaller->CallConstMemberFunction(
-      &BackupFilesAndFoldersTo7ZipFileSubProgram::CopyFilesAndFoldersToBackupStagingFolder, this, args);
+      &SevenZipSubProgram::CopyFilesAndFoldersToBackupStagingFolder, this, args);
    _voidOneArgFunctionCaller->CallConstMemberFunction(
-      &BackupFilesAndFoldersTo7ZipFileSubProgram::SevenZipBackupStagingFolder, this, args);
+      &SevenZipSubProgram::SevenZipBackupStagingFolder, this, args);
    _voidOneArgFunctionCaller->CallConstMemberFunction(
-      &BackupFilesAndFoldersTo7ZipFileSubProgram::Copy7ZipFileToDestinationFolders, this, args);
+      &SevenZipSubProgram::Copy7ZipFileToDestinationFolders, this, args);
    return 0;
 }
 
 // Private Functions
 
-void BackupFilesAndFoldersTo7ZipFileSubProgram::Copy7ZipFileToDestinationFolders(const CloudundancyArgs& args) const
+void SevenZipSubProgram::Copy7ZipFileToDestinationFolders(const CloudundancyArgs& args) const
 {
    _console->WriteLine("[Cloudundancy] Copying .7z file to [DestinationFolders]...");
    _stopwatch->Start();
@@ -47,7 +47,7 @@ void BackupFilesAndFoldersTo7ZipFileSubProgram::Copy7ZipFileToDestinationFolders
    _console->WriteLine(copiedMessage);
 }
 
-void BackupFilesAndFoldersTo7ZipFileSubProgram::CopyFilesAndFoldersToBackupStagingFolder(const CloudundancyArgs& args) const
+void SevenZipSubProgram::CopyFilesAndFoldersToBackupStagingFolder(const CloudundancyArgs& args) const
 {
    const string copyingMessage = String::Concat(
       "[Cloudundancy] Copying [SourceFilesAndFolders] To " + args.sevenZipStagingFolderPath.string());
@@ -62,7 +62,7 @@ void BackupFilesAndFoldersTo7ZipFileSubProgram::CopyFilesAndFoldersToBackupStagi
    _console->WriteLine(copiedMessage);
 }
 
-void BackupFilesAndFoldersTo7ZipFileSubProgram::DeleteBackupStagingFolder(const CloudundancyArgs& args) const
+void SevenZipSubProgram::DeleteBackupStagingFolder(const CloudundancyArgs& args) const
 {
    const string deletingMessage = String::Concat("[Cloudundancy] Deleting ", args.sevenZipStagingFolderPath.string());
    _console->WriteLine(deletingMessage);
@@ -76,7 +76,7 @@ void BackupFilesAndFoldersTo7ZipFileSubProgram::DeleteBackupStagingFolder(const 
    _console->WriteLine(deletedMessage);
 }
 
-void BackupFilesAndFoldersTo7ZipFileSubProgram::SevenZipBackupStagingFolder(const CloudundancyArgs& args) const
+void SevenZipSubProgram::SevenZipBackupStagingFolder(const CloudundancyArgs& args) const
 {
    const string sevenZippingMessage = String::Concat("[Cloudundancy] 7-zipping ", args.sevenZipStagingFolderPath.string(), "...");
    _console->WriteLine(sevenZippingMessage);

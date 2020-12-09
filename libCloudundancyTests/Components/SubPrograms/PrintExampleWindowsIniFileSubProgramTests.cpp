@@ -5,12 +5,12 @@ TESTS(PrintExampleWindowsIniFileSubProgramTests)
 AFACT(Run_PrintsExampleWindowsIniFile_Returns0)
 EVIDENCE
 
-PrintExampleWindowsIniFileSubProgram _exampleWindowsIniFileSubProgram;
+PrintExampleWindowsIniFileSubProgram _printExampleWindowsIniFileSubProgram;
 ConsoleMock* _consoleMock = nullptr;
 
 STARTUP
 {
-   _exampleWindowsIniFileSubProgram._console.reset(_consoleMock = new ConsoleMock);
+   _printExampleWindowsIniFileSubProgram._console.reset(_consoleMock = new ConsoleMock);
 }
 
 TEST(Run_PrintsExampleWindowsIniFile_Returns0)
@@ -18,7 +18,7 @@ TEST(Run_PrintsExampleWindowsIniFile_Returns0)
    _consoleMock->WriteLineMock.Expect();
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
-   const int exitCode = _exampleWindowsIniFileSubProgram.Run(args);
+   const int exitCode = _printExampleWindowsIniFileSubProgram.Run(args);
    //
    const string expectedExampleWindowsIniFileText =
       R"(

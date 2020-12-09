@@ -5,12 +5,12 @@ TESTS(PrintExampleLinuxIniFileSubProgramTests)
 AFACT(Run_PrintsExampleLinuxIniFile_Returns0)
 EVIDENCE
 
-PrintExampleLinuxIniFileSubProgram _exampleLinuxIniFileSubProgram;
+PrintExampleLinuxIniFileSubProgram _printExampleLinuxIniFileSubProgram;
 ConsoleMock* _consoleMock = nullptr;
 
 STARTUP
 {
-   _exampleLinuxIniFileSubProgram._console.reset(_consoleMock = new ConsoleMock);
+   _printExampleLinuxIniFileSubProgram._console.reset(_consoleMock = new ConsoleMock);
 }
 
 TEST(Run_PrintsExampleLinuxIniFile_Returns0)
@@ -18,7 +18,7 @@ TEST(Run_PrintsExampleLinuxIniFile_Returns0)
    _consoleMock->WriteLineMock.Expect();
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
-   const int exitCode = _exampleLinuxIniFileSubProgram.Run(args);
+   const int exitCode = _printExampleLinuxIniFileSubProgram.Run(args);
    //
    const string expectedExampleLinuxIniFileText =
 R"(

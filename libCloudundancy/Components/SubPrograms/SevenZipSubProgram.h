@@ -3,13 +3,13 @@
 struct CloudundancyArgs;
 class CloudundancyFileCopier;
 
-class BackupFilesAndFoldersTo7ZipFileSubProgram : public CloudundancySubProgram
+class SevenZipSubProgram : public CloudundancySubProgram
 {
-   friend class BackupFilesAndFoldersTo7ZipFileSubProgramTests;
+   friend class SevenZipSubProgramTests;
 private:
    // Function Callers
    using VoidOneArgFunctionCallerType = VoidOneArgMemberFunctionCaller<
-      BackupFilesAndFoldersTo7ZipFileSubProgram, const CloudundancyArgs&>;
+      SevenZipSubProgram, const CloudundancyArgs&>;
    unique_ptr<const VoidOneArgFunctionCallerType> _voidOneArgFunctionCaller;
    // Constant Components
    unique_ptr<const CloudundancyFileCopier> _cloudundancyFileCopier;
@@ -19,8 +19,8 @@ private:
    // Mutable Components
    unique_ptr<Stopwatch> _stopwatch;
 public:
-   BackupFilesAndFoldersTo7ZipFileSubProgram();
-   virtual ~BackupFilesAndFoldersTo7ZipFileSubProgram();
+   SevenZipSubProgram();
+   virtual ~SevenZipSubProgram();
    virtual int Run(const CloudundancyArgs& args);
 private:
    void Copy7ZipFileToDestinationFolders(const CloudundancyArgs& args) const;
