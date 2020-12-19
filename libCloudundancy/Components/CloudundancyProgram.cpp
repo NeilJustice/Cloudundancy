@@ -88,6 +88,6 @@ int CloudundancyProgram::ExceptionHandler(const exception& ex, const vector<stri
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    _console->WriteLine("[Cloudundancy]   EndTime: " + endTime);
    _console->WriteLine("[Cloudundancy]  Duration: " + elapsedSeconds + " seconds");
-   _console->WriteLine("[Cloudundancy]  ExitCode: 1");
+   _console->WriteLineColor("[Cloudundancy]  ExitCode: 1", Color::Red);
    return 1;
 }

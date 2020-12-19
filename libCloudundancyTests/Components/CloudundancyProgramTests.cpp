@@ -167,6 +167,8 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndMessage_Returns1)
 
    const string elapsedSeconds = _stopwatchMock->StopAndGetElapsedSecondsMock.ReturnRandom();
 
+   _consoleMock->WriteLineColorMock.Expect();
+
    const exception ex{};
    const vector<string> stringArgs = ZenUnit::RandomVector<string>();
    //
@@ -179,9 +181,9 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndMessage_Returns1)
    {
       string_view(expectedFullExceptionErrorMessage),
       string_view("[Cloudundancy]   EndTime: " + endTime),
-      string_view("[Cloudundancy]  Duration: " + elapsedSeconds + " seconds"),
-      string_view("[Cloudundancy]  ExitCode: 1")
+      string_view("[Cloudundancy]  Duration: " + elapsedSeconds + " seconds")
    }));
+   METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith("[Cloudundancy]  ExitCode: 1", Color::Red));
    METALMOCK(_watchMock->DateTimeNowMock.CalledOnce());
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
    ARE_EQUAL(1, exitCode);
