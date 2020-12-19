@@ -2,11 +2,11 @@
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-17-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B17) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Cloudundancy is a C++ command line program which quickly copies a configurable list of files and folders to a configurable list of destination folders to achieve cloud-redundant and device-redundant backups of business-critical files.
+Cloudundancy is a C++ command line program which quickly copies a configurable list of files and folders to a configurable list of destination folders to achieve cloud-redundant and device-redundant backups of business-critical files by way of Google Drive and Microsoft OneDrive destination folders automatically uploading their contents to their respective clouds.
 
-For example, in a Cloudundancy.ini file, destination folders could be configured to be a Google Drive folder, a Microsoft OneDrive folder, and two USB drives to achieve the peace of mind that comes with having cloud-redundant and device-redundant backups of business-critical files.
+For example, in a Cloudundancy.ini file, destination folders could be configured to be a Google Drive folder, a Microsoft OneDrive folder, and two USB drives to achieve quadruple backups of business-critical files to two clouds and two USB drives.
 
-On Windows, Google Drive and Microsoft OneDrive folders automatically upload their contents to their respective clouds. On Linux, command line invocations of Google Drive and Microsoft OneDrive command line utilities would have to be added after a command line which runs Cloudundancy.
+On Windows, Google Drive and Microsoft OneDrive folders automatically upload their contents to their respective clouds. On Linux, command line invocations of Google Drive and Microsoft OneDrive command line utilities would have to be added after the invocation of Cloudundancy, so as to then upload Cloudundancy-copied files to Google's and Microsoft's clouds.
 
 |Cloudundancy Build Type|Build Status|
 |----------|------------|
@@ -31,7 +31,7 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
 ## Command Line Usage
 
 ```
-Cloudundancy v0.9.0 - Maker of cloud-redundant and device-redundant file backups
+Cloudundancy v0.9.1 - Maker of cloud-redundant and device-redundant file backups
 https://github.com/NeilJustice/Cloudundancy
 
 Usage:
@@ -60,7 +60,7 @@ Cloudundancy program mode `copy-files-to-multiple-folders` copies files and fold
 
 ### example-windows-ini-file
 
-Program mode `example-windows-ini-file` prints an example Windows Cloudundancy .ini file which shows how to achieve quintuple backups of business-critical files to three clouds (Google Drive, OneDrive, GitHub) and two USB drives (D: and E:).
+Cloudundancy program mode `example-windows-ini-file` prints an example Windows Cloudundancy .ini file which shows how to achieve quintuple backups of business-critical files to two auto-cloud-uploading folders (Google Drive and Microsoft OneDrive), one folder which requires `git add/commit/push` to reach its corresponding cloud (GitHub), and two USB drives (D: and E:).
 
 `example-windows-ini-file` console output:
 
@@ -95,10 +95,10 @@ C:\Users\UserName\Documents\WindowsPowerShell\ -> PowerShell
 C:\Jenkins\jobs\ -> Jenkins\jobs
 
 [FileSubpathsToNotCopy]
-# In the [FileSubpathsToNotCopy] section, case-insensitive file path substrings
-# can be listed so as to not back up files matching the listed case-insensitive file path substrings
+# In the [FileSubpathsToNotCopy] section, case-insensitive file path substrings can be listed
+# so as to not copy files matching the listed case-insensitive file path substrings
 
-# PowerShell Modules folder to not backup as PowerShell modules can be easily reinstalled
+# PowerShell Modules folder to not copy, as PowerShell modules can be easily reinstalled
 PowerShell\Modules\
 
 # Jenkins jobs folder file paths to not backup so as to only backup Jenkins job config.xml files

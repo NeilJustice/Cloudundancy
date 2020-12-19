@@ -2,7 +2,7 @@
 #include "libCloudundancy/ValueTypes/CloudundancyArgs.h"
 
 const string CloudundancyArgs::CommandLineUsage =
-R"(Cloudundancy v0.9.0 - Maker of cloud-redundant and device-redundant file backups
+R"(Cloudundancy v0.9.1 - Copies a list of files and folders to a list of destination folders.
 https://github.com/NeilJustice/Cloudundancy
 
 Usage:

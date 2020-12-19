@@ -21,7 +21,7 @@ TEST(Run_PrintsExampleWindowsIniFile_Returns0)
    const int exitCode = _exampleWindowsIniFileSubProgram.Run(args);
    //
    const string expectedExampleWindowsIniFileText =
-      R"(
+R"(
 Example Windows Cloudundancy .ini file:
 
 [DestinationFolders]
@@ -50,10 +50,10 @@ C:\Users\UserName\Documents\WindowsPowerShell\ -> PowerShell
 C:\Jenkins\jobs\ -> Jenkins\jobs
 
 [FileSubpathsToNotCopy]
-# In the [FileSubpathsToNotCopy] section, case-insensitive file path substrings
-# can be listed so as to not back up files matching the listed case-insensitive file path substrings
+# In the [FileSubpathsToNotCopy] section, case-insensitive file path substrings can be listed
+# so as to not copy files matching the listed case-insensitive file path substrings
 
-# PowerShell Modules folder to not backup as PowerShell modules can be easily reinstalled
+# PowerShell Modules folder to not copy, as PowerShell modules can be easily reinstalled
 PowerShell\Modules\
 
 # Jenkins jobs folder file paths to not backup so as to only backup Jenkins job config.xml files
