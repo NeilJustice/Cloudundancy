@@ -17,15 +17,15 @@ On Windows, Google Drive and Microsoft OneDrive folders automatically upload the
 Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
 
 * [Command Line Usage](#command-line-usage)
-* [Program Modes](#program-modes)
+* [Cloudundancy Program Modes](#cloudundancy-program-modes)
    * [copy-files-to-multiple-folders](#copy-files-to-multiple-folders)
    * [7zip-files-then-copy-the-7zip-file-to-multiple-folders](#7zip-files-then-copy-the-7zip-file-to-multiple-folders)
    * [example-linux-ini-file](#example-linux-ini-file)
    * [example-windows-ini-file](#example-windows-ini-file)
 * [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-undefinedbehaviorsanitize-cloudundancy)
 * [Windows Jenkins Jobs Which Build Cloudundancy](#windows-jenkins-jobs-which-build-cloudundancy)
-* [4 Commands To Build Cloudundancy From Source On Linux With Clang](#4-commands-to-build-cloudundancy-from-source-on-linux-with-clang)
-* [4 Commands To Build Cloudundancy From Source On Windows With Visual Studio 2019](#4-commands-to-build-cloudundancy-from-source-on-windows-with-visual-studio-2019)
+* [How To Build Cloudundancy From Source On Linux](#how-to-build-cloudundancy-from-source-on-linux)
+* [How To Build Cloudundancy From Source On Windows](#how-to-build-cloudundancy-from-source-on-windows)
 * [Cloudundancy Roadmap](#cloudundancy-roadmap)
 
 ## Command Line Usage
@@ -48,21 +48,15 @@ Cloudundancy command line arguments are parsed using the excellent single-header
 
 ![Cloudundancy arguments parsing with docopt.cpp](Screenshots/CloudundancyArgsParser.png)
 
-## Program Modes
+## Cloudundancy Program Modes
 
 ### copy-files-to-multiple-folders
 
 Cloudundancy program mode `copy-files-to-multiple-folders` copies files and folders listed in a Cloudundancy.ini file to multiple destination folders.
 
-12/09/2020: Work in progress.
-
 ### 7zip-files-then-copy-the-7zip-file-to-multiple-folders
 
-12/09/2020: Work in progress.
-
 ### example-linux-ini-file
-
-12/09/2020: Work in progress.
 
 ### example-windows-ini-file
 
@@ -121,15 +115,13 @@ scm-polling.log
 
 A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Fedora 33 with Clang and GCC:
 
-12/09/2020: Work in progress.
-
 ### Windows Jenkins Jobs Which Build Cloudundancy
 
 A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Windows 10 with Visual Studio 2019:
 
 ![Cloudundancy Windows Jenkins Jobs](Screenshots/CloudundancyWindowsJenkinsJobs.png)
 
-## 4 Commands To Build Cloudundancy From Source On Linux With Clang
+## How To Build Cloudundancy From Source On Linux
 
 ```
 git clone https://github.com/NeilJustice/Cloudundancy
@@ -138,7 +130,7 @@ CXX=clang++ cmake .. -DCMAKE_BUILD_TYPE=Release
 sudo cmake --build . --target install # Installs binary Cloudundany to /usr/local/bin/Cloudundancy
 ```
 
-## 4 Commands To Build Cloudundancy From Source On Windows With Visual Studio 2019
+## How To Build Cloudundancy From Source On Windows
 
 ```
 git clone https://github.com/NeilJustice/Cloudundancy
@@ -151,9 +143,9 @@ cmake --build . --config Release --target install # Installs Cloudundancy.exe to
 
 ## Cloudundancy Roadmap
 
-|Future Cloudundancy Feature|Estimated Delivery Quarter|
-|---------------------------|--------------------------------------|
-|`7zip-files-then-copy-the-7zip-file-to-multiple-folders` working on Linux|Q4 2020|
-|SonarCloud static analysis badge|Q1 2021|
-|Coverity static analysis badge|Q1 2021|
-|Parallel copying to multiple destination folders|Q2 2021|
+|Future Cloudundancy Feature|Delivery Month|Implementation Status|
+|---------------------------|--------------|---------------------|
+|`7zip-files-then-copy-the-7zip-file-to-multiple-folders` working on Linux|December 2020|In progress|
+|SonarCloud static analysis badge|January 2021|Awaiting implementation|
+|Coverity static analysis badge|January 2021|Awaiting implementation|
+|Parallel copying to multiple destination folders|April 2021|Awaiting implementation|
