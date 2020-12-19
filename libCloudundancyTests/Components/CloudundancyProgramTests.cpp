@@ -8,7 +8,8 @@
 
 TESTS(CloudundancyProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
-AFACT(Main_CallsTryCatchCallRunWithStringArgs_ReturnsExitCode)
+AFACT(Main_ArgcIs1_WriteLinesCommandLineUsage_Returns0)
+AFACT(Main_ArgcIs2OrGreater_CallsTryCatchCallRunWithStringArgs_ReturnsExitCodeFromCallingRun)
 AFACT(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSubProgram_PrintsEndTimeAndElapsedTime_ExitsWithSubProgramExitCode)
 // Private Functions
 AFACT(ExceptionHandler_PrintsExceptionClassNameAndMessage_Returns1)
@@ -64,7 +65,17 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._stopwatch);
 }
 
-TEST(Main_CallsTryCatchCallRunWithStringArgs_ReturnsExitCode)
+TEST(Main_ArgcIs1_WriteLinesCommandLineUsage_Returns0)
+{
+   _consoleMock->WriteLineMock.Expect();
+   //
+   const int exitCode = _cloudundancyProgram.Main(1, nullptr);
+   //
+   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(CloudundancyArgs::CommandLineUsage));
+   IS_ZERO(exitCode);
+}
+
+TEST(Main_ArgcIs2OrGreater_CallsTryCatchCallRunWithStringArgs_ReturnsExitCodeFromCallingRun)
 {
    const vector<string> stringArgs = ArgcArgvToStringVectorMock.ReturnRandom();
 

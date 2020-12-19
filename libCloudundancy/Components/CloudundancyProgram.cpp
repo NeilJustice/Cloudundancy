@@ -28,6 +28,11 @@ CloudundancyProgram::~CloudundancyProgram()
 
 int CloudundancyProgram::Main(int argc, char* argv[])
 {
+   if (argc == 1)
+   {
+      _console->WriteLine(CloudundancyArgs::CommandLineUsage);
+      return 0;
+   }
    const vector<string> stringArgs = _call_Vector_ArgcArgvToStringVector(argc, argv);
    const int exitCode = _tryCatchCaller->TryCatchCall(
       this, &CloudundancyProgram::Run, stringArgs, &CloudundancyProgram::ExceptionHandler);
