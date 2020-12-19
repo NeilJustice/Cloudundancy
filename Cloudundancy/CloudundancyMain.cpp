@@ -35,13 +35,13 @@ using namespace std;
 #include "libCloudundancy/UtilityComponents/Time/Stopwatch.h"
 #include "libCloudundancy/UtilityComponents/Time/Watch.h"
 
-// Example Cloudundancy command lines:
-// example-linux-ini-file
-// example-windows-ini-file
-// copy-files-to-multiple-folders --ini-file=C:\CloudundancyTesting\Cloudundancy.ini
-// 7zip-files-then-copy-the-7zip-file-to-multiple-folders --ini-file=C:\Code\dotfiles\WindowsCloudundancy_CodeFolderBackups.ini --7zip-staging-folder=C:\CodeFolderBackupStaging --7z-ini-file=C:\Code\dotfiles\WindowsCloudundancy_CodeFolderBackups_7ZipFileCopyStep.ini
+// Production Cloudundancy command lines:
+// copy-files-to-multiple-folders --ini-file=C:\Code\dotfiles\WindowsCloudundancy.ini
+// 7zip-files-then-copy-the-7zip-file-to-multiple-folders --ini-file-to-copy-files-to-7zip-staging-folder=C:\Code\dotfiles\WindowsCloudundancy_CopyCodeFolderTo7ZipStagingFolder.ini --7zip-staging-folder=C:\CodeFolderBackupStaging --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=C:\Code\dotfiles\WindowsCloudundancy_Copy7ZipFileFromStagingFolderToMultipleFolders.ini
 
 // Testing Cloudundancy command lines:
+// example-linux-ini-file
+// example-windows-ini-file
 // copy-files-to-multiple-folders --ini-file=C:\Test\Cloudundancy.ini --delete-destination-folders-first
 // 7zip-files-then-copy-the-7zip-file-to-multiple-folders --ini-file-to-copy-files-to-7zip-staging-folder=C:\Test\FileCopyingToStagingFolder.ini --7zip-staging-folder=C:\Test\BackupStagingFolder --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=C:\Test\7zipCopying.ini
 
