@@ -10,7 +10,7 @@ TESTS(CloudundancyProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
 AFACT(Main_ArgcIs1_WriteLinesCommandLineUsage_Returns0)
 AFACT(Main_ArgcIs2OrGreater_CallsTryCatchCallRunWithStringArgs_ReturnsExitCodeFromCallingRun)
-AFACT(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSubProgram_PrintsEndTimeAndElapsedTime_ExitsWithSubProgramExitCode)
+FACTS(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSubProgram_PrintsEndTimeAndElapsedTime_ExitsWithSubProgramExitCode_WritesExitCodeInGreenIf0OtherwiseRed)
 // Private Functions
 AFACT(ExceptionHandler_PrintsExceptionClassNameAndMessage_Returns1)
 EVIDENCE
@@ -95,11 +95,16 @@ TEST(Main_ArgcIs2OrGreater_CallsTryCatchCallRunWithStringArgs_ReturnsExitCodeFro
    ARE_EQUAL(tryCatchCallReturnValue, exitCode);
 }
 
-TEST(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSubProgram_PrintsEndTimeAndElapsedTime_ExitsWithSubProgramExitCode)
+TEST2X2(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSubProgram_PrintsEndTimeAndElapsedTime_ExitsWithSubProgramExitCode_WritesExitCodeInGreenIf0OtherwiseRed,
+   int subProgramExitCode, Color expectedExitCodeLineColor,
+   0, Color::Green,
+   1, Color::Red,
+   2, Color::Red)
 {
    _stopwatchMock->StartMock.Expect();
 
    _consoleMock->WriteLineMock.Expect();
+   _consoleMock->WriteLineColorMock.Expect();
 
    const string machineName = _environmentalistMock->MachineNameMock.ReturnRandom();
    const string userName = _environmentalistMock->UserNameMock.ReturnRandom();
@@ -115,7 +120,7 @@ TEST(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSubPr
    _stopwatchMock->StopAndGetElapsedSecondsMock.Return(elapsedSeconds);
 
    const shared_ptr<CloudundancySubProgramMock> cloudundancySubProgramMock = make_shared<CloudundancySubProgramMock>();
-   const int subProgramExitCode = cloudundancySubProgramMock->RunMock.ReturnRandom();
+   cloudundancySubProgramMock->RunMock.Return(subProgramExitCode);
    _cloudundancySubProgramFactoryMock->NewCloudundancySubProgramMock.Return(cloudundancySubProgramMock);
 
    const map<string, docopt::Value> docoptArgs;
@@ -143,8 +148,9 @@ TEST(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSubPr
       string_view("[Cloudundancy]   StartTime: " + startTime),
       string_view("[Cloudundancy]  EndTime: " + endTime),
       string_view("[Cloudundancy] Duration: " + elapsedSeconds + " seconds"),
-      string_view("[Cloudundancy] ExitCode: " + to_string(subProgramExitCode))
    }));
+   const string expectedExitCodeLine = "[Cloudundancy] ExitCode: " + to_string(subProgramExitCode);
+   METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedExitCodeLine, expectedExitCodeLineColor));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
    ARE_EQUAL(subProgramExitCode, exitCode);
 }
@@ -161,7 +167,7 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndMessage_Returns1)
 
    const string elapsedSeconds = _stopwatchMock->StopAndGetElapsedSecondsMock.ReturnRandom();
 
-   const exception ex;
+   const exception ex{};
    const vector<string> stringArgs = ZenUnit::RandomVector<string>();
    //
    const int exitCode = _cloudundancyProgram.ExceptionHandler(ex, stringArgs);

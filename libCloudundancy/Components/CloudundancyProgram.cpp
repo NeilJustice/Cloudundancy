@@ -62,7 +62,7 @@ int CloudundancyProgram::Run(const std::vector<std::string>& stringArgs)
    const CloudundancyArgs args = _cloudundancyArgsParser->ParseStringArgs(stringArgs);
    const shared_ptr<CloudundancySubProgram> cloudundancySubProgram =
       _cloudundancySubProgramFactory->NewCloudundancySubProgram(args.programMode);
-   const int exitCode = cloudundancySubProgram->Run(args);
+   const int subProgramExitCode = cloudundancySubProgram->Run(args);
 
    const string endTime = _watch->DateTimeNow();
    const string endTimeLine = "[Cloudundancy]  EndTime: " + endTime;
@@ -70,8 +70,10 @@ int CloudundancyProgram::Run(const std::vector<std::string>& stringArgs)
 
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    _console->WriteLine("[Cloudundancy] Duration: "  + elapsedSeconds + " seconds");
-   _console->WriteLine("[Cloudundancy] ExitCode: " + to_string(exitCode));
-   return exitCode;
+   const string exitCodeLine = "[Cloudundancy] ExitCode: " + to_string(subProgramExitCode);
+   const Color color = subProgramExitCode == 0 ? Color::Green : Color::Red;
+   _console->WriteLineColor(exitCodeLine, color);
+   return subProgramExitCode;
 }
 
 // Private Functions
