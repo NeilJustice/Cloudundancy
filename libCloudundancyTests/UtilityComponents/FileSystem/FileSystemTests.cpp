@@ -35,7 +35,8 @@ AFACT(AppendText_CreatesParentDirectoryToFilePath_AppendsTimestampedTextToFile)
 AFACT(WriteTextFile_CreatesParentDirectoryToFilePath_CreatesFileInTextWriteMode_WritesFileTextToFile_ClosesFile)
 // Misc
 AFACT(DeleteFolder_CallsStdFileSystemRemoveAllOnFolderPath)
-AFACT(DeleteFolderExceptForFile_InitializedRecursiveDirectoryIteratorField_CallsRecursivelyDeleteAllFilesExceptIgnoredFileSubpaths_PrintsDeletedFolderExceptForCloudundancyDotLog)
+AFACT(DeleteFolderExceptForFile_FolderDoesNotExist_DoesNothing)
+AFACT(DeleteFolderExceptForFile_FolderExists_InitializedRecursiveDirectoryIteratorField_CallsRecursivelyDeleteAllFilesExceptIgnoredFileSubpaths_PrintsDeletedFolderExceptForCloudundancyDotLog)
 AFACT(DeleteFoldersExceptForFile_CallsDeleteFolderExceptForFileOnEachFolderPath_PrintsDeletedFolderMessages)
 AFACT(SetCurrentPath_CallsFsCurrentPathWithFolderPath)
 // Private Functions
@@ -544,8 +545,20 @@ TEST(DeleteFolder_CallsStdFileSystemRemoveAllOnFolderPath)
    METALMOCK(remove_allMock.CalledOnceWith(folderPath));
 }
 
-TEST(DeleteFolderExceptForFile_InitializedRecursiveDirectoryIteratorField_CallsRecursivelyDeleteAllFilesExceptIgnoredFileSubpaths_PrintsDeletedFolderExceptForCloudundancyDotLog)
+TEST(DeleteFolderExceptForFile_FolderDoesNotExist_DoesNothing)
 {
+   existsMock.Return(false);
+   const fs::path folderPath = ZenUnit::Random<fs::path>();
+   const string exceptFileName = ZenUnit::Random<string>();
+   //
+   _fileSystem.DeleteFolderExceptForFile(folderPath, exceptFileName);
+   //
+   METALMOCK(existsMock.CalledOnceWith(folderPath));
+}
+
+TEST(DeleteFolderExceptForFile_FolderExists_InitializedRecursiveDirectoryIteratorField_CallsRecursivelyDeleteAllFilesExceptIgnoredFileSubpaths_PrintsDeletedFolderExceptForCloudundancyDotLog)
+{
+   existsMock.Return(true);
    _recursiveDirectoryIteratorMock->SetFileSubpathsToIgnoreMock.Expect();
    _recursiveDirectoryIteratorMock->InitializeIteratorAtFolderPathMock.Expect();
    _recursiveDirectoryIteratorMock->RecursivelyDeleteAllFilesExceptIgnoredFileSubpathsMock.Expect();
@@ -555,13 +568,14 @@ TEST(DeleteFolderExceptForFile_InitializedRecursiveDirectoryIteratorField_CallsR
    //
    _fileSystem.DeleteFolderExceptForFile(folderPath, exceptFileName);
    //
+   METALMOCK(existsMock.CalledOnceWith(folderPath));
    const vector<string> expectedFileSubpathsToNotIterate{ string(exceptFileName) };
    METALMOCK(_recursiveDirectoryIteratorMock->SetFileSubpathsToIgnoreMock.CalledOnceWith(expectedFileSubpathsToNotIterate));
    METALMOCK(_recursiveDirectoryIteratorMock->InitializeIteratorAtFolderPathMock.CalledOnceWith(folderPath));
    METALMOCK(_recursiveDirectoryIteratorMock->RecursivelyDeleteAllFilesExceptIgnoredFileSubpathsMock.CalledOnce());
    _recursiveDirectoryIteratorMock->InitializeIteratorAtFolderPathMock.Expect();
    const string expectedDeletedFolderMessage = String::Concat(
-      "[Cloudundancy] Deleted folder ", folderPath.string(), " except for Cloudundancy.log");
+      "[Cloudundancy] Deleted folder ", folderPath.string(), " except for ", exceptFileName);
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedDeletedFolderMessage));
 }
 

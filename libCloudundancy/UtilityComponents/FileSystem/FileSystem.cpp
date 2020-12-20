@@ -213,12 +213,17 @@ void FileSystem::DeleteFolder(const fs::path& folderPath) const
 
 void FileSystem::DeleteFolderExceptForFile(const fs::path& folderPath, string_view exceptFileName) const
 {
+   const bool folderPathExists = _call_fs_exists(folderPath);
+   if (!folderPathExists)
+   {
+      return;
+   }
    const vector<string> fileSubpathsToNotIterate{ string(exceptFileName) };
    _recursiveDirectoryIterator->SetFileSubpathsToIgnore(fileSubpathsToNotIterate);
    _recursiveDirectoryIterator->InitializeIteratorAtFolderPath(folderPath);
    _recursiveDirectoryIterator->RecursivelyDeleteAllFilesExceptIgnoredFileSubpaths();
    const string deletedFolderMessage = String::Concat(
-      "[Cloudundancy] Deleted folder ", folderPath.string(), " except for Cloudundancy.log");
+      "[Cloudundancy] Deleted folder ", folderPath.string(), " except for ", exceptFileName);
    _console->WriteLine(deletedFolderMessage);
 }
 
