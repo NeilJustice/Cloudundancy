@@ -27,7 +27,7 @@ CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudunda
    const size_t numberOfIniFileLines = cloudundancyIni.iniFileLines.size();
    for (size_t lineNumber = 1; lineNumber <= numberOfIniFileLines; ++lineNumber)
    {
-      const string iniFileLine = String::TrimWhitespace(cloudundancyIni.iniFileLines[lineNumber - 1]);
+      string iniFileLine = String::TrimWhitespace(cloudundancyIni.iniFileLines[lineNumber - 1]);
       if (iniFileLine.empty() || String::StartsWith(iniFileLine, "#"))
       {
          continue;
@@ -60,15 +60,15 @@ CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudunda
       else if (inSourceFilesAndFoldersToCopySection)
       {
          const FilePathLineNumberLineText fileCopyInstructionLine(cloudundancyIniPath, lineNumber, iniFileLine);
-         const CloudundancyIniCopyInstruction cloudundancyIniCopyInstruction =
+         CloudundancyIniCopyInstruction cloudundancyIniCopyInstruction =
             _caller_ParseFileCopyInstructionLine->CallConstMemberFunction(
                &CloudundancyIniFileReader::ParseFileCopyInstructionLine, this, fileCopyInstructionLine);
-         cloudundancyIni.cloudundancyIniCopyInstructions.push_back(cloudundancyIniCopyInstruction);
+         cloudundancyIni.cloudundancyIniCopyInstructions.emplace_back(std::move(cloudundancyIniCopyInstruction));
       }
       else
       {
          release_assert(inFileSubpathsToNotCopySection);
-         cloudundancyIni.fileSubpathsToNotCopy.push_back(iniFileLine);
+         cloudundancyIni.fileSubpathsToNotCopy.emplace_back(std::move(iniFileLine));
       }
    }
    _cloudundancyIniValidator->ThrowIfZeroDestinationFolderPaths(cloudundancyIni, cloudundancyIniPath);

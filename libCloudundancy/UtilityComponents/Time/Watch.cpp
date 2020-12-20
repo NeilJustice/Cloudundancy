@@ -14,7 +14,7 @@ Watch::~Watch()
 std::string Watch::DateTimeNow() const
 {
    const tm tmNow = TMNow();
-   char dateTimeNowChars[32];
+   char dateTimeNowChars[32]{};
    strftime(dateTimeNowChars, sizeof(dateTimeNowChars), "%F %r", &tmNow);
    std::string dateTimeNowString(dateTimeNowChars);
    return dateTimeNowString;

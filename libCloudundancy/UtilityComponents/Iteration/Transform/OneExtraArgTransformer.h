@@ -13,15 +13,15 @@ public:
       TransformFunctionType transformFunction,
       ExtraArgType extraArg) const
    {
-      TransformedContainerType transformedElements;
+      TransformedContainerType transformedElements{};
       transformedElements.reserve(sourceContainer.size());
       const auto endSourceIter = sourceContainer.end();
       size_t index = 0;
       for (auto iter = sourceContainer.begin(); iter != endSourceIter; ++iter)
       {
          const auto& sourceElement = *iter;
-			const auto transformedElement = transformFunction(index++, sourceElement, extraArg);
-         transformedElements.push_back(transformedElement);
+			auto transformedElement = transformFunction(index++, sourceElement, extraArg);
+         transformedElements.emplace_back(std::move(transformedElement));
       }
       return transformedElements;
    }

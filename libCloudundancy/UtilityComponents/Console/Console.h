@@ -5,7 +5,7 @@ class Console
 {
    friend class ConsoleTests;
 private:
-   // Function Callers
+   // Function Pointers
    function<void(int)> _call_exit;
    // Mutable Components
    unique_ptr<ConsoleColorer> _consoleColorer;

@@ -8,7 +8,7 @@ public:
       ReturnType(ClassType::* constMemberFunction)(ArgType) const,
       const ClassType* constClassPointer, ArgType arg) const
    {
-      const ReturnType returnValue = (constClassPointer->*constMemberFunction)(arg);
+      ReturnType returnValue = (constClassPointer->*constMemberFunction)(arg);
       return returnValue;
    }
 
@@ -16,7 +16,7 @@ public:
       ReturnType(ClassType::*nonConstMemberFunction)(ArgType),
       ClassType* nonConstClassPointer, ArgType arg) const
    {
-      const ReturnType returnValue = (nonConstClassPointer->*nonConstMemberFunction)(arg);
+      ReturnType returnValue = (nonConstClassPointer->*nonConstMemberFunction)(arg);
       return returnValue;
    }
 

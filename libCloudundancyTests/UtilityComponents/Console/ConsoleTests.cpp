@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "libCloudundancy/UtilityComponents/Console/Console.h"
 #include "libCloudundancy/UtilityComponents/Console/ConsoleColorer.h"
+#include "libCloudundancyTests/UtilityComponents/Console/MetalMock/ConsoleColorerMock.h"
 
 TESTS(ConsoleTests)
 AFACT(DefaultConstructor_NewsConsoleColorer)
@@ -14,18 +15,26 @@ AFACT(WriteLineColor_SetsConsoleColor_WritesMessageThenNewline_UnsetsColor)
 EVIDENCE
 
 Console _console;
+// Function Pointers
 METALMOCK_VOID1_FREE(exit, int)
+// Mutable Components
+ConsoleColorerMock* _consoleColorerMock = nullptr;
 
 STARTUP
 {
+   // Function Pointers
    _console._call_exit = BIND_1ARG_METALMOCK_OBJECT(exitMock);
+   // Mutable Components
+   _console._consoleColorer.reset(_consoleColorerMock = new ConsoleColorerMock);
 }
 
 TEST(DefaultConstructor_NewsConsoleColorer)
 {
    Console console;
+   // Function Pointers
    DELETE_TO_ASSERT_NEWED(console._consoleColorer);
-   STD_FUNCTION_TARGETS(::exit, console._call_exit);
+   // Mutable Components
+   STD_FUNCTION_TARGETS(::_exit, console._call_exit);
 }
 
 TEST(Write_WritesMessageWithoutNewline)
@@ -70,10 +79,15 @@ TEST(WriteLineAndExit_WritesMessageAndNewline_ExitsWithExitCode)
 
 TEST(WriteLineColor_SetsConsoleColor_WritesMessageThenNewline_UnsetsColor)
 {
+   const bool didSetColor = _consoleColorerMock->SetColorMock.ReturnRandom();
+   _consoleColorerMock->UnsetColorMock.Expect();
    const string message = ZenUnit::Random<string>();
    const Color color = ZenUnit::RandomEnum<Color>(Color::MaxValue);
    //
-   DOES_NOT_THROW(_console.WriteLineColor(message, color));
+   _console.WriteLineColor(message, color);
+   //
+   METALMOCK(_consoleColorerMock->SetColorMock.CalledOnceWith(color));
+   METALMOCK(_consoleColorerMock->UnsetColorMock.CalledOnceWith(didSetColor));
 }
 
 RUN_TESTS(ConsoleTests)

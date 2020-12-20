@@ -2,8 +2,8 @@
 #include "libCloudundancy/UtilityComponents/Console/Console.h"
 
 Console::Console()
-   // Function Callers
-   : _call_exit(::exit)
+   // Function Pointers
+   : _call_exit(::_exit)
    // Mutable Components
    , _consoleColorer(make_unique<ConsoleColorer>())
 

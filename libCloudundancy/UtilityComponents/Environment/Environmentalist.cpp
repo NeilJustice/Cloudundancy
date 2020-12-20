@@ -43,7 +43,7 @@ string Environmentalist::LinuxMachineName() const
 
 string Environmentalist::LinuxUserName() const
 {
-   char usernameChars[_SC_LOGIN_NAME_MAX];
+   char usernameChars[_SC_LOGIN_NAME_MAX]{};
    const int getloginReturnValue = getlogin_r(usernameChars, sizeof(usernameChars));
    release_assert(getloginReturnValue == 0);
    string username(usernameChars);
@@ -64,7 +64,7 @@ string Environmentalist::WindowsMachineName() const
 
 string Environmentalist::WindowsUserName() const
 {
-   CHAR windowsUserNameCharacters[257];
+   CHAR windowsUserNameCharacters[257]{};
    DWORD size = sizeof(windowsUserNameCharacters);
    const BOOL didGetUserName = _call_GetUserNameA(windowsUserNameCharacters, &size);
    release_assert(didGetUserName == TRUE);

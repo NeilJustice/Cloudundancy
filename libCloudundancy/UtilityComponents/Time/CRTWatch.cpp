@@ -26,7 +26,7 @@ tm CRTWatch::TmNow() const
    const chrono::time_point<chrono::system_clock> nowAsTimePoint = _call_system_clock_now();
    const time_t nowAsTimeT = _call_to_time_t(nowAsTimePoint);
    const tm* const nowAsTmPointer = _call_localtime(&nowAsTimeT);
-   const tm nowAsTm = *nowAsTmPointer;
+   tm nowAsTm = *nowAsTmPointer;
    return nowAsTm;
 }
 

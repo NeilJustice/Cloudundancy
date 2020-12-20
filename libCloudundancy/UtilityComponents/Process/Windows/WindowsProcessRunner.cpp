@@ -92,7 +92,7 @@ ProcessResult WindowsProcessRunner::Run(string_view processName, string_view arg
 
    const unsigned elapsedMilliseconds = static_cast<unsigned>(
       chrono::duration_cast<chrono::milliseconds>(endTime - beginTime).count());
-   const ProcessResult processResult(
+   ProcessResult processResult(
       processName.data(), arguments.data(), static_cast<int>(processExitCode), standardOutputAndError, elapsedMilliseconds);
    return processResult;
 }
@@ -101,7 +101,8 @@ ProcessResult WindowsProcessRunner::FailFastRun(string_view processName, string_
 {
    const string runningMessage = String::Concat("[Cloudundancy] Running program: ", processName, ' ', arguments);
    _console->WriteLine(runningMessage);
-   const ProcessResult processResult = _caller_Run->CallConstMemberFunction(&WindowsProcessRunner::Run, this, processName, arguments);
+   ProcessResult processResult = _caller_Run->CallConstMemberFunction(
+      &WindowsProcessRunner::Run, this, processName, arguments);
    _console->WriteLineIf(doPrintStandardOutput, processResult.standardOutputAndError);
    if (processResult.exitCode != 0)
    {
@@ -115,11 +116,11 @@ ProcessResult WindowsProcessRunner::FailFastRun(string_view processName, string_
 string WindowsProcessRunner::ReadPipe(HANDLE pipeHandle)
 {
    DWORD numberOfCharsRead = 0;
-   CHAR standardOutputBuffer[4096];
+   CHAR standardOutputBuffer[4096]{};
    const BOOL didReadStandardOutput = ReadFile(
       pipeHandle, standardOutputBuffer, sizeof(standardOutputBuffer), &numberOfCharsRead, nullptr);
    release_assert(didReadStandardOutput == TRUE);
-   const string standardOutputAndError(standardOutputBuffer, numberOfCharsRead);
+   string standardOutputAndError(standardOutputBuffer, numberOfCharsRead);
    return standardOutputAndError;
 }
 
