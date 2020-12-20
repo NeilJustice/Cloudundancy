@@ -16,3 +16,11 @@ struct ProcessResult
       string_view standardOutputAndError,
       unsigned durationInMilliseconds);
 };
+
+#ifdef _WIN32
+   #ifdef _DEBUG
+      static_assert(sizeof(ProcessResult) == 136);
+   #else
+      static_assert(sizeof(ProcessResult) == 112);
+   #endif
+#endif

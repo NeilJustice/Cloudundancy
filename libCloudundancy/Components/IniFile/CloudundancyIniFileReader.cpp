@@ -6,7 +6,7 @@
 CloudundancyIniFileReader::CloudundancyIniFileReader() noexcept
    // Function Callers
    : _caller_ParseFileCopyInstructionLine(make_unique<NonVoidOneArgMemberFunctionCallerType>())
-   , _caller_ThrowIfSourceFileOrFolderDoesNotExist(make_unique<VoidTwoArgMemberFunctionCallerType>())
+   , _caller_ThrowIfSourceFileOrFolderDoesNotExist(make_unique<VoidOneArgMemberFunctionCallerType>())
    // Constant Components
    , _cloudundancyIniValidator(make_unique<CloudundancyIniValidator>())
    , _fileSystem(make_unique<FileSystem>())
@@ -90,14 +90,12 @@ CloudundancyIniCopyInstruction CloudundancyIniFileReader::ParseFileCopyInstructi
    cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath = pipeSplitLine[0];
    cloudundancyIniCopyInstruction.relativeDestinationFolderPath = pipeSplitLine[1];
    _caller_ThrowIfSourceFileOrFolderDoesNotExist->CallConstMemberFunction(
-      &CloudundancyIniFileReader::ThrowIfSourceFileOrFolderDoesNotExist,
-      this, cloudundancyIniCopyInstruction, fileCopyInstructionLine);
+      &CloudundancyIniFileReader::ThrowIfSourceFileOrFolderDoesNotExist, this, cloudundancyIniCopyInstruction);
    return cloudundancyIniCopyInstruction;
 }
 
 void CloudundancyIniFileReader::ThrowIfSourceFileOrFolderDoesNotExist(
-   const CloudundancyIniCopyInstruction& cloudundancyIniCopyInstruction,
-   const FilePathLineNumberLineText& /*filePathLineNumberLineText*/) const
+   const CloudundancyIniCopyInstruction& cloudundancyIniCopyInstruction) const
 {
    bool sourceFileOrFolderExists = _fileSystem->FileOrFolderExists(cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath);
    if (!sourceFileOrFolderExists)

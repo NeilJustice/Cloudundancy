@@ -18,9 +18,9 @@ using NonVoidOneArgMemberFunctionCallerMockMockType = NonVoidOneArgMemberFunctio
    CloudundancyIniCopyInstruction, CloudundancyIniFileReader, const FilePathLineNumberLineText&>;
 NonVoidOneArgMemberFunctionCallerMockMockType* _callerMock_ParseFileCopyInstructionLine = nullptr;
 
-using VoidTwoArgMemberFunctionCallerMockType = VoidTwoArgMemberFunctionCallerMock<
-   CloudundancyIniFileReader, const CloudundancyIniCopyInstruction&, const FilePathLineNumberLineText&>;
-VoidTwoArgMemberFunctionCallerMockType* _callerMock_ThrowIfSourceFileOrFolderDoesNotExist = nullptr;
+using VoidOneArgMemberFunctionCallerMockType = VoidOneArgMemberFunctionCallerMock<
+   CloudundancyIniFileReader, const CloudundancyIniCopyInstruction&>;
+VoidOneArgMemberFunctionCallerMockType* _callerMock_ThrowIfSourceFileOrFolderDoesNotExist = nullptr;
 
 // Constant Components
 CloudundancyIniValidatorMock* _cloudundancyIniValidatorMock = nullptr;
@@ -32,7 +32,7 @@ STARTUP
    _cloudundancyIniFile._caller_ParseFileCopyInstructionLine.reset(
       _callerMock_ParseFileCopyInstructionLine = new NonVoidOneArgMemberFunctionCallerMockMockType);
    _cloudundancyIniFile._caller_ThrowIfSourceFileOrFolderDoesNotExist.reset(
-      _callerMock_ThrowIfSourceFileOrFolderDoesNotExist = new VoidTwoArgMemberFunctionCallerMockType);
+      _callerMock_ThrowIfSourceFileOrFolderDoesNotExist = new VoidOneArgMemberFunctionCallerMockType);
    // Constant Components
    _cloudundancyIniFile._cloudundancyIniValidator.reset(_cloudundancyIniValidatorMock = new CloudundancyIniValidatorMock);
    _cloudundancyIniFile._fileSystem.reset(_fileSystemMock = new FileSystemMock);
@@ -157,8 +157,7 @@ TEST1X1(ParseFileCopyInstructionLine_LineContainsOneSpaceArrowSpace_ReturnsExpec
    expectedFileCopyInstruction.absoluteSourceFileOrFolderPath = sourceFilePath;
    expectedFileCopyInstruction.relativeDestinationFolderPath = relativeDestinationFolderPath;
    METALMOCK(_callerMock_ThrowIfSourceFileOrFolderDoesNotExist->CallConstMemberFunctionMock.CalledOnceWith(
-      &CloudundancyIniFileReader::ThrowIfSourceFileOrFolderDoesNotExist,
-      &_cloudundancyIniFile, cloudundancyIniCopyInstruction, filePathLineNumberLineText));
+      &CloudundancyIniFileReader::ThrowIfSourceFileOrFolderDoesNotExist, &_cloudundancyIniFile, expectedFileCopyInstruction));
    ARE_EQUAL(expectedFileCopyInstruction, cloudundancyIniCopyInstruction);
 }
 
@@ -169,7 +168,7 @@ TEST(ThrowIfSourceFileOrFolderDoesNotExist_SourceFileOrFolderPathExists_DoesNotT
       ZenUnit::Random<CloudundancyIniCopyInstruction>();
    const FilePathLineNumberLineText filePathLineNumberLineText = ZenUnit::Random<FilePathLineNumberLineText>();
    //
-   _cloudundancyIniFile.ThrowIfSourceFileOrFolderDoesNotExist(cloudundancyIniCopyInstruction, filePathLineNumberLineText);
+   _cloudundancyIniFile.ThrowIfSourceFileOrFolderDoesNotExist(cloudundancyIniCopyInstruction);
    //
    METALMOCK(_fileSystemMock->FileOrFolderExistsMock.CalledOnceWith(cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath));
 }
@@ -184,10 +183,8 @@ TEST(ThrowIfSourceFileOrFolderDoesNotExist_SourceFileOrFolderPathDoesNotExist_Th
    FileSystemException expectedFileSystemException(FileSystemExceptionType::FileOrFolderDoesNotExist,
       cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath);
    const string expectedExceptionMessage = expectedFileSystemException.what();
-
-   const FilePathLineNumberLineText filePathLineNumberLineText = ZenUnit::Random<FilePathLineNumberLineText>();
    //
-   THROWS_EXCEPTION(_cloudundancyIniFile.ThrowIfSourceFileOrFolderDoesNotExist(cloudundancyIniCopyInstruction, filePathLineNumberLineText),
+   THROWS_EXCEPTION(_cloudundancyIniFile.ThrowIfSourceFileOrFolderDoesNotExist(cloudundancyIniCopyInstruction),
       FileSystemException, expectedExceptionMessage);
    //
    METALMOCK(_fileSystemMock->FileOrFolderExistsMock.CalledOnceWith(cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath));

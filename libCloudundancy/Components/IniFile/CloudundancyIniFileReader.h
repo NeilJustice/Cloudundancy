@@ -12,11 +12,9 @@ private:
       const FilePathLineNumberLineText&>;
    unique_ptr<NonVoidOneArgMemberFunctionCallerType> _caller_ParseFileCopyInstructionLine;
 
-   using VoidTwoArgMemberFunctionCallerType = const VoidTwoArgMemberFunctionCaller<
-      CloudundancyIniFileReader,
-      const CloudundancyIniCopyInstruction&,
-      const FilePathLineNumberLineText&>;
-   unique_ptr<VoidTwoArgMemberFunctionCallerType> _caller_ThrowIfSourceFileOrFolderDoesNotExist;
+   using VoidOneArgMemberFunctionCallerType = const VoidOneArgMemberFunctionCaller<
+      CloudundancyIniFileReader, const CloudundancyIniCopyInstruction&>;
+   unique_ptr<VoidOneArgMemberFunctionCallerType> _caller_ThrowIfSourceFileOrFolderDoesNotExist;
 
    // Constant Components
    unique_ptr<const CloudundancyIniValidator> _cloudundancyIniValidator;
@@ -29,6 +27,5 @@ private:
    CloudundancyIniCopyInstruction ParseFileCopyInstructionLine(
       const FilePathLineNumberLineText& fileCopyInstructionLine) const;
    void ThrowIfSourceFileOrFolderDoesNotExist(
-      const CloudundancyIniCopyInstruction& cloudundancyIniCopyInstruction,
-      const FilePathLineNumberLineText& filePathLineNumberLineText) const;
+      const CloudundancyIniCopyInstruction& cloudundancyIniCopyInstruction) const;
 };
