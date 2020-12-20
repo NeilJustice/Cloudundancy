@@ -39,7 +39,6 @@ void CloudundancyFileCopier::CopyFilesAndFoldersToMultipleDestinationFolders(
    {
       _console->WriteLine("[Cloudundancy] Deleting [DestinationFolders] first because --delete-destination-folders-first is specified");
       _fileSystem->DeleteFoldersExceptForFile(cloudundancyIni.destinationFolderPaths, "Cloudundancy.log");
-      _console->WriteLine("[Cloudundancy] Destination folders deleted");
    }
    const string copyingMessage = String::Concat(
       "[Cloudundancy] Copying [SourceFilesAndFolders] to [DestinationFolders] as listed in ", iniFilePath.string(), ":\n");
@@ -78,10 +77,12 @@ void CloudundancyFileCopier::DoCopyFilesAndFoldersToDestinationFolder(
       cloudundancyIni.cloudundancyIniCopyInstructions,
       &CloudundancyFileCopier::CopyFileOrFolderToFolder, this, destinationFolderPath);
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
-   const string folderBackedUpMessage = String::Concat(
-      "[Cloudundancy]   FolderBackupResult: Successfully copied [SourceFilesAndFolders] to ", destinationFolderPath.string(), '\n',
+   const string folderBackupResultSuccessMessage = String::Concat(
+      "[Cloudundancy]   FolderBackupResult: Successfully copied [SourceFilesAndFolders] to ", destinationFolderPath.string());
+   _console->WriteLineColor(folderBackupResultSuccessMessage, Color::Green);
+   const string folderBackupDurationMessage = String::Concat(
       "[Cloudundancy] FolderBackupDuration: ", elapsedSeconds, " seconds");
-   _console->WriteLine(folderBackedUpMessage);
+   _console->WriteLine(folderBackupDurationMessage);
    const string cloudundancyBackupSuccessfulMessage =
       String::Concat("Cloudundancy backup successful in ", elapsedSeconds, " seconds");
    _cloudundancyLogFileWriter->AppendTextToCloudundancyLogFileInFolder(

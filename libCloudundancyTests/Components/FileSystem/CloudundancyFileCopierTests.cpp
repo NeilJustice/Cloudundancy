@@ -139,7 +139,6 @@ TEST(CopyFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFir
    METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
       { "[Cloudundancy] Deleting [DestinationFolders] first because --delete-destination-folders-first is specified" },
-      { "[Cloudundancy] Destination folders deleted" },
       { expectedCopyingMessage }
    }));
    METALMOCK(_fileSystemMock->DeleteFoldersExceptForFileMock.CalledOnceWith(cloudundancyIni.destinationFolderPaths, "Cloudundancy.log"));
@@ -199,6 +198,7 @@ TEST(CopyFilesAndFoldersToDestinationFolder_TryCatchCallsDoCopyFilesAndFoldersTo
 TEST(DoCopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesNonSkippedSourceFilesToDestinationFolder_AppendBackupSuccessfulToLogFile)
 {
    _consoleMock->WriteLineMock.Expect();
+   _consoleMock->WriteLineColorMock.Expect();
 
    _cloudundancyLogFileWriterMock->AppendTextToCloudundancyLogFileInFolderMock.Expect();
 
@@ -216,13 +216,15 @@ TEST(DoCopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_Copie
    //
    const string expectedCopyingMessage = String::Concat(
       "\n[Cloudundancy] Copying [SourceFilesAndFolders] to destination folder ", destinationFolderPath.string(), ":\n");
-   const string expectedFolderBackedUpMessage = String::Concat(
-      "[Cloudundancy]   FolderBackupResult: Successfully copied [SourceFilesAndFolders] to ", destinationFolderPath.string(), '\n',
+   const string expectedFolderBackupResultSuccessMessage = String::Concat(
+      "[Cloudundancy]   FolderBackupResult: Successfully copied [SourceFilesAndFolders] to ", destinationFolderPath.string());
+   METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedFolderBackupResultSuccessMessage, Color::Green));
+   const string expectedFolderBackupDurationMessage = String::Concat(
       "[Cloudundancy] FolderBackupDuration: ", elapsedSeconds, " seconds");
    METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
       { expectedCopyingMessage },
-      { expectedFolderBackedUpMessage }
+      { expectedFolderBackupDurationMessage }
    }));
    const string expectedBackupSuccessfulLogFileMessage = String::Concat(
       "Cloudundancy backup successful in ", elapsedSeconds, " seconds");

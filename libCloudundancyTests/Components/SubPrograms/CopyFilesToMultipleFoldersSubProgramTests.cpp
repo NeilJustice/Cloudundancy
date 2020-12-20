@@ -28,7 +28,7 @@ TEST(DefaultConstructor_NewsComponents)
 TEST(Run_SetsArgs_CallsCopyFilesAndFoldersToMultipleDestinationFolders_Returns0)
 {
    _cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleDestinationFoldersMock.Expect();
-   _consoleMock->WriteLineMock.Expect();
+   _consoleMock->WriteLineColorMock.Expect();
 
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
@@ -36,8 +36,9 @@ TEST(Run_SetsArgs_CallsCopyFilesAndFoldersToMultipleDestinationFolders_Returns0)
    //
    METALMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleDestinationFoldersMock.CalledOnceWith(
       args.iniFilePath, args.deleteDestinationFoldersFirst));
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(
-      "\n[Cloudundancy] OverallBackupResult: Successfully copied all [SourceFilesAndFolders] to all [DestinationFolders]"));
+   METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(
+      "\n[Cloudundancy] OverallBackupResult: Successfully copied all [SourceFilesAndFolders] to all [DestinationFolders]",
+      Color::Green));
    IS_ZERO(exitCode);
 }
 
