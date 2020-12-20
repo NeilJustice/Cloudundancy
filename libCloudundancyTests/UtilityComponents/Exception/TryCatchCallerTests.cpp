@@ -3,79 +3,126 @@
 
 template<typename ArgumentType, typename ExceptionType>
 TEMPLATE_TESTS(TryCatchCallerTests, ArgumentType, ExceptionType)
-AFACT(TryCatchCall_CallsFunctionWhichDoesNotThrow_ReturnsFunctionReturnValue)
-AFACT(TryCatchCall_CallsFunctionWhichThrowsException_CallsExceptionHandler_ReturnsExceptionHandlerReturnValue)
+AFACT(TryCatchCallNonConstMemberFunction_CallsMemberFunctionWhichDoesNotThrow_ReturnsFunctionReturnValue)
+AFACT(TryCatchCallNonConstMemberFunction_CallsMemberFunctionWhichThrowsException_CallsExceptionHandler_ReturnsExceptionHandlerReturnValue)
+AFACT(TryCatchCallConstMemberFunction_CallsMemberFunctionWhichDoesNotThrow_DoesNotCallExceptionHandler)
+AFACT(TryCatchCallConstMemberFunction_CallsMemberFunctionWhichThrows_CallsExceptionHandler)
 EVIDENCE
 
 class Class
 {
 public:
-   bool doThrow;
-   vector<ArgumentType> calls;
+   mutable bool doThrowException;
+   mutable vector<ArgumentType> calls;
    int exitCode;
 
-   string exceptionWhat;
-   vector<pair<string, ArgumentType>> exceptionHandlerCalls;
+   string exceptionMessage;
+   mutable vector<pair<string, ArgumentType>> exceptionHandlerCalls;
    int exceptionHandlerExitCode;
 
    Class()
-      : doThrow(false)
+      : doThrowException(false)
    {
       exitCode = ZenUnit::Random<int>();
-      exceptionWhat = ZenUnit::Random<string>();
+      exceptionMessage = ZenUnit::Random<string>();
       exceptionHandlerExitCode = ZenUnit::Random<int>();
    }
 
-   int MemberFunction(ArgumentType argument)
+   int NonConstMemberFunction(ArgumentType argument)
    {
       calls.push_back(argument);
-      if (doThrow)
+      if (doThrowException)
       {
-         throw ExceptionType(exceptionWhat.c_str());
+         throw ExceptionType(exceptionMessage.c_str());
       }
       return exitCode;
    }
 
-   int ExceptionHandler(const exception& ex, ArgumentType argument)
+   void ConstMemberFunction(ArgumentType argument) const
    {
-      const string exceptionGetExceptionClassNameAndMessage = Type::GetExceptionClassNameAndMessage(&ex);
-      exceptionHandlerCalls.emplace_back(exceptionGetExceptionClassNameAndMessage, argument);
+      calls.push_back(argument);
+      if (doThrowException)
+      {
+         throw ExceptionType(exceptionMessage.c_str());
+      }
+   }
+
+   int IntReturningConstMemberFunctionExceptionHandler(const exception& ex, ArgumentType argument) const
+   {
+      const string exceptionExceptionClassNameAndMessage = Type::GetExceptionClassNameAndMessage(&ex);
+      exceptionHandlerCalls.emplace_back(exceptionExceptionClassNameAndMessage, argument);
       return exceptionHandlerExitCode;
+   }
+
+   void VoidConstMemberFunctionExceptionHandler(const exception& ex, ArgumentType argument) const
+   {
+      const string exceptionExceptionClassNameAndMessage = Type::GetExceptionClassNameAndMessage(&ex);
+      exceptionHandlerCalls.emplace_back(exceptionExceptionClassNameAndMessage, argument);
    }
 };
 
-Class classInstance;
+Class nonConstClassInstance;
+const Class constClassInstance;
 TryCatchCaller<Class, ArgumentType> _tryCatchCaller;
 
-TEST(TryCatchCall_CallsFunctionWhichDoesNotThrow_ReturnsFunctionReturnValue)
+TEST(TryCatchCallNonConstMemberFunction_CallsMemberFunctionWhichDoesNotThrow_ReturnsFunctionReturnValue)
 {
    const ArgumentType argument = ZenUnit::Random<ArgumentType>();
-   classInstance.doThrow = false;
+   nonConstClassInstance.doThrowException = false;
    //
-   const int exitCode = _tryCatchCaller.TryCatchCall(
-      &classInstance, &Class::MemberFunction, argument, &Class::ExceptionHandler);
+   const int exitCode = _tryCatchCaller.TryCatchCallNonConstMemberFunction(
+      &nonConstClassInstance, &Class::NonConstMemberFunction, argument, &Class::IntReturningConstMemberFunctionExceptionHandler);
    //
-   VECTORS_ARE_EQUAL({ argument }, classInstance.calls);
-   ARE_EQUAL(classInstance.exitCode, exitCode);
+   VECTORS_ARE_EQUAL({ argument }, nonConstClassInstance.calls);
+   ARE_EQUAL(nonConstClassInstance.exitCode, exitCode);
 }
 
-TEST(TryCatchCall_CallsFunctionWhichThrowsException_CallsExceptionHandler_ReturnsExceptionHandlerReturnValue)
+TEST(TryCatchCallNonConstMemberFunction_CallsMemberFunctionWhichThrowsException_CallsExceptionHandler_ReturnsExceptionHandlerReturnValue)
 {
    const ArgumentType argument = ZenUnit::Random<ArgumentType>();
-   classInstance.doThrow = true;
+   nonConstClassInstance.doThrowException = true;
    //
-   const int exitCode = _tryCatchCaller.TryCatchCall(
-      &classInstance, &Class::MemberFunction, argument, &Class::ExceptionHandler);
+   const int exitCode = _tryCatchCaller.TryCatchCallNonConstMemberFunction(
+      &nonConstClassInstance, &Class::NonConstMemberFunction, argument, &Class::IntReturningConstMemberFunctionExceptionHandler);
    //
-   VECTORS_ARE_EQUAL({ argument }, classInstance.calls);
-   ExceptionType ex(classInstance.exceptionWhat.c_str());
+   VECTORS_ARE_EQUAL({ argument }, nonConstClassInstance.calls);
+   ExceptionType ex(nonConstClassInstance.exceptionMessage.c_str());
    const string exceptionGetExceptionClassNameAndMessage = Type::GetExceptionClassNameAndMessage(&ex);
    vector<pair<string, ArgumentType>> expectedExceptionHandlerCalls =
    {
       { exceptionGetExceptionClassNameAndMessage, argument }
    };
-   VECTORS_ARE_EQUAL(expectedExceptionHandlerCalls, classInstance.exceptionHandlerCalls);
-   ARE_EQUAL(classInstance.exceptionHandlerExitCode, exitCode);
+   VECTORS_ARE_EQUAL(expectedExceptionHandlerCalls, nonConstClassInstance.exceptionHandlerCalls);
+   ARE_EQUAL(nonConstClassInstance.exceptionHandlerExitCode, exitCode);
+}
+
+TEST(TryCatchCallConstMemberFunction_CallsMemberFunctionWhichDoesNotThrow_DoesNotCallExceptionHandler)
+{
+   const ArgumentType argument = ZenUnit::Random<ArgumentType>();
+   nonConstClassInstance.doThrowException = false;
+   //
+   _tryCatchCaller.TryCatchCallConstMemberFunction(
+      &constClassInstance, &Class::ConstMemberFunction, argument, &Class::VoidConstMemberFunctionExceptionHandler);
+   //
+   VECTORS_ARE_EQUAL({argument}, constClassInstance.calls);
+}
+
+TEST(TryCatchCallConstMemberFunction_CallsMemberFunctionWhichThrows_CallsExceptionHandler)
+{
+   const ArgumentType argument = ZenUnit::Random<ArgumentType>();
+   constClassInstance.doThrowException = true;
+   //
+   _tryCatchCaller.TryCatchCallConstMemberFunction(
+      &constClassInstance, &Class::ConstMemberFunction, argument, &Class::VoidConstMemberFunctionExceptionHandler);
+   //
+   VECTORS_ARE_EQUAL({argument}, constClassInstance.calls);
+   ExceptionType ex(constClassInstance.exceptionMessage.c_str());
+   const string exceptionGetExceptionClassNameAndMessage = Type::GetExceptionClassNameAndMessage(&ex);
+   vector<pair<string, ArgumentType>> expectedExceptionHandlerCalls =
+   {
+      { exceptionGetExceptionClassNameAndMessage, argument }
+   };
+   VECTORS_ARE_EQUAL(expectedExceptionHandlerCalls, constClassInstance.exceptionHandlerCalls);
 }
 
 RUN_TEMPLATE_TESTS(TryCatchCallerTests, int, invalid_argument)

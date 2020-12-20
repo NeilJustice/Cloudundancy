@@ -18,30 +18,32 @@ EVIDENCE
 CloudundancyProgram _cloudundancyProgram;
 // Function Callers
 METALMOCK_NONVOID2_STATIC(vector<string>, Vector, ArgcArgvToStringVector, int, char**)
-METALMOCK_NONVOID1_STATIC(string, Exception, GetExceptionClassNameAndMessage, const exception*)
+METALMOCK_NONVOID1_STATIC(string, Type, GetExceptionClassNameAndMessage, const exception*)
+// Function Callers
+TryCatchCallerMock<CloudundancyProgram, const vector<string>&>* _tryCatchCallerMock = nullptr;
 // Constant Components
 CloudundancyArgsParserMock* _cloudundancyArgsParserMock = nullptr;
 CloudundancySubProgramFactoryMock* _cloudundancySubProgramFactoryMock = nullptr;
 ConsoleMock* _consoleMock = nullptr;
 CloudundancyFileCopierMock* _cloudundancyFileCopierMock = nullptr;
 EnvironmentalistMock* _environmentalistMock = nullptr;
-TryCatchCallerMock<CloudundancyProgram, const vector<string>&>* _tryCatchCallerMock = nullptr;
 WatchMock* _watchMock = nullptr;
 // Mutable Components
 StopwatchMock* _stopwatchMock = nullptr;
 
 STARTUP
 {
-   // Function Callers
+   // Function Pointers
    _cloudundancyProgram._call_Type_GetExceptionClassNameAndMessage = BIND_1ARG_METALMOCK_OBJECT(GetExceptionClassNameAndMessageMock);
    _cloudundancyProgram._call_Vector_ArgcArgvToStringVector = BIND_2ARG_METALMOCK_OBJECT(ArgcArgvToStringVectorMock);
+   // Function Callers
+   _cloudundancyProgram._tryCatchCaller.reset(_tryCatchCallerMock = new TryCatchCallerMock<CloudundancyProgram, const vector<string>&>);
    // Constant Components
    _cloudundancyProgram._cloudundancyArgsParser.reset(_cloudundancyArgsParserMock = new CloudundancyArgsParserMock);
    _cloudundancyProgram._cloudundancySubProgramFactory.reset(_cloudundancySubProgramFactoryMock = new CloudundancySubProgramFactoryMock);
    _cloudundancyProgram._environmentalist.reset(_environmentalistMock = new EnvironmentalistMock);
    _cloudundancyProgram._console.reset(_consoleMock = new ConsoleMock);
    _cloudundancyProgram._cloudundancyFileCopier.reset(_cloudundancyFileCopierMock = new CloudundancyFileCopierMock);
-   _cloudundancyProgram._tryCatchCaller.reset(_tryCatchCallerMock = new TryCatchCallerMock<CloudundancyProgram, const vector<string>&>);
    _cloudundancyProgram._watch.reset(_watchMock = new WatchMock);
    // Mutable Components
    _cloudundancyProgram._stopwatch.reset(_stopwatchMock = new StopwatchMock);
@@ -50,16 +52,17 @@ STARTUP
 TEST(DefaultConstructor_NewsComponents)
 {
    CloudundancyProgram cloudundancyProgram;
-   // Function Callers
+   // Function Pointers
    STD_FUNCTION_TARGETS(Type::GetExceptionClassNameAndMessage, cloudundancyProgram._call_Type_GetExceptionClassNameAndMessage);
    STD_FUNCTION_TARGETS(Vector::ArgcArgvToStringVector, cloudundancyProgram._call_Vector_ArgcArgvToStringVector);
+   // Function Callers
+   DELETE_TO_ASSERT_NEWED(cloudundancyProgram._tryCatchCaller);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._cloudundancyArgsParser);
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._cloudundancySubProgramFactory);
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._console);
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._cloudundancyFileCopier);
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._environmentalist);
-   DELETE_TO_ASSERT_NEWED(cloudundancyProgram._tryCatchCaller);
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._watch);
    // Mutable Components
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._stopwatch);
@@ -80,7 +83,7 @@ TEST(Main_ArgcIs2OrGreater_CallsTryCatchCallRunWithStringArgs_ReturnsExitCodeFro
    const vector<string> stringArgs = ArgcArgvToStringVectorMock.ReturnRandom();
 
    int tryCatchCallReturnValue = ZenUnit::Random<int>();
-   _tryCatchCallerMock->TryCatchCallMock.Return(tryCatchCallReturnValue);
+   _tryCatchCallerMock->TryCatchCallNonConstMemberFunctionMock.Return(tryCatchCallReturnValue);
 
    const int argc = 2;
    const string exePath = ZenUnit::Random<string>();
@@ -90,7 +93,7 @@ TEST(Main_ArgcIs2OrGreater_CallsTryCatchCallRunWithStringArgs_ReturnsExitCodeFro
    const int exitCode = _cloudundancyProgram.Main(argc, const_cast<char**>(argv));
    //
    METALMOCK(ArgcArgvToStringVectorMock.CalledOnceWith(argc, const_cast<char**>(argv)));
-   METALMOCK(_tryCatchCallerMock->TryCatchCallMock.CalledOnceWith(
+   METALMOCK(_tryCatchCallerMock->TryCatchCallNonConstMemberFunctionMock.CalledOnceWith(
       &_cloudundancyProgram, &CloudundancyProgram::Run, stringArgs, &CloudundancyProgram::ExceptionHandler));
    ARE_EQUAL(tryCatchCallReturnValue, exitCode);
 }

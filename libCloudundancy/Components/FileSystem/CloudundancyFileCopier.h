@@ -9,6 +9,7 @@ private:
    // Function Pointers
    function<void(int)> _call_exit;
    function<string(const string&, const string&, const string&)> _call_String_ReplaceFirst;
+   function<string(const exception*)> _call_Type_GetExceptionClassNameAndMessage;
 
    // Function Callers
    using _caller_CopyFileFunctionsType = VoidTwoArgMemberFunctionCaller<
@@ -40,6 +41,7 @@ private:
    unique_ptr<const CloudundancyLogFileWriter> _cloudundancyLogFileWriter;
    unique_ptr<const Console> _console;
    unique_ptr<const FileSystem> _fileSystem;
+   unique_ptr<const TryCatchCaller<CloudundancyFileCopier, const pair<fs::path, CloudundancyIni>&>> _tryCatchCaller;
 
    // Mutable Components
    unique_ptr<RecursiveDirectoryIterator> _recursiveDirectoryIterator;
@@ -50,7 +52,13 @@ public:
    virtual void CopyFilesAndFoldersToMultipleDestinationFolders(
       const fs::path& cloudundancyIniFilePath, bool deleteDestinationFoldersFirst) const;
 private:
-   void CopyFilesAndFoldersToDestinationFolder(const fs::path& destinationFolderPath, const CloudundancyIni& cloudundancyIni) const;
+   void CopyFilesAndFoldersToDestinationFolder(
+      const fs::path& destinationFolderPath, const CloudundancyIni& cloudundancyIni) const;
+   void DoCopyFilesAndFoldersToDestinationFolder(
+      const pair<fs::path, CloudundancyIni>& destinationFolderPath_cloudundancyIni) const;
+   void ExceptionHandlerForDoCopyFilesAndFoldersToDestinationFolder(
+      const exception& ex, const pair<fs::path, CloudundancyIni>& destinationFolderPath_cloudundancyIni) const;
+
    void CopyFileOrFolderToFolder(
       const CloudundancyIniCopyInstruction& cloudundancyIniCopyInstruction,
       const fs::path& destinationFolderPath) const;

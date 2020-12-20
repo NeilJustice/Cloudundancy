@@ -6,9 +6,11 @@
 TESTS(CloudundancyFileCopierTests)
 AFACT(DefaultConstructor_SetsFunctionsAndNewsComponents)
 AFACT(CopyFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFirstIsTrue_DeletesDestinationFolders_CopiesFilesAndFoldersToFolders)
-AFACT(CopyFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFirstIsFalse_DoesNotDeleteDestinationFolders_CopiesFilesAndFoldersToFolders)
 // Private Functions
-AFACT(CopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesNonSkippedSourceFilesToDestinationFolder_AppendBackupSuccessfulToLogFile)
+AFACT(CopyFilesAndFoldersToDestinationFolder_TryCatchCallsDoCopyFilesAndFoldersToDestinationFolder)
+AFACT(DoCopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesNonSkippedSourceFilesToDestinationFolder_AppendBackupSuccessfulToLogFile)
+AFACT(DoCopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesNonSkippedSourceFilesToDestinationFolder_AppendBackupSuccessfulToLogFile)
+AFACT(ExceptionHandlerForDoCopyFilesAndFoldersToDestinationFolder_WritesExceptionMessageToConsole_AppendsExceptionMessageToCloudundancyLogFile)
 AFACT(CopyFileOrFolderToFolder_SourcePathHasAFileName_CallsCopyFileToFolder)
 FACTS(CopyFileOrFolderToFolder_SourcePathDoesNotHaveAFileNameMeaningItIsAFolder_CallsRecursivelyCopyNonIgnoredFilesToFolder)
 AFACT(CopyNonIgnoredFilesInAndBelowFolderToFolder_CopiesNonIgnoredFilesToFolderUntilRecursiveDirectoryIteratorReturnsNoMoreFiles)
@@ -27,6 +29,7 @@ CloudundancyFileCopier _cloudundancyFileCopier;
 // Function Pointers
 METALMOCK_VOID1_FREE(exit, int)
 METALMOCK_NONVOID3_STATIC(string, String, ReplaceFirst, const string&, const string&, const string&)
+METALMOCK_NONVOID1_STATIC(string, Type, GetExceptionClassNameAndMessage, const exception*)
 
 // Function Callers
 using _memberCaller_CopyFileFunctionsMockType = VoidTwoArgMemberFunctionCallerMock<
@@ -58,6 +61,8 @@ CloudundancyIniFileReaderMock* _cloudundancyIniFileReaderMock = nullptr;
 CloudundancyLogFileWriterMock* _cloudundancyLogFileWriterMock = nullptr;
 ConsoleMock* _consoleMock = nullptr;
 FileSystemMock* _fileSystemMock = nullptr;
+using TryCatchCallerMockType = TryCatchCallerMock<CloudundancyFileCopier, const pair<fs::path, CloudundancyIni>&>;
+TryCatchCallerMockType* _tryCatchCallerMock = nullptr;
 
 // Mutable Components
 RecursiveDirectoryIteratorMock* _recursiveDirectoryIteratorMock = nullptr;
@@ -68,6 +73,7 @@ STARTUP
    // Function Pointers
    _cloudundancyFileCopier._call_exit = BIND_1ARG_METALMOCK_OBJECT(exitMock);
    _cloudundancyFileCopier._call_String_ReplaceFirst = BIND_3ARG_METALMOCK_OBJECT(ReplaceFirstMock);
+   _cloudundancyFileCopier._call_Type_GetExceptionClassNameAndMessage = BIND_1ARG_METALMOCK_OBJECT(GetExceptionClassNameAndMessageMock);
    // Function Callers
    _cloudundancyFileCopier._memberCaller_CopyFileFunctions.reset(_memberCaller_CopyFileFunctionsMock = new _memberCaller_CopyFileFunctionsMockType);
    _cloudundancyFileCopier._memberCaller_CopyNestedFileToFolder.reset(_memberCaller_CopyNestedFileToFolderMock = new _memberCaller_CopyNestedFileToFolderMockType);
@@ -80,6 +86,7 @@ STARTUP
    _cloudundancyFileCopier._cloudundancyLogFileWriter.reset(_cloudundancyLogFileWriterMock = new CloudundancyLogFileWriterMock);
    _cloudundancyFileCopier._console.reset(_consoleMock = new ConsoleMock);
    _cloudundancyFileCopier._fileSystem.reset(_fileSystemMock = new FileSystemMock);
+   _cloudundancyFileCopier._tryCatchCaller.reset(_tryCatchCallerMock = new TryCatchCallerMockType);
    // Mutable Components
    _cloudundancyFileCopier._recursiveDirectoryIterator.reset(_recursiveDirectoryIteratorMock = new RecursiveDirectoryIteratorMock);
    _cloudundancyFileCopier._stopwatch.reset(_stopwatchMock = new StopwatchMock);
@@ -87,24 +94,26 @@ STARTUP
 
 TEST(DefaultConstructor_SetsFunctionsAndNewsComponents)
 {
-   CloudundancyFileCopier fileCopier;
+   CloudundancyFileCopier cloudundancyFileCopier;
    // Function Pointers
-   STD_FUNCTION_TARGETS(exit, fileCopier._call_exit);
-   STD_FUNCTION_TARGETS(String::ReplaceFirst, fileCopier._call_String_ReplaceFirst);
+   STD_FUNCTION_TARGETS(exit, cloudundancyFileCopier._call_exit);
+   STD_FUNCTION_TARGETS(String::ReplaceFirst, cloudundancyFileCopier._call_String_ReplaceFirst);
+   STD_FUNCTION_TARGETS(Type::GetExceptionClassNameAndMessage, cloudundancyFileCopier._call_Type_GetExceptionClassNameAndMessage);
    // Function Callers
-   DELETE_TO_ASSERT_NEWED(fileCopier._memberCaller_CopyFileFunctions);
-   DELETE_TO_ASSERT_NEWED(fileCopier._memberCaller_CopyNestedFileToFolder);
-   DELETE_TO_ASSERT_NEWED(fileCopier._memberCaller_TryCopyFile);
-   DELETE_TO_ASSERT_NEWED(fileCopier._memberForEacher_CopyEachFileOrFolderToFolder);
-   DELETE_TO_ASSERT_NEWED(fileCopier._memberForEacher_CopyFileOrFolderToFolder);
-   DELETE_TO_ASSERT_NEWED(fileCopier._memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailed);
+   DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._memberCaller_CopyFileFunctions);
+   DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._memberCaller_CopyNestedFileToFolder);
+   DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._memberCaller_TryCopyFile);
+   DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._memberForEacher_CopyEachFileOrFolderToFolder);
+   DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._memberForEacher_CopyFileOrFolderToFolder);
+   DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailed);
    // Constant Components
-   DELETE_TO_ASSERT_NEWED(fileCopier._cloudundancyIniFileReader);
-   DELETE_TO_ASSERT_NEWED(fileCopier._console);
-   DELETE_TO_ASSERT_NEWED(fileCopier._fileSystem);
+   DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._cloudundancyIniFileReader);
+   DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._console);
+   DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._fileSystem);
+   DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._tryCatchCaller);
    // Mutable Components
-   DELETE_TO_ASSERT_NEWED(fileCopier._recursiveDirectoryIterator);
-   DELETE_TO_ASSERT_NEWED(fileCopier._stopwatch);
+   DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._recursiveDirectoryIterator);
+   DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._stopwatch);
 }
 
 TEST(CopyFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFirstIsTrue_DeletesDestinationFolders_CopiesFilesAndFoldersToFolders)
@@ -171,7 +180,23 @@ TEST(CopyFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFir
 
 // Private Functions
 
-TEST(CopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesNonSkippedSourceFilesToDestinationFolder_AppendBackupSuccessfulToLogFile)
+TEST(CopyFilesAndFoldersToDestinationFolder_TryCatchCallsDoCopyFilesAndFoldersToDestinationFolder)
+{
+   _tryCatchCallerMock->TryCatchCallConstMemberFunctionMock.Expect();
+   const fs::path destinationFolderPath = ZenUnit::Random<fs::path>();
+   const CloudundancyIni cloudundancyIni = ZenUnit::Random<CloudundancyIni>();
+   //
+   _cloudundancyFileCopier.CopyFilesAndFoldersToDestinationFolder(destinationFolderPath, cloudundancyIni);
+   //
+   const pair<fs::path, CloudundancyIni> expectedDestinationFolderPath_cloudundancyIni =
+      make_pair(destinationFolderPath, cloudundancyIni);
+   METALMOCK(_tryCatchCallerMock->TryCatchCallConstMemberFunctionMock.CalledOnceWith(
+      &_cloudundancyFileCopier, &CloudundancyFileCopier::DoCopyFilesAndFoldersToDestinationFolder,
+      expectedDestinationFolderPath_cloudundancyIni,
+      &CloudundancyFileCopier::ExceptionHandlerForDoCopyFilesAndFoldersToDestinationFolder));
+}
+
+TEST(DoCopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesNonSkippedSourceFilesToDestinationFolder_AppendBackupSuccessfulToLogFile)
 {
    _consoleMock->WriteLineMock.Expect();
 
@@ -185,8 +210,9 @@ TEST(CopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesN
 
    const fs::path destinationFolderPath = ZenUnit::Random<fs::path>();
    const CloudundancyIni cloudundancyIni = ZenUnit::Random<CloudundancyIni>();
+   const pair<fs::path, CloudundancyIni> destinationFolderPath_cloudundancyIni = make_pair(destinationFolderPath, cloudundancyIni);
    //
-   _cloudundancyFileCopier.CopyFilesAndFoldersToDestinationFolder(destinationFolderPath, cloudundancyIni);
+   _cloudundancyFileCopier.DoCopyFilesAndFoldersToDestinationFolder(destinationFolderPath_cloudundancyIni);
    //
    const string expectedCopyingMessage = String::Concat(
       "\n[Cloudundancy] Copying [SourceFilesAndFolders] to destination folder ", destinationFolderPath.string(), ":\n");
@@ -211,6 +237,32 @@ TEST(CopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesN
       &CloudundancyFileCopier::CopyFileOrFolderToFolder,
       &_cloudundancyFileCopier, destinationFolderPath));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
+}
+
+TEST(ExceptionHandlerForDoCopyFilesAndFoldersToDestinationFolder_WritesExceptionMessageToConsole_AppendsExceptionMessageToCloudundancyLogFile)
+{
+   const string exceptionClassNameAndMessage = GetExceptionClassNameAndMessageMock.ReturnRandom();
+
+   _consoleMock->WriteLineMock.Expect();
+
+   _cloudundancyLogFileWriterMock->AppendTextToCloudundancyLogFileInFolderMock.Expect();
+
+   const string exceptionMessage = ZenUnit::Random<string>();
+   const runtime_error ex(exceptionMessage);
+
+   const fs::path destinationFolderPath = ZenUnit::Random<fs::path>();
+   const CloudundancyIni cloudundancyIni = ZenUnit::Random<CloudundancyIni>();
+   const pair<fs::path, CloudundancyIni> destinationFolderPath_cloudundancyIni = make_pair(destinationFolderPath, cloudundancyIni);
+   //
+   _cloudundancyFileCopier.ExceptionHandlerForDoCopyFilesAndFoldersToDestinationFolder(ex, destinationFolderPath_cloudundancyIni);
+   //
+   METALMOCK(GetExceptionClassNameAndMessageMock.CalledOnceWith(&ex));
+   const string expectedErrorMessage = String::Concat(
+      "Error: Exception thrown while copying files to destination folder ",
+      destinationFolderPath, ": ", exceptionClassNameAndMessage);
+   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedErrorMessage));
+   METALMOCK(_cloudundancyLogFileWriterMock->AppendTextToCloudundancyLogFileInFolderMock.CalledOnceWith(
+      destinationFolderPath, expectedErrorMessage));
 }
 
 TEST(CopyFileOrFolderToFolder_SourcePathHasAFileName_CallsCopyFileToFolder)

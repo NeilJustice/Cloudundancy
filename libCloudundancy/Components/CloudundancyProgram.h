@@ -13,24 +13,26 @@ class CloudundancyProgram
 {
    friend class CloudundancyProgramTests;
 private:
+   // Function Pointers
+   function<string(const exception*)> _call_Type_GetExceptionClassNameAndMessage;
+   function<vector<string>(int, char* [])> _call_Vector_ArgcArgvToStringVector;
+
    // Function Callers
-   std::function<std::string(const std::exception*)> _call_Type_GetExceptionClassNameAndMessage;
-   std::function<std::vector<std::string>(int, char* [])> _call_Vector_ArgcArgvToStringVector;
+   unique_ptr<const TryCatchCaller<CloudundancyProgram, const vector<string>&>> _tryCatchCaller;
    // Constant Components
-   std::unique_ptr<const CloudundancyArgsParser> _cloudundancyArgsParser;
-   std::unique_ptr<const CloudundancySubProgramFactory> _cloudundancySubProgramFactory;
-   std::unique_ptr<const Console> _console;
-   std::unique_ptr<const CloudundancyFileCopier> _cloudundancyFileCopier;
-   std::unique_ptr<const Environmentalist> _environmentalist;
-   std::unique_ptr<const TryCatchCaller<CloudundancyProgram, const std::vector<std::string>&>> _tryCatchCaller;
-   std::unique_ptr<const Watch> _watch;
+   unique_ptr<const CloudundancyArgsParser> _cloudundancyArgsParser;
+   unique_ptr<const CloudundancySubProgramFactory> _cloudundancySubProgramFactory;
+   unique_ptr<const Console> _console;
+   unique_ptr<const CloudundancyFileCopier> _cloudundancyFileCopier;
+   unique_ptr<const Environmentalist> _environmentalist;
+   unique_ptr<const Watch> _watch;
    // Mutable Components
-   std::unique_ptr<Stopwatch> _stopwatch;
+   unique_ptr<Stopwatch> _stopwatch;
 public:
    CloudundancyProgram() noexcept;
    virtual ~CloudundancyProgram();
    int Main(int argc, char* argv[]);
 private:
-   int Run(const std::vector<std::string>& stringArgs);
-   int ExceptionHandler(const std::exception& ex, const std::vector<std::string>& stringArgs);
+   int Run(const vector<string>& stringArgs);
+   int ExceptionHandler(const exception& ex, const vector<string>& stringArgs) const;
 };

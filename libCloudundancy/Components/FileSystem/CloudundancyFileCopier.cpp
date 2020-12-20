@@ -7,6 +7,7 @@ CloudundancyFileCopier::CloudundancyFileCopier() noexcept
    // Function Pointers
    : _call_exit(exit)
    , _call_String_ReplaceFirst(String::ReplaceFirst)
+   , _call_Type_GetExceptionClassNameAndMessage(Type::GetExceptionClassNameAndMessage)
    // Function Callers
    , _memberCaller_CopyFileFunctions(make_unique<_caller_CopyFileFunctionsType>())
    , _memberCaller_CopyNestedFileToFolder(make_unique<_memberCaller_CopyNestedFileToFolderType>())
@@ -19,6 +20,7 @@ CloudundancyFileCopier::CloudundancyFileCopier() noexcept
    , _cloudundancyLogFileWriter(make_unique<CloudundancyLogFileWriter>())
    , _console(make_unique<Console>())
    , _fileSystem(make_unique<FileSystem>())
+   , _tryCatchCaller(make_unique<TryCatchCaller<CloudundancyFileCopier, const pair<fs::path, CloudundancyIni>&>>())
    // Mutable Components
    , _recursiveDirectoryIterator(make_unique<RecursiveDirectoryIterator>())
    , _stopwatch(make_unique<Stopwatch>())
@@ -54,6 +56,19 @@ void CloudundancyFileCopier::CopyFilesAndFoldersToMultipleDestinationFolders(
 void CloudundancyFileCopier::CopyFilesAndFoldersToDestinationFolder(
    const fs::path& destinationFolderPath, const CloudundancyIni& cloudundancyIni) const
 {
+   const pair<fs::path, CloudundancyIni> destinationFolderPath_cloudundancyIni = make_pair(destinationFolderPath, cloudundancyIni);
+   _tryCatchCaller->TryCatchCallConstMemberFunction(
+      this, &CloudundancyFileCopier::DoCopyFilesAndFoldersToDestinationFolder,
+      destinationFolderPath_cloudundancyIni,
+      &CloudundancyFileCopier::ExceptionHandlerForDoCopyFilesAndFoldersToDestinationFolder);
+}
+
+void CloudundancyFileCopier::DoCopyFilesAndFoldersToDestinationFolder(
+   const pair<fs::path, CloudundancyIni>& destinationFolderPath_cloudundancyIni) const
+{
+   const fs::path& destinationFolderPath = destinationFolderPath_cloudundancyIni.first;
+   const CloudundancyIni& cloudundancyIni = destinationFolderPath_cloudundancyIni.second;
+
    const string copyingMessage = String::Concat(
       "\n[Cloudundancy] Copying [SourceFilesAndFolders] to destination folder ", destinationFolderPath.string(), ":\n");
    _console->WriteLine(copyingMessage);
@@ -71,6 +86,18 @@ void CloudundancyFileCopier::CopyFilesAndFoldersToDestinationFolder(
       String::Concat("Cloudundancy backup successful in ", elapsedSeconds, " seconds");
    _cloudundancyLogFileWriter->AppendTextToCloudundancyLogFileInFolder(
       destinationFolderPath, cloudundancyBackupSuccessfulMessage);
+}
+
+void CloudundancyFileCopier::ExceptionHandlerForDoCopyFilesAndFoldersToDestinationFolder(
+   const exception& ex, const pair<fs::path, CloudundancyIni>& destinationFolderPath_cloudundancyIni) const
+{
+   const fs::path& destinationFolderPath = destinationFolderPath_cloudundancyIni.first;
+   const string exceptionClassNameAndMessage = _call_Type_GetExceptionClassNameAndMessage(&ex);
+   const string errorMessage = String::Concat(
+      "Error: Exception thrown while copying files to destination folder ",
+      destinationFolderPath, ": ", exceptionClassNameAndMessage);
+   _console->WriteLine(errorMessage);
+   _cloudundancyLogFileWriter->AppendTextToCloudundancyLogFileInFolder(destinationFolderPath, errorMessage);
 }
 
 void CloudundancyFileCopier::CopyFileOrFolderToFolder(

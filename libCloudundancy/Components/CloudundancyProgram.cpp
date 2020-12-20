@@ -6,16 +6,17 @@
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgramFactory.h"
 
 CloudundancyProgram::CloudundancyProgram() noexcept
-   // Function Callers
+   // Function Pointers
    : _call_Type_GetExceptionClassNameAndMessage(Type::GetExceptionClassNameAndMessage)
    , _call_Vector_ArgcArgvToStringVector(Vector::ArgcArgvToStringVector)
+   // Function Callers
+   , _tryCatchCaller(make_unique<TryCatchCaller<CloudundancyProgram, const vector<string>&>>())
    // Constant Components
    , _cloudundancyArgsParser(make_unique<CloudundancyArgsParser>())
    , _cloudundancySubProgramFactory(make_unique<CloudundancySubProgramFactory>())
    , _console(make_unique<Console>())
    , _cloudundancyFileCopier(make_unique<CloudundancyFileCopier>())
    , _environmentalist(make_unique<Environmentalist>())
-   , _tryCatchCaller(make_unique<TryCatchCaller<CloudundancyProgram, const vector<string>&>>())
    , _watch(make_unique<Watch>())
    // Mutable Components
    , _stopwatch(make_unique<Stopwatch>())
@@ -34,7 +35,7 @@ int CloudundancyProgram::Main(int argc, char* argv[])
       return 0;
    }
    const vector<string> stringArgs = _call_Vector_ArgcArgvToStringVector(argc, argv);
-   const int exitCode = _tryCatchCaller->TryCatchCall(
+   const int exitCode = _tryCatchCaller->TryCatchCallNonConstMemberFunction(
       this, &CloudundancyProgram::Run, stringArgs, &CloudundancyProgram::ExceptionHandler);
    return exitCode;
 }
@@ -78,7 +79,7 @@ int CloudundancyProgram::Run(const std::vector<std::string>& stringArgs)
 
 // Private Functions
 
-int CloudundancyProgram::ExceptionHandler(const exception& ex, const vector<string>& /*stringArgs*/)
+int CloudundancyProgram::ExceptionHandler(const exception& ex, const vector<string>& /*stringArgs*/) const
 {
    const string exceptionTypeNameAndMessage = _call_Type_GetExceptionClassNameAndMessage(&ex);
    const string fullExceptionMessage =

@@ -124,7 +124,7 @@ vector<string> FileSystem::ReadFileLinesWhichMustBeNonEmpty(const fs::path& file
    return fileLines;
 }
 
-// File Copiies
+// File Copies
 
 FileCopyResult FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const
 {
