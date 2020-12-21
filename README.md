@@ -26,6 +26,8 @@ The correctness of Cloudundancy is rigorously confirmed using C++ unit testing f
    * [example-windows-ini-file](#example-windows-ini-file)
 * [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-undefinedbehaviorsanitize-cloudundancy)
 * [Windows Jenkins Jobs Which Build Cloudundancy](#windows-jenkins-jobs-which-build-cloudundancy)
+* [What Cloudundancy Looks Like In Visual Studio Code](#what-cloudundancy-looks-like-in-visual-studio-code)
+* [What Cloudundancy Looks Like In Visual Studio 2019](#what-cloudundancy-looks-like-in-visual-studio-2019)
 * [How To Build Cloudundancy From Source On Linux](#how-to-build-cloudundancy-from-source-on-linux)
 * [How To Build Cloudundancy From Source On Windows](#how-to-build-cloudundancy-from-source-on-windows)
 * [Cloudundancy Features Roadmap](#cloudundancy-features-roadmap)
@@ -184,6 +186,14 @@ A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jo
 A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Windows 10 with Visual Studio 2019:
 
 ![Cloudundancy Windows Jenkins Jobs](Screenshots/CloudundancyWindowsJenkinsJobs.png)
+
+## What Cloudundancy Looks Like In Visual Studio Code
+
+
+
+## What Cloudundancy Looks Like In Visual Studio 2019
+
+![What Cloudundancy Looks Like In Visual Studio 2019](Screenshots/CloudundancyVisualStudio.png)
 
 ## How To Build Cloudundancy From Source On Linux
 
