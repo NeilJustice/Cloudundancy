@@ -54,11 +54,45 @@ Cloudundancy command line arguments are parsed using the excellent single-header
 
 ### copy-files-to-multiple-folders
 
-Cloudundancy program mode `copy-files-to-multiple-folders` copies files and folders listed in a Cloudundancy.ini file to multiple destination folders.
+Cloudundancy program mode `copy-files-to-multiple-folders` copies files and folders listed in a Cloudundancy.ini file to multiple destination folders, which could be automatic cloud-uploading Google Drive and Microsoft OneDrive folders.
+
+As an example, imagine you had the following folder structure at `C:\CloudundancyTesting`:
+
+![CloudundancyTesting Windows Explorer folder](Screenshots/CloudundancyTestingWindowsExplorer.png)
+
+With `Cloudundancy.ini` being as follows to instruct Cloudundancy to backup business-critical files and folders present in `C:\CloudundancyTesting`, except for file paths containing case-insensitive substrings `ignored_filename` or `.ignored_file_extension`:
+
+![CloudundancyTesting .ini file](Screenshots/CloudundancyTestingIniFile.png)
+
+Here is what happens when the following Cloudundancy command line run to achieve cloud-redundant backups of business-critical files to folders `C:\CloudundancyTesting\GoogleDrive` and `C:\CloudundancyTesting\OneDrive`:
+
+`Cloudundancy.exe copy-files-to-multiple-folders --ini-file=C:\CloudundancyTesting\Cloudundancy.ini --delete-destination-folders-first`:
+
+![Windows copy-files-to-multiple-folders console out](Screenshots/WindowsCopyFilesToMultipleFoldersConsoleOutput.png)
+
+Resulting contents of `C:\CloudundancyTesting\GoogleDrive`:
+
+![CloudundancyTesting GoogleDrive folder](Screenshots/CloudundancyTestingGoogleDrive.png)
+
+Contents of `C:\CloudundancyTesting\GoogleDrive\Cloudundancy.log`:
+
+![CloudundancyTesting GoogleDrive Cloudundancy.log](Screenshots/CloudundancyTestingGoogleDriveCloudundancyLog.png)
+
+Resulting contents of `C:\CloudundancyTesting\OneDrive`:
+
+![CloudundancyTesting OneDrive folder](Screenshots/CloudundancyTestingOneDrive.png)
+
+Contents of `C:\CloudundancyTesting\OneDrive\Cloudundancy.log`:
+
+![CloudundancyTesting OneDrive Cloudundancy.log](Screenshots/CloudundancyTestingOneDriveCloudundancyLog.png)
 
 ### 7zip-files-then-copy-the-7zip-file-to-multiple-folders
 
+Work in progress.
+
 ### example-linux-ini-file
+
+Work in progress.
 
 ### example-windows-ini-file
 
