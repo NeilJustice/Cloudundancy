@@ -187,7 +187,7 @@ A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jo
 
 ## How To Build Cloudundancy From Source On Linux
 
-```
+```bash
 git clone https://github.com/NeilJustice/Cloudundancy
 cd Cloudundancy && mkdir Release && cd Release
 CXX=clang++ cmake .. -DCMAKE_BUILD_TYPE=Release
@@ -198,7 +198,7 @@ Resulting `/usr/local/bin/cloudundancy`:
 
 ## How To Build Cloudundancy From Source On Windows
 
-```
+```powershell
 git clone https://github.com/NeilJustice/Cloudundancy
 cd Cloudundancy
 cmake . -G"Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
