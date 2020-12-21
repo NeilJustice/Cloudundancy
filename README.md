@@ -16,7 +16,7 @@ On Linux, command line invocations of Google Drive and Microsoft OneDrive comman
 |AppVeyor Windows (Visual Studio 2019 x64)|<a href="https://ci.appveyor.com/project/NeilJustice/Cloudundancy"><img src="https://ci.appveyor.com/api/projects/status/ygwr3rb9spwhy4u0?svg=true"/></a>|
 |Code Coverage For The GCC 7.5.0 Release Build|[![codecov](https://codecov.io/gh/NeilJustice/Cloudundancy/branch/main/graph/badge.svg?token=ruXbRPB1CQ)](https://codecov.io/gh/NeilJustice/Cloudundancy)|
 
-Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
+The correctness of Cloudundancy is rigorously confirmed using C++ unit testing framework ZenUnit and C++ mocking framework MetalMock. <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">GitHub page for ZenUnit and MetalMock</a>.
 
 * [Command Line Usage](#command-line-usage)
 * [Cloudundancy Program Modes](#cloudundancy-program-modes)
@@ -28,7 +28,7 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
 * [Windows Jenkins Jobs Which Build Cloudundancy](#windows-jenkins-jobs-which-build-cloudundancy)
 * [How To Build Cloudundancy From Source On Linux](#how-to-build-cloudundancy-from-source-on-linux)
 * [How To Build Cloudundancy From Source On Windows](#how-to-build-cloudundancy-from-source-on-windows)
-* [Cloudundancy Roadmap](#cloudundancy-roadmap)
+* [Cloudundancy Features Roadmap](#cloudundancy-features-roadmap)
 
 ## Command Line Usage
 
@@ -48,9 +48,13 @@ Usage:
    Cloudundancy example-windows-ini-file
 ```
 
-Cloudundancy command line arguments are parsed using the excellent single-header library [docopt.cpp](https://github.com/docopt/docopt.cpp):
+Cloudundancy command line arguments are parsed using the excellent single-header library [docopt.cpp](https://github.com/docopt/docopt.cpp) in file `CloudundancyArgsParser.cpp`:
 
-![Cloudundancy arguments parsing with docopt.cpp](Screenshots/CloudundancyArgsParser.png)
+![CloudundancyArgsParser.cpp](Screenshots/CloudundancyArgsParser.png)
+
+The correctness of `class CloudundancyArgsParser` is confirmed in file `CloudundancyArgsParserTests.cpp` using ZenUnit and MetalMock:
+
+![CloudundancyArgsParserTests.cpp](Screenshots/CloudundancyArgsParserTests.png)
 
 ## Cloudundancy Program Modes
 
@@ -190,6 +194,8 @@ CXX=clang++ cmake .. -DCMAKE_BUILD_TYPE=Release
 sudo cmake --build . --target install # Installs binary Cloudundany to /usr/local/bin/Cloudundancy
 ```
 
+Resulting `/usr/local/bin/cloudundancy`:
+
 ## How To Build Cloudundancy From Source On Windows
 
 ```
@@ -199,13 +205,15 @@ cmake . -G"Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
 cmake --build . --config Release --target install # Installs Cloudundancy.exe to C:\bin\Cloudundancy.exe
 ```
 
+Resulting `C:\bin\Cloudundancy.exe`:
+
 ![Cloudundancy.exe on Windows](Screenshots/CloudundancyDotExe.png)
 
-## Cloudundancy Roadmap
+## Cloudundancy Features Roadmap
 
-|Future Cloudundancy Feature|Delivery Month|Implementation Status|
+|Future Cloudundancy Feature|Estimated Delivery Month|Implementation Status|
 |---------------------------|--------------|---------------------|
 |`7zip-files-then-copy-the-7zip-file-to-multiple-folders` working on Linux|December 2020|In progress|
 |SonarCloud static analysis badge|January 2021|Awaiting implementation|
 |Coverity static analysis badge|January 2021|Awaiting implementation|
-|Parallel copying to multiple destination folders|April 2021|Awaiting implementation|
+|`--parallel` for parallel file copying to multiple destination folders|April 2021|Awaiting implementation|
