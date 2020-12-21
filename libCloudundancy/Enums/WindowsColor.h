@@ -1,6 +1,5 @@
 #pragma once
 
-#ifdef _WIN32
 enum class WindowsColor : unsigned char
 {
 	Black,
@@ -20,4 +19,3 @@ enum class WindowsColor : unsigned char
 	Yellow,
 	White
 };
-#endif
