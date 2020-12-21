@@ -52,7 +52,7 @@ Cloudundancy command line arguments are parsed using the excellent single-header
 
 ![CloudundancyArgsParser.cpp](Screenshots/CloudundancyArgsParser.png)
 
-The correctness of `class CloudundancyArgsParser` is confirmed in file `CloudundancyArgsParserTests.cpp` using ZenUnit and MetalMock:
+The correctness of `class CloudundancyArgsParser` is confirmed in file `CloudundancyArgsParserTests.cpp` using ZenUnit and MetalMock. Shown in this screenshot is the syntax for a ZenUnit 2-by-2 value parameterized test and the syntax for how to expect and assert function calls on MetalMock mock objects:
 
 ![CloudundancyArgsParserTests.cpp](Screenshots/CloudundancyArgsParserTests.png)
 
