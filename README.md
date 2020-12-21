@@ -64,6 +64,26 @@ With `Cloudundancy.ini` being as follows to instruct Cloudundancy to backup busi
 
 ![CloudundancyTesting .ini file](Screenshots/CloudundancyTestingIniFile.png)
 
+`Cloudundancy.ini` in text format:
+
+```ini
+[DestinationFolders]
+C:\CloudundancyTesting\GoogleDrive
+C:\CloudundancyTesting\OneDrive
+
+[SourceFilesAndFolders]
+C:\CloudundancyTesting\BusinessCriticalFile1.txt -> .
+C:\CloudundancyTesting\BusinessCriticalFile2.txt -> .
+C:\CloudundancyTesting\BusinessCriticalFile3.txt -> .
+C:\CloudundancyTesting\BusinessCriticalFolder1\  -> BusinessCriticalFolder1
+C:\CloudundancyTesting\BusinessCriticalFolder2\  -> BusinessCriticalFolder2
+C:\CloudundancyTesting\BusinessCriticalFolder3\  -> RenamedBusinessCriticalFolder3
+
+[FileSubpathsToNotCopy]
+ignored_filename
+.ignored_file_extension
+```
+
 Here is what happens when the following Cloudundancy command line run to achieve cloud-redundant backups of business-critical files to folders `C:\CloudundancyTesting\GoogleDrive` and `C:\CloudundancyTesting\OneDrive`:
 
 `Cloudundancy.exe copy-files-to-multiple-folders --ini-file=C:\CloudundancyTesting\Cloudundancy.ini --delete-destination-folders-first`:
