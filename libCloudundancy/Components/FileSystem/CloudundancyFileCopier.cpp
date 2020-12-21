@@ -42,7 +42,7 @@ void CloudundancyFileCopier::CopyFilesAndFoldersToMultipleDestinationFolders(
    }
    const string copyingMessage = String::Concat(
       "[Cloudundancy] Copying [SourceFilesAndFolders] to [DestinationFolders] as listed in ", iniFilePath.string(), ":\n");
-   _console->WriteLine(copyingMessage);
+   _console->WriteLineColor(copyingMessage, Color::Teal);
    _console->WriteLines(cloudundancyIni.iniFileLines);
    _recursiveDirectoryIterator->SetFileSubpathsToIgnore(cloudundancyIni.fileSubpathsToNotCopy);
    _memberForEacher_CopyEachFileOrFolderToFolder->CallConstMemberFunctionForEachElement(
@@ -70,7 +70,7 @@ void CloudundancyFileCopier::DoCopyFilesAndFoldersToDestinationFolder(
 
    const string copyingMessage = String::Concat(
       "\n[Cloudundancy] Copying [SourceFilesAndFolders] to destination folder ", destinationFolderPath.string(), ":\n");
-   _console->WriteLine(copyingMessage);
+   _console->WriteLineColor(copyingMessage, Color::Teal);
    _cloudundancyLogFileWriter->AppendTextToCloudundancyLogFileInFolder(destinationFolderPath, "Cloudundancy backup started");
    _stopwatch->Start();
    _memberForEacher_CopyFileOrFolderToFolder->CallConstMemberFunctionForEachElement(

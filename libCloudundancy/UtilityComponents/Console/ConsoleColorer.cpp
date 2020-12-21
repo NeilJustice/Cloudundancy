@@ -67,8 +67,7 @@ void ConsoleColorer::SetTextColor(Color color) const
 #elif _WIN32
    const HANDLE stdOutHandle = _call_GetStdHandle(STD_OUTPUT_HANDLE);
    const WindowsColor windowsColor = ColorToWindowsColor(color);
-   const BOOL didSetConsoleTextAttr = _call_SetConsoleTextAttribute(
-      stdOutHandle, static_cast<WORD>(windowsColor));
+   const BOOL didSetConsoleTextAttr = _call_SetConsoleTextAttribute(stdOutHandle, static_cast<WORD>(windowsColor));
    release_assert(didSetConsoleTextAttr == TRUE);
 #endif
 }

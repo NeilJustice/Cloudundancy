@@ -31,7 +31,9 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
 ## Command Line Usage
 
 ```
-Cloudundancy v0.9.1 - Maker of cloud-redundant and device-redundant file backups
+Cloudundancy v0.9.2
+Copies a list of files and folders to a list of destination folders,
+which could be Google Drive and Microsoft OneDrive automatic cloud-uploading folders.
 https://github.com/NeilJustice/Cloudundancy
 
 Usage:

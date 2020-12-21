@@ -9,7 +9,9 @@ EVIDENCE
 TEST(CommandLineUsage_IsExpectedString)
 {
    ARE_EQUAL(
-R"(Cloudundancy v0.9.1 - Copies a list of files and folders to a list of destination folders.
+R"(Cloudundancy v0.9.2
+Copies a list of files and folders to a list of destination folders,
+which could be Google Drive and Microsoft OneDrive automatic cloud-uploading folders.
 https://github.com/NeilJustice/Cloudundancy
 
 Usage:
