@@ -191,7 +191,7 @@ A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jo
 git clone https://github.com/NeilJustice/Cloudundancy
 cd Cloudundancy && mkdir Release && cd Release
 CXX=clang++ cmake .. -DCMAKE_BUILD_TYPE=Release
-sudo cmake --build . --target install # Installs binary Cloudundany to /usr/local/bin/Cloudundancy
+sudo cmake --build . --target install
 ```
 
 Resulting `/usr/local/bin/cloudundancy`:
@@ -202,7 +202,7 @@ Resulting `/usr/local/bin/cloudundancy`:
 git clone https://github.com/NeilJustice/Cloudundancy
 cd Cloudundancy
 cmake . -G"Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
-cmake --build . --config Release --target install # Installs Cloudundancy.exe to C:\bin\Cloudundancy.exe
+cmake --build . --config Release --target install
 ```
 
 Resulting `C:\bin\Cloudundancy.exe`:
