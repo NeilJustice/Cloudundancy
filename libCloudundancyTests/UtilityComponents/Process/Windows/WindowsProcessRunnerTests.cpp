@@ -33,8 +33,7 @@ TEST(DefaultConstructor_NewsComponents)
 
 TEST(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
 {
-   _consoleMock->WriteLineMock.Expect();
-   _consoleMock->WriteLineIfMock.Expect();
+   _consoleMock->WriteLineColorMock.Expect();
    _consoleMock->WriteLineIfMock.Expect();
 
    ProcessResult runReturnValue = ZenUnit::Random<ProcessResult>();
@@ -48,7 +47,7 @@ TEST(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
    const ProcessResult processResult = _windowsProcessRunner.FailFastRun(processName, arguments, doPrintStandardOutput);
    //
    const string expectedRunningProgramMessage = String::Concat("[Cloudundancy] Running program: ", processName, ' ', arguments);
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedRunningProgramMessage));
+   METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedRunningProgramMessage, Color::Yellow));
    METALMOCK(_consoleMock->WriteLineIfMock.CalledOnceWith(doPrintStandardOutput, processResult.standardOutputAndError));
    METALMOCK(_caller_RunMock->CallConstMemberFunctionMock.CalledOnceWith(
       &WindowsProcessRunner::Run, &_windowsProcessRunner, processName, arguments));
@@ -61,7 +60,7 @@ TEST(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessage_CallsExitWithProcessE
    runReturnValue.exitCode = ZenUnit::RandomNon0<int>();
    _caller_RunMock->CallConstMemberFunctionMock.Return(runReturnValue);
 
-   _consoleMock->WriteLineMock.Expect();
+   _consoleMock->WriteLineColorMock.Expect();
    _consoleMock->WriteLineIfMock.Expect();
    _consoleMock->WriteLineAndExitMock.Expect();
 
@@ -74,7 +73,7 @@ TEST(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessage_CallsExitWithProcessE
    METALMOCK(_caller_RunMock->CallConstMemberFunctionMock.CalledOnceWith(
       &WindowsProcessRunner::Run, &_windowsProcessRunner, processName, arguments));
    const string expectedRunningProgramMessage = String::Concat("[Cloudundancy] Running program: ", processName, ' ', arguments);
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedRunningProgramMessage));
+   METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedRunningProgramMessage, Color::Yellow));
    METALMOCK(_consoleMock->WriteLineIfMock.CalledOnceWith(doPrintStandardOutput, processResult.standardOutputAndError));
    const string expectedProcessFailedErrorMessage = String::Concat(
       "Process \"", processName, " ", arguments, "\" failed to return exit code 0 by returning exit code ", processResult.exitCode, '.');
