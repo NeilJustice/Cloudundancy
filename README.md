@@ -94,7 +94,7 @@ Resulting contents of `C:\CloudundancyTesting\GoogleDrive`:
 
 ![CloudundancyTesting GoogleDrive folder](Screenshots/CloudundancyTestingGoogleDrive.png)
 
-Contents of `C:\CloudundancyTesting\GoogleDrive\Cloudundancy.log`:
+Resulting contents of `C:\CloudundancyTesting\GoogleDrive\Cloudundancy.log`:
 
 ![CloudundancyTesting GoogleDrive Cloudundancy.log](Screenshots/CloudundancyTestingGoogleDriveCloudundancyLog.png)
 
@@ -102,9 +102,11 @@ Resulting contents of `C:\CloudundancyTesting\OneDrive`:
 
 ![CloudundancyTesting OneDrive folder](Screenshots/CloudundancyTestingOneDrive.png)
 
-Contents of `C:\CloudundancyTesting\OneDrive\Cloudundancy.log`:
+Resulting contents of `C:\CloudundancyTesting\OneDrive\Cloudundancy.log`:
 
 ![CloudundancyTesting OneDrive Cloudundancy.log](Screenshots/CloudundancyTestingOneDriveCloudundancyLog.png)
+
+Now should your Google account or Microsoft account ever be compromised, peace of mind can be had by knowing you made a cloud-redundant backup with the help of Cloudundancy.
 
 ### 7zip-files-then-copy-the-7zip-file-to-multiple-folders
 
