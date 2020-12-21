@@ -41,7 +41,7 @@ using namespace std;
 
 // Testing Cloudundancy command lines:
 // copy-files-to-multiple-folders --ini-file=C:\CloudundancyTesting\Cloudundancy.ini --delete-destination-folders-first
-// 7zip-files-then-copy-the-7zip-file-to-multiple-folders --ini-file-to-copy-files-to-7zip-staging-folder=C:\Test\FileCopyingToStagingFolder.ini --7zip-staging-folder=C:\Test\BackupStagingFolder --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=C:\Test\7ZipCopyingStep.ini
+// 7zip-files-then-copy-the-7zip-file-to-multiple-folders --ini-file-to-copy-files-to-7zip-staging-folder=C:\Cloudundancy7ZipTesting\CodeFolderTo7ZipStagingFolderCopyingStep.ini --7zip-staging-folder=C:\Cloudundancy7ZipTesting\7ZipStagingFolder --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=C:\Cloudundancy7ZipTesting\7ZipFileToGoogleDriveAndOneDriveCopyingStep.ini
 // example-linux-ini-file
 // example-windows-ini-file
 

@@ -96,36 +96,27 @@ TEST(DeleteBackupStagingFolder_PrintsDeleting_DeletesBackupStagingFolder_PrintsD
 
 TEST(CopyFilesAndFoldersToBackupStagingFolder_CopiesSourceFilesAndFoldersToBackupStagingFolder_PrintsElapsedSeconds)
 {
-   _consoleMock->WriteLineMock.Expect();
-   _stopwatchMock->StartMock.Expect();
    _cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleDestinationFoldersMock.Expect();
-   const string elapsedSeconds = _stopwatchMock->StopAndGetElapsedSecondsMock.ReturnRandom();
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
    _sevenZipSubProgram.CopyFilesAndFoldersToBackupStagingFolder(args);
    //
-   METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    METALMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleDestinationFoldersMock.
       CalledOnceWith(args.sevenZipModeIniFilePath, false));
-   METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
-   const string expectedCopyingMessage = String::Concat(
-      "[Cloudundancy] Copying [SourceFilesAndFolders] To " + args.sevenZipStagingFolderPath.string());
-   const string expectedCopiedMessage = String::Concat(
-      "[Cloudundancy] Copied [SourceFilesAndFolders] To ", args.sevenZipStagingFolderPath.string(), " in ", elapsedSeconds, " seconds\n");
-   METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
-   {
-      { expectedCopyingMessage },
-      { expectedCopiedMessage }
-   }));
 }
 
 TEST(SevenZipBackupStagingFolder_Writes7ZipFileToFolder7ZipFileBackslashCloudundancyBackup_PrintsElapsedSeconds)
 {
-   _consoleMock->WriteLineMock.Expect();
+   _consoleMock->WriteLineColorMock.Expect();
+
    _stopwatchMock->StartMock.Expect();
+
    _fileSystemMock->SetCurrentPathMock.Expect();
+
    const string dateTimeNowForFileNames = _watchMock->DateTimeNowForFileNamesMock.ReturnRandom();
+
    _processRunnerMock->FailFastRunMock.ReturnRandom();
+
    const string elapsedSeconds = _stopwatchMock->StopAndGetElapsedSecondsMock.ReturnRandom();
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
@@ -138,37 +129,31 @@ TEST(SevenZipBackupStagingFolder_Writes7ZipFileToFolder7ZipFileBackslashCloudund
       "a -r -mx9 7ZipFile\\CloudundancyBackup_" + dateTimeNowForFileNames + ".7z");
    METALMOCK(_processRunnerMock->FailFastRunMock.CalledOnceWith("7z", expectedSevenZipCommandLineArguments, true));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
-   const string expectedSevenZippingMessage = String::Concat("[Cloudundancy] 7-zipping ", args.sevenZipStagingFolderPath.string(), "...");
+   const string expectedSevenZippingMessage =
+      String::Concat("\n[Cloudundancy] 7-zipping ", args.sevenZipStagingFolderPath.string(), "...");
    const string expectedSevenZippedMessage = String::Concat(
       "[Cloudundancy] 7-zipped ", args.sevenZipStagingFolderPath.string(), " in ", elapsedSeconds, " seconds\n");
-   METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
+   METALMOCK(_consoleMock->WriteLineColorMock.CalledAsFollows(
    {
-      { expectedSevenZippingMessage },
-      { expectedSevenZippedMessage }
+      { expectedSevenZippingMessage, Color::Teal },
+      { expectedSevenZippedMessage, Color::Green }
    }));
 }
 
 TEST(Copy7ZipFileToDestinationFolders_DoesSo_PrintsElapsedSeconds)
 {
    _consoleMock->WriteLineMock.Expect();
-   _stopwatchMock->StartMock.Expect();
-   const string elapsedSeconds = _stopwatchMock->StopAndGetElapsedSecondsMock.ReturnRandom();
+   _consoleMock->WriteLineColorMock.Expect();
    _cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleDestinationFoldersMock.Expect();
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
    _sevenZipSubProgram.Copy7ZipFileToDestinationFolders(args);
    //
-   METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    METALMOCK(_cloudundancyFileCopierMock->CopyFilesAndFoldersToMultipleDestinationFoldersMock.
       CalledOnceWith(args.sevenZipFileCopyingIniFilePath, false));
-   METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
-   const string expectedCopiedMessage = String::Concat(
-      "[Cloudundancy] Copied .7z file to [DestinationFolders] in ", elapsedSeconds, " seconds\n");
-   METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
-   {
-      { "[Cloudundancy] Copying .7z file to [DestinationFolders]..." },
-      { expectedCopiedMessage }
-   }));
+   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith("[Cloudundancy] Copying .7z file to [DestinationFolders]..."));
+   METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(
+      "\n[Cloudundancy] Successfully copied .7z file to [DestinationFolders]", Color::Green));
 }
 
 RUN_TESTS(SevenZipSubProgramTests)

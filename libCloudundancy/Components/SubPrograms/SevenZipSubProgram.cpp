@@ -37,29 +37,13 @@ int SevenZipSubProgram::Run(const CloudundancyArgs& args)
 void SevenZipSubProgram::Copy7ZipFileToDestinationFolders(const CloudundancyArgs& args) const
 {
    _console->WriteLine("[Cloudundancy] Copying .7z file to [DestinationFolders]...");
-   _stopwatch->Start();
-
    _cloudundancyFileCopier->CopyFilesAndFoldersToMultipleDestinationFolders(args.sevenZipFileCopyingIniFilePath, false);
-
-   const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
-   const string copiedMessage = String::Concat(
-      "[Cloudundancy] Copied .7z file to [DestinationFolders] in ", elapsedSeconds, " seconds\n");
-   _console->WriteLine(copiedMessage);
+   _console->WriteLineColor("\n[Cloudundancy] Successfully copied .7z file to [DestinationFolders]", Color::Green);
 }
 
 void SevenZipSubProgram::CopyFilesAndFoldersToBackupStagingFolder(const CloudundancyArgs& args) const
 {
-   const string copyingMessage = String::Concat(
-      "[Cloudundancy] Copying [SourceFilesAndFolders] To " + args.sevenZipStagingFolderPath.string());
-   _console->WriteLine(copyingMessage);
-   _stopwatch->Start();
-
    _cloudundancyFileCopier->CopyFilesAndFoldersToMultipleDestinationFolders(args.sevenZipModeIniFilePath, false);
-
-   const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
-   const string copiedMessage = String::Concat(
-      "[Cloudundancy] Copied [SourceFilesAndFolders] To ", args.sevenZipStagingFolderPath.string(), " in ", elapsedSeconds, " seconds\n");
-   _console->WriteLine(copiedMessage);
 }
 
 void SevenZipSubProgram::DeleteBackupStagingFolder(const CloudundancyArgs& args) const
@@ -78,8 +62,8 @@ void SevenZipSubProgram::DeleteBackupStagingFolder(const CloudundancyArgs& args)
 
 void SevenZipSubProgram::SevenZipBackupStagingFolder(const CloudundancyArgs& args) const
 {
-   const string sevenZippingMessage = String::Concat("[Cloudundancy] 7-zipping ", args.sevenZipStagingFolderPath.string(), "...");
-   _console->WriteLine(sevenZippingMessage);
+   const string sevenZippingMessage = String::Concat("\n[Cloudundancy] 7-zipping ", args.sevenZipStagingFolderPath.string(), "...");
+   _console->WriteLineColor(sevenZippingMessage, Color::Teal);
    _stopwatch->Start();
 
    _fileSystem->SetCurrentPath(args.sevenZipStagingFolderPath);
@@ -91,5 +75,5 @@ void SevenZipSubProgram::SevenZipBackupStagingFolder(const CloudundancyArgs& arg
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string sevenZippedMessage = String::Concat(
       "[Cloudundancy] 7-zipped ", args.sevenZipStagingFolderPath.string(), " in ", elapsedSeconds, " seconds\n");
-   _console->WriteLine(sevenZippedMessage);
+   _console->WriteLineColor(sevenZippedMessage, Color::Green);
 }
