@@ -6,7 +6,7 @@
 TESTS(WatchTests)
 AFACT(DefaultConstructor_NewsCRTWatch)
 FACTS(DateTimeNow_ReturnsLocalDateTimeNow)
-FACTS(DateTimeNowForFileNames_ReturnsYYYYDashMMDashDDUnderscoreHHDashMM)
+FACTS(DateTimeNowForFileNames_ReturnsYYYYDashMMDashDDTHHDashMMDashSS)
 EVIDENCE
 
 class WatchSelfMocked : public Metal::Mock<Watch>
@@ -46,14 +46,14 @@ TEST2X2(DateTimeNow_ReturnsLocalDateTimeNow,
    ARE_EQUAL(expectedReturnValue, dateTimeNow);
 }
 
-TEST6X6(DateTimeNowForFileNames_ReturnsYYYYDashMMDashDDUnderscoreHHDashMM,
-   const char* expectedReturnValue, int tm_year, int tm_mon, int tm_mday, int tm_hour, int tm_min,
-   "1900-01-01@00-00", 0, 0, 1, 0, 0,
-   "1901-02-03@04-05", 1, 1, 3, 4, 5,
-   "1970-01-01@00-00", 70, 0, 1, 0, 0,
-   "2000-01-01@00-00", 100, 0, 1, 0, 0,
-   "2038-01-01@00-00", 138, 0, 1, 0, 0,
-   "9999-12-31@23-59", 8099, 11, 31, 23, 59)
+TEST7X7(DateTimeNowForFileNames_ReturnsYYYYDashMMDashDDTHHDashMMDashSS,
+   const string& expectedReturnValue, int tm_year, int tm_mon, int tm_mday, int tm_hour, int tm_min, int tm_sec,
+   "1900-01-01T00-00-00"s, 0, 0, 1, 0, 0, 0,
+   "1901-02-03T04-05-01"s, 1, 1, 3, 4, 5, 1,
+   "1970-01-01T00-00-15"s, 70, 0, 1, 0, 0, 15,
+   "2000-01-01T00-00-30"s, 100, 0, 1, 0, 0, 30,
+   "2038-01-01T00-00-45"s, 138, 0, 1, 0, 0, 45,
+   "9999-12-31T23-59-59"s, 8099, 11, 31, 23, 59, 59)
 {
    tm tmValue{};
    tmValue.tm_year = tm_year;
@@ -61,7 +61,7 @@ TEST6X6(DateTimeNowForFileNames_ReturnsYYYYDashMMDashDDUnderscoreHHDashMM,
    tmValue.tm_mday = tm_mday;
    tmValue.tm_hour = tm_hour;
    tmValue.tm_min = tm_min;
-   tmValue.tm_sec = ZenUnit::Random<int>();
+   tmValue.tm_sec = tm_sec;
    _crtWatchMock->TmNowMock.Return(tmValue);
    //
    const string dateTimeNowMinutes = _watchSelfMocked->DateTimeNowForFileNames();

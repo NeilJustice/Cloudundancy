@@ -24,16 +24,17 @@ std::string Watch::DateTimeNow() const
 string Watch::DateTimeNowForFileNames() const
 {
    const tm tmNow = _crtWatch->TmNow();
-   // 16 == strlen("2100-01-01 00:00")
-   //               0123456789012345
-   array<char, 17> chars;
+   // 16 == strlen("2100-01-01T00-00-00")
+   //               0123456789012345678
+   array<char, 19> chars;
    Write8601Date(tmNow, chars.data());
-   chars[10] = '@';
+   chars[10] = 'T';
    Chars::OneOrTwoDigitSizeTToTwoChars(static_cast<size_t>(tmNow.tm_hour), chars.data() + 11);
    chars[13] = '-';
    Chars::OneOrTwoDigitSizeTToTwoChars(static_cast<size_t>(tmNow.tm_min), chars.data() + 14);
-   chars[16] = 0;
-   string dateTimeNowForFileNames(chars.data());
+   chars[16] = '-';
+   Chars::OneOrTwoDigitSizeTToTwoChars(static_cast<size_t>(tmNow.tm_sec), chars.data() + 17);
+   string dateTimeNowForFileNames(chars.data(), chars.size());
    return dateTimeNowForFileNames;
 }
 

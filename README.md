@@ -62,6 +62,10 @@ The correctness of `class CloudundancyArgsParser` is confirmed in file `Cloudund
 
 ### copy-files-to-multiple-folders
 
+```
+Cloudundancy copy-files-to-multiple-folders --ini-file=<CloudundancyIniFilePath> [--delete-destination-folders-first]
+```
+
 Cloudundancy program mode `copy-files-to-multiple-folders` copies files and folders listed in a Cloudundancy.ini file to multiple destination folders, which could be automatic cloud-uploading Google Drive and Microsoft OneDrive folders.
 
 As an example, imagine you had the following folder structure at `C:\CloudundancyTesting`:
@@ -118,7 +122,55 @@ Now should your Google account or Microsoft account ever be compromised, peace o
 
 ### 7zip-files-then-copy-the-7zip-file-to-multiple-folders
 
-Work in progress.
+```
+Cloudundancy 7zip-files-then-copy-the-7zip-file-to-multiple-folders
+      --ini-file-to-copy-files-to-7zip-staging-folder=<CloudundancyIniFilePath>
+      --7zip-staging-folder=<FolderPath>
+      --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=<CloudundancyIniFilePath>
+```
+
+Program mode `7zip-files-then-copy-the-7zip-file-to-multiple-folders` performs the following steps to backup files to a .7z file and then copy the .7z file to multiple destination folders:
+
+1. Deletes the "7-Zip staging folder" specified with `--7zip-staging-folder`. Example `--7zip-staging-folder`: `C:\Cloudundancy7ZipTesting\7ZipStagingFolder`.
+2. Copies `[SourceFilesAndFolders]` listed in Cloudundancy.ini file `--ini-file-to-copy-files-to-7zip-staging-folder` to the 7-Zip staging folder specified as the sole directory in the `[DestinationDirectories]` section of this Cloudundancy.ini file.
+
+Example `--ini-file-to-copy-files-to-7zip-staging-folder`:
+
+![CodeFolderTo7ZipStagingFolderCopyingStep.ini](Screenshots/CodeFolderTo7ZipStagingFolderCopyingStep.png)
+
+3. Runs executable `7z` (Binary `7z` on the PATH on Linux, `7z.exe` on the PATH on Windows) to 7-Zip the contents of `--7zip-staging-folder` to a .7z file written to folder `<7ZipStagingFolder>\7ZipFile` with file name `CloudundancyBackup_YYYY-MM-DDTHH-MM-SS`. Example .7z file name: `CloudundancyBackup_2020-12-21T15-01-03.7z`
+4. Copies the `.7z` file to `[DestinationFolders]` listed in Cloudundancy.ini file `--ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders`.
+
+Example `--ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders`:
+
+![7ZipFileToGoogleDriveAndOneDriveCopyingStep.ini](Screenshots/7ZipFileToGoogleDriveAndOneDriveCopyingStep.png)
+
+As an example, imagine you had the following folder structure and were interested in achieving 7-Zipped cloud-redundant backups for folder `C:\Cloudundancy7ZipTesting\CodeFolder`, which contains all of your GitHub repos as subfolders.
+
+![Cloudundancy 7-Zip Testing Folder](Screenshots/Cloudundancy7ZipTestingFolder.png)
+
+Here is what happens when the following Cloudundancy command line is run:
+
+```
+Cloudundancy.exe 7zip-files-then-copy-the-7zip-file-to-multiple-folders 
+   --ini-file-to-copy-files-to-7zip-staging-folder=C:\Cloudundancy7ZipTesting\CodeFolderTo7ZipStagingFolderCopyingStep.ini
+   --7zip-staging-folder=C:\Cloudundancy7ZipTesting\7ZipStagingFolder
+   --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=C:\Cloudundancy7ZipTesting\7ZipFileToGoogleDriveAndOneDriveCopyingStep.ini
+```
+
+![7-Zip Mode Standard Output](Screenshots/7ZipModeStandardOutput.png)
+
+GitHub repos successfully 7-Zipped and copied to a Google Drive folder:
+
+![Google Drive .7z File](Screenshots/GoogleDrive7zFile.png)
+
+![Google Drive .7z File Contents](Screenshots/GoogleDrive7zFileContents.png)
+
+GitHub repos successfully 7-Zipped and copied to a OneDrive folder:
+
+![One Drive .7z File](Screenshots/OneDrive7zFile.png)
+
+![One Drive .7z File Contents](Screenshots/OneDrive7zFileContents.png)
 
 ### example-linux-ini-file
 
