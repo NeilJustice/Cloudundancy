@@ -2,11 +2,13 @@
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-17-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B17) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Cloudundancy is a C++ command line program which quickly copies a configurable list of files and folders to a configurable list of destination folders to achieve cloud-redundant and device-redundant backups of business-critical files by way of Google Drive and Microsoft OneDrive destination folders automatically uploading their contents to their respective clouds.
+Cloudundancy is a C++ command line program which quickly copies a configurable list of files and folders to a configurable list of destination folders to achieve cloud-redundant and device-redundant backups of business-critical files.
 
-For example, in a Cloudundancy.ini file, destination folders could be configured to be a Google Drive folder, a Microsoft OneDrive folder, and two USB drives to achieve quadruple backups of business-critical files to two clouds and two USB drives.
+For example, in a Cloudundancy.ini file, destination folders can be configured to be a Google Drive folder, a Microsoft OneDrive folder, and two USB drives to achieve quadruple backups of business-critical files to two clouds and two USB drives.
 
-On Windows, Google Drive and Microsoft OneDrive folders automatically upload their contents to their respective clouds. On Linux, command line invocations of Google Drive and Microsoft OneDrive command line utilities would have to be added after the invocation of Cloudundancy, so as to then upload Cloudundancy-copied files to Google's and Microsoft's clouds.
+On Windows, Google Drive and Microsoft OneDrive folders automatically upload their contents to their respective clouds.
+
+On Linux, command line invocations of Google Drive and Microsoft OneDrive command line utilities would have to be added after the invocation of Cloudundancy to upload Cloudundancy-copied files to Google's cloud and Microsoft's cloud.
 
 |Cloudundancy Build Type|Build Status|
 |----------|------------|
