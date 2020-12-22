@@ -72,20 +72,6 @@ void ConsoleColorer::SetTextColor(Color color) const
 #endif
 }
 
-WindowsColor ConsoleColorer::ColorToWindowsColor(Color color) noexcept
-{
-   switch (color)
-   {
-   case Color::Red: return WindowsColor::Red;
-   case Color::White: return WindowsColor::White;
-   case Color::Teal: return WindowsColor::Teal;
-   case Color::Green: return WindowsColor::Green;
-   case Color::Yellow: return WindowsColor::Yellow;
-   case Color::Unset:
-   default: return WindowsColor::White;
-   };
-}
-
 const char* ConsoleColorer::ColorToLinuxColor(Color color) noexcept
 {
    switch (color)
@@ -98,4 +84,18 @@ const char* ConsoleColorer::ColorToLinuxColor(Color color) noexcept
    case Color::Unset:
    default: return "\033[0m";
    }
+}
+
+WindowsColor ConsoleColorer::ColorToWindowsColor(Color color) noexcept
+{
+   switch (color)
+   {
+   case Color::Red: return WindowsColor::Red;
+   case Color::White: return WindowsColor::White;
+   case Color::Teal: return WindowsColor::Teal;
+   case Color::Green: return WindowsColor::Green;
+   case Color::Yellow: return WindowsColor::Yellow;
+   case Color::Unset:
+   default: return WindowsColor::White;
+   };
 }
