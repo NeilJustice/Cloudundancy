@@ -16,7 +16,7 @@ matrix:
         apt:
           update: true
           sources: [ 'ubuntu-toolchain-r-test' ]
-          packages: [ 'ninja-build', 'clang-9', 'libstdc++-8-dev' ]
+          packages: [ 'ninja-build', 'clang-9', 'libstdc++-9-dev' ]
 
     - os: linux
       compiler: clang
