@@ -29,21 +29,21 @@ matrix:
 
     - os: linux
       compiler: gcc
-      env: CMAKE_BUILD_TYPE=Debug COMPILER=g++ CODE_COV_MODE=OFF
+      env: CMAKE_BUILD_TYPE=Debug COMPILER=g++-9 CODE_COV_MODE=OFF
       addons:
         apt:
           update: true
           sources: [ 'ubuntu-toolchain-r-test' ]
-          packages: [ 'ninja-build' ]
+          packages: [ 'ninja-build', 'g++-9' ]
 
     - os: linux
       compiler: gcc
-      env: CMAKE_BUILD_TYPE=Release COMPILER=g++ CODE_COV_MODE=ON
+      env: CMAKE_BUILD_TYPE=Release COMPILER=g++-9 CODE_COV_MODE=ON
       addons:
         apt:
           update: true
           sources: [ 'ubuntu-toolchain-r-test' ]
-          packages: [ 'ninja-build', 'lcov' ]
+          packages: [ 'ninja-build', 'g++-9', 'lcov' ]
 
 script:
    - ./TravisScripts/travis_script.sh
