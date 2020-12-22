@@ -11,11 +11,13 @@ ReleaseCI/
 CMakeCache.txt
 
 # Linux
+covhtml/
 build.ninja
 *.o
+*.profdata
+*.profraw
 
 # Windows
-.axoCover/
 .vs/
 x64/
 *.dat
