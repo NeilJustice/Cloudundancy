@@ -17,43 +17,54 @@ LinuxProcessRunner::~LinuxProcessRunner()
 {
 }
 
-ProcessResult LinuxProcessRunner::Run(string_view processName, string_view /*arguments*/) const // LCOV_EXCL_LINE
+ProcessResult LinuxProcessRunner::Run(string_view processName, string_view arguments) const // LCOV_EXCL_LINE
 {
-   char* argv[6];
+   const vector<string> spaceSplitArguments = String::Split(arguments, ' ');
+   constexpr size_t ProcessNameArgv = 1;
+   constexpr size_t TerminatingNullArgv = 1;
+   unique_ptr<char*[]> argv = make_unique<char*[]>(ProcessNameArgv + spaceSplitArguments.size() + TerminatingNullArgv);
    argv[0] = const_cast<char*>(processName.data());
-   argv[1] = nullptr;
-   // argv[1] = "a";
-   // argv[2] = "-r";
-   // argv[3] = "-mx9";
-   // argv[4] = "7ZipFile\\HomeDirectory.7z";
-   // argv[5] = nullptr;
+   for (size_t i = 1; i < spaceSplitArguments.size(); ++i)
+   {
+      const string& ithArgument = spaceSplitArguments[i];
+      argv[1] = const_cast<char*>(ithArgument.c_str());
+   }
+   argv[ProcessNameArgv + spaceSplitArguments.size()] = nullptr;
 
-   pid_t processPid;
-   const int posixSpawnpReturnValue = posix_spawnp(&processPid, processName.data(), nullptr, nullptr, argv, nullptr);
+   pid_t pid;
+   const int posixSpawnpReturnValue = posix_spawnp(&pid, processName.data(), nullptr, nullptr, argv.get(), nullptr);
    if (posixSpawnpReturnValue != 0)
    {
-
+      const string exceptionMessage = String::Concat(
+         "Fatal Error: 'posix_spawnp(&pid, processName.data(), nullptr, nullptr, argv.get(), nullptr)' returned non-0: ", posixSpawnpReturnValue);
+      throw runtime_error(exceptionMessage);
    }
+
    int waitPidStatus;
-	pid_t waitpidReturnValue = waitpid(processPid, &waitPidStatus, 0);
-	if (waitpidReturnValue != processPid)
+	pid_t waitpidReturnValue = waitpid(pid, &waitPidStatus, 0);
+	if (waitpidReturnValue != pid)
 	{
       const int errnoValue = errno;
       const char* const readableErrno = strerror(errnoValue);
       const string exceptionMessage = String::Concat(
-         "Error: waitpid(processPid, &waitPidStatus, 0) unexpectedly returned ", waitpidReturnValue,
-         " which is not equal to sevenZipPid ", processPid, ". errno=", errnoValue, " strerror(errno)=", readableErrno, '\n');
-		throw runtime_error(exceptionMessage);
+         "Fatal Error: 'waitpid(pid, &waitPidStatus, 0)' unexpectedly returned ", waitpidReturnValue,
+         " which is not equal to pid ", pid, ". errno=", errnoValue, " strerror(errno)=", readableErrno);
+      throw runtime_error(exceptionMessage);
    }
+
    const int wifexitedReturnValue = WIFEXITED(waitPidStatus);
    if (wifexitedReturnValue == 1)
    {
-      ProcessResult processResult{};
+      ProcessResult processResult;
+      processResult.processName = processName;
+      processResult.arguments = arguments;
+      processResult.exitCode = 0;
       return processResult;
    }
    else
    {
-      throw runtime_error("WIFEXITED(waitPidStatus) did not return 1");
+      const string exceptionMessage = String::Concat("WIFEXITED(waitPidStatus) did not return 1: ", wifexitedReturnValue);
+      throw runtime_error(exceptionMessage);
    }
 }
 

@@ -8,37 +8,18 @@ public:
    static bool Contains(string_view str, string_view substring);
    static bool CaseInsensitiveContains(string_view str, string_view substring);
    static std::string ReplaceFirst(string_view str, string_view substring, string_view replacement);
-   static std::string RegexReplace(const std::string& str, const std::string& pattern, const std::string& replacement);
-   static bool StartsWith(string_view str, const std::string& substring);
-	static std::vector<std::string> Split(const std::string& str, char separator);
-	static std::string TrimWhitespace(string_view str);
+   static std::string RegexReplace(string_view str, string_view pattern, string_view replacement);
+   static bool StartsWith(string_view str, string_view substring);
+   static std::vector<std::string> Split(string_view str, char separator);
+   static std::string TrimWhitespace(string_view str);
 
-   template<typename T, typename... Ts>
-	static std::string Concat(const T& value, const Ts&... values)
+   template<typename... Types>
+   static std::string Concat(const Types&... values)
 	{
 		std::ostringstream oss;
-		oss << value;
-		DoConcat(&oss, values...);
-      const std::string result = oss.str();
-		return result;
-	}
-
-   template<typename T, typename... Ts>
-	static void DoConcat(std::ostringstream* outOss, const T& value, const Ts&... values)
-	{
-		(*outOss) << value;
-		DoConcat(outOss, values...);
-	}
-
-   template<typename T, typename... Ts>
-	static void DoConcat(std::ostringstream* outOss, const T& value)
-	{
-		(*outOss) << value;
-	}
-
-	template<typename... T>
-	static void DoConcat(std::ostringstream*)
-	{
+		(oss << ... << values);
+      const std::string ossConcatenatedValues = oss.str();
+		return ossConcatenatedValues;
 	}
 private:
    static string ToLower(string_view str);

@@ -41,14 +41,14 @@ std::string String::ReplaceFirst(string_view str, string_view substring, string_
    return replacedString;
 }
 
-string String::RegexReplace(const string& str, const string& pattern, const string& replacement)
+string String::RegexReplace(string_view str, string_view pattern, string_view replacement)
 {
-   const regex regexPattern(pattern);
-   string replacedString = regex_replace(str, regexPattern, replacement);
+   const regex regexPattern(pattern.data());
+   string replacedString = regex_replace(str.data(), regexPattern, replacement.data());
    return replacedString;
 }
 
-bool String::StartsWith(string_view str, const string& substring)
+bool String::StartsWith(string_view str, string_view substring)
 {
    const size_t substringLength = substring.size();
 	if (substringLength > str.size())
@@ -67,10 +67,10 @@ bool String::StartsWith(string_view str, const string& substring)
 	return true;
 }
 
-vector<string> String::Split(const string& str, char separator)
+vector<string> String::Split(string_view str, char separator)
 {
    vector<string> splitString;
-   istringstream is(str);
+   istringstream is(str.data());
    string token;
    while (getline(is, token, separator))
    {
