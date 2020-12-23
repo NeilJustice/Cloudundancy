@@ -48,6 +48,7 @@ STARTUP
    _environmentalist._call_gethostname = BIND_2ARG_METALMOCK_OBJECT(gethostnameMock);
 #elif defined _WIN32
    _environmentalist._call_GetComputerNameA = BIND_2ARG_METALMOCK_OBJECT(GetComputerNameAMock);
+   _environmentalist._call_GetUserNameA = BIND_2ARG_METALMOCK_OBJECT(GetUserNameAMock);
 #endif
    // Constant Components
    _environmentalist._asserter.reset(_asserterMock = new AsserterMock);
@@ -126,17 +127,17 @@ class GetComputerNameAMock_CallInstead
 private:
    size_t numberOfCalls = 0;
    CHAR* _outComputerNameCharsArg = nullptr;
-   DWORD _computerNameCharsArgSize = 0;
+   DWORD _computerNameCharsSizeArg = 0;
 public:
    string computerNameCharsReturnValue;
    BOOL returnValue = FALSE;
 
-   BOOL CallInstead(CHAR* outComputerNameChars, DWORD* computerNameCharsArgSize)
+   BOOL CallInstead(CHAR* outComputerNameChars, DWORD* computerNameCharsSize)
    {
       ++numberOfCalls;
       _outComputerNameCharsArg = outComputerNameChars;
       memcpy(outComputerNameChars, computerNameCharsReturnValue.c_str(), computerNameCharsReturnValue.size());
-      _computerNameCharsArgSize = *computerNameCharsArgSize;
+      _computerNameCharsSizeArg = *computerNameCharsSize;
       return returnValue;
    }
 
@@ -144,7 +145,7 @@ public:
    {
       ARE_EQUAL(1, numberOfCalls);
       IS_NOT_NULLPTR(_outComputerNameCharsArg);
-      ARE_EQUAL(expectedComputerNameCharsSize, _computerNameCharsArgSize);
+      ARE_EQUAL(expectedComputerNameCharsSize, _computerNameCharsSizeArg);
    }
 } _GetComputerNameAMock_CallInsteadMock;
 
@@ -167,9 +168,50 @@ TEST(WindowsMachineName_ReturnsResultOfCallingGetComputerNameA)
    ARE_EQUAL(expectedWindowsMachineName, windowsMachineName);
 }
 
+class GetUserNameAMock_CallInstead
+{
+private:
+   size_t numberOfCalls = 0;
+   CHAR* _outUserNameCharsArg = nullptr;
+   DWORD _usernameCharsSizeArg = 0;
+public:
+   string usernameCharsReturnValue;
+   BOOL returnValue = FALSE;
+
+   BOOL CallInstead(CHAR* outUserNameChars, DWORD* usernameCharsSize)
+   {
+      ++numberOfCalls;
+      _outUserNameCharsArg = outUserNameChars;
+      memcpy(outUserNameChars, usernameCharsReturnValue.c_str(), usernameCharsReturnValue.size());
+      _usernameCharsSizeArg = *usernameCharsSize;
+      return returnValue;
+   }
+
+   void CalledOnceWith(DWORD expectedUserNameCharsSize)
+   {
+      ARE_EQUAL(1, numberOfCalls);
+      IS_NOT_NULLPTR(_outUserNameCharsArg);
+      ARE_EQUAL(expectedUserNameCharsSize, _usernameCharsSizeArg);
+   }
+} _GetUserNameAMock_CallInsteadMock;
+
 TEST(WindowsUserName_ReturnsResultOfCallingGetUserNameA)
 {
+   _GetUserNameAMock_CallInsteadMock.returnValue = ZenUnit::Random<BOOL>();
+   _GetUserNameAMock_CallInsteadMock.usernameCharsReturnValue = ZenUnit::Random<string>();
+   GetUserNameAMock.CallInstead(std::bind(
+      &GetUserNameAMock_CallInstead::CallInstead, &_GetUserNameAMock_CallInsteadMock, placeholders::_1, placeholders::_2));
 
+   _asserterMock->ThrowIfIntsNotEqualMock.Expect();
+   //
+   const string windowsUserName = _environmentalist.WindowsUserName();
+   //
+   _GetUserNameAMock_CallInsteadMock.CalledOnceWith(257);
+   METALMOCK(_asserterMock->ThrowIfIntsNotEqualMock.CalledOnceWith(
+      1, static_cast<int>(_GetUserNameAMock_CallInsteadMock.returnValue),
+      "_call_GetUserNameA(windowsUserNameChars, &size) unexpectedly did not return TRUE"));
+   const string expectedWindowsUserName(_GetUserNameAMock_CallInsteadMock.usernameCharsReturnValue);
+   ARE_EQUAL(expectedWindowsUserName, windowsUserName);
 }
 
 #endif

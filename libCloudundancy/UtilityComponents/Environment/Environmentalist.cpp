@@ -37,20 +37,22 @@ string Environmentalist::UserName() const
 
 string Environmentalist::LinuxMachineName() const
 {
-   char hostname[65]{};
-   const int gethostnameResult = _call_gethostname(hostname, sizeof(hostname));
-   release_assert(gethostnameResult == 0);
-   string linuxMachineName(hostname);
+   char linuxMachineNameChars[65]{};
+   const int gethostnameResult = _call_gethostname(linuxMachineNameChars, sizeof(linuxMachineNameChars));
+   _asserter->ThrowIfIntsNotEqual(0, gethostnameResult,
+      "_call_gethostname(hostname, sizeof(hostname)) unexpectedly did not return 0");
+   string linuxMachineName(linuxMachineNameChars);
    return linuxMachineName;
 }
 
 string Environmentalist::LinuxUserName() const
 {
-   char usernameChars[_SC_LOGIN_NAME_MAX]{};
-   const int getloginReturnValue = getlogin_r(usernameChars, sizeof(usernameChars));
-   release_assert(getloginReturnValue == 0);
-   string username(usernameChars);
-   return username;
+   char linuxUserNameChars[_SC_LOGIN_NAME_MAX]{};
+   const int getloginReturnValue = getlogin_r(linuxUserNameChars, sizeof(linuxUserNameChars));
+   _asserter->ThrowIfIntsNotEqual(0, getloginReturnValue,
+      "getlogin_r(usernameChars, sizeof(usernameChars)) unexpectedly did not return 0");
+   string linuxUserName(linuxUserNameChars);
+   return linuxUserName;
 }
 
 #elif defined _WIN32
@@ -69,8 +71,8 @@ string Environmentalist::WindowsMachineName() const
 string Environmentalist::WindowsUserName() const
 {
    CHAR windowsUserNameChars[257]{};
-   DWORD size = sizeof(windowsUserNameChars);
-   const BOOL didGetUserName = _call_GetUserNameA(windowsUserNameChars, &size);
+   DWORD windowsUserNameCharsSize = sizeof(windowsUserNameChars);
+   const BOOL didGetUserName = _call_GetUserNameA(windowsUserNameChars, &windowsUserNameCharsSize);
    _asserter->ThrowIfIntsNotEqual(1, static_cast<int>(didGetUserName),
       "_call_GetUserNameA(windowsUserNameChars, &size) unexpectedly did not return TRUE");
    string windowsUserName(windowsUserNameChars);
