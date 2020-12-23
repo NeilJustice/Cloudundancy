@@ -1,6 +1,6 @@
 #pragma once
 
-enum class Color
+enum class Color : unsigned char
 {
    Unset,
    Red,

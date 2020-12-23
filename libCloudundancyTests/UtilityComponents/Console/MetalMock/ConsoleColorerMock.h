@@ -4,6 +4,6 @@
 class ConsoleColorerMock : public Metal::Mock<ConsoleColorer>
 {
 public:
-   METALMOCK_NONVOID1(bool, SetColor, Color)
-   METALMOCK_VOID1_CONST(UnsetColor, bool)
+   METALMOCK_NONVOID1(bool, SetTextColor, Color)
+   METALMOCK_VOID1_CONST(UnsetTextColor, bool)
 };

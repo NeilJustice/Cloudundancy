@@ -11,7 +11,7 @@ AFACT(WriteLines_WritesLinesToCoutWithNewline)
 AFACT(WriteLineIf_DoPrintMessageIsFalse_Returns)
 AFACT(WriteLineIf_DoPrintMessageIsTrue_WritesMessageToCoutWithNewline)
 AFACT(WriteLineAndExit_WritesMessageAndNewline_ExitsWithExitCode)
-AFACT(WriteLineColor_SetsConsoleColor_WritesMessageThenNewline_UnsetsColor)
+AFACT(WriteLineColor_SetsConsoleTextColor_WritesMessageThenNewline_UnsetsColor)
 EVIDENCE
 
 Console _console;
@@ -77,17 +77,17 @@ TEST(WriteLineAndExit_WritesMessageAndNewline_ExitsWithExitCode)
    METALMOCK(exitMock.CalledOnceWith(exitCode));
 }
 
-TEST(WriteLineColor_SetsConsoleColor_WritesMessageThenNewline_UnsetsColor)
+TEST(WriteLineColor_SetsConsoleTextColor_WritesMessageThenNewline_UnsetsColor)
 {
-   const bool didSetColor = _consoleColorerMock->SetColorMock.ReturnRandom();
-   _consoleColorerMock->UnsetColorMock.Expect();
+   const bool didSetTextColor = _consoleColorerMock->SetTextColorMock.ReturnRandom();
+   _consoleColorerMock->UnsetTextColorMock.Expect();
    const string message = ZenUnit::Random<string>();
    const Color color = ZenUnit::RandomEnum<Color>(Color::MaxValue);
    //
    _console.WriteLineColor(message, color);
    //
-   METALMOCK(_consoleColorerMock->SetColorMock.CalledOnceWith(color));
-   METALMOCK(_consoleColorerMock->UnsetColorMock.CalledOnceWith(didSetColor));
+   METALMOCK(_consoleColorerMock->SetTextColorMock.CalledOnceWith(color));
+   METALMOCK(_consoleColorerMock->UnsetTextColorMock.CalledOnceWith(didSetTextColor));
 }
 
 RUN_TESTS(ConsoleTests)

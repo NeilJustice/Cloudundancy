@@ -48,7 +48,7 @@ void Console::WriteLineAndExit(string_view message, int exitCode) const
 
 void Console::WriteLineColor(string_view message, Color color) const
 {
-   const bool didSetColor = _consoleColorer->SetColor(color);
+   const bool didSetTextColor = _consoleColorer->SetTextColor(color);
    cout << message << '\n';
-   _consoleColorer->UnsetColor(didSetColor);
+   _consoleColorer->UnsetTextColor(didSetTextColor);
 }

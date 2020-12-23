@@ -2,6 +2,7 @@
 #include "libCloudundancy/UtilityComponents/Console/ConsoleColorer.h"
 
 ConsoleColorer::ConsoleColorer() noexcept
+// Function Pointers
 #ifdef _WIN32
    : _call_fileno(::_fileno)
    , _call_isatty(::_isatty)
@@ -13,8 +14,11 @@ ConsoleColorer::ConsoleColorer() noexcept
    , _call_GetStdHandle(::GetStdHandle)
    , _call_SetConsoleTextAttribute(::SetConsoleTextAttribute)
 #endif
+   // Constant Components
+   , _asserter(make_unique<Asserter>())
+   // Mutable Fields
    , _supportsColor(false)
-   , _supportsColorSet(false)
+   , _supportsColorHasBeenSet(false)
 {
 }
 
@@ -22,59 +26,34 @@ ConsoleColorer::~ConsoleColorer()
 {
 }
 
-bool ConsoleColorer::SetColor(Color color)
+bool ConsoleColorer::SetTextColor(Color textColor)
 {
-   SetSupportsColorIfUnset();
-   const bool doSetTextColor = color != Color::White && _supportsColor;
-   if (doSetTextColor)
+   if (textColor == Color::White)
    {
-      SetTextColor(color);
+      return false;
+   }
+   SetSupportsColorIfUnset();
+   if (_supportsColor)
+   {
+      PlatformSpecificSetTextColor(textColor);
       return true;
    }
    return false;
 }
 
-void ConsoleColorer::UnsetColor(bool didPreviouslySetTextColor) const
+void ConsoleColorer::UnsetTextColor(bool didPreviouslySetTextColor) const
 {
    if (didPreviouslySetTextColor)
    {
-      SetTextColor(Color::White);
+      PlatformSpecificSetTextColor(Color::White);
    }
 }
 
-void ConsoleColorer::SetSupportsColorIfUnset()
-{
-   if (!_supportsColorSet)
-   {
-      _supportsColor = SupportsColor();
-      _supportsColorSet = true;
-   }
-}
+// Private Functions
 
-bool ConsoleColorer::SupportsColor() const
+const char* ConsoleColorer::ColorToLinuxColor(Color textColor) const
 {
-   const int stdoutFileHandle = _call_fileno(stdout);
-   const int isAtty = _call_isatty(stdoutFileHandle);
-   const bool supportsColor = isAtty != 0;
-   return supportsColor;
-}
-
-void ConsoleColorer::SetTextColor(Color color) const
-{
-#if defined __linux__
-   const char* linuxColor = ColorToLinuxColor(color);
-   std::cout << linuxColor;
-#elif _WIN32
-   const HANDLE stdOutHandle = _call_GetStdHandle(STD_OUTPUT_HANDLE);
-   const WindowsColor windowsColor = ColorToWindowsColor(color);
-   const BOOL didSetConsoleTextAttr = _call_SetConsoleTextAttribute(stdOutHandle, static_cast<WORD>(windowsColor));
-   release_assert(didSetConsoleTextAttr == TRUE);
-#endif
-}
-
-const char* ConsoleColorer::ColorToLinuxColor(Color color) noexcept
-{
-   switch (color)
+   switch (textColor)
    {
    case Color::Red: return "\033[31m";
    case Color::White: return "\033[0m";
@@ -86,9 +65,9 @@ const char* ConsoleColorer::ColorToLinuxColor(Color color) noexcept
    }
 }
 
-WindowsColor ConsoleColorer::ColorToWindowsColor(Color color) noexcept
+WindowsColor ConsoleColorer::ColorToWindowsColor(Color textColor) const
 {
-   switch (color)
+   switch (textColor)
    {
    case Color::Red: return WindowsColor::Red;
    case Color::White: return WindowsColor::White;
@@ -98,4 +77,35 @@ WindowsColor ConsoleColorer::ColorToWindowsColor(Color color) noexcept
    case Color::Unset:
    default: return WindowsColor::White;
    };
+}
+
+void ConsoleColorer::PlatformSpecificSetTextColor(Color textColor) const
+{
+#if defined __linux__
+   const char* linuxColor = ColorToLinuxColor(color);
+   std::cout << linuxColor;
+#elif _WIN32
+   const HANDLE stdOutHandle = _call_GetStdHandle(STD_OUTPUT_HANDLE);
+   const WindowsColor windowsColor = ColorToWindowsColor(textColor);
+   const BOOL didSetConsoleTextAttr = _call_SetConsoleTextAttribute(stdOutHandle, static_cast<WORD>(windowsColor));
+   _asserter->ThrowIfIntsNotEqual(1, static_cast<int>(didSetConsoleTextAttr),
+      "SetConsoleTextAttribute() unexpectedly did not return 1");
+#endif
+}
+
+void ConsoleColorer::SetSupportsColorIfUnset()
+{
+   if (!_supportsColorHasBeenSet)
+   {
+      _supportsColor = SupportsColor();
+      _supportsColorHasBeenSet = true;
+   }
+}
+
+bool ConsoleColorer::SupportsColor() const
+{
+   const int stdoutFileHandle = _call_fileno(stdout);
+   const int isAtty = _call_isatty(stdoutFileHandle);
+   const bool supportsColor = isAtty != 0;
+   return supportsColor;
 }

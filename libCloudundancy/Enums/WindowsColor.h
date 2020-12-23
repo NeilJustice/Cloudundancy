@@ -17,5 +17,6 @@ enum class WindowsColor : unsigned char
 	Red,
 	Pink,
 	Yellow,
-	White
+	White,
+	MaxValue
 };
