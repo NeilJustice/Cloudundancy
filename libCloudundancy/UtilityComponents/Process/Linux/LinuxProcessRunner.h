@@ -1,10 +1,6 @@
 #pragma once
 #ifdef __linux__
 
-class Console;
-template<typename ReturnType, typename ClassType, typename Arg1Type, typename Arg2Type>
-class NonVoidTwoArgMemberFunctionCaller;
-
 class LinuxProcessRunner
 {
 public:

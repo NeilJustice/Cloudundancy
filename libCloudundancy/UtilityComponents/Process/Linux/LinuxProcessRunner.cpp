@@ -1,5 +1,6 @@
 #include "pch.h"
 #ifdef __linux__
+
 #include "libCloudundancy/UtilityComponents/Process/Linux/LinuxProcessRunner.h"
 
 LinuxProcessRunner::~LinuxProcessRunner()
@@ -16,6 +17,4 @@ ProcessResult LinuxProcessRunner::FailFastRun(string_view processName, string_vi
    return ProcessResult();
 }
 
-#else
-namespace { char symbolToQuietMSBuildLinkerWarning4221ForDoesNotDefineAPublicSymbol; }
 #endif
