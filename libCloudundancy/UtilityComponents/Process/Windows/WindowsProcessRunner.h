@@ -10,8 +10,7 @@ class WindowsProcessRunner
    friend class WindowsProcessRunnerTests;
 private:
    // Function Callers
-   using _caller_Run_Type = const NonVoidTwoArgMemberFunctionCaller<
-      ProcessResult, WindowsProcessRunner, string_view, string_view>;
+   using _caller_Run_Type = const NonVoidTwoArgMemberFunctionCaller<ProcessResult, WindowsProcessRunner, string_view, string_view>;
    unique_ptr<const _caller_Run_Type> _caller_Run;
    // Constant Components
    unique_ptr<const Console> _console;

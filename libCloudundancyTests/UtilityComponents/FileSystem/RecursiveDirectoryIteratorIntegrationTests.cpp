@@ -15,16 +15,6 @@ RecursiveDirectoryIterator _recursiveDirectoryIterator;
 FileSystem _fileSystem;
 const fs::path _rootFolderPath = "IntegrationTest_RecursiveDirectoryIterator";
 
-STARTUP
-{
-   CreateIntegrationTestingDirectoryStructure();
-}
-
-CLEANUP
-{
-   _fileSystem.DeleteFolder(_rootFolderPath);
-}
-
 void CreateIntegrationTestingDirectoryStructure()
 {
    _fileSystem.WriteTextFile(_rootFolderPath / "file1.txt", "");
@@ -46,6 +36,16 @@ void CreateIntegrationTestingDirectoryStructure()
 
    _fileSystem.WriteTextFile(_rootFolderPath / "ignored_directory_name_1" / "file1.txt", "");
    _fileSystem.WriteTextFile(_rootFolderPath / "ignored_directory_name_2" / "file1.txt", "");
+}
+
+STARTUP
+{
+   CreateIntegrationTestingDirectoryStructure();
+}
+
+CLEANUP
+{
+   _fileSystem.DeleteFolder(_rootFolderPath);
 }
 
 TEST(DefaultConstructor_NewsOneExtraArgTransformer_SetsFieldsToDefaultValues)

@@ -3,7 +3,7 @@ project(Cloudundancy)
 include(${CMAKE_SOURCE_DIR}/CMakeMacros.cmake)
 
 if(UNIX)
-   set(CMAKE_CXX_FLAGS "-std=c++2a -Wall -Wextra -pedantic -Werror -pthread")
+   set(CMAKE_CXX_FLAGS "-std=c++2a -Wall -Wextra -pedantic -Werror -pthread -Wno-gnu-zero-variadic-macro-arguments")
    if(ClangTidyMode)
       set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
       message("ClangTidyMode enabled: CMAKE_EXPORT_COMPILE_COMMANDS set to ON")
@@ -41,3 +41,4 @@ if(UNIX)
       find -name "*.cpp" -not -path "*/CMakeFiles/*" -print0 | xargs -0 -n 1 -P ${NumberOfCores} -t clang-tidy -p ${CMAKE_BUILD_TYPE}
       WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} VERBATIM USES_TERMINAL)
 endif()
+

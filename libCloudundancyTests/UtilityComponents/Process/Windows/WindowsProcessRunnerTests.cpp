@@ -12,8 +12,7 @@ EVIDENCE
 
 WindowsProcessRunner _windowsProcessRunner;
 // Function Callers
-using _caller_Run_MockType = NonVoidTwoArgMemberFunctionCallerMock<
-   ProcessResult, WindowsProcessRunner, string_view, string_view>;
+using _caller_Run_MockType = NonVoidTwoArgMemberFunctionCallerMock<ProcessResult, WindowsProcessRunner, string_view, string_view>;
 _caller_Run_MockType* _caller_RunMock = nullptr;
 // Constant Components
 ConsoleMock* _consoleMock = nullptr;
