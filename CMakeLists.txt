@@ -3,7 +3,7 @@ project(Cloudundancy)
 include(${CMAKE_SOURCE_DIR}/CMakeMacros.cmake)
 
 if(UNIX)
-   set(CMAKE_CXX_FLAGS "-std=c++2a -Wall -Wextra -Werror -pthread -Wno-unused-parameter")
+   set(CMAKE_CXX_FLAGS "-std=c++2a -Wall -Wextra -pedantic -Werror -pthread")
    if(ClangTidyMode)
       set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
       message("ClangTidyMode enabled: CMAKE_EXPORT_COMPILE_COMMANDS set to ON")
