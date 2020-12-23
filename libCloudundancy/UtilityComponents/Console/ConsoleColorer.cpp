@@ -82,7 +82,7 @@ WindowsColor ConsoleColorer::ColorToWindowsColor(Color textColor) const
 void ConsoleColorer::PlatformSpecificSetTextColor(Color textColor) const
 {
 #if defined __linux__
-   const char* linuxColor = ColorToLinuxColor(color);
+   const char* linuxColor = ColorToLinuxColor(textColor);
    std::cout << linuxColor;
 #elif _WIN32
    const HANDLE stdOutHandle = _call_GetStdHandle(STD_OUTPUT_HANDLE);
