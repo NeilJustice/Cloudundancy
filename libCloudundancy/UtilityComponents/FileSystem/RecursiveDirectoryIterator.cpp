@@ -25,10 +25,10 @@ void RecursiveDirectoryIterator::InitializeIteratorAtFolderPath(const fs::path& 
 
 fs::path RecursiveDirectoryIterator::NextNonIgnoredFilePath()
 {
-   static const fs::recursive_directory_iterator zeroMoreFilesRemaining{};
+   static const fs::recursive_directory_iterator zeroFilesRemaining{};
    while (true)
    {
-      if (_recursiveDirectoryIterator == zeroMoreFilesRemaining)
+      if (_recursiveDirectoryIterator == zeroFilesRemaining)
       {
          return fs::path();
       }
