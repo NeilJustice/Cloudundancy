@@ -1,5 +1,4 @@
 ignore:
   - "ZenUnit.h"
   - "MetalMock.h"
-  - "libCloudundancy/Components/Docopt/docopt.h"
-  - "libCloudundancy/Components/Time/date.h"
+  - "libCloudundancy/UtilityComponents/Docopt/docopt.h"
