@@ -4,6 +4,7 @@ class Environmentalist
 {
    friend class EnvironmentalistTests;
 private:
+   // Function Pointers
    std::function<fs::path()> _call_filesystem_current_path;
 #if defined __linux__
    std::function<int(char*, size_t)> _call_gethostname;
@@ -11,6 +12,8 @@ private:
    std::function<BOOL(LPSTR, LPDWORD)> _call_GetComputerNameA;
    std::function<BOOL(LPSTR, LPDWORD)> _call_GetUserNameA;
 #endif
+   // Constant Components
+   unique_ptr<const Asserter> _asserter;
 public:
    Environmentalist() noexcept;
    virtual ~Environmentalist() = default;

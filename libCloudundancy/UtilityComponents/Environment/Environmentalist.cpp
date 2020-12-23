@@ -2,6 +2,7 @@
 #include "libCloudundancy/UtilityComponents/Environment/Environmentalist.h"
 
 Environmentalist::Environmentalist() noexcept
+   // Function Pointers
    : _call_filesystem_current_path(static_cast<fs::path(*)()>(fs::current_path))
 #if defined __linux__
    , _call_gethostname(::gethostname)
@@ -9,6 +10,8 @@ Environmentalist::Environmentalist() noexcept
    , _call_GetComputerNameA(::GetComputerNameA)
    , _call_GetUserNameA(::GetUserNameA)
 #endif
+   // Constant Components
+   , _asserter(make_unique<Asserter>())
 {
 }
 
@@ -55,20 +58,22 @@ string Environmentalist::LinuxUserName() const
 string Environmentalist::WindowsMachineName() const
 {
    CHAR computerNameChars[41]{};
-   DWORD size = sizeof(computerNameChars);
-   const BOOL didGetComputerName = _call_GetComputerNameA(computerNameChars, &size);
-   release_assert(didGetComputerName == TRUE);
+   DWORD computerNameCharsSize = sizeof(computerNameChars);
+   const BOOL didGetComputerName = _call_GetComputerNameA(computerNameChars, &computerNameCharsSize);
+   _asserter->ThrowIfIntsNotEqual(1, static_cast<int>(didGetComputerName),
+      "_call_GetComputerNameA(computerNameChars, &size) unexpectedly did not return TRUE");
    string windowsMachineName(computerNameChars);
    return windowsMachineName;
 }
 
 string Environmentalist::WindowsUserName() const
 {
-   CHAR windowsUserNameCharacters[257]{};
-   DWORD size = sizeof(windowsUserNameCharacters);
-   const BOOL didGetUserName = _call_GetUserNameA(windowsUserNameCharacters, &size);
-   release_assert(didGetUserName == TRUE);
-   string windowsUserName(windowsUserNameCharacters);
+   CHAR windowsUserNameChars[257]{};
+   DWORD size = sizeof(windowsUserNameChars);
+   const BOOL didGetUserName = _call_GetUserNameA(windowsUserNameChars, &size);
+   _asserter->ThrowIfIntsNotEqual(1, static_cast<int>(didGetUserName),
+      "_call_GetUserNameA(windowsUserNameChars, &size) unexpectedly did not return TRUE");
+   string windowsUserName(windowsUserNameChars);
    return windowsUserName;
 }
 

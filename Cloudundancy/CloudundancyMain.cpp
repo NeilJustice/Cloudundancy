@@ -29,6 +29,7 @@ using namespace std;
 
 #include "libCloudundancy/Components/CloudundancyProgram.h"
 #include "libCloudundancy/Enums/Color.h"
+#include "libCloudundancy/UtilityComponents/Assertion/Asserter.h"
 #include "libCloudundancy/UtilityComponents/Console/Console.h"
 #include "libCloudundancy/UtilityComponents/Environment/Environmentalist.h"
 #include "libCloudundancy/UtilityComponents/Exception/TryCatchCaller.h"
