@@ -1,6 +1,6 @@
 # ☁️ Cloudundancy ☁️
 
-[![Standard](https://img.shields.io/badge/c%2B%2B-17-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B17) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Standard](https://img.shields.io/badge/c%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B20) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 Cloudundancy is a C++ command line program which quickly copies a configurable list of files and folders to a configurable list of destination folders to achieve cloud-redundant and device-redundant backups of business-critical files.
 
@@ -18,7 +18,7 @@ On Linux, command line invocations of Google Drive and Microsoft OneDrive comman
 
 The correctness of Cloudundancy at the unit level is rigorously confirmed using C++ unit testing framework ZenUnit and C++ mocking framework MetalMock. <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">GitHub page for ZenUnit and MetalMock</a>.
 
-The correctness of Cloudundancy at the user level is currently confirmed with manual testing and will in the future be confirmed using an automated acceptance testing framework.
+The correctness of Cloudundancy at the user level is currently confirmed with manual testing and twice-daily Jenkins jobs which invoke Cloudundancy to backup my business-critical files. In the future Cloudundancy's correctness at the user level will be additionally confirmed using an automated acceptance testing framework.
 
 * [Command Line Usage](#command-line-usage)
 * [Cloudundancy Program Modes](#cloudundancy-program-modes)
@@ -154,7 +154,7 @@ As an example, imagine you had the following folder structure and were intereste
 Here is what happens when the following Cloudundancy command line is run:
 
 ```
-Cloudundancy.exe 7zip-files-then-copy-the-7zip-file-to-multiple-folders 
+Cloudundancy.exe 7zip-files-then-copy-the-7zip-file-to-multiple-folders
    --ini-file-to-copy-files-to-7zip-staging-folder=C:\Cloudundancy7ZipTesting\CodeFolderTo7ZipStagingFolderCopyingStep.ini
    --7zip-staging-folder=C:\Cloudundancy7ZipTesting\7ZipStagingFolder
    --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=C:\Cloudundancy7ZipTesting\7ZipFileToGoogleDriveAndOneDriveCopyingStep.ini
