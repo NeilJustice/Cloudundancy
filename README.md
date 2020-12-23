@@ -16,7 +16,9 @@ On Linux, command line invocations of Google Drive and Microsoft OneDrive comman
 |AppVeyor Windows (Visual Studio 2019 x64)|<a href="https://ci.appveyor.com/project/NeilJustice/Cloudundancy"><img src="https://ci.appveyor.com/api/projects/status/ygwr3rb9spwhy4u0?svg=true"/></a>|
 |Code Coverage For The GCC 7.5.0 Release Build|[![codecov](https://codecov.io/gh/NeilJustice/Cloudundancy/branch/main/graph/badge.svg?token=ruXbRPB1CQ)](https://codecov.io/gh/NeilJustice/Cloudundancy)|
 
-The correctness of Cloudundancy is rigorously confirmed using C++ unit testing framework ZenUnit and C++ mocking framework MetalMock. <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">GitHub page for ZenUnit and MetalMock</a>.
+The correctness of Cloudundancy at the unit level is rigorously confirmed using C++ unit testing framework ZenUnit and C++ mocking framework MetalMock. <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">GitHub page for ZenUnit and MetalMock</a>.
+
+The correctness of Cloudundancy at the user level is currently confirmed with manual testing and will in the future be confirmed using an automated acceptance testing framework.
 
 * [Command Line Usage](#command-line-usage)
 * [Cloudundancy Program Modes](#cloudundancy-program-modes)
