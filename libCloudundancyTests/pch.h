@@ -1,5 +1,5 @@
 #pragma once
-#include "libCloudundancy/CompilerWarnings/IfWindowsIgnoreTheseWarningsGlobally.h"
+#include "libCloudundancy/Compiler/IfWindowsIgnoreTheseWallWarnings.h"
 
 #ifdef _WIN32
 #define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING

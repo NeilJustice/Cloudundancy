@@ -26,8 +26,8 @@ The correctness of Cloudundancy is rigorously confirmed using C++ unit testing f
    * [example-windows-ini-file](#example-windows-ini-file)
 * [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-undefinedbehaviorsanitize-cloudundancy)
 * [Windows Jenkins Jobs Which Build Cloudundancy](#windows-jenkins-jobs-which-build-cloudundancy)
-* [What Cloudundancy Looks Like In Visual Studio Code](#what-cloudundancy-looks-like-in-visual-studio-code)
-* [What Cloudundancy Looks Like In Visual Studio 2019](#what-cloudundancy-looks-like-in-visual-studio-2019)
+* [What Cloudundancy Source Code Looks Like In Visual Studio Code](#what-cloudundancy-source-code-looks-like-in-visual-studio-code)
+* [What Cloudundancy Source Code Looks Like In Visual Studio 2019](#what-cloudundancy-source-code-looks-like-in-visual-studio-2019)
 * [How To Build Cloudundancy From Source On Linux](#how-to-build-cloudundancy-from-source-on-linux)
 * [How To Build Cloudundancy From Source On Windows](#how-to-build-cloudundancy-from-source-on-windows)
 * [Cloudundancy Features Roadmap](#cloudundancy-features-roadmap)
@@ -186,7 +186,7 @@ Cloudundancy program mode `example-windows-ini-file` prints an example Windows C
 
 `example-windows-ini-file` in text format:
 
-```
+```ini
 [DestinationFolders]
 # Cloud-redundant backups to Google's cloud, Microsoft's cloud, and GitHub's cloud
 C:\GoogleDrive\CloudundancyBackups
@@ -243,9 +243,9 @@ A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jo
 
 
 
-## What Cloudundancy Looks Like In Visual Studio 2019
+## What Cloudundancy Source Code Looks Like In Visual Studio 2019
 
-![What Cloudundancy Looks Like In Visual Studio 2019](Screenshots/CloudundancyVisualStudio.png)
+![What Cloudundancy Source Code Looks Like In Visual Studio 2019](Screenshots/WhatCloudundancySourceCodeLooksLikeInVisualStudio2019.png)
 
 ## How To Build Cloudundancy From Source On Linux
 

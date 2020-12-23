@@ -7,7 +7,7 @@ if(UNIX)
 endif()
 
 folder_source_group(Components)
-folder_source_group(CompilerWarnings)
+folder_source_group(Compiler)
 folder_source_group_subfolder(Components Args)
 folder_source_group_subfolder(Components SubPrograms)
 folder_source_group_subfolder(Components FileSystem)
