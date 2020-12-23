@@ -7,6 +7,7 @@ TESTS(WatchTests)
 AFACT(DefaultConstructor_NewsCRTWatch)
 FACTS(DateTimeNow_ReturnsLocalDateTimeNow)
 FACTS(DateTimeNowForFileNames_ReturnsYYYYDashMMDashDDTHHDashMMDashSS)
+AFACT(TMNow_ReturnstmNow__CodeCoverage)
 EVIDENCE
 
 class WatchSelfMocked : public Metal::Mock<Watch>
@@ -68,6 +69,15 @@ TEST7X7(DateTimeNowForFileNames_ReturnsYYYYDashMMDashDDTHHDashMMDashSS,
    //
    METALMOCK(_crtWatchMock->TmNowMock.CalledOnce());
    ARE_EQUAL(expectedReturnValue, dateTimeNowMinutes);
+}
+
+TEST(TMNow_ReturnstmNow__CodeCoverage)
+{
+   Watch watch;
+   //
+   const tm tmNow = watch.TMNow();
+   //
+   IS_NOT_DEFAULT_VALUE(tmNow);
 }
 
 static constexpr tm Tm(int tmMonth, int tmMonthDay, int tmYear, int tmHour, int tmMin, int tmSec)
