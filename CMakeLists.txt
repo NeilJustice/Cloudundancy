@@ -32,7 +32,7 @@ add_subdirectory(Cloudundancy)
 add_subdirectory(libCloudundancy)
 add_subdirectory(libCloudundancyTests)
 
-set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
+set(CMAKE_CONFIGURATION_TYPES "Debug;Release;RelWithDebInfo")
 
 if(UNIX)
    include(ProcessorCount)
