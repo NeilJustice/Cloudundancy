@@ -12,9 +12,9 @@ AFACT(UnsetTextColor_DidPreviouslySetTextColorIsTrue_CallsSetTextColorWhite)
 FACTS(ColorToLinuxColor_ReturnsLinuxColorStringForColor)
 FACTS(ColorToWindowsColor_ReturnsWindowsColorForColor)
 #ifdef __linux__
-AFACT(Linux__PlatformSpecificSetTextColor_CallsColorToLinuxColor_InsertionOperatorsLinuxColorToCout)
+AFACT(Linux__SetTextColor_CallsColorToLinuxColor_InsertionOperatorsLinuxColorToCout)
 #elif _WIN32
-AFACT(Windows__PlatformSpecificSetTextColor_CallsSetConsoleTextAttributeToWindowsColor)
+AFACT(Windows__SetTextColor_CallsSetConsoleTextAttributeToWindowsColor)
 #endif
 AFACT(SetSupportsColorIfUnset_SupportsColorBeenSetIsTrue_DoesNothing)
 AFACT(SetSupportsColorIfUnset_SupportsColorBeenSetIsFalse_SetsSupportsColorToResultOfCallingSupportsColor_SetsSupportsColorHasBeenSetToTrue)
@@ -158,7 +158,7 @@ TEST2X2(ColorToWindowsColor_ReturnsWindowsColorForColor,
 
 #ifdef __linux__
 
-TEST(Linux__PlatformSpecificSetTextColor_CallsColorToLinuxColor_InsertionOperatorsLinuxColorToCout)
+TEST(Linux__SetTextColor_CallsColorToLinuxColor_InsertionOperatorsLinuxColorToCout)
 {
    class ConsoleColorerSelfMocked : public Metal::Mock<ConsoleColorer>
    {
@@ -175,7 +175,7 @@ TEST(Linux__PlatformSpecificSetTextColor_CallsColorToLinuxColor_InsertionOperato
 
 #elif _WIN32
 
-TEST(Windows__PlatformSpecificSetTextColor_CallsSetConsoleTextAttributeToWindowsColor)
+TEST(Windows__SetTextColor_CallsSetConsoleTextAttributeToWindowsColor)
 {
    class ConsoleColorerSelfMocked : public Metal::Mock<ConsoleColorer>
    {
