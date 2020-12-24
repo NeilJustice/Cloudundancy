@@ -67,15 +67,8 @@ void SevenZipSubProgram::SevenZipBackupStagingFolder(const CloudundancyArgs& arg
    _stopwatch->Start();
    _fileSystem->SetCurrentPath(args.sevenZipStagingFolderPath);
    const string dateTimeNowForFileNames = _watch->DateTimeNowForFileNames();
-
-#ifdef __linux__
    const string sevenZipCommandLineArguments = String::Concat(
-      "a -r -mx9 7ZipFile/CloudundancyBackup_", dateTimeNowForFileNames, ".7z");
-#elif _WIN32
-   const string sevenZipCommandLineArguments = String::Concat(
-      "a -r -mx9 7ZipFile\\CloudundancyBackup_", dateTimeNowForFileNames, ".7z");
-#endif
-
+      "a -r -mx6 7ZipFile", fs::path::preferred_separator, "CloudundancyBackup_", dateTimeNowForFileNames, ".7z");
    _processRunner->FailFastRun("7z", sevenZipCommandLineArguments, true);
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string sevenZippedMessage = String::Concat(
