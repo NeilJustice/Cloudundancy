@@ -107,7 +107,7 @@ ProcessResult WindowsProcessRunner::FailFastRun(string_view processName, string_
    if (processResult.exitCode != 0)
    {
       const string processFailedErrorMessage = String::Concat(
-         "Process \"", processName, ' ', arguments, "\" failed to return exit code 0 by returning exit code ", processResult.exitCode, '.');
+         "Process \"", processName, ' ', arguments, "\" failed with exit code ", processResult.exitCode, '.');
       _console->WriteLineAndExit(processFailedErrorMessage, processResult.exitCode);
    }
    return processResult;

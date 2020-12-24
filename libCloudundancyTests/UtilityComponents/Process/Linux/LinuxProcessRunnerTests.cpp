@@ -72,7 +72,7 @@ TEST(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessageAndExitsProgramWithPro
    const string expectedRunningProgramMessage = String::Concat("[Cloudundancy] Running program: ", processName, ' ', arguments);
    METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedRunningProgramMessage, Color::Yellow));
    const string expectedProcessFailedErrorMessage = String::Concat(
-      "Process \"", processName, " ", arguments, "\" failed to return exit code 0 by returning exit code ", processResult.exitCode, '.');
+      "Process \"", processName, " ", arguments, "\" failed with exit code ", processResult.exitCode, '.');
    METALMOCK(_consoleMock->WriteLineAndExitMock.CalledOnceWith(expectedProcessFailedErrorMessage, runReturnValue.exitCode));
    ARE_EQUAL(runReturnValue, processResult);
 }

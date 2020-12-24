@@ -26,8 +26,8 @@ ProcessResult LinuxProcessRunner::Run(string_view processName, string_view argum
    argv[0] = const_cast<char*>(processName.data());
    for (size_t i = 1; i < spaceSplitArguments.size(); ++i)
    {
-      const string& ithArgument = spaceSplitArguments[i];
-      argv[1] = const_cast<char*>(ithArgument.c_str());
+      const string& ithArgument = spaceSplitArguments[i - 1];
+      argv[i] = const_cast<char*>(ithArgument.c_str());
    }
    argv[ProcessNameArgv + spaceSplitArguments.size()] = nullptr;
    pid_t pid;
@@ -80,7 +80,7 @@ ProcessResult LinuxProcessRunner::FailFastRun(string_view processName, string_vi
    if (processResult.exitCode != 0)
    {
       const string processFailedErrorMessage = String::Concat(
-         "Process \"", processName, ' ', arguments, "\" failed to return exit code 0 by returning exit code ", processResult.exitCode, '.');
+         "Process \"", processName, ' ', arguments, "\" failed with exit code ", processResult.exitCode, '.');
       _console->WriteLineAndExit(processFailedErrorMessage, processResult.exitCode);
    }
    return processResult;
