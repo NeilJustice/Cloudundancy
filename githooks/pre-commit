@@ -3,7 +3,7 @@ set -u
 
 osname="$(uname --operating-system)"
 if [[ "$osname" == *"Linux" ]]; then
-   JenkinsJobs/Linux/CloudundancyDebugClangSanitizers.sh
+   JenkinsJobs/Linux/Cloudundancy-Debug-Clang.sh
 elif [ "$osname" == "Msys" ]; then
    powershell.exe JenkinsJobs/Windows/CloudundancyDebug.ps1
 fi
@@ -17,3 +17,4 @@ fi
 echo "***************************************************"
 echo "pre-commit: Jenkins job succeeded. Allowing commit."
 echo "***************************************************"
+
