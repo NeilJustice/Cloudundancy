@@ -95,11 +95,9 @@ void CloudundancyFileCopier::ExceptionHandlerForDoCopyFilesAndFoldersToDestinati
    const fs::path& destinationFolderPath = destinationFolderPath_cloudundancyIni.first;
    const string exceptionClassNameAndMessage = _call_Type_GetExceptionClassNameAndMessage(&ex);
    const string errorMessage = String::Concat(
-      "\n[Cloudundancy]     Error: Exception thrown while copying files to destination folder ",
-      destinationFolderPath, ": ", exceptionClassNameAndMessage, ". Rethrowing exception.");
-   _console->WriteLine(errorMessage);
+      "Exception thrown while copying files to destination folder ", destinationFolderPath, ": ", exceptionClassNameAndMessage);
    _cloudundancyLogFileWriter->AppendTextToCloudundancyLogFileInFolder(destinationFolderPath, errorMessage);
-   throw ex;
+   throw runtime_error(exceptionClassNameAndMessage);
 }
 
 void CloudundancyFileCopier::CopyFileOrFolderToFolder(
