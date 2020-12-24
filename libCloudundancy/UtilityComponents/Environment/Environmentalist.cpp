@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "libCloudundancy/UtilityComponents/Environment/Environmentalist.h"
+#ifdef __linux__
+#include <pwd.h>
+#endif
 
 Environmentalist::Environmentalist() noexcept
    // Function Pointers
@@ -40,19 +43,18 @@ string Environmentalist::LinuxMachineName() const
    char linuxMachineNameChars[65]{};
    const int gethostnameResult = _call_gethostname(linuxMachineNameChars, sizeof(linuxMachineNameChars));
    _asserter->ThrowIfIntsNotEqual(0, gethostnameResult,
-      "_call_gethostname(hostname, sizeof(hostname)) unexpectedly did not return 0");
+      "_call_gethostname(hostname, sizeof(hostname)) unexpectedly did not return 0: " + to_string(gethostnameResult));
    string linuxMachineName(linuxMachineNameChars);
    return linuxMachineName;
 }
 
 string Environmentalist::LinuxUserName() const
 {
-   char linuxUserNameChars[_SC_LOGIN_NAME_MAX]{};
-   const int getloginReturnValue = getlogin_r(linuxUserNameChars, sizeof(linuxUserNameChars));
-   _asserter->ThrowIfIntsNotEqual(0, getloginReturnValue,
-      "getlogin_r(usernameChars, sizeof(usernameChars)) unexpectedly did not return 0");
-   string linuxUserName(linuxUserNameChars);
-   return linuxUserName;
+   const uid_t uidValue = geteuid();
+   struct passwd* const passwdValue = getpwuid(uidValue);
+   release_assert(passwdValue != nullptr);
+   string username(passwdValue->pw_name);
+   return username;
 }
 
 #elif defined _WIN32
