@@ -126,7 +126,7 @@ TEST(SevenZipBackupStagingFolder_Writes7ZipFileToFolder7ZipFileBackslashCloudund
    METALMOCK(_fileSystemMock->SetCurrentPathMock.CalledOnceWith(args.sevenZipStagingFolderPath));
    METALMOCK(_watchMock->DateTimeNowForFileNamesMock.CalledOnce());
    const string expectedSevenZipCommandLineArguments = String::Concat(
-      "a -t7z 7ZipFile/CloudundancyBackup_", dateTimeNowForFileNames, ".7z -r -mx6");
+      "a 7ZipFile/CloudundancyBackup_", dateTimeNowForFileNames, ".7z -r -mx6");
    METALMOCK(_processRunnerMock->FailFastRunMock.CalledOnceWith("7z", expectedSevenZipCommandLineArguments, true));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
    const string expectedSevenZippingMessage =
