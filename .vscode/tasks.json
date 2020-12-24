@@ -5,7 +5,7 @@
       "type": "shell",
       "label": "Build Debug",
       "command": "ninja",
-      "args": [ "-v" ],
+      "args": [ "" ],
       "options": { "cwd": "${workspaceRoot}/Debug" },
       "problemMatcher": [ "$gcc" ],
       "group": { "kind": "build", "isDefault": true }
@@ -14,7 +14,7 @@
       "type": "shell",
       "label": "Build Release",
       "command": "ninja",
-      "args": [ "-v" ],
+      "args": [ "" ],
       "options": { "cwd": "${workspaceRoot}/Release" },
       "problemMatcher": [ "$gcc" ]
    },

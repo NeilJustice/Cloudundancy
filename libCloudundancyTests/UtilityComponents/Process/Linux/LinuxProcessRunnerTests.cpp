@@ -6,7 +6,7 @@
 TESTS(LinuxProcessRunnerTests)
 AFACT(DefaultConstructor_NewsComponents)
 AFACT(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
-AFACT(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessage_CallsExitWithProcessExitCode)
+AFACT(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessageAndExitsProgramWithProcessExitCode)
 EVIDENCE
 
 LinuxProcessRunner _linuxProcessRunner;
@@ -18,21 +18,24 @@ ConsoleMock* _consoleMock = nullptr;
 
 STARTUP
 {
+   // Function Callers
    _linuxProcessRunner._caller_Run.reset(_caller_RunMock = new _caller_Run_MockType);
+   // Constant Components
    _linuxProcessRunner._console.reset(_consoleMock = new ConsoleMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
 {
    LinuxProcessRunner linuxProcessRunner;
+   // Function Callers
    DELETE_TO_ASSERT_NEWED(linuxProcessRunner._caller_Run);
+   // Constant Components
    DELETE_TO_ASSERT_NEWED(linuxProcessRunner._console);
 }
 
 TEST(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
 {
    _consoleMock->WriteLineColorMock.Expect();
-   _consoleMock->WriteLineIfMock.Expect();
 
    ProcessResult runReturnValue = ZenUnit::Random<ProcessResult>();
    runReturnValue.exitCode = 0;
@@ -40,39 +43,34 @@ TEST(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
 
    const string processName = ZenUnit::Random<string>();
    const string arguments = ZenUnit::Random<string>();
-   const bool doPrintStandardOutput = ZenUnit::Random<bool>();
    //
-   const ProcessResult processResult = _linuxProcessRunner.FailFastRun(processName, arguments, doPrintStandardOutput);
+   const ProcessResult processResult = _linuxProcessRunner.FailFastRun(processName, arguments, ZenUnit::Random<bool>());
    //
    const string expectedRunningProgramMessage = String::Concat("[Cloudundancy] Running program: ", processName, ' ', arguments);
    METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedRunningProgramMessage, Color::Yellow));
-   METALMOCK(_consoleMock->WriteLineIfMock.CalledOnceWith(doPrintStandardOutput, processResult.standardOutputAndError));
    METALMOCK(_caller_RunMock->CallConstMemberFunctionMock.CalledOnceWith(
       &LinuxProcessRunner::Run, &_linuxProcessRunner, processName, arguments));
    ARE_EQUAL(runReturnValue, processResult);
 }
 
-TEST(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessage_CallsExitWithProcessExitCode)
+TEST(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessageAndExitsProgramWithProcessExitCode)
 {
    ProcessResult runReturnValue = ZenUnit::Random<ProcessResult>();
    runReturnValue.exitCode = ZenUnit::RandomNon0<int>();
    _caller_RunMock->CallConstMemberFunctionMock.Return(runReturnValue);
 
    _consoleMock->WriteLineColorMock.Expect();
-   _consoleMock->WriteLineIfMock.Expect();
    _consoleMock->WriteLineAndExitMock.Expect();
 
    const string processName = ZenUnit::Random<string>();
    const string arguments = ZenUnit::Random<string>();
-   const bool doPrintStandardOutput = ZenUnit::Random<bool>();
    //
-   const ProcessResult processResult = _linuxProcessRunner.FailFastRun(processName, arguments, doPrintStandardOutput);
+   const ProcessResult processResult = _linuxProcessRunner.FailFastRun(processName, arguments, ZenUnit::Random<bool>());
    //
    METALMOCK(_caller_RunMock->CallConstMemberFunctionMock.CalledOnceWith(
       &LinuxProcessRunner::Run, &_linuxProcessRunner, processName, arguments));
    const string expectedRunningProgramMessage = String::Concat("[Cloudundancy] Running program: ", processName, ' ', arguments);
    METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedRunningProgramMessage, Color::Yellow));
-   METALMOCK(_consoleMock->WriteLineIfMock.CalledOnceWith(doPrintStandardOutput, processResult.standardOutputAndError));
    const string expectedProcessFailedErrorMessage = String::Concat(
       "Process \"", processName, " ", arguments, "\" failed to return exit code 0 by returning exit code ", processResult.exitCode, '.');
    METALMOCK(_consoleMock->WriteLineAndExitMock.CalledOnceWith(expectedProcessFailedErrorMessage, runReturnValue.exitCode));

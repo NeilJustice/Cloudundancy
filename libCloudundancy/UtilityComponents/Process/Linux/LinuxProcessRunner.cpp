@@ -30,51 +30,53 @@ ProcessResult LinuxProcessRunner::Run(string_view processName, string_view argum
       argv[1] = const_cast<char*>(ithArgument.c_str());
    }
    argv[ProcessNameArgv + spaceSplitArguments.size()] = nullptr;
-
    pid_t pid;
    const int posixSpawnpReturnValue = posix_spawnp(&pid, processName.data(), nullptr, nullptr, argv.get(), nullptr);
    if (posixSpawnpReturnValue != 0)
    {
+      const int errnoValue = errno;
+      const char* const readableErrno = strerror(errnoValue);
       const string exceptionMessage = String::Concat(
-         "Fatal Error: 'posix_spawnp(&pid, processName.data(), nullptr, nullptr, argv.get(), nullptr)' returned non-0: ", posixSpawnpReturnValue);
+         "Error: 'posix_spawnp(&pid, processName.data(), nullptr, nullptr, argv.get(), nullptr)' returned non-0: ", posixSpawnpReturnValue,
+         ". errno=", errnoValue, " (", readableErrno, ")");
       throw runtime_error(exceptionMessage);
    }
-
-   int waitPidStatus;
-	pid_t waitpidReturnValue = waitpid(pid, &waitPidStatus, 0);
+   int waitpidStatus;
+	pid_t waitpidReturnValue = waitpid(pid, &waitpidStatus, 0);
 	if (waitpidReturnValue != pid)
 	{
       const int errnoValue = errno;
       const char* const readableErrno = strerror(errnoValue);
       const string exceptionMessage = String::Concat(
-         "Fatal Error: 'waitpid(pid, &waitPidStatus, 0)' unexpectedly returned ", waitpidReturnValue,
+         "Error: 'waitpid(pid, &waitPidStatus, 0)' unexpectedly returned ", waitpidReturnValue,
          " which is not equal to pid ", pid, ". errno=", errnoValue, " strerror(errno)=", readableErrno);
       throw runtime_error(exceptionMessage);
    }
-
-   const int wifexitedReturnValue = WIFEXITED(waitPidStatus);
+   const int wifexitedReturnValue = WIFEXITED(waitpidStatus);
    if (wifexitedReturnValue == 1)
    {
       ProcessResult processResult;
       processResult.processName = processName;
       processResult.arguments = arguments;
-      processResult.exitCode = 0;
+      processResult.exitCode = WEXITSTATUS(waitpidStatus);
       return processResult;
    }
    else
    {
-      const string exceptionMessage = String::Concat("WIFEXITED(waitPidStatus) did not return 1: ", wifexitedReturnValue);
+      const int errnoValue = errno;
+      const char* const readableErrno = strerror(errnoValue);
+      const string exceptionMessage = String::Concat(
+         "Error: 'WIFEXITED(waitPidStatus) did not return 1: ", wifexitedReturnValue, ". errno=", errnoValue, " (", readableErrno, ")");
       throw runtime_error(exceptionMessage);
    }
 }
 
-ProcessResult LinuxProcessRunner::FailFastRun(string_view processName, string_view arguments, bool doPrintStandardOutput) const
+ProcessResult LinuxProcessRunner::FailFastRun(string_view processName, string_view arguments, bool /*doPrintStandardOutput*/) const
 {
    const string runningMessage = String::Concat("[Cloudundancy] Running program: ", processName, ' ', arguments);
    _console->WriteLineColor(runningMessage, Color::Yellow);
    const ProcessResult processResult = _caller_Run->CallConstMemberFunction(
       &LinuxProcessRunner::Run, this, processName, arguments);
-   _console->WriteLineIf(doPrintStandardOutput, processResult.standardOutputAndError);
    if (processResult.exitCode != 0)
    {
       const string processFailedErrorMessage = String::Concat(
