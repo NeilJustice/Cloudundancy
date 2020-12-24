@@ -10,7 +10,7 @@ AFACT(CopyFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFi
 AFACT(CopyFilesAndFoldersToDestinationFolder_TryCatchCallsDoCopyFilesAndFoldersToDestinationFolder)
 AFACT(DoCopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesNonSkippedSourceFilesToDestinationFolder_AppendBackupSuccessfulToLogFile)
 AFACT(DoCopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesNonSkippedSourceFilesToDestinationFolder_AppendBackupSuccessfulToLogFile)
-AFACT(ExceptionHandlerForDoCopyFilesAndFoldersToDestinationFolder_WritesExceptionMessageToConsole_AppendsExceptionMessageToCloudundancyLogFile)
+AFACT(ExceptionHandlerForDoCopyFilesAndFoldersToDestinationFolder_WritesExceptionMessageToConsole_AppendsExceptionMessageToCloudundancyLogFile_RethrowsException)
 AFACT(CopyFileOrFolderToFolder_SourcePathHasAFileName_CallsCopyFileToFolder)
 FACTS(CopyFileOrFolderToFolder_SourcePathDoesNotHaveAFileNameMeaningItIsAFolder_CallsRecursivelyCopyNonIgnoredFilesToFolder)
 AFACT(CopyNonIgnoredFilesInAndBelowFolderToFolder_CopiesNonIgnoredFilesToFolderUntilRecursiveDirectoryIteratorReturnsNoMoreFiles)
@@ -240,7 +240,7 @@ TEST(DoCopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_Copie
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
 }
 
-TEST(ExceptionHandlerForDoCopyFilesAndFoldersToDestinationFolder_WritesExceptionMessageToConsole_AppendsExceptionMessageToCloudundancyLogFile)
+TEST(ExceptionHandlerForDoCopyFilesAndFoldersToDestinationFolder_WritesExceptionMessageToConsole_AppendsExceptionMessageToCloudundancyLogFile_RethrowsException)
 {
    const string exceptionClassNameAndMessage = GetExceptionClassNameAndMessageMock.ReturnRandom();
 
@@ -255,12 +255,14 @@ TEST(ExceptionHandlerForDoCopyFilesAndFoldersToDestinationFolder_WritesException
    const CloudundancyIni cloudundancyIni = ZenUnit::Random<CloudundancyIni>();
    const pair<fs::path, CloudundancyIni> destinationFolderPath_cloudundancyIni = make_pair(destinationFolderPath, cloudundancyIni);
    //
-   _cloudundancyFileCopier.ExceptionHandlerForDoCopyFilesAndFoldersToDestinationFolder(ex, destinationFolderPath_cloudundancyIni);
+   THROWS_EXCEPTION(_cloudundancyFileCopier.ExceptionHandlerForDoCopyFilesAndFoldersToDestinationFolder(
+      ex, destinationFolderPath_cloudundancyIni),
+      exception, exceptionMessage);
    //
    METALMOCK(GetExceptionClassNameAndMessageMock.CalledOnceWith(&ex));
    const string expectedErrorMessage = String::Concat(
-      "Error: Exception thrown while copying files to destination folder ",
-      destinationFolderPath, ": ", exceptionClassNameAndMessage);
+      "\n[Cloudundancy]     Error: Exception thrown while copying files to destination folder ",
+      destinationFolderPath, ": ", exceptionClassNameAndMessage, ". Rethrowing exception.");
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedErrorMessage));
    METALMOCK(_cloudundancyLogFileWriterMock->AppendTextToCloudundancyLogFileInFolderMock.CalledOnceWith(
       destinationFolderPath, expectedErrorMessage));
