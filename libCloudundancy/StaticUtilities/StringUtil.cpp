@@ -23,7 +23,9 @@ string String::ToLower(string_view str)
 #pragma warning(push)
 #pragma warning(disable: 4242) // conversion from 'int' to 'char', possible loss of data
 #pragma warning(disable: 4244) // '=': conversion from 'int' to 'char', possible loss of data
+#endif
    std::transform(str.begin(), str.end(), lowercaseStr.begin(), ::tolower);
+#ifdef _WIN32
 #pragma warning(pop)
 #endif
    return lowercaseStr;
