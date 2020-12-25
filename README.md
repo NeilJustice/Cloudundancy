@@ -43,7 +43,9 @@ which could be Google Drive and Microsoft OneDrive automatic cloud-uploading fol
 https://github.com/NeilJustice/Cloudundancy
 
 Usage:
-   Cloudundancy copy-files-to-multiple-folders --ini-file=<CloudundancyIniFilePath> [--delete-destination-folders-first]
+   Cloudundancy copy-files-to-multiple-folders 
+      --ini-file=<CloudundancyIniFilePath> 
+      [--delete-destination-folders-first]
    Cloudundancy 7zip-files-then-copy-the-7zip-file-to-multiple-folders
       --ini-file-to-copy-files-to-7zip-staging-folder=<CloudundancyIniFilePath>
       --7zip-staging-folder=<FolderPath>
