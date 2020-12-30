@@ -1,22 +1,12 @@
 #include "libCloudundancy/Compiler/IfWindowsIgnoreTheseWallWarnings.h"
 
+#include <filesystem>
+#include <functional>
+namespace fs = std::filesystem;
+
 #if defined __linux__
-#include <experimental/filesystem>
-namespace fs = std::experimental::filesystem;
 #include <memory>
 #include <unistd.h>
-#elif defined _WIN32 || defined __APPLE__
-#pragma warning(push)
-#pragma warning(disable: 4365) // signed/unsigned mismatch
-#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
-#include <filesystem>
-namespace fs = std::filesystem;
-#pragma warning(pop)
-#endif
-
-#include <functional>
-#ifdef __linux__
-#include <memory> // unique_ptr
 #endif
 
 #ifdef _WIN32
