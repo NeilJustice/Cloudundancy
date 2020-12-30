@@ -1,5 +1,5 @@
 #pragma once
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 class Console;
 class LinuxProcessRunnerTests;
 template<typename ReturnType, typename ClassType, typename Arg1Type, typename Arg2Type>

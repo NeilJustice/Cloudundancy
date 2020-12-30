@@ -8,7 +8,7 @@
 #include "libCloudundancyTests/UtilityComponents/Time/MetalMock/WatchMock.h"
 
 TESTS(FileSystemTests)
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 AFACT(GetLinuxErrno_ReturnsAddressOfGlobalErrnoVariable)
 #endif
 AFACT(DefaultConstructor_SetsFunctionPointers_NewsComponents)
@@ -111,7 +111,7 @@ STARTUP
    _fileSystem._stopwatch.reset(_stopwatchMock = new StopwatchMock);
 }
 
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 TEST(GetLinuxErrno_ReturnsAddressOfGlobalErrnoVariable)
 {
    int* errnoPointer = GetLinuxErrno();
@@ -123,7 +123,7 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 {
    FileSystem fileSystem;
    // C File Function Pointers
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    STD_FUNCTION_TARGETS(GetLinuxErrno, fileSystem._call_errno);
 #elif _WIN32
    STD_FUNCTION_TARGETS(::_errno, fileSystem._call_errno);

@@ -1,13 +1,13 @@
 #include "pch.h"
 #include "libCloudundancy/UtilityComponents/Process/ProcessRunner.h"
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 #include "libCloudundancy/UtilityComponents/Process/Linux/LinuxProcessRunner.h"
 #elif _WIN32
 #include "libCloudundancy/UtilityComponents/Process/Windows/WindowsProcessRunner.h"
 #endif
 
 ProcessRunner::ProcessRunner()
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    : _osSpecificProcessRunner(make_unique<LinuxProcessRunner>())
 #elif _WIN32
    : _osSpecificProcessRunner(make_unique<WindowsProcessRunner>())

@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/UtilityComponents/Process/ProcessRunner.h"
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 #include "libCloudundancyTests/UtilityComponents/Process/Linux/MetalMock/LinuxProcessRunnerMock.h"
 #elif _WIN32
 #include "libCloudundancyTests/UtilityComponents/Process/Windows/MetalMock/WindowsProcessRunnerMock.h"
@@ -13,7 +13,7 @@ AFACT(FailFastRun_CallsProcessRunnerFailFastRun)
 EVIDENCE
 
 ProcessRunner _processRunner;
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 LinuxProcessRunnerMock* _osSpecificProcessRunnerMock = nullptr;
 #elif _WIN32
 WindowsProcessRunnerMock* _osSpecificProcessRunnerMock = nullptr;
@@ -21,7 +21,7 @@ WindowsProcessRunnerMock* _osSpecificProcessRunnerMock = nullptr;
 
 STARTUP
 {
-   #ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    _processRunner._osSpecificProcessRunner.reset(_osSpecificProcessRunnerMock = new LinuxProcessRunnerMock);
 #elif _WIN32
    _processRunner._osSpecificProcessRunner.reset(_osSpecificProcessRunnerMock = new WindowsProcessRunnerMock);

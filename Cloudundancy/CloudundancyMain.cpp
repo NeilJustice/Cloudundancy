@@ -15,7 +15,7 @@ namespace fs = std::filesystem;
 #endif
 
 #include <functional>
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 #include <memory> // unique_ptr
 #endif
 

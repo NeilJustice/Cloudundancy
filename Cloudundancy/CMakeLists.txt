@@ -14,7 +14,7 @@ endif()
 
 install(TARGETS Cloudundancy DESTINATION "bin")
 
-if(UNIX)
+if(UNIX AND NOT APPLE)
    if(CodeCovMode)
      target_link_libraries(Cloudundancy CodeCovLibraryInterface)
    endif()

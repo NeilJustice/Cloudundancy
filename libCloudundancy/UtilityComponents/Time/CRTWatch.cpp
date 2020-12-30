@@ -5,7 +5,7 @@ CRTWatch::CRTWatch()
    // Function Pointers
    : _call_system_clock_now(chrono::system_clock::now)
    , _call_to_time_t(chrono::system_clock::to_time_t)
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    , _call_localtime(::localtime)
 #elif _WIN32
    , _call_localtime64_s(::_localtime64_s)
@@ -19,7 +19,7 @@ CRTWatch::~CRTWatch()
 {
 }
 
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 
 tm CRTWatch::TmNow() const
 {

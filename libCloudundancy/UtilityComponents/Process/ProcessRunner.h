@@ -1,7 +1,7 @@
 #pragma once
 class ProcessRunnerTests;
 
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 class LinuxProcessRunner;
 #elif _WIN32
 class WindowsProcessRunner;
@@ -11,7 +11,7 @@ class ProcessRunner
 {
    friend class ::ProcessRunnerTests;
 private:
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    unique_ptr<const LinuxProcessRunner> _osSpecificProcessRunner;
 #elif _WIN32
    unique_ptr<const WindowsProcessRunner> _osSpecificProcessRunner;

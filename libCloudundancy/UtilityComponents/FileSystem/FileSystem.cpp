@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libCloudundancy/UtilityComponents/FileSystem/FileSystem.h"
 
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 int* GetLinuxErrno()
 {
    return &errno;
@@ -10,7 +10,7 @@ int* GetLinuxErrno()
 
 FileSystem::FileSystem()
    // C File Function Pointers
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    : _call_errno(GetLinuxErrno)
 #elif _WIN32
    : _call_errno(::_errno)

@@ -18,7 +18,7 @@ EVIDENCE
 FileOpenerCloser _fileOpenerCloser;
 // Function Pointers
 METALMOCK_NONVOID1_FREE(int, fclose, FILE*)
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 METALMOCK_NONVOID2_FREE(FILE*, fopen, const char*, const char*)
 #elif _WIN32
 METALMOCK_NONVOID3_FREE(FILE*, _wfsopen, const wchar_t*, const wchar_t*, int)
@@ -30,7 +30,7 @@ STARTUP
 {
    // Function Pointers
    _fileOpenerCloser._call_fclose = BIND_1ARG_METALMOCK_OBJECT(fcloseMock);
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    _fileOpenerCloser._call_fopen = BIND_2ARG_METALMOCK_OBJECT(fopenMock);
 #elif _WIN32
    _fileOpenerCloser._call_wfsopen = BIND_3ARG_METALMOCK_OBJECT(_wfsopenMock);
@@ -43,7 +43,7 @@ TEST(DefaultConstructor_SetsFunctionPointers)
 {
    const FileOpenerCloser fileOpenerCloser;
    STD_FUNCTION_TARGETS(::fclose, fileOpenerCloser._call_fclose);
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    STD_FUNCTION_TARGETS(fopen, fileOpenerCloser._call_fopen);
 #elif _WIN32
    STD_FUNCTION_TARGETS(_wfsopen, fileOpenerCloser._call_wfsopen);
@@ -53,7 +53,7 @@ TEST(DefaultConstructor_SetsFunctionPointers)
 TEST(CreateWriteModeBinaryFile_ReturnsFileHandleOpenedInBinaryWriteMode)
 {
    FILE writeModeBinaryFileHandle;
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    fopenMock.Return(&writeModeBinaryFileHandle);
 #elif _WIN32
    _wfsopenMock.Return(&writeModeBinaryFileHandle);
@@ -62,7 +62,7 @@ TEST(CreateWriteModeBinaryFile_ReturnsFileHandleOpenedInBinaryWriteMode)
    //
    FILE* const returnedWriteModeBinaryFileHandle = _fileOpenerCloser.CreateWriteModeBinaryFile(filePath);
    //
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    METALMOCK(fopenMock.CalledOnceWith(filePath.c_str(), "wb"));
 #elif _WIN32
    METALMOCK(_wfsopenMock.CalledOnceWith(filePath.c_str(), L"wb", _SH_DENYWR));
@@ -73,7 +73,7 @@ TEST(CreateWriteModeBinaryFile_ReturnsFileHandleOpenedInBinaryWriteMode)
 TEST(CreateWriteModeTextFile_ReturnsFileHandleOpenedInTextWriteMode)
 {
    FILE writeModeTextFileHandle;
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    fopenMock.Return(&writeModeTextFileHandle);
 #elif _WIN32
    _wfsopenMock.Return(&writeModeTextFileHandle);
@@ -82,7 +82,7 @@ TEST(CreateWriteModeTextFile_ReturnsFileHandleOpenedInTextWriteMode)
    //
    FILE* const returnedWriteModeTextFileHandle = _fileOpenerCloser.CreateWriteModeTextFile(filePath);
    //
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    METALMOCK(fopenMock.CalledOnceWith(filePath.c_str(), "w"));
 #elif _WIN32
    METALMOCK(_wfsopenMock.CalledOnceWith(filePath.c_str(), L"w", _SH_DENYWR));
@@ -93,7 +93,7 @@ TEST(CreateWriteModeTextFile_ReturnsFileHandleOpenedInTextWriteMode)
 TEST(OpenReadModeBinaryFile_ReturnsFileHandleOpenedInBinaryReadMode)
 {
    FILE readModeBinaryFileHandle;
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    fopenMock.Return(&readModeBinaryFileHandle);
 #elif _WIN32
    _wfsopenMock.Return(&readModeBinaryFileHandle);
@@ -102,7 +102,7 @@ TEST(OpenReadModeBinaryFile_ReturnsFileHandleOpenedInBinaryReadMode)
    //
    FILE* const returnedReadModeBinaryFileHandle = _fileOpenerCloser.OpenReadModeBinaryFile(filePath);
    //
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    METALMOCK(fopenMock.CalledOnceWith(filePath.c_str(), "rb"));
 #elif _WIN32
    METALMOCK(_wfsopenMock.CalledOnceWith(filePath.c_str(), L"rb", _SH_DENYWR));
@@ -113,7 +113,7 @@ TEST(OpenReadModeBinaryFile_ReturnsFileHandleOpenedInBinaryReadMode)
 TEST(OpenReadModeTextFile_ReturnsFileHandleOpenedInTextReadMode)
 {
    FILE readModeTextFileHandle;
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    fopenMock.Return(&readModeTextFileHandle);
 #elif _WIN32
    _wfsopenMock.Return(&readModeTextFileHandle);
@@ -122,7 +122,7 @@ TEST(OpenReadModeTextFile_ReturnsFileHandleOpenedInTextReadMode)
    //
    FILE* const returnedReadModeTextFileHandle = _fileOpenerCloser.OpenReadModeTextFile(filePath);
    //
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    METALMOCK(fopenMock.CalledOnceWith(filePath.c_str(), "r"));
 #elif _WIN32
    METALMOCK(_wfsopenMock.CalledOnceWith(filePath.c_str(), L"r", _SH_DENYWR));
@@ -133,7 +133,7 @@ TEST(OpenReadModeTextFile_ReturnsFileHandleOpenedInTextReadMode)
 TEST(OpenAppendModeTextFile_ReturnsFileHandleOpenedInTextAppendMode)
 {
    FILE appendModeTextFileHandle;
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    fopenMock.Return(&appendModeTextFileHandle);
 #elif _WIN32
    _wfsopenMock.Return(&appendModeTextFileHandle);
@@ -142,7 +142,7 @@ TEST(OpenAppendModeTextFile_ReturnsFileHandleOpenedInTextAppendMode)
    //
    FILE* const returnedAppendModeTextFileHandle = _fileOpenerCloser.OpenAppendModeTextFile(filePath);
    //
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    METALMOCK(fopenMock.CalledOnceWith(filePath.c_str(), "a"));
 #elif _WIN32
    METALMOCK(_wfsopenMock.CalledOnceWith(filePath.c_str(), L"a", _SH_DENYWR));
