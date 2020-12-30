@@ -1,8 +1,15 @@
 #pragma once
 #include "libCloudundancy/Compiler/IfWindowsIgnoreTheseWallWarnings.h"
 
+#ifdef _WIN32
+#pragma warning(push)
+#pragma warning(disable: 4365) // signed / unsigned mismatch
+#endif
 #include <filesystem>
 namespace fs = std::filesystem;
+#ifdef _WIN32
+#pragma warning(pop)
+#endif
 
 #if defined __linux__
    #include <memory>
