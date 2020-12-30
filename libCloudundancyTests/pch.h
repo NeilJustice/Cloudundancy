@@ -1,21 +1,9 @@
 #pragma once
 #include "libCloudundancy/Compiler/IfWindowsIgnoreTheseWallWarnings.h"
 
-#ifdef _WIN32
-#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
-#endif
-
-#if defined __linux__
-   #include <experimental/filesystem>
-   namespace fs = std::experimental::filesystem;
-#elif defined _WIN32 || defined __APPLE__
-   #pragma warning(push)
-   #pragma warning(disable: 4365) // signed/unsigned mismatch
-   #include <filesystem>
-   namespace fs = std::filesystem;
-   #pragma warning(pop)
-#endif
+#include <filesystem>
 #include <regex>
+namespace fs = std::filesystem;
 using namespace std;
 
 #include "ZenUnit/ZenUnit.h"
