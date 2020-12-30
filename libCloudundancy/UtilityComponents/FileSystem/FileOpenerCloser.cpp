@@ -4,7 +4,7 @@
 FileOpenerCloser::FileOpenerCloser()
 // Function Pointers
    : _call_fclose(::fclose)
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    , _call_fopen(::fopen)
 #elif _WIN32
    , _call_wfsopen(_wfsopen)
@@ -20,7 +20,7 @@ FileOpenerCloser::~FileOpenerCloser()
 
 FILE* FileOpenerCloser::CreateWriteModeBinaryFile(const fs::path& filePath) const
 {
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    FILE* const writeModeBinaryFileHandle = OpenFileOnLinux(filePath, "wb");
 #elif _WIN32
    FILE* const writeModeBinaryFileHandle = OpenFileOnWindows(filePath, L"wb");
@@ -30,7 +30,7 @@ FILE* FileOpenerCloser::CreateWriteModeBinaryFile(const fs::path& filePath) cons
 
 FILE* FileOpenerCloser::CreateWriteModeTextFile(const fs::path& filePath) const
 {
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    FILE* const writeModeTextFileHandle = OpenFileOnLinux(filePath, "w");
 #elif _WIN32
    FILE* const writeModeTextFileHandle = OpenFileOnWindows(filePath, L"w");
@@ -40,7 +40,7 @@ FILE* FileOpenerCloser::CreateWriteModeTextFile(const fs::path& filePath) const
 
 FILE* FileOpenerCloser::OpenReadModeBinaryFile(const fs::path& filePath) const
 {
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    FILE* const readModeBinaryFileHandle = OpenFileOnLinux(filePath, "rb");
 #elif _WIN32
    FILE* const readModeBinaryFileHandle = OpenFileOnWindows(filePath, L"rb");
@@ -50,7 +50,7 @@ FILE* FileOpenerCloser::OpenReadModeBinaryFile(const fs::path& filePath) const
 
 FILE* FileOpenerCloser::OpenReadModeTextFile(const fs::path& filePath) const
 {
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    FILE* const readModeTextFileHandle = OpenFileOnLinux(filePath, "r");
 #elif _WIN32
    FILE* const readModeTextFileHandle = OpenFileOnWindows(filePath, L"r");
@@ -60,7 +60,7 @@ FILE* FileOpenerCloser::OpenReadModeTextFile(const fs::path& filePath) const
 
 FILE* FileOpenerCloser::OpenAppendModeTextFile(const fs::path& filePath) const
 {
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    FILE* const appendModeTextFileHandle = OpenFileOnLinux(filePath, "a");
 #elif _WIN32
    FILE* const appendModeTextFileHandle = OpenFileOnWindows(filePath, L"a");
@@ -77,7 +77,7 @@ void FileOpenerCloser::CloseFile(FILE* fileHandle) const
 
 // Private Functions
 
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 
 FILE* FileOpenerCloser::OpenFileOnLinux(const fs::path& filePath, const char* fileOpenMode) const
 {

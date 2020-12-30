@@ -10,7 +10,7 @@ CRTWatch _crtWatch;
 // Function Pointers
 METALMOCK_NONVOID0_STATIC(chrono::time_point<chrono::system_clock>, chrono::system_clock, now)
 METALMOCK_NONVOID1_STATIC(long long, chrono::system_clock, to_time_t, const chrono::system_clock::time_point&)
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 METALMOCK_NONVOID1_FREE(tm*, localtime, const time_t* const)
 #elif _WIN32
 METALMOCK_NONVOID2_FREE(errno_t, _localtime64_s, tm*, const time_t*)
@@ -23,7 +23,7 @@ STARTUP
    // Function Pointers
    _crtWatch._call_system_clock_now = BIND_0ARG_METALMOCK_OBJECT(nowMock);
    _crtWatch._call_to_time_t = BIND_1ARG_METALMOCK_OBJECT(to_time_tMock);
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    _crtWatch._call_localtime = BIND_1ARG_METALMOCK_OBJECT(localtimeMock);
 #elif _WIN32
    _crtWatch._call_localtime64_s = BIND_2ARG_METALMOCK_OBJECT(_localtime64_sMock);
@@ -38,7 +38,7 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsAsserter)
    // Function Pointers
    STD_FUNCTION_TARGETS(chrono::system_clock::now, crtWatch._call_system_clock_now);
    STD_FUNCTION_TARGETS(chrono::system_clock::to_time_t, crtWatch._call_to_time_t);
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    STD_FUNCTION_TARGETS(::localtime, crtWatch._call_localtime);
 #elif _WIN32
    STD_FUNCTION_TARGETS(::_localtime64_s, crtWatch._call_localtime64_s);
@@ -47,7 +47,7 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsAsserter)
    DELETE_TO_ASSERT_NEWED(crtWatch._asserter);
 }
 
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 
 struct localtimeCallHistory
 {

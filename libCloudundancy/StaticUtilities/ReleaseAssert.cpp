@@ -21,7 +21,7 @@ void ReleaseAssert(
    size_t lineNumber,
    const char* functionName)
 {
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    if (!predicateExpressionResult)
 #elif _WIN32
    if (!predicateExpressionResult)

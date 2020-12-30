@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/UtilityComponents/Environment/Environmentalist.h"
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 #include <pwd.h>
 #endif
 
@@ -29,7 +29,7 @@ string Environmentalist::MachineName() const
 
 string Environmentalist::UserName() const
 {
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    return LinuxUserName();
 #elif _WIN32
    return WindowsUserName();

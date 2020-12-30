@@ -7,7 +7,7 @@ class FileOpenerCloser
 private:
    // Function Pointers
    function<int(FILE*)> _call_fclose;
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    std::function<FILE* (const char*, const char*)> _call_fopen;
 #elif _WIN32
    std::function<FILE* (const wchar_t*, const wchar_t*, int)> _call_wfsopen;
@@ -24,7 +24,7 @@ public:
    virtual FILE* OpenAppendModeTextFile(const fs::path& filePath) const;
    virtual void CloseFile(FILE* fileHandle) const;
 private:
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
    FILE* OpenFileOnLinux(const fs::path& filePath, const char* fileOpenMode) const;
 #elif _WIN32
    FILE* OpenFileOnWindows(const fs::path& filePath, const wchar_t* fileOpenMode) const;

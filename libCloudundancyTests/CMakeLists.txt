@@ -78,14 +78,14 @@ source_group("" FILES ${Sources})
 add_executable(libCloudundancyTests ${Sources})
 
 target_link_libraries(libCloudundancyTests libCloudundancy)
-if(UNIX)
+if(UNIX AND NOT APPLE)
    target_link_libraries(libCloudundancyTests stdc++fs)
 endif()
 
 IfMSVCEnablePrecompiledHeaders()
 IfMSVCAddRunTestsPostBuildStep()
 
-if(UNIX)
+if(UNIX AND NOT APPLE)
    if(CodeCovMode)
      target_link_libraries(libCloudundancyTests CodeCovLibraryInterface)
    endif()

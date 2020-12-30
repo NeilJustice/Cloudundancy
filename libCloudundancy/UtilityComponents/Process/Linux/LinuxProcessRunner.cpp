@@ -1,5 +1,5 @@
 #include "pch.h"
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 
 #include "libCloudundancy/UtilityComponents/Process/Linux/LinuxProcessRunner.h"
 #include <spawn.h>
