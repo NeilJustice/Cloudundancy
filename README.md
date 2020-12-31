@@ -14,7 +14,7 @@ On Linux, command line invocations of Google Drive and Microsoft OneDrive comman
 |----------|------------|
 |Travis CI Linux Clang 9.0.1, Linux GCC 9.3.0, and macOS AppleClang 12.0.0 Debug and Release|[![Build Status](https://travis-ci.com/NeilJustice/Cloudundancy.svg?branch=main)](https://travis-ci.com/NeilJustice/Cloudundancy)|
 |AppVeyor Windows (Visual Studio 2019 x64)|<a href="https://ci.appveyor.com/project/NeilJustice/Cloudundancy"><img src="https://ci.appveyor.com/api/projects/status/ygwr3rb9spwhy4u0?svg=true"/></a>|
-|Code Coverage For The Travis CI Linux GCC 9.3.0 Release Build|[![codecov](https://codecov.io/gh/NeilJustice/Cloudundancy/branch/main/graph/badge.svg?token=ruXbRPB1CQ)](https://codecov.io/gh/NeilJustice/Cloudundancy) (100% pending lcov Travis CI update for C++20)|
+|Code Coverage For The Travis CI Linux GCC 9.3.0 Release Build|[![codecov](https://codecov.io/gh/NeilJustice/Cloudundancy/branch/main/graph/badge.svg?token=ruXbRPB1CQ)](https://codecov.io/gh/NeilJustice/Cloudundancy)|
 
 The correctness of Cloudundancy at the unit level is rigorously confirmed using C++ unit testing framework ZenUnit and C++ mocking framework MetalMock. <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">GitHub page for ZenUnit and MetalMock</a>.
 
