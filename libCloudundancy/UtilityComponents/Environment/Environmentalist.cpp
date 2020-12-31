@@ -20,7 +20,7 @@ Environmentalist::Environmentalist() noexcept
 
 string Environmentalist::MachineName() const
 {
-#if defined __linux__
+#if defined __linux__ || defined __APPLE__
    return LinuxMachineName();
 #elif defined _WIN32
    return WindowsMachineName();
@@ -36,7 +36,7 @@ string Environmentalist::UserName() const
 #endif
 }
 
-#if defined __linux__
+#if defined __linux__ || defined __APPLE__
 
 string Environmentalist::LinuxMachineName() const
 {

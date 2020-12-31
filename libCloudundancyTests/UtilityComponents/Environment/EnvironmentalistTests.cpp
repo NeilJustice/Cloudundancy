@@ -3,7 +3,7 @@
 
 TESTS(EnvironmentalistTests)
 AFACT(DefaultConstructor_SetsFunctionPointers)
-#if defined __linux__
+#if defined __linux__ || defined __APPLE__
 AFACT(Linux__MachineName_ReturnsResultOfCallingWindowsMachineName)
 AFACT(Linux__UserName_ReturnsResultOfCallingWindowsUserName)
 AFACT(LinuxMachineName_ReturnsResultOfCallinggethostname)
@@ -19,7 +19,7 @@ EVIDENCE
 class EnvironmentalistSelfMocked : public Metal::Mock<Environmentalist>
 {
 public:
-#if defined __linux__
+#if defined __linux__ || defined __APPLE__
    METALMOCK_NONVOID0_CONST(string, LinuxMachineName)
    METALMOCK_NONVOID0_CONST(string, LinuxUserName)
 #elif defined _WIN32
@@ -31,7 +31,7 @@ public:
 Environmentalist _environmentalist;
 // Function Pointers
 METALMOCK_NONVOID0_FREE(fs::path, current_path)
-#if defined __linux__
+#if defined __linux__ || defined __APPLE__
 METALMOCK_NONVOID2_FREE(int, gethostname, char*, size_t)
 #elif defined _WIN32
 METALMOCK_NONVOID2_FREE(BOOL, GetComputerNameA, LPSTR, LPDWORD)
@@ -44,7 +44,7 @@ STARTUP
 {
    // Function Pointers
    _environmentalist._call_filesystem_current_path = BIND_0ARG_METALMOCK_OBJECT(current_pathMock);
-#if defined __linux__
+#if defined __linux__ || defined __APPLE__
    _environmentalist._call_gethostname = BIND_2ARG_METALMOCK_OBJECT(gethostnameMock);
 #elif defined _WIN32
    _environmentalist._call_GetComputerNameA = BIND_2ARG_METALMOCK_OBJECT(GetComputerNameAMock);
@@ -58,7 +58,7 @@ TEST(DefaultConstructor_SetsFunctionPointers)
 {
    Environmentalist environmentalist;
    // Function Pointers
-#if defined __linux__
+#if defined __linux__ || defined __APPLE__
    STD_FUNCTION_TARGETS(::gethostname, environmentalist._call_gethostname);
 #elif defined _WIN32
    STD_FUNCTION_TARGETS(::GetComputerNameA, environmentalist._call_GetComputerNameA);
@@ -68,7 +68,7 @@ TEST(DefaultConstructor_SetsFunctionPointers)
    DELETE_TO_ASSERT_NEWED(environmentalist._asserter);
 }
 
-#if defined __linux__
+#if defined __linux__ || defined __APPLE__
 
 TEST(Linux__MachineName_ReturnsResultOfCallingWindowsMachineName)
 {

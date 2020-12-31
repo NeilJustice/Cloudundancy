@@ -43,7 +43,7 @@ string Watch::DateTimeNowForFileNames() const
 tm Watch::TMNow() const
 {
    const std::chrono::time_point<std::chrono::system_clock> nowTimePoint = std::chrono::system_clock::now();
-#if defined __linux__
+#if defined __linux__ || defined __APPLE__
    tm* tmNow = nullptr;
    long nowTimeT = std::chrono::system_clock::to_time_t(nowTimePoint);
    tmNow = localtime(&nowTimeT);

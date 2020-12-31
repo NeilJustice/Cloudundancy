@@ -4,7 +4,7 @@
 #include <functional>
 namespace fs = std::filesystem;
 
-#if defined __linux__
+#if defined __linux__ || defined __APPLE__
 #include <memory>
 #include <unistd.h>
 #endif

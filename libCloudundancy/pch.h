@@ -6,12 +6,11 @@
 #pragma warning(disable: 4365) // signed / unsigned mismatch
 #endif
 #include <filesystem>
-namespace fs = std::filesystem;
 #ifdef _WIN32
 #pragma warning(pop)
 #endif
 
-#if defined __linux__
+#if defined __linux__ || defined __APPLE__
    #include <memory>
    #include <unistd.h>
 #endif
@@ -25,6 +24,7 @@ namespace fs = std::filesystem;
 #include <sstream>
 #include <unordered_map>
 #include <unordered_set>
+namespace fs = std::filesystem;
 using namespace std;
 
 #ifdef _WIN32

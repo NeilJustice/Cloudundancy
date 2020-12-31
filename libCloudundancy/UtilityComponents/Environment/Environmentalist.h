@@ -6,7 +6,7 @@ class Environmentalist
 private:
    // Function Pointers
    std::function<fs::path()> _call_filesystem_current_path;
-#if defined __linux__
+#if defined __linux__ || defined __APPLE__
    std::function<int(char*, size_t)> _call_gethostname;
 #elif defined _WIN32
    std::function<BOOL(LPSTR, LPDWORD)> _call_GetComputerNameA;
@@ -20,7 +20,7 @@ public:
    virtual string MachineName() const;
    virtual string UserName() const;
 private:
-#if defined __linux__
+#if defined __linux__ || defined __APPLE__
    virtual string LinuxMachineName() const;
    virtual string LinuxUserName() const;
 #elif defined _WIN32
