@@ -30,7 +30,7 @@ pair<int, string> ErrorCodeTranslator::GetErrnoWithDescription() const
 {
    const int errnoValue = *_call_errno();
    const string errnoDescription = GetErrnoDescription(errnoValue);
-   const pair<int, string> errnoWithDescription(errnoValue, errnoDescription);
+   pair<int, string> errnoWithDescription(errnoValue, errnoDescription);
    return errnoWithDescription;
 }
 
@@ -44,7 +44,7 @@ pair<DWORD, string> ErrorCodeTranslator::GetWindowsLastErrorWithDescription() co
       return make_pair(0ul, ""s);
    }
    const string windowsLastErrorDescription = GetWindowsLastErrorDescription(windowsLastError);
-   const pair<DWORD, string> windowsLastErrorAndDescription = make_pair(windowsLastError, windowsLastErrorDescription);
+   pair<DWORD, string> windowsLastErrorAndDescription = make_pair(windowsLastError, windowsLastErrorDescription);
    return windowsLastErrorAndDescription;
 }
 
@@ -88,7 +88,7 @@ string ErrorCodeTranslator::GetErrnoDescription(int errnoValue) const
 #pragma warning(pop)
    const errno_t strErrorSReturnValue = _call_strerror_s(errnoDescriptionChars, maximumErrnoDescriptionLength, errnoValue);
    release_assert(strErrorSReturnValue == 0);
-   const string errnoDescription(errnoDescriptionChars);
+   string errnoDescription(errnoDescriptionChars);
    return errnoDescription;
 }
 

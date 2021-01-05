@@ -1,6 +1,7 @@
 #include "pch.h"
-#include "libCloudundancy/UtilityComponents/FileSystem/FileOpenerCloser.h"
+#include "libCloudundancyTests/Components/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
 #include "libCloudundancyTests/UtilityComponents/Assertion/MetalMock/AsserterMock.h"
+#include "libCloudundancy/UtilityComponents/FileSystem/FileOpenerCloser.h"
 
 TESTS(FileOpenerCloserTests)
 AFACT(DefaultConstructor_SetsFunctionPointers)
@@ -9,7 +10,8 @@ AFACT(CreateWriteModeTextFile_ReturnsFileHandleOpenedInTextWriteMode)
 AFACT(OpenReadModeBinaryFile_ReturnsFileHandleOpenedInBinaryReadMode)
 AFACT(OpenReadModeTextFile_ReturnsFileHandleOpenedInTextReadMode)
 AFACT(OpenAppendModeTextFile_ReturnsFileHandleOpenedInTextAppendMode)
-AFACT(CloseFile_CallsFCloseOnFileHandle)
+AFACT(CloseFile_CallsFCloseOnFileHandleWhichReturns0_Returns)
+AFACT(CloseFile_CallsFCloseOnFileHandleWhichReturnsNon0_ThrowsRuntimeError)
 // Private Functions
 AFACT(ThrowFileOpenExceptionIfFileOpenFailed_FileHandleIsNullptr_ThrowsFileOpenException)
 AFACT(ThrowFileOpenExceptionIfFileOpenFailed_FileHandleIsNotNullptr_DoesNotThrowException)
@@ -25,6 +27,7 @@ METALMOCK_NONVOID3_FREE(FILE*, _wfsopen, const wchar_t*, const wchar_t*, int)
 #endif
 // Constant Components
 AsserterMock* _asserterMock = nullptr;
+ErrorCodeTranslatorMock* _errorCodeTranslatorMock = nullptr;
 
 STARTUP
 {
@@ -37,6 +40,7 @@ STARTUP
 #endif
    // Constant Components
    _fileOpenerCloser._asserter.reset(_asserterMock = new AsserterMock);
+   _fileOpenerCloser._errorCodeTranslator.reset(_errorCodeTranslatorMock = new ErrorCodeTranslatorMock);
 }
 
 TEST(DefaultConstructor_SetsFunctionPointers)
@@ -150,28 +154,47 @@ TEST(OpenAppendModeTextFile_ReturnsFileHandleOpenedInTextAppendMode)
    ARE_EQUAL(&appendModeTextFileHandle, returnedAppendModeTextFileHandle);
 }
 
-TEST(CloseFile_CallsFCloseOnFileHandle)
+TEST(CloseFile_CallsFCloseOnFileHandleWhichReturns0_Returns)
 {
-   const int fcloseReturnValue = fcloseMock.ReturnRandom();
-   _asserterMock->ThrowIfIntsNotEqualMock.Expect();
+   fcloseMock.Return(0);
    FILE fileHandle{};
    //
    _fileOpenerCloser.CloseFile(&fileHandle);
    //
    METALMOCK(fcloseMock.CalledOnceWith(&fileHandle));
-   METALMOCK(_asserterMock->ThrowIfIntsNotEqualMock.CalledOnceWith(0, fcloseReturnValue,
-      "fclose(fileHandle) in FileOpenerCloser::CloseFile() unexpectedly returned a non-0 value"));
+}
+
+TEST(CloseFile_CallsFCloseOnFileHandleWhichReturnsNon0_ThrowsRuntimeError)
+{
+   const int non0FCloseReturnValue = ZenUnit::RandomNon0<int>();
+   fcloseMock.Return(non0FCloseReturnValue);
+
+   const pair<int, string> errnoWithDescription = _errorCodeTranslatorMock->GetErrnoWithDescriptionMock.ReturnRandom();
+
+   FILE fileHandle{};
+   //
+   const string expectedExceptionMessage = String::Concat("fclose(FILE*) unexpectedly returned ", non0FCloseReturnValue,
+      ". errno=", errnoWithDescription.first, " (", errnoWithDescription.second, ")");
+   THROWS_EXCEPTION(_fileOpenerCloser.CloseFile(&fileHandle),
+      runtime_error, expectedExceptionMessage);
+   //
+   METALMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
+   METALMOCK(fcloseMock.CalledOnceWith(&fileHandle));
 }
 
 // Private Functions
 
 TEST(ThrowFileOpenExceptionIfFileOpenFailed_FileHandleIsNullptr_ThrowsFileOpenException)
 {
+   const pair<int, string> errnoWithDescription = _errorCodeTranslatorMock->GetErrnoWithDescriptionMock.ReturnRandom();
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
-   const string expectedExceptionMessage = "fopen() returned nullptr. filePath=\"" + filePath.string() + "\"";
+   const string expectedExceptionMessage = String::Concat("fopen() returned nullptr. filePath=\"",
+      filePath.string(), "\". errno=", errnoWithDescription.first, " (", errnoWithDescription.second, ")");
    THROWS_EXCEPTION(_fileOpenerCloser.ThrowFileOpenExceptionIfFileOpenFailed(nullptr, filePath),
       runtime_error, expectedExceptionMessage);
+   //
+   METALMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
 }
 
 TEST(ThrowFileOpenExceptionIfFileOpenFailed_FileHandleIsNotNullptr_DoesNotThrowException)
@@ -179,7 +202,7 @@ TEST(ThrowFileOpenExceptionIfFileOpenFailed_FileHandleIsNotNullptr_DoesNotThrowE
    FILE nonNullFileHandle{};
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
-   FileOpenerCloser::ThrowFileOpenExceptionIfFileOpenFailed(&nonNullFileHandle, filePath);
+   _fileOpenerCloser.ThrowFileOpenExceptionIfFileOpenFailed(&nonNullFileHandle, filePath);
 }
 
 RUN_TESTS(FileOpenerCloserTests)

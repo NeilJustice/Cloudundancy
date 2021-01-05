@@ -1,8 +1,9 @@
 #include "pch.h"
+#include "libCloudundancy/Components/ErrorHandling/ErrorCodeTranslator.h"
 #include "libCloudundancy/UtilityComponents/FileSystem/FileOpenerCloser.h"
 
 FileOpenerCloser::FileOpenerCloser()
-// Function Pointers
+   // Function Pointers
    : _call_fclose(::fclose)
 #if defined __linux__ || defined __APPLE__
    , _call_fopen(::fopen)
@@ -11,6 +12,7 @@ FileOpenerCloser::FileOpenerCloser()
 #endif
    // Constant Components
    , _asserter(make_unique<Asserter>())
+   , _errorCodeTranslator(make_unique<ErrorCodeTranslator>())
 {
 }
 
@@ -71,8 +73,13 @@ FILE* FileOpenerCloser::OpenAppendModeTextFile(const fs::path& filePath) const
 void FileOpenerCloser::CloseFile(FILE* fileHandle) const
 {
    const int fcloseReturnValue = _call_fclose(fileHandle);
-   _asserter->ThrowIfIntsNotEqual(0, fcloseReturnValue,
-      "fclose(fileHandle) in FileOpenerCloser::CloseFile() unexpectedly returned a non-0 value");
+   if (fcloseReturnValue != 0)
+   {
+      const pair<int, string> errnoWithDescription = _errorCodeTranslator->GetErrnoWithDescription();
+      const string exceptionMessage = String::Concat("fclose(FILE*) unexpectedly returned ", fcloseReturnValue,
+         ". errno=", errnoWithDescription.first, " (", errnoWithDescription.second, ")");
+      throw runtime_error(exceptionMessage);
+   }
 }
 
 // Private Functions
@@ -97,11 +104,13 @@ FILE* FileOpenerCloser::OpenFileOnWindows(const fs::path& filePath, const wchar_
 
 #endif
 
-void FileOpenerCloser::ThrowFileOpenExceptionIfFileOpenFailed(FILE* fileHandle, const fs::path& filePath)
+void FileOpenerCloser::ThrowFileOpenExceptionIfFileOpenFailed(FILE* fileHandle, const fs::path& filePath) const
 {
    if (fileHandle == nullptr)
    {
-      const string exceptionMessage = "fopen() returned nullptr. filePath=\"" + filePath.string() + "\"";
+      const pair<int, string> errnoWithDescription = _errorCodeTranslator->GetErrnoWithDescription();
+      const string exceptionMessage = String::Concat("fopen() returned nullptr. filePath=\"",
+         filePath.string(), "\". errno=", errnoWithDescription.first, " (", errnoWithDescription.second, ")");
       throw runtime_error(exceptionMessage);
    }
 }

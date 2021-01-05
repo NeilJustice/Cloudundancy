@@ -1,5 +1,6 @@
 #pragma once
 class Asserter;
+class ErrorCodeTranslator;
 
 class FileOpenerCloser
 {
@@ -14,6 +15,7 @@ private:
 #endif
    // Constant Components
    unique_ptr<const Asserter> _asserter;
+   unique_ptr<const ErrorCodeTranslator> _errorCodeTranslator;
 public:
    FileOpenerCloser();
    virtual ~FileOpenerCloser();
@@ -29,5 +31,5 @@ private:
 #elif _WIN32
    FILE* OpenFileOnWindows(const fs::path& filePath, const wchar_t* fileOpenMode) const;
 #endif
-   static void ThrowFileOpenExceptionIfFileOpenFailed(FILE* fileHandle, const fs::path& filePath);
+   void ThrowFileOpenExceptionIfFileOpenFailed(FILE* fileHandle, const fs::path& filePath) const;
 };
