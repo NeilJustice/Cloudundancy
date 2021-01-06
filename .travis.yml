@@ -45,29 +45,29 @@ matrix:
              - sourceline: 'ppa:ubuntu-toolchain-r/test'
           packages: [ 'ninja-build' ]
 
-    - os: linux
-      compiler: gcc
-      env: CMAKE_BUILD_TYPE=Release COMPILER=g++ CODE_COV_MODE=ON
-      addons:
-        apt:
-          update: true
-          sources:
-             - sourceline: 'ppa:ubuntu-toolchain-r/test'
-          packages: [ 'ninja-build' ]
+    #- os: linux
+     # compiler: gcc
+      #env: CMAKE_BUILD_TYPE=Release COMPILER=g++ CODE_COV_MODE=ON
+      #addons:
+       # apt:
+        #  update: true
+         # sources:
+          #   - sourceline: 'ppa:ubuntu-toolchain-r/test'
+          #packages: [ 'ninja-build' ]
 
-    - os: osx
-      osx_image: xcode12.2
-      compiler: clang
-      env: CMAKE_BUILD_TYPE=Debug COMPILER=clang++ CODE_COV_MODE=OFF
-      before_install:
-         - brew install ninja
+    #- os: osx
+     # osx_image: xcode12.2
+      #compiler: clang
+      #env: CMAKE_BUILD_TYPE=Debug COMPILER=clang++ CODE_COV_MODE=OFF
+      #before_install:
+       #  - brew install ninja
 
-    - os: osx
-      osx_image: xcode12.2
-      compiler: clang
-      env: CMAKE_BUILD_TYPE=Release COMPILER=clang++ CODE_COV_MODE=OFF
-      before_install:
-      - brew install ninja
+    #- os: osx
+     # osx_image: xcode12.2
+      #compiler: clang
+      #env: CMAKE_BUILD_TYPE=Release COMPILER=clang++ CODE_COV_MODE=OFF
+      #before_install:
+      #- brew install ninja
 
 script: ./travis_script.sh
 
