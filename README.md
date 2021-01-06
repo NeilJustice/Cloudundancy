@@ -6,21 +6,17 @@ Cloudundancy is a C++ command line program which quickly copies a configurable l
 
 For example, in a Cloudundancy.ini file, destination folders can be configured to be a Google Drive folder, a Microsoft OneDrive folder, and two USB drives to achieve quadruple backups of business-critical files to two clouds and two USB drives.
 
-On Windows, Google Drive and Microsoft OneDrive folders automatically upload their contents to their respective clouds.
-
-On Linux, command line invocations of Google Drive and Microsoft OneDrive command line utilities would have to be added after the invocation of Cloudundancy to upload Cloudundancy-copied files to Google's cloud and Microsoft's cloud.
-
 |Build Type|Build Status|
 |----------|------------|
 |Travis CI Linux Clang 9.0.1 and Linux GCC 9.3.0 Debug and Release|[![Build Status](https://travis-ci.com/NeilJustice/Cloudundancy.svg?branch=main)](https://travis-ci.com/NeilJustice/Cloudundancy)|
 |AppVeyor Windows Visual Studio 2019 x64 Debug and Release|<a href="https://ci.appveyor.com/project/NeilJustice/Cloudundancy"><img src="https://ci.appveyor.com/api/projects/status/ygwr3rb9spwhy4u0?svg=true"/></a>|
 |Code Coverage For The Travis CI Linux GCC 9.3.0 Release Build|[![codecov](https://codecov.io/gh/NeilJustice/Cloudundancy/branch/main/graph/badge.svg?token=ruXbRPB1CQ)](https://codecov.io/gh/NeilJustice/Cloudundancy)|
 
-The correctness of Cloudundancy at the unit level is rigorously confirmed using C++ unit testing framework ZenUnit and C++ mocking framework MetalMock. <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">GitHub page for ZenUnit and MetalMock</a>.
+The correctness of Cloudundancy at the unit level is rigorously confirmed using <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
 
-The correctness of Cloudundancy at the user level is currently confirmed with manual testing and twice-daily Jenkins jobs which invoke Cloudundancy to backup my business-critical files. In the future Cloudundancy's correctness at the user level will be additionally confirmed using an automated acceptance testing framework.
+The correctness of Cloudundancy at the user level is currently confirmed with manual testing and twice-daily Jenkins jobs which invoke Cloudundancy to backup my business-critical files. In the future, Cloudundancy's correctness at the user level will be confirmed using an automated acceptance testing framework.
 
-* [Command Line Usage](#command-line-usage)
+* [Cloudundancy Command Line Usage](#cloudundancy-command-line-usage)
 * [Cloudundancy Program Modes](#cloudundancy-program-modes)
    * [copy-files-to-multiple-folders](#copy-files-to-multiple-folders)
    * [7zip-files-then-copy-the-7zip-file-to-multiple-folders](#7zip-files-then-copy-the-7zip-file-to-multiple-folders)
@@ -28,13 +24,13 @@ The correctness of Cloudundancy at the user level is currently confirmed with ma
    * [example-windows-ini-file](#example-windows-ini-file)
 * [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-undefinedbehaviorsanitize-cloudundancy)
 * [Windows Jenkins Jobs Which Build Cloudundancy](#windows-jenkins-jobs-which-build-cloudundancy)
-* [What Cloudundancy Source Code Looks Like In Visual Studio Code](#what-cloudundancy-source-code-looks-like-in-visual-studio-code)
-* [What Cloudundancy Source Code Looks Like In Visual Studio 2019](#what-cloudundancy-source-code-looks-like-in-visual-studio-2019)
-* [How To Build Cloudundancy From Source On Linux](#how-to-build-cloudundancy-from-source-on-linux)
-* [How To Build Cloudundancy From Source On Windows](#how-to-build-cloudundancy-from-source-on-windows)
-* [Cloudundancy Features Roadmap](#cloudundancy-features-roadmap)
+* [Cloudundancy Source Code As It Appears Visual Studio Code](#cloudundancy-source-code-as-it-appears-visual-studio-code)
+* [Cloudundancy Source Code As It Appears In Visual Studio 2019](#cloudundancy-source-code-as-it-appears-in-visual-studio-2019)
+* [How To Build A Cloudundancy Binary From Source On Linux With Clang](#how-to-build-a-cloudundancy-binary-from-source-on-linux-with-clang)
+* [How To Build Cloudundancy.exe From Source On Windows With Visual Studio 2019](#how-to-build-cloudundancy.exe-from-source-on-windows-with-visual-studio-2019)
+* [Cloudundancy Roadmap](#cloudundancy-roadmap)
 
-## Command Line Usage
+## Cloudundancy Command Line Usage
 
 ```
 Cloudundancy v0.9.2
@@ -100,7 +96,7 @@ ignored_filename
 .ignored_file_extension
 ```
 
-Here is what happens when the following Cloudundancy command line run to achieve cloud-redundant backups of business-critical files to folders `C:\CloudundancyTesting\GoogleDrive` and `C:\CloudundancyTesting\OneDrive`:
+Here is the console output when the following Cloudundancy command line is run to achieve cloud-redundant backups of business-critical files to folders `C:\CloudundancyTesting\GoogleDrive` and `C:\CloudundancyTesting\OneDrive`:
 
 `Cloudundancy.exe copy-files-to-multiple-folders --ini-file=C:\CloudundancyTesting\Cloudundancy.ini --delete-destination-folders-first`:
 
@@ -110,13 +106,13 @@ Resulting contents of `C:\CloudundancyTesting\GoogleDrive`:
 
 ![CloudundancyTesting GoogleDrive folder](Screenshots/CloudundancyTestingGoogleDrive.png)
 
-Resulting contents of `C:\CloudundancyTesting\GoogleDrive\Cloudundancy.log`:
-
-![CloudundancyTesting GoogleDrive Cloudundancy.log](Screenshots/CloudundancyTestingGoogleDriveCloudundancyLog.png)
-
 Resulting contents of `C:\CloudundancyTesting\OneDrive`:
 
 ![CloudundancyTesting OneDrive folder](Screenshots/CloudundancyTestingOneDrive.png)
+
+Resulting contents of `C:\CloudundancyTesting\GoogleDrive\Cloudundancy.log`:
+
+![CloudundancyTesting GoogleDrive Cloudundancy.log](Screenshots/CloudundancyTestingGoogleDriveCloudundancyLog.png)
 
 Resulting contents of `C:\CloudundancyTesting\OneDrive\Cloudundancy.log`:
 
@@ -243,15 +239,15 @@ A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jo
 
 ![Cloudundancy Windows Jenkins Jobs](Screenshots/CloudundancyWindowsJenkinsJobs.png)
 
-## What Cloudundancy Looks Like In Visual Studio Code
+## Cloudundancy Source Code As It Appears Visual Studio Code
 
 
 
-## What Cloudundancy Source Code Looks Like In Visual Studio 2019
+## Cloudundancy Source Code As It Appears In Visual Studio 2019
 
 ![What Cloudundancy Source Code Looks Like In Visual Studio 2019](Screenshots/WhatCloudundancySourceCodeLooksLikeInVisualStudio2019.png)
 
-## How To Build Cloudundancy From Source On Linux
+## How To Build A Cloudundancy Binary From Source On Linux With Clang
 
 ```bash
 git clone https://github.com/NeilJustice/Cloudundancy
@@ -260,9 +256,9 @@ CXX=clang++ cmake .. -DCMAKE_BUILD_TYPE=Release
 sudo cmake --build . --target install
 ```
 
-Resulting `/usr/local/bin/cloudundancy`:
+Resulting binary `/usr/local/bin/cloudundancy`:
 
-## How To Build Cloudundancy From Source On Windows
+## How To Build Cloudundancy.exe From Source On Windows With Visual Studio 2019
 
 ```powershell
 git clone https://github.com/NeilJustice/Cloudundancy
@@ -275,11 +271,13 @@ Resulting `C:\bin\Cloudundancy.exe`:
 
 ![Cloudundancy.exe on Windows](Screenshots/CloudundancyDotExe.png)
 
-## Cloudundancy Features Roadmap
+## Cloudundancy Roadmap
 
 |Future Cloudundancy Feature|Estimated Delivery Month|Implementation Status|
 |---------------------------|--------------|---------------------|
-|`7zip-files-then-copy-the-7zip-file-to-multiple-folders` working on Linux|December 2020|In progress|
+|GitHub Actions build|January 2021|In progress|
+|Linux and Windows SonarQube static analysis Jenkins jobs for Cloudundancy|January 2021|Awaiting implementation|
 |SonarCloud static analysis badge|January 2021|Awaiting implementation|
-|Coverity static analysis badge|January 2021|Awaiting implementation|
+|Coverity static analysis badge|February 2021|Awaiting implementation|
 |`--parallel` for parallel file copying to multiple destination folders|April 2021|Awaiting implementation|
+|Automated acceptance testing for Cloudundancy|May 2021|Awaiting implementation|
