@@ -26,7 +26,7 @@ CloudundancyArgsParserMock* _cloudundancyArgsParserMock = nullptr;
 CloudundancySubProgramFactoryMock* _cloudundancySubProgramFactoryMock = nullptr;
 ConsoleMock* _consoleMock = nullptr;
 CloudundancyFileCopierMock* _cloudundancyFileCopierMock = nullptr;
-EnvironmentalistMock* _environmentalistMock = nullptr;
+EnvironmentServiceMock* _environmentServiceMock = nullptr;
 WatchMock* _watchMock = nullptr;
 // Mutable Components
 StopwatchMock* _stopwatchMock = nullptr;
@@ -41,7 +41,7 @@ STARTUP
    // Constant Components
    _cloudundancyProgram._cloudundancyArgsParser.reset(_cloudundancyArgsParserMock = new CloudundancyArgsParserMock);
    _cloudundancyProgram._cloudundancySubProgramFactory.reset(_cloudundancySubProgramFactoryMock = new CloudundancySubProgramFactoryMock);
-   _cloudundancyProgram._environmentalist.reset(_environmentalistMock = new EnvironmentalistMock);
+   _cloudundancyProgram._environmentService.reset(_environmentServiceMock = new EnvironmentServiceMock);
    _cloudundancyProgram._console.reset(_consoleMock = new ConsoleMock);
    _cloudundancyProgram._cloudundancyFileCopier.reset(_cloudundancyFileCopierMock = new CloudundancyFileCopierMock);
    _cloudundancyProgram._watch.reset(_watchMock = new WatchMock);
@@ -62,7 +62,7 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._cloudundancySubProgramFactory);
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._console);
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._cloudundancyFileCopier);
-   DELETE_TO_ASSERT_NEWED(cloudundancyProgram._environmentalist);
+   DELETE_TO_ASSERT_NEWED(cloudundancyProgram._environmentService);
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._watch);
    // Mutable Components
    DELETE_TO_ASSERT_NEWED(cloudundancyProgram._stopwatch);
@@ -109,8 +109,8 @@ TEST2X2(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSu
    _consoleMock->WriteLineMock.Expect();
    _consoleMock->WriteLineColorMock.Expect();
 
-   const string machineName = _environmentalistMock->MachineNameMock.ReturnRandom();
-   const string userName = _environmentalistMock->UserNameMock.ReturnRandom();
+   const string machineName = _environmentServiceMock->MachineNameMock.ReturnRandom();
+   const string userName = _environmentServiceMock->UserNameMock.ReturnRandom();
 
    const string startTime = ZenUnit::Random<string>();
    const string endTime = ZenUnit::Random<string>();
@@ -137,8 +137,8 @@ TEST2X2(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSu
    const string expectedUserNameLine = "[Cloudundancy]    UserName: " + userName;
 
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
-   METALMOCK(_environmentalistMock->MachineNameMock.CalledOnce());
-   METALMOCK(_environmentalistMock->UserNameMock.CalledOnce());
+   METALMOCK(_environmentServiceMock->MachineNameMock.CalledOnce());
+   METALMOCK(_environmentServiceMock->UserNameMock.CalledOnce());
    METALMOCK(_watchMock->DateTimeNowMock.CalledNTimes(2));
    METALMOCK(_cloudundancyArgsParserMock->ParseStringArgsMock.CalledOnceWith(stringArgs));
    METALMOCK(_cloudundancySubProgramFactoryMock->NewCloudundancySubProgramMock.CalledOnceWith(args.programMode));

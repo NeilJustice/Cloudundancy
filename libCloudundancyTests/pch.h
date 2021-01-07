@@ -43,7 +43,7 @@ using namespace std;
 #include "libCloudundancyTests/UtilityComponents/Assertion/MetalMock/AsserterMock.h"
 #include "libCloudundancyTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
 #include "libCloudundancyTests/UtilityComponents/Docopt/MetalMock/DocoptParserMock.h"
-#include "libCloudundancyTests/UtilityComponents/Environment/MetalMock/EnvironmentalistMock.h"
+#include "libCloudundancyTests/UtilityComponents/Environment/MetalMock/EnvironmentServiceMock.h"
 #include "libCloudundancyTests/UtilityComponents/Exception/MetalMock/TryCatchCallerMock.h"
 #include "libCloudundancyTests/UtilityComponents/FileSystem/MetalMock/FileSystemMock.h"
 #include "libCloudundancyTests/UtilityComponents/FileSystem/MetalMock/RecursiveDirectoryIteratorMock.h"

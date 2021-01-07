@@ -65,7 +65,7 @@ using namespace std;
 #include "libCloudundancy/UtilityComponents/Console/ConsoleColorer.h"
 #include "libCloudundancy/UtilityComponents/Docopt/docopt.h"
 #include "libCloudundancy/UtilityComponents/Docopt/DocoptParser.h"
-#include "libCloudundancy/UtilityComponents/Environment/Environmentalist.h"
+#include "libCloudundancy/UtilityComponents/Environment/EnvironmentService.h"
 #include "libCloudundancy/UtilityComponents/Exception/TryCatchCaller.h"
 #include "libCloudundancy/UtilityComponents/FileSystem/FileOpenerCloser.h"
 #include "libCloudundancy/UtilityComponents/FileSystem/FileSystem.h"

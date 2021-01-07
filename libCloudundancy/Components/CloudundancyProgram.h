@@ -3,7 +3,7 @@ class CloudundancyArgsParser;
 class CloudundancySubProgramFactory;
 class CloudundancyFileCopier;
 class Console;
-class Environmentalist;
+class EnvironmentService;
 class Stopwatch;
 template<typename ClassType, typename ArgumentType>
 class TryCatchCaller;
@@ -24,7 +24,7 @@ private:
    unique_ptr<const CloudundancySubProgramFactory> _cloudundancySubProgramFactory;
    unique_ptr<const Console> _console;
    unique_ptr<const CloudundancyFileCopier> _cloudundancyFileCopier;
-   unique_ptr<const Environmentalist> _environmentalist;
+   unique_ptr<const EnvironmentService> _environmentService;
    unique_ptr<const Watch> _watch;
    // Mutable Components
    unique_ptr<Stopwatch> _stopwatch;

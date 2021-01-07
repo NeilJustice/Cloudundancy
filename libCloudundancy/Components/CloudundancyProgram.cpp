@@ -16,7 +16,7 @@ CloudundancyProgram::CloudundancyProgram() noexcept
    , _cloudundancySubProgramFactory(make_unique<CloudundancySubProgramFactory>())
    , _console(make_unique<Console>())
    , _cloudundancyFileCopier(make_unique<CloudundancyFileCopier>())
-   , _environmentalist(make_unique<Environmentalist>())
+   , _environmentService(make_unique<EnvironmentService>())
    , _watch(make_unique<Watch>())
    // Mutable Components
    , _stopwatch(make_unique<Stopwatch>())
@@ -48,11 +48,11 @@ int CloudundancyProgram::Run(const std::vector<std::string>& stringArgs)
    const string runningLine = "[Cloudundancy]     Running: " + spaceJoinedArgs;
    _console->WriteLine(runningLine);
 
-   const string machineName = _environmentalist->MachineName();
+   const string machineName = _environmentService->MachineName();
    const string machineNameLine = "[Cloudundancy] MachineName: " + machineName;
    _console->WriteLine(machineNameLine);
 
-   const string userName = _environmentalist->UserName();
+   const string userName = _environmentService->UserName();
    const string userNameLine = "[Cloudundancy]    UserName: " + userName;
    _console->WriteLine(userNameLine);
 

@@ -21,7 +21,7 @@ using namespace std;
 #include "libCloudundancy/Enums/Color.h"
 #include "libCloudundancy/UtilityComponents/Assertion/Asserter.h"
 #include "libCloudundancy/UtilityComponents/Console/Console.h"
-#include "libCloudundancy/UtilityComponents/Environment/Environmentalist.h"
+#include "libCloudundancy/UtilityComponents/Environment/EnvironmentService.h"
 #include "libCloudundancy/UtilityComponents/Exception/TryCatchCaller.h"
 #include "libCloudundancy/UtilityComponents/Time/Stopwatch.h"
 #include "libCloudundancy/UtilityComponents/Time/Watch.h"
