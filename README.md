@@ -26,7 +26,7 @@ The correctness of Cloudundancy at the user level is currently confirmed with ma
 * [Windows Jenkins Jobs Which Build Cloudundancy](#windows-jenkins-jobs-which-build-cloudundancy)
 * [Cloudundancy Source Code As It Appears Visual Studio Code](#cloudundancy-source-code-as-it-appears-visual-studio-code)
 * [Cloudundancy Source Code As It Appears In Visual Studio 2019](#cloudundancy-source-code-as-it-appears-in-visual-studio-2019)
-* [How To Build A Cloudundancy Binary From Source On Linux With Clang](#how-to-build-a-cloudundancy-binary-from-source-on-linux-with-clang)
+* [How To Build Cloudundancy From Source On Linux With Clang](#how-to-build-cloudundancy-from-source-on-linux-with-clang)
 * [How To Build Cloudundancy.exe From Source On Windows With Visual Studio 2019](#how-to-build-cloudundancy.exe-from-source-on-windows-with-visual-studio-2019)
 * [Cloudundancy Roadmap](#cloudundancy-roadmap)
 
@@ -247,7 +247,7 @@ A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jo
 
 ![What Cloudundancy Source Code Looks Like In Visual Studio 2019](Screenshots/WhatCloudundancySourceCodeLooksLikeInVisualStudio2019.png)
 
-## How To Build A Cloudundancy Binary From Source On Linux With Clang
+## How To Build Cloudundancy From Source On Linux With Clang
 
 ```bash
 git clone https://github.com/NeilJustice/Cloudundancy
@@ -267,7 +267,7 @@ cmake . -G"Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
 cmake --build . --config Release --target install
 ```
 
-Resulting `C:\bin\Cloudundancy.exe`:
+Resulting executable `C:\bin\Cloudundancy.exe`:
 
 ![Cloudundancy.exe on Windows](Screenshots/CloudundancyDotExe.png)
 
