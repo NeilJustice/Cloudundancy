@@ -1,11 +1,11 @@
 #include "pch.h"
 #include "libCloudundancy/Components/ErrorHandling/ErrorCodeTranslator.h"
+#include "libCloudundancy/StaticUtilities/GetLinuxErrno.h"
 
 TESTS(ErrorCodeTranslatorTests)
 #if defined __linux__|| defined __APPLE__
 AFACT(GetLinuxErrno_ReturnsAddressOfErrno)
 #endif
-
 AFACT(DefaultConstructor_SetsFunctionPointers)
 AFACT(GetErrnoValue_ReturnsResultOfCallingErrnoFunction)
 AFACT(GetErrnoWithDescription_ReturnsErrnoValueWithDescription)
