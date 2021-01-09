@@ -1,7 +1,7 @@
 #include "pch.h"
+#include "libCloudundancy/UtilityComponents/FileSystem/FileOpenerCloser.h"
 #include "libCloudundancyTests/Components/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
 #include "libCloudundancyTests/UtilityComponents/Assertion/MetalMock/AsserterMock.h"
-#include "libCloudundancy/UtilityComponents/FileSystem/FileOpenerCloser.h"
 
 TESTS(FileOpenerCloserTests)
 AFACT(DefaultConstructor_SetsFunctionPointers)

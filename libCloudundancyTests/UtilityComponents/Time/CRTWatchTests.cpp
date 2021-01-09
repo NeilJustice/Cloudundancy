@@ -62,7 +62,7 @@ struct localtimeCallHistory
       return &returnValue;
    }
 
-   void AssertCalledOnceWith(const time_t& expectedTimeTArgument)
+   void AssertCalledOnceWith(const time_t& expectedTimeTArgument) const
    {
       ARE_EQUAL(1, numberOfCalls);
       ARE_EQUAL(expectedTimeTArgument, timeTArgument);

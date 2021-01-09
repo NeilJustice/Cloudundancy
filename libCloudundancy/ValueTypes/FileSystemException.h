@@ -5,7 +5,7 @@ class FileSystemException : public exception
 private:
    const string _exceptionMessage;
 public:
-   FileSystemException(const FileSystemException&) = default;
+   FileSystemException(const FileSystemException&) noexcept = default;
 
    FileSystemException(
       FileSystemExceptionType fileSystemExceptionType, const fs::path& filePath);

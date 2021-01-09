@@ -152,26 +152,26 @@ TEST(GetWindowsLastErrorWithDescription_GetLastErrorReturnsNon0_ReturnsLastError
 
 struct strerror_r_CallHistory
 {
-   size_t numberOfCalls = 0ull;
+   size_t numberOfCalls = 0ULL;
    char* returnValue = nullptr;
    int errnoValueArgument = 0;
    char* outErrnoDescriptionCharsArgument = nullptr;
    string outErrnoDescriptionCharsReturnValue;
-   size_t outErrnoDescriptionCharsSizeArgument = 0ull;
+   size_t outErrnoDescriptionCharsSizeArgument = 0ULL;
 
    char* RecordFunctionCall(int errnoValue, char* outErrnoDescriptionChars, size_t outErrnoDescriptionCharsSize)
    {
       ++numberOfCalls;
       errnoValueArgument = errnoValue;
       outErrnoDescriptionCharsArgument = outErrnoDescriptionChars;
-      strcpy(outErrnoDescriptionChars, outErrnoDescriptionCharsReturnValue.c_str());
+      strncpy(outErrnoDescriptionChars, outErrnoDescriptionCharsReturnValue.c_str(), outErrnoDescriptionCharsReturnValue.size());
       outErrnoDescriptionCharsSizeArgument = outErrnoDescriptionCharsSize;
       return returnValue;
    }
 
-   void AssertCalledOnceWith(int expectedErrnoValue, size_t expectedOutErrnoDescriptionCharsSize)
+   void AssertCalledOnceWith(int expectedErrnoValue, size_t expectedOutErrnoDescriptionCharsSize) const
    {
-      ARE_EQUAL(1ull, numberOfCalls);
+      ARE_EQUAL(1ULL, numberOfCalls);
       ARE_EQUAL(expectedErrnoValue, errnoValueArgument);
       IS_NOT_NULLPTR(outErrnoDescriptionCharsArgument);
       ARE_EQUAL(expectedOutErrnoDescriptionCharsSize, outErrnoDescriptionCharsSizeArgument);
@@ -183,7 +183,10 @@ char* strerror_r_CallInstead(int errnoValue, char* outErrnoDescriptionChars, siz
    ++_strerror_r_CallHistory.numberOfCalls;
    _strerror_r_CallHistory.errnoValueArgument = errnoValue;
    _strerror_r_CallHistory.outErrnoDescriptionCharsArgument = outErrnoDescriptionChars;
-   strcpy(outErrnoDescriptionChars, _strerror_r_CallHistory.outErrnoDescriptionCharsReturnValue.c_str());
+   strncpy(
+      outErrnoDescriptionChars,
+      _strerror_r_CallHistory.outErrnoDescriptionCharsReturnValue.c_str(),
+      _strerror_r_CallHistory.outErrnoDescriptionCharsReturnValue.size());
    _strerror_r_CallHistory.outErrnoDescriptionCharsSizeArgument = outErrnoDescriptionCharsSize;
    return _strerror_r_CallHistory.returnValue;
 }
@@ -199,7 +202,7 @@ TEST(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
    //
    const string errnoDescription = _errorCodeTranslator.GetErrnoDescription(errnoValue);
    //
-   _strerror_r_CallHistory.AssertCalledOnceWith(errnoValue, 64ull);
+   _strerror_r_CallHistory.AssertCalledOnceWith(errnoValue, 64ULL);
    ARE_EQUAL(_strerror_r_CallHistory.returnValue, errnoDescription);
 }
 
@@ -207,10 +210,10 @@ TEST(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
 
 struct strerror_s_CallHistory
 {
-   size_t numberOfCalls = 0ull;
+   size_t numberOfCalls = 0ULL;
    char* outErrnoDescriptionCharsArgument = nullptr;
    string outErrnoDescriptionCharsReturnValue;
-   size_t outErrnoDescriptionCharsSizeArgument = 0ull;
+   size_t outErrnoDescriptionCharsSizeArgument = 0ULL;
    int errnoValueArgument = 0;
    errno_t returnValue = 0;
 
@@ -231,7 +234,7 @@ struct strerror_s_CallHistory
 
    void AssertCalledOnceWith(size_t expectedOutErrnoDescriptionCharsSize, int expectedErrnoValue)
    {
-      ARE_EQUAL(1ull, numberOfCalls);
+      ARE_EQUAL(1ULL, numberOfCalls);
       IS_NOT_NULLPTR(outErrnoDescriptionCharsArgument);
       ARE_EQUAL(expectedOutErrnoDescriptionCharsSize, outErrnoDescriptionCharsSizeArgument);
       ARE_EQUAL(expectedErrnoValue, errnoValueArgument);

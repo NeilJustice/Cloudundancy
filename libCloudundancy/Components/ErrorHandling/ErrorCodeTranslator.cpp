@@ -60,7 +60,7 @@ string ErrorCodeTranslator::GetWindowsLastErrorDescription(DWORD windowsLastErro
 }
 #endif
 
-constexpr size_t maximumErrnoDescriptionLength = 64ull;
+constexpr size_t maximumErrnoDescriptionLength = 64ULL;
 
 #if defined __linux__|| defined __APPLE__
 
@@ -68,7 +68,7 @@ string ErrorCodeTranslator::GetErrnoDescription(int errnoValue) const
 {
    char* errnoDescriptionChars = static_cast<char*>(alloca(maximumErrnoDescriptionLength));
    errnoDescriptionChars = _call_strerror_r(errnoValue, errnoDescriptionChars, maximumErrnoDescriptionLength);
-   const string errnoDescription(errnoDescriptionChars);
+   string errnoDescription(errnoDescriptionChars);
    return errnoDescription;
 }
 

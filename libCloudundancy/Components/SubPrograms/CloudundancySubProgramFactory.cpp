@@ -1,9 +1,9 @@
 #include "pch.h"
-#include "libCloudundancy/Components/SubPrograms/CopyFilesToMultipleFoldersSubProgram.h"
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgramFactory.h"
-#include "libCloudundancy/Components/SubPrograms/SevenZipSubProgram.h"
+#include "libCloudundancy/Components/SubPrograms/CopyFilesToMultipleFoldersSubProgram.h"
 #include "libCloudundancy/Components/SubPrograms/ExampleLinuxIniFileSubProgram.h"
 #include "libCloudundancy/Components/SubPrograms/ExampleWindowsIniFileSubProgram.h"
+#include "libCloudundancy/Components/SubPrograms/SevenZipSubProgram.h"
 
 shared_ptr<CloudundancySubProgram> CloudundancySubProgramFactory::NewCloudundancySubProgram(ProgramMode programMode) const
 {
