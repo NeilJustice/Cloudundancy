@@ -36,7 +36,7 @@ TEST(DefaultConstructor_SetsFunctionPointers)
 {
    EnvironmentService environmentService;
    // Function Pointers
-   //STD_FUNCTION_TARGETS(::gethostname, environmentService._call_gethostname);
+   STD_FUNCTION_TARGETS(::gethostname, environmentService._call_gethostname);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(environmentService._asserter);
 }

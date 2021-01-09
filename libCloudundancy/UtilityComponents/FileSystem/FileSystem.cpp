@@ -1,12 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/UtilityComponents/FileSystem/FileSystem.h"
-
-#if defined __linux__ || defined __APPLE__
-int* GetLinuxErrno()
-{
-   return &errno;
-}
-#endif
+#include "libCloudundancy/StaticUtilities/GetLinuxErrno.h"
 
 FileSystem::FileSystem()
    // C File Function Pointers

@@ -10,7 +10,7 @@ private:
    std::function<fs::path()> _call_filesystem_current_path;
    std::function<int(char*, size_t)> _call_gethostname;
    std::function<uid_t()> _call_geteuid;
-   std::function<passwd*(uid_t)> _call_getpwuid;
+   std::function<struct passwd*(uid_t)> _call_getpwuid;
    // Constant Components
    unique_ptr<const Asserter> _asserter;
 public:

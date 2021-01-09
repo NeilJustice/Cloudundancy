@@ -11,8 +11,6 @@ class RecursiveDirectoryIterator;
 class Stopwatch;
 class Watch;
 
-int* GetLinuxErrno();
-
 class FileSystem
 {
 	friend class FileSystemTests;

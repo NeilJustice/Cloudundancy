@@ -1,12 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/Components/ErrorHandling/ErrorCodeTranslator.h"
-
-#if defined __linux__|| defined __APPLE__
-int* GetLinuxErrno()
-{
-   return &errno;
-}
-#endif
+#include "libCloudundancy/StaticUtilities/GetLinuxErrno.h"
 
 ErrorCodeTranslator::ErrorCodeTranslator()
 #if defined __linux__|| defined __APPLE__
