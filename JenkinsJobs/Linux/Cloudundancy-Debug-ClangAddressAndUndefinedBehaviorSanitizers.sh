@@ -8,5 +8,5 @@ python3 -u PyUtils/BuildAndInstallCPlusPlusProgram.py \
    --cmake-architecture=x64 \
    --cmake-build-type=Debug \
    --tests-project-name=libCloudundancyTests \
-   --cmake-definitions="-DClangSanitizerMode_AddressAndUndefined=ON" \
+   --cmake-definitions="-DClangSanitizerMode_AddressAndUndefinedBehavior=ON" \
    --no-install
