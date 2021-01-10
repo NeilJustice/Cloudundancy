@@ -20,6 +20,8 @@ EnvironmentService _environmentService;
 // Function Pointers
 METALMOCK_NONVOID0_FREE(fs::path, current_path)
 METALMOCK_NONVOID2_FREE(int, gethostname, char*, size_t)
+METALMOCK_NONVOID0_FREE(uid_t, geteuid)
+METALMOCK_NONVOID1_FREE(struct passwd*, getpwuid, uid_t);
 // Constant Components
 AsserterMock* _asserterMock = nullptr;
 
@@ -28,6 +30,8 @@ STARTUP
    // Function Pointers
    _environmentService._call_filesystem_current_path = BIND_0ARG_METALMOCK_OBJECT(current_pathMock);
    _environmentService._call_gethostname = BIND_2ARG_METALMOCK_OBJECT(gethostnameMock);
+   _environmentService._call_geteuid = BIND_0ARG_METALMOCK_OBJECT(geteuidMock);
+   _environmentService._call_getpwuid = BIND_1ARG_METALMOCK_OBJECT(getpwuidMock);
    // Constant Components
    _environmentService._asserter.reset(_asserterMock = new AsserterMock);
 }
@@ -36,7 +40,9 @@ TEST(DefaultConstructor_SetsFunctionPointers)
 {
    EnvironmentService environmentService;
    // Function Pointers
-   STD_FUNCTION_TARGETS(::gethostname, environmentService._call_gethostname);
+   STD_FUNCTION_TARGETS(gethostname, environmentService._call_gethostname);
+   STD_FUNCTION_TARGETS(geteuid, environmentService._call_geteuid);
+   STD_FUNCTION_TARGETS(getpwuid, environmentService._call_getpwuid);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(environmentService._asserter);
 }
@@ -79,8 +85,7 @@ TEST(MachineName_ReturnsResultOfCallinggethostname)
    //
    METALMOCK(_asserterMock->ThrowIfIntsNotEqualMock.CalledOnceWith(
       0, _gethostnameMock_CallInstead.returnValue,
-      "_call_gethostname(hostname, sizeof(hostname)) unexpectedly did not return 0: " +
-      to_string(_gethostnameMock_CallInstead.returnValue)));
+      "_call_gethostname(hostname, sizeof(hostname)) unexpectedly did not return 0"));
    _gethostnameMock_CallInstead.CalledOnceWith(65);
    const string expectedLinuxMachineName{};
    ARE_EQUAL(_gethostnameMock_CallInstead.outLinuxMachineNameCharsReturnValue, linuxMachineName);
@@ -88,7 +93,16 @@ TEST(MachineName_ReturnsResultOfCallinggethostname)
 
 TEST(UserName_ReturnsResultOfCallinggetlogin_r)
 {
-
+   const uid_t uidValue = geteuidMock.ReturnRandom();
+   struct passwd passwdValue{};
+   getpwuidMock.Return(&passwdValue);
+   //
+   const string username = _environmentService.UserName();
+   //
+   METALMOCK(geteuidMock.CalledOnce());
+   METALMOCK(getpwuidMock.CalledOnceWith(uidValue));
+   const string expectedUsername(passwdValue.pw_name);
+   ARE_EQUAL(expectedUsername, username);
 }
 
 RUN_TESTS(EnvironmentServiceTests)
@@ -132,8 +146,8 @@ TEST(DefaultConstructor_SetsFunctionPointers)
 {
    EnvironmentService environmentService;
    // Function Pointers
-   STD_FUNCTION_TARGETS(::GetComputerNameA, environmentService._call_GetComputerNameA);
-   STD_FUNCTION_TARGETS(::GetUserNameA, environmentService._call_GetUserNameA);
+   STD_FUNCTION_TARGETS(GetComputerNameA, environmentService._call_GetComputerNameA);
+   STD_FUNCTION_TARGETS(GetUserNameA, environmentService._call_GetUserNameA);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(environmentService._asserter);
 }

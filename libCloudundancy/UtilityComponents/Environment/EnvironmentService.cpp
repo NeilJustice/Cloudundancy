@@ -20,8 +20,7 @@ string EnvironmentService::MachineName() const
    char linuxMachineNameChars[65]{};
    const int gethostnameResult = _call_gethostname(linuxMachineNameChars, sizeof(linuxMachineNameChars));
    _asserter->ThrowIfIntsNotEqual(0, gethostnameResult,
-      "_call_gethostname(hostname, sizeof(hostname)) unexpectedly did not return 0: " +
-      to_string(gethostnameResult));
+      "_call_gethostname(hostname, sizeof(hostname)) unexpectedly did not return 0");
    string linuxMachineName(linuxMachineNameChars);
    return linuxMachineName;
 }
@@ -39,8 +38,8 @@ string EnvironmentService::UserName() const
 EnvironmentService::EnvironmentService() noexcept
    // Function Pointers
    : _call_filesystem_current_path(static_cast<fs::path(*)()>(fs::current_path))
-   , _call_GetComputerNameA(::GetComputerNameA)
-   , _call_GetUserNameA(::GetUserNameA)
+   , _call_GetComputerNameA(GetComputerNameA)
+   , _call_GetUserNameA(GetUserNameA)
    // Constant Components
    , _asserter(make_unique<Asserter>())
 {
