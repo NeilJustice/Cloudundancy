@@ -5,8 +5,7 @@ include_directories(${CMAKE_SOURCE_DIR})
 if(UNIX)
    include_directories(${CMAKE_CURRENT_SOURCE_DIR}) # Includes directory libCloudundancyTests so that pch.h can be found
 endif()
-include_directories(${ZenUnitIncludeDirectory})
-include_directories(${MetalMockIncludeDirectory})
+include_directories(${ZenUnitAndMetalMockIncludeDirectory})
 
 folder_source_group(Components)
 folder_source_group_subfolder(Components Args)
