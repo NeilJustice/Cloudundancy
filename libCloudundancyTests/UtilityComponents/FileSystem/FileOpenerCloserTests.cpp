@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/UtilityComponents/FileSystem/FileOpenerCloser.h"
 #include "libCloudundancyTests/Components/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
-#include "libCloudundancyTests/UtilityComponents/Assertion/MetalMock/AsserterMock.h"
 
 TESTS(FileOpenerCloserTests)
 AFACT(DefaultConstructor_SetsFunctionPointers)
@@ -26,7 +25,6 @@ METALMOCK_NONVOID2_FREE(FILE*, fopen, const char*, const char*)
 METALMOCK_NONVOID3_FREE(FILE*, _wfsopen, const wchar_t*, const wchar_t*, int)
 #endif
 // Constant Components
-AsserterMock* _asserterMock = nullptr;
 ErrorCodeTranslatorMock* _errorCodeTranslatorMock = nullptr;
 
 STARTUP
@@ -39,7 +37,6 @@ STARTUP
    _fileOpenerCloser._call_wfsopen = BIND_3ARG_METALMOCK_OBJECT(_wfsopenMock);
 #endif
    // Constant Components
-   _fileOpenerCloser._asserter.reset(_asserterMock = new AsserterMock);
    _fileOpenerCloser._errorCodeTranslator.reset(_errorCodeTranslatorMock = new ErrorCodeTranslatorMock);
 }
 

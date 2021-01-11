@@ -11,7 +11,6 @@ FileOpenerCloser::FileOpenerCloser()
    , _call_wfsopen(_wfsopen)
 #endif
    // Constant Components
-   , _asserter(make_unique<Asserter>())
    , _errorCodeTranslator(make_unique<ErrorCodeTranslator>())
 {
 }

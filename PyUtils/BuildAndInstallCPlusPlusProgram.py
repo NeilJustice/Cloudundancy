@@ -13,7 +13,7 @@ def linux_cmake_build_test_install(cmakeGenerator, cmakeArchitecture, cmakeBuild
 
    Process.fail_fast_run('ninja -v')
 
-   zenUnitTestsProgramCommand = f'{testsProjectName}/{testsProjectName} --test-runs=3 --random-test-ordering --exit-1-if-tests-skipped'
+   zenUnitTestsProgramCommand = f'{testsProjectName}/{testsProjectName} --test-runs=3 --random --exit-1-if-tests-skipped'
    Process.fail_fast_run(zenUnitTestsProgramCommand)
 
    os.chdir('..')
@@ -25,7 +25,7 @@ def windows_cmake_build_test_install(solutionName, cmakeGenerator, cmakeArchitec
    msbuildCommand = f'MSBuild.exe {solutionName}.sln /p:Configuration={cmakeBuildType} /p:Platform=x64 /m'
    Process.fail_fast_run(msbuildCommand)
 
-   zenUnitTestsProgramCommand = f'{testsProjectName}/{cmakeBuildType}/{testsProjectName}.exe --test-runs=3 --random-test-ordering --exit-1-if-tests-skipped'
+   zenUnitTestsProgramCommand = f'{testsProjectName}/{cmakeBuildType}/{testsProjectName}.exe --test-runs=3 --random --exit-1-if-tests-skipped'
    Process.fail_fast_run(zenUnitTestsProgramCommand)
 
    optionally_install_program(doInstallProgram, '.', cmakeBuildType)

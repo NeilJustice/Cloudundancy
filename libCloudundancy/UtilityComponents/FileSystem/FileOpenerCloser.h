@@ -1,5 +1,4 @@
 #pragma once
-class Asserter;
 class ErrorCodeTranslator;
 
 class FileOpenerCloser
@@ -14,7 +13,6 @@ private:
    std::function<FILE* (const wchar_t*, const wchar_t*, int)> _call_wfsopen;
 #endif
    // Constant Components
-   unique_ptr<const Asserter> _asserter;
    unique_ptr<const ErrorCodeTranslator> _errorCodeTranslator;
 public:
    FileOpenerCloser();
