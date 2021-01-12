@@ -2,6 +2,7 @@
 #include "libCloudundancy/UtilityComponents/Environment/EnvironmentService.h"
 
 #if defined __linux__ || defined __APPLE__
+#include <pwd.h>
 
 TESTS(EnvironmentServiceTests)
 AFACT(DefaultConstructor_SetsFunctionPointers)
@@ -21,7 +22,7 @@ EnvironmentService _environmentService;
 METALMOCK_NONVOID0_FREE(fs::path, current_path)
 METALMOCK_NONVOID2_FREE(int, gethostname, char*, size_t)
 METALMOCK_NONVOID0_FREE(uid_t, geteuid)
-METALMOCK_NONVOID1_FREE(struct passwd*, getpwuid, uid_t);
+METALMOCK_NONVOID1_FREE(struct passwd*, getpwuid, uid_t)
 // Constant Components
 AsserterMock* _asserterMock = nullptr;
 
@@ -95,6 +96,8 @@ TEST(UserName_ReturnsResultOfCallinggetlogin_r)
 {
    const uid_t uidValue = geteuidMock.ReturnRandom();
    struct passwd passwdValue{};
+   const string pwName = ZenUnit::Random<string>();
+   passwdValue.pw_name = const_cast<char*>(pwName.c_str());
    getpwuidMock.Return(&passwdValue);
    //
    const string username = _environmentService.UserName();
