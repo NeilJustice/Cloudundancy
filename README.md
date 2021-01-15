@@ -27,7 +27,7 @@ The correctness of Cloudundancy at the user level is currently confirmed with ma
 * [Cloudundancy Code Structure As It Appears Visual Studio Code](#cloudundancy-code-structure-as-it-appears-visual-studio-code)
 * [Cloudundancy Code Structure As It Appears In Visual Studio 2019](#cloudundancy-code-structure-as-it-appears-in-visual-studio-2019)
 * [How To Build Binary cloudundancy From Source On Linux With Clang](#how-to-build-binary-cloudundancy-from-source-on-linux-with-clang)
-* [How To Build Cloudundancy.exe From Source On Windows With Visual Studio 2019](#how-to-build-cloudundancy.exe-from-source-on-windows-with-visual-studio-2019)
+* [How To Build Executable Cloudundancy.exe From Source On Windows With Visual Studio 2019](#how-to-build-executable-cloudundancy.exe-from-source-on-windows-with-visual-studio-2019)
 * [Cloudundancy Roadmap](#cloudundancy-roadmap)
 
 ## Cloudundancy Command Line Usage
@@ -264,7 +264,9 @@ sudo cmake --build . --target install
 
 Resulting binary `/usr/local/bin/cloudundancy`:
 
-## How To Build Cloudundancy.exe From Source On Windows With Visual Studio 2019
+
+
+## How To Build Executable Cloudundancy.exe From Source On Windows With Visual Studio 2019
 
 ```powershell
 git clone https://github.com/NeilJustice/Cloudundancy
