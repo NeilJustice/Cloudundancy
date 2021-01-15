@@ -6,6 +6,9 @@ source_group("" FILES CloudundancyMain.cpp)
 include_directories(${CMAKE_SOURCE_DIR})
 
 add_executable(Cloudundancy CloudundancyMain.cpp)
+if(UNIX)
+   set_target_properties(Cloudundancy PROPERTIES OUTPUT_NAME cloudundancy)
+endif()
 
 target_link_libraries(Cloudundancy libCloudundancy)
 if(UNIX)
