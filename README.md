@@ -243,9 +243,13 @@ A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jo
 
 ## Cloudundancy Code Structure As It Appears Visual Studio Code
 
+Seen in this screenshot is the call to `_cloudundancyIniFileReader->ReadIniFile(iniFilePath`) for reading the Cloudundancy .ini file:
 
+![Cloudundancy Code Structure As It Appears Visual Studio Code](Screenshots/Linux/CloudundancyCodeStructureInVSCode.png)
 
 ## Cloudundancy Code Structure As It Appears In Visual Studio 2019
+
+Seen in this screenshot is the `CloudundancyProgram::Main(int argc, char* argv[])` function which begins Cloudundancy's program behavior. Also seen in this screenshot is the ZenUnit unit test for confirming that Cloudundancy's command line usage text is printed when `CloudundancyProgram::Main(int argc, char* argv[])` is called with `argc == 1`.
 
 ![What Cloudundancy Source Code Looks Like In Visual Studio 2019](Screenshots/WhatCloudundancySourceCodeLooksLikeInVisualStudio2019.png)
 
