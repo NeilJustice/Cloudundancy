@@ -24,9 +24,9 @@ The correctness of Cloudundancy at the user level is currently confirmed with ma
    * [example-windows-ini-file](#example-windows-ini-file)
 * [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-undefinedbehaviorsanitize-cloudundancy)
 * [Windows Jenkins Jobs Which Build Cloudundancy](#windows-jenkins-jobs-which-build-cloudundancy)
-* [Cloudundancy Source Code As It Appears Visual Studio Code](#cloudundancy-source-code-as-it-appears-visual-studio-code)
-* [Cloudundancy Source Code As It Appears In Visual Studio 2019](#cloudundancy-source-code-as-it-appears-in-visual-studio-2019)
-* [How To Build Cloudundancy From Source On Linux With Clang](#how-to-build-cloudundancy-from-source-on-linux-with-clang)
+* [Cloudundancy Code Structure As It Appears Visual Studio Code](#cloudundancy-code-structure-as-it-appears-visual-studio-code)
+* [Cloudundancy Code Structure As It Appears In Visual Studio 2019](#cloudundancy-code-structure-as-it-appears-in-visual-studio-2019)
+* [How To Build Binary cloudundancy From Source On Linux With Clang](#how-to-build-binary-cloudundancy-from-source-on-linux-with-clang)
 * [How To Build Cloudundancy.exe From Source On Windows With Visual Studio 2019](#how-to-build-cloudundancy.exe-from-source-on-windows-with-visual-studio-2019)
 * [Cloudundancy Roadmap](#cloudundancy-roadmap)
 
@@ -34,8 +34,8 @@ The correctness of Cloudundancy at the user level is currently confirmed with ma
 
 ```
 Cloudundancy v0.9.2
-Copies a list of files and folders to a list of destination folders,
-which could be Google Drive and Microsoft OneDrive automatic cloud-uploading folders.
+Copies a list of files and folders to a list of destination folders as specified in a Cloudundancy .ini file.
+Destination folders could be Google Drive, OneDrive, and DropBox automatic cloud-uploading folders.
 https://github.com/NeilJustice/Cloudundancy
 
 Usage:
@@ -50,7 +50,7 @@ Usage:
    Cloudundancy example-windows-ini-file
 ```
 
-Cloudundancy command line arguments are parsed using the excellent single-header library [docopt.cpp](https://github.com/docopt/docopt.cpp) in file `CloudundancyArgsParser.cpp`:
+Cloudundancy command line arguments are parsed in file `CloudundancyArgsParser.cpp` using the excellent single-header library [docopt.cpp](https://github.com/docopt/docopt.cpp):
 
 ![CloudundancyArgsParser.cpp](Screenshots/CloudundancyArgsParser.png)
 
@@ -118,7 +118,7 @@ Resulting contents of `C:\CloudundancyTesting\OneDrive\Cloudundancy.log`:
 
 ![CloudundancyTesting OneDrive Cloudundancy.log](Screenshots/CloudundancyTestingOneDriveCloudundancyLog.png)
 
-Now should your Google account or Microsoft account ever be compromised, peace of mind can be had by knowing you made a cloud-redundant backup with the help of Cloudundancy.
+Now one day should access to your Google account or Microsoft account become not possible by way of a variety of rare but possible potential scenarios, peace of mind can be had by knowing you have cloud-redundant backups of your files made with the help of Cloudundancy.
 
 ### 7zip-files-then-copy-the-7zip-file-to-multiple-folders
 
@@ -241,15 +241,15 @@ A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jo
 
 ![Cloudundancy Windows Jenkins Jobs](Screenshots/CloudundancyWindowsJenkinsJobs.png)
 
-## Cloudundancy Source Code As It Appears Visual Studio Code
+## Cloudundancy Code Structure As It Appears Visual Studio Code
 
 
 
-## Cloudundancy Source Code As It Appears In Visual Studio 2019
+## Cloudundancy Code Structure As It Appears In Visual Studio 2019
 
 ![What Cloudundancy Source Code Looks Like In Visual Studio 2019](Screenshots/WhatCloudundancySourceCodeLooksLikeInVisualStudio2019.png)
 
-## How To Build Cloudundancy From Source On Linux With Clang
+## How To Build Binary cloudundancy From Source On Linux With Clang
 
 ```bash
 git clone https://github.com/NeilJustice/Cloudundancy
