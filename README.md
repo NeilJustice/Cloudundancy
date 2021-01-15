@@ -282,8 +282,8 @@ Resulting executable `C:\bin\Cloudundancy.exe`:
 ## Cloudundancy Roadmap
 
 |Future Cloudundancy Feature|Estimated Delivery Month|Implementation Status|
-|---------------------------|--------------|---------------------|
-|GitHub Actions build|February 2021|In progress|
+|---------------------------|------------------------|---------------------|
+|GitHub Actions build|February 2021|Awaiting implementation|
 |Linux and Windows SonarQube static analysis Jenkins jobs for Cloudundancy|February 2021|Awaiting implementation|
 |SonarCloud static analysis badge|February 2021|Awaiting implementation|
 |Coverity static analysis badge|February 2021|Awaiting implementation|
