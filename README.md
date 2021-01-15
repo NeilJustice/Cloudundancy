@@ -39,8 +39,8 @@ which could be Google Drive and Microsoft OneDrive automatic cloud-uploading fol
 https://github.com/NeilJustice/Cloudundancy
 
 Usage:
-   Cloudundancy copy-files-to-multiple-folders 
-      --ini-file=<CloudundancyIniFilePath> 
+   Cloudundancy copy-files-to-multiple-folders
+      --ini-file=<CloudundancyIniFilePath>
       [--delete-destination-folders-first]
    Cloudundancy 7zip-files-then-copy-the-7zip-file-to-multiple-folders
       --ini-file-to-copy-files-to-7zip-staging-folder=<CloudundancyIniFilePath>
@@ -232,6 +232,8 @@ scm-polling.log
 ### Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy
 
 A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Fedora 33 with Clang and GCC:
+
+![Linux Cloudundancy Jenkins Jobs](Screenshots/Linux/LinuxCloudundancyJenkinsJobs.png)
 
 ### Windows Jenkins Jobs Which Build Cloudundancy
 
