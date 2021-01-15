@@ -275,9 +275,10 @@ Resulting executable `C:\bin\Cloudundancy.exe`:
 
 |Future Cloudundancy Feature|Estimated Delivery Month|Implementation Status|
 |---------------------------|--------------|---------------------|
-|GitHub Actions build|January 2021|In progress|
-|Linux and Windows SonarQube static analysis Jenkins jobs for Cloudundancy|January 2021|Awaiting implementation|
-|SonarCloud static analysis badge|January 2021|Awaiting implementation|
+|GitHub Actions build|February 2021|In progress|
+|Linux and Windows SonarQube static analysis Jenkins jobs for Cloudundancy|February 2021|Awaiting implementation|
+|SonarCloud static analysis badge|February 2021|Awaiting implementation|
 |Coverity static analysis badge|February 2021|Awaiting implementation|
 |`--parallel` for parallel file copying to multiple destination folders|April 2021|Awaiting implementation|
-|Automated acceptance testing for Cloudundancy|May 2021|Awaiting implementation|
+|Automated acceptance testing|May 2021|Awaiting implementation|
+
