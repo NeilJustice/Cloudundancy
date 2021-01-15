@@ -264,7 +264,7 @@ sudo cmake --build . --target install
 
 Resulting binary `/usr/local/bin/cloudundancy`:
 
-
+![Binary cloudundancy on Linux](Screenshots/Linux/LinuxBinaryCloudundancy.png)
 
 ## How To Build Executable Cloudundancy.exe From Source On Windows With Visual Studio 2019
 
