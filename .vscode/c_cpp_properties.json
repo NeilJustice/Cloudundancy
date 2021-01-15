@@ -4,7 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "/usr/include",
-                "/usr/local/include/ZenUnit",
+                "/usr/local/include/ZenUnitAndMetalMock",
                 "${workspaceFolder}",
                 "${workspaceFolder}/libCloudundancy",
                 "${workspaceFolder}/libCloudundancyTests"
@@ -14,7 +14,7 @@
                 "databaseFilename": "",
                 "path": [
                     "/usr/include",
-                    "/usr/local/include/ZenUnit",
+                    "/usr/local/include/ZenUnitAndMetalMock",
                     "${workspaceRoot}"
                 ]
             },
