@@ -12,9 +12,9 @@ TEST(ZenUnitEqualizer_ThrowsZenUnitAnomalyIfAnyFieldNotEqual)
    ZENUNIT_EQUALIZER_TEST_SETUP(ProcessResult);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(ProcessResult, processName, ZenUnit::Random<string>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(ProcessResult, arguments, ZenUnit::Random<string>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(ProcessResult, exitCode, ZenUnit::Random<int>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(ProcessResult, exitCode, ZenUnit::RandomNon0<int>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(ProcessResult, standardOutputAndError, ZenUnit::Random<string>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(ProcessResult, durationInMilliseconds, ZenUnit::Random<unsigned>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(ProcessResult, durationInMilliseconds, ZenUnit::RandomNon0<unsigned>());
 }
 
 TEST(TestableRandomProcessResult_ReturnsProcessResultWithAllRandomFields)
