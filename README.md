@@ -34,18 +34,18 @@ The correctness of Cloudundancy at the user level is currently confirmed with ma
 
 ```
 Cloudundancy v0.9.2
-Copies a list of files and folders to a list of destination folders as specified in a Cloudundancy .ini file.
-Destination folders could be Google Drive, OneDrive, and DropBox automatic cloud-uploading folders.
 https://github.com/NeilJustice/Cloudundancy
 
 Usage:
    Cloudundancy copy-files-to-multiple-folders
       --ini-file=<CloudundancyIniFilePath>
       [--delete-destination-folders-first]
+
    Cloudundancy 7zip-files-then-copy-the-7zip-file-to-multiple-folders
       --ini-file-to-copy-files-to-7zip-staging-folder=<CloudundancyIniFilePath>
       --7zip-staging-folder=<FolderPath>
       --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=<CloudundancyIniFilePath>
+
    Cloudundancy example-linux-ini-file
    Cloudundancy example-windows-ini-file
 ```
