@@ -39,9 +39,9 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsAsserter)
    STD_FUNCTION_TARGETS(chrono::system_clock::now, crtWatch._call_system_clock_now);
    STD_FUNCTION_TARGETS(chrono::system_clock::to_time_t, crtWatch._call_to_time_t);
 #if defined __linux__ || defined __APPLE__
-   STD_FUNCTION_TARGETS(::localtime, crtWatch._call_localtime);
+   STD_FUNCTION_TARGETS(localtime, crtWatch._call_localtime);
 #elif _WIN32
-   STD_FUNCTION_TARGETS(::_localtime64_s, crtWatch._call_localtime64_s);
+   STD_FUNCTION_TARGETS(_localtime64_s, crtWatch._call_localtime64_s);
 #endif
    // Constant Components
    DELETE_TO_ASSERT_NEWED(crtWatch._asserter);

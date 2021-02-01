@@ -25,14 +25,16 @@ private:
    // std::filesystem Function Pointers
    using CopyFileOverloadType = bool(*)(const fs::path&, const fs::path&, fs::copy_options);
    using CurrentPathOverloadType = void(*)(const fs::path&);
-   using CreateDirectoriesOverloadType = bool(*)(const fs::path&);
    using ExistsOverloadType = bool(*)(const fs::path&);
    using FileSizeOverloadType = size_t(*)(const fs::path&);
    using RemoveAllOverloadType = uintmax_t(*)(const fs::path&);
    function<bool(const fs::path&, const fs::path&, fs::copy_options)> _call_fs_copy_file;
    function<void(const fs::path&)> _call_fs_current_path;
+
+   using CreateDirectoriesOverloadType = bool(*)(const fs::path&);
    bool(*_call_fs_create_directories_as_assignable_function_overload_pointer)(const fs::path&);
    function<bool(const fs::path&)> _call_fs_create_directories;
+
    bool(*_call_fs_exists_as_assignable_function_overload_pointer)(const fs::path&);
    function<bool(const fs::path&)> _call_fs_exists;
    function<size_t(const fs::path&)> _call_fs_file_size;

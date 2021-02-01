@@ -7,12 +7,12 @@ FileSystem::FileSystem()
 #if defined __linux__ || defined __APPLE__
    : _call_errno(GetLinuxErrno)
 #elif _WIN32
-   : _call_errno(::_errno)
+   : _call_errno(_errno)
 #endif
-   , _call_fread(::fread)
-   , _call_fseek(::fseek)
-   , _call_ftell(::ftell)
-   , _call_fwrite(::fwrite)
+   , _call_fread(fread)
+   , _call_fseek(fseek)
+   , _call_ftell(ftell)
+   , _call_fwrite(fwrite)
    // std::filesystem Function Pointers
    , _call_fs_copy_file(static_cast<CopyFileOverloadType>(fs::copy_file))
    , _call_fs_current_path(static_cast<void(*)(const fs::path&)>(fs::current_path))

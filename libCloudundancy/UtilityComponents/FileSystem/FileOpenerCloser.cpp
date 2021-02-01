@@ -4,9 +4,9 @@
 
 FileOpenerCloser::FileOpenerCloser()
    // Function Pointers
-   : _call_fclose(::fclose)
+   : _call_fclose(fclose)
 #if defined __linux__ || defined __APPLE__
-   , _call_fopen(::fopen)
+   , _call_fopen(fopen)
 #elif _WIN32
    , _call_wfsopen(_wfsopen)
 #endif

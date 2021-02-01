@@ -60,7 +60,7 @@ TEST(DefaultConstructor_SetsFunctionPointers)
    STD_FUNCTION_TARGETS(GetLinuxErrno, errorCodeTranslator._call_errno);
    STD_FUNCTION_TARGETS(strerror_r, errorCodeTranslator._call_strerror_r);
 #elif _WIN32
-   STD_FUNCTION_TARGETS(::_errno, errorCodeTranslator._call_errno);
+   STD_FUNCTION_TARGETS(_errno, errorCodeTranslator._call_errno);
    STD_FUNCTION_TARGETS_OVERLOAD(
       ErrorCodeTranslator::strerror_s_function_type,
       strerror_s, errorCodeTranslator._call_strerror_s);

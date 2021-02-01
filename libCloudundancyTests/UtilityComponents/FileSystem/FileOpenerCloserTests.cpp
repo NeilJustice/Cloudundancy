@@ -43,7 +43,7 @@ STARTUP
 TEST(DefaultConstructor_SetsFunctionPointers)
 {
    const FileOpenerCloser fileOpenerCloser;
-   STD_FUNCTION_TARGETS(::fclose, fileOpenerCloser._call_fclose);
+   STD_FUNCTION_TARGETS(fclose, fileOpenerCloser._call_fclose);
 #if defined __linux__ || defined __APPLE__
    STD_FUNCTION_TARGETS(fopen, fileOpenerCloser._call_fopen);
 #elif _WIN32

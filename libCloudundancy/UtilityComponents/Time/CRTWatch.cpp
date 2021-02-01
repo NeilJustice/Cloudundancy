@@ -6,9 +6,9 @@ CRTWatch::CRTWatch()
    : _call_system_clock_now(chrono::system_clock::now)
    , _call_to_time_t(chrono::system_clock::to_time_t)
 #if defined __linux__ || defined __APPLE__
-   , _call_localtime(::localtime)
+   , _call_localtime(localtime)
 #elif _WIN32
-   , _call_localtime64_s(::_localtime64_s)
+   , _call_localtime64_s(_localtime64_s)
 #endif
    // Constant Components
    , _asserter(make_unique<Asserter>())

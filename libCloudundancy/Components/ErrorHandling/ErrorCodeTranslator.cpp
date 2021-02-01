@@ -7,7 +7,7 @@ ErrorCodeTranslator::ErrorCodeTranslator()
    : _call_errno(GetLinuxErrno)
    , _call_strerror_r(strerror_r)
 #elif _WIN32
-   : _call_errno(::_errno)
+   : _call_errno(_errno)
    , _call_strerror_s(static_cast<strerror_s_function_type>(strerror_s))
    , _call_GetLastError(GetLastError)
 #endif

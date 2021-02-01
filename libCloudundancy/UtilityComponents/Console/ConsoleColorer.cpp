@@ -4,15 +4,15 @@
 ConsoleColorer::ConsoleColorer() noexcept
 // Function Pointers
 #ifdef _WIN32
-   : _call_fileno(::_fileno)
-   , _call_isatty(::_isatty)
+   : _call_fileno(_fileno)
+   , _call_isatty(_isatty)
 #else
-   : _call_fileno(::fileno)
-   , _call_isatty(::isatty)
+   : _call_fileno(fileno)
+   , _call_isatty(isatty)
 #endif
 #ifdef _WIN32
-   , _call_GetStdHandle(::GetStdHandle)
-   , _call_SetConsoleTextAttribute(::SetConsoleTextAttribute)
+   , _call_GetStdHandle(GetStdHandle)
+   , _call_SetConsoleTextAttribute(SetConsoleTextAttribute)
 #endif
    // Constant Components
    , _asserter(make_unique<Asserter>())

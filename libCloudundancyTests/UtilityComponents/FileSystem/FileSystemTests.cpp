@@ -127,12 +127,12 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 #if defined __linux__ || defined __APPLE__
    STD_FUNCTION_TARGETS(GetLinuxErrno, fileSystem._call_errno);
 #elif _WIN32
-   STD_FUNCTION_TARGETS(::_errno, fileSystem._call_errno);
+   STD_FUNCTION_TARGETS(_errno, fileSystem._call_errno);
 #endif
-   STD_FUNCTION_TARGETS(::fread, fileSystem._call_fread);
-   STD_FUNCTION_TARGETS(::fseek, fileSystem._call_fseek);
-   STD_FUNCTION_TARGETS(::ftell, fileSystem._call_ftell);
-   STD_FUNCTION_TARGETS(::fwrite, fileSystem._call_fwrite);
+   STD_FUNCTION_TARGETS(fread, fileSystem._call_fread);
+   STD_FUNCTION_TARGETS(fseek, fileSystem._call_fseek);
+   STD_FUNCTION_TARGETS(ftell, fileSystem._call_ftell);
+   STD_FUNCTION_TARGETS(fwrite, fileSystem._call_fwrite);
    // std::filesystem Function Pointers
 #ifdef _WIN32
    STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::CopyFileOverloadType, fs::copy_file, fileSystem._call_fs_copy_file);

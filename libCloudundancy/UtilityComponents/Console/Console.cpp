@@ -3,7 +3,7 @@
 
 Console::Console()
    // Function Pointers
-   : _call_exit(::_exit)
+   : _call_exit(_exit)
    // Mutable Components
    , _consoleColorer(make_unique<ConsoleColorer>())
 

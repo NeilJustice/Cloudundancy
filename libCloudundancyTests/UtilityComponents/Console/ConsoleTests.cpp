@@ -34,7 +34,7 @@ TEST(DefaultConstructor_NewsConsoleColorer)
    // Function Pointers
    DELETE_TO_ASSERT_NEWED(console._consoleColorer);
    // Mutable Components
-   STD_FUNCTION_TARGETS(::_exit, console._call_exit);
+   STD_FUNCTION_TARGETS(_exit, console._call_exit);
 }
 
 TEST(Write_WritesMessageWithoutNewline)

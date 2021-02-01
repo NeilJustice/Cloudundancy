@@ -43,13 +43,13 @@ TEST(DefaultConstructor_SetsFunctionPointers_SetsBoolFieldsToFalse)
    //
    // Function Pointers
 #ifdef _WIN32
-   STD_FUNCTION_TARGETS(::_fileno, consoleColorer._call_fileno);
-   STD_FUNCTION_TARGETS(::_isatty, consoleColorer._call_isatty);
-   STD_FUNCTION_TARGETS(::GetStdHandle, consoleColorer._call_GetStdHandle);
-   STD_FUNCTION_TARGETS(::SetConsoleTextAttribute, consoleColorer._call_SetConsoleTextAttribute);
+   STD_FUNCTION_TARGETS(_fileno, consoleColorer._call_fileno);
+   STD_FUNCTION_TARGETS(_isatty, consoleColorer._call_isatty);
+   STD_FUNCTION_TARGETS(GetStdHandle, consoleColorer._call_GetStdHandle);
+   STD_FUNCTION_TARGETS(SetConsoleTextAttribute, consoleColorer._call_SetConsoleTextAttribute);
 #else
-   STD_FUNCTION_TARGETS(::fileno, consoleColorer._call_fileno);
-   STD_FUNCTION_TARGETS(::isatty, consoleColorer._call_isatty);
+   STD_FUNCTION_TARGETS(fileno, consoleColorer._call_fileno);
+   STD_FUNCTION_TARGETS(isatty, consoleColorer._call_isatty);
 #endif
    // Constant Components
    DELETE_TO_ASSERT_NEWED(consoleColorer._asserter);
