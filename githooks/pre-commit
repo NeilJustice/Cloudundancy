@@ -5,7 +5,7 @@ osname="$(uname --operating-system)"
 if [[ "$osname" == *"Linux" ]]; then
    JenkinsJobs/Linux/Cloudundancy-Debug-Clang.sh
 elif [ "$osname" == "Msys" ]; then
-   powershell.exe JenkinsJobs/Windows/CloudundancyDebug.ps1
+   powershell.exe JenkinsJobs/Windows/Cloudundancy-Debug.ps1
 fi
 jenkinsJobExitCode=$?
 if [ "$jenkinsJobExitCode" -ne 0 ]; then
@@ -17,4 +17,3 @@ fi
 echo "***************************************************"
 echo "pre-commit: Jenkins job succeeded. Allowing commit."
 echo "***************************************************"
-
