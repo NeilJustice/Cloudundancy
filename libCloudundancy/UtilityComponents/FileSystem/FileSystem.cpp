@@ -14,12 +14,12 @@ FileSystem::FileSystem()
    , _call_ftell(ftell)
    , _call_fwrite(fwrite)
    // std::filesystem Function Pointers
-   , _call_fs_copy_file(static_cast<CopyFileOverloadType>(fs::copy_file))
-   , _call_fs_current_path(static_cast<void(*)(const fs::path&)>(fs::current_path))
+   , _call_std_filesystem_copy_file(static_cast<CopyFileOverloadType>(fs::copy_file))
+   , _call_std_filesystem_current_path(static_cast<void(*)(const fs::path&)>(fs::current_path))
    , _call_fs_create_directories_as_assignable_function_overload_pointer(fs::create_directories)
-   , _call_fs_exists_as_assignable_function_overload_pointer(fs::exists)
-   , _call_fs_file_size(static_cast<FileSizeOverloadType>(fs::file_size))
-   , _call_fs_remove_all(static_cast<RemoveAllOverloadType>(fs::remove_all))
+   , _call_std_filesystem_exists_as_assignable_function_overload_pointer(fs::exists)
+   , _call_std_filesystem_file_size(static_cast<FileSizeOverloadType>(fs::file_size))
+   , _call_std_filesystem_remove_all(static_cast<RemoveAllOverloadType>(fs::remove_all))
    // Function Callers
    , _caller_FileSize(make_unique<_caller_FileSize_Type>())
    , _caller_FileSystem_DeleteFolderExceptForFile(make_unique<_caller_FileSystem_DeleteFolderExceptForFileType>())
@@ -34,8 +34,8 @@ FileSystem::FileSystem()
    , _recursiveDirectoryIterator(make_unique<RecursiveDirectoryIterator>())
    , _stopwatch(make_unique<Stopwatch>())
 {
-   _call_fs_create_directories = _call_fs_create_directories_as_assignable_function_overload_pointer;
-   _call_fs_exists = _call_fs_exists_as_assignable_function_overload_pointer;
+   _call_std_filesystem_create_directories = _call_fs_create_directories_as_assignable_function_overload_pointer;
+   _call_std_filesystem_exists = _call_std_filesystem_exists_as_assignable_function_overload_pointer;
 }
 
 FileSystem::~FileSystem()
@@ -46,7 +46,7 @@ FileSystem::~FileSystem()
 
 bool FileSystem::FileOrFolderExists(const fs::path& fileOrFolderPath) const
 {
-   const bool fileOrFolderExists = _call_fs_exists(fileOrFolderPath);
+   const bool fileOrFolderExists = _call_std_filesystem_exists(fileOrFolderPath);
    return fileOrFolderExists;
 }
 
@@ -54,7 +54,7 @@ void FileSystem::ThrowIfFilePathIsNotEmptyAndDoesNotExist(const fs::path& filePa
 {
    if (!filePath.empty())
    {
-      const bool filePathExists = _call_fs_exists(filePath);
+      const bool filePathExists = _call_std_filesystem_exists(filePath);
       if (!filePathExists)
       {
          throw FileSystemException(FileSystemExceptionType::FileDoesNotExist, filePath);
@@ -126,7 +126,7 @@ FileCopyResult FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs:
    shared_ptr<const vector<char>> sourceFileBytes = _caller_ReadFileBytes->CallConstMemberFunction(
       &FileSystem::ReadFileBytes, this, sourceFilePath);
    const fs::path parentPathOfDestinationFilePath = destinationFilePath.parent_path();
-   _call_fs_create_directories(parentPathOfDestinationFilePath);
+   _call_std_filesystem_create_directories(parentPathOfDestinationFilePath);
    FILE* const writeModeDestinationBinaryFileHandle = _fileOpenerCloser->CreateWriteModeBinaryFile(destinationFilePath);
    const size_t sourceFileBytesSize = sourceFileBytes->size();
    size_t numberOfBytesWritten = 0;
@@ -150,11 +150,11 @@ FileCopyResult FileSystem::TryCopyFileWithStdFilesystemCopyFile(
 {
    _stopwatch->Start();
    const fs::path parentFolderPathForDestinationFile = destinationFilePath.parent_path();
-   _call_fs_create_directories(parentFolderPathForDestinationFile);
+   _call_std_filesystem_create_directories(parentFolderPathForDestinationFile);
    FileCopyResult fileCopyResult;
    fileCopyResult.sourceFilePath = sourceFilePath;
    fileCopyResult.destinationFilePath = destinationFilePath;
-   fileCopyResult.copySucceeded = _call_fs_copy_file(
+   fileCopyResult.copySucceeded = _call_std_filesystem_copy_file(
       sourceFilePath, destinationFilePath, fs::copy_options::overwrite_existing);
    fileCopyResult.durationInMilliseconds = _stopwatch->StopAndGetElapsedMilliseconds();
    return fileCopyResult;
@@ -162,7 +162,7 @@ FileCopyResult FileSystem::TryCopyFileWithStdFilesystemCopyFile(
 
 bool FileSystem::IsFileSizeGreaterThanOrEqualTo2GB(const fs::path& filePath) const
 {
-   const size_t fileSizeInBytes = _call_fs_file_size(filePath);
+   const size_t fileSizeInBytes = _call_std_filesystem_file_size(filePath);
    constexpr size_t NumberOfBytesIn2GB = 2ULL * 1024ULL * 1024ULL * 1024ULL;
    static_assert(NumberOfBytesIn2GB == 2147483648);
    if (fileSizeInBytes >= NumberOfBytesIn2GB)
@@ -177,7 +177,7 @@ bool FileSystem::IsFileSizeGreaterThanOrEqualTo2GB(const fs::path& filePath) con
 void FileSystem::AppendText(const fs::path& filePath, string_view text) const
 {
    const fs::path parentFolderPath = filePath.parent_path();
-   _call_fs_create_directories(parentFolderPath);
+   _call_std_filesystem_create_directories(parentFolderPath);
    FILE* const appendModeTextFileHandle = _fileOpenerCloser->OpenAppendModeTextFile(filePath);
    const size_t textSize = text.size();
    const size_t numberOfBytesWritten = _call_fwrite(text.data(), 1, textSize, appendModeTextFileHandle);
@@ -189,7 +189,7 @@ void FileSystem::AppendText(const fs::path& filePath, string_view text) const
 void FileSystem::WriteTextFile(const fs::path& filePath, string_view fileText) const
 {
    const fs::path parentFolderPath = filePath.parent_path();
-   _call_fs_create_directories(parentFolderPath);
+   _call_std_filesystem_create_directories(parentFolderPath);
    FILE* const writeModeTextFileHandle = _fileOpenerCloser->CreateWriteModeTextFile(filePath);
    const size_t fileTextSize = fileText.size();
    const size_t numberOfBytesWritten = _call_fwrite(fileText.data(), 1, fileTextSize, writeModeTextFileHandle);
@@ -202,12 +202,12 @@ void FileSystem::WriteTextFile(const fs::path& filePath, string_view fileText) c
 
 void FileSystem::DeleteFolder(const fs::path& folderPath) const
 {
-   _call_fs_remove_all(folderPath);
+   _call_std_filesystem_remove_all(folderPath);
 }
 
 void FileSystem::DeleteFolderExceptForFile(const fs::path& folderPath, string_view exceptFileName) const
 {
-   const bool folderPathExists = _call_fs_exists(folderPath);
+   const bool folderPathExists = _call_std_filesystem_exists(folderPath);
    if (!folderPathExists)
    {
       return;
@@ -229,7 +229,7 @@ void FileSystem::DeleteFoldersExceptForFile(const vector<fs::path>& folderPaths,
 
 void FileSystem::SetCurrentPath(const fs::path& folderPath) const
 {
-   _call_fs_current_path(folderPath);
+   _call_std_filesystem_current_path(folderPath);
 }
 
 // Private Functions
