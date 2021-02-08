@@ -18,7 +18,6 @@ class BuildAndInstallCPlusPlusProgramTests(unittest.TestCase):
    def setUp(self):
       self.solutionName = Random.string()
       self.cmakeGenerator = Random.string()
-      self.cmakeArchitecture = Random.string()
       self.cmakeBuildType = Random.string()
       self.testsProjectName = Random.string()
       self.cmakeDefinitions = Random.string()
@@ -27,7 +26,7 @@ class BuildAndInstallCPlusPlusProgramTests(unittest.TestCase):
    def docstring__IsExpectedString_test(self):
       self.assertEqual("""BuildAndInstallCPlusPlusProgram.py - Builds and installs a C++ progarm on Linux or Windows.
 
-Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-generator=<String> --cmake-architecture=<x64OrWin32> --cmake-build-type=<String> --tests-project-name=<String> [--cmake-definitions=<String>] (--install|--no-install)""",
+Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-generator=<String> --cmake-build-type=<String> --tests-project-name=<String> [--cmake-definitions=<String>] (--install|--no-install)""",
       BuildAndInstallCPlusPlusProgram.__doc__)
 
    def main__ValidArgs_CMakes_Builds_RunsTests_InstallsIfInstallArgSpecified_test(self):
@@ -42,7 +41,6 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
             {
                '--solution-name': self.solutionName,
                '--cmake-generator': self.cmakeGenerator,
-               '--cmake-architecture': self.cmakeArchitecture,
                '--cmake-build-type': self.cmakeBuildType,
                '--tests-project-name': self.testsProjectName,
                '--cmake-definitions': self.cmakeDefinitions,
@@ -58,10 +56,10 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
             platform.system.assert_called_once_with()
             if trueExpectLinuxFalseExpectWindows:
                BuildAndInstallCPlusPlusProgram.linux_cmake_build_test_install.assert_called_once_with(
-                  self.cmakeGenerator, self.cmakeArchitecture, self.cmakeBuildType, self.testsProjectName, self.cmakeDefinitions, self.doInstallProgram)
+                  self.cmakeGenerator, self.cmakeBuildType, self.testsProjectName, self.cmakeDefinitions, self.doInstallProgram)
             else:
                BuildAndInstallCPlusPlusProgram.windows_cmake_build_test_install.assert_called_once_with(
-                  self.solutionName, self.cmakeGenerator, self.cmakeArchitecture, self.cmakeBuildType, self.testsProjectName, self.cmakeDefinitions, self.doInstallProgram)
+                  self.solutionName, self.cmakeGenerator, self.cmakeBuildType, self.testsProjectName, self.cmakeDefinitions, self.doInstallProgram)
       testcase('Linux', True)
       testcase('linux', True)
       testcase('Windows', False)
@@ -75,10 +73,10 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
       doInstallProgram = Random.boolean()
       #
       BuildAndInstallCPlusPlusProgram.linux_cmake_build_test_install(
-         self.cmakeGenerator, self.cmakeArchitecture, self.cmakeBuildType, self.testsProjectName, self.cmakeDefinitions, doInstallProgram)
+         self.cmakeGenerator, self.cmakeBuildType, self.testsProjectName, self.cmakeDefinitions, doInstallProgram)
       #
       CMake.generate.assert_called_once_with(
-         self.cmakeBuildType, self.cmakeGenerator, self.cmakeArchitecture, self.cmakeBuildType, self.cmakeDefinitions, '..')
+         self.cmakeBuildType, self.cmakeGenerator, self.cmakeBuildType, self.cmakeDefinitions, '..')
       expectedZenUnitTestsProgramCommand = f'{self.testsProjectName}/{self.testsProjectName} --test-runs=3 --random --exit-1-if-tests-skipped'
       self.assertEqual(2, len(Process.fail_fast_run.call_args_list))
       Process.fail_fast_run.assert_has_calls([
@@ -94,9 +92,9 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
       doInstallProgram = Random.boolean()
       #
       BuildAndInstallCPlusPlusProgram.windows_cmake_build_test_install(
-         self.solutionName, self.cmakeGenerator, self.cmakeArchitecture, self.cmakeBuildType, self.testsProjectName, self.cmakeDefinitions, doInstallProgram)
+         self.solutionName, self.cmakeGenerator, self.cmakeBuildType, self.testsProjectName, self.cmakeDefinitions, doInstallProgram)
       #
-      CMake.generate.assert_called_once_with('.', self.cmakeGenerator, self.cmakeArchitecture, self.cmakeBuildType, self.cmakeDefinitions, '.')
+      CMake.generate.assert_called_once_with('.', self.cmakeGenerator, self.cmakeBuildType, self.cmakeDefinitions, '.')
       expectedMSBuildCommand = f'MSBuild.exe {self.solutionName}.sln /p:Configuration={self.cmakeBuildType} /p:Platform=x64 /m'
       expectedZenUnitTestsProgramCommand = f'{self.testsProjectName}/{self.cmakeBuildType}/{self.testsProjectName}.exe --test-runs=3 --random --exit-1-if-tests-skipped'
       self.assertEqual(2, len(Process.fail_fast_run.call_args_list))

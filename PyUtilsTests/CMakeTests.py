@@ -20,7 +20,6 @@ class CMakeTests(unittest.TestCase):
    def setUp(self):
       self.cmakeFolderPath = Random.string()
       self.cmakeGenerator = Random.string()
-      self.cmakeArchitecture = Random.string()
       self.cmakeBuildType = Random.string()
       self.cmakeListsFolderPath = Random.string()
 
@@ -34,7 +33,7 @@ class CMakeTests(unittest.TestCase):
          with self.subTest(f'{platformSystem, cmakeDefinitions, expectedCMakeCommand}'):
             platform.system.return_value = platformSystem
             #
-            CMake.generate(self.cmakeFolderPath, self.cmakeGenerator, self.cmakeArchitecture, self.cmakeBuildType, cmakeDefinitions, self.cmakeListsFolderPath)
+            CMake.generate(self.cmakeFolderPath, self.cmakeGenerator, self.cmakeBuildType, cmakeDefinitions, self.cmakeListsFolderPath)
             #
             os.makedirs.assert_called_once_with(self.cmakeFolderPath, exist_ok=True)
             os.chdir.assert_called_once_with(self.cmakeFolderPath)
@@ -45,11 +44,11 @@ class CMakeTests(unittest.TestCase):
       testcase('Linux', '-DAddressSanitizerMode=ON',
          f'cmake -Werror=dev -G"{self.cmakeGenerator}" -DCMAKE_BUILD_TYPE={self.cmakeBuildType} -DAddressSanitizerMode=ON {self.cmakeListsFolderPath}')
       testcase('linux', '',
-         f'cmake -Werror=dev -G"{self.cmakeGenerator}" -A"{self.cmakeArchitecture}"  {self.cmakeListsFolderPath}')
+         f'cmake -Werror=dev -G"{self.cmakeGenerator}"  {self.cmakeListsFolderPath}')
       testcase('Windows', '',
-        f'cmake -Werror=dev -G"{self.cmakeGenerator}" -A"{self.cmakeArchitecture}"  {self.cmakeListsFolderPath}')
+        f'cmake -Werror=dev -G"{self.cmakeGenerator}"  {self.cmakeListsFolderPath}')
       testcase('Windows', '-DCMAKE_INSTALL_PREFIX=C:/',
-         f'cmake -Werror=dev -G"{self.cmakeGenerator}" -A"{self.cmakeArchitecture}" -DCMAKE_INSTALL_PREFIX=C:/ {self.cmakeListsFolderPath}')
+         f'cmake -Werror=dev -G"{self.cmakeGenerator}" -DCMAKE_INSTALL_PREFIX=C:/ {self.cmakeListsFolderPath}')
 
    def generate_in_folder_CreatesAndCdsToDirectory_RunsCMakeWithGeneratorAndBuildType_test(self):
       @patch('os.makedirs', spec_set=True)
@@ -60,7 +59,7 @@ class CMakeTests(unittest.TestCase):
       def testcase(platformSystem, expectCMakeBuildTypeSpecified, _1, _2, _3, _4, _5):
          platform.system.return_value = platformSystem
          #
-         CMake.generate_in_folder(self.cmakeFolderPath, self.cmakeGenerator, self.cmakeArchitecture, self.cmakeBuildType, self.cmakeListsFolderPath)
+         CMake.generate_in_folder(self.cmakeFolderPath, self.cmakeGenerator, self.cmakeBuildType, self.cmakeListsFolderPath)
          #
          os.makedirs.assert_called_once_with(self.cmakeFolderPath, exist_ok=True)
          os.chdir.assert_called_once_with(self.cmakeFolderPath)
@@ -68,7 +67,7 @@ class CMakeTests(unittest.TestCase):
          if expectCMakeBuildTypeSpecified:
             expectedCMakeCommand = f'cmake -Werror=dev -G"{self.cmakeGenerator}" -DCMAKE_BUILD_TYPE={self.cmakeBuildType} {self.cmakeListsFolderPath}'
          else:
-            expectedCMakeCommand = f'cmake -Werror=dev -G"{self.cmakeGenerator}" -A"{self.cmakeArchitecture}" {self.cmakeListsFolderPath}'
+            expectedCMakeCommand = f'cmake -Werror=dev -G"{self.cmakeGenerator}" {self.cmakeListsFolderPath}'
          Process.fail_fast_run.assert_called_once_with(expectedCMakeCommand)
       testcase('Linux', True)
       testcase('linux', False)
@@ -94,7 +93,7 @@ class CMakeTests(unittest.TestCase):
       self.assertEqual(2, len(functools.partial.call_args_list))
       functools.partial.assert_has_calls([
          call(os.path.join, baseFolderPath),
-         call(CMake.generate_in_folder, generator='Visual Studio 16 2019', architecture='x64', buildType='N/A', cmakeListsFolderPath='.')])
+         call(CMake.generate_in_folder, generator='Visual Studio 16 2019', buildType='N/A', cmakeListsFolderPath='.')])
       self.assertEqual(2, len(map.call_args_list))
       map.assert_has_calls([
          call(osPathJoinPartial, folderNamesContainingCMakeLists),
@@ -108,7 +107,7 @@ class CMakeTests(unittest.TestCase):
       CMake.delete_cmake_cache_file_then_cmake()
       #
       File.delete.assert_called_once_with('CMakeCache.txt')
-      CMake.generate.assert_called_once_with('.', 'Visual Studio 16 2019', 'x64', '', '-DCMAKE_INSTALL_PREFIX=C:\\', '.')
+      CMake.generate.assert_called_once_with('.', 'Visual Studio 16 2019', '', '-DCMAKE_INSTALL_PREFIX=C:\\', '.')
 
    @patch('PyUtils.CMake.delete_cmake_cache_file_then_cmake', spec_set=True)
    def main_ArgvIsNotLength2OrArgv1IsNotDeleteCacheThenCMake_DoesNothing_test(self, _1):

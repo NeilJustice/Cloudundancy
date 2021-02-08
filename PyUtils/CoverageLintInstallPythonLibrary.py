@@ -3,8 +3,6 @@ Runs coverage, pylint, flake8, then copies a folder to an install folder.
 
 Usage: CoverageLintInstallPythonLibrary.py --project=<FolderName> --test-project=<FolderName> --run-tests-with-coverage-python-file=<FileName>"""
 import os
-import sys
-sys.path.append('.') # Jenkins
 import docopt
 from PyUtils import Python, Process
 
