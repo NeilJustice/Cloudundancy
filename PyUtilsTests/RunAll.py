@@ -1,5 +1,4 @@
 import sys
-sys.path.append('..') # Jenkins
 import nose
 
 noseConfig = nose.config.Config()

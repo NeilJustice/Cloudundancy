@@ -47,5 +47,5 @@ install_manifest.txt
 # Python
 __pycache__/
 htmlcov/
+.coverage
 coverage.xml
-

@@ -3,7 +3,7 @@ import unittest
 from unittest.mock import patch
 from unittest.mock import call
 import docopt
-from PyUtils import CoverageLintInstallPythonLibrary, Python, Process, UnitTester, Random
+from PyUtils import CoverageLintInstallPythonLibrary, Python, Process, UnitTester, Random # pylint:disable=no-name-in-module
 
 testNames = [
 'docstring_ReturnsExpected_test',

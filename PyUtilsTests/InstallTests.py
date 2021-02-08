@@ -1,7 +1,7 @@
 import os
 import unittest
 from unittest.mock import patch
-from PyUtils import FileSystem, Install, UnitTester, Util, Random
+from PyUtils import FileSystem, Install, UnitTester, Util, Random # pylint:disable=no-name-in-module
 
 testNames = [
 'binary_CopiesConfigurationExeToLibFolder_test'
