@@ -1,10 +1,7 @@
-import collections
-import functools
 import os
 import platform
 import unittest
 from unittest.mock import patch
-from unittest.mock import call
 from PyUtils import CMake, File, UnitTester, Process, Random
 
 testNames = [

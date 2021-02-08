@@ -1,6 +1,5 @@
 import unittest
 from unittest.mock import patch
-from unittest.mock import call
 import docopt
 from PyUtils import CoverageLintInstallPythonLibrary, Python, Process, UnitTester, Random # pylint:disable=no-name-in-module
 
@@ -15,7 +14,7 @@ class CoverageLintInstallPythonLibraryTests(unittest.TestCase):
       self.assertEqual("""CoverageLintInstallPythonLibrary.py
 Runs coverage, pylint, flake8, then copies a folder to an install folder.
 
-Usage: CoverageLintInstallPythonLibrary.py --project=<FolderName> --test-project=<FolderName> --run-tests-with-coverage-python-file=<RelativeFilePath>""",
+Usage: CoverageLintInstallPythonLibrary.py --project=<FolderName> --run-tests-with-coverage-python-file=<RelativeFilePath>""",
 CoverageLintInstallPythonLibrary.__doc__)
 
    @patch('docopt.docopt', spec_set=True)
@@ -24,12 +23,10 @@ CoverageLintInstallPythonLibrary.__doc__)
    @patch('PyUtils.Python.pylint_all', spec_set=True)
    def main_RunTestsWithCoverage_Pylints_Flake8s_CopiesSpecifiedFolderToInstallFolder_test(self, _1, _2, _3, _4):
       projectFolderName = Random.string()
-      testProjectFolderName = Random.string()
       runTestsWithCoveragePythonFileName = Random.string()
       docopt.docopt.return_value =\
       {
          '--project': projectFolderName,
-         '--test-project': testProjectFolderName,
          '--run-tests-with-coverage-python-file': runTestsWithCoveragePythonFileName
       }
       #
