@@ -15,14 +15,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StaticAnalysis", "StaticAna
 		.pylintrc = .pylintrc
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows", "Windows", "{678EE4DB-58D5-44E3-88EA-32AB51DE559C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Linux", "Linux", "{AC3A658D-B158-4CEB-A7DB-4089B8C0ACF2}"
 	ProjectSection(SolutionItems) = preProject
-		JenkinsJobs\Windows\PyUtils.ps1 = JenkinsJobs\Windows\PyUtils.ps1
+		JenkinsJobs\Linux\Cloudundancy-Debug-Clang.sh = JenkinsJobs\Linux\Cloudundancy-Debug-Clang.sh
+		JenkinsJobs\Linux\Cloudundancy-Debug-ClangAddressAndUndefinedBehaviorSanitizers.sh = JenkinsJobs\Linux\Cloudundancy-Debug-ClangAddressAndUndefinedBehaviorSanitizers.sh
+		JenkinsJobs\Linux\Cloudundancy-Debug-ClangTidy.sh = JenkinsJobs\Linux\Cloudundancy-Debug-ClangTidy.sh
+		JenkinsJobs\Linux\Cloudundancy-Debug-GCC.sh = JenkinsJobs\Linux\Cloudundancy-Debug-GCC.sh
+		JenkinsJobs\Linux\Cloudundancy-Release-Clang.sh = JenkinsJobs\Linux\Cloudundancy-Release-Clang.sh
+		JenkinsJobs\Linux\Cloudundancy-Release-ClangAddressAndUndefinedBehaviorSanitizers.sh = JenkinsJobs\Linux\Cloudundancy-Release-ClangAddressAndUndefinedBehaviorSanitizers.sh
+		JenkinsJobs\Linux\Cloudundancy-Release-ClangTidy.sh = JenkinsJobs\Linux\Cloudundancy-Release-ClangTidy.sh
+		JenkinsJobs\Linux\Cloudundancy-Release-GCC.sh = JenkinsJobs\Linux\Cloudundancy-Release-GCC.sh
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Linux", "Linux", "{806B2AB8-4582-4080-97E2-B79EAC0D105D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows", "Windows", "{0585F101-B99D-49C2-B499-F420D66A6238}"
 	ProjectSection(SolutionItems) = preProject
-		JenkinsJobs\Linux\PyUtils.sh = JenkinsJobs\Linux\PyUtils.sh
+		JenkinsJobs\Windows\Cloudundancy-Debug.ps1 = JenkinsJobs\Windows\Cloudundancy-Debug.ps1
+		JenkinsJobs\Windows\Cloudundancy-PyUtils.ps1 = JenkinsJobs\Windows\Cloudundancy-PyUtils.ps1
+		JenkinsJobs\Windows\Cloudundancy-Release.ps1 = JenkinsJobs\Windows\Cloudundancy-Release.ps1
 	EndProjectSection
 EndProject
 Global
@@ -40,8 +49,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{678EE4DB-58D5-44E3-88EA-32AB51DE559C} = {88409A64-F6E8-4265-B8D3-C9DD53E33B7E}
-		{806B2AB8-4582-4080-97E2-B79EAC0D105D} = {88409A64-F6E8-4265-B8D3-C9DD53E33B7E}
+		{AC3A658D-B158-4CEB-A7DB-4089B8C0ACF2} = {88409A64-F6E8-4265-B8D3-C9DD53E33B7E}
+		{0585F101-B99D-49C2-B499-F420D66A6238} = {88409A64-F6E8-4265-B8D3-C9DD53E33B7E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82671E97-3DD4-4529-9667-B702FFFC49EB}
