@@ -49,3 +49,6 @@ __pycache__/
 htmlcov/
 .coverage
 coverage.xml
+
+# SonarQube
+.scannerwork/
