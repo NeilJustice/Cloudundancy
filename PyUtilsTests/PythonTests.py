@@ -86,14 +86,14 @@ class PythonTests(unittest.TestCase):
          Python.run_all_with_coverage(omitPattern)
          #
          self.assertEqual(2, len(print.call_args_list))
-         print.assert_has_calls([call('Running RunAll.py with coverage from', currentWorkingDirectory)])
+         print.assert_has_calls([call('Running PyUtilsTests/RunAll.py with coverage from', currentWorkingDirectory)])
          Process.run_and_get_exit_code.assert_called_once_with(
-            f'coverage3 report --omit="{omitPattern}" --fail-under=100 --show-missing')
+            f'coverage report --omit="{omitPattern}" --fail-under=100 --show-missing')
          self.assertEqual(3, len(Process.fail_fast_run.call_args_list))
          Process.fail_fast_run.assert_has_calls([
-            call('coverage3 run --branch RunAll.py'),
-            call('coverage3 html'),
-            call(f'coverage3 xml --omit="{omitPattern}"')])
+            call('coverage run --branch PyUtilsTests/RunAll.py'),
+            call('coverage html'),
+            call(f'coverage xml --omit="{omitPattern}"')])
          print.assert_has_calls([call(expectedConcludingPrint)])
          sys.exit.assert_called_once_with(reportExitCode)
       testcase(-1, 'Failure. Coverage is less than 100%.')
