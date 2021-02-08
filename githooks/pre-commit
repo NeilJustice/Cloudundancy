@@ -1,10 +1,12 @@
 #!/bin/bash
-set -u
+set -eu
 
 osname="$(uname --operating-system)"
 if [[ "$osname" == *"Linux" ]]; then
+	JenkinsJobs/Linux/Cloudundancy-PyUtils.sh
    JenkinsJobs/Linux/Cloudundancy-Debug-Clang.sh
 elif [ "$osname" == "Msys" ]; then
+	powershell.exe JenkinsJobs/Windows/Cloudundancy-PyUtils.ps1
    powershell.exe JenkinsJobs/Windows/Cloudundancy-Debug.ps1
 fi
 jenkinsJobExitCode=$?
