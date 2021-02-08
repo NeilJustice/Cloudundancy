@@ -34,9 +34,9 @@ CoverageLintInstallPythonLibrary.__doc__)
       #
       docopt.docopt.assert_called_once_with(CoverageLintInstallPythonLibrary.__doc__)
       expectedRunTestsWithCoverageCommand = f'python {runTestsWithCoveragePythonFileName}'
-      Process.fail_fast_run.assert_called_once_with(expectedRunTestsWithCoverageCommand)
       Python.flake8_all.assert_called_once_with()
       Python.pylint_all.assert_called_once_with()
+      Process.fail_fast_run.assert_called_once_with(expectedRunTestsWithCoverageCommand)
 
 if __name__ == '__main__': # pragma nocover
    UnitTester.run_tests(CoverageLintInstallPythonLibraryTests, testNames)

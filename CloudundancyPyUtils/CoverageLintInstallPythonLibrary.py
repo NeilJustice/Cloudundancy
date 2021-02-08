@@ -9,9 +9,9 @@ def main():
    arguments = docopt.docopt(__doc__)
    runTestsWithCoveragePythonFileName = arguments['--run-tests-with-coverage-python-file']
    runTestsWithCoverageCommand = f'python {runTestsWithCoveragePythonFileName}'
-   Process.fail_fast_run(runTestsWithCoverageCommand)
    Python.flake8_all()
    Python.pylint_all()
+   Process.fail_fast_run(runTestsWithCoverageCommand)
 
 if __name__ == '__main__': # pragma nocover
    main()
