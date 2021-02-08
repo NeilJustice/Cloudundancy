@@ -9,8 +9,6 @@ from PyUtils import CMake, File, UnitTester, Process, Random
 
 testNames = [
 'generate_CreatesAndCdsToDirectory_RunsCMakeWithGeneratorAndBuildType_test',
-'generate_in_folder_CreatesAndCdsToDirectory_RunsCMakeWithGeneratorAndBuildType_test',
-'generate_all_CallsGenerateOnRelativeFolderNamesContainingCMakeLists_test',
 'delete_cmake_cache_file_then_cmake_DeletesCMakeCacheDotTxt_ThenCMakeGenerates_test',
 'main_ArgvIsNotLength2OrArgv1IsNotDeleteCacheThenCMake_DoesNothing_test',
 'main_ArgvIs2AndArgv1IsDeleteCacheThenCMake_DeletesCMakeCacheDotTxtThenCMakeGenerates_test'
@@ -49,56 +47,6 @@ class CMakeTests(unittest.TestCase):
         f'cmake -Werror=dev -G"{self.cmakeGenerator}"  {self.cmakeListsFolderPath}')
       testcase('Windows', '-DCMAKE_INSTALL_PREFIX=C:/',
          f'cmake -Werror=dev -G"{self.cmakeGenerator}" -DCMAKE_INSTALL_PREFIX=C:/ {self.cmakeListsFolderPath}')
-
-   def generate_in_folder_CreatesAndCdsToDirectory_RunsCMakeWithGeneratorAndBuildType_test(self):
-      @patch('os.makedirs', spec_set=True)
-      @patch('os.chdir', spec_set=True)
-      @patch('platform.system', spec_set=True)
-      @patch('builtins.print', spec_set=True)
-      @patch('PyUtils.Process.fail_fast_run', spec_set=True)
-      def testcase(platformSystem, expectCMakeBuildTypeSpecified, _1, _2, _3, _4, _5):
-         platform.system.return_value = platformSystem
-         #
-         CMake.generate_in_folder(self.cmakeFolderPath, self.cmakeGenerator, self.cmakeBuildType, self.cmakeListsFolderPath)
-         #
-         os.makedirs.assert_called_once_with(self.cmakeFolderPath, exist_ok=True)
-         os.chdir.assert_called_once_with(self.cmakeFolderPath)
-         print.assert_called_once_with('Generating CMake in folder', self.cmakeFolderPath)
-         if expectCMakeBuildTypeSpecified:
-            expectedCMakeCommand = f'cmake -Werror=dev -G"{self.cmakeGenerator}" -DCMAKE_BUILD_TYPE={self.cmakeBuildType} {self.cmakeListsFolderPath}'
-         else:
-            expectedCMakeCommand = f'cmake -Werror=dev -G"{self.cmakeGenerator}" {self.cmakeListsFolderPath}'
-         Process.fail_fast_run.assert_called_once_with(expectedCMakeCommand)
-      testcase('Linux', True)
-      testcase('linux', False)
-      testcase('Windows', False)
-
-   @patch('functools.partial', spec_set=True)
-   @patch('builtins.map', spec_set=True)
-   @patch('collections.deque', spec_set=True)
-   def generate_all_CallsGenerateOnRelativeFolderNamesContainingCMakeLists_test(self, _1, _2, _3):
-      baseFolderPath = Random.string()
-      folderNamesContainingCMakeLists = [Random.string(), Random.string()]
-      osPathJoinPartial = Random.string()
-      generateInFolderPartial = Random.string()
-      functools.partial.side_effect = [osPathJoinPartial, generateInFolderPartial]
-
-      folderPathsContainingCMakeLists = [Random.string(), Random.string()]
-
-      mapObject = Random.string()
-      map.side_effect = [folderPathsContainingCMakeLists, mapObject]
-      #
-      CMake.generate_all(baseFolderPath, folderNamesContainingCMakeLists)
-      #
-      self.assertEqual(2, len(functools.partial.call_args_list))
-      functools.partial.assert_has_calls([
-         call(os.path.join, baseFolderPath),
-         call(CMake.generate_in_folder, generator='Visual Studio 16 2019', buildType='N/A', cmakeListsFolderPath='.')])
-      self.assertEqual(2, len(map.call_args_list))
-      map.assert_has_calls([
-         call(osPathJoinPartial, folderNamesContainingCMakeLists),
-         call(generateInFolderPartial, folderPathsContainingCMakeLists)])
-      collections.deque.assert_called_once_with(mapObject, maxlen=0)
 
    @patch('PyUtils.File.delete', spec_set=True)
    @patch('PyUtils.CMake.generate', spec_set=True)

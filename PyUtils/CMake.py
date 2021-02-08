@@ -15,24 +15,6 @@ def generate(folderPath, generator, buildType, cmakeDefinitions, cmakeListsFolde
       cmakeCommand = f'cmake -Werror=dev -G"{generator}" {cmakeDefinitions} {cmakeListsFolderPath}'
    Process.fail_fast_run(cmakeCommand)
 
-def generate_in_folder(folderPath, generator, buildType, cmakeListsFolderPath):
-   os.makedirs(folderPath, exist_ok=True)
-   os.chdir(folderPath)
-   print('Generating CMake in folder', folderPath)
-   if platform.system() == 'Linux':
-      cmakeCommand = f'cmake -Werror=dev -G"{generator}" -DCMAKE_BUILD_TYPE={buildType} {cmakeListsFolderPath}'
-   else:
-      cmakeCommand = f'cmake -Werror=dev -G"{generator}" {cmakeListsFolderPath}'
-   Process.fail_fast_run(cmakeCommand)
-
-def generate_all(baseFolderPath, folderNamesContainingCMakeLists):
-   osPathJoinPartialBaseFolderPath = functools.partial(os.path.join, baseFolderPath)
-   folderPathsContainingCMakeLists = list(map(
-      osPathJoinPartialBaseFolderPath, folderNamesContainingCMakeLists))
-   boundGenerateInFolder = functools.partial(
-      generate_in_folder, generator='Visual Studio 16 2019', buildType='N/A', cmakeListsFolderPath='.')
-   collections.deque(map(boundGenerateInFolder, folderPathsContainingCMakeLists), maxlen=0)
-
 def delete_cmake_cache_file_then_cmake():
    File.delete('CMakeCache.txt')
    generate('.', 'Visual Studio 16 2019', '', '-DCMAKE_INSTALL_PREFIX=C:\\', '.')
