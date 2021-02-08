@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 import docopt
-from PyUtils import CoverageLintInstallPythonLibrary, Python, Process, UnitTester, Random # pylint:disable=no-name-in-module
+from CloudundancyPyUtils import CoverageLintInstallPythonLibrary, Python, Process, UnitTester, Random # pylint:disable=no-name-in-module
 
 testNames = [
 'docstring_ReturnsExpected_test',
@@ -18,9 +18,9 @@ Usage: CoverageLintInstallPythonLibrary.py --project=<FolderName> --run-tests-wi
 CoverageLintInstallPythonLibrary.__doc__)
 
    @patch('docopt.docopt', spec_set=True)
-   @patch('PyUtils.Process.fail_fast_run', spec_set=True)
-   @patch('PyUtils.Python.flake8_all', spec_set=True)
-   @patch('PyUtils.Python.pylint_all', spec_set=True)
+   @patch('CloudundancyPyUtils.Process.fail_fast_run', spec_set=True)
+   @patch('CloudundancyPyUtils.Python.flake8_all', spec_set=True)
+   @patch('CloudundancyPyUtils.Python.pylint_all', spec_set=True)
    def main_RunTestsWithCoverage_Pylints_Flake8s_CopiesSpecifiedFolderToInstallFolder_test(self, _1, _2, _3, _4):
       projectFolderName = Random.string()
       runTestsWithCoveragePythonFileName = Random.string()

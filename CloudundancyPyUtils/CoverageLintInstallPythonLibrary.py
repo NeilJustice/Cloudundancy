@@ -3,7 +3,7 @@ Runs coverage, pylint, flake8, then copies a folder to an install folder.
 
 Usage: CoverageLintInstallPythonLibrary.py --project=<FolderName> --run-tests-with-coverage-python-file=<RelativeFilePath>"""
 import docopt
-from PyUtils import Python, Process
+from CloudundancyPyUtils import Python, Process
 
 def main():
    arguments = docopt.docopt(__doc__)

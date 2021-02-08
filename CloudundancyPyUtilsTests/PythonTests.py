@@ -4,7 +4,7 @@ import platform
 import sys
 import unittest
 from unittest.mock import call, patch
-from PyUtils import Python, Process, UnitTester, Random
+from CloudundancyPyUtils import Python, Process, UnitTester, Random
 
 testNames = [
 'pylint_file_CallsPylintOnAllPythonFilesInCurrentFolderAndSubFolders_test',
@@ -17,7 +17,7 @@ class PythonTests(unittest.TestCase):
 
    ExpectedPylintCommand = 'pylint --rcfile=.pylintrc --score=n --init-hook=\"sys.path.append(\'.\')\" '
 
-   @patch('PyUtils.Process.run_and_get_exit_code', spec_set=True)
+   @patch('CloudundancyPyUtils.Process.run_and_get_exit_code', spec_set=True)
    def pylint_file_CallsPylintOnAllPythonFilesInCurrentFolderAndSubFolders_test(self, _1):
       pylintExitCode = Random.integer()
       Process.run_and_get_exit_code.return_value = pylintExitCode
@@ -31,8 +31,8 @@ class PythonTests(unittest.TestCase):
    def pylint_all_LinuxCallsMapParallelPylintFileWithAllPyFilePaths_WindowsCallsMapSequential_test(self):
       @patch('glob.glob', spec_set=True)
       @patch('platform.system', spec_set=True)
-      @patch('PyUtils.Process.run_parallel_ProcessPoolExecutor', spec_set=True)
-      @patch('PyUtils.Process.run_foreach', spec_set=True)
+      @patch('CloudundancyPyUtils.Process.run_parallel_ProcessPoolExecutor', spec_set=True)
+      @patch('CloudundancyPyUtils.Process.run_foreach', spec_set=True)
       @patch('sys.exit', spec_set=True)
       def testcase(platformSystem, expectedMapParallel, allPylintsSucceeded, expectSysExit1, _1, _2, _3, _4, _5):
          with self.subTest(f'{platformSystem, expectedMapParallel, allPylintsSucceeded, expectSysExit1}'):
@@ -62,7 +62,7 @@ class PythonTests(unittest.TestCase):
       testcase('Windows', False, False, True)
       testcase('windows', True, False, True)
 
-   @patch('PyUtils.Process.fail_fast_run', spec_set=True)
+   @patch('CloudundancyPyUtils.Process.fail_fast_run', spec_set=True)
    def flake8_all_RunsFlake8WithFlake8Config_test(self, _1):
       #
       Python.flake8_all()
@@ -73,8 +73,8 @@ class PythonTests(unittest.TestCase):
    def run_all_with_coverage_RunsCoverage_RunsReport_RunsHtml_RunsXml_ExitsWithReportExitCode_test(self):
       @patch('builtins.print', spec_set=True)
       @patch('os.getcwd', spec_set=True)
-      @patch('PyUtils.Process.fail_fast_run', spec_set=True)
-      @patch('PyUtils.Process.run_and_get_exit_code', spec_set=True)
+      @patch('CloudundancyPyUtils.Process.fail_fast_run', spec_set=True)
+      @patch('CloudundancyPyUtils.Process.run_and_get_exit_code', spec_set=True)
       @patch('sys.exit', spec_set=True)
       @patch('builtins.print', spec_set=True)
       def testcase(reportExitCode, expectedConcludingPrint, _1, _2, _3, _4, _5, _6):
@@ -86,12 +86,12 @@ class PythonTests(unittest.TestCase):
          Python.run_all_with_coverage(omitPattern)
          #
          self.assertEqual(2, len(print.call_args_list))
-         print.assert_has_calls([call('Running PyUtilsTests/RunAll.py with coverage from', currentWorkingDirectory)])
+         print.assert_has_calls([call('Running CloudundancyPyUtilsTests/RunAll.py with coverage from', currentWorkingDirectory)])
          Process.run_and_get_exit_code.assert_called_once_with(
             f'coverage report --omit="{omitPattern}" --fail-under=100 --show-missing')
          self.assertEqual(3, len(Process.fail_fast_run.call_args_list))
          Process.fail_fast_run.assert_has_calls([
-            call('coverage run --branch PyUtilsTests/RunAll.py'),
+            call('coverage run --branch CloudundancyPyUtilsTests/RunAll.py'),
             call('coverage html'),
             call(f'coverage xml --omit="{omitPattern}"')])
          print.assert_has_calls([call(expectedConcludingPrint)])

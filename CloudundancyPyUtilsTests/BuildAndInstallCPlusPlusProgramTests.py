@@ -4,7 +4,7 @@ import sys
 import unittest
 from unittest.mock import call, patch
 import docopt
-from PyUtils import CMake, BuildAndInstallCPlusPlusProgram, Process, Random, UnitTester
+from CloudundancyPyUtils import CMake, BuildAndInstallCPlusPlusProgram, Process, Random, UnitTester
 
 testNames = [
 'docstring__IsExpectedString_test',
@@ -33,8 +33,8 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
       @patch('builtins.print', spec_set=True)
       @patch('docopt.docopt', spec_set=True)
       @patch('platform.system', spec_set=True)
-      @patch('PyUtils.BuildAndInstallCPlusPlusProgram.linux_cmake_build_test_install', spec_set=True)
-      @patch('PyUtils.BuildAndInstallCPlusPlusProgram.windows_cmake_build_test_install', spec_set=True)
+      @patch('CloudundancyPyUtils.BuildAndInstallCPlusPlusProgram.linux_cmake_build_test_install', spec_set=True)
+      @patch('CloudundancyPyUtils.BuildAndInstallCPlusPlusProgram.windows_cmake_build_test_install', spec_set=True)
       def testcase(platformSystem, trueExpectLinuxFalseExpectWindows, _1, _2, _3, _4, _5):
          with self.subTest(f'{platformSystem, trueExpectLinuxFalseExpectWindows}'):
             docopt.docopt.return_value =\
@@ -65,10 +65,10 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
       testcase('Windows', False)
       testcase('OSX', False)
 
-   @patch('PyUtils.CMake.generate', spec_set=True)
-   @patch('PyUtils.Process.fail_fast_run', spec_set=True)
+   @patch('CloudundancyPyUtils.CMake.generate', spec_set=True)
+   @patch('CloudundancyPyUtils.Process.fail_fast_run', spec_set=True)
    @patch('os.chdir', spec_set=True)
-   @patch('PyUtils.BuildAndInstallCPlusPlusProgram.optionally_install_program', spec_set=True)
+   @patch('CloudundancyPyUtils.BuildAndInstallCPlusPlusProgram.optionally_install_program', spec_set=True)
    def linux_cmake_build_test_install__RunCMakeThenRunsNinja_test(self, _1, _2, _3, _4):
       doInstallProgram = Random.boolean()
       #
@@ -85,9 +85,9 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
       os.chdir.assert_called_once_with('..')
       BuildAndInstallCPlusPlusProgram.optionally_install_program.assert_called_once_with(doInstallProgram, self.cmakeBuildType, self.cmakeBuildType)
 
-   @patch('PyUtils.CMake.generate', spec_set=True)
-   @patch('PyUtils.Process.fail_fast_run', spec_set=True)
-   @patch('PyUtils.BuildAndInstallCPlusPlusProgram.optionally_install_program', spec_set=True)
+   @patch('CloudundancyPyUtils.CMake.generate', spec_set=True)
+   @patch('CloudundancyPyUtils.Process.fail_fast_run', spec_set=True)
+   @patch('CloudundancyPyUtils.BuildAndInstallCPlusPlusProgram.optionally_install_program', spec_set=True)
    def windows_cmake_build_test_install__RunsCMakeThenRunsMSBuild_test(self, _1, _2, _3):
       doInstallProgram = Random.boolean()
       #
@@ -104,7 +104,7 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
       BuildAndInstallCPlusPlusProgram.optionally_install_program.assert_called_once_with(doInstallProgram, '.', self.cmakeBuildType)
 
    def optionally_install_program__RunsCMakeInstallTargetIfInstallArgSpecified_test(self):
-      @patch('PyUtils.Process.fail_fast_run', spec_set=True)
+      @patch('CloudundancyPyUtils.Process.fail_fast_run', spec_set=True)
       def testcase(doInstallProgram, expectRunCMake, _1):
          with self.subTest(f'{doInstallProgram, expectRunCMake}'):
             cmakeBuildArgument = Random.string()

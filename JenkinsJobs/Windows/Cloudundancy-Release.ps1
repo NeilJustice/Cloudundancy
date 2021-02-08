@@ -3,7 +3,7 @@ param([string]$cmakeInstallPrefix = "C:\")
 Set-PSDebug -Trace 1
 
 $env:PYTHONPATH="."
-python.exe -u PyUtils\BuildAndInstallCPlusPlusProgram.py `
+python.exe -u CloudundancyPyUtils\BuildAndInstallCPlusPlusProgram.py `
    --solution-name=Cloudundancy `
    --cmake-generator="Visual Studio 16 2019" `
    --cmake-build-type=Release `

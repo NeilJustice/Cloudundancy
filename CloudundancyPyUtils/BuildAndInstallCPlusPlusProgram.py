@@ -5,7 +5,7 @@ import os
 import platform
 import sys
 import docopt
-from PyUtils import CMake, Process
+from CloudundancyPyUtils import CMake, Process
 
 def linux_cmake_build_test_install(cmakeGenerator, cmakeBuildType, testsProjectName, cmakeDefinitions, doInstallProgram):
    CMake.generate(cmakeBuildType, cmakeGenerator, cmakeBuildType, cmakeDefinitions, '..')

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eu
 export CXX=g++
-python -u PyUtils/BuildAndInstallCPlusPlusProgram.py \
+python -u CloudundancyPyUtils/BuildAndInstallCPlusPlusProgram.py \
    --solution-name=Cloudundancy \
    --cmake-generator=Ninja \
    --cmake-build-type=Release \

@@ -2,7 +2,7 @@ import os
 import platform
 import unittest
 from unittest.mock import patch
-from PyUtils import CMake, File, UnitTester, Process, Random
+from CloudundancyPyUtils import CMake, File, UnitTester, Process, Random
 
 testNames = [
 'generate_CreatesAndCdsToDirectory_RunsCMakeWithGeneratorAndBuildType_test',
@@ -23,7 +23,7 @@ class CMakeTests(unittest.TestCase):
       @patch('os.chdir', spec_set=True)
       @patch('platform.system', spec_set=True)
       @patch('builtins.print', spec_set=True)
-      @patch('PyUtils.Process.fail_fast_run', spec_set=True)
+      @patch('CloudundancyPyUtils.Process.fail_fast_run', spec_set=True)
       def testcase(platformSystem, cmakeDefinitions, expectedCMakeCommand, _1, _2, _3, _4, _5):
          with self.subTest(f'{platformSystem, cmakeDefinitions, expectedCMakeCommand}'):
             platform.system.return_value = platformSystem
@@ -45,8 +45,8 @@ class CMakeTests(unittest.TestCase):
       testcase('Windows', '-DCMAKE_INSTALL_PREFIX=C:/',
          f'cmake -Werror=dev -G"{self.cmakeGenerator}" -DCMAKE_INSTALL_PREFIX=C:/ {self.cmakeListsFolderPath}')
 
-   @patch('PyUtils.File.delete', spec_set=True)
-   @patch('PyUtils.CMake.generate', spec_set=True)
+   @patch('CloudundancyPyUtils.File.delete', spec_set=True)
+   @patch('CloudundancyPyUtils.CMake.generate', spec_set=True)
    def delete_cmake_cache_file_then_cmake_DeletesCMakeCacheDotTxt_ThenCMakeGenerates_test(self, _1, _2):
       #
       CMake.delete_cmake_cache_file_then_cmake()
@@ -54,14 +54,14 @@ class CMakeTests(unittest.TestCase):
       File.delete.assert_called_once_with('CMakeCache.txt')
       CMake.generate.assert_called_once_with('.', 'Visual Studio 16 2019', '', '-DCMAKE_INSTALL_PREFIX=C:\\', '.')
 
-   @patch('PyUtils.CMake.delete_cmake_cache_file_then_cmake', spec_set=True)
+   @patch('CloudundancyPyUtils.CMake.delete_cmake_cache_file_then_cmake', spec_set=True)
    def main_ArgvIsNotLength2OrArgv1IsNotDeleteCacheThenCMake_DoesNothing_test(self, _1):
       CMake.main([])
       CMake.main(['CMake.py'])
       CMake.main(['CMake.py', 'not_DeleteCacheThenCMake'])
       CMake.delete_cmake_cache_file_then_cmake.assert_not_called()
 
-   @patch('PyUtils.CMake.delete_cmake_cache_file_then_cmake', spec_set=True)
+   @patch('CloudundancyPyUtils.CMake.delete_cmake_cache_file_then_cmake', spec_set=True)
    def main_ArgvIs2AndArgv1IsDeleteCacheThenCMake_DeletesCMakeCacheDotTxtThenCMakeGenerates_test(self, _1):
       CMake.main(['CMake.py', 'DeleteCacheThenCMake'])
       CMake.delete_cmake_cache_file_then_cmake.assert_called_once_with()

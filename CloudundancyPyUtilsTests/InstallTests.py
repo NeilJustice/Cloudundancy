@@ -1,7 +1,7 @@
 import os
 import unittest
 from unittest.mock import patch
-from PyUtils import FileSystem, Install, UnitTester, Util, Random # pylint:disable=no-name-in-module
+from CloudundancyPyUtils import FileSystem, Install, UnitTester, Util, Random # pylint:disable=no-name-in-module
 
 testNames = [
 'binary_CopiesConfigurationExeToLibFolder_test'
@@ -17,8 +17,8 @@ class InstallTests(unittest.TestCase):
 
    @patch('os.getcwd', spec_set=True)
    @patch('os.path.join', spec_set=True)
-   @patch('PyUtils.Util.home_folder_join', spec_set=True)
-   @patch('PyUtils.FileSystem.install_copy_file', spec_set=True)
+   @patch('CloudundancyPyUtils.Util.home_folder_join', spec_set=True)
+   @patch('CloudundancyPyUtils.FileSystem.install_copy_file', spec_set=True)
    def binary_CopiesConfigurationExeToLibFolder_test(self, _1, _2, _3, _4):
       os.getcwd.return_value = self.solutionDirectory
       os.path.join.return_value = self.sourceFilePath

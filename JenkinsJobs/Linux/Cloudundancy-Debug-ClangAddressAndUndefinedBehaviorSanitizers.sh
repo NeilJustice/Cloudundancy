@@ -2,7 +2,7 @@
 set -eu
 export CXX=clang++
 export UBSAN_OPTIONS=halt_on_error=true
-python -u PyUtils/BuildAndInstallCPlusPlusProgram.py \
+python -u CloudundancyPyUtils/BuildAndInstallCPlusPlusProgram.py \
    --solution-name=Cloudundancy \
    --cmake-generator=Ninja \
    --cmake-build-type=Debug \
