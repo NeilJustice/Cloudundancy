@@ -1,5 +1,6 @@
 Set-PSDebug -Trace 1
 
+$env:PYTHONPATH="."
 python.exe -u PyUtils\BuildAndInstallCPlusPlusProgram.py `
    --solution-name=Cloudundancy `
    --cmake-generator="Visual Studio 16 2019" `
