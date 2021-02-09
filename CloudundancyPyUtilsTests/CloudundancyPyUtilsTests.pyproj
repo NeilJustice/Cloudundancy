@@ -37,9 +37,6 @@
     <Compile Include="CMakeTests.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="InstallTests.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="ProcessTests.py" />
     <Compile Include="PythonTests.py" />
     <Compile Include="RandomTests.py">
@@ -48,7 +45,6 @@
     <Compile Include="RunAll.py" />
     <Compile Include="RunAllWithCoverage.py" />
     <Compile Include="UnitTesterTests.py" />
-    <Compile Include="UtilTests.py" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

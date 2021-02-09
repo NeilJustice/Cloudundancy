@@ -37,16 +37,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="FileSystem.py" />
-    <Compile Include="Install.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Process.py" />
     <Compile Include="Python.py" />
     <Compile Include="Random.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="UnitTester.py" />
-    <Compile Include="Util.py" />
     <Compile Include="__init__.py">
       <SubType>Code</SubType>
     </Compile>
