@@ -12,3 +12,4 @@ python.exe -u CloudundancyPyUtils\BuildAndInstallCPlusPlusProgram.py `
    --install
 
 Set-PSDebug -Trace 0
+exit $LastExitCode

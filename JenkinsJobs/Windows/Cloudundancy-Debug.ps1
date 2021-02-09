@@ -7,6 +7,6 @@ python.exe -u CloudundancyPyUtils\BuildAndInstallCPlusPlusProgram.py `
    --cmake-build-type=Debug `
    --tests-project=libCloudundancyTests `
    --no-install
-exit $LastExitCode
 
 Set-PSDebug -Trace 0
+exit $LastExitCode
