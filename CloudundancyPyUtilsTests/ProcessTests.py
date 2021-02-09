@@ -15,14 +15,9 @@ testNames = [
 'run_and_get_exit_code_RunsProcess_ReturnsExitCode_test',
 'run_and_get_exit_code_RunsProcess_ProcessRaisesAnException_PrintsException_Exits1_test',
 'cross_platform_subprocess_call_CallsSubprocessCallOnWindows_CallsShlexSubprocessCallOnNotWindows_test',
-'run_exe_ArgsNotSpecified_CallsRunWithExpected_test',
-'run_exe_ArgSpecified_CallsRunWithExpected_test',
 'append_args_AppendsSpaceThenArgsIfArgsNotEmpty_testCases',
-'run_parallel_multiprocessing_CallsMultiprocessingPoolMap_Returns1IfAnyExitCodesNon0_test',
 'run_parallel_processpoolexecutor_CallsProcessPoolExecutorMap_Returns1IfAnyExitCodesNon0_test',
-'run_and_get_stdout_test',
-'bytes_to_utf8_ReturnsBytesDecodedToUtf8_test',
-'run_and_check_stdout_for_substring_test'
+'bytes_to_utf8_ReturnsBytesDecodedToUtf8_test'
 ]
 
 class ProcessTests(unittest.TestCase):
@@ -142,29 +137,6 @@ class ProcessTests(unittest.TestCase):
       testcase('Linux', True)
       testcase('OSX', True)
 
-   @patch('CloudundancyPyUtils.Process.fail_fast_run', spec_set=True)
-   @patch('CloudundancyPyUtils.Process.append_args', spec_set=True)
-   def run_exe_ArgsNotSpecified_CallsRunWithExpected_test(self, _1, _2):
-      Process.append_args.return_value = self.appendArgsReturnValue
-      #
-      Process.run_exe(self.projectName, self.configuration)
-      #
-      self.assert_run_exe_behavior('')
-
-   @patch('CloudundancyPyUtils.Process.fail_fast_run', spec_set=True)
-   @patch('CloudundancyPyUtils.Process.append_args', spec_set=True)
-   def run_exe_ArgSpecified_CallsRunWithExpected_test(self, _1, _2):
-      Process.append_args.return_value = self.appendArgsReturnValue
-      #
-      Process.run_exe(self.projectName, self.configuration, 'args')
-      #
-      self.assert_run_exe_behavior('args')
-
-   def assert_run_exe_behavior(self, expectedArgs):
-      expectedExePath = f'{self.projectName}\\{self.configuration}\\{self.projectName}.exe'
-      Process.append_args.assert_called_once_with(expectedExePath, expectedArgs)
-      Process.fail_fast_run.assert_called_once_with(self.appendArgsReturnValue)
-
    def append_args_AppendsSpaceThenArgsIfArgsNotEmpty_testCases(self):
       def testcase(expectedReturnValue, args):
          with self.subTest(f'{expectedReturnValue, args}'):
@@ -174,53 +146,6 @@ class ProcessTests(unittest.TestCase):
       testcase('ExePath  ', ' ')
       testcase('ExePath arg1', 'arg1')
       testcase('ExePath arg1 arg2', 'arg1 arg2')
-
-   def run_parallel_multiprocessing_CallsMultiprocessingPoolMap_Returns1IfAnyExitCodesNon0_test(self):
-      class MultiprocessingPoolMock:
-         def __init__(self):
-            self.map_return_value = 0
-            self.mapArgs = []
-            self.numberOfCloseCalls = 0
-
-         def map(self, func, iterable):
-            self.mapArgs.append((func, iterable))
-            return self.map_return_value
-
-         def close(self):
-            self.numberOfCloseCalls = self.numberOfCloseCalls + 1
-
-         def assert_map_called_once_with(self, expectedFunc, expectedIterable):
-            assert self.mapArgs == [(expectedFunc, expectedIterable)]
-
-         def assert_close_called_once(self):
-            assert self.numberOfCloseCalls == 1
-
-      @patch('multiprocessing.cpu_count', spec_set=True)
-      @patch('multiprocessing.Pool', spec_set=True)
-      def testcase(expectedReturnValue, exitCodes, _1, _2):
-         with self.subTest(f'{expectedReturnValue, exitCodes}'):
-            cpuCount = Random.integer()
-            multiprocessing.cpu_count.return_value = cpuCount
-            Iterable = ['a', 'b', 'c']
-            poolMock = MultiprocessingPoolMock()
-            poolMock.map_return_value = exitCodes
-            multiprocessing.Pool.return_value = poolMock
-            #
-            allcommandsExited0 = Process.run_parallel_multiprocessing(len, Iterable)
-            #
-            multiprocessing.cpu_count.assert_called_once_with()
-            multiprocessing.Pool.assert_called_once_with(cpuCount)
-            poolMock.assert_map_called_once_with(len, Iterable)
-            poolMock.assert_close_called_once()
-            self.assertEqual(expectedReturnValue, allcommandsExited0)
-      testcase(False, [-1])
-      testcase(True, [0])
-      testcase(True, [0, 0])
-      testcase(False, [1])
-      testcase(False, [2])
-      testcase(False, [1, 0])
-      testcase(False, [0, 1])
-      testcase(False, [0, 1, 0])
 
    def run_parallel_processpoolexecutor_CallsProcessPoolExecutorMap_Returns1IfAnyExitCodesNon0_test(self):
       class ProcessPoolExecutorMock:
@@ -278,50 +203,9 @@ class ProcessTests(unittest.TestCase):
       testcase(False, [0, 1])
       testcase(False, [0, 1, 0])
 
-   @patch('shlex.split', spec_set=True)
-   @patch('subprocess.check_output', spec_set=True)
-   @patch('CloudundancyPyUtils.Process.bytes_to_utf8', spec_set=True)
-   def run_and_get_stdout_test(self, _1, _2, _3):
-      shlexReturnValue = Random.string()
-      shlex.split.return_value = shlexReturnValue
-      checkOutputReturnValue = Random.string()
-      subprocess.check_output.return_value = checkOutputReturnValue
-      toUtf8ReturnValue = Random.string()
-      Process.bytes_to_utf8.return_value = toUtf8ReturnValue
-      #
-      standardOutput = Process.run_and_get_stdout(self.command)
-      #
-      shlex.split.assert_called_once_with(self.command)
-      subprocess.check_output.assert_called_once_with(shlexReturnValue)
-      Process.bytes_to_utf8.assert_called_once_with(checkOutputReturnValue)
-      self.assertEqual(toUtf8ReturnValue, standardOutput)
-
    def bytes_to_utf8_ReturnsBytesDecodedToUtf8_test(self):
       self.assertEqual('', Process.bytes_to_utf8(b''))
       self.assertEqual('\r\n', Process.bytes_to_utf8(b'\r\n'))
-
-   def run_and_check_stdout_for_substring_test(self):
-      @patch('builtins.print', spec_set=True)
-      @patch('CloudundancyPyUtils.Process.run_and_get_stdout', spec_set=True)
-      @patch('sys.exit', spec_set=True)
-      def testcase(stdout, substring, expectExit, _1, _2, printMock):
-         with self.subTest(f'{stdout, substring, expectExit}'):
-            Process.run_and_get_stdout.return_value = stdout
-            #
-            Process.run_and_check_stdout_for_substring(self.command, substring)
-            #
-            self.assertEqual(2, len(printMock.call_args_list))
-            printMock.assert_has_calls([
-               call(f'Running \'{self.command}\' and checking for substring \'{substring}\''),
-               call(f'Substring \'{substring}\' ' + ('found.' if not expectExit else 'not found.'))])
-            if expectExit:
-               sys.exit.assert_called_once_with(1)
-            else:
-               sys.exit.assert_not_called()
-      testcase('stdout', 'abc', True)
-      testcase('stdout', 'StdOut', True)
-      testcase('stdout', 'stdout', False)
-      testcase('prefix stdout suffix', 'stdout', False)
 
 if __name__ == '__main__': # pragma nocover
    UnitTester.run_tests(ProcessTests, testNames)

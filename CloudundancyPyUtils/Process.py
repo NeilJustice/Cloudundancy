@@ -48,22 +48,9 @@ def run_and_get_exit_code(command):
    else:
       return exitCode
 
-def run_exe(projectName, configuration, args=''):
-   exePath = f'{projectName}\\{configuration}\\{projectName}.exe'
-   exePathWithArgs = append_args(exePath, args)
-   fail_fast_run(exePathWithArgs)
-
 def append_args(exePath, args):
    exePathWithArgs = exePath + (' ' + args if args != '' else '')
    return exePathWithArgs
-
-def run_parallel_multiprocessing(func, iterable):
-   cpuCount = multiprocessing.cpu_count()
-   pool = multiprocessing.Pool(cpuCount)
-   exitCodes = pool.map(func, iterable)
-   pool.close()
-   allCommandsSucceeded = not any(exitCodes)
-   return allCommandsSucceeded
 
 def run_parallel_processpoolexecutor(func, iterable):
    cpuCount = multiprocessing.cpu_count()
@@ -72,20 +59,6 @@ def run_parallel_processpoolexecutor(func, iterable):
    processPoolExecutor.shutdown(wait=True)
    allCommandsSucceeded = not any(exitCodes)
    return allCommandsSucceeded
-
-def run_and_get_stdout(command):
-   shlexedCommand = shlex.split(command)
-   standardOutputBytes = subprocess.check_output(shlexedCommand)
-   standardOutputUtf8 = bytes_to_utf8(standardOutputBytes)
-   return standardOutputUtf8
-
-def run_and_check_stdout_for_substring(command, substring):
-   print(f'Running \'{command}\' and checking for substring \'{substring}\'')
-   stdOut = run_and_get_stdout(command)
-   stdOutContainsSubstring = substring in stdOut
-   print(f'Substring \'{substring}\' ' + ('found.' if stdOutContainsSubstring else 'not found.'))
-   if not stdOutContainsSubstring:
-      sys.exit(1)
 
 class ProcessThread(threading.Thread): # pragma nocover
 
