@@ -15,9 +15,9 @@ def pylint_all():
    pyFilePaths = glob.glob('**/*.py', recursive=True)
    allPylintsSucceeded = False
    if platform.system() == 'Windows':
-      allPylintsSucceeded = Process.run_foreach(PylintCommand, pyFilePaths)
+      allPylintsSucceeded = Process.run_parallel_processthread(PylintCommand, pyFilePaths)
    else:
-      allPylintsSucceeded = Process.run_parallel_ProcessPoolExecutor(pylint_file, pyFilePaths)
+      allPylintsSucceeded = Process.run_parallel_processpoolexecutor(pylint_file, pyFilePaths)
    if not allPylintsSucceeded:
       sys.exit(1)
 
@@ -25,14 +25,14 @@ def flake8_all():
    flake8Command = 'flake8 --config=.flake8 --show-source --benchmark'
    Process.fail_fast_run(flake8Command)
 
-def run_all_with_coverage(omit):
-   print('Running CloudundancyPyUtilsTests/RunAll.py with coverage from', os.getcwd())
-   Process.fail_fast_run('coverage run --branch CloudundancyPyUtilsTests/RunAll.py')
-   reportExitCode = Process.run_and_get_exit_code(f'coverage report --omit="{omit}" --fail-under=100 --show-missing')
-   Process.fail_fast_run('coverage html')
-   Process.fail_fast_run(f'coverage xml --omit="{omit}"')
+def run_all_with_coverage(testsProjectName, omitPattern):
+   print(f'Running {testsProjectName}/RunAll.py with coverage from', os.getcwd())
+   Process.fail_fast_run(f'coverage run --branch {testsProjectName}/RunAll.py')
+   reportExitCode = Process.run_and_get_exit_code(f'coverage report --omit="{omitPattern}" --fail-under=100 --show-missing')
+   Process.fail_fast_run(f'coverage xml --omit="{omitPattern}" -o {testsProjectName}/CoberturaCodeCoverageResults_{testsProjectName}.xml')
+   Process.fail_fast_run(f'coverage html --omit="{omitPattern}" --directory={testsProjectName}/CodeCoverageHTMLReport --title="{testsProjectName} Code Coverage"')
    if reportExitCode == 0:
-      print('Success. Coverage is 100%.')
+      print('Success. Code coverage is 100%.')
    else:
-      print('Failure. Coverage is less than 100%.')
+      print('Failure. Code coverage is less than 100%.')
    sys.exit(reportExitCode)

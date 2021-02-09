@@ -19,7 +19,7 @@ testNames = [
 'run_exe_ArgSpecified_CallsRunWithExpected_test',
 'append_args_AppendsSpaceThenArgsIfArgsNotEmpty_testCases',
 'run_parallel_multiprocessing_CallsMultiprocessingPoolMap_Returns1IfAnyExitCodesNon0_test',
-'run_parallel_ProcessPoolExecutor_CallsProcessPoolExecutorMap_Returns1IfAnyExitCodesNon0_test',
+'run_parallel_processpoolexecutor_CallsProcessPoolExecutorMap_Returns1IfAnyExitCodesNon0_test',
 'run_and_get_stdout_test',
 'bytes_to_utf8_ReturnsBytesDecodedToUtf8_test',
 'run_and_check_stdout_for_substring_test'
@@ -66,7 +66,7 @@ class ProcessTests(unittest.TestCase):
       @patch('CloudundancyPyUtils.Process.run_and_get_exit_code', spec_set=True)
       @patch('builtins.print', spec_set=True)
       @patch('sys.exit', spec_set=True)
-      def testcase(exitCode, expectPrintCommandFailedAndExit, _1, _2, _3):
+      def testcase(exitCode, expectPrintCommandFailedAndExit, _1, printMock, _3):
          with self.subTest(f'{exitCode, expectPrintCommandFailedAndExit}'):
             Process.run_and_get_exit_code.return_value = exitCode
             #
@@ -75,8 +75,7 @@ class ProcessTests(unittest.TestCase):
             Process.run_and_get_exit_code.assert_called_once_with(self.command)
             if expectPrintCommandFailedAndExit:
                expectedSingleQuotedCommand = f'\'{self.command}\''
-               print.assert_called_once_with(
-                  'Command', expectedSingleQuotedCommand, 'failed with exit code', exitCode)
+               printMock.assert_called_once_with('Command', expectedSingleQuotedCommand, 'failed with exit code', exitCode)
                sys.exit.assert_called_once_with(exitCode)
             else:
                sys.exit.assert_not_called()
@@ -87,7 +86,7 @@ class ProcessTests(unittest.TestCase):
    @patch('os.getcwd', spec_set=True)
    @patch('builtins.print', spec_set=True)
    @patch('CloudundancyPyUtils.Process.cross_platform_subprocess_call', spec_set=True)
-   def run_and_get_exit_code_RunsProcess_ReturnsExitCode_test(self, _1, _2, _3):
+   def run_and_get_exit_code_RunsProcess_ReturnsExitCode_test(self, _1, printMock, _3):
       os.getcwd.return_value = self.currentWorkingDirectory
       subprocessReturnValue = Random.integer()
       Process.cross_platform_subprocess_call.return_value = subprocessReturnValue
@@ -95,7 +94,7 @@ class ProcessTests(unittest.TestCase):
       exitCode = Process.run_and_get_exit_code(self.command)
       #
       os.getcwd.assert_called_once_with()
-      print.assert_called_once_with('Running', f'\'{self.command}\'', 'from', self.currentWorkingDirectory)
+      printMock.assert_called_once_with('Running', f'\'{self.command}\'', 'from', self.currentWorkingDirectory)
       Process.cross_platform_subprocess_call.assert_called_once_with(self.command)
       self.assertEqual(subprocessReturnValue, exitCode)
 
@@ -103,17 +102,17 @@ class ProcessTests(unittest.TestCase):
    @patch('builtins.print', spec_set=True)
    @patch('CloudundancyPyUtils.Process.cross_platform_subprocess_call', spec_set=True)
    @patch('sys.exit', spec_set=True)
-   def run_and_get_exit_code_RunsProcess_ProcessRaisesAnException_PrintsException_Exits1_test(self, _1, _2, _3, _4):
+   def run_and_get_exit_code_RunsProcess_ProcessRaisesAnException_PrintsException_Exits1_test(self, _1, _2, printMock, _4):
       os.getcwd.return_value = self.currentWorkingDirectory
       exceptionMessage = Random.string()
-      Process.cross_platform_subprocess_call.side_effect = Exception(exceptionMessage)
+      Process.cross_platform_subprocess_call.side_effect = FileNotFoundError(exceptionMessage)
       #
       Process.run_and_get_exit_code(self.command)
       #
       os.getcwd.assert_called_once_with()
       Process.cross_platform_subprocess_call.assert_called_once_with(self.command)
-      self.assertEqual(2, len(print.call_args_list))
-      print.assert_has_calls([
+      self.assertEqual(2, len(printMock.call_args_list))
+      printMock.assert_has_calls([
          call('Running', f'\'{self.command}\'', 'from', self.currentWorkingDirectory),
          call(exceptionMessage)])
       sys.exit.assert_called_once_with(1)
@@ -223,7 +222,7 @@ class ProcessTests(unittest.TestCase):
       testcase(False, [0, 1])
       testcase(False, [0, 1, 0])
 
-   def run_parallel_ProcessPoolExecutor_CallsProcessPoolExecutorMap_Returns1IfAnyExitCodesNon0_test(self):
+   def run_parallel_processpoolexecutor_CallsProcessPoolExecutorMap_Returns1IfAnyExitCodesNon0_test(self):
       class ProcessPoolExecutorMock:
          def __init__(self):
             self.map_numberOfCalls = 0
@@ -263,7 +262,7 @@ class ProcessTests(unittest.TestCase):
             processPoolExecutorMock.map_returnValue = exitCodes
             concurrent.futures.ProcessPoolExecutor.return_value = processPoolExecutorMock
             #
-            allCommandsExited0 = Process.run_parallel_ProcessPoolExecutor(len, Iterable)
+            allCommandsExited0 = Process.run_parallel_processpoolexecutor(len, Iterable)
             #
             multiprocessing.cpu_count.assert_called_once_with()
             concurrent.futures.ProcessPoolExecutor.assert_called_once_with(cpuCount)
@@ -305,14 +304,14 @@ class ProcessTests(unittest.TestCase):
       @patch('builtins.print', spec_set=True)
       @patch('CloudundancyPyUtils.Process.run_and_get_stdout', spec_set=True)
       @patch('sys.exit', spec_set=True)
-      def testcase(stdout, substring, expectExit, _1, _2, _3):
+      def testcase(stdout, substring, expectExit, _1, _2, printMock):
          with self.subTest(f'{stdout, substring, expectExit}'):
             Process.run_and_get_stdout.return_value = stdout
             #
             Process.run_and_check_stdout_for_substring(self.command, substring)
             #
-            self.assertEqual(2, len(print.call_args_list))
-            print.assert_has_calls([
+            self.assertEqual(2, len(printMock.call_args_list))
+            printMock.assert_has_calls([
                call(f'Running \'{self.command}\' and checking for substring \'{substring}\''),
                call(f'Substring \'{substring}\' ' + ('found.' if not expectExit else 'not found.'))])
             if expectExit:

@@ -26,19 +26,6 @@ def fail_fast_run(command):
       print('Command', singleQuotedCommand, 'failed with exit code', exitCode)
       sys.exit(exitCode)
 
-def run_and_get_exit_code(command):
-   singleQuotedCommand = f'\'{command}\''
-   currentWorkingDirectory = os.getcwd()
-   print('Running', singleQuotedCommand, 'from', currentWorkingDirectory)
-   try:
-      exitCode = cross_platform_subprocess_call(command)
-   except Exception as e:
-      exceptionMessage = str(e)
-      print(exceptionMessage)
-      sys.exit(1)
-   else:
-      return exitCode
-
 def cross_platform_subprocess_call(command):
    systemName = platform.system()
    if systemName.casefold() == 'windows':
@@ -47,6 +34,19 @@ def cross_platform_subprocess_call(command):
       shlexedCommand = shlex.split(command)
       exitCode = subprocess.call(shlexedCommand)
    return exitCode
+
+def run_and_get_exit_code(command):
+   singleQuotedCommand = f'\'{command}\''
+   currentWorkingDirectory = os.getcwd()
+   print('Running', singleQuotedCommand, 'from', currentWorkingDirectory)
+   try:
+      exitCode = cross_platform_subprocess_call(command)
+   except FileNotFoundError as ex:
+      exceptionMessage = str(ex)
+      print(exceptionMessage)
+      sys.exit(1)
+   else:
+      return exitCode
 
 def run_exe(projectName, configuration, args=''):
    exePath = f'{projectName}\\{configuration}\\{projectName}.exe'
@@ -65,7 +65,7 @@ def run_parallel_multiprocessing(func, iterable):
    allCommandsSucceeded = not any(exitCodes)
    return allCommandsSucceeded
 
-def run_parallel_ProcessPoolExecutor(func, iterable):
+def run_parallel_processpoolexecutor(func, iterable):
    cpuCount = multiprocessing.cpu_count()
    processPoolExecutor = concurrent.futures.ProcessPoolExecutor(cpuCount)
    exitCodes = processPoolExecutor.map(func, iterable)
@@ -101,18 +101,18 @@ class ProcessThread(threading.Thread): # pragma nocover
       exitCode = run_and_get_exit_code(fullCommand)
       self.outExitCodes[self.commandIndex] = exitCode
 
-def run_foreach(command, commandSuffixArgs): # pragma nocover
+def run_parallel_processthread(command, commandSuffixArgs): # pragma nocover
    numberOfCommands = len(commandSuffixArgs)
    processThreads = [None] * numberOfCommands
    processExitCodes = [None] * numberOfCommands
-   beginTime = time.clock()
+   beginTime = time.process_time()
    for commandIndex, commandSuffixArg in enumerate(commandSuffixArgs):
       processThread = ProcessThread(commandIndex, command, commandSuffixArg, processExitCodes)
       processThread.start()
       processThreads[commandIndex] = processThread
    for processThread in processThreads:
       processThread.join()
-   endTime = time.clock()
+   endTime = time.process_time()
    elapsedMilliseconds = int((endTime - beginTime) * 1000)
    allProcessesExitedZero = not any(processExitCodes)
    print('Done in', elapsedMilliseconds, 'ms')
