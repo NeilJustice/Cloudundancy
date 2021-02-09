@@ -37,7 +37,6 @@
     <Compile Include="CMakeTests.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="FileTests.py" />
     <Compile Include="InstallTests.py">
       <SubType>Code</SubType>
     </Compile>

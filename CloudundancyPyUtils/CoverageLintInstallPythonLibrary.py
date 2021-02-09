@@ -1,5 +1,5 @@
 """CoverageLintInstallPythonLibrary.py
-Runs coverage, pylint, flake8, then copies a folder to an install folder.
+Runs flake8, then pylint, then unit tests with code coverage.
 
 Usage: CoverageLintInstallPythonLibrary.py --project=<FolderName> --run-tests-with-coverage-python-file=<RelativeFilePath>"""
 import docopt

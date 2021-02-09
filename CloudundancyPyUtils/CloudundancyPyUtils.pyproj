@@ -36,7 +36,6 @@
     <Compile Include="CoverageLintInstallPythonLibrary.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="File.py" />
     <Compile Include="FileSystem.py" />
     <Compile Include="Install.py">
       <SubType>Code</SubType>
