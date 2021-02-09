@@ -33,7 +33,6 @@
     <Compile Include="CoverageLintInstallPythonLibraryTests.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="FileSystemTests.py" />
     <Compile Include="CMakeTests.py">
       <SubType>Code</SubType>
     </Compile>
