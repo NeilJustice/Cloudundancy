@@ -2,63 +2,57 @@
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B20) ![GitHub](https://img.shields.io/github/license/NeilJustice/Cloudundancy) ![GitHub last commit](https://img.shields.io/github/last-commit/NeilJustice/Cloudundancy)
 
-Cloudundancy is a cross-platform C++ command line program for quickly copying a configurable list of files and folders to a configurable list of destination folders to achieve cloud-redundant and device-redundant backups of business-critical files.
+Cloudundancy is a cross-platform C++ command line program for quickly copying a configurable list of files and folders to a configurable list of destination folders to achieve cloud-redundant and device-redundant backups of files.
 
-For example, in a Cloudundancy.ini file, destination folders can be configured to be a Google Drive folder, a Microsoft OneDrive folder, and two USB drives to achieve quadruple backups of business-critical files to two clouds and two USB drives.
+For example, in a Cloudundancy.ini file, destination folders could be configured to be an automatic cloud-uploading Google Drive folder, an automatic cloud-uploading Microsoft OneDrive folder, and two USB sticks to achieve the peace of mind that comes with having cloud-redundant and device-redundant backups of business-critical files.
 
 |Build Type|Build Status|
 |----------|------------|
 |Travis CI Linux Clang 9.0.1 and Linux GCC 9.3.0 Debug and Release|[![Build Status](https://travis-ci.com/NeilJustice/Cloudundancy.svg?branch=main)](https://travis-ci.com/NeilJustice/Cloudundancy)|
 |AppVeyor Windows Visual Studio 2019 x64 Debug and Release|<a href="https://ci.appveyor.com/project/NeilJustice/Cloudundancy"><img src="https://ci.appveyor.com/api/projects/status/ygwr3rb9spwhy4u0?svg=true"/></a>|
-|Code Coverage For The Travis CI Linux GCC 9.3.0 Release Build|[![codecov](https://codecov.io/gh/NeilJustice/Cloudundancy/branch/main/graph/badge.svg?token=ruXbRPB1CQ)](https://codecov.io/gh/NeilJustice/Cloudundancy)|
+|Code coverage for the Travis CI Linux GCC 9.3.0 Release Build|[![codecov](https://codecov.io/gh/NeilJustice/Cloudundancy/branch/main/graph/badge.svg?token=ruXbRPB1CQ)](https://codecov.io/gh/NeilJustice/Cloudundancy)|
 
-The correctness of Cloudundancy at the unit level is rigorously confirmed using <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
+Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
 
-The correctness of Cloudundancy at the user level is currently confirmed with manual testing and twice-daily Jenkins jobs which invoke Cloudundancy to backup my business-critical files. In the future, Cloudundancy's correctness at the user level will be confirmed using an automated acceptance testing framework.
-
-* [Cloudundancy Command Line Usage](#cloudundancy-command-line-usage)
-* [Cloudundancy Program Modes](#cloudundancy-program-modes)
+* [Cloudundancy command line usage](#cloudundancy-command-line-usage)
+* [Cloudundancy program modes](#cloudundancy-program-modes)
    * [copy-files-to-multiple-folders](#copy-files-to-multiple-folders)
    * [7zip-files-then-copy-the-7zip-file-to-multiple-folders](#7zip-files-then-copy-the-7zip-file-to-multiple-folders)
    * [example-linux-ini-file](#example-linux-ini-file)
    * [example-windows-ini-file](#example-windows-ini-file)
-* [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-undefinedbehaviorsanitize-cloudundancy)
-* [Windows Jenkins Jobs Which Build Cloudundancy](#windows-jenkins-jobs-which-build-cloudundancy)
-* [Cloudundancy Code Structure As It Appears Visual Studio Code](#cloudundancy-code-structure-as-it-appears-visual-studio-code)
-* [Cloudundancy Code Structure As It Appears In Visual Studio 2019](#cloudundancy-code-structure-as-it-appears-in-visual-studio-2019)
-* [How To Build Binary cloudundancy From Source On Linux With Clang](#how-to-build-binary-cloudundancy-from-source-on-linux-with-clang)
-* [How To Build Executable Cloudundancy.exe From Source On Windows With Visual Studio 2019](#how-to-build-executable-cloudundancy.exe-from-source-on-windows-with-visual-studio-2019)
-* [Cloudundancy Roadmap](#cloudundancy-roadmap)
+* [Linux Jenkins jobs which build, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-undefinedbehaviorsanitize-cloudundancy)
+* [Windows Jenkins Jobs which build Cloudundancy](#windows-jenkins-jobs-which-build-cloudundancy)
+* [Cloudundancy code structure as it appears in Visual Studio Code](#cloudundancy-code-structure-as-it-appears-in-visual-studio-code)
+* [Cloudundancy code structure as it appears in Visual Studio 2019](#cloudundancy-code-structure-as-it-appears-in-visual-studio-2019)
+* [How to build binary cloudundancy from source on Linux with Clang](#how-to-build-binary-cloudundancy-from-source-on-linux-with-clang)
+* [How to build executable Cloudundancy.exe from source on Windows with Visual Studio 2019](#how-to-build-executable-cloudundancy.exe-from-source-on-windows-with-visual-studio-2019)
+* [Cloudundancy roadmap](#future-features-roadmap)
 
-## Cloudundancy Command Line Usage
+# Cloudundancy command line usage
 
 ```
-Cloudundancy v0.9.2
+Cloudundancy v0.9.2 - Creates cloud-redundant and device-redundant file backups
 https://github.com/NeilJustice/Cloudundancy
 
 Usage:
-   Cloudundancy copy-files-to-multiple-folders
+   cloudundancy copy-files-to-multiple-folders
       --ini-file=<CloudundancyIniFilePath>
       [--delete-destination-folders-first]
-   Cloudundancy 7zip-files-then-copy-the-7zip-file-to-multiple-folders
+   cloudundancy 7zip-files-then-copy-the-7zip-file-to-multiple-folders
       --ini-file-to-copy-files-to-7zip-staging-folder=<CloudundancyIniFilePath>
       --7zip-staging-folder=<FolderPath>
       --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=<CloudundancyIniFilePath>
-   Cloudundancy example-linux-ini-file
-   Cloudundancy example-windows-ini-file
+   cloudundancy example-linux-ini-file
+   cloudundancy example-windows-ini-file
 ```
 
 Cloudundancy command line arguments are parsed in file `CloudundancyArgsParser.cpp` using the excellent single-header library [docopt.cpp](https://github.com/docopt/docopt.cpp):
 
 ![CloudundancyArgsParser.cpp](Screenshots/CloudundancyArgsParser.png)
 
-The correctness of `class CloudundancyArgsParser` is confirmed in file `CloudundancyArgsParserTests.cpp` using ZenUnit and MetalMock. Shown in this screenshot is the syntax for a ZenUnit 2-by-2 value parameterized test and the syntax for how to expect and assert function calls on MetalMock mock objects:
+# Cloudundancy program modes
 
-![CloudundancyArgsParserTests.cpp](Screenshots/CloudundancyArgsParserTests.png)
-
-## Cloudundancy Program Modes
-
-### copy-files-to-multiple-folders
+## copy-files-to-multiple-folders
 
 ```
 Cloudundancy copy-files-to-multiple-folders --ini-file=<CloudundancyIniFilePath> [--delete-destination-folders-first]
@@ -118,7 +112,7 @@ Resulting contents of `C:\CloudundancyTesting\OneDrive\Cloudundancy.log`:
 
 Now one day should access to your Google account or Microsoft account become not possible by way of a variety of rare but possible potential scenarios, peace of mind can be had by knowing you have cloud-redundant backups of your files made with the help of Cloudundancy.
 
-### 7zip-files-then-copy-the-7zip-file-to-multiple-folders
+## 7zip-files-then-copy-the-7zip-file-to-multiple-folders
 
 ```
 Cloudundancy 7zip-files-then-copy-the-7zip-file-to-multiple-folders
@@ -170,15 +164,15 @@ GitHub repos successfully 7-Zipped and copied to a OneDrive folder:
 
 ![One Drive .7z File Contents](Screenshots/OneDrive7zFileContents.png)
 
-### example-linux-ini-file
+## example-linux-ini-file
 
 Work in progress.
 
-### example-windows-ini-file
+## example-windows-ini-file
 
-Cloudundancy program mode `example-windows-ini-file` prints an example Windows Cloudundancy .ini file which shows how to achieve quintuple backups of business-critical files to two auto-cloud-uploading folders (Google Drive and Microsoft OneDrive), one folder which requires `git add/commit/push` to reach its corresponding cloud (GitHub), and two USB drives (D: and E:).
+Cloudundancy program mode `example-windows-ini-file` prints an example Windows Cloudundancy .ini file, which shows how to achieve quintuple backups of business-critical files to two automatic cloud-uploading folders (Google Drive and OneDrive), one folder which requires `git add/commit/push` to upload folder contents to its corresponding cloud (GitHub), and two USB drives (D: and E:).
 
-`example-windows-ini-file` console output:
+Console output for `example-windows-ini-file`:
 
 ![Example Windows Cloudundancy .ini File](Screenshots/ExampleWindowsCloudundancyIniFile.png)
 
@@ -227,31 +221,31 @@ nextBuildNumber
 scm-polling.log
 ```
 
-### Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy
+# Linux Jenkins jobs which build, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy
 
 A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Fedora 33 with Clang and GCC:
 
-![Linux Cloudundancy Jenkins Jobs](Screenshots/Linux/LinuxCloudundancyJenkinsJobs.png)
+![Linux Cloudundancy Jenkins jobs](Screenshots/Linux/LinuxCloudundancyJenkinsJobs.png)
 
-### Windows Jenkins Jobs Which Build Cloudundancy
+# Windows Jenkins jobs which build Cloudundancy
 
 A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Windows 10 with Visual Studio 2019:
 
-![Cloudundancy Windows Jenkins Jobs](Screenshots/CloudundancyWindowsJenkinsJobs.png)
+![Cloudundancy Windows Jenkins jobs](Screenshots/CloudundancyWindowsJenkinsJobs.png)
 
-## Cloudundancy Code Structure As It Appears Visual Studio Code
+# Cloudundancy code structure as it appears in Visual Studio Code
 
 Seen in this screenshot is the call to `_cloudundancyIniFileReader->ReadIniFile(iniFilePath`) for reading the Cloudundancy .ini file:
 
 ![Cloudundancy Code Structure As It Appears Visual Studio Code](Screenshots/Linux/CloudundancyCodeStructureInVSCode.png)
 
-## Cloudundancy Code Structure As It Appears In Visual Studio 2019
+# Cloudundancy code structure as it appears in Visual Studio 2019
 
-Seen in this screenshot is the `CloudundancyProgram::Main(int argc, char* argv[])` function which begins Cloudundancy's program behavior. Also seen in this screenshot is the ZenUnit unit test for confirming that Cloudundancy's command line usage text is printed when `CloudundancyProgram::Main(int argc, char* argv[])` is called with `argc == 1`.
+Seen in this screenshot is the `CloudundancyProgram::Main(int argc, char* argv[])` function which begins Cloudundancy's program behavior:
 
 ![What Cloudundancy Source Code Looks Like In Visual Studio 2019](Screenshots/WhatCloudundancySourceCodeLooksLikeInVisualStudio2019.png)
 
-## How To Build Binary cloudundancy From Source On Linux With Clang
+# How to build binary cloudundancy from source on Linux with Clang
 
 ```bash
 git clone https://github.com/NeilJustice/Cloudundancy
@@ -264,7 +258,7 @@ Resulting binary `/usr/local/bin/cloudundancy`:
 
 ![Binary cloudundancy on Linux](Screenshots/Linux/LinuxBinaryCloudundancy.png)
 
-## How To Build Executable Cloudundancy.exe From Source On Windows With Visual Studio 2019
+# How to build executable Cloudundancy.exe from source on Windows with Visual Studio 2019
 
 ```powershell
 git clone https://github.com/NeilJustice/Cloudundancy
@@ -277,14 +271,14 @@ Resulting executable `C:\bin\Cloudundancy.exe`:
 
 ![Cloudundancy.exe on Windows](Screenshots/CloudundancyDotExe.png)
 
-## Cloudundancy Roadmap
+# Cloudundancy roadmap
 
-|Future Cloudundancy Feature|Estimated Delivery Month|Implementation Status|
-|---------------------------|------------------------|---------------------|
-|GitHub Actions build|February 2021|Awaiting implementation|
-|Linux and Windows SonarQube static analysis Jenkins jobs for Cloudundancy|February 2021|Awaiting implementation|
-|SonarCloud static analysis badge|February 2021|Awaiting implementation|
-|Coverity static analysis badge|February 2021|Awaiting implementation|
-|`--parallel` for parallel file copying to multiple destination folders|April 2021|Awaiting implementation|
-|Automated acceptance testing|May 2021|Awaiting implementation|
-
+|Future Cloudundancy Feature|Implementation Status As Of 2/13/2021|
+|---------------------------|-------------------------------------|
+|SonarCloud badge for CloudundancyPyUtils Python code|In progress|
+|Linux and Windows SonarQube C++ and Python static analysis Jenkins jobs with screenshots added to this readme file|Awaiting implementation|
+|GitHub Actions build|Awaiting implementation|
+|SonarCloud C++ static analysis badge|Awaiting implementation|
+|Coverity C++ static analysis badge|Awaiting implementation|
+|`--parallel` for parallel file copying to multiple destination folders|Awaiting implementation|
+|Automated acceptance testing|Awaiting implementation|
