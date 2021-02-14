@@ -6,7 +6,7 @@
     <ProjectGuid>7442c4b6-4d10-4aea-a009-421f7252d55e</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>BuildAndInstallCPlusPlusProgram.py</StartupFile>
+    <StartupFile>Python.py</StartupFile>
     <SearchPath>..\</SearchPath>
     <WorkingDirectory>C:\Code\Cloudundancy</WorkingDirectory>
     <OutputPath>.</OutputPath>

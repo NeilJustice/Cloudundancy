@@ -22,7 +22,7 @@ x64/
 *.db
 *.opendb
 *.sln
-!PyUtils.sln
+!CloudundancyPyUtils.sln
 *.suo
 *.filters
 *.i
