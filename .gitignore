@@ -45,7 +45,7 @@ install_manifest.txt
 # Python
 __pycache__/
 CodeCoverageHTMLReport/
-CloudundancyPyUtilsTests/CoberturaCodeCoverageResults_CloudundancyPyUtilsTests.xml
+CloudundancyPyUtils/CloudundancyPyUtilsTests/CoberturaCodeCoverageResults_CloudundancyPyUtilsTests.xml
 htmlcov/
 .coverage
 coverage.xml
