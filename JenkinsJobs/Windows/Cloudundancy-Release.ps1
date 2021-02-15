@@ -1,4 +1,3 @@
-param([string]$cmakeInstallPrefix = "C:\")
 Set-PSDebug -Trace 1
 
 $env:PYTHONPATH="CloudundancyPyUtils"
