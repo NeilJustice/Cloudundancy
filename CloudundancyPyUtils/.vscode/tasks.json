@@ -21,7 +21,7 @@
       {
          "label": "Run All Tests",
          "type": "shell",
-         "command": "PYTHONPATH=ZenUnitPy python ZenUnitPyTests/RunAll.py",
+         "command": "PYTHONPATH=CloudundancyPyUtils python CloudundancyPyUtilsTests/RunAll.py",
          "options": {
             "cwd": "${workspaceRoot}"
          },
