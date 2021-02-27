@@ -1,10 +1,8 @@
 #!/bin/bash
-set -euv
+set -eu
 
 cd CloudundancyPyUtils
-export PYTHONPATH=.
-python CloudundancyPyUtils/CoverageLintInstallPythonLibrary.py \
-	--project=CloudundancyPyUtils \
-	--run-tests-with-coverage-python-file=CloudundancyPyUtilsTests/RunAllWithCoverage.py
+export PYTHONPATH='.'
+python CloudundancyPyUtils/CoverageLintInstallPythonLibrary.py --project=Cloudundancy --run-tests-with-coverage-python-file=CloudundancyPyUtilsTests/RunAllWithCoverage.py
 cd ..
 
