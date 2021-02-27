@@ -1,5 +1,6 @@
 #!/bin/bash
 set -eu
+
 export PYTHONPATH=CloudundancyPyUtils
 export CXX=clang++
 export UBSAN_OPTIONS=halt_on_error=true
@@ -8,5 +9,5 @@ python -u CloudundancyPyUtils/CloudundancyPyUtils/BuildAndInstallCPlusPlusProgra
    --cmake-generator=Ninja \
    --cmake-build-type=Release \
    --tests-project-name=libCloudundancyTests \
-   --cmake-definitions="-DClangSanitizerMode_AddressAndUndefined=ON" \
+   --cmake-definitions="-DClangUndefinedBehaviorSanitizerMode=ON" \
    --no-install
