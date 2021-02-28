@@ -166,11 +166,45 @@ GitHub repos successfully 7-Zipped and copied to a OneDrive folder:
 
 ### example-linux-ini-file
 
-Work in progress.
+Cloudundancy program mode `example-linux-ini-file` prints an example Linux Cloudundancy .ini file, which shows how to achieve triple backups of files to one GitHub repo folder and two USB drives.
+
+```ini
+[DestinationFolders]
+/code/dotfiles/LinuxCloudundancy
+/home/neil/BlackUSB/LinuxCloudundancy
+/home/neil/SilverUSB/LinuxCloudundancy
+
+[SourceFilesAndFolders]
+# dotfiles
+/code/dotfiles/linux/ -> dotfiles
+
+# Linux
+/etc/fstab -> Linux
+
+# Jenkins
+/var/lib/jenkins/config.xml                                   -> Jenkins
+/var/lib/jenkins/build-failure-analyzer.xml                   -> Jenkins
+/var/lib/jenkins/io.jenkins.plugins.casc.CasCGlobalConfig.xml -> Jenkins
+/var/lib/jenkins/jobs/                                        -> Jenkins/jobs
+
+# VS Code
+/home/neil/.config/Code/User/keybindings.json -> VSCode
+/home/neil/.config/Code/User/settings.json    -> VSCode
+/home/neil/.config/Code/User/snippets/        -> VSCode/Snippets
+
+[FileSubpathsToNotCopy]
+/.git/
+/builds/
+/cobertura/
+/lastStable
+/lastSuccessful/
+nextBuildNumber
+scm-polling.log
+```
 
 ### example-windows-ini-file
 
-Cloudundancy program mode `example-windows-ini-file` prints an example Windows Cloudundancy .ini file, which shows how to achieve quintuple backups of business-critical files to two automatic cloud-uploading folders (Google Drive and OneDrive), one folder which requires `git add/commit/push` to upload folder contents to its corresponding cloud (GitHub), and two USB drives (D: and E:).
+Cloudundancy program mode `example-windows-ini-file` prints an example Windows Cloudundancy .ini file, which shows how to achieve quintuple backups of files to two automatic cloud-uploading folders (Google Drive and OneDrive), one folder which requires `git add/commit/push` to upload folder contents to its corresponding cloud (GitHub), and two USB drives (D: and E:).
 
 Console output for `example-windows-ini-file`:
 
