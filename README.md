@@ -96,12 +96,6 @@ scm-polling.log
 
 Cloudundancy program mode `example-windows-ini-file` prints an example Windows Cloudundancy .ini file which shows how to achieve quintuple backups of files to two automatic cloud-uploading folders (C:\GoogleDrive and C:\OneDrive), one GitHub repo folder (C:\GitHubRepos), and two USB drives (D: and E:).
 
-Console output for `example-windows-ini-file`:
-
-![Example Windows Cloudundancy .ini File](Screenshots/ExampleWindowsCloudundancyIniFile.png)
-
-`example-windows-ini-file` in text format:
-
 ```ini
 [DestinationFolders]
 # Cloud-redundant backups to Google's cloud, Microsoft's cloud, and GitHub's cloud
@@ -144,6 +138,8 @@ PowerShell\Modules\
 nextBuildNumber
 scm-polling.log
 ```
+
+![Example Windows Cloudundancy .ini File](Screenshots/ExampleWindowsCloudundancyIniFile.png)
 
 ### copy-files-to-multiple-folders
 
