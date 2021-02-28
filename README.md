@@ -4,7 +4,7 @@
 
 Cloudundancy is a cross-platform C++ command line program for quickly copying a configurable list of files and folders to a configurable list of destination folders to achieve cloud-redundant and device-redundant backups of files.
 
-For example, in a Cloudundancy.ini file, destination folders could be configured to be an automatic cloud-uploading Google Drive folder, an automatic cloud-uploading Microsoft OneDrive folder, and two USB sticks to achieve the peace of mind that comes with having cloud-redundant and device-redundant backups of business-critical files.
+For example, in a Cloudundancy.ini file, destination folders can be configured to be automatic cloud-uploading Google Drive and Microsoft OneDrive folders plus two USB drives to achieve cloud-redundant and device-redundant backups of business-critical files.
 
 |Build Type|Build Status|
 |----------|------------|
