@@ -5,38 +5,37 @@ int ExampleLinuxIniFileSubProgram::Run(const CloudundancyArgs&)
 {
    const string exampleLinuxIniFileText =
 R"(
-Example Linux Cloudundancy .ini file:
-
 [DestinationFolders]
-# Cloud-redundant backups to Google's cloud and GitHub's cloud
-~/GoogleDrive/CloudundancyBackups
-~/GitHubRepos/CloudundancyBackups
-
-# Device-redundant backups to ~/USBDriveA and ~/USBDriveB
-~/USBDriveA
-~/USBDriveB
+/code/dotfiles/LinuxCloudundancy
+/home/neil/BlackUSB/LinuxCloudundancy
+/home/neil/SilverUSB/LinuxCloudundancy
 
 [SourceFilesAndFolders]
-# In the [SourceFilesAndFolders] section, the format of lines is "<SourceFileOrFolderPath> -> <RelativeDestinationFolderPath>"
+# dotfiles
+/code/dotfiles/linux/ -> dotfiles
 
-# Critical files to backup
-~/GoogleDrive/KeePassFile.kdbx -> .
-~/GoogleDrive/PersonalFinancesSpreadsheet.xlsx -> .
+# Linux
+/etc/fstab -> Linux
 
-# Critical directories to backup
-Placeholder/Jenkins/jobs/ -> Jenkins/jobs
+# Jenkins
+/var/lib/jenkins/config.xml                                   -> Jenkins
+/var/lib/jenkins/build-failure-analyzer.xml                   -> Jenkins
+/var/lib/jenkins/io.jenkins.plugins.casc.CasCGlobalConfig.xml -> Jenkins
+/var/lib/jenkins/jobs/                                        -> Jenkins/jobs
+
+# VS Code
+/home/neil/.config/Code/User/keybindings.json -> VSCode
+/home/neil/.config/Code/User/settings.json    -> VSCode
+/home/neil/.config/Code/User/snippets/        -> VSCode/Snippets
 
 [FileSubpathsToNotCopy]
-# In the [FileSubpathsToNotCopy] section, case-insensitive file path substrings
-# can be listed so as to not back up files matching the listed case-insensitive file path substrings
-
-# Jenkins jobs folder file paths to not backup so as to only backup Jenkins job config.xml files
+/.git/
 /builds/
 /cobertura/
 /lastStable
 /lastSuccessful/
-/atomic
 nextBuildNumber
+scm-polling.log
 )";
    _console->WriteLine(exampleLinuxIniFileText);
    return 0;
