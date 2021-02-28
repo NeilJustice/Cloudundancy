@@ -54,7 +54,7 @@ Cloudundancy command line arguments are parsed in file `CloudundancyArgsParser.c
 
 ### example-linux-ini-file
 
-Cloudundancy program mode `example-linux-ini-file` prints an example Linux Cloudundancy .ini file, which shows how to achieve triple backups of files to one GitHub repo folder and two USB drives.
+Cloudundancy program mode `example-linux-ini-file` prints an example Linux Cloudundancy .ini file which shows how to achieve triple backups of files to one GitHub repo folder and two USB drives.
 
 ```ini
 [DestinationFolders]
@@ -90,9 +90,11 @@ nextBuildNumber
 scm-polling.log
 ```
 
+![Example Linux Cloudundancy .ini file](Screenshots/Linux/ExampleLinuxIniFile.png)
+
 ### example-windows-ini-file
 
-Cloudundancy program mode `example-windows-ini-file` prints an example Windows Cloudundancy .ini file, which shows how to achieve quintuple backups of files to two automatic cloud-uploading folders (Google Drive and OneDrive), one folder which requires `git add/commit/push` to upload folder contents to its corresponding cloud (GitHub), and two USB drives (D: and E:).
+Cloudundancy program mode `example-windows-ini-file` prints an example Windows Cloudundancy .ini file which shows how to achieve quintuple backups of files to two automatic cloud-uploading folders (C:\GoogleDrive and C:\OneDrive), one GitHub repo folder (C:\GitHubRepos), and two USB drives (D: and E:).
 
 Console output for `example-windows-ini-file`:
 
