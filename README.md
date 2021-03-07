@@ -23,7 +23,7 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
 * [Cloudundancy Code Structure As It Appears In Visual Studio Code](#cloudundancy-code-structure-as-it-appears-in-visual-studio-code)
 * [Cloudundancy Code Structure As It Appears In Visual Studio 2019](#cloudundancy-code-structure-as-it-appears-in-visual-studio-2019)
 * [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-and-undefinedbehaviorsanitize-cloudundancy)
-* [Windows Jenkins Jobs Which Build Cloudundancy](#windows-jenkins-jobs-which-build-cloudundancy)
+* [Windows Jenkins Jobs Which Build Cloudundancy And SonarQube Scan Cloudundancy's Python Code](#windows-jenkins-jobs-which-build-cloudundancy-and-sonarqube-scan-cloudundancys-python-code)
 * [How To Build Binary cloudundancy From Source On Linux With Clang](#how-to-build-binary-cloudundancy-from-source-on-linux-with-clang)
 * [How To Build Executable Cloudundancy.exe From Source On Windows with Visual Studio 2019](#how-to-build-executable-cloudundancy.exe-from-source-on-windows-with-visual-studio-2019)
 * [Cloudundancy Roadmap](#future-features-roadmap)
@@ -273,13 +273,13 @@ Seen in this screenshot is the `CloudundancyProgram::Main(int argc, char* argv[]
 
 ## Linux Jenkins jobs Which Build, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy
 
-A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Fedora 33 with Clang and GCC:
+A Jenkins Blue Ocean build pipeline builds the following Jenkins jobs on Fedora 33:
 
 ![Linux Cloudundancy Jenkins jobs](Screenshots/Linux/LinuxCloudundancyJenkinsJobs.png)
 
-## Windows Jenkins Jobs Which Build Cloudundancy
+## Windows Jenkins Jobs Which Build Cloudundancy And SonarQube Scan Cloudundancy's Python Code
 
-A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Windows 10 with Visual Studio 2019:
+A Jenkins Blue Ocean build pipeline builds the following Jenkins jobs on Windows 10:
 
 ![Cloudundancy Windows Jenkins jobs](Screenshots/Windows/WindowsJenkinsJobs.png)
 
