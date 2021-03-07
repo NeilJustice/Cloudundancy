@@ -41,7 +41,7 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    false, false,
    true, true)
 {
-   const map<string, docopt::Value> docoptArgs = ZenUnit::RandomMap<string, docopt::Value>();
+   const map<string, docopt::Value> docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::Value>();
    _docoptParserMock->ParseArgsMock.Return(docoptArgs);
 
    const bool isCopyFilesToMultipleFoldersMode = ZenUnit::Random<bool>();

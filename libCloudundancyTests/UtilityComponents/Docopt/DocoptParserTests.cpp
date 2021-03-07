@@ -29,7 +29,7 @@ STARTUP
 {
    _docoptParser._call_docopt_docopt = BIND_5ARG_METALMOCK_OBJECT(docoptMock);
 
-   _docoptArgs = ZenUnit::RandomMap<string, docopt::Value>();
+   _docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::Value>();
    _argName = ZenUnit::Random<string>() + "_argName";
    _expectedOutOfRangeExceptionMessage = "Key not found in map: [" + _argName + "]";
 }
@@ -51,7 +51,7 @@ TEST(ParseArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
 
 TEST(ParseArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
 {
-   const map<string, docopt::Value> docoptReturnValue = ZenUnit::RandomMap<string, docopt::Value>();
+   const map<string, docopt::Value> docoptReturnValue = ZenUnit::RandomOrderedMap<string, docopt::Value>();
    docoptMock.Return(docoptReturnValue);
 
    const string usage = ZenUnit::Random<string>();
