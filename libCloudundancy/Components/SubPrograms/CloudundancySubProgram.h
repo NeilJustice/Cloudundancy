@@ -7,9 +7,10 @@ class CloudundancySubProgram
    friend class ExampleLinuxIniFileSubProgramTests;
    friend class ExampleWindowsIniFileSubProgramTests;
 protected:
+   // Constant Components
    unique_ptr<const Console> _console;
 public:
    CloudundancySubProgram();
-   virtual ~CloudundancySubProgram() = default;
+   virtual ~CloudundancySubProgram();
    virtual int Run(const CloudundancyArgs& args);
 };

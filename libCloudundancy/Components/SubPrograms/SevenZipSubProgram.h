@@ -8,8 +8,7 @@ class SevenZipSubProgram : public CloudundancySubProgram
    friend class SevenZipSubProgramTests;
 private:
    // Function Callers
-   using VoidOneArgFunctionCallerType = VoidOneArgMemberFunctionCaller<
-      SevenZipSubProgram, const CloudundancyArgs&>;
+   using VoidOneArgFunctionCallerType = VoidOneArgMemberFunctionCaller<SevenZipSubProgram, const CloudundancyArgs&>;
    unique_ptr<const VoidOneArgFunctionCallerType> _voidOneArgFunctionCaller;
    // Constant Components
    unique_ptr<const CloudundancyFileCopier> _cloudundancyFileCopier;
@@ -21,7 +20,7 @@ private:
 public:
    SevenZipSubProgram();
    virtual ~SevenZipSubProgram();
-   virtual int Run(const CloudundancyArgs& args);
+   int Run(const CloudundancyArgs& args) override;
 private:
    void Copy7ZipFileToDestinationFolders(const CloudundancyArgs& args) const;
    void CopyFilesAndFoldersToBackupStagingFolder(const CloudundancyArgs& args) const;

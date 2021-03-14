@@ -14,7 +14,7 @@ namespace ZenUnit
    AbsoluteFilePathToRelativeDestinationFolderPath TestableRandomAbsoluteFilePathToRelativeDestinationFolderPath(
       const ZenUnit::RandomGenerator* randomGenerator, const UtilsRandomGenerator* utilsRandomGenerator)
    {
-      AbsoluteFilePathToRelativeDestinationFolderPath randomCloudundancyIniCopyInstruction;
+      AbsoluteFilePathToRelativeDestinationFolderPath randomCloudundancyIniCopyInstruction{};
       randomCloudundancyIniCopyInstruction.absoluteSourceFilePath = randomGenerator->FilesystemPath();
       randomCloudundancyIniCopyInstruction.relativeDestinationFolderPath = utilsRandomGenerator->RelativeFolderPath();
       return randomCloudundancyIniCopyInstruction;

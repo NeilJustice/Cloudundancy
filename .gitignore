@@ -52,3 +52,8 @@ coverage.xml
 
 # SonarQube
 .scannerwork/
+
+# Cppcheck
+*.a1
+*.a2
+cppcheck_results.txt

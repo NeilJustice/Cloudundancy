@@ -126,7 +126,6 @@ TEST2X2(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSu
    cloudundancySubProgramMock->RunMock.Return(subProgramExitCode);
    _cloudundancySubProgramFactoryMock->NewCloudundancySubProgramMock.Return(cloudundancySubProgramMock);
 
-   const map<string, docopt::Value> docoptArgs;
    const vector<string> stringArgs = ZenUnit::RandomVector<string>();
    //
    const int exitCode = _cloudundancyProgram.Run(stringArgs);

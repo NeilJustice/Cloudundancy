@@ -63,7 +63,6 @@ public:
       for (int i = static_cast<int>(vectorSize - 1); i >= 0; --i)
       {
          const T& element = vec[i];
-         const string elementAsString = element.ToString();
          if (i > 0)
          {
             oss << separator;
@@ -74,7 +73,7 @@ public:
    }
 
 	template<typename T>
-	static bool Contains(const std::vector<T> v, const T& element)
+	static bool Contains(const std::vector<T>& v, const T& element)
 	{
       const size_t size = v.size();
 		for (size_t i = 0; i < size; ++i)
