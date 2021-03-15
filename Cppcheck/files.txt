@@ -1,6 +1,6 @@
+CMakeCCompilerId.a1::CMakeFiles/3.19.5/CompilerIdC/CMakeCCompilerId.c
+CMakeCXXCompilerId.a1::CMakeFiles/3.19.5/CompilerIdCXX/CMakeCXXCompilerId.cpp
 CloudundancyMain.a1::Cloudundancy/CloudundancyMain.cpp
-CMakeCCompilerId.a1::Debug/CMakeFiles/3.18.4/CompilerIdC/CMakeCCompilerId.c
-CMakeCXXCompilerId.a1::Debug/CMakeFiles/3.18.4/CompilerIdCXX/CMakeCXXCompilerId.cpp
 CloudundancyArgsParser.a1::libCloudundancy/Components/Args/CloudundancyArgsParser.cpp
 ProgramModeDeterminer.a1::libCloudundancy/Components/Args/ProgramModeDeterminer.cpp
 CloudundancyProgram.a1::libCloudundancy/Components/CloudundancyProgram.cpp
