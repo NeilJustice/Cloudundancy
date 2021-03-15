@@ -1,5 +1,6 @@
 #!/bin/bash
-set -eu
+set -ev
+
 export PYTHONPATH=CloudundancyPyUtils
 export CXX=g++
 python -u CloudundancyPyUtils/CloudundancyPyUtils/BuildAndInstallCPlusPlusProgram.py \
