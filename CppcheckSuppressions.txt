@@ -1,15 +1,6 @@
-accessForwarded:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h:1424
-accessForwarded:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h:1434
-accessForwarded:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h:2538
-accessForwarded:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h:2567
-accessForwarded:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h:2634
-accessForwarded:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h:3180
-accessForwarded:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h:3593
-accessForwarded:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h:4005
+*:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h
+*:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\MetalMock.h
 AssignmentAddressToInteger:libCloudundancy\UtilityComponents\Time\Watch.cpp:54
-noExplicitConstructor:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\MetalMock.h:1585
-noExplicitConstructor:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\MetalMock.h:1686
-noExplicitConstructor:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\MetalMock.h:1695
 noExplicitConstructor:libCloudundancy\UtilityComponents\Docopt\docopt.h:56
 syntaxError:libCloudundancyTests\UtilityComponents\Exception\TryCatchCallerTests.cpp:129
 syntaxError:libCloudundancyTests\UtilityComponents\FunctionCallers\MemberFunctions\NonVoidOneArgMemberFunctionCallerTests.cpp:62
@@ -24,4 +15,3 @@ syntaxError:libCloudundancyTests\UtilityComponents\Iteration\Transform\Transform
 unusedFunction:libCloudundancyTests\ValueTypes\ZenUnit\AbsoluteFilePathToRelativeDestinationFolderPathEqualizerAndRandom.cpp:24
 unusedFunction:libCloudundancyTests\ValueTypes\ZenUnit\ProcessResultEqualizerAndRandom.cpp:28
 unusedFunction:libCloudundancyTests\ValueTypes\ZenUnit\tmZenUnitEqualizerAndRandom.cpp:35
-useStlAlgorithm:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\MetalMock.h:1261
