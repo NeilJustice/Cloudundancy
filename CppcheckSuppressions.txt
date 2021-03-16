@@ -1,4 +1,6 @@
 noExplicitConstructor:libCloudundancy/UtilityComponents/Docopt/docopt.h:56
+syntaxError:*
+unmatchedSuppression:*
 unusedFunction:libCloudundancyTests/ValueTypes/ZenUnit/AbsoluteFilePathToRelativeDestinationFolderPathEqualizerAndRandom.cpp:24
 unusedFunction:libCloudundancyTests/ValueTypes/ZenUnit/ProcessResultEqualizerAndRandom.cpp:28
 unusedFunction:libCloudundancyTests/ValueTypes/ZenUnit/tmZenUnitEqualizerAndRandom.cpp:35
@@ -9,5 +11,5 @@ preprocessorErrorDirective:/usr/include/c++/v1/__config:104
 # Windows
 *:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h
 *:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\MetalMock.h
-syntaxError:*
-AssignmentAddressToInteger:libCloudundancy\UtilityComponents\Time\Watch.cpp:54
+AssignmentAddressToInteger:libCloudundancy/UtilityComponents/Time/Watch.cpp:54
+
