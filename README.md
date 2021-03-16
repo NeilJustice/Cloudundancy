@@ -20,8 +20,8 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
    * [example-windows-ini-file](#example-windows-ini-file)
    * [copy-files-to-multiple-folders](#copy-files-to-multiple-folders)
    * [7zip-files-then-copy-the-7zip-file-to-multiple-folders](#7zip-files-then-copy-the-7zip-file-to-multiple-folders)
-* [Cloudundancy Code Structure As It Appears In Visual Studio Code](#cloudundancy-code-structure-as-it-appears-in-visual-studio-code)
-* [Cloudundancy Code Structure As It Appears In Visual Studio 2019](#cloudundancy-code-structure-as-it-appears-in-visual-studio-2019)
+* [Cloudundancy Code Structure As It Appears In Visual Studio Code On Linux](#cloudundancy-code-structure-as-it-appears-in-visual-studio-code-on-linux)
+* [Cloudundancy Code Structure As It Appears In Visual Studio 2019 On Windows](#cloudundancy-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
 * [Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-and-undefinedbehaviorsanitize-cloudundancy)
 * [Windows Jenkins Jobs Which Build and Cppcheck Cloudundancy](#windows-jenkins-jobs-which-build-and-cppcheck-cloudundancy)
 * [How To Build Binary cloudundancy From Source On Linux With Clang](#how-to-build-binary-cloudundancy-from-source-on-linux-with-clang)
@@ -259,17 +259,17 @@ GitHub repos successfully 7-Zipped and copied to a OneDrive folder:
 
 ![One Drive .7z File Contents](Screenshots/OneDrive7zFileContents.png)
 
-## Cloudundancy Code Structure As It Appears In Visual Studio Code
+## Cloudundancy Code Structure As It Appears In Visual Studio Code On Linux
 
 Seen in this screenshot is the call to `_cloudundancyIniFileReader->ReadIniFile(iniFilePath`) for reading the Cloudundancy .ini file:
 
-![Cloudundancy Code Structure As It Appears Visual Studio Code](Screenshots/Linux/CloudundancyCodeStructureInVSCode.png)
+![Cloudundancy Code Structure As It Appears Visual Studio Code On Linux](Screenshots/Linux/CloudundancyCodeStructureInVSCode.png)
 
-## Cloudundancy Code Structure As It Appears In Visual Studio 2019
+## Cloudundancy Code Structure As It Appears In Visual Studio 2019 On Windows
 
 Seen in this screenshot is the `CloudundancyProgram::Main(int argc, char* argv[])` function which begins Cloudundancy's program behavior:
 
-![What Cloudundancy Source Code Looks Like In Visual Studio 2019](Screenshots/WhatCloudundancySourceCodeLooksLikeInVisualStudio2019.png)
+![What Cloudundancy Source Code Looks Like In Visual Studio 2019 On Windows](Screenshots/WhatCloudundancySourceCodeLooksLikeInVisualStudio2019.png)
 
 ## Linux Jenkins jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy
 
