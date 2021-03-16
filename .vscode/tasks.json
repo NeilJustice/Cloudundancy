@@ -1,104 +1,164 @@
 {
    "version": "2.0.0",
    "tasks": [
-   {
-      "type": "shell",
-      "label": "Build Debug",
-      "command": "ninja",
-      "args": [ "" ],
-      "options": { "cwd": "${workspaceRoot}/Debug" },
-      "problemMatcher": [ "$gcc" ],
-      "group": { "kind": "build", "isDefault": true }
-   },
-   {
-      "type": "shell",
-      "label": "Build Release",
-      "command": "ninja",
-      "args": [ "" ],
-      "options": { "cwd": "${workspaceRoot}/Release" },
-      "problemMatcher": [ "$gcc" ]
-   },
-   {
-      "type": "shell",
-      "label": "Run Debug Cloudundancy 7z",
-      "command": "${workspaceRoot}/Debug/Cloudundancy/Cloudundancy",
-      "args": [
-         "7zip-files-then-copy-the-7zip-file-to-multiple-folders",
-         "--ini-file-to-copy-files-to-7zip-staging-folder=/code/dotfiles/LinuxCloudundancy_CopyCodeFolderTo7ZipStagingFolder.ini",
-         "--7zip-staging-folde=/home/neil/code_7zip_staging",
-         "--ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=/code/dotfiles/LinuxCloudundancy_Copy7ZipFileFromStagingFolderToMultipleFolders.ini"
-      ],
-      "problemMatcher": [ "$gcc" ]
-   },
-   {
-      "type": "shell",
-      "label": "Run Debug libCloudundancyTests",
-      "command": "${workspaceRoot}/Debug/libCloudundancyTests/libCloudundancyTests",
-      "args": [ "" ],
-      "problemMatcher": [ "$gcc" ],
-      "group": { "kind": "test", "isDefault": true }
-   },
-   {
-      "type": "shell",
-      "label": "Run Release Cloudundancy",
-      "command": "${workspaceRoot}/Release/Cloudundancy/Cloudundancy",
-      "args": [ "" ],
-      "problemMatcher": [ "$gcc" ]
-   },
-   {
-      "type": "shell",
-      "label": "Run Release libCloudundancyTests",
-      "command": "${workspaceRoot}/Release/libCloudundancyTests/libCloudundancyTests",
-      "args": [ "" ],
-      "problemMatcher": [ "$gcc" ]
-   },
-   {
-      "type": "shell",
-      "label": "Clean Debug",
-      "command": "ninja",
-      "args": [ "clean" ],
-      "options": { "cwd": "${workspaceRoot}/Debug" },
-      "problemMatcher": [ "$gcc" ]
-   },
-   {
-      "type": "shell",
-      "label": "Clean Release",
-      "command": "ninja",
-      "args": [ "clean" ],
-      "options": { "cwd": "${workspaceRoot}/Release" },
-      "problemMatcher": [ "$gcc" ]
-   },
-   {
-      "type": "shell",
-      "label": "Compile Active File",
-      "command": "/usr/bin/clang++",
-      "args": [
-         "-c",
-         "-std=c++1z",
-         "-Wall",
-         "-Werror",
-         "-I/code/Cloudundancy",
-         "-I/code/Cloudundancy/libCloudundancy",
-         "-I/code/Cloudundancy/libCloudundancyTests",
-         "${file}"
-       ],
-       "options": { "cwd": "${workspaceFolder}" },
-       "problemMatcher": [ "$gcc" ]
-     },
-     {
-      "type": "shell",
-      "label": "Check Syntax Of Active File",
-      "command": "/usr/bin/clang++",
-      "args": [
-        "-fsyntax-only",
-        "-std=c++1z",
-        "-I/code/Cloudundancy",
-        "-I/code/Cloudundancy/libCloudundancy",
-        "-I/code/Cloudundancy/libCloudundancyTests",
-        "${file}"
-      ],
-      "options": { "cwd": "${workspaceFolder}" },
-      "problemMatcher": [ "$gcc" ]
-   }
+      {
+         "type": "shell",
+         "label": "Build Debug",
+         "command": "ninja",
+         "args": [
+            ""
+         ],
+         "options": {
+            "cwd": "${workspaceRoot}/Debug"
+         },
+         "group": {
+            "kind": "build",
+            "isDefault": true
+         },
+         "problemMatcher": {
+            "base" : "$gcc",
+            "fileLocation": [
+               "relative",
+               "/code/Cloudundancy/Debug"
+            ]
+         }
+      },
+      {
+         "type": "shell",
+         "label": "Build Release",
+         "command": "ninja",
+         "args": [
+            ""
+         ],
+         "options": {
+            "cwd": "${workspaceRoot}/Release"
+         },
+         "problemMatcher": {
+            "base" : "$gcc",
+            "fileLocation": [
+               "relative",
+               "/code/Cloudundancy/Release"
+            ]
+         }
+      },
+      {
+         "type": "shell",
+         "label": "Run Debug Cloudundancy 7z",
+         "command": "${workspaceRoot}/Debug/Cloudundancy/Cloudundancy",
+         "args": [
+            "7zip-files-then-copy-the-7zip-file-to-multiple-folders",
+            "--ini-file-to-copy-files-to-7zip-staging-folder=/code/dotfiles/LinuxCloudundancy_CopyCodeFolderTo7ZipStagingFolder.ini",
+            "--7zip-staging-folde=/home/neil/code_7zip_staging",
+            "--ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=/code/dotfiles/LinuxCloudundancy_Copy7ZipFileFromStagingFolderToMultipleFolders.ini"
+         ],
+         "problemMatcher": [
+            "$gcc"
+         ]
+      },
+      {
+         "type": "shell",
+         "label": "Run Debug libCloudundancyTests",
+         "command": "${workspaceRoot}/Debug/libCloudundancyTests/libCloudundancyTests",
+         "args": [
+            ""
+         ],
+         "problemMatcher": [
+            "$gcc"
+         ],
+         "group": {
+            "kind": "test",
+            "isDefault": true
+         }
+      },
+      {
+         "type": "shell",
+         "label": "Run Release Cloudundancy",
+         "command": "${workspaceRoot}/Release/Cloudundancy/Cloudundancy",
+         "args": [
+            ""
+         ],
+         "problemMatcher": [
+            "$gcc"
+         ]
+      },
+      {
+         "type": "shell",
+         "label": "Run Release libCloudundancyTests",
+         "command": "${workspaceRoot}/Release/libCloudundancyTests/libCloudundancyTests",
+         "args": [
+            ""
+         ],
+         "problemMatcher": [
+            "$gcc"
+         ]
+      },
+      {
+         "type": "shell",
+         "label": "Clean Debug",
+         "command": "ninja",
+         "args": [
+            "clean"
+         ],
+         "options": {
+            "cwd": "${workspaceRoot}/Debug"
+         },
+         "problemMatcher": [
+            "$gcc"
+         ]
+      },
+      {
+         "type": "shell",
+         "label": "Clean Release",
+         "command": "ninja",
+         "args": [
+            "clean"
+         ],
+         "options": {
+            "cwd": "${workspaceRoot}/Release"
+         },
+         "problemMatcher": [
+            "$gcc"
+         ]
+      },
+      {
+         "type": "shell",
+         "label": "Compile Active File",
+         "command": "/usr/bin/clang++",
+         "args": [
+            "-c",
+            "-std=c++1z",
+            "-Wall",
+            "-Werror",
+            "-I/code/Cloudundancy",
+            "-I/code/Cloudundancy/libCloudundancy",
+            "-I/code/Cloudundancy/libCloudundancyTests",
+            "${file}"
+         ],
+         "options": {
+            "cwd": "${workspaceFolder}"
+         },
+         "problemMatcher": [
+            "$gcc"
+         ]
+      },
+      {
+         "type": "shell",
+         "label": "Check Syntax Of Active File",
+         "command": "/usr/bin/clang++",
+         "args": [
+            "-fsyntax-only",
+            "-std=c++1z",
+            "-I/code/Cloudundancy",
+            "-I/code/Cloudundancy/libCloudundancy",
+            "-I/code/Cloudundancy/libCloudundancyTests",
+            "${file}"
+         ],
+         "options": {
+            "cwd": "${workspaceFolder}"
+         },
+         "problemMatcher": [
+            "$gcc"
+         ]
+      }
    ]
 }
