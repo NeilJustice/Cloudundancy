@@ -23,5 +23,10 @@ cppcheck.exe `
    --output-file=cppcheck_results.txt `
    --error-exitcode=1 `
    .
+if ($LastExitCode -eq 1)
+{
+	Write-Host "Cppcheck failed with exit code 1"
+	exit 1
+}
 
 Set-PSDebug -Trace 0
