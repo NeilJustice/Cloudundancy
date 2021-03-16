@@ -273,13 +273,13 @@ Seen in this screenshot is the `CloudundancyProgram::Main(int argc, char* argv[]
 
 ## Linux Jenkins jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy
 
-A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Fedora 33:
+A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Fedora 33 with Clang 11.0.0 and GCC 10.2.1:
 
 ![Linux Cloudundancy Jenkins jobs](Screenshots/Linux/LinuxCloudundancyJenkinsJobs.png)
 
 ## Windows Jenkins Jobs Which Build and Cppcheck Cloudundancy
 
-A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Windows 10:
+A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Windows 10 with Visual Studio 2019:
 
 ![Cloudundancy Windows Jenkins jobs](Screenshots/Windows/WindowsJenkinsJobs.png)
 
