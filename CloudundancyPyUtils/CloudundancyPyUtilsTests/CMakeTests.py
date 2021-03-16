@@ -19,9 +19,9 @@ class CMakeTests(unittest.TestCase):
       @patch('os.makedirs', spec_set=True)
       @patch('os.chdir', spec_set=True)
       @patch('platform.system', spec_set=True)
-      @patch('builtins.print', spec_set=True)
       @patch('CloudundancyPyUtils.Process.fail_fast_run', spec_set=True)
-      def testcase(platformSystem, cmakeDefinitions, expectedCMakeCommand, _1, _2, _3, _4, _5):
+      @patch('builtins.print', spec_set=True)
+      def testcase(platformSystem, cmakeDefinitions, expectedCMakeCommand, printMock, _2, _3, _4, _5):
          with self.subTest(f'{platformSystem, cmakeDefinitions, expectedCMakeCommand}'):
             platform.system.return_value = platformSystem
             #
@@ -29,7 +29,7 @@ class CMakeTests(unittest.TestCase):
             #
             os.makedirs.assert_called_once_with(self.cmakeFolderPath, exist_ok=True)
             os.chdir.assert_called_once_with(self.cmakeFolderPath)
-            print.assert_called_once_with('Generating CMake in folder', self.cmakeFolderPath)
+            printMock.assert_called_once_with('Generating CMake in folder', self.cmakeFolderPath)
             Process.fail_fast_run.assert_called_once_with(expectedCMakeCommand)
       testcase('Linux', '',
          f'cmake -Werror=dev -G"{self.cmakeGenerator}" -DCMAKE_BUILD_TYPE={self.cmakeBuildType}  {self.cmakeListsFolderPath}')

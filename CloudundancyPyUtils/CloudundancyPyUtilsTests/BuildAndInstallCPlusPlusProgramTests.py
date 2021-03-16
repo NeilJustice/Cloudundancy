@@ -30,12 +30,12 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
       BuildAndInstallCPlusPlusProgram.__doc__)
 
    def main__ValidArgs_CMakes_Builds_RunsTests_InstallsIfInstallArgSpecified_test(self):
-      @patch('builtins.print', spec_set=True)
       @patch('docopt.docopt', spec_set=True)
       @patch('platform.system', spec_set=True)
       @patch('CloudundancyPyUtils.BuildAndInstallCPlusPlusProgram.linux_cmake_build_test_install', spec_set=True)
       @patch('CloudundancyPyUtils.BuildAndInstallCPlusPlusProgram.windows_cmake_build_test_install', spec_set=True)
-      def testcase(platformSystem, trueExpectLinuxFalseExpectWindows, _1, _2, _3, _4, _5):
+      @patch('builtins.print', spec_set=True)
+      def testcase(platformSystem, trueExpectLinuxFalseExpectWindows, printMock, _1, _2, _3, _4):
          with self.subTest(f'{platformSystem, trueExpectLinuxFalseExpectWindows}'):
             docopt.docopt.return_value =\
             {
@@ -51,7 +51,7 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
             BuildAndInstallCPlusPlusProgram.main()
             #
             expectedRunningSysArgvMessage = f'Running {sys.argv}\n'
-            print.assert_called_once_with(expectedRunningSysArgvMessage)
+            printMock.assert_called_once_with(expectedRunningSysArgvMessage)
             docopt.docopt.assert_called_once_with(BuildAndInstallCPlusPlusProgram.__doc__)
             platform.system.assert_called_once_with()
             if trueExpectLinuxFalseExpectWindows:
