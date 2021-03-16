@@ -22,8 +22,8 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
    * [7zip-files-then-copy-the-7zip-file-to-multiple-folders](#7zip-files-then-copy-the-7zip-file-to-multiple-folders)
 * [Cloudundancy Code Structure As It Appears In Visual Studio Code](#cloudundancy-code-structure-as-it-appears-in-visual-studio-code)
 * [Cloudundancy Code Structure As It Appears In Visual Studio 2019](#cloudundancy-code-structure-as-it-appears-in-visual-studio-2019)
-* [Linux Jenkins Jobs Which Build, clang-tidy, Cppcheck, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy](#linux-jenkins-jobs-which-build-clang-tidy-cppcheck-addresssanitize-and-undefinedbehaviorsanitize-cloudundancy)
-* [Windows Jenkins Jobs Which Build Cloudundancy And SonarQube Scan Cloudundancy's Python Code](#windows-jenkins-jobs-which-build-cloudundancy-and-sonarqube-scan-cloudundancys-python-code)
+* [Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-and-undefinedbehaviorsanitize-cloudundancy)
+* [Windows Jenkins Jobs Which Build and Cppcheck Cloudundancy](#windows-jenkins-jobs-which-build-and-cppcheck-cloudundancy)
 * [How To Build Binary cloudundancy From Source On Linux With Clang](#how-to-build-binary-cloudundancy-from-source-on-linux-with-clang)
 * [How To Build Executable Cloudundancy.exe From Source On Windows with Visual Studio 2019](#how-to-build-executable-cloudundancy.exe-from-source-on-windows-with-visual-studio-2019)
 * [Cloudundancy Roadmap](#future-features-roadmap)
@@ -271,13 +271,13 @@ Seen in this screenshot is the `CloudundancyProgram::Main(int argc, char* argv[]
 
 ![What Cloudundancy Source Code Looks Like In Visual Studio 2019](Screenshots/WhatCloudundancySourceCodeLooksLikeInVisualStudio2019.png)
 
-## Linux Jenkins jobs Which Build, clang-tidy, Cppcheck, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy
+## Linux Jenkins jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy
 
 A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Fedora 33:
 
 ![Linux Cloudundancy Jenkins jobs](Screenshots/Linux/LinuxCloudundancyJenkinsJobs.png)
 
-## Windows Jenkins Jobs Which Build Cloudundancy And SonarQube Scan Cloudundancy's Python Code
+## Windows Jenkins Jobs Which Build and Cppcheck Cloudundancy
 
 A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Windows 10:
 
