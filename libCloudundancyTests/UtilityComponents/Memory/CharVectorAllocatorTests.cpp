@@ -9,7 +9,7 @@ CharVectorAllocator _charVectorAllocator;
 
 TEST(NewCharVector_ReturnsOperatorNewedCharVectorWithSpecifiedSize)
 {
-   CharVectorAllocator charVectorAllocator;
+   CharVectorAllocator charVectorAllocator{};
    const size_t size = ZenUnit::RandomBetween<size_t>(0, 3);
    //
    const vector<char>* charVector = charVectorAllocator.NewCharVector(size);

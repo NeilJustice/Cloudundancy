@@ -26,7 +26,7 @@ public:
 TEST(CallConstMemberFunction_CallsConstMemberFunction)
 {
    Class c;
-   VoidOneArgMemberFunctionCaller<Class, ArgType> oneArgVoidMemberFunctionCaller;
+   VoidOneArgMemberFunctionCaller<Class, ArgType> oneArgVoidMemberFunctionCaller{};
    IS_EMPTY(c.calls);
    //
    oneArgVoidMemberFunctionCaller.CallConstMemberFunction(&Class::ConstMemberVoidFunction, &c, ArgType{ 1 });
@@ -41,7 +41,7 @@ TEST(CallConstMemberFunction_CallsConstMemberFunction)
 TEST(CallNonConstCallMemberFunction_CallsNonConstMemberFunction)
 {
    Class c;
-   VoidOneArgMemberFunctionCaller<Class, ArgType> oneArgVoidMemberFunctionCaller;
+   VoidOneArgMemberFunctionCaller<Class, ArgType> oneArgVoidMemberFunctionCaller{};
    IS_EMPTY(c.calls);
    //
    oneArgVoidMemberFunctionCaller.CallNonConstCallMemberFunction(&Class::NonConstMemberVoidFunction, &c, ArgType{ 1 });

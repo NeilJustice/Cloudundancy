@@ -20,7 +20,7 @@ CLEANUP
 
 TEST(Call_CallsFunctionOnce)
 {
-   VoidOneArgFunctionCaller<ArgType> voidOneArgFunctionCaller;
+   VoidOneArgFunctionCaller<ArgType> voidOneArgFunctionCaller{};
 
    voidOneArgFunctionCaller.Call(VoidOneArgFunction, ArgType{ 1 });
    VECTORS_ARE_EQUAL(vector<ArgType>{ 1 }, functionCalls);
