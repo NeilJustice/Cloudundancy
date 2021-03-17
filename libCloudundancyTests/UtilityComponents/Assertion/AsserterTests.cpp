@@ -27,9 +27,7 @@ TEST(ThrowIfIntsNotEqual_IntsAreNotEqual_ThrowsRuntimeError)
 	//
 	const string expectedExceptionMessage = String::Concat(
 		"Asserter::ThrowIfIntsNotEqual(expected, actual, message) failed due to expected != actual.\n",
-		" expected=", expected, '\n',
-		"   actual=", actual, '\n',
-		"  message=\"", message, "\"");
+		" expected=", expected, '\n', "   actual=", actual, '\n', "  message=\"", message, "\"");
 	THROWS_EXCEPTION(_asserter.ThrowIfIntsNotEqual(expected, actual, message),
 		runtime_error, expectedExceptionMessage);
 }
@@ -51,9 +49,7 @@ TEST(ThrowIfSizeTsNotEqual_SizeTAreNotEqual_ThrowsRuntimeError)
 	//
 	const string expectedExceptionMessage = String::Concat(
 		"Asserter::ThrowIfSizeTsNotEqual(expected, actual, message) failed due to expected != actual.\n",
-		" expected=", expected, '\n',
-		"   actual=", actual, '\n',
-		"  message=\"", message, "\"");
+		" expected=", expected, '\n', "   actual=", actual, '\n', "  message=\"", message, "\"");
 	THROWS_EXCEPTION(_asserter.ThrowIfSizeTsNotEqual(expected, actual, message),
 		runtime_error, expectedExceptionMessage);
 }
