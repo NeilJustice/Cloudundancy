@@ -493,9 +493,7 @@ TEST(WriteCopiedMessageOrExitWithCode1IfCopyFailed_CopyFailed_WritesCopyFailedAn
       destinationFolderPath, expectedCopyFailedLogFileMessage));
 
    const string expectedCopyFailedConsoleMessage = String::Concat(
-      "Copy failed [", fileCopyResult.durationInMilliseconds, "ms]: ", fileCopyResult.copyFailureReason, '\n',
-      '\n',
-      "[Cloudundancy] ExitCode: 1");
+      "Copy failed [", fileCopyResult.durationInMilliseconds, "ms]: ", fileCopyResult.copyFailureReason, "\n\n[Cloudundancy] ExitCode: 1");
    METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedCopyFailedConsoleMessage, Color::Red));
 
    METALMOCK(exitMock.CalledOnceWith(1));
