@@ -35,5 +35,5 @@ public:
    virtual void RecursivelyDeleteAllFilesExceptIgnoredFileSubpaths();
 private:
    static bool FilePathCaseInsensitiveContainsAnySubstring(
-      const fs::path& filePath, const vector<string>& substrings);
+      const fs::path& filePath, const vector<string>& filePathIgnoreSubstrings);
 };

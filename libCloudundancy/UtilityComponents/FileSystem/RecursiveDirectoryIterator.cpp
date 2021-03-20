@@ -65,17 +65,17 @@ void RecursiveDirectoryIterator::RecursivelyDeleteAllFilesExceptIgnoredFileSubpa
 // Private Functions
 
 bool RecursiveDirectoryIterator::FilePathCaseInsensitiveContainsAnySubstring(
-   const fs::path& filePath, const vector<string>& substrings)
+   const fs::path& filePath, const vector<string>& filePathIgnoreSubstrings)
 {
-   if (substrings.empty())
+   if (filePathIgnoreSubstrings.empty())
    {
       return false;
    }
    const string filePathAsString = filePath.string();
    const bool doIgnoreFilePath = std::any_of(
-      cbegin(substrings), cend(substrings), [&](const string& ignoredSubstring)
+      filePathIgnoreSubstrings.cbegin(), filePathIgnoreSubstrings.cend(), [&](const string& ignoredFilePathSubstring)
       {
-         if (String::CaseInsensitiveContains(filePathAsString, ignoredSubstring))
+         if (String::CaseInsensitiveContains(filePathAsString, ignoredFilePathSubstring))
          {
             return true;
          }

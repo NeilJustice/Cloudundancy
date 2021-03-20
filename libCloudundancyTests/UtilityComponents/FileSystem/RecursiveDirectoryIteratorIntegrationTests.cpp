@@ -132,12 +132,12 @@ TEST(IntegrationTest_RecursiveDirectoryIterator_EmptyFilePathIgnoreSubstrings_Re
 #ifdef _WIN32
 TEST(IntegrationTest_RecursiveDirectoryIterator_NonEmptyFilePathIgnoreSubstrings_ReturnsAllNonIgnoredFilePathsInAndBelowFolderPath)
 {
-   const vector<string> emptyFilePathIgnoreSubstrings =
+   const vector<string> filePathIgnoreSubstrings =
    {
       "ignored_file_extension",
       "ignored_directory_name"
    };
-   _recursiveDirectoryIterator.SetFileSubpathsToIgnore(emptyFilePathIgnoreSubstrings);
+   _recursiveDirectoryIterator.SetFileSubpathsToIgnore(filePathIgnoreSubstrings);
    _recursiveDirectoryIterator.InitializeIteratorAtFolderPath(_rootFolderPath);
    //
    const fs::path path1 = _recursiveDirectoryIterator.NextNonIgnoredFilePath();

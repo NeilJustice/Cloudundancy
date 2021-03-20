@@ -33,7 +33,7 @@ TEST(RecursivelyDeleteAllFilesExceptIgnoredFileSubpaths_RecursivelyCallsFilesyst
 {
    const fs::path filePath1 = ZenUnit::Random<fs::path>();
    const fs::path filePath2 = ZenUnit::Random<fs::path>();
-   const fs::path defaultFilePath;
+   const fs::path defaultFilePath{};
    _recursiveDirectoryIteratorSelfMocked.NextNonIgnoredFilePathMock.ReturnValues(filePath1, filePath2, defaultFilePath);
    _recursiveDirectoryIteratorSelfMocked.removeMock.ReturnRandom();
    //
