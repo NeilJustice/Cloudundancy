@@ -25,7 +25,6 @@
          "type": "cppdbg",
          "request": "launch",
          "program": "${workspaceRoot}/Debug/libCloudundancyTests/libCloudundancyTests",
-         "args": [ "" ],
          "stopAtEntry": false,
          "cwd": "${workspaceFolder}",
          "environment": [],
