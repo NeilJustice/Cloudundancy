@@ -5,6 +5,8 @@
 
 TESTS(LinuxProcessRunnerTests)
 AFACT(DefaultConstructor_NewsComponents)
+AFACT(Run_RunsProcessWithArguments_ReturnsProcessResult__whoamiTestCase)
+AFACT(Run_RunsProcessWithArguments_ReturnsProcessResult__basenameTestCase)
 AFACT(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
 AFACT(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessageAndExitsProgramWithProcessExitCode)
 EVIDENCE
@@ -31,6 +33,29 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(linuxProcessRunner._caller_Run);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(linuxProcessRunner._console);
+}
+
+TEST(Run_RunsProcessWithArguments_ReturnsProcessResult__whoamiTestCase)
+{
+   const ProcessResult processResult = _linuxProcessRunner.Run("whoami", "");
+   //
+   ARE_EQUAL("whoami", processResult.processName);
+   ARE_EQUAL("", processResult.arguments);
+   ARE_EQUAL(0, processResult.exitCode);
+   const uid_t uidValue = geteuid();
+   struct passwd* const passwdValue = getpwuid(uidValue);
+   string expectedUsername(passwdValue->pw_name);
+   ARE_EQUAL(expectedUsername, processResult.standardOutputAndError);
+}
+
+TEST(Run_RunsProcessWithArguments_ReturnsProcessResult__basenameTestCase)
+{
+   const ProcessResult processResult = _linuxProcessRunner.Run("basename", "/dir1/dir2/file");
+   //
+   ARE_EQUAL("basename", processResult.processName);
+   ARE_EQUAL("/dir1/dir2/file", processResult.arguments);
+   ARE_EQUAL(0, processResult.exitCode);
+   ARE_EQUAL("file", processResult.standardOutputAndError);
 }
 
 TEST(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)

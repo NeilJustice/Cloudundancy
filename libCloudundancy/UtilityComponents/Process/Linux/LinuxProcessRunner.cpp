@@ -17,7 +17,7 @@ LinuxProcessRunner::~LinuxProcessRunner()
 {
 }
 
-ProcessResult LinuxProcessRunner::Run(string_view processName, string_view arguments) const // LCOV_EXCL_LINE
+ProcessResult LinuxProcessRunner::Run(string_view processName, string_view arguments) const
 {
    const vector<string> spaceSplitArguments = String::Split(arguments, ' ');
    constexpr size_t ProcessNameArgv = 1;
