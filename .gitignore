@@ -54,6 +54,7 @@ coverage.xml
 .scannerwork/
 
 # Cppcheck
+Cppcheck/files.txt
 *.a1
 *.a2
 cppcheck_results.txt
