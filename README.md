@@ -22,11 +22,11 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
    * [7zip-files-then-copy-the-7zip-file-to-multiple-folders](#7zip-files-then-copy-the-7zip-file-to-multiple-folders)
 * [Cloudundancy Code Structure As It Appears In Visual Studio Code On Linux](#cloudundancy-code-structure-as-it-appears-in-visual-studio-code-on-linux)
 * [Cloudundancy Code Structure As It Appears In Visual Studio 2019 On Windows](#cloudundancy-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
-* [Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-and-undefinedbehaviorsanitize-cloudundancy)
-* [Windows Jenkins Jobs Which Build and Cppcheck Cloudundancy](#windows-jenkins-jobs-which-build-and-cppcheck-cloudundancy)
+* [Linux Jenkins jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy's C++ Code and SonarQube Scan Cloudundancy's Python Code](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-and-undefinedbehaviorsanitize-cloudundancys-c++-code-and-sonarqube-scan-cloudundancys-python-code)
+* [Windows Jenkins Jobs Which Build and Cppcheck Cloudundancy's C++ Code and SonarQube Scan Cloudundancy's Python Code](#windows-jenkins-jobs-which-build-and-cppcheck-cloudundancys-c++-code-and-sonarqube-scan-cloudundancys-python-code)
 * [How To Build Binary cloudundancy From Source On Linux With Clang](#how-to-build-binary-cloudundancy-from-source-on-linux-with-clang)
 * [How To Build Executable Cloudundancy.exe From Source On Windows with Visual Studio 2019](#how-to-build-executable-cloudundancy.exe-from-source-on-windows-with-visual-studio-2019)
-* [Cloudundancy Roadmap](#future-features-roadmap)
+* [Cloudundancy Roadmap](#cloudundancy-roadmap)
 
 ## Cloudundancy Command Line Usage
 
@@ -45,10 +45,6 @@ Usage:
       --7zip-staging-folder=<FolderPath>
       --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=<CloudundancyIniFilePath>
 ```
-
-Cloudundancy command line arguments are parsed in file `CloudundancyArgsParser.cpp` using the excellent single-header library [docopt.cpp](https://github.com/docopt/docopt.cpp):
-
-![CloudundancyArgsParser.cpp](Screenshots/CloudundancyArgsParser.png)
 
 ## Cloudundancy Program Modes
 
@@ -267,17 +263,17 @@ Seen in this screenshot is the call to `_cloudundancyIniFileReader->ReadIniFile(
 
 ## Cloudundancy Code Structure As It Appears In Visual Studio 2019 On Windows
 
-Seen in this screenshot is the `CloudundancyProgram::Main(int argc, char* argv[])` function which begins Cloudundancy's program behavior:
+Shown in this screenshot is function `CloudundancyArgsParser::ParseStringArgs` which uses the excellent single-header command line arguments parsing  library [docopt.cpp](https://github.com/docopt/docopt.cpp) to parse Cloudundancy's command line arguments:
 
-![What Cloudundancy Source Code Looks Like In Visual Studio 2019 On Windows](Screenshots/WhatCloudundancySourceCodeLooksLikeInVisualStudio2019.png)
+![CloudundancyArgsParser.cpp](Screenshots/CloudundancyArgsParser.png)
 
-## Linux Jenkins jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy
+## Linux Jenkins jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy's C++ Code and SonarQube Scan Cloudundancy's Python Code
 
 A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Fedora 33 with Clang 11.0.0 and GCC 10.2.1:
 
 ![Linux Cloudundancy Jenkins jobs](Screenshots/Linux/LinuxCloudundancyJenkinsJobs.png)
 
-## Windows Jenkins Jobs Which Build and Cppcheck Cloudundancy
+## Windows Jenkins Jobs Which Build and Cppcheck Cloudundancy's C++ Code and SonarQube Scan Cloudundancy's Python Code
 
 A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Windows 10 with Visual Studio 2019:
 
@@ -317,5 +313,4 @@ Resulting executable `C:\bin\Cloudundancy.exe`:
 |SonarCloud badge for CloudundancyPyUtils Python code|Awaiting implementation|
 |SonarCloud badge for Cloudundancy C++ code|Awaiting implementation|
 |Coverity C++ static analysis badge|Awaiting implementation|
-|`--parallel` for parallel file copying to multiple destination folders|Awaiting implementation|
 |Automated acceptance testing|Awaiting implementation|
