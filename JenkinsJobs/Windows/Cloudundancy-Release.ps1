@@ -6,7 +6,7 @@ python.exe -u CloudundancyPyUtils\CloudundancyPyUtils\BuildAndInstallCPlusPlusPr
    --cmake-generator="Visual Studio 16 2019" `
    --cmake-build-type=Release `
    --tests-project-name=libCloudundancyTests `
-   --cmake-definitions="-DCMAKE_INSTALL_PREFIX=$cmakeInstallPrefix" `
+   --cmake-definitions="-DCMAKE_INSTALL_PREFIX=C:\" `
    --install
 
 Set-PSDebug -Trace 0
