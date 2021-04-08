@@ -306,9 +306,9 @@ Resulting executable `C:\bin\Cloudundancy.exe`:
 
 ## Cloudundancy Roadmap
 
-|Future Cloudundancy Feature|Implementation Status As Of 3/15/2021|
-|---------------------------|-------------------------------------|
-|GitHub Actions build|Awaiting implementation|
+|Future Cloudundancy Feature|Implementation Status As Of 4/8/2021|
+|---------------------------|------------------------------------|
+|GitHub Actions build|In progress|
 |SonarCloud badge for CloudundancyPyUtils Python code|Awaiting implementation|
 |SonarCloud badge for Cloudundancy C++ code|Awaiting implementation|
 |Coverity C++ static analysis badge|Awaiting implementation|
