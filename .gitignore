@@ -57,4 +57,7 @@ coverage.xml
 Cppcheck/files.txt
 *.a1
 *.a2
+*.a3
+*.s2
+*.s4
 cppcheck_results.txt
