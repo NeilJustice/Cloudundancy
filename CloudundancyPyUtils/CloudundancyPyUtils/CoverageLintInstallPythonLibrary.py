@@ -5,7 +5,7 @@ Usage: CoverageLintInstallPythonLibrary.py --project=<FolderName> --run-tests-wi
 import docopt
 from CloudundancyPyUtils import Python, Process
 
-def main():
+def main() -> None:
    arguments = docopt.docopt(__doc__)
    runTestsWithCoveragePythonFileName = arguments['--run-tests-with-coverage-python-file']
    runTestsWithCoverageCommand = f'python {runTestsWithCoveragePythonFileName}'

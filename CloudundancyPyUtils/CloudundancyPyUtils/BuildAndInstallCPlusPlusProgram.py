@@ -7,7 +7,7 @@ import sys
 import docopt
 from CloudundancyPyUtils import CMake, Process
 
-def linux_cmake_build_test_install(cmakeGenerator, cmakeBuildType, testsProjectName, cmakeDefinitions, doInstallProgram):
+def linux_cmake_build_test_install(cmakeGenerator: str, cmakeBuildType: str, testsProjectName: str, cmakeDefinitions: str, doInstallProgram: bool) -> None:
    CMake.generate(cmakeBuildType, cmakeGenerator, cmakeBuildType, cmakeDefinitions, '..')
    Process.fail_fast_run('ninja -v')
    zenUnitTestsProgramCommand = f'{testsProjectName}/{testsProjectName} --test-runs=2 --random --max-test-milliseconds=200 --exit-1-if-tests-skipped'
@@ -15,7 +15,7 @@ def linux_cmake_build_test_install(cmakeGenerator, cmakeBuildType, testsProjectN
    os.chdir('..')
    optionally_install_program(doInstallProgram, cmakeBuildType, cmakeBuildType)
 
-def windows_cmake_build_test_install(solutionName, cmakeGenerator, cmakeBuildType, testsProjectName, cmakeDefinitions, doInstallProgram):
+def windows_cmake_build_test_install(solutionName: str, cmakeGenerator: str, cmakeBuildType: str, testsProjectName: str, cmakeDefinitions: str, doInstallProgram: bool) -> None:
    CMake.generate('.', cmakeGenerator, cmakeBuildType, cmakeDefinitions, '.')
    msbuildCommand = f'MSBuild.exe {solutionName}.sln /p:Configuration={cmakeBuildType} /p:Platform=x64 /m'
    Process.fail_fast_run(msbuildCommand)
@@ -23,12 +23,12 @@ def windows_cmake_build_test_install(solutionName, cmakeGenerator, cmakeBuildTyp
    Process.fail_fast_run(zenUnitTestsProgramCommand)
    optionally_install_program(doInstallProgram, '.', cmakeBuildType)
 
-def optionally_install_program(doInstallProgram, cmakeBuildArgument, cmakeBuildType):
+def optionally_install_program(doInstallProgram: bool, cmakeBuildArgument: str, cmakeBuildType: str) -> None:
    if doInstallProgram:
       cmakeInstallCommand = f'cmake --build {cmakeBuildArgument} --target install --config {cmakeBuildType}'
       Process.fail_fast_run(cmakeInstallCommand)
 
-def main():
+def main() -> None:
    runningSysArgvMessage = f'Running {sys.argv}\n'
    print(runningSysArgvMessage)
    arguments = docopt.docopt(__doc__)
