@@ -33,7 +33,7 @@
     <Compile Include="CMake.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CoverageLintInstallPythonLibrary.py">
+    <Compile Include="MypyFlake8PylintRunTestsWithCoverage.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Process.py" />
