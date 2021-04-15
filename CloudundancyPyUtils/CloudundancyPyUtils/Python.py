@@ -11,8 +11,7 @@ def run_flake8() -> None:
    Process.fail_fast_run(flake8Command)
 
 def run_mypy() -> None:
-   mypyCommand = 'mypy .'
-   Process.fail_fast_run(mypyCommand)
+   Process.fail_fast_run('mypy .')
 
 def run_pylint_on_file(pythonFilePath: str) -> int:
    pylintCommand = PylintCommand + pythonFilePath

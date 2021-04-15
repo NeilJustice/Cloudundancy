@@ -34,8 +34,7 @@ class PythonTests(unittest.TestCase):
       #
       Python.run_mypy()
       #
-      expectedMypyCommand = 'mypy .'
-      Process.fail_fast_run(expectedMypyCommand)
+      Process.fail_fast_run('mypy .')
 
    @patch('CloudundancyPyUtils.Process.run_and_get_exit_code', spec_set=True)
    def run_pylint_on_file_CallsPylintOnAllPythonFilesInCurrentFolderAndSubFolders_test(self, _1):
