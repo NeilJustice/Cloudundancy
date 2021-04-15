@@ -6,7 +6,7 @@ import shlex
 import subprocess
 import sys
 import time
-from typing import Any, Tuple
+from typing import Any, List, Tuple
 from CloudundancyPyUtils import ProcessThread
 
 def append_args(exePath: str, args: str) -> str:
@@ -61,10 +61,10 @@ def run_parallel_processpoolexecutor(func: Any, iterable: Any) -> bool:
    allCommandsSucceeded = not any(exitCodes)
    return allCommandsSucceeded
 
-def run_parallel_processthread(command: str, commandSuffixArgs: list) -> bool: # pragma nocover
+def run_parallel_processthread(command: str, commandSuffixArgs: List[str]) -> bool: # pragma nocover
    numberOfCommands = len(commandSuffixArgs)
    processThreads = [None] * numberOfCommands
-   processExitCodes = [None] * numberOfCommands
+   processExitCodes = [0] * numberOfCommands
    beginTime = time.process_time()
    for commandIndex, commandSuffixArg in enumerate(commandSuffixArgs):
       processThread = ProcessThread.ProcessThread(commandIndex, command, commandSuffixArg, processExitCodes)

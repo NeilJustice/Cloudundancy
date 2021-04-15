@@ -1,10 +1,10 @@
-"""BuildAndInstallCPlusPlusProgram.py - Builds and installs a C++ progarm on Linux or Windows.
+"""BuildAndInstallCPlusPlusProgram.py - Builds and installs a C++ program on Linux or Windows.
 
 Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-generator=<String> --cmake-build-type=<String> --tests-project-name=<String> [--cmake-definitions=<String>] (--install|--no-install)"""
 import os
 import platform
 import sys
-import docopt
+import docopt # type: ignore
 from CloudundancyPyUtils import CMake, Process
 
 def linux_cmake_build_test_install(cmakeGenerator: str, cmakeBuildType: str, testsProjectName: str, cmakeDefinitions: str, doInstallProgram: bool) -> None:

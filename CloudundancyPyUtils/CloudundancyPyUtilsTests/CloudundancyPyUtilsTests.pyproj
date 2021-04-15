@@ -6,7 +6,7 @@
     <ProjectGuid>5be2bd06-b3d6-4e12-9d37-cb82aa0ef9d3</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>MypyFlake8PylintRunTestsWithCoverageTests.py</StartupFile>
+    <StartupFile>BuildAndInstallCPlusPlusProgramTests.py</StartupFile>
     <SearchPath>..\</SearchPath>
     <WorkingDirectory>..</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -46,6 +46,9 @@
     <Compile Include="RunAllWithCoverage.py" />
     <Compile Include="UnitTester.py" />
     <Compile Include="UnitTesterTests.py" />
+    <Compile Include="__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

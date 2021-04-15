@@ -2,7 +2,7 @@
 Runs mypy, flake8, pylint, then runs tests with coverage.
 
 Usage: MypyFlake8PylintRunTestsWithCoverage.py --run-tests-with-coverage-python-file=<FilePath>"""
-import docopt
+import docopt # type: ignore
 from CloudundancyPyUtils import Process, Python
 
 def main() -> None:

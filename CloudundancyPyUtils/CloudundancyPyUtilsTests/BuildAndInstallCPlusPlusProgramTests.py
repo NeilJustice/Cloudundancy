@@ -25,7 +25,7 @@ class BuildAndInstallCPlusPlusProgramTests(unittest.TestCase):
       self.doInstallProgram = Random.boolean()
 
    def docstring__IsExpectedString_test(self):
-      self.assertEqual("""BuildAndInstallCPlusPlusProgram.py - Builds and installs a C++ progarm on Linux or Windows.
+      self.assertEqual("""BuildAndInstallCPlusPlusProgram.py - Builds and installs a C++ program on Linux or Windows.
 
 Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-generator=<String> --cmake-build-type=<String> --tests-project-name=<String> [--cmake-definitions=<String>] (--install|--no-install)""",
       BuildAndInstallCPlusPlusProgram.__doc__)

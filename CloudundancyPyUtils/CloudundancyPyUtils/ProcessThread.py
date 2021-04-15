@@ -1,9 +1,10 @@
 import threading
+from typing import List
 from CloudundancyPyUtils import Process
 
 class ProcessThread(threading.Thread): # pragma nocover
 
-   def __init__(self, commandIndex: int, command: str, commandSuffixArg: str, outExitCodes: list):
+   def __init__(self, commandIndex: int, command: str, commandSuffixArg: str, outExitCodes: List[int]):
       threading.Thread.__init__(self)
       self.commandIndex = commandIndex
       self.command = command

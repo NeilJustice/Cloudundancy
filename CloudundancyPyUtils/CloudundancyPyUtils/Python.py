@@ -11,7 +11,7 @@ def run_flake8() -> None:
    Process.fail_fast_run(flake8Command)
 
 def run_mypy() -> None:
-   mypyCommand = 'mypy . --ignore-missing-imports --disallow-untyped-calls --disallow-incomplete-defs'
+   mypyCommand = 'mypy .'
    Process.fail_fast_run(mypyCommand)
 
 def run_pylint_on_file(pythonFilePath: str) -> int:

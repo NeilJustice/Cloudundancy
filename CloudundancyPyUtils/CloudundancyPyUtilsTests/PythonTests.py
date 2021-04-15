@@ -34,7 +34,7 @@ class PythonTests(unittest.TestCase):
       #
       Python.run_mypy()
       #
-      expectedMypyCommand = 'mypy . --ignore-missing-imports --disallow-untyped-calls --disallow-incomplete-defs'
+      expectedMypyCommand = 'mypy .'
       Process.fail_fast_run(expectedMypyCommand)
 
    @patch('CloudundancyPyUtils.Process.run_and_get_exit_code', spec_set=True)
