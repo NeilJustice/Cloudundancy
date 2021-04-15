@@ -6,14 +6,14 @@
     <ProjectGuid>7442c4b6-4d10-4aea-a009-421f7252d55e</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>Python.py</StartupFile>
+    <StartupFile>MypyFlake8PylintRunTestsWithCoverage.py</StartupFile>
     <SearchPath>..\</SearchPath>
-    <WorkingDirectory>C:\Code\Cloudundancy</WorkingDirectory>
+    <WorkingDirectory>D:\Code\Cloudundancy\CloudundancyPyUtils</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>PyUtils</Name>
     <RootNamespace>PyUtils</RootNamespace>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>--solution-name=Cloudundancy --cmake-generator="Visual Studio 16 2019" --cmake-build-type=Debug --tests-project=libCloudundancyTests --no-install</CommandLineArguments>
+    <CommandLineArguments>--project=CloudundancyPyUtils --run-tests-with-coverage-python-file=CloudundancyPyUtilsTests/RunAllWithCoverage.py</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
     <IsWindowsApplication>False</IsWindowsApplication>
     <InterpreterArguments>
@@ -41,10 +41,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Python.py" />
-    <Compile Include="Random.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="UnitTester.py" />
     <Compile Include="__init__.py">
       <SubType>Code</SubType>
     </Compile>

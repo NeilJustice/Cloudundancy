@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch, Mock, sentinel
-from CloudundancyPyUtils import UnitTester, Random
+from CloudundancyPyUtilsTests import UnitTester, Random
 
 specification = [
 'test_run_tests_RunsTestCaseWithTextTestRunner'

@@ -6,19 +6,16 @@ import shlex
 import subprocess
 import sys
 import time
-from typing import Any
+from typing import Any, Tuple
 from CloudundancyPyUtils import ProcessThread
+
+def append_args(exePath: str, args: str) -> str:
+   exePathWithArgs = exePath + (' ' + args if args != '' else '')
+   return exePathWithArgs
 
 def bytes_to_utf8(byteString: bytes) -> str:
    utf8 = byteString.decode('utf-8')
    return utf8
-
-def run(command):
-   shlexedCommand = shlex.split(command)
-   completedProcess = subprocess.run(shlexedCommand, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False)
-   completedProcess.stdout = bytes_to_utf8(completedProcess.stdout)
-   completedProcess.stderr = bytes_to_utf8(completedProcess.stderr)
-   return completedProcess
 
 def fail_fast_run(command: str) -> None:
    exitCode = run_and_get_exit_code(command)
@@ -29,17 +26,24 @@ def fail_fast_run(command: str) -> None:
 
 def cross_platform_subprocess_call(command: str) -> int:
    systemName = platform.system()
-   if systemName.casefold() == 'windows':
+   if systemName == 'Windows':
       exitCode = subprocess.call(command)
    else:
       shlexedCommand = shlex.split(command)
       exitCode = subprocess.call(shlexedCommand)
    return exitCode
 
+def run(command: str) -> Tuple[str, str]:
+   shlexedCommand = shlex.split(command)
+   completedProcess = subprocess.run(shlexedCommand, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False)
+   stdout = bytes_to_utf8(completedProcess.stdout)
+   stderr = bytes_to_utf8(completedProcess.stderr)
+   return (stdout, stderr)
+
 def run_and_get_exit_code(command: str) -> int:
    singleQuotedCommand = f'\'{command}\''
    currentWorkingDirectory = os.getcwd()
-   print('Running', singleQuotedCommand, 'from', currentWorkingDirectory)
+   print(' Running:', singleQuotedCommand, 'from', currentWorkingDirectory)
    try:
       exitCode = cross_platform_subprocess_call(command)
    except FileNotFoundError as ex:
@@ -48,10 +52,6 @@ def run_and_get_exit_code(command: str) -> int:
       sys.exit(1)
    else:
       return exitCode
-
-def append_args(exePath: str, args: str) -> str:
-   exePathWithArgs = exePath + (' ' + args if args != '' else '')
-   return exePathWithArgs
 
 def run_parallel_processpoolexecutor(func: Any, iterable: Any) -> bool:
    cpuCount = multiprocessing.cpu_count()

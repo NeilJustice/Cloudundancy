@@ -1,4 +1,4 @@
-"""MypyFlake8PylintRunTestsWithCoverage.py - Runs flake8, then pylint, then unit tests with code coverage.
+"""MypyFlake8PylintRunTestsWithCoverage.py - Runs Mypy, flake8, pylint, then runs all unit tests with code coverage.
 
 Usage: MypyFlake8PylintRunTestsWithCoverage.py --project=<FolderName> --run-tests-with-coverage-python-file=<RelativeFilePath>"""
 import docopt
@@ -14,3 +14,6 @@ def main() -> None:
 
 if __name__ == '__main__': # pragma nocover
    main()
+
+# --project=CloudundancyPyUtils --run-tests-with-coverage-python-file=CloudundancyPyUtilsTests/RunAllWithCoverage.py
+# Working directory: D:\Code\Cloudundancy\CloudundancyPyUtils

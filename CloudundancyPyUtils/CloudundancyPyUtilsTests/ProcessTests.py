@@ -7,17 +7,19 @@ import sys
 import subprocess
 import unittest
 from unittest.mock import patch, call
-from CloudundancyPyUtils import Process, UnitTester, Random
+from CloudundancyPyUtils import Process
+from CloudundancyPyUtilsTests import Random, UnitTester
 
 testNames = [
-'run_RunsProcess_ReturnsStdOutStdErrAndReturnCode_test',
+'append_args_AppendsSpaceThenArgsIfArgsNotEmpty_testCases',
+'bytes_to_utf8_string_ReturnsBytesDecodedToUtf8String_test',
+'cross_platform_subprocess_call_Windows_CallsSubprocessCall_ReturnsExitCode_test',
+'cross_platform_subprocess_call_Linux_CallsSubprocessCallWithShlexedCommand_ReturnsSubprocessCallReturnValue_test',
 'fail_fast_run_CallsProcessAndGetExitCode_SysExitsWithExitCodeIfRunReturnsNonZero_test',
 'run_and_get_exit_code_RunsProcess_ReturnsExitCode_test',
 'run_and_get_exit_code_RunsProcess_ProcessRaisesAnException_PrintsException_Exits1_test',
-'cross_platform_subprocess_call_CallsSubprocessCallOnWindows_CallsShlexSubprocessCallOnNotWindows_test',
-'append_args_AppendsSpaceThenArgsIfArgsNotEmpty_testCases',
 'run_parallel_processpoolexecutor_CallsProcessPoolExecutorMap_Returns1IfAnyExitCodesNon0_test',
-'bytes_to_utf8_ReturnsBytesDecodedToUtf8_test'
+'run_SubprocessRunsProcessWithCheckEqualsFalse_ReturnsStdOutStdErr_test'
 ]
 
 class ProcessTests(unittest.TestCase):
@@ -30,32 +32,47 @@ class ProcessTests(unittest.TestCase):
       self.currentWorkingDirectory = Random.string()
       self.ExpectedPylintcommand = 'pylint --rcfile=.pylintrc --init-hook=\"sys.path.append(\'.\')\" '
 
+   def bytes_to_utf8_string_ReturnsBytesDecodedToUtf8String_test(self):
+      self.assertEqual('', Process.bytes_to_utf8(b''))
+      self.assertEqual('\r\n', Process.bytes_to_utf8(b'\r\n'))
+
+   @patch('platform.system', spec_set=True)
+   @patch('subprocess.call', spec_set=True)
+   def cross_platform_subprocess_call_Windows_CallsSubprocessCall_ReturnsExitCode_test(self, _1, _2):
+      platform.system.return_value = 'Windows'
+      subprocessCallReturnValue = Random.integer()
+      subprocess.call.return_value = subprocessCallReturnValue
+      #
+      exitCode = Process.cross_platform_subprocess_call(self.command)
+      #
+      platform.system.assert_called_once_with()
+      subprocess.call.assert_called_once_with(self.command)
+      self.assertEqual(subprocessCallReturnValue, exitCode)
+
+   @patch('platform.system', spec_set=True)
    @patch('shlex.split', spec_set=True)
-   @patch('subprocess.run', spec_set=True)
-   @patch('CloudundancyPyUtils.Process.bytes_to_utf8', spec_set=True)
-   def run_RunsProcess_ReturnsStdOutStdErrAndReturnCode_test(self, _1, _2, _3):
+   @patch('subprocess.call', spec_set=True)
+   def cross_platform_subprocess_call_Linux_CallsSubprocessCallWithShlexedCommand_ReturnsSubprocessCallReturnValue_test(self, _1, _2, _3):
+      platform.system.return_value = 'Linux'
       shlex.split.return_value = self.shlexedCommand
-      args = [Random.string(), Random.string()]
-      returncode = Random.integer()
-      stdoutBytes = bytes(Random.string(), 'utf-8')
-      stderrBytes = bytes(Random.string(), 'utf-8')
-      subprocessRunReturnValue = subprocess.CompletedProcess(args, returncode, stdoutBytes, stderrBytes)
-      subprocess.run.return_value = subprocessRunReturnValue
-      stdoutUtf8 = Random.string()
-      stderrUtf8 = Random.string()
-      Process.bytes_to_utf8.side_effect = [stdoutUtf8, stderrUtf8]
+      subprocessCallReturnValue = Random.integer()
+      subprocess.call.return_value = subprocessCallReturnValue
       #
-      completedProcess = Process.run(self.command)
+      exitCode = Process.cross_platform_subprocess_call(self.command)
       #
-      shlex.split.assert_called_once_with(self.command)
-      subprocess.run.assert_called_once_with(self.shlexedCommand, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False)
-      self.assertEqual(2, len(Process.bytes_to_utf8.call_args_list))
-      Process.bytes_to_utf8.assert_has_calls([call(stdoutBytes), call(stderrBytes)])
-      expectedReturnValue = subprocess.CompletedProcess(args, returncode, stdoutUtf8, stderrUtf8)
-      self.assertEqual(expectedReturnValue.args, completedProcess.args)
-      self.assertEqual(expectedReturnValue.returncode, completedProcess.returncode)
-      self.assertEqual(expectedReturnValue.stdout, completedProcess.stdout)
-      self.assertEqual(expectedReturnValue.stderr, completedProcess.stderr)
+      platform.system.assert_called_once_with()
+      subprocess.call.assert_called_once_with(self.shlexedCommand)
+      self.assertEqual(subprocessCallReturnValue, exitCode)
+
+   def append_args_AppendsSpaceThenArgsIfArgsNotEmpty_testCases(self):
+      def testcase(expectedReturnValue: str, args: str) -> None:
+         with self.subTest(f'{expectedReturnValue, args}'):
+            returnValue = Process.append_args('ExePath', args)
+            self.assertEqual(expectedReturnValue, returnValue)
+      testcase('ExePath', '')
+      testcase('ExePath  ', ' ')
+      testcase('ExePath arg1', 'arg1')
+      testcase('ExePath arg1 arg2', 'arg1 arg2')
 
    def fail_fast_run_CallsProcessAndGetExitCode_SysExitsWithExitCodeIfRunReturnsNonZero_test(self):
       @patch('CloudundancyPyUtils.Process.run_and_get_exit_code', spec_set=True)
@@ -78,6 +95,30 @@ class ProcessTests(unittest.TestCase):
       testcase(0, False)
       testcase(1, True)
 
+   @patch('shlex.split', spec_set=True)
+   @patch('subprocess.run', spec_set=True)
+   @patch('CloudundancyPyUtils.Process.bytes_to_utf8', spec_set=True)
+   def run_SubprocessRunsProcessWithCheckEqualsFalse_ReturnsStdOutStdErr_test(self, _1, _2, _3):
+      shlex.split.return_value = self.shlexedCommand
+      args = [Random.string(), Random.string()]
+      returncode = Random.integer()
+      stdoutUtf8 = Random.string()
+      stderrUtf8 = Random.string()
+      stdoutBytes = stdoutUtf8.encode('utf-8')
+      stderrBytes = stderrUtf8.encode('utf-8')
+      subprocessRunReturnValue = subprocess.CompletedProcess(args, returncode, stdoutBytes, stderrBytes)
+      subprocess.run.return_value = subprocessRunReturnValue
+      Process.bytes_to_utf8.side_effect = [stdoutUtf8, stderrUtf8]
+      #
+      (stdout, stderr) = Process.run(self.command)
+      #
+      shlex.split.assert_called_once_with(self.command)
+      subprocess.run.assert_called_once_with(self.shlexedCommand, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False)
+      self.assertEqual(2, len(Process.bytes_to_utf8.call_args_list))
+      Process.bytes_to_utf8.assert_has_calls([call(stdoutBytes), call(stderrBytes)])
+      self.assertEqual(stdoutUtf8, stdout)
+      self.assertEqual(stderrUtf8, stderr)
+
    @patch('os.getcwd', spec_set=True)
    @patch('builtins.print', spec_set=True)
    @patch('CloudundancyPyUtils.Process.cross_platform_subprocess_call', spec_set=True)
@@ -89,7 +130,7 @@ class ProcessTests(unittest.TestCase):
       exitCode = Process.run_and_get_exit_code(self.command)
       #
       os.getcwd.assert_called_once_with()
-      printMock.assert_called_once_with('Running', f'\'{self.command}\'', 'from', self.currentWorkingDirectory)
+      printMock.assert_called_once_with(' Running:', f'\'{self.command}\'', 'from', self.currentWorkingDirectory)
       Process.cross_platform_subprocess_call.assert_called_once_with(self.command)
       self.assertEqual(subprocessReturnValue, exitCode)
 
@@ -108,44 +149,9 @@ class ProcessTests(unittest.TestCase):
       Process.cross_platform_subprocess_call.assert_called_once_with(self.command)
       self.assertEqual(2, len(printMock.call_args_list))
       printMock.assert_has_calls([
-         call('Running', f'\'{self.command}\'', 'from', self.currentWorkingDirectory),
+         call(' Running:', f'\'{self.command}\'', 'from', self.currentWorkingDirectory),
          call(exceptionMessage)])
       sys.exit.assert_called_once_with(1)
-
-   def cross_platform_subprocess_call_CallsSubprocessCallOnWindows_CallsShlexSubprocessCallOnNotWindows_test(self):
-      @patch('platform.system', spec_set=True)
-      @patch('shlex.split', spec_set=True)
-      @patch('subprocess.call', spec_set=True)
-      def testcase(platformSystem, expectShlex, _1, _2, _3):
-         with self.subTest(f'{platformSystem, expectShlex}'):
-            platform.system.return_value = platformSystem
-            if expectShlex:
-               shlex.split.return_value = self.shlexedCommand
-            subprocessCallReturnValue = 1
-            subprocess.call.return_value = subprocessCallReturnValue
-            #
-            exitCode = Process.cross_platform_subprocess_call(self.command)
-            #
-            platform.system.assert_called_once_with()
-            if expectShlex:
-               subprocess.call.assert_called_once_with(self.shlexedCommand)
-            else:
-               subprocess.call.assert_called_once_with(self.command)
-            self.assertEqual(subprocessCallReturnValue, exitCode)
-      testcase('Windows', False)
-      testcase('windows', False)
-      testcase('Linux', True)
-      testcase('OSX', True)
-
-   def append_args_AppendsSpaceThenArgsIfArgsNotEmpty_testCases(self):
-      def testcase(expectedReturnValue, args):
-         with self.subTest(f'{expectedReturnValue, args}'):
-            returnValue = Process.append_args('ExePath', args)
-            self.assertEqual(expectedReturnValue, returnValue)
-      testcase('ExePath', '')
-      testcase('ExePath  ', ' ')
-      testcase('ExePath arg1', 'arg1')
-      testcase('ExePath arg1 arg2', 'arg1 arg2')
 
    def run_parallel_processpoolexecutor_CallsProcessPoolExecutorMap_Returns1IfAnyExitCodesNon0_test(self):
       class ProcessPoolExecutorMock:
@@ -202,10 +208,6 @@ class ProcessTests(unittest.TestCase):
       testcase(False, [1, 0])
       testcase(False, [0, 1])
       testcase(False, [0, 1, 0])
-
-   def bytes_to_utf8_ReturnsBytesDecodedToUtf8_test(self):
-      self.assertEqual('', Process.bytes_to_utf8(b''))
-      self.assertEqual('\r\n', Process.bytes_to_utf8(b'\r\n'))
 
 if __name__ == '__main__': # pragma nocover
    UnitTester.run_tests(ProcessTests, testNames)

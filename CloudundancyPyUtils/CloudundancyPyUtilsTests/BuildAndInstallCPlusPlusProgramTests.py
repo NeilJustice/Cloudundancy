@@ -4,7 +4,8 @@ import sys
 import unittest
 from unittest.mock import call, patch
 import docopt
-from CloudundancyPyUtils import CMake, BuildAndInstallCPlusPlusProgram, Process, Random, UnitTester
+from CloudundancyPyUtils import CMake, BuildAndInstallCPlusPlusProgram, Process
+from CloudundancyPyUtilsTests import Random, UnitTester
 
 testNames = [
 'docstring__IsExpectedString_test',
@@ -75,8 +76,7 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
       BuildAndInstallCPlusPlusProgram.linux_cmake_build_test_install(
          self.cmakeGenerator, self.cmakeBuildType, self.testsProjectName, self.cmakeDefinitions, doInstallProgram)
       #
-      CMake.generate.assert_called_once_with(
-         self.cmakeBuildType, self.cmakeGenerator, self.cmakeBuildType, self.cmakeDefinitions, '..')
+      CMake.generate.assert_called_once_with(self.cmakeBuildType, self.cmakeGenerator, self.cmakeBuildType, self.cmakeDefinitions, '..')
       expectedZenUnitTestsProgramCommand = f'{self.testsProjectName}/{self.testsProjectName} --test-runs=2 --random --max-test-milliseconds=200 --exit-1-if-tests-skipped'
       self.assertEqual(2, len(Process.fail_fast_run.call_args_list))
       Process.fail_fast_run.assert_has_calls([

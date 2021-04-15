@@ -2,7 +2,8 @@ import os
 import platform
 import unittest
 from unittest.mock import patch
-from CloudundancyPyUtils import CMake, UnitTester, Process, Random
+from CloudundancyPyUtils import CMake, Process
+from CloudundancyPyUtilsTests import Random, UnitTester
 
 testNames = [
 'generate_CreatesAndCdsToDirectory_RunsCMakeWithGeneratorAndBuildType_test'

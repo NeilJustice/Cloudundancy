@@ -4,7 +4,8 @@ import platform
 import sys
 import unittest
 from unittest.mock import call, patch
-from CloudundancyPyUtils import Python, Process, UnitTester, Random
+from CloudundancyPyUtils import Python, Process
+from CloudundancyPyUtilsTests import UnitTester, Random
 
 testNames = [
 'pylint_file_CallsPylintOnAllPythonFilesInCurrentFolderAndSubFolders_test',

@@ -1,6 +1,6 @@
 import re
 import unittest
-from CloudundancyPyUtils import UnitTester, Random
+from CloudundancyPyUtilsTests import UnitTester, Random
 
 testNames = [
 'boolean_RandomsRandomBoolean_test',

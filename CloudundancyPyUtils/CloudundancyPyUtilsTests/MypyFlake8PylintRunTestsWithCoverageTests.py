@@ -1,7 +1,8 @@
 import unittest
 from unittest.mock import patch
 import docopt
-from CloudundancyPyUtils import MypyFlake8PylintRunTestsWithCoverage, Python, Process, UnitTester, Random # pylint:disable=no-name-in-module
+from CloudundancyPyUtils import MypyFlake8PylintRunTestsWithCoverage, Python, Process # pylint:disable=no-name-in-module
+from CloudundancyPyUtilsTests import UnitTester, Random
 
 testNames = [
 'docstring_ReturnsExpected_test',
@@ -11,7 +12,7 @@ testNames = [
 class MypyFlake8PylintRunTestsWithCoverageTests(unittest.TestCase):
 
    def docstring_ReturnsExpected_test(self):
-      self.assertEqual("""MypyFlake8PylintRunTestsWithCoverage.py - Runs flake8, then pylint, then unit tests with code coverage.
+      self.assertEqual("""MypyFlake8PylintRunTestsWithCoverage.py - Runs Mypy, flake8, pylint, then runs all unit tests with code coverage.
 
 Usage: MypyFlake8PylintRunTestsWithCoverage.py --project=<FolderName> --run-tests-with-coverage-python-file=<RelativeFilePath>""",
 MypyFlake8PylintRunTestsWithCoverage.__doc__)
