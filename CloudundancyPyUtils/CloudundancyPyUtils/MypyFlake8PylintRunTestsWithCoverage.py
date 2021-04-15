@@ -14,7 +14,7 @@ def main() -> None:
    Python.run_pylint_on_all_files_in_parallel()
    runTestsWithCoverageCommand = f'python {runTestsWithCoveragePythonFileName}'
    Process.fail_fast_run(runTestsWithCoverageCommand)
-   print('[MypyFlake8PylintRunTestsWithCoverage.py] Successfully ran pylint, flake8, and tests with coverage.')
+   print('[MypyFlake8PylintRunTestsWithCoverage.py] Successfully ran mypy, flake8, pylint, and unit tests with code coverage.')
    print('[MypyFlake8PylintRunTestsWithCoverage.py] ExitCode: 0')
 
 if __name__ == '__main__': # pragma nocover
