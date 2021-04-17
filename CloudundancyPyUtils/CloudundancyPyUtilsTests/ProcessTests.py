@@ -11,15 +11,15 @@ from CloudundancyPyUtils import Process
 from CloudundancyPyUtilsTests import Random, UnitTester
 
 testNames = [
-'append_args_AppendsSpaceThenArgsIfArgsNotEmpty_testCases',
-'bytes_to_utf8_string_ReturnsBytesDecodedToUtf8String_test',
-'cross_platform_subprocess_call_Windows_CallsSubprocessCall_ReturnsExitCode_test',
-'cross_platform_subprocess_call_Linux_CallsSubprocessCallWithShlexedCommand_ReturnsSubprocessCallReturnValue_test',
-'fail_fast_run_CallsProcessAndGetExitCode_SysExitsWithExitCodeIfRunReturnsNonZero_test',
-'run_and_get_exit_code_RunsProcess_ReturnsExitCode_test',
-'run_and_get_exit_code_RunsProcess_ProcessRaisesAnException_PrintsException_Exits1_test',
-'run_parallel_processpoolexecutor_CallsProcessPoolExecutorMap_Returns1IfAnyExitCodesNon0_test',
-'run_SubprocessRunsProcessWithCheckEqualsFalse_ReturnsStdOutStdErr_test'
+'test_append_args_AppendsSpaceThenArgsIfArgsNotEmpty',
+'test_bytes_to_utf8_string_ReturnsBytesDecodedToUtf8String',
+'test_cross_platform_subprocess_call_Windows_CallsSubprocessCall_ReturnsExitCode',
+'test_cross_platform_subprocess_call_Linux_CallsSubprocessCallWithShlexedCommand_ReturnsSubprocessCallReturnValue',
+'test_fail_fast_run_CallsProcessAndGetExitCode_SysExitsWithExitCodeIfRunReturnsNonZero',
+'test_run_and_get_exit_code_RunsProcess_ReturnsExitCode',
+'test_run_and_get_exit_code_RunsProcess_ProcessRaisesAnException_PrintsException_Exits1',
+'test_run_parallel_processpoolexecutor_CallsProcessPoolExecutorMap_Returns1IfAnyExitCodesNon0',
+'test_run_SubprocessRunsProcessWithCheckEqualsFalse_ReturnsStdOutStdErr'
 ]
 
 class ProcessTests(unittest.TestCase):
@@ -32,13 +32,13 @@ class ProcessTests(unittest.TestCase):
       self.currentWorkingDirectory = Random.string()
       self.ExpectedPylintcommand = 'pylint --rcfile=.pylintrc --init-hook=\"sys.path.append(\'.\')\" '
 
-   def bytes_to_utf8_string_ReturnsBytesDecodedToUtf8String_test(self):
+   def test_bytes_to_utf8_string_ReturnsBytesDecodedToUtf8String(self):
       self.assertEqual('', Process.bytes_to_utf8(b''))
       self.assertEqual('\r\n', Process.bytes_to_utf8(b'\r\n'))
 
    @patch('platform.system', spec_set=True)
    @patch('subprocess.call', spec_set=True)
-   def cross_platform_subprocess_call_Windows_CallsSubprocessCall_ReturnsExitCode_test(self, _1, _2):
+   def test_cross_platform_subprocess_call_Windows_CallsSubprocessCall_ReturnsExitCode(self, _1, _2):
       platform.system.return_value = 'Windows'
       subprocessCallReturnValue = Random.integer()
       subprocess.call.return_value = subprocessCallReturnValue
@@ -52,7 +52,7 @@ class ProcessTests(unittest.TestCase):
    @patch('platform.system', spec_set=True)
    @patch('shlex.split', spec_set=True)
    @patch('subprocess.call', spec_set=True)
-   def cross_platform_subprocess_call_Linux_CallsSubprocessCallWithShlexedCommand_ReturnsSubprocessCallReturnValue_test(self, _1, _2, _3):
+   def test_cross_platform_subprocess_call_Linux_CallsSubprocessCallWithShlexedCommand_ReturnsSubprocessCallReturnValue(self, _1, _2, _3):
       platform.system.return_value = 'Linux'
       shlex.split.return_value = self.shlexedCommand
       subprocessCallReturnValue = Random.integer()
@@ -64,7 +64,7 @@ class ProcessTests(unittest.TestCase):
       subprocess.call.assert_called_once_with(self.shlexedCommand)
       self.assertEqual(subprocessCallReturnValue, exitCode)
 
-   def append_args_AppendsSpaceThenArgsIfArgsNotEmpty_testCases(self):
+   def test_append_args_AppendsSpaceThenArgsIfArgsNotEmpty(self):
       def testcase(expectedReturnValue: str, args: str) -> None:
          with self.subTest(f'{expectedReturnValue, args}'):
             returnValue = Process.append_args('ExePath', args)
@@ -74,7 +74,7 @@ class ProcessTests(unittest.TestCase):
       testcase('ExePath arg1', 'arg1')
       testcase('ExePath arg1 arg2', 'arg1 arg2')
 
-   def fail_fast_run_CallsProcessAndGetExitCode_SysExitsWithExitCodeIfRunReturnsNonZero_test(self):
+   def test_fail_fast_run_CallsProcessAndGetExitCode_SysExitsWithExitCodeIfRunReturnsNonZero(self):
       @patch('CloudundancyPyUtils.Process.run_and_get_exit_code', spec_set=True)
       @patch('builtins.print', spec_set=True)
       @patch('sys.exit', spec_set=True)
@@ -98,7 +98,7 @@ class ProcessTests(unittest.TestCase):
    @patch('shlex.split', spec_set=True)
    @patch('subprocess.run', spec_set=True)
    @patch('CloudundancyPyUtils.Process.bytes_to_utf8', spec_set=True)
-   def run_SubprocessRunsProcessWithCheckEqualsFalse_ReturnsStdOutStdErr_test(self, _1, _2, _3):
+   def test_run_SubprocessRunsProcessWithCheckEqualsFalse_ReturnsStdOutStdErr(self, _1, _2, _3):
       shlex.split.return_value = self.shlexedCommand
       args = [Random.string(), Random.string()]
       returncode = Random.integer()
@@ -122,7 +122,7 @@ class ProcessTests(unittest.TestCase):
    @patch('os.getcwd', spec_set=True)
    @patch('builtins.print', spec_set=True)
    @patch('CloudundancyPyUtils.Process.cross_platform_subprocess_call', spec_set=True)
-   def run_and_get_exit_code_RunsProcess_ReturnsExitCode_test(self, _1, printMock, _3):
+   def test_run_and_get_exit_code_RunsProcess_ReturnsExitCode(self, _1, printMock, _3):
       os.getcwd.return_value = self.currentWorkingDirectory
       subprocessReturnValue = Random.integer()
       Process.cross_platform_subprocess_call.return_value = subprocessReturnValue
@@ -138,7 +138,7 @@ class ProcessTests(unittest.TestCase):
    @patch('builtins.print', spec_set=True)
    @patch('CloudundancyPyUtils.Process.cross_platform_subprocess_call', spec_set=True)
    @patch('sys.exit', spec_set=True)
-   def run_and_get_exit_code_RunsProcess_ProcessRaisesAnException_PrintsException_Exits1_test(self, _1, _2, printMock, _4):
+   def test_run_and_get_exit_code_RunsProcess_ProcessRaisesAnException_PrintsException_Exits1(self, _1, _2, printMock, _4):
       os.getcwd.return_value = self.currentWorkingDirectory
       exceptionMessage = Random.string()
       Process.cross_platform_subprocess_call.side_effect = FileNotFoundError(exceptionMessage)
@@ -153,7 +153,7 @@ class ProcessTests(unittest.TestCase):
          call(exceptionMessage)])
       sys.exit.assert_called_once_with(1)
 
-   def run_parallel_processpoolexecutor_CallsProcessPoolExecutorMap_Returns1IfAnyExitCodesNon0_test(self):
+   def test_run_parallel_processpoolexecutor_CallsProcessPoolExecutorMap_Returns1IfAnyExitCodesNon0(self):
       class ProcessPoolExecutorMock:
          def __init__(self):
             self.map_numberOfCalls = 0

@@ -8,11 +8,11 @@ from CloudundancyPyUtils import CMake, BuildAndInstallCPlusPlusProgram, Process
 from CloudundancyPyUtilsTests import Random, UnitTester
 
 testNames = [
-'docstring__IsExpectedString_test',
-'main__ValidArgs_CMakes_Builds_RunsTests_InstallsIfInstallArgSpecified_test',
-'linux_cmake_build_test_install__RunCMakeThenRunsNinja_test',
-'windows_cmake_build_test_install__RunsCMakeThenRunsMSBuild_test',
-'optionally_install_program__RunsCMakeInstallTargetIfInstallArgSpecified_test'
+'test_docstring__IsExpectedString',
+'test_main__ValidArgs_CMakes_Builds_RunsTests_InstallsIfInstallArgSpecified',
+'test_linux_cmake_build_test_install__RunCMakeThenRunsNinja',
+'test_windows_cmake_build_test_install__RunsCMakeThenRunsMSBuild',
+'test_optionally_install_program__RunsCMakeInstallTargetIfInstallArgSpecified'
 ]
 
 class BuildAndInstallCPlusPlusProgramTests(unittest.TestCase):
@@ -24,13 +24,13 @@ class BuildAndInstallCPlusPlusProgramTests(unittest.TestCase):
       self.cmakeDefinitions = Random.string()
       self.doInstallProgram = Random.boolean()
 
-   def docstring__IsExpectedString_test(self):
+   def test_docstring__IsExpectedString(self):
       self.assertEqual("""BuildAndInstallCPlusPlusProgram.py - Builds and installs a C++ program on Linux or Windows.
 
 Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-generator=<String> --cmake-build-type=<String> --tests-project-name=<String> [--cmake-definitions=<String>] (--install|--no-install)""",
       BuildAndInstallCPlusPlusProgram.__doc__)
 
-   def main__ValidArgs_CMakes_Builds_RunsTests_InstallsIfInstallArgSpecified_test(self):
+   def test_main__ValidArgs_CMakes_Builds_RunsTests_InstallsIfInstallArgSpecified(self):
       @patch('docopt.docopt', spec_set=True)
       @patch('platform.system', spec_set=True)
       @patch('CloudundancyPyUtils.BuildAndInstallCPlusPlusProgram.linux_cmake_build_test_install', spec_set=True)
@@ -70,7 +70,7 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
    @patch('CloudundancyPyUtils.Process.fail_fast_run', spec_set=True)
    @patch('os.chdir', spec_set=True)
    @patch('CloudundancyPyUtils.BuildAndInstallCPlusPlusProgram.optionally_install_program', spec_set=True)
-   def linux_cmake_build_test_install__RunCMakeThenRunsNinja_test(self, _1, _2, _3, _4):
+   def test_linux_cmake_build_test_install__RunCMakeThenRunsNinja(self, _1, _2, _3, _4):
       doInstallProgram = Random.boolean()
       #
       BuildAndInstallCPlusPlusProgram.linux_cmake_build_test_install(
@@ -88,7 +88,7 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
    @patch('CloudundancyPyUtils.CMake.generate', spec_set=True)
    @patch('CloudundancyPyUtils.Process.fail_fast_run', spec_set=True)
    @patch('CloudundancyPyUtils.BuildAndInstallCPlusPlusProgram.optionally_install_program', spec_set=True)
-   def windows_cmake_build_test_install__RunsCMakeThenRunsMSBuild_test(self, _1, _2, _3):
+   def test_windows_cmake_build_test_install__RunsCMakeThenRunsMSBuild(self, _1, _2, _3):
       doInstallProgram = Random.boolean()
       #
       BuildAndInstallCPlusPlusProgram.windows_cmake_build_test_install(
@@ -103,7 +103,7 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
          call(expectedZenUnitTestsProgramCommand)])
       BuildAndInstallCPlusPlusProgram.optionally_install_program.assert_called_once_with(doInstallProgram, '.', self.cmakeBuildType)
 
-   def optionally_install_program__RunsCMakeInstallTargetIfInstallArgSpecified_test(self):
+   def test_optionally_install_program__RunsCMakeInstallTargetIfInstallArgSpecified(self):
       @patch('CloudundancyPyUtils.Process.fail_fast_run', spec_set=True)
       def testcase(doInstallProgram, expectRunCMake, _1):
          with self.subTest(f'{doInstallProgram, expectRunCMake}'):

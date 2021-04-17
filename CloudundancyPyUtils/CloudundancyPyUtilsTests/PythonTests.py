@@ -8,11 +8,11 @@ from CloudundancyPyUtils import Process, Python
 from CloudundancyPyUtilsTests import Random, UnitTester
 
 testNames = [
-'run_flake8_RunsFlake8WithFlake8Config_test',
-'run_mypy_RunsMypyDotWithIgnoreMissingImports_test',
-'run_pylint_on_file_CallsPylintOnAllPythonFilesInCurrentFolderAndSubFolders_test',
-'run_pylint_on_all_files_in_parallel_LinuxCallsMapParallelPylintFileWithAllPyFilePaths_WindowsCallsMapSequential_test',
-'run_all_with_coverage_RunsCoverage_RunsReport_RunsHtml_RunsXml_ExitsWithReportExitCode_test'
+'test_run_flake8_RunsFlake8WithFlake8Config',
+'test_run_mypy_RunsMypyDotWithIgnoreMissingImports',
+'test_run_pylint_on_file_CallsPylintOnAllPythonFilesInCurrentFolderAndSubFolders',
+'test_run_pylint_on_all_files_in_parallel_LinuxCallsMapParallelPylintFileWithAllPyFilePaths_WindowsCallsMapSequential',
+'test_run_all_with_coverage_RunsCoverage_RunsReport_RunsHtml_RunsXml_ExitsWithReportExitCode'
 ]
 
 class PythonTests(unittest.TestCase):
@@ -21,7 +21,7 @@ class PythonTests(unittest.TestCase):
 
    @staticmethod
    @patch('CloudundancyPyUtils.Process.fail_fast_run', spec_set=True)
-   def run_flake8_RunsFlake8WithFlake8Config_test(_1):
+   def test_run_flake8_RunsFlake8WithFlake8Config(_1):
       #
       Python.run_flake8()
       #
@@ -30,14 +30,14 @@ class PythonTests(unittest.TestCase):
 
    @staticmethod
    @patch('CloudundancyPyUtils.Process.fail_fast_run', spec_set=True)
-   def run_mypy_RunsMypyDotWithIgnoreMissingImports_test(_1):
+   def test_run_mypy_RunsMypyDotWithIgnoreMissingImports(_1):
       #
       Python.run_mypy()
       #
       Process.fail_fast_run('mypy .')
 
    @patch('CloudundancyPyUtils.Process.run_and_get_exit_code', spec_set=True)
-   def run_pylint_on_file_CallsPylintOnAllPythonFilesInCurrentFolderAndSubFolders_test(self, _1):
+   def test_run_pylint_on_file_CallsPylintOnAllPythonFilesInCurrentFolderAndSubFolders(self, _1):
       pylintExitCode = Random.integer()
       Process.run_and_get_exit_code.return_value = pylintExitCode
       pythonFilePath = Random.string()
@@ -47,7 +47,7 @@ class PythonTests(unittest.TestCase):
       Process.run_and_get_exit_code.assert_called_once_with(PythonTests.ExpectedPylintCommand + pythonFilePath)
       self.assertEqual(pylintExitCode, pylintExitCode)
 
-   def run_pylint_on_all_files_in_parallel_LinuxCallsMapParallelPylintFileWithAllPyFilePaths_WindowsCallsMapSequential_test(self):
+   def test_run_pylint_on_all_files_in_parallel_LinuxCallsMapParallelPylintFileWithAllPyFilePaths_WindowsCallsMapSequential(self):
       @patch('glob.glob', spec_set=True)
       @patch('platform.system', spec_set=True)
       @patch('CloudundancyPyUtils.Process.run_parallel_processpoolexecutor', spec_set=True)
@@ -81,7 +81,7 @@ class PythonTests(unittest.TestCase):
       testcase('Windows', False, False, True)
       testcase('windows', True, False, True)
 
-   def run_all_with_coverage_RunsCoverage_RunsReport_RunsHtml_RunsXml_ExitsWithReportExitCode_test(self):
+   def test_run_all_with_coverage_RunsCoverage_RunsReport_RunsHtml_RunsXml_ExitsWithReportExitCode(self):
       @patch('os.getcwd', spec_set=True)
       @patch('CloudundancyPyUtils.Process.fail_fast_run', spec_set=True)
       @patch('CloudundancyPyUtils.Process.run_and_get_exit_code', spec_set=True)

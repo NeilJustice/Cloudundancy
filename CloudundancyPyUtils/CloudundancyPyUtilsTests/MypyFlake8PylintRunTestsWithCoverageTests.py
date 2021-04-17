@@ -5,13 +5,13 @@ from CloudundancyPyUtils import MypyFlake8PylintRunTestsWithCoverage, Process, P
 from CloudundancyPyUtilsTests import Random, UnitTester
 
 testNames = [
-'docstring_ReturnsExpected_test',
-'main_RunsMypy_Flake8_Pylint_ThenRunTestsWithCoverage_test'
+'test_docstring_ReturnsExpected',
+'test_main_RunsMypy_Flake8_Pylint_ThenRunTestsWithCoverage'
 ]
 
 class MypyFlake8PylintRunTestsWithCoverageTests(unittest.TestCase):
 
-   def docstring_ReturnsExpected_test(self):
+   def test_docstring_ReturnsExpected(self):
       self.assertEqual("""MypyFlake8PylintRunTestsWithCoverage.py
 Runs mypy, flake8, pylint, then runs tests with coverage.
 
@@ -24,7 +24,7 @@ MypyFlake8PylintRunTestsWithCoverage.__doc__)
    @patch('CloudundancyPyUtils.Python.run_pylint_on_all_files_in_parallel', spec_set=True)
    @patch('CloudundancyPyUtils.Process.fail_fast_run', spec_set=True)
    @patch('builtins.print', spec_set=True)
-   def main_RunsMypy_Flake8_Pylint_ThenRunTestsWithCoverage_test(self, printMock, _2, _3, _4, _5, _6):
+   def test_main_RunsMypy_Flake8_Pylint_ThenRunTestsWithCoverage(self, printMock, _2, _3, _4, _5, _6):
       runTestsWithCoveragePythonFileName = Random.string()
       docopt.docopt.return_value =\
       {
