@@ -14,21 +14,21 @@ For example, in a Cloudundancy.ini file, destination folders can be configured t
 
 Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
 
-* [Cloudundancy Command Line Usage](#cloudundancy-command-line-usage)
-* [Cloudundancy Program Modes](#cloudundancy-program-modes)
+* [Cloudundancy command line usage](#cloudundancy-command-line-usage)
+* [Cloudundancy program modes](#cloudundancy-program-modes)
    * [example-linux-ini-file](#example-linux-ini-file)
    * [example-windows-ini-file](#example-windows-ini-file)
    * [copy-files-to-multiple-folders](#copy-files-to-multiple-folders)
    * [7zip-files-then-copy-the-7zip-file-to-multiple-folders](#7zip-files-then-copy-the-7zip-file-to-multiple-folders)
-* [Cloudundancy Code Structure As It Appears In Visual Studio Code On Linux](#cloudundancy-code-structure-as-it-appears-in-visual-studio-code-on-linux)
-* [Cloudundancy Code Structure As It Appears In Visual Studio 2019 On Windows](#cloudundancy-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
-* [Linux Jenkins jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy's C++ Code and Mypy-Flake8-Pylint-SonarQube Cloudundancy's CI/CD Python Code](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-and-undefinedbehaviorsanitize-cloudundancys-c-code-and-mypy-flake8-pylint-sonarqube-cloudundancys-cicd-python-code)
-* [Windows Jenkins Jobs Which Build and Cppcheck Cloudundancy's C++ Code and Mypy-Flake8-Pylint-SonarQube Cloudundancy's CI/CD Python Code](#windows-jenkins-jobs-which-build-and-cppcheck-cloudundancys-c-code-and-mypy-flake8-pylint-sonarqube-cloudundancys-cicd-python-code)
-* [How To Build Binary cloudundancy On Linux With Clang](#how-to-build-binary-cloudundancy-on-linux-with-clang)
-* [How To Build Executable Cloudundancy.exe On Windows with Visual Studio 2019](#how-to-build-executable-cloudundancyexe-on-windows-with-visual-studio-2019)
-* [Cloudundancy Roadmap](#cloudundancy-roadmap)
+* [Cloudundancy code structure as it appears in Visual Studio code on Linux](#cloudundancy-code-structure-as-it-appears-in-visual-studio-code-on-linux)
+* [Cloudundancy code structure as it appears in Visual Studio 2019 on Windows](#cloudundancy-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
+* [Linux Jenkins jobs which build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy's C++ code and Mypy-Flake8-Pylint-SonarQube scan Cloudundancy's CI/CD Python code](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-and-undefinedbehaviorsanitize-cloudundancys-c-code-and-mypy-flake8-pylint-sonarqube-scan-cloudundancys-cicd-python-code)
+* [Windows Jenkins jobs which build and Cppcheck Cloudundancy's C++ code and Mypy-Flake8-Pylint-SonarQube scan Cloudundancy's CI/CD Python code](#windows-jenkins-jobs-which-build-and-cppcheck-cloudundancys-c-code-and-mypy-flake8-pylint-sonarqube-scan-cloudundancys-cicd-python-code)
+* [How to build binary cloudundancy on Linux with Clang](#how-to-build-binary-cloudundancy-on-linux-with-clang)
+* [How to build executable Cloudundancy.exe on Windows with Visual Studio 2019](#how-to-build-executable-cloudundancyexe-on-windows-with-visual-studio-2019)
+* [Cloudundancy roadmap](#cloudundancy-roadmap)
 
-## Cloudundancy Command Line Usage
+## Cloudundancy command line usage
 
 ```
 Cloudundancy v0.10.0 - Creates cloud-redundant and device-redundant file backups
@@ -45,7 +45,7 @@ Usage:
       --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=<FilePath>
 ```
 
-## Cloudundancy Program Modes
+## Cloudundancy program modes
 
 ### example-linux-ini-file
 
@@ -229,7 +229,7 @@ Example `--ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders`:
 
 As an example, imagine you had the following folder structure and were interested in achieving 7-Zipped cloud-redundant backups for folder `C:\Cloudundancy7ZipTesting\CodeFolder`, which contains all of your GitHub repos as subfolders.
 
-![Cloudundancy 7-Zip Testing Folder](Screenshots/Cloudundancy7ZipTestingFolder.png)
+![Cloudundancy 7-Zip testing folder](Screenshots/Cloudundancy7ZipTestingFolder.png)
 
 Here is what happens when the following Cloudundancy command line is run:
 
@@ -240,45 +240,45 @@ Cloudundancy.exe 7zip-files-then-copy-the-7zip-file-to-multiple-folders
    --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=C:\Cloudundancy7ZipTesting\7ZipFileToGoogleDriveAndOneDriveCopyingStep.ini
 ```
 
-![7-Zip Mode Standard Output](Screenshots/7ZipModeStandardOutput.png)
+![7-Zip mode standard output](Screenshots/7ZipModeStandardOutput.png)
 
 GitHub repos successfully 7-Zipped and copied to a Google Drive folder:
 
-![Google Drive .7z File](Screenshots/GoogleDrive7zFile.png)
+![Google Drive .7z file](Screenshots/GoogleDrive7zFile.png)
 
-![Google Drive .7z File Contents](Screenshots/GoogleDrive7zFileContents.png)
+![Google Drive .7z file contents](Screenshots/GoogleDrive7zFileContents.png)
 
 GitHub repos successfully 7-Zipped and copied to a OneDrive folder:
 
-![One Drive .7z File](Screenshots/OneDrive7zFile.png)
+![One Drive .7z file](Screenshots/OneDrive7zFile.png)
 
-![One Drive .7z File Contents](Screenshots/OneDrive7zFileContents.png)
+![One Drive .7z file contents](Screenshots/OneDrive7zFileContents.png)
 
-## Cloudundancy Code Structure As It Appears In Visual Studio Code On Linux
+## Cloudundancy code structure as it appears in Visual Studio Code on Linux
 
 Seen in this screenshot is the call to `_cloudundancyIniFileReader->ReadIniFile(iniFilePath`) for reading the Cloudundancy .ini file:
 
-![Cloudundancy Code Structure As It Appears Visual Studio Code On Linux](Screenshots/Linux/CloudundancyCodeStructureInVSCode.png)
+![Cloudundancy code structure as it appears Visual Studio Code on Linux](Screenshots/Linux/CloudundancyCodeStructureInVSCode.png)
 
-## Cloudundancy Code Structure As It Appears In Visual Studio 2019 On Windows
+## Cloudundancy code structure as it appears in Visual Studio 2019 on Windows
 
 Shown in this screenshot is function `CloudundancyArgsParser::ParseStringArgs` which uses the excellent single-header command line arguments parsing  library [docopt.cpp](https://github.com/docopt/docopt.cpp) to parse Cloudundancy's command line arguments:
 
 ![CloudundancyArgsParser.cpp](Screenshots/CloudundancyArgsParser.png)
 
-## Linux Jenkins jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy's C++ Code and Mypy-Flake8-Pylint-SonarQube Cloudundancy's CI/CD Python Code
+## Linux Jenkins jobs Which build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy's C++ code and Mypy-Flake8-Pylint-SonarQube scan Cloudundancy's CI/CD Python code
 
 A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Fedora 33 with Clang 11.0.0 and GCC 10.2.1:
 
 ![Linux Cloudundancy Jenkins jobs](Screenshots/Linux/LinuxCloudundancyJenkinsJobs.png)
 
-## Windows Jenkins Jobs Which Build and Cppcheck Cloudundancy's C++ Code and Mypy-Flake8-Pylint-SonarQube Cloudundancy's CI/CD Python Code
+## Windows Jenkins jobs which build and Cppcheck Cloudundancy's C++ code and Mypy-Flake8-Pylint-SonarQube scan Cloudundancy's CI/CD Python code
 
 A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Windows 10 with Visual Studio 2019:
 
 ![Cloudundancy Windows Jenkins jobs](Screenshots/Windows/WindowsJenkinsJobs.png)
 
-## How To Build Binary cloudundancy On Linux With Clang
+## How to build binary cloudundancy on Linux with Clang
 
 ```bash
 git clone https://github.com/NeilJustice/Cloudundancy
@@ -291,7 +291,7 @@ Resulting binary `/usr/local/bin/cloudundancy`:
 
 ![Binary cloudundancy on Linux](Screenshots/Linux/LinuxBinaryCloudundancy.png)
 
-## How To Build Executable Cloudundancy.exe On Windows With Visual Studio 2019
+## How to build executable Cloudundancy.exe on Windows with Visual Studio 2019
 
 ```powershell
 git clone https://github.com/NeilJustice/Cloudundancy
@@ -304,12 +304,10 @@ Resulting executable `C:\bin\Cloudundancy.exe`:
 
 ![Cloudundancy.exe on Windows](Screenshots/CloudundancyDotExe.png)
 
-## Cloudundancy Roadmap
+## Cloudundancy roadmap
 
-|Future Cloudundancy Feature|Implementation Status As Of 4/8/2021|
-|---------------------------|------------------------------------|
+|Future Cloudundancy feature|Implementation Status As Of 4/18/2021|
+|---------------------------|-------------------------------------|
 |GitHub Actions build|In progress|
 |SonarCloud badge for CloudundancyPyUtils Python code|Awaiting implementation|
 |SonarCloud badge for Cloudundancy C++ code|Awaiting implementation|
-|Coverity C++ static analysis badge|Awaiting implementation|
-|Automated acceptance testing|Awaiting implementation|
