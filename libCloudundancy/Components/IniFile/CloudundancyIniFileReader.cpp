@@ -27,7 +27,8 @@ CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudunda
    const size_t numberOfIniFileLines = cloudundancyIni.iniFileLines.size();
    for (size_t lineNumber = 1; lineNumber <= numberOfIniFileLines; ++lineNumber)
    {
-      string iniFileLine = String::TrimWhitespace(cloudundancyIni.iniFileLines[lineNumber - 1]);
+      const string& untrimmedIniFileLine = cloudundancyIni.iniFileLines[lineNumber - 1];
+      const string iniFileLine = String::TrimWhitespace(untrimmedIniFileLine);
       if (iniFileLine.empty() || String::StartsWith(iniFileLine, "#"))
       {
          continue;
@@ -68,7 +69,7 @@ CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudunda
       else
       {
          release_assert(inFileSubpathsToNotCopySection);
-         cloudundancyIni.fileSubpathsToNotCopy.emplace_back(std::move(iniFileLine));
+         cloudundancyIni.fileSubpathsToNotCopy.emplace_back(iniFileLine);
       }
    }
    _cloudundancyIniValidator->ThrowIfZeroDestinationFolderPaths(cloudundancyIni, cloudundancyIniPath);

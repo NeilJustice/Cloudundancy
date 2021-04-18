@@ -5,11 +5,11 @@
          "name": "Debug Cloudundancy",
          "type": "cppdbg",
          "request": "launch",
-         "program": "${workspaceRoot}/Debug/Cloudundancy/Cloudundancy",
+         "program": "${workspaceRoot}/Debug/Cloudundancy/cloudundancy",
          "args": [
             "7zip-files-then-copy-the-7zip-file-to-multiple-folders",
             "--ini-file-to-copy-files-to-7zip-staging-folder=/code/dotfiles/LinuxCloudundancy_CopyCodeFolderTo7ZipStagingFolder.ini",
-            "--7zip-staging-folde=/home/neil/code_7zip_staging",
+            "--7zip-staging-folde=/code_7zip_staging",
             "--ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=/code/dotfiles/LinuxCloudundancy_Copy7ZipFileFromStagingFolderToMultipleFolders.ini"
          ],
          "stopAtEntry": false,
@@ -19,19 +19,19 @@
          "MIMode": "gdb",
          "miDebuggerPath": "/usr/bin/gdb",
          "preLaunchTask": "Build Debug"
-      },
-      {
-         "name": "Debug libCloudundancyTests",
-         "type": "cppdbg",
-         "request": "launch",
-         "program": "${workspaceRoot}/Debug/libCloudundancyTests/libCloudundancyTests",
-         "stopAtEntry": false,
-         "cwd": "${workspaceFolder}",
-         "environment": [],
-         "externalConsole": false,
-         "MIMode": "gdb",
-         "miDebuggerPath": "/usr/bin/gdb",
-         "preLaunchTask": "Build Debug"
       }
+      // {
+      //    "name": "Debug libCloudundancyTests",
+      //    "type": "cppdbg",
+      //    "request": "launch",
+      //    "program": "${workspaceRoot}/Debug/libCloudundancyTests/libCloudundancyTests",
+      //    "stopAtEntry": false,
+      //    "cwd": "${workspaceFolder}",
+      //    "environment": [],
+      //    "externalConsole": false,
+      //    "MIMode": "gdb",
+      //    "miDebuggerPath": "/usr/bin/gdb",
+      //    "preLaunchTask": "Build Debug"
+      // }
    ]
 }
