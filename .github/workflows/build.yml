@@ -53,3 +53,8 @@ jobs:
         env:
           CXX: "/usr/bin/clang++"
           PYTHONPATH: CloudundancyPyUtils
+
+      - uses: codecov/codecov-action@v1
+        with:
+          files: CloudundancyPyUtils/CloudundancyPyUtilsTests/CoberturaCodeCoverageResults_CloudundancyPyUtilsTests.xml
+          fail_ci_if_error: true

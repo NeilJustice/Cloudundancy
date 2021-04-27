@@ -8,8 +8,9 @@ For example, in a Cloudundancy.ini file, destination folders can be configured t
 
 |Build Type|Build Status|
 |----------|------------|
-|GitHub Actions ubuntu-latest Clang 10.0.0 Debug|[![Cloudundancy](https://github.com/NeilJustice/Cloudundancy/actions/workflows/build.yml/badge.svg)](https://github.com/NeilJustice/Cloudundancy/actions/workflows/build.yml)|
-|AppVeyor Windows Visual Studio 2019 x64 Debug and Release|<a href="https://ci.appveyor.com/project/NeilJustice/Cloudundancy"><img src="https://ci.appveyor.com/api/projects/status/ygwr3rb9spwhy4u0?svg=true"/></a>|
+|GitHub Actions Debug build - ubuntu-latest Clang 10.0.0|[![Cloudundancy](https://github.com/NeilJustice/Cloudundancy/actions/workflows/build.yml/badge.svg)](https://github.com/NeilJustice/Cloudundancy/actions/workflows/build.yml)|
+|AppVeyor Debug and Release build - Visual Studio 2019 x64|<a href="https://ci.appveyor.com/project/NeilJustice/Cloudundancy"><img src="https://ci.appveyor.com/api/projects/status/ygwr3rb9spwhy4u0?svg=true"/></a>|
+|Codecov.io code coverage for CloudundancyPyUtils||
 
 Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
 
