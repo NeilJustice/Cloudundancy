@@ -47,7 +47,7 @@ jobs:
            python CloudundancyPyUtils/CloudundancyPyUtils/BuildAndInstallCPlusPlusProgram.py \
               --solution-name=Cloudundancy \
               --cmake-generator=Ninja \
-              --cmake-build-type=Debug \
+              --cmake-build-type=Release \
               --tests-project-name=libCloudundancyTests \
               --no-install
         env:
