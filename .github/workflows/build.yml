@@ -1,0 +1,55 @@
+name: Cloudundancy
+
+on: [push]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+         os: [ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          
+      - uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
+        
+      - uses: actions/cache@v2
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
+        
+      - name: Install pip packages
+        run: pip install --upgrade --upgrade-strategy eager -r dev-requirements.txt
+        
+      - name: mypy, flake8, pylint, then run all unit tests with coverage and pytest
+        run: python CloudundancyPyUtils/MypyFlake8PylintRunTestsWithCoverage.py --run-tests-with-coverage-python-file=CloudundancyPyUtilsTests/RunAllWithCoverage.py
+        working-directory: CloudundancyPyUtils
+        env:          
+          PYTHONPATH: "."
+      
+      - name: Install ninja-build
+        run: sudo apt-get install ninja-build
+        
+      - name: Download ZenUnit.h
+        run: curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/ZenUnit.h"
+      
+      - name: Download MetalMock.h
+        run: curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/MetalMock.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/MetalMock.h"
+      
+      - name: Run BuildAndInstallCPlusPlusProgram.py
+        run: |
+           python CloudundancyPyUtils/CloudundancyPyUtils/BuildAndInstallCPlusPlusProgram.py \
+              --solution-name=Cloudundancy \
+              --cmake-generator=Ninja \
+              --cmake-build-type=Debug \
+              --tests-project-name=libCloudundancyTests \
+              --no-install
+        env:
+          CXX: "/usr/bin/clang++"
+          PYTHONPATH: CloudundancyPyUtils
