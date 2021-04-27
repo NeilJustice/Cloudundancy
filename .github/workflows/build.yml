@@ -51,5 +51,5 @@ jobs:
               --tests-project-name=libCloudundancyTests \
               --no-install
         env:
-          CXX: "/usr/bin/g++"
+          CXX: "/usr/bin/clang++"
           PYTHONPATH: CloudundancyPyUtils
