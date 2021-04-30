@@ -9,10 +9,13 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CloudundancyPyUtilsTests", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JenkinsJobs", "JenkinsJobs", "{88409A64-F6E8-4265-B8D3-C9DD53E33B7E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StaticAnalysis", "StaticAnalysis", "{AC4777E1-CF10-4308-B5EC-CEB9CC3E322B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ConfigurationFiles", "ConfigurationFiles", "{AC4777E1-CF10-4308-B5EC-CEB9CC3E322B}"
 	ProjectSection(SolutionItems) = preProject
 		.flake8 = .flake8
 		.pylintrc = .pylintrc
+		mypy.ini = mypy.ini
+		pytest.ini = pytest.ini
+		..\sonar-project.properties = ..\sonar-project.properties
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Linux", "Linux", "{AC3A658D-B158-4CEB-A7DB-4089B8C0ACF2}"
