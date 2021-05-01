@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import call, patch
 import docopt
-from CloudundancyPyUtils import MypyFlake8PylintRunTestsWithCoverage, Process, Python
+from CloudundancyPyUtils import MypyFlake8PylintThenRunTestsWithCoverage, Process, Python
 from CloudundancyPyUtilsTests import Random, UnitTester
 
 testNames = [
@@ -9,14 +9,14 @@ testNames = [
 'test_main_RunsMypy_Flake8_Pylint_ThenRunTestsWithCoverage'
 ]
 
-class MypyFlake8PylintRunTestsWithCoverageTests(unittest.TestCase):
+class MypyFlake8PylintThenRunTestsWithCoverageTests(unittest.TestCase):
 
    def test_docstring_ReturnsExpected(self):
-      self.assertEqual("""MypyFlake8PylintRunTestsWithCoverage.py
+      self.assertEqual("""MypyFlake8PylintThenRunTestsWithCoverage.py
 Runs mypy, flake8, pylint, then runs tests with coverage.
 
-Usage: MypyFlake8PylintRunTestsWithCoverage.py --run-tests-with-coverage-python-file=<FilePath>""",
-MypyFlake8PylintRunTestsWithCoverage.__doc__)
+Usage: MypyFlake8PylintThenRunTestsWithCoverage.py --run-tests-with-coverage-python-file=<FilePath>""",
+MypyFlake8PylintThenRunTestsWithCoverage.__doc__)
 
    @patch('docopt.docopt', spec_set=True)
    @patch('CloudundancyPyUtils.Python.run_mypy', spec_set=True)
@@ -31,9 +31,9 @@ MypyFlake8PylintRunTestsWithCoverage.__doc__)
          '--run-tests-with-coverage-python-file': runTestsWithCoveragePythonFileName
       }
       #
-      MypyFlake8PylintRunTestsWithCoverage.main()
+      MypyFlake8PylintThenRunTestsWithCoverage.main()
       #
-      docopt.docopt.assert_called_once_with(MypyFlake8PylintRunTestsWithCoverage.__doc__)
+      docopt.docopt.assert_called_once_with(MypyFlake8PylintThenRunTestsWithCoverage.__doc__)
       Python.run_mypy.assert_called_once_with()
       Python.run_flake8.assert_called_once_with()
       Python.run_pylint_on_all_files_in_parallel.assert_called_once_with()
@@ -41,9 +41,9 @@ MypyFlake8PylintRunTestsWithCoverage.__doc__)
       Process.fail_fast_run.assert_called_once_with(expectedRunTestsWithCoverageCommand)
       self.assertEqual(3, len(printMock.call_args_list))
       printMock.assert_has_calls([
-         call(f'[MypyFlake8PylintRunTestsWithCoverage.py] --run-tests-with-coverage-python-file={runTestsWithCoveragePythonFileName}'),
-         call('[MypyFlake8PylintRunTestsWithCoverage.py] Successfully ran mypy, flake8, pylint, and unit tests with code coverage.'),
-         call('[MypyFlake8PylintRunTestsWithCoverage.py] ExitCode: 0')])
+         call(f'[MypyFlake8PylintThenRunTestsWithCoverage.py] --run-tests-with-coverage-python-file={runTestsWithCoveragePythonFileName}'),
+         call('[MypyFlake8PylintThenRunTestsWithCoverage.py] Successfully ran mypy, flake8, pylint, and unit tests with code coverage.'),
+         call('[MypyFlake8PylintThenRunTestsWithCoverage.py] ExitCode: 0')])
 
 if __name__ == '__main__': # pragma nocover
-   UnitTester.run_tests(MypyFlake8PylintRunTestsWithCoverageTests, testNames)
+   UnitTester.run_tests(MypyFlake8PylintThenRunTestsWithCoverageTests, testNames)

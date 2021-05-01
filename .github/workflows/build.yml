@@ -28,7 +28,7 @@ jobs:
         run: pip install --upgrade --upgrade-strategy eager -r dev-requirements.txt
         
       - name: mypy, flake8, pylint, then run all unit tests with coverage and pytest
-        run: python CloudundancyPyUtils/MypyFlake8PylintRunTestsWithCoverage.py --run-tests-with-coverage-python-file=CloudundancyPyUtilsTests/RunAllWithCoverage.py
+        run: python CloudundancyPyUtils/MypyFlake8PylintThenRunTestsWithCoverage.py --run-tests-with-coverage-python-file=CloudundancyPyUtilsTests/RunAllWithCoverage.py
         working-directory: CloudundancyPyUtils
         env:          
           PYTHONPATH: "."

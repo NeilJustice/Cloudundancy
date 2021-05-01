@@ -6,7 +6,7 @@
     <ProjectGuid>7442c4b6-4d10-4aea-a009-421f7252d55e</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>MypyFlake8PylintRunTestsWithCoverage.py</StartupFile>
+    <StartupFile>MypyFlake8PylintThenRunTestsWithCoverage.py</StartupFile>
     <SearchPath>..\</SearchPath>
     <WorkingDirectory>D:\Code\Cloudundancy\CloudundancyPyUtils</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -33,7 +33,7 @@
     <Compile Include="CMake.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MypyFlake8PylintRunTestsWithCoverage.py">
+    <Compile Include="MypyFlake8PylintThenRunTestsWithCoverage.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Process.py" />
