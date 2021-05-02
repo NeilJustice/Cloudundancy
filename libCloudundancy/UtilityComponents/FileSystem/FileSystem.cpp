@@ -78,7 +78,7 @@ shared_ptr<const vector<char>> FileSystem::ReadFileBytes(const fs::path& filePat
    const unique_ptr<vector<char>> fileBytesBuffer(_charVectorAllocator->NewCharVector(fileSizeInBytes));
    const size_t numberOfBytesRead = _call_fread(&(*fileBytesBuffer)[0], 1, fileSizeInBytes, readModeBinaryFileHandle);
    _asserter->ThrowIfSizeTsNotEqual(fileSizeInBytes, numberOfBytesRead,
-      "fread() in FileSystem::ReadBytes() unexpectedly did not return fileSizeInBytes");
+      "fread() in FileSystem::ReadFileBytes() unexpectedly did not return fileSizeInBytes");
    _fileOpenerCloser->CloseFile(readModeBinaryFileHandle);
    shared_ptr<const vector<char>> fileBytes = make_shared<vector<char>>(*fileBytesBuffer);
    return fileBytes;
