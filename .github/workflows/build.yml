@@ -34,13 +34,12 @@ jobs:
           PYTHONPATH: "."
       
       - name: Install ninja-build
-        run: sudo apt-get install ninja-build
+        run: sudo apt-get install ninja-build lcov
         
-      - name: Download ZenUnit.h
-        run: curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/ZenUnit.h"
-      
-      - name: Download MetalMock.h
-        run: curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/MetalMock.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/MetalMock.h"
+      - name: Download ZenUnit.h and MetalMock.h
+        run: |
+          curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/ZenUnit.h"
+          curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/MetalMock.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/MetalMock.h"
       
       - name: Run BuildAndInstallCPlusPlusProgram.py
         run: |
@@ -53,8 +52,22 @@ jobs:
         env:
           CXX: "/usr/bin/clang++"
           PYTHONPATH: CloudundancyPyUtils
-
+          
       - uses: codecov/codecov-action@v1
         with:
           files: CloudundancyPyUtils/CloudundancyPyUtilsTests/CoberturaCodeCoverageResults_CloudundancyPyUtilsTests.xml
           fail_ci_if_error: true
+
+  sonarcloud:
+    name: SonarCloud scan CloudundancyPyUtils
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: SonarCloud scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
