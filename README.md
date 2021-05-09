@@ -10,7 +10,7 @@ For example, in a Cloudundancy.ini file, destination folders can be configured t
 |----------|------------|
 |GitHub Actions Debug and Release build - ubuntu-latest Clang 10.0.0 / GCC 10.2.0|[![Cloudundancy](https://github.com/NeilJustice/Cloudundancy/actions/workflows/build.yml/badge.svg)](https://github.com/NeilJustice/Cloudundancy/actions/workflows/build.yml)|
 |AppVeyor Debug and Release build - Visual Studio 2019 x64|<a href="https://ci.appveyor.com/project/NeilJustice/Cloudundancy"><img src="https://ci.appveyor.com/api/projects/status/ygwr3rb9spwhy4u0?svg=true"/></a>|
-|Codecov.io code coverage for FileRevisor's C++ and CloudundancyDevOpsPython|[![codecov](https://codecov.io/gh/NeilJustice/Cloudundancy/branch/main/graph/badge.svg?token=ruXbRPB1CQ)](https://codecov.io/gh/NeilJustice/Cloudundancy)|
+|Codecov.io code coverage for Cloudundancy's C++ and CloudundancyDevOpsPython|[![codecov](https://codecov.io/gh/NeilJustice/Cloudundancy/branch/main/graph/badge.svg?token=ruXbRPB1CQ)](https://codecov.io/gh/NeilJustice/Cloudundancy)|
 |SonarCloud scan of CloudundancyDevOpsPython Python code|[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NeilJustice_Cloudundancy&metric=alert_status)](https://sonarcloud.io/dashboard?id=NeilJustice_Cloudundancy)|
 
 Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
