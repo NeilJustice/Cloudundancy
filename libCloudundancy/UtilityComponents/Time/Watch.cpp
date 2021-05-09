@@ -50,7 +50,7 @@ tm Watch::TMNow() const
    return *tmNow;
 #elif defined _WIN32
    const __time64_t nowTimeT = std::chrono::system_clock::to_time_t(nowTimePoint);
-   tm tmNow;
+   tm tmNow{};
    const errno_t localtimeResult = localtime_s(&tmNow, &nowTimeT);
    release_assert(localtimeResult == 0);
    return tmNow;
