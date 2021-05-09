@@ -45,7 +45,7 @@ add_library(libCloudundancy ${Sources})
 IfMSVCEnablePrecompiledHeaders()
 
 if(UNIX)
-   if(CodeCovMode)
+   if(LCovCodeCoverageMode)
      target_link_libraries(libCloudundancy CodeCovLibraryInterface)
    endif()
 endif()

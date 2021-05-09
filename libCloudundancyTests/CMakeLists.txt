@@ -87,7 +87,7 @@ IfMSVCEnablePrecompiledHeaders()
 IfMSVCAddRunTestsPostBuildStep()
 
 if(UNIX AND NOT APPLE)
-   if(CodeCovMode)
+   if(LCovCodeCoverageMode)
      target_link_libraries(libCloudundancyTests CodeCovLibraryInterface)
    endif()
 endif()
