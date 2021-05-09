@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CloudundancyPyUtils", "CloudundancyPyUtils\CloudundancyPyUtils.pyproj", "{7442C4B6-4D10-4AEA-A009-421F7252D55E}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CloudundancyDevOpsPython", "CloudundancyDevOpsPython\CloudundancyDevOpsPython.pyproj", "{7442C4B6-4D10-4AEA-A009-421F7252D55E}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CloudundancyPyUtilsTests", "CloudundancyPyUtilsTests\CloudundancyPyUtilsTests.pyproj", "{5BE2BD06-B3D6-4E12-9D37-CB82AA0EF9D3}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CloudundancyDevOpsPythonTests", "CloudundancyDevOpsPythonTests\CloudundancyDevOpsPythonTests.pyproj", "{5BE2BD06-B3D6-4E12-9D37-CB82AA0EF9D3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JenkinsJobs", "JenkinsJobs", "{88409A64-F6E8-4265-B8D3-C9DD53E33B7E}"
 EndProject
@@ -28,7 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Linux", "Linux", "{AC3A658D
 		..\JenkinsJobs\Linux\Cloudundancy-Release-ClangTidy.sh = ..\JenkinsJobs\Linux\Cloudundancy-Release-ClangTidy.sh
 		..\JenkinsJobs\Linux\Cloudundancy-Release-ClangUndefinedBehaviorSanitizer.sh = ..\JenkinsJobs\Linux\Cloudundancy-Release-ClangUndefinedBehaviorSanitizer.sh
 		..\JenkinsJobs\Linux\Cloudundancy-Release-GCC.sh = ..\JenkinsJobs\Linux\Cloudundancy-Release-GCC.sh
-		..\JenkinsJobs\Linux\CloudundancyPyUtils-Mypy-Flake8-Pylint-SonarQube.sh = ..\JenkinsJobs\Linux\CloudundancyPyUtils-Mypy-Flake8-Pylint-SonarQube.sh
+		..\JenkinsJobs\Linux\CloudundancyDevOpsPython-Mypy-Flake8-Pylint-SonarQube.sh = ..\JenkinsJobs\Linux\CloudundancyDevOpsPython-Mypy-Flake8-Pylint-SonarQube.sh
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows", "Windows", "{0585F101-B99D-49C2-B499-F420D66A6238}"
@@ -36,7 +36,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows", "Windows", "{0585
 		..\JenkinsJobs\Windows\Cloudundancy-Cppcheck.ps1 = ..\JenkinsJobs\Windows\Cloudundancy-Cppcheck.ps1
 		..\JenkinsJobs\Windows\Cloudundancy-Debug.ps1 = ..\JenkinsJobs\Windows\Cloudundancy-Debug.ps1
 		..\JenkinsJobs\Windows\Cloudundancy-Release.ps1 = ..\JenkinsJobs\Windows\Cloudundancy-Release.ps1
-		..\JenkinsJobs\Windows\CloudundancyPyUtils-Mypy-Flake8-Pylint-SonarQube.ps1 = ..\JenkinsJobs\Windows\CloudundancyPyUtils-Mypy-Flake8-Pylint-SonarQube.ps1
+		..\JenkinsJobs\Windows\CloudundancyDevOpsPython-Mypy-Flake8-Pylint-SonarQube.ps1 = ..\JenkinsJobs\Windows\CloudundancyDevOpsPython-Mypy-Flake8-Pylint-SonarQube.ps1
 	EndProjectSection
 EndProject
 Global

@@ -1,8 +1,8 @@
 import unittest
 from unittest.mock import call, patch
 import docopt
-from CloudundancyPyUtils import MypyFlake8PylintThenRunTestsWithCoverage, Process, Python
-from CloudundancyPyUtilsTests import Random, UnitTester
+from CloudundancyDevOpsPython import MypyFlake8PylintThenRunTestsWithCoverage, Process, Python
+from CloudundancyDevOpsPythonTests import Random, UnitTester
 
 testNames = [
 'test_docstring_ReturnsExpected',
@@ -19,10 +19,10 @@ Usage: MypyFlake8PylintThenRunTestsWithCoverage.py --run-tests-with-coverage-pyt
 MypyFlake8PylintThenRunTestsWithCoverage.__doc__)
 
    @patch('docopt.docopt', spec_set=True)
-   @patch('CloudundancyPyUtils.Python.run_mypy', spec_set=True)
-   @patch('CloudundancyPyUtils.Python.run_flake8', spec_set=True)
-   @patch('CloudundancyPyUtils.Python.run_pylint_on_all_files_in_parallel', spec_set=True)
-   @patch('CloudundancyPyUtils.Process.fail_fast_run', spec_set=True)
+   @patch('CloudundancyDevOpsPython.Python.run_mypy', spec_set=True)
+   @patch('CloudundancyDevOpsPython.Python.run_flake8', spec_set=True)
+   @patch('CloudundancyDevOpsPython.Python.run_pylint_on_all_files_in_parallel', spec_set=True)
+   @patch('CloudundancyDevOpsPython.Process.fail_fast_run', spec_set=True)
    @patch('builtins.print', spec_set=True)
    def test_main_RunsMypy_Flake8_Pylint_ThenRunTestsWithCoverage(self, printMock, _2, _3, _4, _5, _6):
       runTestsWithCoveragePythonFileName = Random.string()

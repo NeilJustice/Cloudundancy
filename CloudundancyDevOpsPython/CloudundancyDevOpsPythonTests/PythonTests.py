@@ -4,8 +4,8 @@ import platform
 import sys
 import unittest
 from unittest.mock import call, patch
-from CloudundancyPyUtils import Process, Python
-from CloudundancyPyUtilsTests import Random, UnitTester
+from CloudundancyDevOpsPython import Process, Python
+from CloudundancyDevOpsPythonTests import Random, UnitTester
 
 testNames = [
 'test_run_flake8_RunsFlake8WithFlake8Config',
@@ -20,7 +20,7 @@ class PythonTests(unittest.TestCase):
    ExpectedPylintCommand = 'pylint --rcfile=.pylintrc --score=n --init-hook=\"sys.path.append(\'.\')\" '
 
    @staticmethod
-   @patch('CloudundancyPyUtils.Process.fail_fast_run', spec_set=True)
+   @patch('CloudundancyDevOpsPython.Process.fail_fast_run', spec_set=True)
    def test_run_flake8_RunsFlake8WithFlake8Config(_1):
       #
       Python.run_flake8()
@@ -29,14 +29,14 @@ class PythonTests(unittest.TestCase):
       Process.fail_fast_run.assert_called_once_with(expectedFlake8Command)
 
    @staticmethod
-   @patch('CloudundancyPyUtils.Process.fail_fast_run', spec_set=True)
+   @patch('CloudundancyDevOpsPython.Process.fail_fast_run', spec_set=True)
    def test_run_mypy_RunsMypyDotWithIgnoreMissingImports(_1):
       #
       Python.run_mypy()
       #
       Process.fail_fast_run('mypy .')
 
-   @patch('CloudundancyPyUtils.Process.run_and_get_exit_code', spec_set=True)
+   @patch('CloudundancyDevOpsPython.Process.run_and_get_exit_code', spec_set=True)
    def test_run_pylint_on_file_CallsPylintOnAllPythonFilesInCurrentFolderAndSubFolders(self, _1):
       pylintExitCode = Random.integer()
       Process.run_and_get_exit_code.return_value = pylintExitCode
@@ -50,8 +50,8 @@ class PythonTests(unittest.TestCase):
    def test_run_pylint_on_all_files_in_parallel_LinuxCallsMapParallelPylintFileWithAllPyFilePaths_WindowsCallsMapSequential(self):
       @patch('glob.glob', spec_set=True)
       @patch('platform.system', spec_set=True)
-      @patch('CloudundancyPyUtils.Process.run_parallel_processpoolexecutor', spec_set=True)
-      @patch('CloudundancyPyUtils.Process.run_parallel_processthread', spec_set=True)
+      @patch('CloudundancyDevOpsPython.Process.run_parallel_processpoolexecutor', spec_set=True)
+      @patch('CloudundancyDevOpsPython.Process.run_parallel_processthread', spec_set=True)
       @patch('sys.exit', spec_set=True)
       def testcase(platformSystem, expectedMapParallel, allPylintProcessesSucceeded, expectSysExit1, _1, _2, _3, _4, _5):
          with self.subTest(f'{platformSystem, expectedMapParallel, allPylintProcessesSucceeded, expectSysExit1}'):
@@ -83,8 +83,8 @@ class PythonTests(unittest.TestCase):
 
    def test_run_all_with_coverage_RunsCoverage_RunsReport_RunsHtml_RunsXml_ExitsWithReportExitCode(self):
       @patch('os.getcwd', spec_set=True)
-      @patch('CloudundancyPyUtils.Process.fail_fast_run', spec_set=True)
-      @patch('CloudundancyPyUtils.Process.run_and_get_exit_code', spec_set=True)
+      @patch('CloudundancyDevOpsPython.Process.fail_fast_run', spec_set=True)
+      @patch('CloudundancyDevOpsPython.Process.run_and_get_exit_code', spec_set=True)
       @patch('sys.exit', spec_set=True)
       @patch('builtins.print', spec_set=True)
       def testcase(reportExitCode, expectedConcludingPrint, printMock, _2, _3, _4, _5):

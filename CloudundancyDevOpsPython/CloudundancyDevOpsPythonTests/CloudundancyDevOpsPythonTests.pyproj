@@ -10,8 +10,8 @@
     <SearchPath>..\</SearchPath>
     <WorkingDirectory>..</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>PyUtilsTests</Name>
-    <RootNamespace>PyUtilsTests</RootNamespace>
+    <Name>DevOpsPythonTests</Name>
+    <RootNamespace>DevOpsPythonTests</RootNamespace>
     <IsWindowsApplication>False</IsWindowsApplication>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <CommandLineArguments>

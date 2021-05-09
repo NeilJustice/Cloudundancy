@@ -7,8 +7,8 @@ import sys
 import subprocess
 import unittest
 from unittest.mock import patch, call
-from CloudundancyPyUtils import Process
-from CloudundancyPyUtilsTests import Random, UnitTester
+from CloudundancyDevOpsPython import Process
+from CloudundancyDevOpsPythonTests import Random, UnitTester
 
 testNames = [
 'test_append_args_AppendsSpaceThenArgsIfArgsNotEmpty',
@@ -75,7 +75,7 @@ class ProcessTests(unittest.TestCase):
       testcase('ExePath arg1 arg2', 'arg1 arg2')
 
    def test_fail_fast_run_CallsProcessAndGetExitCode_SysExitsWithExitCodeIfRunReturnsNonZero(self):
-      @patch('CloudundancyPyUtils.Process.run_and_get_exit_code', spec_set=True)
+      @patch('CloudundancyDevOpsPython.Process.run_and_get_exit_code', spec_set=True)
       @patch('builtins.print', spec_set=True)
       @patch('sys.exit', spec_set=True)
       def testcase(exitCode, expectPrintCommandFailedAndExit, _1, printMock, _3):
@@ -97,7 +97,7 @@ class ProcessTests(unittest.TestCase):
 
    @patch('shlex.split', spec_set=True)
    @patch('subprocess.run', spec_set=True)
-   @patch('CloudundancyPyUtils.Process.bytes_to_utf8', spec_set=True)
+   @patch('CloudundancyDevOpsPython.Process.bytes_to_utf8', spec_set=True)
    def test_run_SubprocessRunsProcessWithCheckEqualsFalse_ReturnsStdOutStdErr(self, _1, _2, _3):
       shlex.split.return_value = self.shlexedCommand
       args = [Random.string(), Random.string()]
@@ -121,7 +121,7 @@ class ProcessTests(unittest.TestCase):
 
    @patch('os.getcwd', spec_set=True)
    @patch('builtins.print', spec_set=True)
-   @patch('CloudundancyPyUtils.Process.cross_platform_subprocess_call', spec_set=True)
+   @patch('CloudundancyDevOpsPython.Process.cross_platform_subprocess_call', spec_set=True)
    def test_run_and_get_exit_code_RunsProcess_ReturnsExitCode(self, _1, printMock, _3):
       os.getcwd.return_value = self.currentWorkingDirectory
       subprocessReturnValue = Random.integer()
@@ -136,7 +136,7 @@ class ProcessTests(unittest.TestCase):
 
    @patch('os.getcwd', spec_set=True)
    @patch('builtins.print', spec_set=True)
-   @patch('CloudundancyPyUtils.Process.cross_platform_subprocess_call', spec_set=True)
+   @patch('CloudundancyDevOpsPython.Process.cross_platform_subprocess_call', spec_set=True)
    @patch('sys.exit', spec_set=True)
    def test_run_and_get_exit_code_RunsProcess_ProcessRaisesAnException_PrintsException_Exits1(self, _1, _2, printMock, _4):
       os.getcwd.return_value = self.currentWorkingDirectory

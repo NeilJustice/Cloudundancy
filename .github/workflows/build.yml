@@ -28,8 +28,8 @@ jobs:
         run: pip install --upgrade --upgrade-strategy eager -r dev-requirements.txt
         
       - name: mypy, flake8, pylint, then run all unit tests with coverage and pytest
-        run: python CloudundancyPyUtils/MypyFlake8PylintThenRunTestsWithCoverage.py --run-tests-with-coverage-python-file=CloudundancyPyUtilsTests/RunAllWithCoverage.py
-        working-directory: CloudundancyPyUtils
+        run: python CloudundancyDevOpsPython/MypyFlake8PylintThenRunTestsWithCoverage.py --run-tests-with-coverage-python-file=CloudundancyDevOpsPythonTests/RunAllWithCoverage.py
+        working-directory: CloudundancyDevOpsPython
         env:          
           PYTHONPATH: "."
       
@@ -43,7 +43,7 @@ jobs:
       
       - name: Run BuildAndInstallCPlusPlusProgram.py
         run: |
-           python CloudundancyPyUtils/CloudundancyPyUtils/BuildAndInstallCPlusPlusProgram.py \
+           python CloudundancyDevOpsPython/CloudundancyDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
               --solution-name=Cloudundancy \
               --cmake-generator=Ninja \
               --cmake-build-type=Release \
@@ -51,15 +51,15 @@ jobs:
               --no-install
         env:
           CXX: "/usr/bin/clang++"
-          PYTHONPATH: CloudundancyPyUtils
+          PYTHONPATH: CloudundancyDevOpsPython
           
       - uses: codecov/codecov-action@v1
         with:
-          files: CloudundancyPyUtils/CloudundancyPyUtilsTests/CoberturaCodeCoverageResults_CloudundancyPyUtilsTests.xml
+          files: CloudundancyDevOpsPython/CloudundancyDevOpsPythonTests/CoberturaCodeCoverageResults_CloudundancyDevOpsPythonTests.xml
           fail_ci_if_error: true
 
   sonarcloud:
-    name: SonarCloud scan CloudundancyPyUtils
+    name: SonarCloud scan CloudundancyDevOpsPython
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

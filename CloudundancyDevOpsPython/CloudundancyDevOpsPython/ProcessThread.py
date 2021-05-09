@@ -1,6 +1,6 @@
 import threading
 from typing import List
-from CloudundancyPyUtils import Process
+from CloudundancyDevOpsPython import Process
 
 class ProcessThread(threading.Thread): # pragma nocover
 

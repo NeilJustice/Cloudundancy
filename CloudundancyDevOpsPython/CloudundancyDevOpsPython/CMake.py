@@ -1,6 +1,6 @@
 import os
 import platform
-from CloudundancyPyUtils import Process
+from CloudundancyDevOpsPython import Process
 
 def generate(folderPath: str, generator: str, buildType: str, cmakeDefinitions: str, cmakeListsFolderPath: str) -> None:
    os.makedirs(folderPath, exist_ok=True)
