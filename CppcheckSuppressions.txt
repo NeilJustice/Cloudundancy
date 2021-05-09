@@ -11,5 +11,4 @@ preprocessorErrorDirective:/usr/include/c++/v1/__config:104
 # Windows
 *:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h
 *:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\MetalMock.h
-AssignmentAddressToInteger:libCloudundancy/UtilityComponents/Time/Watch.cpp:54
 
