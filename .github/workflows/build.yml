@@ -1,5 +1,4 @@
 name: Cloudundancy
-
 on: [push]
 
 jobs:
@@ -30,7 +29,6 @@ jobs:
 
       - name: Mypy, Flake8, Pylint, then run unit tests with coverage and pytest
         run: python CloudundancyDevOpsPython/MypyFlake8PylintThenRunTestsWithCoverage.py --run-tests-with-coverage-python-file=CloudundancyDevOpsPythonTests/RunAllWithCoverage.py
-        working-directory: CloudundancyDevOpsPython
         env:
           PYTHONPATH: "."
 
@@ -49,7 +47,7 @@ jobs:
 
       - name: Run BuildAndInstallCPlusPlusProgram.py in non code coverage mode if clang++ Debug/Release or g++-10 Debug
         run: |
-           python CloudundancyDevOpsPython/CloudundancyDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
+           python CloudundancyDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
               --solution-name=Cloudundancy \
               --cmake-generator=Ninja \
               --cmake-build-type="${{ matrix.cmake_build_type }}" \
@@ -58,12 +56,12 @@ jobs:
               --no-install
         env:
           CXX: "/usr/bin/${{ matrix.cxx }}"
-          PYTHONPATH: CloudundancyDevOpsPython
+          PYTHONPATH: "."
         if: ${{ matrix.cxx == 'clang++' || (matrix.cxx == 'g++-10' && matrix.cmake_build_type == 'Debug') }}
           
       - name: Run BuildAndInstallCPlusPlusProgram.py in code coverage mode if g++-10 Release
         run: |
-           python CloudundancyDevOpsPython/CloudundancyDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
+           python CloudundancyDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
               --solution-name=Cloudundancy \
               --cmake-generator=Ninja \
               --cmake-build-type="${{ matrix.cmake_build_type }}" \
@@ -72,7 +70,7 @@ jobs:
               --no-install
         env:
           CXX: "/usr/bin/${{ matrix.cxx }}"
-          PYTHONPATH: CloudundancyDevOpsPython
+          PYTHONPATH: "."
         if: ${{ matrix.cxx == 'g++-10' && matrix.cmake_build_type == 'Release' }}
 
       - name: Install and run lcov 1.15 then upload to Codecov.io if g++-10 Release
@@ -88,20 +86,12 @@ jobs:
 
       - uses: codecov/codecov-action@v1
         with:
-          files: CloudundancyDevOpsPython/CloudundancyDevOpsPythonTests/CoberturaCodeCoverageResults_CloudundancyDevOpsPythonTests.xml
+          files: CloudundancyDevOpsPythonTests/CoberturaCodeCoverageResults_CloudundancyDevOpsPythonTests.xml
           fail_ci_if_error: true
 
-  sonarcloud:
-    name: SonarCloud scan CloudundancyDevOpsPython
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - name: SonarCloud scan
+      - name: SonarCloud scan if Clang Debug
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}          
+        if: ${{ matrix.cxx == 'clang++' && matrix.cmake_build_type == 'Debug' }}

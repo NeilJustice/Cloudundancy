@@ -19,19 +19,31 @@
          "MIMode": "gdb",
          "miDebuggerPath": "/usr/bin/gdb",
          "preLaunchTask": "Build Debug"
+      },
+      {
+         "name": "Debug libCloudundancyTests",
+         "type": "cppdbg",
+         "request": "launch",
+         "program": "${workspaceRoot}/Debug/libCloudundancyTests/libCloudundancyTests",
+         "stopAtEntry": false,
+         "cwd": "${workspaceFolder}",
+         "environment": [],
+         "externalConsole": false,
+         "MIMode": "gdb",
+         "miDebuggerPath": "/usr/bin/gdb",
+         "preLaunchTask": "Build Debug"
+      },
+      {
+         "name": "Debug Python",
+         "type": "python",
+         "python": "/usr/bin/python",
+         "request": "launch",
+         "program": "${file}",
+         "args": [ "" ],
+         "env": { "PYTHONPATH": ".." },
+         "stopOnEntry": false,
+         "console": "integratedTerminal",
+         "cwd": "${fileDirname}"
       }
-      // {
-      //    "name": "Debug libCloudundancyTests",
-      //    "type": "cppdbg",
-      //    "request": "launch",
-      //    "program": "${workspaceRoot}/Debug/libCloudundancyTests/libCloudundancyTests",
-      //    "stopAtEntry": false,
-      //    "cwd": "${workspaceFolder}",
-      //    "environment": [],
-      //    "externalConsole": false,
-      //    "MIMode": "gdb",
-      //    "miDebuggerPath": "/usr/bin/gdb",
-      //    "preLaunchTask": "Build Debug"
-      // }
    ]
 }

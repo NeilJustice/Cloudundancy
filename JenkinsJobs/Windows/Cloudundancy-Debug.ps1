@@ -1,7 +1,7 @@
 Set-PSDebug -Trace 1
 
-$env:PYTHONPATH="CloudundancyDevOpsPython"
-python.exe -u CloudundancyDevOpsPython\CloudundancyDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
+$env:PYTHONPATH="."
+python.exe -u CloudundancyDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
    --solution-name=Cloudundancy `
    --cmake-generator="Visual Studio 16 2019" `
    --cmake-build-type=Debug `
