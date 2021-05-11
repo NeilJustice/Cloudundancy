@@ -2,7 +2,7 @@
 #include "libCloudundancy/ValueTypes/CloudundancyArgs.h"
 
 const string CloudundancyArgs::CommandLineUsage =
-R"(Cloudundancy v0.10.0 - Creates cloud-redundant and device-redundant file backups
+R"(Cloudundancy v0.11.0 - Creates cloud-redundant and device-redundant file backups
 https://github.com/NeilJustice/Cloudundancy
 
 Usage:

@@ -32,7 +32,7 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
 ## Cloudundancy command line usage
 
 ```
-Cloudundancy v0.10.0 - Creates cloud-redundant and device-redundant file backups
+Cloudundancy v0.11.0 - Creates cloud-redundant and device-redundant file backups
 https://github.com/NeilJustice/Cloudundancy
 
 Usage:
