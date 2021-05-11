@@ -23,15 +23,7 @@ jobs:
         with:
           path: ${{ env.pythonLocation }}
           key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
-
-      - name: Install pip packages
-        run: pip install --upgrade --upgrade-strategy eager -r dev-requirements.txt
-
-      - name: Mypy, Flake8, Pylint, then run unit tests with coverage and pytest
-        run: python CloudundancyDevOpsPython/MypyFlake8PylintThenRunTestsWithCoverage.py --run-tests-with-coverage-python-file=CloudundancyDevOpsPythonTests/RunAllWithCoverage.py
-        env:
-          PYTHONPATH: "."
-
+          
       - name: Install apt packages
         run: sudo apt-get install ninja-build
         
@@ -44,6 +36,22 @@ jobs:
 
       - name: Download MetalMock.h
         run: curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/MetalMock.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/MetalMock.h"
+
+      - name: Install pip packages
+        run: pip install --upgrade --upgrade-strategy eager -r dev-requirements.txt
+
+      - name: Mypy, Flake8, Pylint, then run unit tests with coverage and pytest if g++-10 Release
+        run: python CloudundancyDevOpsPython/MypyFlake8PylintThenRunTestsWithCoverage.py --run-tests-with-coverage-python-file=CloudundancyDevOpsPythonTests/RunAllWithCoverage.py
+        env:
+          PYTHONPATH: "."
+        if: ${{ matrix.cxx == 'g++-10' && matrix.cmake_build_type == 'Release' }}
+          
+      - name: Upload Python code coverage if g++-10 Release
+        uses: codecov/codecov-action@v1
+        with:
+          files: CloudundancyDevOpsPythonTests/CoberturaCodeCoverageResults_CloudundancyDevOpsPythonTests.xml
+          fail_ci_if_error: true
+        if: ${{ matrix.cxx == 'g++-10' && matrix.cmake_build_type == 'Release' }}
 
       - name: Run BuildAndInstallCPlusPlusProgram.py in non code coverage mode if clang++ Debug/Release or g++-10 Debug
         run: |
@@ -83,11 +91,6 @@ jobs:
           lcov_1_15/bin/lcov --list coverage.info
           bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
         if: ${{ matrix.cxx == 'g++-10' && matrix.cmake_build_type == 'Release' }}
-
-      - uses: codecov/codecov-action@v1
-        with:
-          files: CloudundancyDevOpsPythonTests/CoberturaCodeCoverageResults_CloudundancyDevOpsPythonTests.xml
-          fail_ci_if_error: true
 
       - name: SonarCloud scan if Clang Debug
         uses: SonarSource/sonarcloud-github-action@master
