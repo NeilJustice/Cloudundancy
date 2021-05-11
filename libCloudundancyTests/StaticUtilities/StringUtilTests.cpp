@@ -2,6 +2,8 @@
 #include "libCloudundancy/StaticUtilities/StringUtil.h"
 
 TESTS(StringTests)
+AFACT(ConcatStrings_ReturnsStringsConcatenatedIntoAString)
+AFACT(ConcatValues_ReturnsValuesConcatenatedIntoAString)
 FACTS(Contains_ReturnsTrueIfStringContainsSubstring)
 FACTS(CaseInsensitiveContains_ReturnsTrueIfStringCaseInsensitiveContainsSubstring)
 FACTS(ReplaceFirst_ReturnsReplacedString)
@@ -9,7 +11,6 @@ FACTS(RegexReplace_ReturnsRegexReplacedString)
 FACTS(StartsWith_ReturnsTrueIfStringStartsWithSubstring)
 FACTS(Split_ReturnsStringSplitOnCharacterSeparator)
 FACTS(TrimWhitespace_ReturnsStringWithLeadingAndTrailingSpacesAndTabsRemoved)
-AFACT(Concat_ConcatsValuesIntoString)
 EVIDENCE
 
 struct UserType
@@ -22,6 +23,32 @@ struct UserType
 		return os;
 	}
 };
+
+TEST(ConcatStrings_ReturnsStringsConcatenatedIntoAString)
+{
+   ARE_EQUAL("", String::ConcatStrings(""));
+	ARE_EQUAL("1", String::ConcatStrings("1"));
+	ARE_EQUAL("12", String::ConcatStrings("1", "2"));
+	ARE_EQUAL("123", String::ConcatStrings("1", "2", "3"));
+
+   const string str1 = "str1";
+   string_view str2 = "str2";
+   const char* const str3 = "str3";
+   ARE_EQUAL("str1str2str3", String::ConcatStrings(str1, str2, str3));
+}
+
+TEST(ConcatValues_ReturnsValuesConcatenatedIntoAString)
+{
+	ARE_EQUAL("", String::ConcatValues(""));
+	ARE_EQUAL("1", String::ConcatValues("1"));
+	ARE_EQUAL("12", String::ConcatValues("1", "2"));
+	ARE_EQUAL("123", String::ConcatValues("1", "2", "3"));
+
+   const UserType userType1(1);
+   const string str = "hello";
+   const UserType userType3(3);
+	ARE_EQUAL("1hello3", String::ConcatValues(userType1, str, userType3));
+}
 
 TEST3X3(Contains_ReturnsTrueIfStringContainsSubstring,
    bool expectedReturnValue, const string& str, const string& substring,
@@ -124,19 +151,6 @@ TEST2X2(TrimWhitespace_ReturnsStringWithLeadingAndTrailingSpacesAndTabsRemoved,
 {
 	const string strWithWhitespaceTrimmed = String::TrimWhitespace(str);
 	ARE_EQUAL(expectedReturnValue, strWithWhitespaceTrimmed);
-}
-
-TEST(Concat_ConcatsValuesIntoString)
-{
-	ARE_EQUAL("", String::Concat(""));
-	ARE_EQUAL("1", String::Concat("1"));
-	ARE_EQUAL("12", String::Concat("1", "2"));
-	ARE_EQUAL("123", String::Concat("1", "2", "3"));
-
-   const UserType userType1(1);
-   const string str = "hello";
-   const UserType userType3(3);
-	ARE_EQUAL("1hello3", String::Concat(userType1, str, userType3));
 }
 
 RUN_TESTS(StringTests)

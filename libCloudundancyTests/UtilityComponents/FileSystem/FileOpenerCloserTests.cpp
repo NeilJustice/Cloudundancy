@@ -170,7 +170,7 @@ TEST(CloseFile_CallsFCloseOnFileHandleWhichReturnsNon0_ThrowsRuntimeError)
 
    FILE fileHandle{};
    //
-   const string expectedExceptionMessage = String::Concat("fclose(FILE*) unexpectedly returned ", non0FCloseReturnValue,
+   const string expectedExceptionMessage = String::ConcatValues("fclose(FILE*) unexpectedly returned ", non0FCloseReturnValue,
       ". errno=", errnoWithDescription.first, " (", errnoWithDescription.second, ")");
    THROWS_EXCEPTION(_fileOpenerCloser.CloseFile(&fileHandle),
       runtime_error, expectedExceptionMessage);
@@ -186,7 +186,7 @@ TEST(ThrowFileOpenExceptionIfFileOpenFailed_FileHandleIsNullptr_ThrowsFileOpenEx
    const pair<int, string> errnoWithDescription = _errorCodeTranslatorMock->GetErrnoWithDescriptionMock.ReturnRandom();
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
-   const string expectedExceptionMessage = String::Concat("fopen() returned nullptr. filePath=\"",
+   const string expectedExceptionMessage = String::ConcatValues("fopen() returned nullptr. filePath=\"",
       filePath.string(), "\". errno=", errnoWithDescription.first, " (", errnoWithDescription.second, ")");
    THROWS_EXCEPTION(_fileOpenerCloser.ThrowFileOpenExceptionIfFileOpenFailed(nullptr, filePath),
       runtime_error, expectedExceptionMessage);

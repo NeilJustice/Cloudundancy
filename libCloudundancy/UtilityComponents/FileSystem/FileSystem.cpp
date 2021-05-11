@@ -220,7 +220,7 @@ void FileSystem::DeleteFolderExceptForFile(const fs::path& folderPath, string_vi
    _recursiveDirectoryIterator->SetFileSubpathsToIgnore(fileSubpathsToNotIterate);
    _recursiveDirectoryIterator->InitializeIteratorAtFolderPath(folderPath);
    _recursiveDirectoryIterator->RecursivelyDeleteAllFilesExceptIgnoredFileSubpaths();
-   const string deletedFolderMessage = String::Concat(
+   const string deletedFolderMessage = String::ConcatStrings(
       "[Cloudundancy] Deleted folder ", folderPath.string(), " except for ", exceptFileName);
    _console->WriteLine(deletedFolderMessage);
 }

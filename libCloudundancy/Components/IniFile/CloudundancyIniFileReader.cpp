@@ -83,7 +83,7 @@ CloudundancyIniCopyInstruction CloudundancyIniFileReader::ParseFileCopyInstructi
    const vector<string> pipeSplitLine = String::Split(pipeReplacedLine, '|');
    if (pipeSplitLine.size() != 2)
    {
-      const string exceptionMessage = String::Concat("Cloudundancy .ini file line does not contain required substring \" -> \"");
+      const string exceptionMessage = "Cloudundancy .ini file line does not contain required substring \" -> \"";
       throw FileSystemException(FileSystemExceptionType::MalformedFile,
          fileCopyInstructionLine.filePath, fileCopyInstructionLine.lineNumber, exceptionMessage);
    }

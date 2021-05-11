@@ -7,7 +7,7 @@ string Type::GetExceptionClassNameAndMessage(const exception* ex)
 {
    const string* exceptionTypeName = Type::GetName(*ex);
    const string exceptionMessage = ex->what();
-   string exceptionClassNameAndMessage = String::Concat(*exceptionTypeName, ": ", exceptionMessage);
+   string exceptionClassNameAndMessage = String::ConcatStrings(*exceptionTypeName, ": ", exceptionMessage);
    return exceptionClassNameAndMessage;
 }
 

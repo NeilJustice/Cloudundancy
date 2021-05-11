@@ -128,7 +128,7 @@ TEST1X1(ParseFileCopyInstructionLine_LineDoesNotContainSpaceArrowSpace_OrLineCon
    filePathLineNumberLineText.lineNumber = ZenUnit::Random<size_t>();
    filePathLineNumberLineText.lineText = lineText;
    //
-   const string exceptionMessage = String::Concat("Cloudundancy .ini file line does not contain required substring \" -> \"");
+   const string exceptionMessage = "Cloudundancy .ini file line does not contain required substring \" -> \"";
    FileSystemException expectedFileSystemException(FileSystemExceptionType::MalformedFile,
       filePathLineNumberLineText.filePath, filePathLineNumberLineText.lineNumber, exceptionMessage);
    const string expectedExceptionMessage = expectedFileSystemException.what();

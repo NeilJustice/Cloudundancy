@@ -575,7 +575,7 @@ TEST(DeleteFolderExceptForFile_FolderExists_InitializedRecursiveDirectoryIterato
    METALMOCK(_recursiveDirectoryIteratorMock->InitializeIteratorAtFolderPathMock.CalledOnceWith(folderPath));
    METALMOCK(_recursiveDirectoryIteratorMock->RecursivelyDeleteAllFilesExceptIgnoredFileSubpathsMock.CalledOnce());
    _recursiveDirectoryIteratorMock->InitializeIteratorAtFolderPathMock.Expect();
-   const string expectedDeletedFolderMessage = String::Concat(
+   const string expectedDeletedFolderMessage = String::ConcatStrings(
       "[Cloudundancy] Deleted folder ", folderPath.string(), " except for ", exceptFileName);
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedDeletedFolderMessage));
 }

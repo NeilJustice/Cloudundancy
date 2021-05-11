@@ -48,31 +48,29 @@ void SevenZipSubProgram::CopyFilesAndFoldersToBackupStagingFolder(const Cloudund
 
 void SevenZipSubProgram::DeleteBackupStagingFolder(const CloudundancyArgs& args) const
 {
-   const string deletingMessage = String::Concat("[Cloudundancy] Deleting ", args.sevenZipStagingFolderPath.string());
+   const string deletingMessage = String::ConcatStrings("[Cloudundancy] Deleting ", args.sevenZipStagingFolderPath.string());
    _console->WriteLine(deletingMessage);
    _stopwatch->Start();
 
    _fileSystem->DeleteFolderExceptForFile(args.sevenZipStagingFolderPath, "Cloudundancy.log");
 
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
-   const string deletedMessage = String::Concat(
+   const string deletedMessage = String::ConcatStrings(
       "[Cloudundancy] Deleted ", args.sevenZipStagingFolderPath.string(), " in ", elapsedSeconds, " seconds\n");
    _console->WriteLine(deletedMessage);
 }
 
 void SevenZipSubProgram::SevenZipBackupStagingFolder(const CloudundancyArgs& args) const
 {
-   const string sevenZippingMessage = String::Concat(
-      "\n[Cloudundancy] 7-zipping ", args.sevenZipStagingFolderPath.string(), "...");
+   const string sevenZippingMessage = String::ConcatStrings("\n[Cloudundancy] 7-zipping ", args.sevenZipStagingFolderPath.string(), "...");
    _console->WriteLineColor(sevenZippingMessage, Color::Teal);
    _stopwatch->Start();
    _fileSystem->SetCurrentPath(args.sevenZipStagingFolderPath);
    const string dateTimeNowForFileNames = _watch->DateTimeNowForFileNames();
-   const string sevenZipCommandLineArguments = String::Concat(
-      "a 7ZipFile/CloudundancyBackup_", dateTimeNowForFileNames, ".7z -r -mx9");
+   const string sevenZipCommandLineArguments = String::ConcatStrings("a 7ZipFile/CloudundancyBackup_", dateTimeNowForFileNames, ".7z -r -mx9");
    _processRunner->FailFastRun("7z", sevenZipCommandLineArguments, true);
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
-   const string sevenZippedMessage = String::Concat(
+   const string sevenZippedMessage = String::ConcatStrings(
       "[Cloudundancy] 7-zipped ", args.sevenZipStagingFolderPath.string(), " in ", elapsedSeconds, " seconds\n");
    _console->WriteLineColor(sevenZippedMessage, Color::Green);
 }

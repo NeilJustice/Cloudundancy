@@ -16,7 +16,7 @@ TEST(TwoArgConstructor_MakesWhatFunctionReturnExpectedExceptionMessage)
    const FileSystemException fileSystemException(fileSystemExceptionType, filePath);
    const char* const fullExceptionMessage = fileSystemException.what();
    //
-   const string expectedFullExceptionMessage = String::Concat(
+   const string expectedFullExceptionMessage = String::ConcatStrings(
       ENUM_TO_STRING(FileSystemExceptionType, fileSystemExceptionType), ": ", filePath.string());
    ARE_EQUAL(expectedFullExceptionMessage, fullExceptionMessage);
 }
@@ -33,7 +33,7 @@ TEST(ThreeArgConstructor_MakesWhatFunctionReturnExpectedExceptionMessage)
       exceptionMessage);
    const char* const fullExceptionMessage = fileSystemException.what();
    //
-   const string expectedFullExceptionMessage = String::Concat(
+   const string expectedFullExceptionMessage = String::ConcatStrings(
       ENUM_TO_STRING(FileSystemExceptionType, fileSystemExceptionType), ": ", filePath.string(), ": ", exceptionMessage);
    ARE_EQUAL(expectedFullExceptionMessage, fullExceptionMessage);
 }
@@ -52,7 +52,7 @@ TEST(FourArgConstructor_MakesWhatFunctionReturnExpectedExceptionMessage)
       exceptionMessage);
    const char* const fullExceptionMessage = fileSystemException.what();
    //
-   const string expectedFullExceptionMessage = String::Concat(
+   const string expectedFullExceptionMessage = String::ConcatValues(
       ENUM_TO_STRING(FileSystemExceptionType, fileSystemExceptionType),
       " at ", filePath.string(), " line ", lineNumber, ": ", exceptionMessage);
    ARE_EQUAL(expectedFullExceptionMessage, fullExceptionMessage);

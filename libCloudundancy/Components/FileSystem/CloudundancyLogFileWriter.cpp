@@ -16,7 +16,7 @@ CloudundancyLogFileWriter::~CloudundancyLogFileWriter()
 void CloudundancyLogFileWriter::AppendTextToCloudundancyLogFileInFolder(const fs::path& folderPath, string_view text) const
 {
    const string dateTimeNow = _watch->DateTimeNow();
-   const string timestampedBackupStartedMessage = String::Concat(dateTimeNow, '|', text, '\n');
+   const string timestampedBackupStartedMessage = String::ConcatStrings(dateTimeNow, "|", text, "\n");
    const fs::path cloudundancyLogFilePath = folderPath / "Cloudundancy.log";
    _fileSystem->AppendText(cloudundancyLogFilePath, timestampedBackupStartedMessage);
 }

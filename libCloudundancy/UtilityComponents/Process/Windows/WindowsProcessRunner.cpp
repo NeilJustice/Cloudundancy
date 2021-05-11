@@ -25,8 +25,8 @@ ProcessResult WindowsProcessRunner::Run(string_view processName, string_view arg
    const BOOL createPipeSucceeded = CreatePipe(&stdOutReadHandle, &stdOutWriteHandle, &securityAttrs, 0);
    if (!createPipeSucceeded)
    {
-      const string exitMessage = String::Concat(
-         "[Cloudundancy] Error: WindowsProcessRunner::Run(processName, arguments) failed because CreatePipe(&stdOutReadHandle, &stdOutWriteHandle, &securityAttrs, 0) returned FALSE", '\n',
+      const string exitMessage = String::ConcatStrings(
+         "[Cloudundancy] Error: WindowsProcessRunner::Run(processName, arguments) failed because CreatePipe(&stdOutReadHandle, &stdOutWriteHandle, &securityAttrs, 0) returned FALSE\n",
          "[Cloudundancy] ExitCode: 1");
       _console->WriteLineAndExit(exitMessage, 1);
    }
@@ -53,7 +53,7 @@ ProcessResult WindowsProcessRunner::Run(string_view processName, string_view arg
    if (!createProcessSucceeded)
    {
       const DWORD lastError = GetLastError();
-      const string exitMessage = String::Concat(
+      const string exitMessage = String::ConcatValues(
          "[Cloudundancy] Error: WindowsProcessRunner::Run(processName, arguments) failed because CreateProcessA(nullptr, commandLineChars.get(), nullptr, nullptr, TRUE, CREATE_NO_WINDOW, nullptr, nullptr, &startupInfo, &processInformation) returned FALSE. GetLastError()=", lastError, '\n',
          "[Cloudundancy] ExitCode: 1");
       _console->WriteLineAndExit(exitMessage, 1);
@@ -63,7 +63,7 @@ ProcessResult WindowsProcessRunner::Run(string_view processName, string_view arg
    if (processWaitResult != 0)
    {
       const DWORD lastError = GetLastError();
-      const string exitMessage = String::Concat(
+      const string exitMessage = String::ConcatValues(
          "[Cloudundancy] Error: WindowsProcessRunner::Run(processName, arguments) failed because WaitForSingleObject(processInformation.hProcess, INFINITE) failed. GetLastError()=", lastError, '\n',
          "[Cloudundancy] ExitCode: 1");
       _console->WriteLineAndExit(exitMessage, 1);
@@ -99,14 +99,14 @@ ProcessResult WindowsProcessRunner::Run(string_view processName, string_view arg
 
 ProcessResult WindowsProcessRunner::FailFastRun(string_view processName, string_view arguments, bool doPrintStandardOutput) const
 {
-   const string runningMessage = String::Concat("[Cloudundancy] Running program: ", processName, ' ', arguments);
+   const string runningMessage = String::ConcatStrings("[Cloudundancy] Running program: ", processName, " ", arguments);
    _console->WriteLineColor(runningMessage, Color::Yellow);
    const ProcessResult processResult = _caller_Run->CallConstMemberFunction(
       &WindowsProcessRunner::Run, this, processName, arguments);
    _console->WriteLineIf(doPrintStandardOutput, processResult.standardOutputAndError);
    if (processResult.exitCode != 0)
    {
-      const string processFailedErrorMessage = String::Concat(
+      const string processFailedErrorMessage = String::ConcatValues(
          "Process \"", processName, ' ', arguments, "\" failed with exit code ", processResult.exitCode, '.');
       _console->WriteLineAndExit(processFailedErrorMessage, processResult.exitCode);
    }

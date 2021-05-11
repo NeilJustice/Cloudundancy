@@ -37,7 +37,7 @@ TEST(AppendTimestampedTextToCloudundancyLogFileInDestinationFolder_AppendsTimest
    //
    METALMOCK(_watchMock->DateTimeNowMock.CalledOnce());
    const fs::path expectedCloudundancyLogFilePath = folderPath / "Cloudundancy.log";
-   const string expectedTimestampedBackupStartedMessage = String::Concat(dateTimeNow, '|', text, '\n');
+   const string expectedTimestampedBackupStartedMessage = String::ConcatStrings(dateTimeNow, "|", text, "\n");
    METALMOCK(_fileSystemMock->AppendTextMock.CalledOnceWith(
       expectedCloudundancyLogFilePath, expectedTimestampedBackupStartedMessage));
 }

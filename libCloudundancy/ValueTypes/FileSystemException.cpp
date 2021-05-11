@@ -3,21 +3,21 @@
 
 FileSystemException::FileSystemException(
    FileSystemExceptionType fileSystemExceptionType, const fs::path& filePath)
-   : _exceptionMessage(String::Concat(
+   : _exceptionMessage(String::ConcatStrings(
       ENUM_TO_STRING(FileSystemExceptionType, fileSystemExceptionType), ": ", filePath.string()))
 {
 }
 
 FileSystemException::FileSystemException(
    FileSystemExceptionType fileSystemExceptionType, const fs::path& filePath, string_view exceptionMessage)
-   : _exceptionMessage(String::Concat(
+   : _exceptionMessage(String::ConcatStrings(
       ENUM_TO_STRING(FileSystemExceptionType, fileSystemExceptionType), ": ", filePath.string(), ": ", exceptionMessage))
 {
 }
 
 FileSystemException::FileSystemException(
    FileSystemExceptionType fileSystemExceptionType, const fs::path& filePath, size_t lineNumber, string_view exceptionMessage)
-   : _exceptionMessage(String::Concat(
+   : _exceptionMessage(String::ConcatValues(
       ENUM_TO_STRING(FileSystemExceptionType, fileSystemExceptionType), " at ", filePath.string(), " line ", lineNumber, ": ", exceptionMessage))
 {
 }

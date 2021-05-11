@@ -84,8 +84,8 @@ TEST(DeleteBackupStagingFolder_PrintsDeleting_DeletesBackupStagingFolder_PrintsD
    METALMOCK(_fileSystemMock->DeleteFolderExceptForFileMock.CalledOnceWith(args.sevenZipStagingFolderPath, "Cloudundancy.log"));
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
-   const string expectedDeletingMessage = String::Concat("[Cloudundancy] Deleting ", args.sevenZipStagingFolderPath.string());
-   const string expectedDeletedMessage = String::Concat(
+   const string expectedDeletingMessage = String::ConcatStrings("[Cloudundancy] Deleting ", args.sevenZipStagingFolderPath.string());
+   const string expectedDeletedMessage = String::ConcatStrings(
       "[Cloudundancy] Deleted ", args.sevenZipStagingFolderPath.string(), " in ", elapsedSeconds, " seconds\n");
    METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
@@ -125,13 +125,11 @@ TEST(SevenZipBackupStagingFolder_Writes7ZipFileToFolder7ZipFileBackslashCloudund
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    METALMOCK(_fileSystemMock->SetCurrentPathMock.CalledOnceWith(args.sevenZipStagingFolderPath));
    METALMOCK(_watchMock->DateTimeNowForFileNamesMock.CalledOnce());
-   const string expectedSevenZipCommandLineArguments = String::Concat(
-      "a 7ZipFile/CloudundancyBackup_", dateTimeNowForFileNames, ".7z -r -mx9");
+   const string expectedSevenZipCommandLineArguments = String::ConcatStrings("a 7ZipFile/CloudundancyBackup_", dateTimeNowForFileNames, ".7z -r -mx9");
    METALMOCK(_processRunnerMock->FailFastRunMock.CalledOnceWith("7z", expectedSevenZipCommandLineArguments, true));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
-   const string expectedSevenZippingMessage =
-      String::Concat("\n[Cloudundancy] 7-zipping ", args.sevenZipStagingFolderPath.string(), "...");
-   const string expectedSevenZippedMessage = String::Concat(
+   const string expectedSevenZippingMessage = String::ConcatStrings("\n[Cloudundancy] 7-zipping ", args.sevenZipStagingFolderPath.string(), "...");
+   const string expectedSevenZippedMessage = String::ConcatStrings(
       "[Cloudundancy] 7-zipped ", args.sevenZipStagingFolderPath.string(), " in ", elapsedSeconds, " seconds\n");
    METALMOCK(_consoleMock->WriteLineColorMock.CalledAsFollows(
    {
