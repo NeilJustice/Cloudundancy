@@ -36,7 +36,7 @@ ProcessResult LinuxProcessRunner::Run(string_view processName, string_view argum
    {
       const int errnoValue = errno;
       const char* const readableErrno = strerror(errnoValue);
-      const string exceptionMessage = String::Concat(
+      const string exceptionMessage = String::ConcatValues(
          "Error: 'posix_spawnp(&pid, processName.data(), nullptr, nullptr, argv.get(), nullptr)' returned non-0: ", posixSpawnpReturnValue,
          ". errno=", errnoValue, " (", readableErrno, ")");
       throw runtime_error(exceptionMessage);
@@ -47,7 +47,7 @@ ProcessResult LinuxProcessRunner::Run(string_view processName, string_view argum
 	{
       const int errnoValue = errno;
       const char* const readableErrno = strerror(errnoValue);
-      const string exceptionMessage = String::Concat(
+      const string exceptionMessage = String::ConcatValues(
          "Error: 'waitpid(pid, &waitPidStatus, 0)' unexpectedly returned ", waitpidReturnValue,
          " which is not equal to pid ", pid, ". errno=", errnoValue, " strerror(errno)=", readableErrno);
       throw runtime_error(exceptionMessage);
@@ -63,20 +63,20 @@ ProcessResult LinuxProcessRunner::Run(string_view processName, string_view argum
    }
    const int errnoValue = errno;
    const char* const readableErrno = strerror(errnoValue);
-   const string exceptionMessage = String::Concat(
+   const string exceptionMessage = String::ConcatValues(
       "Error: 'WIFEXITED(waitPidStatus) did not return 1: ", wifexitedReturnValue, ". errno=", errnoValue, " (", readableErrno, ")");
    throw runtime_error(exceptionMessage);
 }
 
 ProcessResult LinuxProcessRunner::FailFastRun(string_view processName, string_view arguments, bool /*doPrintStandardOutput*/) const
 {
-   const string runningMessage = String::Concat("[Cloudundancy] Running program: ", processName, ' ', arguments);
+   const string runningMessage = String::ConcatStrings("[Cloudundancy] Running program: ", processName, " ", arguments);
    _console->WriteLineColor(runningMessage, Color::Yellow);
    ProcessResult processResult = _caller_Run->CallConstMemberFunction(
       &LinuxProcessRunner::Run, this, processName, arguments);
    if (processResult.exitCode != 0)
    {
-      const string processFailedErrorMessage = String::Concat(
+      const string processFailedErrorMessage = String::ConcatValues(
          "Process \"", processName, ' ', arguments, "\" failed with exit code ", processResult.exitCode, '.');
       _console->WriteLineAndExit(processFailedErrorMessage, processResult.exitCode);
    }

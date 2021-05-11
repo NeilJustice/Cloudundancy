@@ -56,7 +56,7 @@ TEST(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
    //
    const ProcessResult processResult = _linuxProcessRunner.FailFastRun(processName, arguments, ZenUnit::Random<bool>());
    //
-   const string expectedRunningProgramMessage = String::Concat("[Cloudundancy] Running program: ", processName, ' ', arguments);
+   const string expectedRunningProgramMessage = String::ConcatStrings("[Cloudundancy] Running program: ", processName, " ", arguments);
    METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedRunningProgramMessage, Color::Yellow));
    METALMOCK(_caller_RunMock->CallConstMemberFunctionMock.CalledOnceWith(
       &LinuxProcessRunner::Run, &_linuxProcessRunner, processName, arguments));
@@ -79,9 +79,9 @@ TEST(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessageAndExitsProgramWithPro
    //
    METALMOCK(_caller_RunMock->CallConstMemberFunctionMock.CalledOnceWith(
       &LinuxProcessRunner::Run, &_linuxProcessRunner, processName, arguments));
-   const string expectedRunningProgramMessage = String::Concat("[Cloudundancy] Running program: ", processName, ' ', arguments);
+   const string expectedRunningProgramMessage = String::ConcatStrings("[Cloudundancy] Running program: ", processName, " ", arguments);
    METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedRunningProgramMessage, Color::Yellow));
-   const string expectedProcessFailedErrorMessage = String::Concat(
+   const string expectedProcessFailedErrorMessage = String::ConcatValues(
       "Process \"", processName, " ", arguments, "\" failed with exit code ", processResult.exitCode, '.');
    METALMOCK(_consoleMock->WriteLineAndExitMock.CalledOnceWith(expectedProcessFailedErrorMessage, runReturnValue.exitCode));
    ARE_EQUAL(runReturnValue, processResult);
