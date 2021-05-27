@@ -1,5 +1,5 @@
 #pragma once
-#include "libCloudundancy/Compiler/IfWindowsIgnoreTheseWallWarnings.h"
+#include "libCloudundancy/Compiler/IfWindowsIgnoreTheseWarningsGlobally.h"
 
 #ifdef _WIN32
 #pragma warning(push)
