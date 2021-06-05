@@ -23,6 +23,7 @@ cppcheck.exe `
    .
 if ($LastExitCode -eq 1)
 {
+   Get-Content cppcheck_results.txt
    Write-Host "Cppcheck failed with exit code 1"
    exit 1
 }
