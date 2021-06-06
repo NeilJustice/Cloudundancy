@@ -27,7 +27,6 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
 * [Windows Jenkins jobs which build and Cppcheck Cloudundancy's C++ code and Mypy-Flake8-Pylint-SonarQube scan Cloudundancy's CI/CD Python code](#windows-jenkins-jobs-which-build-and-cppcheck-cloudundancys-c-code-and-mypy-flake8-pylint-sonarqube-scan-cloudundancys-cicd-python-code)
 * [How to build binary cloudundancy on Linux with Clang](#how-to-build-binary-cloudundancy-on-linux-with-clang)
 * [How to build executable Cloudundancy.exe on Windows with Visual Studio 2019](#how-to-build-executable-cloudundancyexe-on-windows-with-visual-studio-2019)
-* [Cloudundancy roadmap](#cloudundancy-roadmap)
 
 ## Cloudundancy command line usage
 
@@ -304,11 +303,3 @@ cmake --build . --config Release --target install
 Resulting executable `C:\bin\Cloudundancy.exe`:
 
 ![Cloudundancy.exe on Windows](Screenshots/CloudundancyDotExe.png)
-
-## Cloudundancy roadmap
-
-|Future Cloudundancy feature|Implementation Status As Of 4/18/2021|
-|---------------------------|-------------------------------------|
-|GitHub Actions build|In progress|
-|SonarCloud badge for CloudundancyDevOpsPython Python code|Awaiting implementation|
-|SonarCloud badge for Cloudundancy C++ code|Awaiting implementation|
