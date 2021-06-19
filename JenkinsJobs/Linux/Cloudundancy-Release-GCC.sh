@@ -8,4 +8,5 @@ python -u CloudundancyDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
    --cmake-generator=Ninja \
    --cmake-build-type=Release \
    --tests-project=libCloudundancyTests \
+   --cmake-definitions="-DFastLinuxReleaseBuildMode=ON" \
    --no-install

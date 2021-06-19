@@ -8,5 +8,5 @@ python -u CloudundancyDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
    --cmake-generator=Ninja \
    --cmake-build-type=Release \
    --tests-project-name=libCloudundancyTests \
-   --cmake-definitions="-DClangAddressSanitizerMode=ON" \
+   --cmake-definitions="-DClangAddressSanitizerMode=ON -DFastLinuxReleaseBuildMode=ON" \
    --no-install
