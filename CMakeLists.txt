@@ -3,7 +3,7 @@ project(Cloudundancy)
 include(${CMAKE_SOURCE_DIR}/CMakeMacros.cmake)
 
 if(UNIX)
-   set(CMAKE_CXX_FLAGS "-std=c++2a -Wall -Wextra -pedantic -Werror -pthread -Wno-gnu-zero-variadic-macro-arguments")
+   set(CMAKE_CXX_FLAGS "-std=c++2a -Wall -Wextra -pedantic -Werror -pthread -Wno-gnu-zero-variadic-macro-arguments -Wno-unused-variable")
    if(FastLinuxDebugBuildMode)
       replace(CMAKE_CXX_FLAGS_DEBUG "-g" "")
       message("FastLinuxDebugBuildMode enabled: -g removed")
