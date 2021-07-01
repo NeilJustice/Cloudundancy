@@ -5,8 +5,10 @@ jobs:
   build:
     strategy:
       matrix:
-         cmake_build_type: [Debug, Release]
-         cxx: [clang++, g++-10]
+         cmake_build_type: [Release]
+         cxx: [g++-10]
+         # cmake_build_type: [Debug, Release]
+         # cxx: [clang++, g++-10]
 
     runs-on: ubuntu-latest
 
@@ -23,10 +25,10 @@ jobs:
         with:
           path: ${{ env.pythonLocation }}
           key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
-          
+
       - name: Install apt packages
         run: sudo apt-get install ninja-build
-        
+
       - name: Install lcov if g++-10 Release
         run: sudo apt-get install lcov
         if: ${{ matrix.cxx == 'g++-10' && matrix.cmake_build_type == 'Release' }}
@@ -45,7 +47,7 @@ jobs:
         env:
           PYTHONPATH: "."
         if: ${{ matrix.cxx == 'g++-10' && matrix.cmake_build_type == 'Release' }}
-          
+
       - name: Upload Python code coverage if g++-10 Release
         uses: codecov/codecov-action@v1
         with:
@@ -66,7 +68,7 @@ jobs:
           CXX: "/usr/bin/${{ matrix.cxx }}"
           PYTHONPATH: "."
         if: ${{ matrix.cxx == 'clang++' || (matrix.cxx == 'g++-10' && matrix.cmake_build_type == 'Debug') }}
-          
+
       - name: Run BuildAndInstallCPlusPlusProgram.py in code coverage mode if g++-10 Release
         run: |
            python CloudundancyDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
@@ -96,5 +98,5 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}          
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         if: ${{ matrix.cxx == 'g++-10' && matrix.cmake_build_type == 'Release' }}
