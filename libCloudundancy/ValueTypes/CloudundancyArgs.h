@@ -13,9 +13,11 @@ struct CloudundancyArgs
 };
 
 #ifdef _WIN32
-   #ifdef _DEBUG
-      static_assert(sizeof(CloudundancyArgs) == 176);
-   #else
-      static_assert(sizeof(CloudundancyArgs) == 144);
-   #endif
+#ifdef _DEBUG
+static_assert(sizeof(CloudundancyArgs) == 176);
+#else
+static_assert(sizeof(CloudundancyArgs) == 144);
+#endif
+#else
+static_assert(sizeof(CloudundancyArgs) == 176);
 #endif

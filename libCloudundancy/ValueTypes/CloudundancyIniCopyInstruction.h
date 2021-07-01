@@ -7,9 +7,11 @@ struct CloudundancyIniCopyInstruction
 };
 
 #ifdef _WIN32
-   #ifdef _DEBUG
-      static_assert(sizeof(CloudundancyIniCopyInstruction) == 80);
-   #else
-      static_assert(sizeof(CloudundancyIniCopyInstruction) == 64);
-   #endif
+#ifdef _DEBUG
+static_assert(sizeof(CloudundancyIniCopyInstruction) == 80);
+#else
+static_assert(sizeof(CloudundancyIniCopyInstruction) == 64);
+#endif
+#else
+static_assert(sizeof(CloudundancyIniCopyInstruction) == 80);
 #endif

@@ -9,9 +9,11 @@ struct CloudundancyIni
 };
 
 #ifdef _WIN32
-   #ifdef _DEBUG
-      static_assert(sizeof(CloudundancyIni) == 128);
-   #else
-      static_assert(sizeof(CloudundancyIni) == 96);
-   #endif
+#ifdef _DEBUG
+static_assert(sizeof(CloudundancyIni) == 128);
+#else
+static_assert(sizeof(CloudundancyIni) == 96);
+#endif
+#else
+static_assert(sizeof(CloudundancyIni) == 96);
 #endif
