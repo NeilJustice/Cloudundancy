@@ -18,6 +18,7 @@ using namespace std;
 #include "ZenUnitAndMetalMock/MetalMock.h"
 
 // libCloudundancy Enums
+#include "libCloudundancy/Enums/ENUM_STRING_ARRAY.h"
 #include "libCloudundancy/Enums/Color.h"
 #include "libCloudundancy/Enums/FileSystemExceptionType.h"
 #include "libCloudundancy/Enums/ProgramMode.h"

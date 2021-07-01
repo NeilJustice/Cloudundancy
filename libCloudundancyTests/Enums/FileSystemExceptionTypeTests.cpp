@@ -1,46 +1,25 @@
 #include "pch.h"
 
 TESTS(FileSystemExceptionTypeTests)
-AFACT(OStreamLeftShiftOperator_FileSystemExceptionTypeValueIsWithinRange_WritesFileSystemExceptionTypeAsString)
-AFACT(OStreamLeftShiftOperator_FileSystemExceptionTypeValueIsNotWithinRange_WritesFileSystemExceptionTypeAsInt)
+AFACT(ENUM_AS_STRING_ReturnsExpectedStringForEachEnumValue)
 EVIDENCE
 
-TEST(OStreamLeftShiftOperator_FileSystemExceptionTypeValueIsWithinRange_WritesFileSystemExceptionTypeAsString)
+TEST(ENUM_AS_STRING_ReturnsExpectedStringForEachEnumValue)
 {
-   ostringstream oss;
-   const FileSystemExceptionType firstFileSystemExceptionTypeValue =
-      ZenUnit::RandomEnum<FileSystemExceptionType>(FileSystemExceptionType::MaxValue);
-   const FileSystemExceptionType secondFileSystemExceptionTypeValue =
-      ZenUnit::RandomEnum<FileSystemExceptionType>(FileSystemExceptionType::MaxValue);
-   //
-   oss << firstFileSystemExceptionTypeValue << secondFileSystemExceptionTypeValue;
-   //
-   const string ossString = oss.str();
-   const string expectedOssString =
-      ENUM_TO_STRING(FileSystemExceptionType, firstFileSystemExceptionTypeValue) +
-      ENUM_TO_STRING(FileSystemExceptionType, secondFileSystemExceptionTypeValue);
-   ARE_EQUAL(expectedOssString, ossString);
-}
-
-TEST(OStreamLeftShiftOperator_FileSystemExceptionTypeValueIsNotWithinRange_WritesFileSystemExceptionTypeAsInt)
-{
-   ostringstream oss;
-
-   const FileSystemExceptionType firstFileSystemExceptionTypeValue =
-      static_cast<FileSystemExceptionType>(ZenUnit::RandomBetween<int>(
-         static_cast<int>(FileSystemExceptionType::MaxValue) + 1, static_cast<int>(FileSystemExceptionType::MaxValue) + 3));
-
-   const FileSystemExceptionType secondFileSystemExceptionTypeValue =
-      static_cast<FileSystemExceptionType>(ZenUnit::RandomBetween<int>(
-         static_cast<int>(FileSystemExceptionType::MaxValue) + 1, static_cast<int>(FileSystemExceptionType::MaxValue) + 3));
-   //
-   oss << firstFileSystemExceptionTypeValue << secondFileSystemExceptionTypeValue;
-   //
-   const string ossString = oss.str();
-   const string expectedOssString =
-      to_string(static_cast<int>(firstFileSystemExceptionTypeValue)) +
-      to_string(static_cast<int>(secondFileSystemExceptionTypeValue));
-   ARE_EQUAL(expectedOssString, ossString);
+   ARE_EQUAL("Unset", ENUM_AS_STRING(FileSystemExceptionType, FileSystemExceptionType::Unset));
+   ARE_EQUAL("CloseFileFailed", ENUM_AS_STRING(FileSystemExceptionType, FileSystemExceptionType::CloseFileFailed));
+   ARE_EQUAL("DeleteFolderFailed", ENUM_AS_STRING(FileSystemExceptionType, FileSystemExceptionType::DeleteFolderFailed));
+   ARE_EQUAL("DeleteFileFailed", ENUM_AS_STRING(FileSystemExceptionType, FileSystemExceptionType::DeleteFileFailed));
+   ARE_EQUAL("FileCannotBeEmpty", ENUM_AS_STRING(FileSystemExceptionType, FileSystemExceptionType::FileCannotBeEmpty));
+   ARE_EQUAL("FileDoesNotExist", ENUM_AS_STRING(FileSystemExceptionType, FileSystemExceptionType::FileDoesNotExist));
+   ARE_EQUAL("FileOrFolderDoesNotExist", ENUM_AS_STRING(FileSystemExceptionType, FileSystemExceptionType::FileOrFolderDoesNotExist));
+   ARE_EQUAL("FolderDoesNotExist", ENUM_AS_STRING(FileSystemExceptionType, FileSystemExceptionType::FolderDoesNotExist));
+   ARE_EQUAL("MalformedFile", ENUM_AS_STRING(FileSystemExceptionType, FileSystemExceptionType::MalformedFile));
+   ARE_EQUAL("OpenFileFailed", ENUM_AS_STRING(FileSystemExceptionType, FileSystemExceptionType::OpenFileFailed));
+   ARE_EQUAL("RenameFolderFailed", ENUM_AS_STRING(FileSystemExceptionType, FileSystemExceptionType::RenameFolderFailed));
+   ARE_EQUAL("Windows_SetFileAttributeFailed", ENUM_AS_STRING(FileSystemExceptionType, FileSystemExceptionType::Windows_SetFileAttributeFailed));
+   ARE_EQUAL("Windows_FindFirstFileExFailed", ENUM_AS_STRING(FileSystemExceptionType, FileSystemExceptionType::Windows_FindFirstFileExFailed));
+   ARE_EQUAL("MaxValue", ENUM_AS_STRING(FileSystemExceptionType, FileSystemExceptionType::MaxValue));
 }
 
 RUN_TESTS(FileSystemExceptionTypeTests)

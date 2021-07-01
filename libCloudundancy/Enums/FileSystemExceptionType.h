@@ -1,5 +1,4 @@
 #pragma once
-#include "libCloudundancy/StaticUtilities/STRING_ENUM_MAP.h"
 
 enum class FileSystemExceptionType : unsigned char
 {
@@ -19,21 +18,19 @@ enum class FileSystemExceptionType : unsigned char
    MaxValue
 };
 
-ostream& operator<<(ostream& os, FileSystemExceptionType fileSystemExceptionType);
-
-BEGIN_STRING_ENUM_MAP(FileSystemExceptionType)
-   ADD_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPPINGS(FileSystemExceptionType, Unset)
-   ADD_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPPINGS(FileSystemExceptionType, CloseFileFailed)
-   ADD_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPPINGS(FileSystemExceptionType, DeleteFolderFailed)
-   ADD_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPPINGS(FileSystemExceptionType, DeleteFileFailed)
-   ADD_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPPINGS(FileSystemExceptionType, FileCannotBeEmpty)
-   ADD_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPPINGS(FileSystemExceptionType, FileDoesNotExist)
-   ADD_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPPINGS(FileSystemExceptionType, FileOrFolderDoesNotExist)
-   ADD_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPPINGS(FileSystemExceptionType, FolderDoesNotExist)
-   ADD_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPPINGS(FileSystemExceptionType, MalformedFile)
-   ADD_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPPINGS(FileSystemExceptionType, OpenFileFailed)
-   ADD_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPPINGS(FileSystemExceptionType, RenameFolderFailed)
-   ADD_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPPINGS(FileSystemExceptionType, Windows_SetFileAttributeFailed)
-   ADD_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPPINGS(FileSystemExceptionType, Windows_FindFirstFileExFailed)
-   ADD_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPPINGS(FileSystemExceptionType, MaxValue)
-END_STRING_ENUM_MAP
+BEGIN_ENUM_STRING_ARRAY(FileSystemExceptionType)
+ENUM_STRING_ARRAY_ELEMENT(Unset)
+ENUM_STRING_ARRAY_ELEMENT(CloseFileFailed)
+ENUM_STRING_ARRAY_ELEMENT(DeleteFolderFailed)
+ENUM_STRING_ARRAY_ELEMENT(DeleteFileFailed)
+ENUM_STRING_ARRAY_ELEMENT(FileCannotBeEmpty)
+ENUM_STRING_ARRAY_ELEMENT(FileDoesNotExist)
+ENUM_STRING_ARRAY_ELEMENT(FileOrFolderDoesNotExist)
+ENUM_STRING_ARRAY_ELEMENT(FolderDoesNotExist)
+ENUM_STRING_ARRAY_ELEMENT(MalformedFile)
+ENUM_STRING_ARRAY_ELEMENT(OpenFileFailed)
+ENUM_STRING_ARRAY_ELEMENT(RenameFolderFailed)
+ENUM_STRING_ARRAY_ELEMENT(Windows_SetFileAttributeFailed)
+ENUM_STRING_ARRAY_ELEMENT(Windows_FindFirstFileExFailed)
+ENUM_STRING_ARRAY_ELEMENT(MaxValue)
+END_ENUM_STRING_ARRAY
