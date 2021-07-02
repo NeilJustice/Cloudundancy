@@ -6,7 +6,7 @@
 
 TESTS(LinuxProcessRunnerTests)
 AFACT(DefaultConstructor_NewsComponents)
-AFACT(Run_RunsProcessWithArguments_ReturnsProcessResult__whoamiTestCase)
+AFACT(Run_RunsProcessWithArguments_ReturnsProcessResult)
 AFACT(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
 AFACT(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessageAndExitsProgramWithProcessExitCode)
 // Private Functions
@@ -47,12 +47,12 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(linuxProcessRunner._errorCodeTranslator);
 }
 
-TEST(Run_RunsProcessWithArguments_ReturnsProcessResult__whoamiTestCase)
+TEST(Run_RunsProcessWithArguments_ReturnsProcessResult)
 {
-   const ProcessResult processResult = _linuxProcessRunner.Run("whoami", "");
+   const ProcessResult processResult = _linuxProcessRunner.Run("wc", "--help");
    //
-   ARE_EQUAL("whoami", processResult.processName);
-   ARE_EQUAL("", processResult.arguments);
+   ARE_EQUAL("wc", processResult.processName);
+   ARE_EQUAL("--help", processResult.arguments);
    ARE_EQUAL(0, processResult.exitCode);
 }
 
