@@ -108,8 +108,8 @@ TEST(MakeArgv_ArgumentsAreEmpty_ReturnsProcessNameFollowedByNullptr)
    //
    const unique_ptr<char*[]> argv = _linuxProcessRunner.MakeArgv(processName, "");
    //
-   ARE_EQUAL(processName, (*argv)[0]);
-   ARE_EQUAL(nullptr, (*argv)[1]);
+   ARE_EQUAL(processName.c_str(), argv.get()[0]);
+   ARE_EQUAL(nullptr, argv.get()[1]);
 }
 
 TEST(MakeArgv_ArgumentsAreNotEmpty_ReturnsProcessNameFollowedBySpaceSeparatedArgumentsFollowedByNullptr)
@@ -121,10 +121,10 @@ TEST(MakeArgv_ArgumentsAreNotEmpty_ReturnsProcessNameFollowedBySpaceSeparatedArg
    //
    const unique_ptr<char*[]> argv = _linuxProcessRunner.MakeArgv(processName, arguments);
    //
-   ARE_EQUAL(processName, (*argv)[0]);
-   ARE_EQUAL(argument1, (*argv)[1]);
-   ARE_EQUAL(argument2, (*argv)[2]);
-   ARE_EQUAL(nullptr, (*argv)[3]);
+   ARE_EQUAL(processName.c_str(), argv.get()[0]);
+   ARE_EQUAL(argument1.c_str(), argv.get()[1]);
+   ARE_EQUAL(argument2.c_str(), argv.get()[2]);
+   ARE_EQUAL(nullptr, argv.get()[3]);
 }
 
 TEST(ThrowIfWifexitedReturnValueIsNot1_WifexitedReturnValueIs1_DoesNothing)

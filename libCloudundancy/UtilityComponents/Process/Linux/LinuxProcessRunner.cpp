@@ -61,7 +61,7 @@ unique_ptr<char*[]> LinuxProcessRunner::MakeArgv(string_view processName, string
    constexpr size_t TerminatingNullArgv = 1;
    unique_ptr<char*[]> argv = make_unique<char*[]>(ProcessNameArgv + spaceSplitArguments.size() + TerminatingNullArgv);
    argv[0] = const_cast<char*>(processName.data());
-   for (size_t i = 1; i < spaceSplitArguments.size(); ++i)
+   for (size_t i = 1; i <= spaceSplitArguments.size(); ++i)
    {
       const string& ithArgument = spaceSplitArguments[i - 1];
       argv[i] = const_cast<char*>(ithArgument.c_str());
