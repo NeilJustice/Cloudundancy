@@ -64,8 +64,7 @@ void RecursiveDirectoryIterator::RecursivelyDeleteAllFilesExceptIgnoredFileSubpa
 
 // Private Functions
 
-bool RecursiveDirectoryIterator::FilePathCaseInsensitiveContainsAnySubstring(
-   const fs::path& filePath, const vector<string>& filePathIgnoreSubstrings)
+bool RecursiveDirectoryIterator::FilePathCaseInsensitiveContainsAnySubstring(const fs::path& filePath, const vector<string>& filePathIgnoreSubstrings)
 {
    if (filePathIgnoreSubstrings.empty())
    {
