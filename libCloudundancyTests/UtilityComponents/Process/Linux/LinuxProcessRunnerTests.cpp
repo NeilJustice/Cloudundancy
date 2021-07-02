@@ -2,12 +2,18 @@
 #if defined __linux__ || defined __APPLE__
 
 #include "libCloudundancy/UtilityComponents/Process/Linux/LinuxProcessRunner.h"
+#include "libCloudundancyTests/Components/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
 
 TESTS(LinuxProcessRunnerTests)
 AFACT(DefaultConstructor_NewsComponents)
 AFACT(Run_RunsProcessWithArguments_ReturnsProcessResult__whoamiTestCase)
 AFACT(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
 AFACT(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessageAndExitsProgramWithProcessExitCode)
+// Private Functions
+AFACT(ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0_PosixSpawnpReturnValueIs0_DoesNothing)
+AFACT(ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0_PosixSpawnpReturnValueIsNot0_ThrowsRuntimeError)
+AFACT(ThrowRuntimeErrorIfWaitPidReturnValueDoesNotEqualPid_WaitPidReturnValueEqualsPid_DoesNothing)
+AFACT(ThrowRuntimeErrorIfWaitPidReturnValueDoesNotEqualPid_WaitPidReturnValueDoesNotEqualPid_ThrowsRuntimeError)
 EVIDENCE
 
 LinuxProcessRunner _linuxProcessRunner;
@@ -16,6 +22,7 @@ using _caller_Run_MockType = NonVoidTwoArgMemberFunctionCallerMock<ProcessResult
 _caller_Run_MockType* _caller_RunMock = nullptr;
 // Constant Components
 ConsoleMock* _consoleMock = nullptr;
+ErrorCodeTranslatorMock* _errorCodeTranslatorMock = nullptr;
 
 STARTUP
 {
@@ -23,6 +30,7 @@ STARTUP
    _linuxProcessRunner._caller_Run.reset(_caller_RunMock = new _caller_Run_MockType);
    // Constant Components
    _linuxProcessRunner._console.reset(_consoleMock = new ConsoleMock);
+   _linuxProcessRunner._errorCodeTranslator.reset(_errorCodeTranslatorMock = new ErrorCodeTranslatorMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
@@ -32,6 +40,7 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(linuxProcessRunner._caller_Run);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(linuxProcessRunner._console);
+   DELETE_TO_ASSERT_NEWED(linuxProcessRunner._errorCodeTranslator);
 }
 
 TEST(Run_RunsProcessWithArguments_ReturnsProcessResult__whoamiTestCase)
@@ -85,6 +94,31 @@ TEST(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessageAndExitsProgramWithPro
       "Process \"", processName, " ", arguments, "\" failed with exit code ", processResult.exitCode, '.');
    METALMOCK(_consoleMock->WriteLineAndExitMock.CalledOnceWith(expectedProcessFailedErrorMessage, runReturnValue.exitCode));
    ARE_EQUAL(runReturnValue, processResult);
+}
+
+// Private Functions
+
+TEST(ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0_PosixSpawnpReturnValueIs0_DoesNothing)
+{
+   _linuxProcessRunner.ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0(0);
+}
+
+TEST(ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0_PosixSpawnpReturnValueIsNot0_ThrowsRuntimeError)
+{
+
+}
+
+TEST(ThrowRuntimeErrorIfWaitPidReturnValueDoesNotEqualPid_WaitPidReturnValueEqualsPid_DoesNothing)
+{
+   const pid_t waitpidReturnValue = ZenUnit::Random<pid_t>();
+   const pid_t pid = waitpidReturnValue;
+   //
+   _linuxProcessRunner.ThrowRuntimeErrorIfWaitPidReturnValueDoesNotEqualPid(waitpidReturnValue, pid);
+}
+
+TEST(ThrowRuntimeErrorIfWaitPidReturnValueDoesNotEqualPid_WaitPidReturnValueDoesNotEqualPid_ThrowsRuntimeError)
+{
+
 }
 
 RUN_TESTS(LinuxProcessRunnerTests)
