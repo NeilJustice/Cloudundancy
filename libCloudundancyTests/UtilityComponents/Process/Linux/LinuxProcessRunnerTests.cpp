@@ -105,7 +105,16 @@ TEST(ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0_PosixSpawnpReturnValueIs0_Doe
 
 TEST(ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0_PosixSpawnpReturnValueIsNot0_ThrowsRuntimeError)
 {
-
+   const pair<int, string> errnoAndErrnoDescription = _errorCodeTranslatorMock->GetErrnoWithDescriptionMock.ReturnRandom();
+   const int posixSpawnpReturnValue = ZenUnit::RandomNon0<int>();
+   //
+   const string expectedExceptionMessage = String::ConcatValues(
+      "'posix_spawnp(&pid, processName.data(), nullptr, nullptr, argv.get(), nullptr)' returned non-0: ", posixSpawnpReturnValue,
+      ". errno=", errnoAndErrnoDescription.first, " (", errnoAndErrnoDescription.second, ')');
+   THROWS_EXCEPTION(_linuxProcessRunner.ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0(posixSpawnpReturnValue),
+      runtime_error, expectedExceptionMessage);
+   //
+   METALMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
 }
 
 TEST(ThrowRuntimeErrorIfWaitPidReturnValueDoesNotEqualPid_WaitPidReturnValueEqualsPid_DoesNothing)
@@ -118,7 +127,17 @@ TEST(ThrowRuntimeErrorIfWaitPidReturnValueDoesNotEqualPid_WaitPidReturnValueEqua
 
 TEST(ThrowRuntimeErrorIfWaitPidReturnValueDoesNotEqualPid_WaitPidReturnValueDoesNotEqualPid_ThrowsRuntimeError)
 {
-
+   const pair<int, string> errnoAndErrnoDescription = _errorCodeTranslatorMock->GetErrnoWithDescriptionMock.ReturnRandom();
+   const pid_t waitpidReturnValue = ZenUnit::Random<pid_t>();
+   const pid_t pid = ZenUnit::RandomNotEqualToValue<pid_t>(waitpidReturnValue);
+   //
+   const string expectedExceptionMessage = String::ConcatValues(
+      "'waitpid(pid, &waitPidStatus, 0)' unexpectedly returned ", waitpidReturnValue, " which is not equal to pid ", pid,
+      ". errno=", errnoAndErrnoDescription.first, " (", errnoAndErrnoDescription.second, ')');
+   THROWS_EXCEPTION(_linuxProcessRunner.ThrowRuntimeErrorIfWaitPidReturnValueDoesNotEqualPid(waitpidReturnValue, pid),
+      runtime_error, expectedExceptionMessage);
+   //
+   METALMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
 }
 
 RUN_TESTS(LinuxProcessRunnerTests)

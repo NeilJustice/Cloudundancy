@@ -36,7 +36,7 @@ ProcessResult LinuxProcessRunner::Run(string_view processName, string_view argum
    const int posixSpawnpReturnValue = posix_spawnp(&pid, processName.data(), nullptr, nullptr, argv.get(), nullptr);
    ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0(posixSpawnpReturnValue);
    int waitpidStatus = 0;
-	pid_t waitpidReturnValue = waitpid(pid, &waitpidStatus, 0);
+   pid_t waitpidReturnValue = waitpid(pid, &waitpidStatus, 0);
    ThrowRuntimeErrorIfWaitPidReturnValueDoesNotEqualPid(waitpidReturnValue, pid);
    const int wifexitedReturnValue = WIFEXITED(waitpidStatus);
    if (wifexitedReturnValue == 1)
@@ -75,11 +75,10 @@ void LinuxProcessRunner::ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0(int posix
 {
    if (posixSpawnpReturnValue != 0)
    {
-      const int errnoValue = errno;
-      const char* const readableErrno = strerror(errnoValue);
+      const pair<int, string> errnoAndErrnoDescription = _errorCodeTranslator->GetErrnoWithDescription();
       const string exceptionMessage = String::ConcatValues(
          "'posix_spawnp(&pid, processName.data(), nullptr, nullptr, argv.get(), nullptr)' returned non-0: ", posixSpawnpReturnValue,
-         ". errno=", errnoValue, " (", readableErrno, ")");
+         ". errno=", errnoAndErrnoDescription.first, " (", errnoAndErrnoDescription.second, ')');
       throw runtime_error(exceptionMessage);
    }
 }
@@ -87,12 +86,11 @@ void LinuxProcessRunner::ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0(int posix
 void LinuxProcessRunner::ThrowRuntimeErrorIfWaitPidReturnValueDoesNotEqualPid(pid_t waitpidReturnValue, pid_t pid) const
 {
    if (waitpidReturnValue != pid)
-	{
-      const int errnoValue = errno;
-      const char* const readableErrno = strerror(errnoValue);
+   {
+      const pair<int, string> errnoAndErrnoDescription = _errorCodeTranslator->GetErrnoWithDescription();
       const string exceptionMessage = String::ConcatValues(
-         "'waitpid(pid, &waitPidStatus, 0)' unexpectedly returned ", waitpidReturnValue,
-         " which is not equal to pid ", pid, ". errno=", errnoValue, " strerror(errno)=", readableErrno);
+         "'waitpid(pid, &waitPidStatus, 0)' unexpectedly returned ", waitpidReturnValue, " which is not equal to pid ", pid,
+         ". errno=", errnoAndErrnoDescription.first, " (", errnoAndErrnoDescription.second, ')');
       throw runtime_error(exceptionMessage);
    }
 }
