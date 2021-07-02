@@ -6,7 +6,7 @@
 
 TESTS(LinuxProcessRunnerTests)
 AFACT(DefaultConstructor_NewsComponents)
-AFACT(Run_RunsProcessWithArguments_ReturnsProcessResult__whoamiTestCase)
+AFACT(Run_RunsProcessWithArguments_ReturnsProcessResult)
 AFACT(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
 AFACT(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessageAndExitsProgramWithProcessExitCode)
 // Private Functions
@@ -47,12 +47,12 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(linuxProcessRunner._errorCodeTranslator);
 }
 
-TEST(Run_RunsProcessWithArguments_ReturnsProcessResult__whoamiTestCase)
+TEST(Run_RunsProcessWithArguments_ReturnsProcessResult)
 {
-   const ProcessResult processResult = _linuxProcessRunner.Run("whoami", "");
+   const ProcessResult processResult = _linuxProcessRunner.Run("wc", "--help");
    //
-   ARE_EQUAL("whoami", processResult.processName);
-   ARE_EQUAL("", processResult.arguments);
+   ARE_EQUAL("wc", processResult.processName);
+   ARE_EQUAL("--help", processResult.arguments);
    ARE_EQUAL(0, processResult.exitCode);
 }
 
@@ -108,8 +108,8 @@ TEST(MakeArgv_ArgumentsAreEmpty_ReturnsProcessNameFollowedByNullptr)
    //
    const unique_ptr<char*[]> argv = _linuxProcessRunner.MakeArgv(processName, "");
    //
-   ARE_EQUAL(processName, (*argv)[0]);
-   ARE_EQUAL(nullptr, (*argv)[1]);
+   ARE_EQUAL(processName.c_str(), argv.get()[0]);
+   ARE_EQUAL(nullptr, argv.get()[1]);
 }
 
 TEST(MakeArgv_ArgumentsAreNotEmpty_ReturnsProcessNameFollowedBySpaceSeparatedArgumentsFollowedByNullptr)
@@ -121,10 +121,10 @@ TEST(MakeArgv_ArgumentsAreNotEmpty_ReturnsProcessNameFollowedBySpaceSeparatedArg
    //
    const unique_ptr<char*[]> argv = _linuxProcessRunner.MakeArgv(processName, arguments);
    //
-   ARE_EQUAL(processName, (*argv)[0]);
-   ARE_EQUAL(argument1, (*argv)[1]);
-   ARE_EQUAL(argument2, (*argv)[2]);
-   ARE_EQUAL(nullptr, (*argv)[3]);
+   ARE_EQUAL(processName.c_str(), argv.get()[0]);
+   ARE_EQUAL(argument1.c_str(), argv.get()[1]);
+   ARE_EQUAL(argument2.c_str(), argv.get()[2]);
+   ARE_EQUAL(nullptr, argv.get()[3]);
 }
 
 TEST(ThrowIfWifexitedReturnValueIsNot1_WifexitedReturnValueIs1_DoesNothing)
