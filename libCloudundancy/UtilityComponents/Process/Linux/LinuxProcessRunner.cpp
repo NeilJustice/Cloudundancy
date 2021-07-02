@@ -21,17 +21,7 @@ LinuxProcessRunner::~LinuxProcessRunner()
 
 ProcessResult LinuxProcessRunner::Run(string_view processName, string_view arguments) const
 {
-   const vector<string> spaceSplitArguments = String::Split(arguments, ' ');
-   constexpr size_t ProcessNameArgv = 1;
-   constexpr size_t TerminatingNullArgv = 1;
-   unique_ptr<char*[]> argv = make_unique<char*[]>(ProcessNameArgv + spaceSplitArguments.size() + TerminatingNullArgv);
-   argv[0] = const_cast<char*>(processName.data());
-   for (size_t i = 1; i < spaceSplitArguments.size(); ++i)
-   {
-      const string& ithArgument = spaceSplitArguments[i - 1];
-      argv[i] = const_cast<char*>(ithArgument.c_str());
-   }
-   argv[ProcessNameArgv + spaceSplitArguments.size()] = nullptr;
+   const unique_ptr<char*[]> argv = MakeArgv(processName, arguments);
    pid_t pid = 0;
    const int posixSpawnpReturnValue = posix_spawnp(&pid, processName.data(), nullptr, nullptr, argv.get(), nullptr);
    ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0(posixSpawnpReturnValue);
@@ -70,6 +60,22 @@ ProcessResult LinuxProcessRunner::FailFastRun(string_view processName, string_vi
 }
 
 // Private Functions
+
+unique_ptr<char*[]> LinuxProcessRunner::MakeArgv(string_view processName, string_view arguments) const
+{
+   const vector<string> spaceSplitArguments = String::Split(arguments, ' ');
+   constexpr size_t ProcessNameArgv = 1;
+   constexpr size_t TerminatingNullArgv = 1;
+   unique_ptr<char*[]> argv = make_unique<char*[]>(ProcessNameArgv + spaceSplitArguments.size() + TerminatingNullArgv);
+   argv[0] = const_cast<char*>(processName.data());
+   for (size_t i = 1; i < spaceSplitArguments.size(); ++i)
+   {
+      const string& ithArgument = spaceSplitArguments[i - 1];
+      argv[i] = const_cast<char*>(ithArgument.c_str());
+   }
+   argv[ProcessNameArgv + spaceSplitArguments.size()] = nullptr;
+   return argv;
+}
 
 void LinuxProcessRunner::ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0(int posixSpawnpReturnValue) const
 {

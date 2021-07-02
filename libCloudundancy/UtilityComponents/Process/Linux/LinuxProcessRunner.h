@@ -22,6 +22,7 @@ public:
    virtual ProcessResult Run(string_view processName, string_view arguments) const;
    virtual ProcessResult FailFastRun(string_view processName, string_view arguments, bool doPrintStandardOutput) const;
 private:
+   unique_ptr<char*[]> MakeArgv(string_view processName, string_view arguments) const;
    void ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0(int posixSpawnpReturnValue) const;
    void ThrowRuntimeErrorIfWaitPidReturnValueDoesNotEqualPid(pid_t waitpidReturnValue, pid_t pid) const;
 };
