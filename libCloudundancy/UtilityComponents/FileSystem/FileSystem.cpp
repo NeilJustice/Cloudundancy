@@ -113,10 +113,6 @@ vector<string> FileSystem::ReadFileLinesWhichMustBeNonEmpty(const fs::path& file
    string currentFileLine;
    while (getline(fileTextIStringStream, currentFileLine))
    {
-      if (currentFileLine.find("sh.") != string::npos)
-      {
-         break;
-      }
       fileLines.push_back(currentFileLine);
    }
    return fileLines;
