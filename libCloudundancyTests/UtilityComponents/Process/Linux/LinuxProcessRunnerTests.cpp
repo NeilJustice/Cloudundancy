@@ -10,6 +10,8 @@ AFACT(Run_RunsProcessWithArguments_ReturnsProcessResult__whoamiTestCase)
 AFACT(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
 AFACT(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessageAndExitsProgramWithProcessExitCode)
 // Private Functions
+AFACT(MakeArgv_ArgumentsAreEmpty_ReturnsProcessNameFollowedByNullptr)
+AFACT(MakeArgv_ArgumentsAreNotEmpty_ReturnsProcessNameFollowedBySpaceSeparatedArgumentsFollowedByNullptr)
 AFACT(ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0_PosixSpawnpReturnValueIs0_DoesNothing)
 AFACT(ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0_PosixSpawnpReturnValueIsNot0_ThrowsRuntimeError)
 AFACT(ThrowRuntimeErrorIfWaitPidReturnValueDoesNotEqualPid_WaitPidReturnValueEqualsPid_DoesNothing)
@@ -97,6 +99,31 @@ TEST(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessageAndExitsProgramWithPro
 }
 
 // Private Functions
+
+TEST(MakeArgv_ArgumentsAreEmpty_ReturnsProcessNameFollowedByNullptr)
+{
+   const string processName = ZenUnit::Random<string>();
+   //
+   const unique_ptr<char*[]> argv = _linuxProcessRunner.MakeArgv(processName, "");
+   //
+   ARE_EQUAL(processName, (*argv)[0]);
+   ARE_EQUAL(nullptr, (*argv)[1]);
+}
+
+TEST(MakeArgv_ArgumentsAreNotEmpty_ReturnsProcessNameFollowedBySpaceSeparatedArgumentsFollowedByNullptr)
+{
+   const string processName = ZenUnit::Random<string>();
+   const string argument1 = ZenUnit::Random<string>();
+   const string argument2 = ZenUnit::Random<string>();
+   const string arguments = argument1 + " " + argument2;
+   //
+   const unique_ptr<char*[]> argv = _linuxProcessRunner.MakeArgv(processName, arguments);
+   //
+   ARE_EQUAL(processName, (*argv)[0]);
+   ARE_EQUAL(argument1, (*argv)[1]);
+   ARE_EQUAL(argument2, (*argv)[2]);
+   ARE_EQUAL(nullptr, (*argv)[3]);
+}
 
 TEST(ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0_PosixSpawnpReturnValueIs0_DoesNothing)
 {
