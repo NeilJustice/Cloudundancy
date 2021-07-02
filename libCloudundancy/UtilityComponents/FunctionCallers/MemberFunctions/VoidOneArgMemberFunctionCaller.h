@@ -4,6 +4,8 @@ template<typename ClassType, typename ArgType>
 class VoidOneArgMemberFunctionCaller
 {
 public:
+   VoidOneArgMemberFunctionCaller() {}
+
    virtual void CallConstMemberFunction(
       void (ClassType::*constMemberFunction)(ArgType) const,
       const ClassType* constClassPointer, ArgType arg) const
