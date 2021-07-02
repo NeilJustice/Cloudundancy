@@ -12,6 +12,8 @@ AFACT(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessageAndExitsProgramWithPr
 // Private Functions
 AFACT(MakeArgv_ArgumentsAreEmpty_ReturnsProcessNameFollowedByNullptr)
 AFACT(MakeArgv_ArgumentsAreNotEmpty_ReturnsProcessNameFollowedBySpaceSeparatedArgumentsFollowedByNullptr)
+AFACT(ThrowIfWifexitedReturnValueIsNot1_WifexitedReturnValueIs1_DoesNothing)
+AFACT(ThrowIfWifexitedReturnValueIsNot1_WifexitedReturnValueIsNot1_ThrowsRuntimeError)
 AFACT(ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0_PosixSpawnpReturnValueIs0_DoesNothing)
 AFACT(ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0_PosixSpawnpReturnValueIsNot0_ThrowsRuntimeError)
 AFACT(ThrowRuntimeErrorIfWaitPidReturnValueDoesNotEqualPid_WaitPidReturnValueEqualsPid_DoesNothing)
@@ -123,6 +125,25 @@ TEST(MakeArgv_ArgumentsAreNotEmpty_ReturnsProcessNameFollowedBySpaceSeparatedArg
    ARE_EQUAL(argument1, (*argv)[1]);
    ARE_EQUAL(argument2, (*argv)[2]);
    ARE_EQUAL(nullptr, (*argv)[3]);
+}
+
+TEST(ThrowIfWifexitedReturnValueIsNot1_WifexitedReturnValueIs1_DoesNothing)
+{
+   _linuxProcessRunner.ThrowIfWifexitedReturnValueIsNot1(1);
+}
+
+TEST(ThrowIfWifexitedReturnValueIsNot1_WifexitedReturnValueIsNot1_ThrowsRuntimeError)
+{
+   const pair<int, string> errnoAndErrnoDescription = _errorCodeTranslatorMock->GetErrnoWithDescriptionMock.ReturnRandom();
+   const int wifexitedReturnValue = ZenUnit::RandomNotEqualToValue<int>(1);
+   //
+   const string expectedExceptionMessage = String::ConcatValues(
+      "'WIFEXITED(waitPidStatus) did not return 1: ", errnoAndErrnoDescription.first,
+      ". errno=", errnoAndErrnoDescription.first, " (", errnoAndErrnoDescription.second, ")");
+   THROWS_EXCEPTION(_linuxProcessRunner.ThrowIfWifexitedReturnValueIsNot1(wifexitedReturnValue),
+      runtime_error, expectedExceptionMessage);
+   //
+   METALMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
 }
 
 TEST(ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0_PosixSpawnpReturnValueIs0_DoesNothing)

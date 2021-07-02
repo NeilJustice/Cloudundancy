@@ -29,19 +29,12 @@ ProcessResult LinuxProcessRunner::Run(string_view processName, string_view argum
    pid_t waitpidReturnValue = waitpid(pid, &waitpidStatus, 0);
    ThrowRuntimeErrorIfWaitPidReturnValueDoesNotEqualPid(waitpidReturnValue, pid);
    const int wifexitedReturnValue = WIFEXITED(waitpidStatus);
-   if (wifexitedReturnValue == 1)
-   {
-      ProcessResult processResult;
-      processResult.processName = processName;
-      processResult.arguments = arguments;
-      processResult.exitCode = WEXITSTATUS(waitpidStatus);
-      return processResult;
-   }
-   const int errnoValue = errno;
-   const char* const readableErrno = strerror(errnoValue);
-   const string exceptionMessage = String::ConcatValues(
-      "'WIFEXITED(waitPidStatus) did not return 1: ", wifexitedReturnValue, ". errno=", errnoValue, " (", readableErrno, ")");
-   throw runtime_error(exceptionMessage);
+   ThrowIfWifexitedReturnValueIsNot1(wifexitedReturnValue);
+   ProcessResult processResult;
+   processResult.processName = processName;
+   processResult.arguments = arguments;
+   processResult.exitCode = WEXITSTATUS(waitpidStatus);
+   return processResult;
 }
 
 ProcessResult LinuxProcessRunner::FailFastRun(string_view processName, string_view arguments, bool /*doPrintStandardOutput*/) const
@@ -75,6 +68,18 @@ unique_ptr<char*[]> LinuxProcessRunner::MakeArgv(string_view processName, string
    }
    argv[ProcessNameArgv + spaceSplitArguments.size()] = nullptr;
    return argv;
+}
+
+void LinuxProcessRunner::ThrowIfWifexitedReturnValueIsNot1(int wifexitedReturnValue) const
+{
+   if (wifexitedReturnValue != 1)
+   {
+      const pair<int, string> errnoAndErrnoDescription = _errorCodeTranslator->GetErrnoWithDescription();
+      const string exceptionMessage = String::ConcatValues(
+         "'WIFEXITED(waitPidStatus) did not return 1: ", errnoAndErrnoDescription.first,
+         ". errno=", errnoAndErrnoDescription.first, " (", errnoAndErrnoDescription.second, ")");
+      throw runtime_error(exceptionMessage);
+   }
 }
 
 void LinuxProcessRunner::ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0(int posixSpawnpReturnValue) const

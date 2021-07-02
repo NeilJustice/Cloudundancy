@@ -23,8 +23,12 @@ TEST(RelativeFolderPath_ReturnsFilesystemPathWith0To2FoldersLeadingToARandomFold
 
 TEST(RelativeFolderPaths_ReturnsVectorOfRandomFilesystemPathsBetweenSize0And2)
 {
-   vector<fs::path> relativeFolderPaths = _utilsRandomGenerator.RelativeFolderPaths();
-   IS_TRUE(relativeFolderPaths.size() <= 2);
+   // 50 iterations for code coverage of the for-loop body in _utilsRandomGenerator.RelativeFolderPaths()
+   for (size_t i = 0; i < 50; ++i)
+   {
+      vector<fs::path> relativeFolderPaths = _utilsRandomGenerator.RelativeFolderPaths();
+      IS_TRUE(relativeFolderPaths.size() <= 2);
+   }
 }
 
 RUN_TESTS(UtilsRandomGeneratorTests)
