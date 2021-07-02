@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/ValueTypes/FileSystemException.h"
+#include "libCloudundancy/Exceptions/FileSystemException.h"
 
 FileSystemException::FileSystemException(
    FileSystemExceptionType fileSystemExceptionType, const fs::path& filePath)

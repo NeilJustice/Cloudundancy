@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/ValueTypes/FileSystemException.h"
+#include "libCloudundancy/Exceptions/FileSystemException.h"
 
 TESTS(FileExceptionTests)
 AFACT(TwoArgConstructor_MakesWhatFunctionReturnExpectedExceptionMessage)

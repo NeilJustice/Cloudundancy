@@ -24,6 +24,9 @@ using namespace std;
 #include "libCloudundancy/Enums/ProgramMode.h"
 #include "libCloudundancy/Enums/WindowsColor.h"
 
+// libCloudundancy Exceptions
+#include "libCloudundancy/Exceptions/FileSystemException.h"
+
 // libCloudundancy ValueTypes
 #include "libCloudundancy/ValueTypes/CloudundancyIniCopyInstruction.h"
 #include "libCloudundancy/ValueTypes/AbsoluteFilePathToRelativeDestinationFolderPath.h"
@@ -31,7 +34,6 @@ using namespace std;
 #include "libCloudundancy/ValueTypes/CloudundancyIni.h"
 #include "libCloudundancy/ValueTypes/FileCopyResult.h"
 #include "libCloudundancy/ValueTypes/FilePathLineNumberLineText.h"
-#include "libCloudundancy/ValueTypes/FileSystemException.h"
 #include "libCloudundancy/ValueTypes/ProcessResult.h"
 
 // libCloudundancy StaticUtilities
