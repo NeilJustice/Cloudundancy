@@ -3,7 +3,7 @@
 #include "libCloudundancy/StaticUtilities/GetLinuxErrno.h"
 
 ErrorCodeTranslator::ErrorCodeTranslator()
-#if defined __linux__|| defined __APPLE__
+#if defined __linux__ || defined __APPLE__
    : _call_errno(GetLinuxErrno)
    , _call_strerror_r(strerror_r)
 #elif _WIN32
