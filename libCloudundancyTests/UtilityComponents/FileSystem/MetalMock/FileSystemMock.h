@@ -20,7 +20,7 @@ public:
 
    // File Writes
    METALMOCK_VOID2_CONST(AppendText, const fs::path&, string_view)
-   METALMOCK_VOID2_CONST(WriteTextFile, const fs::path&, string_view)
+   METALMOCK_VOID2_CONST(CreateTextFile, const fs::path&, string_view)
 
    // Misc
    METALMOCK_VOID1_CONST(DeleteFolder, const fs::path&)

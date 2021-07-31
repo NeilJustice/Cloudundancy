@@ -8,6 +8,8 @@ class NonVoidOneArgMemberFunctionCaller;
 template<typename ClassType, typename ElementType, typename ExtraArgType>
 class OneExtraArgMemberFunctionForEacher;
 class RecursiveDirectoryIterator;
+template<typename ClassType, typename Arg1Type, typename Arg2Type>
+class VoidTwoArgMemberFunctionCaller;
 class Stopwatch;
 class Watch;
 
@@ -56,6 +58,9 @@ private:
    using _caller_ReadFileText_Type = NonVoidOneArgMemberFunctionCaller<string, FileSystem, const fs::path&>;
    unique_ptr<const _caller_ReadFileText_Type> _caller_ReadFileText;
 
+   using _caller_CreateTextFileType = VoidTwoArgMemberFunctionCaller<FileSystem, const fs::path&, string_view>;
+   unique_ptr<const _caller_CreateTextFileType> _caller_CreateTextFile;
+
    // Constant Components
    unique_ptr<const Asserter> _asserter;
    unique_ptr<const Console> _console;
@@ -85,7 +90,7 @@ public:
 
    // File Writes
    virtual void AppendText(const fs::path& filePath, string_view text) const;
-   virtual void WriteTextFile(const fs::path& filePath, string_view text) const;
+   virtual void CreateTextFile(const fs::path& filePath, string_view text) const;
 
    // Misc
    virtual void DeleteFolder(const fs::path& folderPath) const;

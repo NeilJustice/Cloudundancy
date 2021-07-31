@@ -24,7 +24,8 @@ FileSystem::FileSystem()
    , _caller_FileSize(make_unique<_caller_FileSize_Type>())
    , _caller_FileSystem_DeleteFolderContentsExceptForFileName(make_unique<_caller_FileSystem_DeleteFolderContentsExceptForFileNameType>())
    , _caller_ReadFileBytes(make_unique<_caller_ReadFileBytes_Type>())
-   , _caller_ReadFileText(make_unique< _caller_ReadFileText_Type>())
+   , _caller_ReadFileText(make_unique<_caller_ReadFileText_Type>())
+   , _caller_CreateTextFile(make_unique<_caller_CreateTextFileType>())
    // Constant Components
    , _asserter(make_unique<Asserter>())
    , _console(make_unique<Console>())
@@ -183,7 +184,7 @@ void FileSystem::AppendText(const fs::path& filePath, string_view text) const
    _fileOpenerCloser->CloseFile(appendModeTextFileHandle);
 }
 
-void FileSystem::WriteTextFile(const fs::path& filePath, string_view fileText) const
+void FileSystem::CreateTextFile(const fs::path& filePath, string_view fileText) const
 {
    const fs::path parentFolderPath = filePath.parent_path();
    _call_fs_create_directories(parentFolderPath);
@@ -209,10 +210,10 @@ void FileSystem::DeleteFolderContentsExceptForFileName(const fs::path& folderPat
    {
       return;
    }
-   const vector<string> fileSubpathsToNotDelete{ string(exceptFileName) };
-   _recursiveDirectoryIterator->SetFileSubpathsToIgnore(fileSubpathsToNotDelete);
-   _recursiveDirectoryIterator->InitializeIteratorAtFolderPath(folderPath);
-   _recursiveDirectoryIterator->RecursivelyDeleteAllFilesExceptIgnoredFileSubpaths();
+   const fs::path exceptFilePath = folderPath / exceptFileName;
+   const string textOfExceptFile = _caller_ReadFileText->CallConstMemberFunction(&FileSystem::ReadFileText, this, exceptFilePath);
+   _call_fs_remove_all(folderPath);
+   _caller_CreateTextFile->CallConstMemberFunction(&FileSystem::CreateTextFile, this, exceptFilePath, textOfExceptFile);
    const string deletedFolderMessage = String::ConcatStrings("[Cloudundancy] Deleted folder ", folderPath.string(), " except for ", exceptFileName);
    _console->WriteLine(deletedFolderMessage);
 }

@@ -15,25 +15,25 @@ const fs::path _rootFolderPath = "IntegrationTest_RecursiveDirectoryIterator";
 
 void CreateIntegrationTestingDirectoryStructure()
 {
-   _fileSystem.WriteTextFile(_rootFolderPath / "file1.txt", "");
-   _fileSystem.WriteTextFile(_rootFolderPath / "file2.ini", "");
-   _fileSystem.WriteTextFile(_rootFolderPath / "root.ignored_file_extension_1", "");
-   _fileSystem.WriteTextFile(_rootFolderPath / "root.ignored_file_extension_2", "");
+   _fileSystem.CreateTextFile(_rootFolderPath / "file1.txt", "");
+   _fileSystem.CreateTextFile(_rootFolderPath / "file2.ini", "");
+   _fileSystem.CreateTextFile(_rootFolderPath / "root.ignored_file_extension_1", "");
+   _fileSystem.CreateTextFile(_rootFolderPath / "root.ignored_file_extension_2", "");
 
-   _fileSystem.WriteTextFile(_rootFolderPath / "subdir1" / "file1.xml", "");
-   _fileSystem.WriteTextFile(_rootFolderPath / "subdir1" / "file2.json", "");
-   _fileSystem.WriteTextFile(_rootFolderPath / "subdir1" / "file3.ignored_file_extension_1", "");
-   _fileSystem.WriteTextFile(_rootFolderPath / "subdir1" / "file4.ignored_file_extension_2", "");
+   _fileSystem.CreateTextFile(_rootFolderPath / "subdir1" / "file1.xml", "");
+   _fileSystem.CreateTextFile(_rootFolderPath / "subdir1" / "file2.json", "");
+   _fileSystem.CreateTextFile(_rootFolderPath / "subdir1" / "file3.ignored_file_extension_1", "");
+   _fileSystem.CreateTextFile(_rootFolderPath / "subdir1" / "file4.ignored_file_extension_2", "");
 
-   _fileSystem.WriteTextFile(_rootFolderPath / "subdir2" / "file1.xml", "");
-   _fileSystem.WriteTextFile(_rootFolderPath / "subdir2" / "file2.json", "");
-   _fileSystem.WriteTextFile(_rootFolderPath / "subdir2" / "file3.ignored_file_extension_1", "");
-   _fileSystem.WriteTextFile(_rootFolderPath / "subdir2" / "file4.ignored_file_extension_2", "");
+   _fileSystem.CreateTextFile(_rootFolderPath / "subdir2" / "file1.xml", "");
+   _fileSystem.CreateTextFile(_rootFolderPath / "subdir2" / "file2.json", "");
+   _fileSystem.CreateTextFile(_rootFolderPath / "subdir2" / "file3.ignored_file_extension_1", "");
+   _fileSystem.CreateTextFile(_rootFolderPath / "subdir2" / "file4.ignored_file_extension_2", "");
 
-   _fileSystem.WriteTextFile(_rootFolderPath / "subdir3" / "subdir4" / "file1.html", "");
+   _fileSystem.CreateTextFile(_rootFolderPath / "subdir3" / "subdir4" / "file1.html", "");
 
-   _fileSystem.WriteTextFile(_rootFolderPath / "ignored_directory_name_1" / "file1.txt", "");
-   _fileSystem.WriteTextFile(_rootFolderPath / "ignored_directory_name_2" / "file1.txt", "");
+   _fileSystem.CreateTextFile(_rootFolderPath / "ignored_directory_name_1" / "file1.txt", "");
+   _fileSystem.CreateTextFile(_rootFolderPath / "ignored_directory_name_2" / "file1.txt", "");
 }
 
 STARTUP

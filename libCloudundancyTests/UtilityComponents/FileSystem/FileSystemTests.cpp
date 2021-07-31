@@ -33,7 +33,7 @@ AFACT(TryCopyFile_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile_Wr
 AFACT(TryCopyFileWithStdFilesystemCopyFile_CreatesParentFoldersForDestinationFile_CopiesSourceFileToDestinationFileByCallingStdFilesystemCopyFile)
 // File Writes
 AFACT(AppendText_CreatesParentDirectoryToFilePath_AppendsTimestampedTextToFile)
-AFACT(WriteTextFile_CreatesParentDirectoryToFilePath_CreatesFileInTextWriteMode_WritesFileTextToFile_ClosesFile)
+AFACT(CreateTextFile_CreatesParentDirectoryToFilePath_CreatesFileInTextWriteMode_WritesFileTextToFile_ClosesFile)
 // Misc
 AFACT(DeleteFolder_CallsStdFileSystemRemoveAllOnFolderPath)
 AFACT(DeleteFolderContentsExceptForFileName_FolderDoesNotExist_DoesNothing)
@@ -59,17 +59,20 @@ METALMOCK_NONVOID1_FREE(bool, _call_fs_create_directories, const fs::path&)
 METALMOCK_NONVOID1_FREE(bool, _call_fs_exists, const fs::path&)
 METALMOCK_NONVOID1_FREE(size_t, _call_fs_file_size, const fs::path&)
 // Function Callers
-using _caller_FileSize_MockType = NonVoidOneArgMemberFunctionCallerMock<size_t, FileSystem, FILE*>;
-_caller_FileSize_MockType* _caller_FileSizeMock = nullptr;
+using _caller_FileSizeMockType = NonVoidOneArgMemberFunctionCallerMock<size_t, FileSystem, FILE*>;
+_caller_FileSizeMockType* _caller_FileSizeMock = nullptr;
 
 using _caller_FileSystem_DeleteFolderContentsExceptForFileNameMockType = OneExtraArgMemberFunctionForEacherMock<FileSystem, fs::path, string_view>;
 _caller_FileSystem_DeleteFolderContentsExceptForFileNameMockType* _caller_FileSystem_DeleteFolderContentsExceptForFileNameMock = nullptr;
 
-using _caller_ReadFileBytes_MockType = NonVoidOneArgMemberFunctionCallerMock<shared_ptr<const vector<char>>, FileSystem, const fs::path&>;
-_caller_ReadFileBytes_MockType* _caller_ReadFileBytesMock = nullptr;
+using _caller_ReadFileBytesMockType = NonVoidOneArgMemberFunctionCallerMock<shared_ptr<const vector<char>>, FileSystem, const fs::path&>;
+_caller_ReadFileBytesMockType* _caller_ReadFileBytesMock = nullptr;
 
-using _caller_ReadFileText_MockType = NonVoidOneArgMemberFunctionCallerMock<string, FileSystem, const fs::path&>;
-_caller_ReadFileText_MockType* _caller_ReadFileTextMock = nullptr;
+using _caller_ReadFileTextMockType = NonVoidOneArgMemberFunctionCallerMock<string, FileSystem, const fs::path&>;
+_caller_ReadFileTextMockType* _caller_ReadFileTextMock = nullptr;
+
+using _caller_CreateTextFileMockType = VoidTwoArgMemberFunctionCallerMock<FileSystem, const fs::path&, string_view>;
+_caller_CreateTextFileMockType* _caller_CreateTextFileMock = nullptr;
 
 // Constant Components
 AsserterMock* _asserterMock = nullptr;
@@ -97,10 +100,11 @@ STARTUP
    _fileSystem._call_fs_remove_all = BIND_1ARG_METALMOCK_OBJECT(_call_fs_remove_allMock);
    _fileSystem._call_fs_exists = BIND_1ARG_METALMOCK_OBJECT(_call_fs_existsMock);
    // Function Callers
-   _fileSystem._caller_ReadFileBytes.reset(_caller_ReadFileBytesMock = new _caller_ReadFileBytes_MockType);
-   _fileSystem._caller_FileSize.reset(_caller_FileSizeMock = new _caller_FileSize_MockType);
+   _fileSystem._caller_ReadFileBytes.reset(_caller_ReadFileBytesMock = new _caller_ReadFileBytesMockType);
+   _fileSystem._caller_FileSize.reset(_caller_FileSizeMock = new _caller_FileSizeMockType);
    _fileSystem._caller_FileSystem_DeleteFolderContentsExceptForFileName.reset(_caller_FileSystem_DeleteFolderContentsExceptForFileNameMock = new _caller_FileSystem_DeleteFolderContentsExceptForFileNameMockType);
-   _fileSystem._caller_ReadFileText.reset(_caller_ReadFileTextMock = new _caller_ReadFileText_MockType);
+   _fileSystem._caller_ReadFileText.reset(_caller_ReadFileTextMock = new _caller_ReadFileTextMockType);
+   _fileSystem._caller_CreateTextFile.reset(_caller_CreateTextFileMock = new _caller_CreateTextFileMockType);
    // Constant Components
    _fileSystem._asserter.reset(_asserterMock = new AsserterMock);
    _fileSystem._console.reset(_consoleMock = new ConsoleMock);
@@ -145,6 +149,7 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
    DELETE_TO_ASSERT_NEWED(fileSystem._caller_FileSize);
    DELETE_TO_ASSERT_NEWED(fileSystem._caller_ReadFileBytes);
    DELETE_TO_ASSERT_NEWED(fileSystem._caller_ReadFileText);
+   DELETE_TO_ASSERT_NEWED(fileSystem._caller_CreateTextFile);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(fileSystem._asserter);
    DELETE_TO_ASSERT_NEWED(fileSystem._charVectorAllocator);
@@ -506,7 +511,7 @@ TEST(AppendText_CreatesParentDirectoryToFilePath_AppendsTimestampedTextToFile)
    METALMOCK(_fileOpenerCloserMock->CloseFileMock.CalledOnceWith(&appendModeTextFileHandle));
 }
 
-TEST(WriteTextFile_CreatesParentDirectoryToFilePath_CreatesFileInTextWriteMode_WritesFileTextToFile_ClosesFile)
+TEST(CreateTextFile_CreatesParentDirectoryToFilePath_CreatesFileInTextWriteMode_WritesFileTextToFile_ClosesFile)
 {
    _call_fs_create_directoriesMock.ReturnRandom();
 
@@ -522,7 +527,7 @@ TEST(WriteTextFile_CreatesParentDirectoryToFilePath_CreatesFileInTextWriteMode_W
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const string fileText = ZenUnit::Random<string>();
    //
-   _fileSystem.WriteTextFile(filePath, fileText);
+   _fileSystem.CreateTextFile(filePath, fileText);
    //
    const fs::path expectedParentFolderPath = filePath.parent_path();
    METALMOCK(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentFolderPath));
@@ -559,23 +564,27 @@ TEST(DeleteFolderContentsExceptForFileName_FolderDoesNotExist_DoesNothing)
 TEST(DeleteFolderContentsExceptForFileName_FolderExists_InitializedRecursiveDirectoryIteratorField_CallsRecursivelyDeleteAllFilesExceptIgnoredFileSubpaths_PrintsDeletedFolderExceptForCloudundancyDotLog)
 {
    _call_fs_existsMock.Return(true);
-   _recursiveDirectoryIteratorMock->SetFileSubpathsToIgnoreMock.Expect();
-   _recursiveDirectoryIteratorMock->InitializeIteratorAtFolderPathMock.Expect();
-   _recursiveDirectoryIteratorMock->RecursivelyDeleteAllFilesExceptIgnoredFileSubpathsMock.Expect();
+
+   const string textOfExceptFile = _caller_ReadFileTextMock->CallConstMemberFunctionMock.ReturnRandom();
+
    _consoleMock->WriteLineMock.Expect();
+
+   _call_fs_remove_allMock.ReturnRandom();
+
+   _caller_CreateTextFileMock->CallConstMemberFunctionMock.Expect();
+
    const fs::path folderPath = ZenUnit::Random<fs::path>();
    const string exceptFileName = ZenUnit::Random<string>();
    //
    _fileSystem.DeleteFolderContentsExceptForFileName(folderPath, exceptFileName);
    //
    METALMOCK(_call_fs_existsMock.CalledOnceWith(folderPath));
+   const fs::path expectedExceptFilePath = folderPath / exceptFileName;
+   METALMOCK(_caller_ReadFileTextMock->CallConstMemberFunctionMock.CalledOnceWith(&FileSystem::ReadFileText, &_fileSystem, expectedExceptFilePath));
+   METALMOCK(_call_fs_remove_allMock.CalledOnceWith(folderPath));
+   METALMOCK(_caller_CreateTextFileMock->CallConstMemberFunctionMock.CalledOnceWith(&FileSystem::CreateTextFile, &_fileSystem, expectedExceptFilePath, textOfExceptFile));
    const vector<string> expectedFileSubpathsToNotIterate{ string(exceptFileName) };
-   METALMOCK(_recursiveDirectoryIteratorMock->SetFileSubpathsToIgnoreMock.CalledOnceWith(expectedFileSubpathsToNotIterate));
-   METALMOCK(_recursiveDirectoryIteratorMock->InitializeIteratorAtFolderPathMock.CalledOnceWith(folderPath));
-   METALMOCK(_recursiveDirectoryIteratorMock->RecursivelyDeleteAllFilesExceptIgnoredFileSubpathsMock.CalledOnce());
-   _recursiveDirectoryIteratorMock->InitializeIteratorAtFolderPathMock.Expect();
-   const string expectedDeletedFolderMessage = String::ConcatStrings(
-      "[Cloudundancy] Deleted folder ", folderPath.string(), " except for ", exceptFileName);
+   const string expectedDeletedFolderMessage = String::ConcatStrings("[Cloudundancy] Deleted folder ", folderPath.string(), " except for ", exceptFileName);
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedDeletedFolderMessage));
 }
 
