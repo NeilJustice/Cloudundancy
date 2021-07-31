@@ -23,29 +23,32 @@ private:
    function<size_t(const void*, size_t, size_t, FILE*)> _call_fwrite;
 
    // std::filesystem Function Pointers
-   using CopyFileOverloadType = bool(*)(const fs::path&, const fs::path&, fs::copy_options);
-   using CurrentPathOverloadType = void(*)(const fs::path&);
-   using ExistsOverloadType = bool(*)(const fs::path&);
-   using FileSizeOverloadType = size_t(*)(const fs::path&);
-   using RemoveAllOverloadType = uintmax_t(*)(const fs::path&);
-   function<bool(const fs::path&, const fs::path&, fs::copy_options)> _call_std_filesystem_copy_file;
-   function<void(const fs::path&)> _call_std_filesystem_current_path;
+   using FSCopyFileFunctionOverloadType = bool(*)(const fs::path&, const fs::path&, fs::copy_options);
+   function<bool(const fs::path&, const fs::path&, fs::copy_options)> _call_fs_copy_file;
+
+   using FSCurrentPathFunctionOverloadType = void(*)(const fs::path&);
+   function<void(const fs::path&)> _call_fs_current_path;
 
    using CreateDirectoriesOverloadType = bool(*)(const fs::path&);
    bool(*_call_fs_create_directories_as_assignable_function_overload_pointer)(const fs::path&);
    function<bool(const fs::path&)> _call_std_filesystem_create_directories;
 
-   bool(*_call_std_filesystem_exists_as_assignable_function_overload_pointer)(const fs::path&);
+   using FSRemoveAllFunctionOverloadType = unsigned long long(*)(const fs::path&);
+   function<unsigned long long(const fs::path&)> _call_fs_remove_all;
+
+   using FSExistsFunctionOverloadType = bool(*)(const fs::path&);
+   bool(*_call_fs_exists_as_assignable_function_overload_pointer)(const fs::path&);
    function<bool(const fs::path&)> _call_std_filesystem_exists;
-   function<size_t(const fs::path&)> _call_std_filesystem_file_size;
-   function<uintmax_t(const fs::path&)> _call_std_filesystem_remove_all;
+
+   using FSFileSizeFunctionOverloadType = size_t(*)(const fs::path&);
+   function<size_t(const fs::path&)> _call_fs_file_size;
 
    // Function Callers
    using _caller_FileSize_Type = NonVoidOneArgMemberFunctionCaller<size_t, FileSystem, FILE*>;
    unique_ptr<const _caller_FileSize_Type> _caller_FileSize;
 
-   using _caller_FileSystem_DeleteFolderExceptForFileType = OneExtraArgMemberFunctionForEacher<FileSystem, fs::path, string_view>;
-   unique_ptr<const _caller_FileSystem_DeleteFolderExceptForFileType> _caller_FileSystem_DeleteFolderExceptForFile;
+   using _caller_FileSystem_DeleteFolderContentsExceptForFileNameType = OneExtraArgMemberFunctionForEacher<FileSystem, fs::path, string_view>;
+   unique_ptr<const _caller_FileSystem_DeleteFolderContentsExceptForFileNameType> _caller_FileSystem_DeleteFolderContentsExceptForFileName;
 
    using _caller_ReadFileBytes_Type = NonVoidOneArgMemberFunctionCaller<shared_ptr<const vector<char>>, FileSystem, const fs::path&>;
    unique_ptr<const _caller_ReadFileBytes_Type> _caller_ReadFileBytes;
@@ -86,7 +89,7 @@ public:
 
    // Misc
    virtual void DeleteFolder(const fs::path& folderPath) const;
-   virtual void DeleteFolderExceptForFile(const fs::path& folderPath, string_view exceptFileName) const;
+   virtual void DeleteFolderContentsExceptForFileName(const fs::path& folderPath, string_view exceptFileName) const;
    virtual void DeleteFoldersExceptForFile(const vector<fs::path>& folderPaths, string_view exceptFileName) const;
    virtual void SetCurrentPath(const fs::path& folderPath) const;
 private:

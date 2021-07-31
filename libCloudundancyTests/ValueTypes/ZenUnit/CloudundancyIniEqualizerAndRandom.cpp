@@ -9,7 +9,7 @@ namespace ZenUnit
       VECTORS_ARE_EQUAL(expectedCloudundancyIni.iniFileLines, actualCloudundancyIni.iniFileLines);
       VECTORS_ARE_EQUAL(expectedCloudundancyIni.destinationFolderPaths, actualCloudundancyIni.destinationFolderPaths);
       VECTORS_ARE_EQUAL(expectedCloudundancyIni.cloudundancyIniCopyInstructions, actualCloudundancyIni.cloudundancyIniCopyInstructions);
-      VECTORS_ARE_EQUAL(expectedCloudundancyIni.fileSubpathsToNotCopy, actualCloudundancyIni.fileSubpathsToNotCopy);
+      VECTORS_ARE_EQUAL(expectedCloudundancyIni.fileSubpathsToIgnore, actualCloudundancyIni.fileSubpathsToIgnore);
    }
 
    CloudundancyIni TestableRandomCloudundancyIni(const ZenUnit::RandomGenerator* randomGenerator)
@@ -23,7 +23,7 @@ namespace ZenUnit
       {
          randomCloudundancyIni.cloudundancyIniCopyInstructions[i] = ZenUnit::Random<CloudundancyIniCopyInstruction>();
       }
-      randomCloudundancyIni.fileSubpathsToNotCopy = randomGenerator->StringVector();
+      randomCloudundancyIni.fileSubpathsToIgnore = randomGenerator->StringVector();
       return randomCloudundancyIni;
    }
 

@@ -44,10 +44,9 @@ void CloudundancyFileCopier::CopyFilesAndFoldersToMultipleDestinationFolders(
       "[Cloudundancy] Copying [SourceFilesAndFolders] to [DestinationFolders] as listed in ", iniFilePath.string(), ":\n");
    _console->WriteLineColor(copyingMessage, Color::Teal);
    _console->WriteLines(cloudundancyIni.iniFileLines);
-   _recursiveDirectoryIterator->SetFileSubpathsToIgnore(cloudundancyIni.fileSubpathsToNotCopy);
+   _recursiveDirectoryIterator->SetFileSubpathsToIgnore(cloudundancyIni.fileSubpathsToIgnore);
    _memberForEacher_CopyEachFileOrFolderToFolder->CallConstMemberFunctionForEachElement(
-      cloudundancyIni.destinationFolderPaths,
-      &CloudundancyFileCopier::CopyFilesAndFoldersToDestinationFolder, this, cloudundancyIni);
+      cloudundancyIni.destinationFolderPaths, &CloudundancyFileCopier::CopyFilesAndFoldersToDestinationFolder, this, cloudundancyIni);
 }
 
 // Private Functions

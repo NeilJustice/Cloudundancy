@@ -5,7 +5,7 @@ struct CloudundancyIni
    vector<string> iniFileLines;
    vector<fs::path> destinationFolderPaths;
    vector<CloudundancyIniCopyInstruction> cloudundancyIniCopyInstructions;
-   vector<string> fileSubpathsToNotCopy;
+   vector<string> fileSubpathsToIgnore;
 };
 
 #ifdef _WIN32

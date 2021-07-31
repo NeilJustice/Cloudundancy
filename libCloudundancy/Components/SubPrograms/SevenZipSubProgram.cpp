@@ -52,7 +52,7 @@ void SevenZipSubProgram::DeleteBackupStagingFolder(const CloudundancyArgs& args)
    _console->WriteLine(deletingMessage);
    _stopwatch->Start();
 
-   _fileSystem->DeleteFolderExceptForFile(args.sevenZipStagingFolderPath, "Cloudundancy.log");
+   _fileSystem->DeleteFolderContentsExceptForFileName(args.sevenZipStagingFolderPath, "Cloudundancy.log");
 
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string deletedMessage = String::ConcatStrings(

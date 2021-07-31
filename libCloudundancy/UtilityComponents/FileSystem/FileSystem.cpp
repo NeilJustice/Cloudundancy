@@ -14,15 +14,15 @@ FileSystem::FileSystem()
    , _call_ftell(ftell)
    , _call_fwrite(fwrite)
    // std::filesystem Function Pointers
-   , _call_std_filesystem_copy_file(static_cast<CopyFileOverloadType>(fs::copy_file))
-   , _call_std_filesystem_current_path(static_cast<void(*)(const fs::path&)>(fs::current_path))
+   , _call_fs_copy_file(static_cast<FSCopyFileFunctionOverloadType>(fs::copy_file))
+   , _call_fs_current_path(static_cast<void(*)(const fs::path&)>(fs::current_path))
    , _call_fs_create_directories_as_assignable_function_overload_pointer(fs::create_directories)
-   , _call_std_filesystem_exists_as_assignable_function_overload_pointer(fs::exists)
-   , _call_std_filesystem_file_size(static_cast<FileSizeOverloadType>(fs::file_size))
-   , _call_std_filesystem_remove_all(static_cast<RemoveAllOverloadType>(fs::remove_all))
+   , _call_fs_remove_all(static_cast<FSRemoveAllFunctionOverloadType>(fs::remove_all))
+   , _call_fs_exists_as_assignable_function_overload_pointer(fs::exists)
+   , _call_fs_file_size(static_cast<FSFileSizeFunctionOverloadType>(fs::file_size))
    // Function Callers
    , _caller_FileSize(make_unique<_caller_FileSize_Type>())
-   , _caller_FileSystem_DeleteFolderExceptForFile(make_unique<_caller_FileSystem_DeleteFolderExceptForFileType>())
+   , _caller_FileSystem_DeleteFolderContentsExceptForFileName(make_unique<_caller_FileSystem_DeleteFolderContentsExceptForFileNameType>())
    , _caller_ReadFileBytes(make_unique<_caller_ReadFileBytes_Type>())
    , _caller_ReadFileText(make_unique< _caller_ReadFileText_Type>())
    // Constant Components
@@ -35,7 +35,7 @@ FileSystem::FileSystem()
    , _stopwatch(make_unique<Stopwatch>())
 {
    _call_std_filesystem_create_directories = _call_fs_create_directories_as_assignable_function_overload_pointer;
-   _call_std_filesystem_exists = _call_std_filesystem_exists_as_assignable_function_overload_pointer;
+   _call_std_filesystem_exists = _call_fs_exists_as_assignable_function_overload_pointer;
 }
 
 FileSystem::~FileSystem()
@@ -67,8 +67,7 @@ void FileSystem::ThrowIfFilePathIsNotEmptyAndDoesNotExist(const fs::path& filePa
 shared_ptr<const vector<char>> FileSystem::ReadFileBytes(const fs::path& filePath) const
 {
    FILE* const readModeBinaryFileHandle = _fileOpenerCloser->OpenReadModeBinaryFile(filePath);
-   const size_t fileSizeInBytes = _caller_FileSize->CallConstMemberFunction(
-      &FileSystem::FileSize, this, readModeBinaryFileHandle);
+   const size_t fileSizeInBytes = _caller_FileSize->CallConstMemberFunction(&FileSystem::FileSize, this, readModeBinaryFileHandle);
    if (fileSizeInBytes == 0)
    {
       _fileOpenerCloser->CloseFile(readModeBinaryFileHandle);
@@ -87,8 +86,7 @@ shared_ptr<const vector<char>> FileSystem::ReadFileBytes(const fs::path& filePat
 string FileSystem::ReadFileText(const fs::path& filePath) const
 {
    FILE* const readModeTextFileHandle = _fileOpenerCloser->OpenReadModeTextFile(filePath);
-   const size_t fileSizeInBytes = _caller_FileSize->CallConstMemberFunction(
-      &FileSystem::FileSize, this, readModeTextFileHandle);
+   const size_t fileSizeInBytes = _caller_FileSize->CallConstMemberFunction(&FileSystem::FileSize, this, readModeTextFileHandle);
    if (fileSizeInBytes == 0)
    {
       _fileOpenerCloser->CloseFile(readModeTextFileHandle);
@@ -154,15 +152,14 @@ FileCopyResult FileSystem::TryCopyFileWithStdFilesystemCopyFile(
    FileCopyResult fileCopyResult;
    fileCopyResult.sourceFilePath = sourceFilePath;
    fileCopyResult.destinationFilePath = destinationFilePath;
-   fileCopyResult.copySucceeded = _call_std_filesystem_copy_file(
-      sourceFilePath, destinationFilePath, fs::copy_options::overwrite_existing);
+   fileCopyResult.copySucceeded = _call_fs_copy_file(sourceFilePath, destinationFilePath, fs::copy_options::overwrite_existing);
    fileCopyResult.durationInMilliseconds = _stopwatch->StopAndGetElapsedMilliseconds();
    return fileCopyResult;
 }
 
 bool FileSystem::IsFileSizeGreaterThanOrEqualTo2GB(const fs::path& filePath) const
 {
-   const size_t fileSizeInBytes = _call_std_filesystem_file_size(filePath);
+   const size_t fileSizeInBytes = _call_fs_file_size(filePath);
    constexpr size_t NumberOfBytesIn2GB = 2ULL * 1024ULL * 1024ULL * 1024ULL;
    static_assert(NumberOfBytesIn2GB == 2147483648);
    if (fileSizeInBytes >= NumberOfBytesIn2GB)
@@ -202,34 +199,33 @@ void FileSystem::WriteTextFile(const fs::path& filePath, string_view fileText) c
 
 void FileSystem::DeleteFolder(const fs::path& folderPath) const
 {
-   _call_std_filesystem_remove_all(folderPath);
+   _call_fs_remove_all(folderPath);
 }
 
-void FileSystem::DeleteFolderExceptForFile(const fs::path& folderPath, string_view exceptFileName) const
+void FileSystem::DeleteFolderContentsExceptForFileName(const fs::path& folderPath, string_view exceptFileName) const
 {
    const bool folderPathExists = _call_std_filesystem_exists(folderPath);
    if (!folderPathExists)
    {
       return;
    }
-   const vector<string> fileSubpathsToNotIterate{ string(exceptFileName) };
-   _recursiveDirectoryIterator->SetFileSubpathsToIgnore(fileSubpathsToNotIterate);
+   const vector<string> fileSubpathsToNotDelete{ string(exceptFileName) };
+   _recursiveDirectoryIterator->SetFileSubpathsToIgnore(fileSubpathsToNotDelete);
    _recursiveDirectoryIterator->InitializeIteratorAtFolderPath(folderPath);
    _recursiveDirectoryIterator->RecursivelyDeleteAllFilesExceptIgnoredFileSubpaths();
-   const string deletedFolderMessage = String::ConcatStrings(
-      "[Cloudundancy] Deleted folder ", folderPath.string(), " except for ", exceptFileName);
+   const string deletedFolderMessage = String::ConcatStrings("[Cloudundancy] Deleted folder ", folderPath.string(), " except for ", exceptFileName);
    _console->WriteLine(deletedFolderMessage);
 }
 
 void FileSystem::DeleteFoldersExceptForFile(const vector<fs::path>& folderPaths, string_view exceptFileName) const
 {
-   _caller_FileSystem_DeleteFolderExceptForFile->CallConstMemberFunctionForEachElement(
-      folderPaths, &FileSystem::DeleteFolderExceptForFile, this, exceptFileName);
+   _caller_FileSystem_DeleteFolderContentsExceptForFileName->CallConstMemberFunctionForEachElement(
+      folderPaths, &FileSystem::DeleteFolderContentsExceptForFileName, this, exceptFileName);
 }
 
 void FileSystem::SetCurrentPath(const fs::path& folderPath) const
 {
-   _call_std_filesystem_current_path(folderPath);
+   _call_fs_current_path(folderPath);
 }
 
 // Private Functions
@@ -237,12 +233,10 @@ void FileSystem::SetCurrentPath(const fs::path& folderPath) const
 size_t FileSystem::FileSize(FILE* fileHandle) const
 {
    const int fseekEndReturnValue = _call_fseek(fileHandle, 0, SEEK_END);
-   _asserter->ThrowIfIntsNotEqual(0, fseekEndReturnValue,
-      "fseek(fileHandle, 0, SEEK_END) in FileSystem::FileSize() unexpectedly did not return 0");
+   _asserter->ThrowIfIntsNotEqual(0, fseekEndReturnValue, "fseek(fileHandle, 0, SEEK_END) in FileSystem::FileSize() unexpectedly did not return 0");
    const long ftellReturnValue = _call_ftell(fileHandle);
    const int fseekSetReturnValue = _call_fseek(fileHandle, 0, SEEK_SET);
-   _asserter->ThrowIfIntsNotEqual(0, fseekSetReturnValue,
-      "fseek(fileHandle, 0, SEEK_SET) in FileSystem::FileSize() unexpectedly did not return 0");
+   _asserter->ThrowIfIntsNotEqual(0, fseekSetReturnValue, "fseek(fileHandle, 0, SEEK_SET) in FileSystem::FileSize() unexpectedly did not return 0");
    const size_t fileSizeInBytes = static_cast<size_t>(ftellReturnValue);
    return fileSizeInBytes;
 }

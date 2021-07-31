@@ -36,9 +36,9 @@ AFACT(AppendText_CreatesParentDirectoryToFilePath_AppendsTimestampedTextToFile)
 AFACT(WriteTextFile_CreatesParentDirectoryToFilePath_CreatesFileInTextWriteMode_WritesFileTextToFile_ClosesFile)
 // Misc
 AFACT(DeleteFolder_CallsStdFileSystemRemoveAllOnFolderPath)
-AFACT(DeleteFolderExceptForFile_FolderDoesNotExist_DoesNothing)
-AFACT(DeleteFolderExceptForFile_FolderExists_InitializedRecursiveDirectoryIteratorField_CallsRecursivelyDeleteAllFilesExceptIgnoredFileSubpaths_PrintsDeletedFolderExceptForCloudundancyDotLog)
-AFACT(DeleteFoldersExceptForFile_CallsDeleteFolderExceptForFileOnEachFolderPath_PrintsDeletedFolderMessages)
+AFACT(DeleteFolderContentsExceptForFileName_FolderDoesNotExist_DoesNothing)
+AFACT(DeleteFolderContentsExceptForFileName_FolderExists_InitializedRecursiveDirectoryIteratorField_CallsRecursivelyDeleteAllFilesExceptIgnoredFileSubpaths_PrintsDeletedFolderExceptForCloudundancyDotLog)
+AFACT(DeleteFoldersExceptForFile_CallsDeleteFolderContentsExceptForFileNameOnEachFolderPath_PrintsDeletedFolderMessages)
 AFACT(SetCurrentPath_CallsFsCurrentPathWithFolderPath)
 // Private Functions
 AFACT(FileSize_CallsFSeekEndThenFTellToDetermineSizeOfFileInBytes)
@@ -52,19 +52,18 @@ METALMOCK_NONVOID3_FREE(int, fseek, FILE*, long, int)
 METALMOCK_NONVOID1_FREE(long, ftell, FILE*)
 METALMOCK_NONVOID4_FREE(size_t, fwrite, const void*, size_t, size_t, FILE*)
 // std::filesystem Function Pointers
-METALMOCK_NONVOID3_FREE(bool, _call_std_filesystem_copy_file, const fs::path&, const fs::path&, fs::copy_options)
-METALMOCK_VOID1_FREE(_call_std_filesystem_current_path, const fs::path&)
+METALMOCK_NONVOID3_FREE(bool, _call_fs_copy_file, const fs::path&, const fs::path&, fs::copy_options)
+METALMOCK_VOID1_FREE(_call_fs_current_path, const fs::path&)
+METALMOCK_NONVOID1_FREE(unsigned long long, _call_fs_remove_all, const fs::path&)
 METALMOCK_NONVOID1_FREE(bool, _call_std_filesystem_create_directories, const fs::path&)
 METALMOCK_NONVOID1_FREE(bool, _call_std_filesystem_exists, const fs::path&)
-METALMOCK_NONVOID1_FREE(size_t, _call_std_filesystem_file_size, const fs::path&)
-METALMOCK_NONVOID1_FREE(uintmax_t, _call_std_filesytem_remove_all, const fs::path&)
+METALMOCK_NONVOID1_FREE(size_t, _call_fs_file_size, const fs::path&)
 // Function Callers
 using _caller_FileSize_MockType = NonVoidOneArgMemberFunctionCallerMock<size_t, FileSystem, FILE*>;
 _caller_FileSize_MockType* _caller_FileSizeMock = nullptr;
 
-using _caller_FileSystem_DeleteFolderExceptForFileMockType =
-   OneExtraArgMemberFunctionForEacherMock<FileSystem, fs::path, string_view>;
-_caller_FileSystem_DeleteFolderExceptForFileMockType* _caller_FileSystem_DeleteFolderExceptForFileMock = nullptr;
+using _caller_FileSystem_DeleteFolderContentsExceptForFileNameMockType = OneExtraArgMemberFunctionForEacherMock<FileSystem, fs::path, string_view>;
+_caller_FileSystem_DeleteFolderContentsExceptForFileNameMockType* _caller_FileSystem_DeleteFolderContentsExceptForFileNameMock = nullptr;
 
 using _caller_ReadFileBytes_MockType = NonVoidOneArgMemberFunctionCallerMock<shared_ptr<const vector<char>>, FileSystem, const fs::path&>;
 _caller_ReadFileBytes_MockType* _caller_ReadFileBytesMock = nullptr;
@@ -91,16 +90,16 @@ STARTUP
    _fileSystem._call_ftell = BIND_1ARG_METALMOCK_OBJECT(ftellMock);
    _fileSystem._call_fwrite = BIND_4ARG_METALMOCK_OBJECT(fwriteMock);
    // std::filesystem Function Pointers
-   _fileSystem._call_std_filesystem_copy_file = BIND_3ARG_METALMOCK_OBJECT(_call_std_filesystem_copy_fileMock);
-   _fileSystem._call_std_filesystem_current_path = BIND_1ARG_METALMOCK_OBJECT(_call_std_filesystem_current_pathMock);
+   _fileSystem._call_fs_copy_file = BIND_3ARG_METALMOCK_OBJECT(_call_fs_copy_fileMock);
+   _fileSystem._call_fs_current_path = BIND_1ARG_METALMOCK_OBJECT(_call_fs_current_pathMock);
    _fileSystem._call_std_filesystem_create_directories = BIND_1ARG_METALMOCK_OBJECT(_call_std_filesystem_create_directoriesMock);
-   _fileSystem._call_std_filesystem_file_size = BIND_1ARG_METALMOCK_OBJECT(_call_std_filesystem_file_sizeMock);
-   _fileSystem._call_std_filesystem_remove_all = BIND_1ARG_METALMOCK_OBJECT(_call_std_filesytem_remove_allMock);
+   _fileSystem._call_fs_file_size = BIND_1ARG_METALMOCK_OBJECT(_call_fs_file_sizeMock);
+   _fileSystem._call_fs_remove_all = BIND_1ARG_METALMOCK_OBJECT(_call_fs_remove_allMock);
    _fileSystem._call_std_filesystem_exists = BIND_1ARG_METALMOCK_OBJECT(_call_std_filesystem_existsMock);
    // Function Callers
    _fileSystem._caller_ReadFileBytes.reset(_caller_ReadFileBytesMock = new _caller_ReadFileBytes_MockType);
    _fileSystem._caller_FileSize.reset(_caller_FileSizeMock = new _caller_FileSize_MockType);
-   _fileSystem._caller_FileSystem_DeleteFolderExceptForFile.reset(_caller_FileSystem_DeleteFolderExceptForFileMock = new _caller_FileSystem_DeleteFolderExceptForFileMockType);
+   _fileSystem._caller_FileSystem_DeleteFolderContentsExceptForFileName.reset(_caller_FileSystem_DeleteFolderContentsExceptForFileNameMock = new _caller_FileSystem_DeleteFolderContentsExceptForFileNameMockType);
    _fileSystem._caller_ReadFileText.reset(_caller_ReadFileTextMock = new _caller_ReadFileText_MockType);
    // Constant Components
    _fileSystem._asserter.reset(_asserterMock = new AsserterMock);
@@ -135,12 +134,12 @@ TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
    STD_FUNCTION_TARGETS(fwrite, fileSystem._call_fwrite);
    // std::filesystem Function Pointers
 #ifdef _WIN32
-   STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::CopyFileOverloadType, fs::copy_file, fileSystem._call_std_filesystem_copy_file);
-   STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::CurrentPathOverloadType, fs::current_path, fileSystem._call_std_filesystem_current_path);
+   STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::FSCopyFileFunctionOverloadType, fs::copy_file, fileSystem._call_fs_copy_file);
+   STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::FSCurrentPathFunctionOverloadType, fs::current_path, fileSystem._call_fs_current_path);
    STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::CreateDirectoriesOverloadType, fs::create_directories, fileSystem._call_std_filesystem_create_directories);
-   STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::ExistsOverloadType, fs::exists, fileSystem._call_std_filesystem_exists);
-   STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::FileSizeOverloadType, fs::file_size, fileSystem._call_std_filesystem_file_size);
-   STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::RemoveAllOverloadType, fs::remove_all, fileSystem._call_std_filesystem_remove_all);
+   STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::FSExistsFunctionOverloadType, fs::exists, fileSystem._call_std_filesystem_exists);
+   STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::FSFileSizeFunctionOverloadType, fs::file_size, fileSystem._call_fs_file_size);
+   STD_FUNCTION_TARGETS_OVERLOAD(FileSystem::FSRemoveAllFunctionOverloadType, fs::remove_all, fileSystem._call_fs_remove_all);
 #endif
    // Function Callers
    DELETE_TO_ASSERT_NEWED(fileSystem._caller_FileSize);
@@ -200,7 +199,7 @@ TEST(ThrowIfFilePathIsNotEmptyAndDoesNotExist_FilePathIsNotEmpty_FilePathDoesNot
 
 TEST(ReadFileText_OpensFileInTextReadMode_FileSizeIs0_ClosesFile_ReturnsEmptyString)
 {
-   FILE readModeTextFileHandle;
+   FILE readModeTextFileHandle{};
    _fileOpenerCloserMock->OpenReadModeTextFileMock.Return(&readModeTextFileHandle);
 
    _caller_FileSizeMock->CallConstMemberFunctionMock.Return(0);
@@ -220,7 +219,7 @@ TEST(ReadFileText_OpensFileInTextReadMode_FileSizeIs0_ClosesFile_ReturnsEmptyStr
 
 TEST(ReadFileText_OpensFileInTextReadMode_FileSizeIsNot0_ReadsFileText_ClosesFile_ReturnsFileBytes)
 {
-   FILE readModeTextFileHandle;
+   FILE readModeTextFileHandle{};
    _fileOpenerCloserMock->OpenReadModeTextFileMock.Return(&readModeTextFileHandle);
 
    const size_t fileSizeInBytes = ZenUnit::RandomBetween<size_t>(1, 3);
@@ -279,7 +278,7 @@ TEST2X2(ReadFileLinesWhichMustBeNonEmpty_FileTextIsNotEmpty_ReturnsFileTextSplit
 
 TEST(ReadFileBytes_OpensFileInBinaryReadMode_FileSizeIs0_ClosesFile_ReturnsSharedPtrToEmptyCharVector)
 {
-   FILE readModeBinaryFileHandle;
+   FILE readModeBinaryFileHandle{};
    _fileOpenerCloserMock->OpenReadModeBinaryFileMock.Return(&readModeBinaryFileHandle);
 
    _caller_FileSizeMock->CallConstMemberFunctionMock.Return(0);
@@ -299,7 +298,7 @@ TEST(ReadFileBytes_OpensFileInBinaryReadMode_FileSizeIs0_ClosesFile_ReturnsShare
 
 TEST(ReadFileBytes_OpensFileInBinaryReadMode_FileSizeIsNot0_ReadsFileBytes_ClosesFile_ReturnsSharedPtrToFileBytes)
 {
-   FILE readModeBinaryFileHandle;
+   FILE readModeBinaryFileHandle{};
    _fileOpenerCloserMock->OpenReadModeBinaryFileMock.Return(&readModeBinaryFileHandle);
 
    const size_t fileSizeInBytes = ZenUnit::RandomBetween<size_t>(1, 3);
@@ -340,12 +339,12 @@ TEST1X1(IsFileSizeGreaterThanOrEqualTo2GB_FileSizeIsGreaterThanOrEqualTo2GB_Retu
    2ULL * 1024ULL * 1024ULL * 1024ULL + 2,
    10ULL * 1024ULL * 1024ULL * 1024ULL)
 {
-   _call_std_filesystem_file_sizeMock.Return(fileSize);
+   _call_fs_file_sizeMock.Return(fileSize);
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
    const bool isFileSizeGreaterThanOrEqualTo2GB = _fileSystem.IsFileSizeGreaterThanOrEqualTo2GB(filePath);
    //
-   METALMOCK(_call_std_filesystem_file_sizeMock.CalledOnceWith(filePath));
+   METALMOCK(_call_fs_file_sizeMock.CalledOnceWith(filePath));
    IS_TRUE(isFileSizeGreaterThanOrEqualTo2GB);
 }
 
@@ -356,12 +355,12 @@ TEST1X1(IsFileSizeGreaterThanOrEqualTo2GB_FileSizeIsLessThan2GB_ReturnsFalse,
    2ULL * 1024ULL * 1024ULL * 1024ULL - 2,
    2ULL * 1024ULL * 1024ULL * 1024ULL - 1)
 {
-   _call_std_filesystem_file_sizeMock.Return(fileSize);
+   _call_fs_file_sizeMock.Return(fileSize);
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
    const bool isFileSizeGreaterThanOrEqualTo2GB = _fileSystem.IsFileSizeGreaterThanOrEqualTo2GB(filePath);
    //
-   METALMOCK(_call_std_filesystem_file_sizeMock.CalledOnceWith(filePath));
+   METALMOCK(_call_fs_file_sizeMock.CalledOnceWith(filePath));
    IS_FALSE(isFileSizeGreaterThanOrEqualTo2GB);
 }
 
@@ -374,7 +373,7 @@ TEST(TryCopyFile_SourceFileIsEmpty_CreatesParentFoldersForDestinationFile_Create
 
    _call_std_filesystem_create_directoriesMock.ReturnRandom();
 
-   FILE writeModeDestinationBinaryFileHandle;
+   FILE writeModeDestinationBinaryFileHandle{};
    _fileOpenerCloserMock->CreateWriteModeBinaryFileMock.Return(&writeModeDestinationBinaryFileHandle);
 
    _asserterMock->ThrowIfSizeTsNotEqualMock.Expect();
@@ -415,7 +414,7 @@ TEST(TryCopyFile_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile_Wri
 
    _call_std_filesystem_create_directoriesMock.ReturnRandom();
 
-   FILE writeModeDestinationBinaryFileHandle;
+   FILE writeModeDestinationBinaryFileHandle{};
    _fileOpenerCloserMock->CreateWriteModeBinaryFileMock.Return(&writeModeDestinationBinaryFileHandle);
 
    _asserterMock->ThrowIfSizeTsNotEqualMock.Expect();
@@ -456,7 +455,7 @@ TEST(TryCopyFileWithStdFilesystemCopyFile_CreatesParentFoldersForDestinationFile
    _stopwatchMock->StartMock.Expect();
    _call_std_filesystem_create_directoriesMock.ReturnRandom();
    const unsigned long long elapsedMilliseconds = _stopwatchMock->StopAndGetElapsedMillisecondsMock.ReturnRandom();
-   const bool copyFileReturnValue = _call_std_filesystem_copy_fileMock.ReturnRandom();
+   const bool copyFileReturnValue = _call_fs_copy_fileMock.ReturnRandom();
 
    const fs::path sourceFilePath = ZenUnit::Random<fs::path>();
    const fs::path destinationFilePath = ZenUnit::Random<fs::path>();
@@ -467,7 +466,7 @@ TEST(TryCopyFileWithStdFilesystemCopyFile_CreatesParentFoldersForDestinationFile
    const fs::path expectedParentPathOfDestinationFilePath = destinationFilePath.parent_path();
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    METALMOCK(_call_std_filesystem_create_directoriesMock.CalledOnceWith(expectedParentPathOfDestinationFilePath));
-   METALMOCK(_call_std_filesystem_copy_fileMock.CalledOnceWith(sourceFilePath, destinationFilePath, fs::copy_options::overwrite_existing));
+   METALMOCK(_call_fs_copy_fileMock.CalledOnceWith(sourceFilePath, destinationFilePath, fs::copy_options::overwrite_existing));
    METALMOCK(_stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
    FileCopyResult expectedFileCopyResult;
    expectedFileCopyResult.sourceFilePath = sourceFilePath;
@@ -538,26 +537,26 @@ TEST(WriteTextFile_CreatesParentDirectoryToFilePath_CreatesFileInTextWriteMode_W
 
 TEST(DeleteFolder_CallsStdFileSystemRemoveAllOnFolderPath)
 {
-   _call_std_filesytem_remove_allMock.ReturnRandom();
+   _call_fs_remove_allMock.ReturnRandom();
    const fs::path folderPath = ZenUnit::Random<fs::path>();
    //
    _fileSystem.DeleteFolder(folderPath);
    //
-   METALMOCK(_call_std_filesytem_remove_allMock.CalledOnceWith(folderPath));
+   METALMOCK(_call_fs_remove_allMock.CalledOnceWith(folderPath));
 }
 
-TEST(DeleteFolderExceptForFile_FolderDoesNotExist_DoesNothing)
+TEST(DeleteFolderContentsExceptForFileName_FolderDoesNotExist_DoesNothing)
 {
    _call_std_filesystem_existsMock.Return(false);
    const fs::path folderPath = ZenUnit::Random<fs::path>();
    const string exceptFileName = ZenUnit::Random<string>();
    //
-   _fileSystem.DeleteFolderExceptForFile(folderPath, exceptFileName);
+   _fileSystem.DeleteFolderContentsExceptForFileName(folderPath, exceptFileName);
    //
    METALMOCK(_call_std_filesystem_existsMock.CalledOnceWith(folderPath));
 }
 
-TEST(DeleteFolderExceptForFile_FolderExists_InitializedRecursiveDirectoryIteratorField_CallsRecursivelyDeleteAllFilesExceptIgnoredFileSubpaths_PrintsDeletedFolderExceptForCloudundancyDotLog)
+TEST(DeleteFolderContentsExceptForFileName_FolderExists_InitializedRecursiveDirectoryIteratorField_CallsRecursivelyDeleteAllFilesExceptIgnoredFileSubpaths_PrintsDeletedFolderExceptForCloudundancyDotLog)
 {
    _call_std_filesystem_existsMock.Return(true);
    _recursiveDirectoryIteratorMock->SetFileSubpathsToIgnoreMock.Expect();
@@ -567,7 +566,7 @@ TEST(DeleteFolderExceptForFile_FolderExists_InitializedRecursiveDirectoryIterato
    const fs::path folderPath = ZenUnit::Random<fs::path>();
    const string exceptFileName = ZenUnit::Random<string>();
    //
-   _fileSystem.DeleteFolderExceptForFile(folderPath, exceptFileName);
+   _fileSystem.DeleteFolderContentsExceptForFileName(folderPath, exceptFileName);
    //
    METALMOCK(_call_std_filesystem_existsMock.CalledOnceWith(folderPath));
    const vector<string> expectedFileSubpathsToNotIterate{ string(exceptFileName) };
@@ -580,26 +579,26 @@ TEST(DeleteFolderExceptForFile_FolderExists_InitializedRecursiveDirectoryIterato
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedDeletedFolderMessage));
 }
 
-TEST(DeleteFoldersExceptForFile_CallsDeleteFolderExceptForFileOnEachFolderPath_PrintsDeletedFolderMessages)
+TEST(DeleteFoldersExceptForFile_CallsDeleteFolderContentsExceptForFileNameOnEachFolderPath_PrintsDeletedFolderMessages)
 {
-   _caller_FileSystem_DeleteFolderExceptForFileMock->CallConstMemberFunctionForEachElementMock.Expect();
+   _caller_FileSystem_DeleteFolderContentsExceptForFileNameMock->CallConstMemberFunctionForEachElementMock.Expect();
    const vector<fs::path> folderPaths = ZenUnit::RandomVector<fs::path>();
    const string exceptFileName = ZenUnit::Random<string>();
    //
    _fileSystem.DeleteFoldersExceptForFile(folderPaths, exceptFileName);
    //
-   METALMOCK(_caller_FileSystem_DeleteFolderExceptForFileMock->CallConstMemberFunctionForEachElementMock.CalledOnceWith(
-      folderPaths, &FileSystem::DeleteFolderExceptForFile, &_fileSystem, exceptFileName));
+   METALMOCK(_caller_FileSystem_DeleteFolderContentsExceptForFileNameMock->CallConstMemberFunctionForEachElementMock.CalledOnceWith(
+      folderPaths, &FileSystem::DeleteFolderContentsExceptForFileName, &_fileSystem, exceptFileName));
 }
 
 TEST(SetCurrentPath_CallsFsCurrentPathWithFolderPath)
 {
-   _call_std_filesystem_current_pathMock.Expect();
+   _call_fs_current_pathMock.Expect();
    const fs::path folderPath = ZenUnit::Random<fs::path>();
    //
    _fileSystem.SetCurrentPath(folderPath);
    //
-   METALMOCK(_call_std_filesystem_current_pathMock.CalledOnceWith(folderPath));
+   METALMOCK(_call_fs_current_pathMock.CalledOnceWith(folderPath));
 }
 
 // Private Functions

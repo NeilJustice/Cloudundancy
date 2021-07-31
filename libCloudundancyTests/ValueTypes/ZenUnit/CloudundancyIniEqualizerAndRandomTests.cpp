@@ -13,7 +13,7 @@ TEST(ZenUnitEqualizer_ThrowsZenUnitAnomalyIfAnyFieldNotEqual)
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyIni, iniFileLines, ZenUnit::RandomNonEmptyVector<string>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyIni, destinationFolderPaths, ZenUnit::RandomNonEmptyVector<fs::path>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyIni, cloudundancyIniCopyInstructions, ZenUnit::RandomNonEmptyVector<CloudundancyIniCopyInstruction>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyIni, fileSubpathsToNotCopy, ZenUnit::RandomNonEmptyVector<string>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyIni, fileSubpathsToIgnore, ZenUnit::RandomNonEmptyVector<string>());
 }
 
 TEST(TestableRandomCloudundancyIni_ReturnsCloudundancyIniWithAllRandomFields)
@@ -21,8 +21,8 @@ TEST(TestableRandomCloudundancyIni_ReturnsCloudundancyIniWithAllRandomFields)
    ZenUnit::RandomGeneratorMock randomGeneratorMock;
 
    const vector<string> iniFileLines = ZenUnit::RandomNonEmptyVector<string>();
-   const vector<string> fileSubpathsToNotCopy = ZenUnit::RandomNonEmptyVector<string>();
-   randomGeneratorMock.StringVectorMock.ReturnValues(iniFileLines, fileSubpathsToNotCopy);
+   const vector<string> fileSubpathsToIgnore = ZenUnit::RandomNonEmptyVector<string>();
+   randomGeneratorMock.StringVectorMock.ReturnValues(iniFileLines, fileSubpathsToIgnore);
 
    const vector<fs::path> destinationFolderPaths = randomGeneratorMock.FilesystemPathVectorMock.ReturnRandom();
    const size_t cloudundancyIniCopyInstructionsVectorSize = ZenUnit::RandomBetween<size_t>(0, 2);
@@ -36,7 +36,7 @@ TEST(TestableRandomCloudundancyIni_ReturnsCloudundancyIniWithAllRandomFields)
    VECTORS_ARE_EQUAL(iniFileLines, randomCloudundancyIni.iniFileLines);
    VECTORS_ARE_EQUAL(destinationFolderPaths, randomCloudundancyIni.destinationFolderPaths);
    ARE_EQUAL(cloudundancyIniCopyInstructionsVectorSize, randomCloudundancyIni.cloudundancyIniCopyInstructions.size());
-   VECTORS_ARE_EQUAL(fileSubpathsToNotCopy, randomCloudundancyIni.fileSubpathsToNotCopy);
+   VECTORS_ARE_EQUAL(fileSubpathsToIgnore, randomCloudundancyIni.fileSubpathsToIgnore);
 }
 
 TEST(ZenUnitRandomCloudundancyIni_DoesNotThrowException)

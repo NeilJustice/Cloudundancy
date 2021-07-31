@@ -74,14 +74,14 @@ TEST(Run_DeletesCodeBackupFolder_CopiesCodeToBackupStagingFolder_SevenZipsBackup
 TEST(DeleteBackupStagingFolder_PrintsDeleting_DeletesBackupStagingFolder_PrintsDeletedInElapsedSeconds)
 {
    _consoleMock->WriteLineMock.Expect();
-   _fileSystemMock->DeleteFolderExceptForFileMock.Expect();
+   _fileSystemMock->DeleteFolderContentsExceptForFileNameMock.Expect();
    _stopwatchMock->StartMock.Expect();
    const string elapsedSeconds = _stopwatchMock->StopAndGetElapsedSecondsMock.ReturnRandom();
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
    _sevenZipSubProgram.DeleteBackupStagingFolder(args);
    //
-   METALMOCK(_fileSystemMock->DeleteFolderExceptForFileMock.CalledOnceWith(args.sevenZipStagingFolderPath, "Cloudundancy.log"));
+   METALMOCK(_fileSystemMock->DeleteFolderContentsExceptForFileNameMock.CalledOnceWith(args.sevenZipStagingFolderPath, "Cloudundancy.log"));
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
    const string expectedDeletingMessage = String::ConcatStrings("[Cloudundancy] Deleting ", args.sevenZipStagingFolderPath.string());

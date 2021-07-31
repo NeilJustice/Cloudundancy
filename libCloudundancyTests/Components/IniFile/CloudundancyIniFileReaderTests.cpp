@@ -101,7 +101,7 @@ TEST(ReadIniFile_ParsesCloudundancyIniFile_ValidatesCloudundancyIni_ReturnsCloud
       fileCopyInstruction1,
       fileCopyInstruction2
    };
-   expectedCloudundancyIni.fileSubpathsToNotCopy =
+   expectedCloudundancyIni.fileSubpathsToIgnore =
    {
       filePathIgnoreSubstring1,
       filePathIgnoreSubstring2

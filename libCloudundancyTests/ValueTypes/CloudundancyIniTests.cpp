@@ -14,7 +14,7 @@ TEST(DefaultConstructor_DefaultInitializesFields)
    expectedDefaultCloudundancyIni.iniFileLines = vector<string>();
    expectedDefaultCloudundancyIni.destinationFolderPaths = vector<fs::path>{};
    expectedDefaultCloudundancyIni.cloudundancyIniCopyInstructions = vector<CloudundancyIniCopyInstruction>{};
-   expectedDefaultCloudundancyIni.fileSubpathsToNotCopy = vector<string>{};
+   expectedDefaultCloudundancyIni.fileSubpathsToIgnore = vector<string>{};
    ARE_EQUAL(expectedDefaultCloudundancyIni, defaultCloudundancyIni);
 }
 
@@ -24,7 +24,7 @@ TEST(ZenUnitEqualizer_ThrowsIfAnyFieldNotEqual)
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyIni, iniFileLines, ZenUnit::RandomNonEmptyVector<string>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyIni, destinationFolderPaths, ZenUnit::RandomNonEmptyVector<fs::path>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyIni, cloudundancyIniCopyInstructions, ZenUnit::RandomNonEmptyVector<CloudundancyIniCopyInstruction>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyIni, fileSubpathsToNotCopy, ZenUnit::RandomNonEmptyVector<string>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyIni, fileSubpathsToIgnore, ZenUnit::RandomNonEmptyVector<string>());
 }
 
 RUN_TESTS(CloudundancyIniTests)

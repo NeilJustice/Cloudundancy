@@ -25,11 +25,11 @@ private:
 
    // Mutable Fields
    fs::recursive_directory_iterator _recursiveDirectoryIterator;
-   vector<string> _fileSubpathsToNotCopy;
+   vector<string> _fileSubpathsToIgnore;
 public:
    RecursiveDirectoryIterator() noexcept;
    virtual ~RecursiveDirectoryIterator();
-   virtual void SetFileSubpathsToIgnore(const vector<string>& fileSubpathsToNotCopy);
+   virtual void SetFileSubpathsToIgnore(const vector<string>& fileSubpathsToIgnore);
    virtual void InitializeIteratorAtFolderPath(const fs::path& folderPath);
    virtual fs::path NextNonIgnoredFilePath();
    virtual void RecursivelyDeleteAllFilesExceptIgnoredFileSubpaths();

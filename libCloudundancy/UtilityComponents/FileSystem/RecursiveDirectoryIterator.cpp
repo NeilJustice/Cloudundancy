@@ -13,9 +13,9 @@ RecursiveDirectoryIterator::~RecursiveDirectoryIterator()
 {
 }
 
-void RecursiveDirectoryIterator::SetFileSubpathsToIgnore(const vector<string>& fileSubpathsToNotCopy)
+void RecursiveDirectoryIterator::SetFileSubpathsToIgnore(const vector<string>& fileSubpathsToIgnore)
 {
-   _fileSubpathsToNotCopy = fileSubpathsToNotCopy;
+   _fileSubpathsToIgnore = fileSubpathsToIgnore;
 }
 
 void RecursiveDirectoryIterator::InitializeIteratorAtFolderPath(const fs::path& folderPath)
@@ -40,7 +40,7 @@ fs::path RecursiveDirectoryIterator::NextNonIgnoredFilePath()
          continue;
       }
       const fs::path& nextFilePath = nextDirectoryEntry.path();
-      const bool filePathIsIgnored = FilePathCaseInsensitiveContainsAnySubstring(nextFilePath, _fileSubpathsToNotCopy);
+      const bool filePathIsIgnored = FilePathCaseInsensitiveContainsAnySubstring(nextFilePath, _fileSubpathsToIgnore);
       if (filePathIsIgnored)
       {
          continue;

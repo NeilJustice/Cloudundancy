@@ -52,7 +52,7 @@ TEST(DefaultConstructor_NewsOneExtraArgTransformer_SetsFieldsToDefaultValues)
    DELETE_TO_ASSERT_NEWED(recursiveDirectoryIterator._oneExtraArgTransformer);
 
    IS_DEFAULT_VALUE(recursiveDirectoryIterator._recursiveDirectoryIterator);
-   ARE_EQUAL(vector<string>(), recursiveDirectoryIterator._fileSubpathsToNotCopy);
+   ARE_EQUAL(vector<string>(), recursiveDirectoryIterator._fileSubpathsToIgnore);
 }
 
 TEST(IntegrationTest_RecursiveDirectoryIterator_EmptyFilePathIgnoreSubstrings_ReturnsAllFilePathsInAndBelowFolderPath)
