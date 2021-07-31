@@ -8,5 +8,5 @@ enum class Color : unsigned char
    Teal,
    Green,
    Yellow,
-	MaxValue
+   MaxValue
 };

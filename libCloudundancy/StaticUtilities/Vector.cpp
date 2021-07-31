@@ -11,5 +11,5 @@ vector<string> Vector::ArgcArgvToStringVector(int argc, char** argv)
    {
       stringArgs.emplace_back(arg);
    });
-	return stringArgs;
+   return stringArgs;
 }

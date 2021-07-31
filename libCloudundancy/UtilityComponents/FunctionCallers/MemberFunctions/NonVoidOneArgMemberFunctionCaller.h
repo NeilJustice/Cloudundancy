@@ -12,7 +12,7 @@ public:
       return returnValue;
    }
 
-	virtual ReturnType CallNonConstMemberFunction(
+   virtual ReturnType CallNonConstMemberFunction(
       ReturnType(ClassType::*nonConstMemberFunction)(ArgType),
       ClassType* nonConstClassPointer, ArgType arg) const
    {

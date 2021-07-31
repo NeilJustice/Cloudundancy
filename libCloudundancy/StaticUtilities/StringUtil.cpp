@@ -53,20 +53,20 @@ string String::RegexReplace(string_view str, string_view pattern, string_view re
 bool String::StartsWith(string_view str, string_view substring)
 {
    const size_t substringLength = substring.size();
-	if (substringLength > str.size())
-	{
-		return false;
-	}
-	for (size_t i = 0; i < substringLength; ++i)
-	{
+   if (substringLength > str.size())
+   {
+      return false;
+   }
+   for (size_t i = 0; i < substringLength; ++i)
+   {
       const char strChar = str[i];
       const char substringChar = substring[i];
-		if (strChar != substringChar)
-		{
-			return false;
-		}
-	}
-	return true;
+      if (strChar != substringChar)
+      {
+         return false;
+      }
+   }
+   return true;
 }
 
 vector<string> String::Split(string_view str, char separator)

@@ -4,10 +4,10 @@ struct FileCopyResult
 {
    fs::path sourceFilePath;
    fs::path destinationFilePath;
-	bool copySucceeded = false;
+   bool copySucceeded = false;
    unsigned long long numberOfBytesCopied = 0;
    unsigned long long durationInMilliseconds = 0;
-	std::string copyFailureReason;
+   std::string copyFailureReason;
 };
 
 #ifdef _WIN32

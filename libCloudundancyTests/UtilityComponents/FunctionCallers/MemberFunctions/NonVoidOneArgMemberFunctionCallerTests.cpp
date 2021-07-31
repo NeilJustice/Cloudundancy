@@ -24,7 +24,7 @@ public:
       return returnValue;
    }
 
-	ReturnType NonConstMemberFunction(ArgType arg)
+   ReturnType NonConstMemberFunction(ArgType arg)
    {
       args.push_back(arg);
       returnValue = ZenUnit::Random<ReturnType>();

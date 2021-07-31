@@ -3,10 +3,10 @@
 struct ProcessResult
 {
    string processName;
-	string arguments;
-	int exitCode;
-	string standardOutputAndError;
-	unsigned durationInMilliseconds;
+   string arguments;
+   int exitCode;
+   string standardOutputAndError;
+   unsigned durationInMilliseconds;
 
    ProcessResult();
    ProcessResult(

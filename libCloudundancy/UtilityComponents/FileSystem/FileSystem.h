@@ -13,7 +13,7 @@ class Watch;
 
 class FileSystem
 {
-	friend class FileSystemTests;
+   friend class FileSystemTests;
 private:
    // C File Function Pointers
    function<int*()> _call_errno;

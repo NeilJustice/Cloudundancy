@@ -20,7 +20,7 @@ public:
       for (auto iter = sourceContainer.begin(); iter != endSourceIter; ++iter)
       {
          const auto& sourceElement = *iter;
-			auto transformedElement = transformFunction(index++, sourceElement, extraArg);
+         auto transformedElement = transformFunction(index++, sourceElement, extraArg);
          transformedElements.emplace_back(std::move(transformedElement));
       }
       return transformedElements;
