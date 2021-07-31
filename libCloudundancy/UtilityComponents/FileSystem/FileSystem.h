@@ -31,14 +31,14 @@ private:
 
    using CreateDirectoriesOverloadType = bool(*)(const fs::path&);
    bool(*_call_fs_create_directories_as_assignable_function_overload_pointer)(const fs::path&);
-   function<bool(const fs::path&)> _call_std_filesystem_create_directories;
+   function<bool(const fs::path&)> _call_fs_create_directories;
 
    using FSRemoveAllFunctionOverloadType = unsigned long long(*)(const fs::path&);
    function<unsigned long long(const fs::path&)> _call_fs_remove_all;
 
    using FSExistsFunctionOverloadType = bool(*)(const fs::path&);
    bool(*_call_fs_exists_as_assignable_function_overload_pointer)(const fs::path&);
-   function<bool(const fs::path&)> _call_std_filesystem_exists;
+   function<bool(const fs::path&)> _call_fs_exists;
 
    using FSFileSizeFunctionOverloadType = size_t(*)(const fs::path&);
    function<size_t(const fs::path&)> _call_fs_file_size;
