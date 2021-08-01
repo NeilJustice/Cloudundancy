@@ -6,7 +6,6 @@ namespace Utils
    class RawFileSystemMock : public Metal::Mock<RawFileSystem>
    {
    public:
-      METALMOCK_VOID2_CONST(AppendTextToClosedFile, const fs::path&, string_view)
       METALMOCK_VOID2_CONST(CloseFile, const shared_ptr<FILE>&, const fs::path&)
       METALMOCK_VOID2_CONST(CreateFileWithTextIfDoesNotExist, const fs::path&, string_view)
       METALMOCK_NONVOID1_CONST(shared_ptr<FILE>, CreateFileInBinaryWriteMode, const fs::path&)

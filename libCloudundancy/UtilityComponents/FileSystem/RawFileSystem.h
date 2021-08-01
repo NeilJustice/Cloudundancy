@@ -63,7 +63,6 @@ private:
 public:
    RawFileSystem();
    virtual ~RawFileSystem();
-   virtual void AppendTextToClosedFile(const fs::path& filePath, string_view text) const;
    virtual void CloseFile(const shared_ptr<FILE>& filePointer, const fs::path& filePath) const;
    virtual void CreateFileWithTextIfDoesNotExist(const fs::path& filePath, string_view fileText) const;
    virtual shared_ptr<FILE> CreateFileInBinaryWriteMode(const fs::path& filePath) const;

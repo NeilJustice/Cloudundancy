@@ -44,18 +44,6 @@ RawFileSystem::~RawFileSystem()
 {
 }
 
-void RawFileSystem::AppendTextToClosedFile(const fs::path& filePath, string_view text) const
-{
-#if defined __linux__
-   const shared_ptr<FILE> filePointer = _caller_CreateOrOpenFileOnLinux->CallConstMemberFunction(&RawFileSystem::CreateOrOpenFileOnLinux, this, filePath, "ab");
-#elif defined _WIN32
-   const shared_ptr<FILE> filePointer = _caller_CreateOrOpenFileOnWindows->CallConstMemberFunction(&RawFileSystem::CreateOrOpenFileOnWindows, this, filePath, L"ab");
-#endif
-   const size_t textSize = text.size();
-   const size_t numberOfBytesWritten = _call_fwrite(text.data(), 1, textSize, filePointer.get());
-   release_assert(numberOfBytesWritten == textSize);
-}
-
 void RawFileSystem::CloseFile(const shared_ptr<FILE>& filePointer, const fs::path& filePath) const
 {
    const int fcloseReturnValue = _call_fclose(filePointer.get());

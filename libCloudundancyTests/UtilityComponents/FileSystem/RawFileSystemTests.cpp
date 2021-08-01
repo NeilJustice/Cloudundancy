@@ -14,12 +14,10 @@ AFACT(CloseFile_fcloseReturnValueIs0_Returns)
 AFACT(CreateFileWithTextIfDoesNotExist_FileExists_DoesNothing)
 AFACT(CreateFileWithTextIfDoesNotExist_FileDoesNotExist_CreateFileWithFileText)
 #if defined __linux__
-AFACT(Linux__AppendTextToClosedFile_OpensFileInBinaryAppendMode_AppendsText_ClosesFile)
 AFACT(Linux__CreateFileInBinaryWriteMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_wb)
 AFACT(Linux__CreateOrOpenFileInBinaryAppendMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_ab)
 AFACT(Linux__OpenFileInBinaryReadMode_ReturnsSharedPtrFromCallingCreateOrOpenFileOnLinux)
 #elif defined _WIN32
-AFACT(Windows__AppendTextToClosedFile_OpensFileInBinaryAppendMode_AppendsText_ClosesFile)
 AFACT(Windows__CreateFileInBinaryWriteMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_wb)
 AFACT(Windows__CreateOrOpenFileInBinaryAppendMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_ab)
 AFACT(Windows__OpenFileInBinaryReadMode_ReturnsSharedPtrFromCallingCreateOrOpenFileOnWindows)
@@ -207,23 +205,6 @@ TEST(CreateFileWithTextIfDoesNotExist_FileDoesNotExist_CreateFileWithFileText)
 
 #if defined __linux__
 
-TEST(Linux__AppendTextToClosedFile_OpensFileInBinaryAppendMode_AppendsText_ClosesFile)
-{
-   const shared_ptr<FILE> filePointer = make_shared<FILE>();
-   _caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.Return(filePointer);
-
-   const string text = ZenUnit::Random<string>();
-   _call_fwriteMock.Return(text.size());
-
-   const fs::path filePath = ZenUnit::Random<fs::path>();
-   //
-   _rawFileSystem.AppendTextToClosedFile(filePath, text);
-   //
-   METALMOCK(_caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &RawFileSystem::CreateOrOpenFileOnLinux, &_rawFileSystem, filePath, "ab"));
-   METALMOCK(_call_fwriteMock.CalledOnceWith(text.data(), 1, text.size(), filePointer.get()));
-}
-
 TEST(Linux__CreateFileInBinaryWriteMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_wb)
 {
    const shared_ptr<FILE> filePointer = make_shared<FILE>();
@@ -292,23 +273,6 @@ TEST(Linux__OpenFileInBinaryReadMode_ReturnsSharedPtrFromCallingCreateOrOpenFile
 }
 
 #elif defined _WIN32
-
-TEST(Windows__AppendTextToClosedFile_OpensFileInBinaryAppendMode_AppendsText_ClosesFile)
-{
-   const shared_ptr<FILE> filePointer = make_shared<FILE>();
-   _caller_CreateOrOpenFileOnWindowsMock->CallConstMemberFunctionMock.Return(filePointer);
-
-   const string text = ZenUnit::Random<string>();
-   _call_fwriteMock.Return(text.size());
-
-   const fs::path filePath = ZenUnit::Random<fs::path>();
-   //
-   _rawFileSystem.AppendTextToClosedFile(filePath, text);
-   //
-   METALMOCK(_caller_CreateOrOpenFileOnWindowsMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &RawFileSystem::CreateOrOpenFileOnWindows, &_rawFileSystem, filePath, L"ab"));
-   METALMOCK(_call_fwriteMock.CalledOnceWith(text.data(), 1, text.size(), filePointer.get()));
-}
 
 TEST(Windows__CreateFileInBinaryWriteMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_wb)
 {
