@@ -300,16 +300,6 @@ TEST(Windows__OpenFileInTextReadMode_ReturnsSharedPtrFromCallingCreateOrOpenFile
 
 #endif
 
-TEST(ReadTextFromOpenFile_ReadsFileSizeWhichReturns0_ClosesFile_ReturnsEmptyString)
-{
-   _caller_ReadFileSizeMock->CallConstMemberFunctionMock.Return(0);
-   const shared_ptr<FILE> filePointer = make_shared<FILE>();
-   //
-   _rawFileSystem.ReadTextFromOpenFile(filePointer);
-   //
-   METALMOCK(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(&RawFileSystem::ReadFileSize, &_rawFileSystem, filePointer));
-}
-
 static constexpr size_t FileSize = 64;
 struct _fread_CallHistoryValues
 {
@@ -346,27 +336,36 @@ void fread_AssertCalledOnceWith(size_t expectedElementSize, size_t expectedEleme
    ARE_EQUAL(expectedRawFilePointer, _fread_CallHistory.rawFilePointer);
 }
 
+TEST(ReadTextFromOpenFile_ReadsFileSizeWhichReturns0_ClosesFile_ReturnsEmptyString)
+{
+   _caller_ReadFileSizeMock->CallConstMemberFunctionMock.Return(0);
+   const shared_ptr<FILE> filePointer = make_shared<FILE>();
+   //
+   const string fileText = _rawFileSystem.ReadTextFromOpenFile(filePointer);
+   //
+   METALMOCK(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(&RawFileSystem::ReadFileSize, &_rawFileSystem, filePointer));
+   ARE_EQUAL("", fileText);
+}
+
 TEST(ReadTextFromOpenFile_ReadsFileSizeWhichReturnsGreaterThan0_ReadsFileBytesIntoString_ClosesFile_ReturnsFileTextString)
 {
-   //_caller_ReadFileSizeMock->CallConstMemberFunctionMock.Return(FileSize);
+   _caller_ReadFileSizeMock->CallConstMemberFunctionMock.Return(FileSize);
 
-   //const size_t numberOfBytesRead = ZenUnit::Random<size_t>();
-   //_fread_CallHistory.returnValue = numberOfBytesRead;
-   //const array<char, FileSize> bufferReturnValue = ZenUnit::RandomStdArray<char, FileSize>();
-   //_fread_CallHistory.bufferReturnValue = bufferReturnValue;
-   //_call_freadMock.CallInstead(std::bind(
-   //   &RawFileSystemTests::fread_CallInstead, this, placeholders::_1, placeholders::_2, placeholders::_3, placeholders::_4));
+   const size_t numberOfBytesRead = ZenUnit::RandomBetween<size_t>(0, FileSize);
+   _fread_CallHistory.returnValue = numberOfBytesRead;
+   const array<char, FileSize> bufferReturnValue = ZenUnit::RandomStdArray<char, FileSize>();
+   _fread_CallHistory.bufferReturnValue = bufferReturnValue;
+   _call_freadMock.CallInstead(std::bind(
+      &RawFileSystemTests::fread_CallInstead, this, placeholders::_1, placeholders::_2, placeholders::_3, placeholders::_4));
 
-   //_asserterMock->ThrowIfSizeTsNotEqualMock.Expect();
-
-   //const shared_ptr<FILE> filePointer = make_shared<FILE>();
-   ////
-   //_rawFileSystem.ReadTextFromOpenFile(filePointer);
-   ////
-   //METALMOCK(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(&RawFileSystem::ReadFileSize, &_rawFileSystem, filePointer));
-   //fread_AssertCalledOnceWith(1, FileSize, filePointer.get());
-   //METALMOCK(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(FileSize, numberOfBytesRead,
-   //   "_call_fread(const_cast<char*>(&fileText[0]), 1, fileSize, filePointer.get()) unexpectedly returned numberOfBytesRead != fileSize"));
+   const shared_ptr<FILE> filePointer = make_shared<FILE>();
+   //
+   const string fileText = _rawFileSystem.ReadTextFromOpenFile(filePointer);
+   //
+   METALMOCK(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(&RawFileSystem::ReadFileSize, &_rawFileSystem, filePointer));
+   fread_AssertCalledOnceWith(1, FileSize, filePointer.get());
+   const string expectedFileText(bufferReturnValue.data(), numberOfBytesRead);
+   ARE_EQUAL(expectedFileText, fileText);
 }
 
 TEST(WriteTextToOpenFile_CallsFWriteOnFilePointerWithText_CallsFFlushOnFilePointer)
