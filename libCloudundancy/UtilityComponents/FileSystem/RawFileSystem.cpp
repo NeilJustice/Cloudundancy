@@ -80,13 +80,13 @@ shared_ptr<FILE> RawFileSystem::CreateFileInBinaryWriteMode(const fs::path& file
 string RawFileSystem::ReadTextFromOpenFile(const shared_ptr<FILE>& filePointer) const
 {
    const size_t fileSize = _caller_ReadFileSize->CallConstMemberFunction(&RawFileSystem::ReadFileSize, this, filePointer);
-   string fileText(fileSize, 0);
+   const unique_ptr<char[]> fileTextBuffer = make_unique<char[]>(fileSize);
+   size_t numberOfBytesRead = 0;
    if (fileSize > 0)
    {
-      const size_t numberOfBytesRead = _call_fread(const_cast<char*>(&fileText[0]), 1, fileSize, filePointer.get());
-      _asserter->ThrowIfSizeTsNotEqual(fileSize, numberOfBytesRead,
-         "_call_fread(const_cast<char*>(&fileText[0]), 1, fileSize, filePointer.get()) unexpectedly returned numberOfBytesRead != fileSize");
+      numberOfBytesRead = _call_fread(fileTextBuffer.get(), 1, fileSize, filePointer.get());
    }
+   string fileText(fileTextBuffer.get(), numberOfBytesRead);
    return fileText;
 }
 
