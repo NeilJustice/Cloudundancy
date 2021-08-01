@@ -35,6 +35,7 @@ private:
    // std::filesystem Function Pointers
    using create_directories_FunctionOverloadType = bool(*)(const fs::path&);
    function<bool(const fs::path&)> _call_fs_create_directories;
+
    using std_filesystem_exists_FunctionOverloadType = bool(*)(const fs::path&);
    function<bool(const fs::path&)> _call_fs_exists;
    // Function Callers
@@ -63,15 +64,12 @@ private:
 public:
    RawFileSystem();
    virtual ~RawFileSystem();
-   virtual void AppendTextToClosedFile(const fs::path& filePath, string_view text) const;
    virtual void CloseFile(const shared_ptr<FILE>& filePointer, const fs::path& filePath) const;
    virtual void CreateFileWithTextIfDoesNotExist(const fs::path& filePath, string_view fileText) const;
    virtual shared_ptr<FILE> CreateFileInBinaryWriteMode(const fs::path& filePath) const;
-   virtual shared_ptr<FILE> CreateOrOpenFileInBinaryAppendMode(const fs::path& filePath) const;
    virtual string ReadTextFromOpenFile(const shared_ptr<FILE>& filePointer, const fs::path& filePath) const;
    virtual shared_ptr<FILE> OpenFileInBinaryReadMode(const fs::path& filePath) const;
    virtual void WriteTextToOpenFile(const shared_ptr<FILE>& filePointer, string_view text) const;
-   virtual void WriteBytesToOpenFile(const shared_ptr<FILE>& filePointer, const void* bytes, size_t bytesLength) const;
 private:
 #if defined __linux__
    shared_ptr<FILE> CreateOrOpenFileOnLinux(const fs::path& filePath, const char* fileOpenMode) const;

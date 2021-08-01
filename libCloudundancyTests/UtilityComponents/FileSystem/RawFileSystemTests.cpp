@@ -14,20 +14,15 @@ AFACT(CloseFile_fcloseReturnValueIs0_Returns)
 AFACT(CreateFileWithTextIfDoesNotExist_FileExists_DoesNothing)
 AFACT(CreateFileWithTextIfDoesNotExist_FileDoesNotExist_CreateFileWithFileText)
 #if defined __linux__
-AFACT(Linux__AppendTextToClosedFile_OpensFileInBinaryAppendMode_AppendsText_ClosesFile)
 AFACT(Linux__CreateFileInBinaryWriteMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_wb)
-AFACT(Linux__CreateOrOpenFileInBinaryAppendMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_ab)
 AFACT(Linux__OpenFileInBinaryReadMode_ReturnsSharedPtrFromCallingCreateOrOpenFileOnLinux)
 #elif defined _WIN32
-AFACT(Windows__AppendTextToClosedFile_OpensFileInBinaryAppendMode_AppendsText_ClosesFile)
 AFACT(Windows__CreateFileInBinaryWriteMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_wb)
-AFACT(Windows__CreateOrOpenFileInBinaryAppendMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_ab)
 AFACT(Windows__OpenFileInBinaryReadMode_ReturnsSharedPtrFromCallingCreateOrOpenFileOnWindows)
 #endif
 AFACT(ReadTextFromOpenFile_ReadsFileSizeWhichReturns0_ClosesFile_ReturnsEmptyString)
 AFACT(ReadTextFromOpenFile_ReadsFileSizeWhichReturnsGreaterThan0_ReadsFileBytesIntoString_ClosesFile_ReturnsFileTextString)
 AFACT(WriteTextToOpenFile_CallsFWriteOnFilePointerWithText_CallsFFlushOnFilePointer)
-AFACT(WriteBytesToOpenFile_CallsFWriteOnFilePointerWithBytes_CallsFFlushOnFilePointer)
 // Private Functions
 #if defined __linux__
 AFACT(Linux__CreateOrOpenFileOnLinux_CreatesParentDirectoriesForFilePath_fopenReturnsNonNullptr_ReturnsOpenedFilePointer)
@@ -207,23 +202,6 @@ TEST(CreateFileWithTextIfDoesNotExist_FileDoesNotExist_CreateFileWithFileText)
 
 #if defined __linux__
 
-TEST(Linux__AppendTextToClosedFile_OpensFileInBinaryAppendMode_AppendsText_ClosesFile)
-{
-   const shared_ptr<FILE> filePointer = make_shared<FILE>();
-   _caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.Return(filePointer);
-
-   const string text = ZenUnit::Random<string>();
-   _call_fwriteMock.Return(text.size());
-
-   const fs::path filePath = ZenUnit::Random<fs::path>();
-   //
-   _rawFileSystem.AppendTextToClosedFile(filePath, text);
-   //
-   METALMOCK(_caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &RawFileSystem::CreateOrOpenFileOnLinux, &_rawFileSystem, filePath, "ab"));
-   METALMOCK(_call_fwriteMock.CalledOnceWith(text.data(), 1, text.size(), filePointer.get()));
-}
-
 TEST(Linux__CreateFileInBinaryWriteMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_wb)
 {
    const shared_ptr<FILE> filePointer = make_shared<FILE>();
@@ -235,19 +213,6 @@ TEST(Linux__CreateFileInBinaryWriteMode_ReturnsSharedFilePointerCreatedWithFileO
    METALMOCK(_caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.CalledOnceWith(
       &RawFileSystem::CreateOrOpenFileOnLinux, &_rawFileSystem, filePath, "wb"));
    ARE_EQUAL(filePointer, returnedTextFilePointer);
-}
-
-TEST(Linux__CreateOrOpenFileInBinaryAppendMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_ab)
-{
-   const shared_ptr<FILE> filePointer = make_shared<FILE>();
-   _caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.Return(filePointer);
-   const fs::path filePath = ZenUnit::Random<fs::path>();
-   //
-   const shared_ptr<FILE> returnedFilePointer = _rawFileSystem.CreateOrOpenFileInBinaryAppendMode(filePath);
-   //
-   METALMOCK(_caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &RawFileSystem::CreateOrOpenFileOnLinux, &_rawFileSystem, filePath, "ab"));
-   ARE_EQUAL(filePointer, returnedFilePointer);
 }
 
 struct fopen_CallHistory
@@ -293,23 +258,6 @@ TEST(Linux__OpenFileInBinaryReadMode_ReturnsSharedPtrFromCallingCreateOrOpenFile
 
 #elif defined _WIN32
 
-TEST(Windows__AppendTextToClosedFile_OpensFileInBinaryAppendMode_AppendsText_ClosesFile)
-{
-   const shared_ptr<FILE> filePointer = make_shared<FILE>();
-   _caller_CreateOrOpenFileOnWindowsMock->CallConstMemberFunctionMock.Return(filePointer);
-
-   const string text = ZenUnit::Random<string>();
-   _call_fwriteMock.Return(text.size());
-
-   const fs::path filePath = ZenUnit::Random<fs::path>();
-   //
-   _rawFileSystem.AppendTextToClosedFile(filePath, text);
-   //
-   METALMOCK(_caller_CreateOrOpenFileOnWindowsMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &RawFileSystem::CreateOrOpenFileOnWindows, &_rawFileSystem, filePath, L"ab"));
-   METALMOCK(_call_fwriteMock.CalledOnceWith(text.data(), 1, text.size(), filePointer.get()));
-}
-
 TEST(Windows__CreateFileInBinaryWriteMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_wb)
 {
    const shared_ptr<FILE> filePointer = make_shared<FILE>();
@@ -320,19 +268,6 @@ TEST(Windows__CreateFileInBinaryWriteMode_ReturnsSharedFilePointerCreatedWithFil
    //
    METALMOCK(_caller_CreateOrOpenFileOnWindowsMock->CallConstMemberFunctionMock.CalledOnceWith(
       &RawFileSystem::CreateOrOpenFileOnWindows, &_rawFileSystem, filePath, L"wb"));
-   ARE_EQUAL(filePointer, returnedFilePointer);
-}
-
-TEST(Windows__CreateOrOpenFileInBinaryAppendMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_ab)
-{
-   const shared_ptr<FILE> filePointer = make_shared<FILE>();
-   _caller_CreateOrOpenFileOnWindowsMock->CallConstMemberFunctionMock.Return(filePointer);
-   const fs::path filePath = ZenUnit::Random<fs::path>();
-   //
-   const shared_ptr<FILE> returnedFilePointer = _rawFileSystem.CreateOrOpenFileInBinaryAppendMode(filePath);
-   //
-   METALMOCK(_caller_CreateOrOpenFileOnWindowsMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &RawFileSystem::CreateOrOpenFileOnWindows, &_rawFileSystem, filePath, L"ab"));
    ARE_EQUAL(filePointer, returnedFilePointer);
 }
 
@@ -447,27 +382,6 @@ TEST(WriteTextToOpenFile_CallsFWriteOnFilePointerWithText_CallsFFlushOnFilePoint
    METALMOCK(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(
       textSize, numberOfBytesWritten, "fwrite() unexpectedly returned numberOfBytesWritten != textSize"));
    METALMOCK(_call_fflushMock.CalledOnceWith(textFilePointer.get()));
-   METALMOCK(_asserterMock->ThrowIfIntsNotEqualMock.CalledOnceWith(0, flushReturnValue, "fflush() unexpectedly did not return 0"));
-}
-
-TEST(WriteBytesToOpenFile_CallsFWriteOnFilePointerWithBytes_CallsFFlushOnFilePointer)
-{
-   const size_t numberOfBytesWritten = _call_fwriteMock.ReturnRandom();
-   _asserterMock->ThrowIfSizeTsNotEqualMock.Expect();
-
-   const int flushReturnValue = _call_fflushMock.ReturnRandom();
-   _asserterMock->ThrowIfIntsNotEqualMock.Expect();
-
-   const shared_ptr<FILE> filePointer = make_shared<FILE>();
-   const vector<char> bytes = ZenUnit::RandomVector<char>();
-   //
-   _rawFileSystem.WriteBytesToOpenFile(filePointer, bytes.data(), bytes.size());
-   //
-   const size_t bytesLength = bytes.size();
-   METALMOCK(_call_fwriteMock.CalledOnceWith(bytes.data(), 1, bytes.size(), filePointer.get()));
-   METALMOCK(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(
-      bytesLength, numberOfBytesWritten, "fwrite() unexpectedly returned numberOfBytesWritten != bytesLength"));
-   METALMOCK(_call_fflushMock.CalledOnceWith(filePointer.get()));
    METALMOCK(_asserterMock->ThrowIfIntsNotEqualMock.CalledOnceWith(0, flushReturnValue, "fflush() unexpectedly did not return 0"));
 }
 
