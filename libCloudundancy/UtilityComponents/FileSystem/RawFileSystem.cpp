@@ -44,6 +44,18 @@ RawFileSystem::~RawFileSystem()
 {
 }
 
+void RawFileSystem::AppendTextToClosedFile(const fs::path& filePath, string_view text) const
+{
+#if defined __linux__
+   const shared_ptr<FILE> filePointer = _caller_CreateOrOpenFileOnLinux->CallConstMemberFunction(&RawFileSystem::CreateOrOpenFileOnLinux, this, filePath, "ab");
+#elif defined _WIN32
+   const shared_ptr<FILE> filePointer = _caller_CreateOrOpenFileOnWindows->CallConstMemberFunction(&RawFileSystem::CreateOrOpenFileOnWindows, this, filePath, L"ab");
+#endif
+   const size_t textSize = text.size();
+   const size_t numberOfBytesWritten = _call_fwrite(text.data(), 1, textSize, filePointer.get());
+   release_assert(numberOfBytesWritten == textSize);
+}
+
 void RawFileSystem::CloseFile(const shared_ptr<FILE>& filePointer, const fs::path& filePath) const
 {
    const int fcloseReturnValue = _call_fclose(filePointer.get());
@@ -77,6 +89,16 @@ shared_ptr<FILE> RawFileSystem::CreateFileInBinaryWriteMode(const fs::path& file
    return filePointer;
 }
 
+shared_ptr<FILE> RawFileSystem::CreateOrOpenFileInBinaryAppendMode(const fs::path& filePath) const
+{
+#if defined __linux__
+   shared_ptr<FILE> filePointer = _caller_CreateOrOpenFileOnLinux->CallConstMemberFunction(&RawFileSystem::CreateOrOpenFileOnLinux, this, filePath, "ab");
+#elif defined _WIN32
+   shared_ptr<FILE> filePointer = _caller_CreateOrOpenFileOnWindows->CallConstMemberFunction(&RawFileSystem::CreateOrOpenFileOnWindows, this, filePath, L"ab");
+#endif
+   return filePointer;
+}
+
 string RawFileSystem::ReadTextFromOpenFile(const shared_ptr<FILE>& filePointer, const fs::path& filePath) const
 {
    const size_t fileSize = _caller_ReadFileSize->CallConstMemberFunction(&RawFileSystem::ReadFileSize, this, filePointer);
@@ -106,6 +128,14 @@ void RawFileSystem::WriteTextToOpenFile(const shared_ptr<FILE>& filePointer, str
    const size_t textSize = text.size();
    const size_t numberOfBytesWritten = _call_fwrite(text.data(), 1, textSize, filePointer.get());
    _asserter->ThrowIfSizeTsNotEqual(textSize, numberOfBytesWritten, "fwrite() unexpectedly returned numberOfBytesWritten != textSize");
+   const int flushReturnValue = _call_fflush(filePointer.get());
+   _asserter->ThrowIfIntsNotEqual(0, flushReturnValue, "fflush() unexpectedly did not return 0");
+}
+
+void RawFileSystem::WriteBytesToOpenFile(const shared_ptr<FILE>& filePointer, const void* bytes, size_t bytesLength) const
+{
+   const size_t numberOfBytesWritten = _call_fwrite(bytes, 1, bytesLength, filePointer.get());
+   _asserter->ThrowIfSizeTsNotEqual(bytesLength, numberOfBytesWritten, "fwrite() unexpectedly returned numberOfBytesWritten != bytesLength");
    const int flushReturnValue = _call_fflush(filePointer.get());
    _asserter->ThrowIfIntsNotEqual(0, flushReturnValue, "fflush() unexpectedly did not return 0");
 }
