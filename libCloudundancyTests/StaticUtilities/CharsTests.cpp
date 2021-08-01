@@ -59,7 +59,7 @@ TEST1X1(OneOrTwoDigitSizeTToTwoChars_ValueIsGreaterThan99_ThrowsOutOfRangeExcept
    100ULL,
    101ULL)
 {
-   const string expectedExceptionMessage = "Argument error calling Utils::Chars::OneOrTwoDigitSizeTToTwoChars(size_t value, char* outChars): value must be <= 99: value=" + to_string(value);
+   const string expectedExceptionMessage = "Argument error calling Chars::OneOrTwoDigitSizeTToTwoChars(size_t value, char* outChars): value must be <= 99: value=" + to_string(value);
    THROWS_EXCEPTION(Chars::OneOrTwoDigitSizeTToTwoChars(value, nullptr),
       out_of_range, expectedExceptionMessage);
 }
@@ -74,7 +74,7 @@ TEST1X1(FourDigitSizeTToFourChars_ValueLessThan1000OrGreaterThan9999_ThrowsOutOf
    10000ULL,
    10001ULL)
 {
-   const string expectedExceptionMessage = "Argument error calling Utils::Chars::FourDigitSizeTToFourChars(size_t value, char* outChars): value must be between 1000 and 9999: value=" + to_string(value);
+   const string expectedExceptionMessage = "Argument error calling Chars::FourDigitSizeTToFourChars(size_t value, char* outChars): value must be between 1000 and 9999: value=" + to_string(value);
    THROWS_EXCEPTION(Chars::FourDigitSizeTToFourChars(value, nullptr),
       out_of_range, expectedExceptionMessage);
 }

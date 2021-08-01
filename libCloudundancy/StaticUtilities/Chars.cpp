@@ -5,7 +5,7 @@ void Chars::OneOrTwoDigitSizeTToTwoChars(size_t value, char* outChars)
 {
    if (value >= 100ULL)
    {
-      throw out_of_range("Argument error calling Utils::Chars::OneOrTwoDigitSizeTToTwoChars(size_t value, char* outChars): value must be <= 99: value=" + to_string(value));
+      throw out_of_range("Argument error calling Chars::OneOrTwoDigitSizeTToTwoChars(size_t value, char* outChars): value must be <= 99: value=" + to_string(value));
    }
    if (value < 10ULL)
    {
@@ -26,7 +26,7 @@ void Chars::FourDigitSizeTToFourChars(size_t value, char* outChars)
 {
    if (value < 1000 || value > 9999)
    {
-      throw out_of_range("Argument error calling Utils::Chars::FourDigitSizeTToFourChars(size_t value, char* outChars): value must be between 1000 and 9999: value=" + to_string(value));
+      throw out_of_range("Argument error calling Chars::FourDigitSizeTToFourChars(size_t value, char* outChars): value must be between 1000 and 9999: value=" + to_string(value));
    }
    const size_t thousandsPlace = value / 1000ULL;
    const size_t hundredsPlace = (value % 1000ULL) / 100ULL;
