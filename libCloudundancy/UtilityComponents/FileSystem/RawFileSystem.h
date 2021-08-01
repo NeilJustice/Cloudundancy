@@ -66,8 +66,8 @@ public:
    virtual void CloseFile(const shared_ptr<FILE>& filePointer, const fs::path& filePath) const;
    virtual void CreateFileWithTextIfDoesNotExist(const fs::path& filePath, string_view fileText) const;
    virtual shared_ptr<FILE> CreateFileInBinaryWriteMode(const fs::path& filePath) const;
-   virtual string ReadTextFromOpenFile(const shared_ptr<FILE>& filePointer, const fs::path& filePath) const;
-   virtual shared_ptr<FILE> OpenFileInBinaryReadMode(const fs::path& filePath) const;
+   virtual string ReadTextFromOpenFile(const shared_ptr<FILE>& filePointer) const;
+   virtual shared_ptr<FILE> OpenFileInTextReadMode(const fs::path& filePath) const;
    virtual void WriteTextToOpenFile(const shared_ptr<FILE>& filePointer, string_view text) const;
    virtual void WriteBytesToOpenFile(const shared_ptr<FILE>& filePointer, const void* bytes, size_t bytesLength) const;
 private:

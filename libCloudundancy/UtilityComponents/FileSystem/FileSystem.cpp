@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "libCloudundancy/StaticUtilities/GetLinuxErrno.h"
 #include "libCloudundancy/UtilityComponents/FileSystem/FileSystem.h"
+#include "libCloudundancy/UtilityComponents/FileSystem/RawFileSystem.h"
 
 FileSystem::FileSystem()
    // C File Function Pointers
@@ -31,6 +32,7 @@ FileSystem::FileSystem()
    , _console(make_unique<Console>())
    , _charVectorAllocator(make_unique<CharVectorAllocator>())
    , _fileOpenerCloser(make_unique<FileOpenerCloser>())
+   , _rawFileSystem(make_unique<RawFileSystem>())
    // Mutable Components
    , _recursiveDirectoryIterator(make_unique<RecursiveDirectoryIterator>())
    , _stopwatch(make_unique<Stopwatch>())
@@ -86,17 +88,8 @@ shared_ptr<const vector<char>> FileSystem::ReadFileBytes(const fs::path& filePat
 
 string FileSystem::ReadFileText(const fs::path& filePath) const
 {
-   FILE* const readModeTextFileHandle = _fileOpenerCloser->OpenReadModeTextFile(filePath);
-   const size_t fileSizeInBytes = _caller_FileSize->CallConstMemberFunction(&FileSystem::FileSize, this, readModeTextFileHandle);
-   if (fileSizeInBytes == 0)
-   {
-      _fileOpenerCloser->CloseFile(readModeTextFileHandle);
-      return {};
-   }
-   const unique_ptr<vector<char>> fileTextBuffer(_charVectorAllocator->NewCharVector(fileSizeInBytes));
-   _call_fread(&(*fileTextBuffer)[0], 1, fileSizeInBytes, readModeTextFileHandle);
-   _fileOpenerCloser->CloseFile(readModeTextFileHandle);
-   string fileText(&(*fileTextBuffer)[0]);
+   const shared_ptr<FILE> filePointer = _rawFileSystem->OpenFileInTextReadMode(filePath);
+   string fileText = _rawFileSystem->ReadTextFromOpenFile(filePointer);
    return fileText;
 }
 

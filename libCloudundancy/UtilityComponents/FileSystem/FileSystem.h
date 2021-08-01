@@ -10,6 +10,7 @@ class OneExtraArgMemberFunctionForEacher;
 class RecursiveDirectoryIterator;
 template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgMemberFunctionCaller;
+class RawFileSystem;
 class Stopwatch;
 class Watch;
 
@@ -66,6 +67,7 @@ private:
    unique_ptr<const Console> _console;
    unique_ptr<const CharVectorAllocator> _charVectorAllocator;
    unique_ptr<const FileOpenerCloser> _fileOpenerCloser;
+   unique_ptr<const RawFileSystem> _rawFileSystem;
 
    // Mutable Components
    unique_ptr<RecursiveDirectoryIterator> _recursiveDirectoryIterator;

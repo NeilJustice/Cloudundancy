@@ -77,7 +77,7 @@ shared_ptr<FILE> RawFileSystem::CreateFileInBinaryWriteMode(const fs::path& file
    return filePointer;
 }
 
-string RawFileSystem::ReadTextFromOpenFile(const shared_ptr<FILE>& filePointer, const fs::path& filePath) const
+string RawFileSystem::ReadTextFromOpenFile(const shared_ptr<FILE>& filePointer) const
 {
    const size_t fileSize = _caller_ReadFileSize->CallConstMemberFunction(&RawFileSystem::ReadFileSize, this, filePointer);
    string fileText(fileSize, 0);
@@ -87,16 +87,15 @@ string RawFileSystem::ReadTextFromOpenFile(const shared_ptr<FILE>& filePointer, 
       _asserter->ThrowIfSizeTsNotEqual(fileSize, numberOfBytesRead,
          "_call_fread(const_cast<char*>(&fileText[0]), 1, fileSize, filePointer.get()) unexpectedly returned numberOfBytesRead != fileSize");
    }
-   _caller_CloseFile->CallConstMemberFunction(&RawFileSystem::CloseFile, this, filePointer, filePath);
    return fileText;
 }
 
-shared_ptr<FILE> RawFileSystem::OpenFileInBinaryReadMode(const fs::path& filePath) const
+shared_ptr<FILE> RawFileSystem::OpenFileInTextReadMode(const fs::path& filePath) const
 {
 #if defined __linux__
-   shared_ptr<FILE> filePointer = _caller_CreateOrOpenFileOnLinux->CallConstMemberFunction(&RawFileSystem::CreateOrOpenFileOnLinux, this, filePath, "b");
+   shared_ptr<FILE> filePointer = _caller_CreateOrOpenFileOnLinux->CallConstMemberFunction(&RawFileSystem::CreateOrOpenFileOnLinux, this, filePath, "r");
 #elif defined _WIN32
-   shared_ptr<FILE> filePointer = _caller_CreateOrOpenFileOnWindows->CallConstMemberFunction(&RawFileSystem::CreateOrOpenFileOnWindows, this, filePath, L"b");
+   shared_ptr<FILE> filePointer = _caller_CreateOrOpenFileOnWindows->CallConstMemberFunction(&RawFileSystem::CreateOrOpenFileOnWindows, this, filePath, L"r");
 #endif
    return filePointer;
 }
