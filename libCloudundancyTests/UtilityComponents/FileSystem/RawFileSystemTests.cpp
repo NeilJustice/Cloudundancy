@@ -15,11 +15,9 @@ AFACT(CreateFileWithTextIfDoesNotExist_FileExists_DoesNothing)
 AFACT(CreateFileWithTextIfDoesNotExist_FileDoesNotExist_CreateFileWithFileText)
 #if defined __linux__
 AFACT(Linux__CreateFileInBinaryWriteMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_wb)
-AFACT(Linux__CreateOrOpenFileInBinaryAppendMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_ab)
 AFACT(Linux__OpenFileInBinaryReadMode_ReturnsSharedPtrFromCallingCreateOrOpenFileOnLinux)
 #elif defined _WIN32
 AFACT(Windows__CreateFileInBinaryWriteMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_wb)
-AFACT(Windows__CreateOrOpenFileInBinaryAppendMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_ab)
 AFACT(Windows__OpenFileInBinaryReadMode_ReturnsSharedPtrFromCallingCreateOrOpenFileOnWindows)
 #endif
 AFACT(ReadTextFromOpenFile_ReadsFileSizeWhichReturns0_ClosesFile_ReturnsEmptyString)
@@ -284,19 +282,6 @@ TEST(Windows__CreateFileInBinaryWriteMode_ReturnsSharedFilePointerCreatedWithFil
    //
    METALMOCK(_caller_CreateOrOpenFileOnWindowsMock->CallConstMemberFunctionMock.CalledOnceWith(
       &RawFileSystem::CreateOrOpenFileOnWindows, &_rawFileSystem, filePath, L"wb"));
-   ARE_EQUAL(filePointer, returnedFilePointer);
-}
-
-TEST(Windows__CreateOrOpenFileInBinaryAppendMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_ab)
-{
-   const shared_ptr<FILE> filePointer = make_shared<FILE>();
-   _caller_CreateOrOpenFileOnWindowsMock->CallConstMemberFunctionMock.Return(filePointer);
-   const fs::path filePath = ZenUnit::Random<fs::path>();
-   //
-   const shared_ptr<FILE> returnedFilePointer = _rawFileSystem.CreateOrOpenFileInBinaryAppendMode(filePath);
-   //
-   METALMOCK(_caller_CreateOrOpenFileOnWindowsMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &RawFileSystem::CreateOrOpenFileOnWindows, &_rawFileSystem, filePath, L"ab"));
    ARE_EQUAL(filePointer, returnedFilePointer);
 }
 

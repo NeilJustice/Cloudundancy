@@ -77,16 +77,6 @@ shared_ptr<FILE> RawFileSystem::CreateFileInBinaryWriteMode(const fs::path& file
    return filePointer;
 }
 
-shared_ptr<FILE> RawFileSystem::CreateOrOpenFileInBinaryAppendMode(const fs::path& filePath) const
-{
-#if defined __linux__
-   shared_ptr<FILE> filePointer = _caller_CreateOrOpenFileOnLinux->CallConstMemberFunction(&RawFileSystem::CreateOrOpenFileOnLinux, this, filePath, "ab");
-#elif defined _WIN32
-   shared_ptr<FILE> filePointer = _caller_CreateOrOpenFileOnWindows->CallConstMemberFunction(&RawFileSystem::CreateOrOpenFileOnWindows, this, filePath, L"ab");
-#endif
-   return filePointer;
-}
-
 string RawFileSystem::ReadTextFromOpenFile(const shared_ptr<FILE>& filePointer, const fs::path& filePath) const
 {
    const size_t fileSize = _caller_ReadFileSize->CallConstMemberFunction(&RawFileSystem::ReadFileSize, this, filePointer);
