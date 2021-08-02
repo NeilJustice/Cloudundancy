@@ -15,7 +15,7 @@ namespace ZenUnit
          actualCloudundancyIniCopyInstruction.relativeDestinationFolderPath);
    }
 
-   CloudundancyIniCopyInstruction TestableRandomCloudundancyIniCopyInstruction(const UtilsRandomGenerator* utilsRandomGenerator)
+   CloudundancyIniCopyInstruction TestableRandomCloudundancyIniCopyInstruction(const Utils::UtilsRandomGenerator* utilsRandomGenerator)
    {
       CloudundancyIniCopyInstruction randomFileCopyInstruction;
       randomFileCopyInstruction.absoluteSourceFileOrFolderPath = utilsRandomGenerator->RelativeFilePath();
@@ -26,6 +26,6 @@ namespace ZenUnit
    template<>
    CloudundancyIniCopyInstruction Random<CloudundancyIniCopyInstruction>()
    {
-      return TestableRandomCloudundancyIniCopyInstruction(UtilsRandomGenerator::Instance());
+      return TestableRandomCloudundancyIniCopyInstruction(Utils::UtilsRandomGenerator::Instance());
    }
 }

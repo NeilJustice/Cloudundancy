@@ -3,8 +3,7 @@
 
 namespace ZenUnit
 {
-   void Equalizer<ProcessResult>::AssertEqual(
-      const ProcessResult& expectedProcessResult, const ProcessResult& actualProcessResult)
+   void Equalizer<Utils::ProcessResult>::AssertEqual(const Utils::ProcessResult& expectedProcessResult, const Utils::ProcessResult& actualProcessResult)
    {
       ARE_EQUAL(expectedProcessResult.processName, actualProcessResult.processName);
       ARE_EQUAL(expectedProcessResult.arguments, actualProcessResult.arguments);
@@ -13,9 +12,9 @@ namespace ZenUnit
       ARE_EQUAL(expectedProcessResult.durationInMilliseconds, actualProcessResult.durationInMilliseconds);
    }
 
-   ProcessResult TestableRandomProcessResult(const ZenUnit::RandomGenerator* randomGenerator)
+   Utils::ProcessResult TestableRandomProcessResult(const ZenUnit::RandomGenerator* randomGenerator)
    {
-      ProcessResult randomProcessResult;
+      Utils::ProcessResult randomProcessResult;
       randomProcessResult.processName = randomGenerator->String();
       randomProcessResult.arguments = randomGenerator->String();
       randomProcessResult.exitCode = randomGenerator->Int();
@@ -25,7 +24,7 @@ namespace ZenUnit
    }
 
    template<>
-   ProcessResult Random<ProcessResult>()
+   Utils::ProcessResult Random<Utils::ProcessResult>()
    {
       return TestableRandomProcessResult(ZenUnit::RandomGenerator::Instance());
    }

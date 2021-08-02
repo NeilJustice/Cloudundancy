@@ -9,14 +9,14 @@ EVIDENCE
 
 CloudundancyLogFileWriter _cloudundancyLogFileWriter;
 // Constant Components
-RawFileSystemMock* _rawFileSystemMock = nullptr;
-WatchMock* _watchMock = nullptr;
+Utils::RawFileSystemMock* _rawFileSystemMock = nullptr;
+Utils::WatchMock* _watchMock = nullptr;
 
 STARTUP
 {
    // Constant Components
-   _cloudundancyLogFileWriter._rawFileSystem.reset(_rawFileSystemMock = new RawFileSystemMock);
-   _cloudundancyLogFileWriter._watch.reset(_watchMock = new WatchMock);
+   _cloudundancyLogFileWriter._rawFileSystem.reset(_rawFileSystemMock = new Utils::RawFileSystemMock);
+   _cloudundancyLogFileWriter._watch.reset(_watchMock = new Utils::WatchMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
@@ -38,7 +38,7 @@ TEST(AppendTimestampedTextToCloudundancyLogFileInDestinationFolder_AppendsTimest
    //
    METALMOCK(_watchMock->DateTimeNowMock.CalledOnce());
    const fs::path expectedCloudundancyLogFilePath = folderPath / "Cloudundancy.log";
-   const string expectedTimestampedBackupStartedMessage = String::ConcatStrings(dateTimeNow, "|", text, "\n");
+   const string expectedTimestampedBackupStartedMessage = Utils::String::ConcatStrings(dateTimeNow, "|", text, "\n");
    METALMOCK(_rawFileSystemMock->AppendTextToClosedFileMock.CalledOnceWith(expectedCloudundancyLogFilePath, expectedTimestampedBackupStartedMessage));
 }
 

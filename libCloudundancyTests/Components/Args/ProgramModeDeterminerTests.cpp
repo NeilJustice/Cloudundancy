@@ -9,18 +9,18 @@ EVIDENCE
 ProgramModeDeterminer _programModeDeterminer;
 
 TEST5X5(DetermineProgramMode_ReturnsProgramModeCorrespondingToProgramModeBool,
-   bool isCopyFilesToMultipleFoldersMode,
+   bool isCopyFileFastsToMultipleFoldersMode,
    bool is7ZipMode,
    bool isExampleLinuxIniFileMode,
    bool isExampleWindowsIniFileMode,
    ProgramMode expectedReturnValue,
-   true, false, false, false, ProgramMode::CopyFilesAndFoldersToMultipleFolders,
+   true, false, false, false, ProgramMode::CopyFileFastsAndFoldersToMultipleFolders,
    false, true, false, false, ProgramMode::SevenZip,
    false, false, true, false, ProgramMode::ExampleLinuxIniFile,
    false, false, false, true, ProgramMode::ExampleWindowsIniFile)
 {
    const ProgramMode programMode = _programModeDeterminer.DetermineProgramMode(
-      isCopyFilesToMultipleFoldersMode,
+      isCopyFileFastsToMultipleFoldersMode,
       is7ZipMode,
       isExampleLinuxIniFileMode,
       isExampleWindowsIniFileMode);

@@ -13,7 +13,7 @@ AFACT(Transform_OneItemRange_CallsTransformerOnce)
 AFACT(Transform_TwoItemRange_CallsTransformerTwice)
 EVIDENCE
 
-using TransformerType = OneExtraArgTransformer<
+using TransformerType = Utils::OneExtraArgTransformer<
    TransformedContainerType<TransformedElementType>,
    SourceContainerType<SourceElementType>,
    TransformedElementType(*)(size_t, SourceElementType, ExtraArgType),
@@ -35,7 +35,7 @@ static TransformedElementType TransformFunction(size_t index, SourceElementType 
 
 TEST(Transform_EmptyRange_DoesNothing)
 {
-   const SourceContainerType<SourceElementType> sourceElements;
+   const SourceContainerType<SourceElementType> sourceElements{};
    //
    const TransformedContainerType<TransformedElementType> transformedElements = _oneExtraArgTransformer.Transform(sourceElements, TransformFunction, 0);
    //
@@ -61,11 +61,11 @@ TEST(Transform_OneItemRange_CallsTransformerOnce)
 
 TEST(Transform_TwoItemRange_CallsTransformerTwice)
 {
-   const OneExtraArgTransformer<
+   const Utils::OneExtraArgTransformer<
       TransformedContainerType<TransformedElementType>,
       SourceContainerType<SourceElementType>,
       decltype(TransformFunction),
-      ExtraArgType> oneExtraArgTransformer;
+      ExtraArgType> oneExtraArgTransformer{};
    SourceContainerType<SourceElementType> sourceElements = { 1, 2 };
    //
    const TransformedContainerType<TransformedElementType> transformedElements = oneExtraArgTransformer.Transform(sourceElements, TransformFunction, 20);

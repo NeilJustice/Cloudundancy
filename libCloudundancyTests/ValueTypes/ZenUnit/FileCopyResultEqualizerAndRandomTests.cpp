@@ -9,13 +9,13 @@ EVIDENCE
 
 TEST(ZenUnitEqualizer_ThrowsIfAnyFieldNotEqual)
 {
-   ZENUNIT_EQUALIZER_TEST_SETUP(FileCopyResult);
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileCopyResult, sourceFilePath, ZenUnit::Random<fs::path>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileCopyResult, destinationFilePath, ZenUnit::Random<fs::path>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileCopyResult, copySucceeded, true);
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileCopyResult, numberOfBytesCopied, ZenUnit::RandomNon0<unsigned long long>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileCopyResult, durationInMilliseconds, ZenUnit::RandomNon0<unsigned long long>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileCopyResult, copyFailureReason, ZenUnit::Random<string>());
+   ZENUNIT_EQUALIZER_TEST_SETUP(Utils::FileCopyResult);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(Utils::FileCopyResult, sourceFilePath, ZenUnit::Random<fs::path>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(Utils::FileCopyResult, destinationFilePath, ZenUnit::Random<fs::path>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(Utils::FileCopyResult, copySucceeded, true);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(Utils::FileCopyResult, numberOfBytesCopied, ZenUnit::RandomNon0<unsigned long long>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(Utils::FileCopyResult, durationInMilliseconds, ZenUnit::RandomNon0<unsigned long long>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(Utils::FileCopyResult, copyFailureReason, ZenUnit::Random<string>());
 }
 
 TEST(TestableRandomFileCopyResult_ReturnsFileCopyResultWithAllRandomFields)
@@ -34,13 +34,13 @@ TEST(TestableRandomFileCopyResult_ReturnsFileCopyResultWithAllRandomFields)
 
    const string copyFailureReason = randomGeneratorMock.StringMock.ReturnRandom();
    //
-   const FileCopyResult randomFileCopyResult = ZenUnit::TestableRandomFileCopyResult(&randomGeneratorMock);
+   const Utils::FileCopyResult randomFileCopyResult = ZenUnit::TestableRandomFileCopyResult(&randomGeneratorMock);
    //
    METALMOCK(randomGeneratorMock.FilesystemPathMock.CalledNTimes(2));
    METALMOCK(randomGeneratorMock.BoolMock.CalledOnce());
    METALMOCK(randomGeneratorMock.UnsignedLongLongMock.CalledNTimes(2));
    METALMOCK(randomGeneratorMock.StringMock.CalledOnce());
-   FileCopyResult expectedRandomFileCopyResult;
+   Utils::FileCopyResult expectedRandomFileCopyResult;
    expectedRandomFileCopyResult.sourceFilePath = sourceFilePath;
    expectedRandomFileCopyResult.destinationFilePath = destinationFilePath;
    expectedRandomFileCopyResult.copySucceeded = copySucceeded;
@@ -52,7 +52,7 @@ TEST(TestableRandomFileCopyResult_ReturnsFileCopyResultWithAllRandomFields)
 
 TEST(ZenUnitRandomFileCopyResult_DoesNotThrowException)
 {
-   ZenUnit::Random<FileCopyResult>();
+   ZenUnit::Random<Utils::FileCopyResult>();
 }
 
 RUN_TESTS(FileCopyResultEqualizerAndRandomTests)

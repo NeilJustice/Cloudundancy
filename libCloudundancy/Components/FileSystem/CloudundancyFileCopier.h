@@ -1,4 +1,5 @@
 #pragma once
+class CloudundancyFileSystem;
 class CloudundancyIniFileReader;
 class CloudundancyLogFileWriter;
 class FileSystem;
@@ -13,54 +14,55 @@ private:
    function<string(const exception*)> _call_Type_GetExceptionClassNameAndMessage;
 
    // Function Callers
-   using _caller_CopyFileFunctionsType = VoidTwoArgMemberFunctionCaller<
+   using _caller_CopyFileFastFunctionsType = Utils::VoidTwoArgMemberFunctionCaller<
       CloudundancyFileCopier, const CloudundancyIniCopyInstruction&, const fs::path&>;
-   unique_ptr<const _caller_CopyFileFunctionsType> _memberCaller_CopyFileFunctions;
+   unique_ptr<const _caller_CopyFileFastFunctionsType> _memberCaller_CopyFileFastFunctions;
 
-   using _memberCaller_CopyNestedFileToFolderType = VoidThreeArgMemberFunctionCaller<
+   using _memberCaller_CopyNestedFileToFolderType = Utils::VoidThreeArgMemberFunctionCaller<
       CloudundancyFileCopier, const fs::path&, const CloudundancyIniCopyInstruction&, const fs::path&>;
    unique_ptr<const _memberCaller_CopyNestedFileToFolderType> _memberCaller_CopyNestedFileToFolder;
 
-   using _memberCaller_TryCopyFileType = NonVoidTwoArgMemberFunctionCaller<
-      FileCopyResult, CloudundancyFileCopier, const fs::path&, const fs::path&>;
-   unique_ptr<const _memberCaller_TryCopyFileType> _memberCaller_TryCopyFile;
+   using _memberCaller_CopyFileFastType = Utils::NonVoidTwoArgMemberFunctionCaller<
+      Utils::FileCopyResult, CloudundancyFileCopier, const fs::path&, const fs::path&>;
+   unique_ptr<const _memberCaller_CopyFileFastType> _memberCaller_CopyFileFast;
 
-   using _memberForEacher_CopyEachFileOrFolderToFolderType = OneExtraArgMemberFunctionForEacher<
+   using _memberForEacher_CopyEachFileOrFolderToFolderType = Utils::OneExtraArgMemberFunctionForEacher<
       CloudundancyFileCopier, fs::path, const CloudundancyIni&>;
    unique_ptr<const _memberForEacher_CopyEachFileOrFolderToFolderType> _memberForEacher_CopyEachFileOrFolderToFolder;
 
-   using _memberForEacher_CopyFileOrFolderToFolderType = OneExtraArgMemberFunctionForEacher<
+   using _memberForEacher_CopyFileFastOrFolderToFolderType = Utils::OneExtraArgMemberFunctionForEacher<
       CloudundancyFileCopier, CloudundancyIniCopyInstruction, const fs::path&>;
-   unique_ptr<const _memberForEacher_CopyFileOrFolderToFolderType> _memberForEacher_CopyFileOrFolderToFolder;
+   unique_ptr<const _memberForEacher_CopyFileFastOrFolderToFolderType> _memberForEacher_CopyFileFastOrFolderToFolder;
 
-   using _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedType = VoidTwoArgMemberFunctionCaller<
-      CloudundancyFileCopier, const FileCopyResult&, const fs::path&>;
+   using _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedType = Utils::VoidTwoArgMemberFunctionCaller<
+      CloudundancyFileCopier, const Utils::FileCopyResult&, const fs::path&>;
    unique_ptr<const _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedType> _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailed;
 
    // Constant Components
+   unique_ptr<const CloudundancyFileSystem> _cloudundancyFileSystem;
    unique_ptr<const CloudundancyIniFileReader> _cloudundancyIniFileReader;
    unique_ptr<const CloudundancyLogFileWriter> _cloudundancyLogFileWriter;
-   unique_ptr<const Console> _console;
-   unique_ptr<const FileSystem> _fileSystem;
-   unique_ptr<const TryCatchCaller<CloudundancyFileCopier, const pair<fs::path, CloudundancyIni>&>> _tryCatchCaller;
+   unique_ptr<const Utils::Console> _console;
+   unique_ptr<const Utils::RawFileSystem> _rawFileSystem;
+   unique_ptr<const Utils::TryCatchCaller<CloudundancyFileCopier, const pair<fs::path, CloudundancyIni>&>> _tryCatchCaller;
 
    // Mutable Components
-   unique_ptr<RecursiveDirectoryIterator> _recursiveDirectoryIterator;
-   unique_ptr<Stopwatch> _stopwatch;
+   unique_ptr<Utils::RecursiveDirectoryIterator> _recursiveDirectoryIterator;
+   unique_ptr<Utils::Stopwatch> _stopwatch;
 public:
    CloudundancyFileCopier() noexcept;
    virtual ~CloudundancyFileCopier();
-   virtual void CopyFilesAndFoldersToMultipleDestinationFolders(
+   virtual void CopyFileFastsAndFoldersToMultipleDestinationFolders(
       const fs::path& cloudundancyIniFilePath, bool deleteDestinationFoldersFirst) const;
 private:
-   void CopyFilesAndFoldersToDestinationFolder(
+   void CopyFileFastsAndFoldersToDestinationFolder(
       const fs::path& destinationFolderPath, const CloudundancyIni& cloudundancyIni) const;
-   void DoCopyFilesAndFoldersToDestinationFolder(
+   void DoCopyFileFastsAndFoldersToDestinationFolder(
       const pair<fs::path, CloudundancyIni>& destinationFolderPath_cloudundancyIni) const;
-   void ExceptionHandlerForDoCopyFilesAndFoldersToDestinationFolder(
+   void ExceptionHandlerForDoCopyFileFastsAndFoldersToDestinationFolder(
       const exception& ex, const pair<fs::path, CloudundancyIni>& destinationFolderPath_cloudundancyIni) const;
 
-   void CopyFileOrFolderToFolder(
+   void CopyFileFastOrFolderToFolder(
       const CloudundancyIniCopyInstruction& cloudundancyIniCopyInstruction,
       const fs::path& destinationFolderPath) const;
    void CopyNestedFileToFolder(
@@ -70,10 +72,10 @@ private:
    void CopyNonIgnoredFilesInAndBelowFolderToFolder(
       const CloudundancyIniCopyInstruction& cloudundancyIniCopyInstruction,
       const fs::path& destinationFolderPath) const;
-   void TryCopyFileToFolder(
+   void CopyFileFastToFolder(
       const CloudundancyIniCopyInstruction& cloudundancyIniCopyInstruction,
       const fs::path& destinationFolderPath) const;
-   FileCopyResult TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const;
+   Utils::FileCopyResult CopyFileFast(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const;
    void WriteCopiedMessageOrExitWithCode1IfCopyFailed(
-      const FileCopyResult& fileCopyResult, const fs::path& destinationFolderPath) const;
+      const Utils::FileCopyResult& fileCopyResult, const fs::path& destinationFolderPath) const;
 };

@@ -4,5 +4,5 @@
 class CloudundancyFileCopierMock : public Metal::Mock<CloudundancyFileCopier>
 {
 public:
-   METALMOCK_VOID2_CONST(CopyFilesAndFoldersToMultipleDestinationFolders, const fs::path&, bool)
+   METALMOCK_VOID2_CONST(CopyFileFastsAndFoldersToMultipleDestinationFolders, const fs::path&, bool)
 };

@@ -14,23 +14,23 @@ AFACT(WriteLineAndExit_WritesMessageAndNewline_ExitsWithExitCode)
 AFACT(WriteLineColor_SetsConsoleTextColor_WritesMessageThenNewline_UnsetsColor)
 EVIDENCE
 
-Console _console;
+Utils::Console _console;
 // Function Pointers
-METALMOCK_VOID1_FREE(exit, int)
+METALMOCK_VOID1_FREE(_call_exit, int)
 // Mutable Components
-ConsoleColorerMock* _consoleColorerMock = nullptr;
+Utils::ConsoleColorerMock* _consoleColorerMock = nullptr;
 
 STARTUP
 {
    // Function Pointers
-   _console._call_exit = BIND_1ARG_METALMOCK_OBJECT(exitMock);
+   _console._call_exit = BIND_1ARG_METALMOCK_OBJECT(_call_exitMock);
    // Mutable Components
-   _console._consoleColorer.reset(_consoleColorerMock = new ConsoleColorerMock);
+   _console._consoleColorer.reset(_consoleColorerMock = new Utils::ConsoleColorerMock);
 }
 
 TEST(DefaultConstructor_NewsConsoleColorer)
 {
-   Console console;
+   Utils::Console console;
    // Function Pointers
    DELETE_TO_ASSERT_NEWED(console._consoleColorer);
    // Mutable Components
@@ -40,14 +40,14 @@ TEST(DefaultConstructor_NewsConsoleColorer)
 TEST(Write_WritesMessageWithoutNewline)
 {
    DOES_NOT_THROW(_console.Write(ZenUnit::Random<string>()));
-   const string_view stringView;
+   const string_view stringView{};
    DOES_NOT_THROW(_console.Write(stringView));
 }
 
 TEST(WriteLine_WritesMessageAndNewline)
 {
    DOES_NOT_THROW(_console.WriteLine(ZenUnit::Random<string>()));
-   const string_view stringView;
+   const string_view stringView{};
    DOES_NOT_THROW(_console.WriteLine(stringView));
 }
 
@@ -69,12 +69,12 @@ TEST(WriteLineIf_DoPrintMessageIsTrue_WritesMessageToCoutWithNewline)
 
 TEST(WriteLineAndExit_WritesMessageAndNewline_ExitsWithExitCode)
 {
-   exitMock.Expect();
+   _call_exitMock.Expect();
    const int exitCode = ZenUnit::Random<int>();
    //
    _console.WriteLineAndExit(ZenUnit::Random<string>(), exitCode);
    //
-   METALMOCK(exitMock.CalledOnceWith(exitCode));
+   METALMOCK(_call_exitMock.CalledOnceWith(exitCode));
 }
 
 TEST(WriteLineColor_SetsConsoleTextColor_WritesMessageThenNewline_UnsetsColor)

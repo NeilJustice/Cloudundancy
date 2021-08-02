@@ -12,35 +12,38 @@ AFACT(Run_CallsProcessRunnerRun)
 AFACT(FailFastRun_CallsProcessRunnerFailFastRun)
 EVIDENCE
 
-ProcessRunner _processRunner;
+Utils::ProcessRunner _processRunner;
+// Constant Components
 #if defined __linux__ || defined __APPLE__
-LinuxProcessRunnerMock* _osSpecificProcessRunnerMock = nullptr;
+Utils::LinuxProcessRunnerMock* _osSpecificProcessRunnerMock = nullptr;
 #elif _WIN32
-WindowsProcessRunnerMock* _osSpecificProcessRunnerMock = nullptr;
+Utils::WindowsProcessRunnerMock* _osSpecificProcessRunnerMock = nullptr;
 #endif
 
 STARTUP
 {
+   // Constant Components
 #if defined __linux__ || defined __APPLE__
-   _processRunner._osSpecificProcessRunner.reset(_osSpecificProcessRunnerMock = new LinuxProcessRunnerMock);
+   _processRunner._osSpecificProcessRunner.reset(_osSpecificProcessRunnerMock = new Utils::LinuxProcessRunnerMock);
 #elif _WIN32
-   _processRunner._osSpecificProcessRunner.reset(_osSpecificProcessRunnerMock = new WindowsProcessRunnerMock);
+   _processRunner._osSpecificProcessRunner.reset(_osSpecificProcessRunnerMock = new Utils::WindowsProcessRunnerMock);
 #endif
 }
 
 TEST(DefaultConstructor_NewsOSSpecificProcessRunner)
 {
-   ProcessRunner processRunner;
+   Utils::ProcessRunner processRunner;
+   // Constant Components
    DELETE_TO_ASSERT_NEWED(processRunner._osSpecificProcessRunner);
 }
 
 TEST(Run_CallsProcessRunnerRun)
 {
-   const ProcessResult runReturnValue = _osSpecificProcessRunnerMock->RunMock.ReturnRandom();
+   const Utils::ProcessResult runReturnValue = _osSpecificProcessRunnerMock->RunMock.ReturnRandom();
    const string processName = ZenUnit::Random<string>();
    const string arguments = ZenUnit::Random<string>();
    //
-   const ProcessResult processResult = _processRunner.Run(processName, arguments);
+   const Utils::ProcessResult processResult = _processRunner.Run(processName, arguments);
    //
    METALMOCK(_osSpecificProcessRunnerMock->RunMock.CalledOnceWith(processName, arguments));
    ARE_EQUAL(runReturnValue, processResult);
@@ -48,12 +51,12 @@ TEST(Run_CallsProcessRunnerRun)
 
 TEST(FailFastRun_CallsProcessRunnerFailFastRun)
 {
-   const ProcessResult failFastReturnValue = _osSpecificProcessRunnerMock->FailFastRunMock.ReturnRandom();
+   const Utils::ProcessResult failFastReturnValue = _osSpecificProcessRunnerMock->FailFastRunMock.ReturnRandom();
    const string processName = ZenUnit::Random<string>();
    const string arguments = ZenUnit::Random<string>();
    const bool doPrintStandardOutput = ZenUnit::Random<bool>();
    //
-   const ProcessResult processResult = _processRunner.FailFastRun(processName, arguments, doPrintStandardOutput);
+   const Utils::ProcessResult processResult = _processRunner.FailFastRun(processName, arguments, doPrintStandardOutput);
    //
    METALMOCK(_osSpecificProcessRunnerMock->FailFastRunMock.CalledOnceWith(processName, arguments, doPrintStandardOutput));
    ARE_EQUAL(failFastReturnValue, processResult);

@@ -1,21 +1,24 @@
 #pragma once
 
-template<typename ClassType, typename ElementType>
-class MemberFunctionForEacher
+namespace Utils
 {
-public:
-   using ConstMemberFunctionType = void(ClassType::*)(const ElementType&) const;
-
-   virtual void CallConstMemberFunctionForEachElement(
-      const std::vector<ElementType>& elements,
-      ConstMemberFunctionType constMemberFunction,
-      const ClassType* constClassPointer) const
+   template<typename ClassType, typename ElementType>
+   class MemberFunctionForEacher
    {
-      for (const ElementType& element : elements)
-      {
-         (constClassPointer->*constMemberFunction)(element);
-      }
-   }
+   public:
+      using ConstMemberFunctionType = void(ClassType::*)(const ElementType&) const;
 
-   virtual ~MemberFunctionForEacher() = default;
-};
+      virtual void CallConstMemberFunctionForEachElement(
+         const std::vector<ElementType>& elements,
+         ConstMemberFunctionType constMemberFunction,
+         const ClassType* constClassPointer) const
+      {
+         for (const ElementType& element : elements)
+         {
+            (constClassPointer->*constMemberFunction)(element);
+         }
+      }
+
+      virtual ~MemberFunctionForEacher() = default;
+   };
+}

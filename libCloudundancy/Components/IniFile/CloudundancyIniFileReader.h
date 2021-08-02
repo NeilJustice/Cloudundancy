@@ -1,25 +1,24 @@
 #pragma once
 class CloudundancyIniValidator;
-class FileSystem;
 
 class CloudundancyIniFileReader
 {
    friend class CloudundancyIniFileReaderTests;
 private:
    // Function Callers
-   using NonVoidOneArgMemberFunctionCallerType = const NonVoidOneArgMemberFunctionCaller<
+   using NonVoidOneArgMemberFunctionCallerType = const Utils::NonVoidOneArgMemberFunctionCaller<
       CloudundancyIniCopyInstruction,
       CloudundancyIniFileReader,
       const FilePathLineNumberLineText&>;
    unique_ptr<NonVoidOneArgMemberFunctionCallerType> _caller_ParseFileCopyInstructionLine;
 
-   using VoidOneArgMemberFunctionCallerType = const VoidOneArgMemberFunctionCaller<
+   using VoidOneArgMemberFunctionCallerType = const Utils::VoidOneArgMemberFunctionCaller<
       CloudundancyIniFileReader, const CloudundancyIniCopyInstruction&>;
    unique_ptr<VoidOneArgMemberFunctionCallerType> _caller_ThrowIfSourceFileOrFolderDoesNotExist;
 
    // Constant Components
    unique_ptr<const CloudundancyIniValidator> _cloudundancyIniValidator;
-   unique_ptr<const FileSystem> _fileSystem;
+   unique_ptr<const Utils::RawFileSystem> _rawFileSystem;
 public:
    CloudundancyIniFileReader() noexcept;
    virtual ~CloudundancyIniFileReader();

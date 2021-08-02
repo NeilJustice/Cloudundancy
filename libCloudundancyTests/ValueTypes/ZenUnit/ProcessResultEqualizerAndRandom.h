@@ -4,12 +4,12 @@ struct ProcessResult;
 namespace ZenUnit
 {
    template<>
-   struct Equalizer<ProcessResult>
+   struct Equalizer<Utils::ProcessResult>
    {
-      static void AssertEqual(const ProcessResult& expectedProcessResult, const ProcessResult& actualProcessResult);
+      static void AssertEqual(const Utils::ProcessResult& expectedProcessResult, const Utils::ProcessResult& actualProcessResult);
    };
 
-   ProcessResult TestableRandomProcessResult(const ZenUnit::RandomGenerator* randomGenerator);
+   Utils::ProcessResult TestableRandomProcessResult(const ZenUnit::RandomGenerator* randomGenerator);
    template<>
-   ProcessResult Random<ProcessResult>();
+   Utils::ProcessResult Random<Utils::ProcessResult>();
 }

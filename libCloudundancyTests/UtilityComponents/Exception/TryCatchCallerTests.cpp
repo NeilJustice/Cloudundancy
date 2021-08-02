@@ -63,7 +63,7 @@ public:
 
 Class nonConstClassInstance;
 const Class constClassInstance;
-TryCatchCaller<Class, ArgumentType> _tryCatchCaller;
+Utils::TryCatchCaller<Class, ArgumentType> _tryCatchCaller;
 
 TEST(TryCatchCallNonConstMemberFunction_CallsMemberFunctionWhichDoesNotThrow_ReturnsFunctionReturnValue)
 {

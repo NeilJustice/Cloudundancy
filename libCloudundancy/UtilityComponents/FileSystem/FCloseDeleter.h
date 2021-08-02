@@ -1,12 +1,15 @@
 #pragma once
 class FCloseDeleterTests;
 
-class FCloseDeleter
+namespace Utils
 {
-   friend class ::FCloseDeleterTests;
-private:
-   function<int(FILE*)> _call_fclose;
-public:
-   FCloseDeleter();
-   void operator()(FILE* rawFilePointer) const;
-};
+   class FCloseDeleter
+   {
+      friend class ::FCloseDeleterTests;
+   private:
+      function<int(FILE*)> _call_fclose;
+   public:
+      FCloseDeleter();
+      void operator()(FILE* rawFilePointer) const;
+   };
+}

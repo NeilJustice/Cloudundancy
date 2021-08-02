@@ -9,8 +9,8 @@ EVIDENCE
 
 TEST(DefaultConstrructor_SetsFieldsTo0)
 {
-   const ProcessResult defaultProcessResult;
-   ProcessResult expectedDefaultProcessResult;
+   const Utils::ProcessResult defaultProcessResult;
+   Utils::ProcessResult expectedDefaultProcessResult;
    expectedDefaultProcessResult.processName = "";
    expectedDefaultProcessResult.arguments = "";
    expectedDefaultProcessResult.exitCode = 0;
@@ -27,9 +27,9 @@ TEST(FiveArgConstructor_SetsFields)
    const string standardOutputAndError = ZenUnit::Random<string>();
    const unsigned durationInMilliseconds = ZenUnit::Random<unsigned>();
    //
-   const ProcessResult processResult(processName, arguments, exitCode, standardOutputAndError, durationInMilliseconds);
+   const Utils::ProcessResult processResult(processName, arguments, exitCode, standardOutputAndError, durationInMilliseconds);
    //
-   ProcessResult expectedProcessResult;
+   Utils::ProcessResult expectedProcessResult;
    expectedProcessResult.processName = processName;
    expectedProcessResult.arguments = arguments;
    expectedProcessResult.exitCode = exitCode;
@@ -40,11 +40,11 @@ TEST(FiveArgConstructor_SetsFields)
 
 TEST(ZenUnitEqualizer_ThrowsIfAnyFieldNotEqual)
 {
-   ZENUNIT_EQUALIZER_TEST_SETUP(ProcessResult);
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(ProcessResult, processName, ZenUnit::Random<string>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(ProcessResult, arguments, ZenUnit::Random<string>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(ProcessResult, exitCode, ZenUnit::RandomNon0<int>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(ProcessResult, standardOutputAndError, ZenUnit::Random<string>());
+   ZENUNIT_EQUALIZER_TEST_SETUP(Utils::ProcessResult);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(Utils::ProcessResult, processName, ZenUnit::Random<string>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(Utils::ProcessResult, arguments, ZenUnit::Random<string>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(Utils::ProcessResult, exitCode, ZenUnit::RandomNon0<int>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(Utils::ProcessResult, standardOutputAndError, ZenUnit::Random<string>());
 }
 
 RUN_TESTS(ProcessResultTests)

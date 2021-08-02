@@ -10,16 +10,16 @@ CloudundancyProgram::CloudundancyProgram() noexcept
    : _call_Type_GetExceptionClassNameAndMessage(Type::GetExceptionClassNameAndMessage)
    , _call_Vector_ArgcArgvToStringVector(Vector::ArgcArgvToStringVector)
    // Function Callers
-   , _tryCatchCaller(make_unique<TryCatchCaller<CloudundancyProgram, const vector<string>&>>())
+   , _tryCatchCaller(make_unique<Utils::TryCatchCaller<CloudundancyProgram, const vector<string>&>>())
    // Constant Components
    , _cloudundancyArgsParser(make_unique<CloudundancyArgsParser>())
    , _cloudundancySubProgramFactory(make_unique<CloudundancySubProgramFactory>())
-   , _console(make_unique<Console>())
+   , _console(make_unique<Utils::Console>())
    , _cloudundancyFileCopier(make_unique<CloudundancyFileCopier>())
-   , _environmentService(make_unique<EnvironmentService>())
-   , _watch(make_unique<Watch>())
+   , _environmentService(make_unique<Utils::EnvironmentService>())
+   , _watch(make_unique<Utils::Watch>())
    // Mutable Components
-   , _stopwatch(make_unique<Stopwatch>())
+   , _stopwatch(make_unique<Utils::Stopwatch>())
 {
 }
 

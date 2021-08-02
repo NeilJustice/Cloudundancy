@@ -25,7 +25,7 @@ using namespace std;
 #include "libCloudundancy/Enums/WindowsColor.h"
 
 // libCloudundancy Exceptions
-#include "libCloudundancy/Exceptions/FileSystemException.h"
+#include "libCloudundancy/Exceptions/FileSystemExceptions.h"
 
 // libCloudundancy ValueTypes
 #include "libCloudundancy/ValueTypes/CloudundancyIniCopyInstruction.h"
@@ -45,16 +45,17 @@ using namespace std;
 // libCloudundancy UtilityComponents Mocks
 #include "libCloudundancyTests/UtilityComponents/Assertion/MetalMock/AsserterMock.h"
 #include "libCloudundancyTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
+#include "libCloudundancyTests/UtilityComponents/Console/MetalMock/ConsoleColorerMock.h"
 #include "libCloudundancyTests/UtilityComponents/Docopt/MetalMock/DocoptParserMock.h"
 #include "libCloudundancyTests/UtilityComponents/Environment/MetalMock/EnvironmentServiceMock.h"
 #include "libCloudundancyTests/UtilityComponents/Exception/MetalMock/TryCatchCallerMock.h"
-#include "libCloudundancyTests/UtilityComponents/FileSystem/MetalMock/FileSystemMock.h"
+#include "libCloudundancyTests/UtilityComponents/FileSystem/MetalMock/RawFileSystemMock.h"
 #include "libCloudundancyTests/UtilityComponents/FileSystem/MetalMock/RecursiveDirectoryIteratorMock.h"
-#include "libCloudundancyTests/UtilityComponents/FunctionCallers/MemberFunctions/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
-#include "libCloudundancyTests/UtilityComponents/FunctionCallers/MemberFunctions/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
-#include "libCloudundancyTests/UtilityComponents/FunctionCallers/MemberFunctions/MetalMock/VoidOneArgMemberFunctionCallerMock.h"
-#include "libCloudundancyTests/UtilityComponents/FunctionCallers/MemberFunctions/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
-#include "libCloudundancyTests/UtilityComponents/FunctionCallers/MemberFunctions/MetalMock/VoidThreeArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/UtilityComponents/FunctionCallers/Member/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/UtilityComponents/FunctionCallers/Member/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/UtilityComponents/FunctionCallers/Member/MetalMock/VoidOneArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/UtilityComponents/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
+#include "libCloudundancyTests/UtilityComponents/FunctionCallers/Member/MetalMock/VoidThreeArgMemberFunctionCallerMock.h"
 #include "libCloudundancyTests/UtilityComponents/Iteration/ForEach/MetalMock/MemberFunctionForEacherMock.h"
 #include "libCloudundancyTests/UtilityComponents/Iteration/ForEach/MetalMock/OneExtraArgMemberFunctionForEacherMock.h"
 #include "libCloudundancyTests/UtilityComponents/Iteration/Transform/MetalMock/OneExtraArgTransformerMock.h"

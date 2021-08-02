@@ -4,13 +4,13 @@
 namespace ZenUnit
 {
    template<>
-   struct Equalizer<FileCopyResult>
+   struct Equalizer<Utils::FileCopyResult>
    {
       static void AssertEqual(
-         const FileCopyResult& expectedFileCopyResult, const FileCopyResult& actualFileCopyResult);
+         const Utils::FileCopyResult& expectedFileCopyResult, const Utils::FileCopyResult& actualFileCopyResult);
    };
 
-   FileCopyResult TestableRandomFileCopyResult(const RandomGenerator* randomGenerator);
+   Utils::FileCopyResult TestableRandomFileCopyResult(const RandomGenerator* randomGenerator);
    template<>
-   FileCopyResult Random();
+   Utils::FileCopyResult Random();
 }

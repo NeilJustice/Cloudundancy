@@ -20,16 +20,16 @@ CloudundancyProgram _cloudundancyProgram;
 METALMOCK_NONVOID2_STATIC(vector<string>, Vector, ArgcArgvToStringVector, int, char**)
 METALMOCK_NONVOID1_STATIC(string, Type, GetExceptionClassNameAndMessage, const exception*)
 // Function Callers
-TryCatchCallerMock<CloudundancyProgram, const vector<string>&>* _tryCatchCallerMock = nullptr;
+Utils::TryCatchCallerMock<CloudundancyProgram, const vector<string>&>* _tryCatchCallerMock = nullptr;
 // Constant Components
 CloudundancyArgsParserMock* _cloudundancyArgsParserMock = nullptr;
 CloudundancySubProgramFactoryMock* _cloudundancySubProgramFactoryMock = nullptr;
-ConsoleMock* _consoleMock = nullptr;
+Utils::ConsoleMock* _consoleMock = nullptr;
 CloudundancyFileCopierMock* _cloudundancyFileCopierMock = nullptr;
-EnvironmentServiceMock* _environmentServiceMock = nullptr;
-WatchMock* _watchMock = nullptr;
+Utils::EnvironmentServiceMock* _environmentServiceMock = nullptr;
+Utils::WatchMock* _watchMock = nullptr;
 // Mutable Components
-StopwatchMock* _stopwatchMock = nullptr;
+Utils::StopwatchMock* _stopwatchMock = nullptr;
 
 STARTUP
 {
@@ -37,16 +37,16 @@ STARTUP
    _cloudundancyProgram._call_Type_GetExceptionClassNameAndMessage = BIND_1ARG_METALMOCK_OBJECT(GetExceptionClassNameAndMessageMock);
    _cloudundancyProgram._call_Vector_ArgcArgvToStringVector = BIND_2ARG_METALMOCK_OBJECT(ArgcArgvToStringVectorMock);
    // Function Callers
-   _cloudundancyProgram._tryCatchCaller.reset(_tryCatchCallerMock = new TryCatchCallerMock<CloudundancyProgram, const vector<string>&>);
+   _cloudundancyProgram._tryCatchCaller.reset(_tryCatchCallerMock = new Utils::TryCatchCallerMock<CloudundancyProgram, const vector<string>&>);
    // Constant Components
    _cloudundancyProgram._cloudundancyArgsParser.reset(_cloudundancyArgsParserMock = new CloudundancyArgsParserMock);
    _cloudundancyProgram._cloudundancySubProgramFactory.reset(_cloudundancySubProgramFactoryMock = new CloudundancySubProgramFactoryMock);
-   _cloudundancyProgram._environmentService.reset(_environmentServiceMock = new EnvironmentServiceMock);
-   _cloudundancyProgram._console.reset(_consoleMock = new ConsoleMock);
+   _cloudundancyProgram._environmentService.reset(_environmentServiceMock = new Utils::EnvironmentServiceMock);
+   _cloudundancyProgram._console.reset(_consoleMock = new Utils::ConsoleMock);
    _cloudundancyProgram._cloudundancyFileCopier.reset(_cloudundancyFileCopierMock = new CloudundancyFileCopierMock);
-   _cloudundancyProgram._watch.reset(_watchMock = new WatchMock);
+   _cloudundancyProgram._watch.reset(_watchMock = new Utils::WatchMock);
    // Mutable Components
-   _cloudundancyProgram._stopwatch.reset(_stopwatchMock = new StopwatchMock);
+   _cloudundancyProgram._stopwatch.reset(_stopwatchMock = new Utils::StopwatchMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)

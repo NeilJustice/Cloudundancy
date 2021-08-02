@@ -12,7 +12,7 @@ namespace ZenUnit
          const CloudundancyIniCopyInstruction& actualCloudundancyIniCopyInstruction);
    };
 
-   CloudundancyIniCopyInstruction TestableRandomCloudundancyIniCopyInstruction(const UtilsRandomGenerator* utilsRandomGenerator);
+   CloudundancyIniCopyInstruction TestableRandomCloudundancyIniCopyInstruction(const Utils::UtilsRandomGenerator* utilsRandomGenerator);
    template<>
    CloudundancyIniCopyInstruction Random();
 }

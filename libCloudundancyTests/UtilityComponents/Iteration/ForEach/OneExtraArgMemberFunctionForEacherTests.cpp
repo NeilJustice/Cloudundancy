@@ -24,7 +24,7 @@ public:
    METALMOCK_VOID2_CONST(TwoArgConstMemberFunctionFunction, const ElementType&, ExtraArgType)
 };
 
-OneExtraArgMemberFunctionForEacher<ClassType, ElementType, ExtraArgType> _oneExtraArgMemberFunctionForEacher;
+Utils::OneExtraArgMemberFunctionForEacher<ClassType, ElementType, ExtraArgType> _oneExtraArgMemberFunctionForEacher;
 
 TEST(CallConstMemberFunctionForEachElement_EmptyElementsVector_DoesNotCallMemberFunction)
 {

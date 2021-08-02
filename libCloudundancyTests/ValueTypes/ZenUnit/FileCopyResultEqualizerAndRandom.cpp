@@ -3,8 +3,8 @@
 
 namespace ZenUnit
 {
-   void Equalizer<FileCopyResult>::AssertEqual(
-      const FileCopyResult& expectedFileCopyResult, const FileCopyResult& actualFileCopyResult)
+   void Equalizer<Utils::FileCopyResult>::AssertEqual(
+      const Utils::FileCopyResult& expectedFileCopyResult, const Utils::FileCopyResult& actualFileCopyResult)
    {
       ARE_EQUAL(expectedFileCopyResult.sourceFilePath, actualFileCopyResult.sourceFilePath);
       ARE_EQUAL(expectedFileCopyResult.destinationFilePath, actualFileCopyResult.destinationFilePath);
@@ -14,9 +14,9 @@ namespace ZenUnit
       ARE_EQUAL(expectedFileCopyResult.copyFailureReason, actualFileCopyResult.copyFailureReason);
    }
 
-   FileCopyResult TestableRandomFileCopyResult(const RandomGenerator* randomGenerator)
+   Utils::FileCopyResult TestableRandomFileCopyResult(const RandomGenerator* randomGenerator)
    {
-      FileCopyResult randomFileCopyResult;
+      Utils::FileCopyResult randomFileCopyResult;
       randomFileCopyResult.sourceFilePath = randomGenerator->FilesystemPath();
       randomFileCopyResult.destinationFilePath = randomGenerator->FilesystemPath();
       randomFileCopyResult.copySucceeded = randomGenerator->Bool();
@@ -27,7 +27,7 @@ namespace ZenUnit
    }
 
    template<>
-   FileCopyResult Random()
+   Utils::FileCopyResult Random()
    {
       return TestableRandomFileCopyResult(RandomGenerator::Instance());
    }

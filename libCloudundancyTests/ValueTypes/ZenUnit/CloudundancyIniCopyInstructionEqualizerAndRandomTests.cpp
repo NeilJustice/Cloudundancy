@@ -15,7 +15,7 @@ TEST(ZenUnitEqualizer_ThrowsIfAnyFieldNotEqual)
 
 TEST(TestableRandomCloudundancyIniCopyInstruction_ReturnsCloudundancyIniCopyInstructionWithAllRandomFields)
 {
-   UtilsRandomGeneratorMock utilsRandomGeneratorMock;
+   Utils::UtilsRandomGeneratorMock utilsRandomGeneratorMock;
    const fs::path absoluteSourceFileOrFolderPath = utilsRandomGeneratorMock.RelativeFilePathMock.ReturnRandom();
    const fs::path relativeDestinationFolderPath = utilsRandomGeneratorMock.RelativeFolderPathMock.ReturnRandom();
    //

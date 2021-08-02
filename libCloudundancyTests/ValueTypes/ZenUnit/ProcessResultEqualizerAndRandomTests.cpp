@@ -9,12 +9,12 @@ EVIDENCE
 
 TEST(ZenUnitEqualizer_ThrowsZenUnitAnomalyIfAnyFieldNotEqual)
 {
-   ZENUNIT_EQUALIZER_TEST_SETUP(ProcessResult);
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(ProcessResult, processName, ZenUnit::Random<string>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(ProcessResult, arguments, ZenUnit::Random<string>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(ProcessResult, exitCode, ZenUnit::RandomNon0<int>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(ProcessResult, standardOutputAndError, ZenUnit::Random<string>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(ProcessResult, durationInMilliseconds, ZenUnit::RandomNon0<unsigned>());
+   ZENUNIT_EQUALIZER_TEST_SETUP(Utils::ProcessResult);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(Utils::ProcessResult, processName, ZenUnit::Random<string>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(Utils::ProcessResult, arguments, ZenUnit::Random<string>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(Utils::ProcessResult, exitCode, ZenUnit::RandomNon0<int>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(Utils::ProcessResult, standardOutputAndError, ZenUnit::Random<string>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(Utils::ProcessResult, durationInMilliseconds, ZenUnit::RandomNon0<unsigned>());
 }
 
 TEST(TestableRandomProcessResult_ReturnsProcessResultWithAllRandomFields)
@@ -30,12 +30,12 @@ TEST(TestableRandomProcessResult_ReturnsProcessResultWithAllRandomFields)
 
    const unsigned durationInMilliseconds = randomGeneratorMock.UnsignedIntMock.ReturnRandom();
    //
-   const ProcessResult randomProcessResult = ZenUnit::TestableRandomProcessResult(&randomGeneratorMock);
+   const Utils::ProcessResult randomProcessResult = ZenUnit::TestableRandomProcessResult(&randomGeneratorMock);
    //
    METALMOCK(randomGeneratorMock.StringMock.CalledNTimes(3));
    METALMOCK(randomGeneratorMock.IntMock.CalledOnce());
    METALMOCK(randomGeneratorMock.UnsignedIntMock.CalledOnce());
-   ProcessResult expectedRandomProcessResult;
+   Utils::ProcessResult expectedRandomProcessResult;
    expectedRandomProcessResult.processName = processName;
    expectedRandomProcessResult.arguments = arguments;
    expectedRandomProcessResult.exitCode = exitCode;
@@ -46,7 +46,7 @@ TEST(TestableRandomProcessResult_ReturnsProcessResultWithAllRandomFields)
 
 TEST(ZenUnitRandomProcessResult_ReturnsResultOfCallingTestableRandomProcessResult)
 {
-   ZenUnit::Random<ProcessResult>();
+   ZenUnit::Random<Utils::ProcessResult>();
 }
 
 RUN_TESTS(ProcessResultEqualizerAndRandomTests)

@@ -3,7 +3,7 @@
 
 CloudundancyIniValidator::CloudundancyIniValidator()
    // Constant Components
-   : _fileSystem(make_unique<FileSystem>())
+   : _rawFileSystem(make_unique<Utils::RawFileSystem>())
 {
 }
 
@@ -11,13 +11,11 @@ CloudundancyIniValidator::~CloudundancyIniValidator()
 {
 }
 
-void CloudundancyIniValidator::ThrowIfZeroDestinationFolderPaths(
-   const CloudundancyIni& cloudundancyIni, const fs::path& cloudundancyIniPath) const
+void CloudundancyIniValidator::ThrowIfZeroDestinationFolderPaths(const CloudundancyIni& cloudundancyIni, const fs::path& cloudundancyIniPath) const
 {
    if (cloudundancyIni.destinationFolderPaths.empty())
    {
-      const FileSystemException fileSystemException(
-         FileSystemExceptionType::MalformedFile, cloudundancyIniPath, "cloudundancyIni.destinationFolderPaths cannot be empty");
-      throw fileSystemException;
+      const Utils::FileMalformedException fileMalformedException(cloudundancyIniPath, "cloudundancyIni.destinationFolderPaths cannot be empty");
+      throw fileMalformedException;
    }
 }

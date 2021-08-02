@@ -1,9 +1,12 @@
 #pragma once
 #include "libCloudundancy/UtilityComponents/Process/ProcessRunner.h"
 
-class ProcessRunnerMock : public Metal::Mock<ProcessRunner>
+namespace Utils
 {
-public:
-   METALMOCK_NONVOID2_CONST(ProcessResult, Run, string_view, string_view)
-   METALMOCK_NONVOID3_CONST(ProcessResult, FailFastRun, string_view, string_view, bool)
-};
+   class ProcessRunnerMock : public Metal::Mock<ProcessRunner>
+   {
+   public:
+      METALMOCK_NONVOID2_CONST(ProcessResult, Run, string_view, string_view)
+      METALMOCK_NONVOID3_CONST(ProcessResult, FailFastRun, string_view, string_view, bool)
+   };
+}

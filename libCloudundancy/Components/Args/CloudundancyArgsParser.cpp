@@ -4,10 +4,10 @@
 
 CloudundancyArgsParser::CloudundancyArgsParser()
    // Constant Components
-   : _console(make_unique<Console>())
-   , _docoptParser(make_unique<DocoptParser>())
-   , _fileSystem(make_unique<FileSystem>())
-   , _processRunner(make_unique<ProcessRunner>())
+   : _console(make_unique<Utils::Console>())
+   , _docoptParser(make_unique<Utils::DocoptParser>())
+   , _rawFileSystem(make_unique<Utils::RawFileSystem>())
+   , _processRunner(make_unique<Utils::ProcessRunner>())
    , _programModeDeterminer(make_unique<ProgramModeDeterminer>())
 {
 }
@@ -20,12 +20,12 @@ CloudundancyArgs CloudundancyArgsParser::ParseStringArgs(const vector<string>& s
 {
    const map<string, docopt::Value> docoptArgs = _docoptParser->ParseArgs(CloudundancyArgs::CommandLineUsage, stringArgs);
    CloudundancyArgs cloudundancyArgs;
-   const bool isCopyFilesToMultipleFoldersMode = _docoptParser->GetRequiredBool(docoptArgs, "copy-files-to-multiple-folders");
+   const bool isCopyFileFastsToMultipleFoldersMode = _docoptParser->GetRequiredBool(docoptArgs, "copy-files-to-multiple-folders");
    const bool is7ZipMode = _docoptParser->GetRequiredBool(docoptArgs, "7zip-files-then-copy-the-7zip-file-to-multiple-folders");
    const bool isExampleLinuxIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "example-linux-ini-file");
    const bool isExampleWindowsIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "example-windows-ini-file");
    cloudundancyArgs.programMode = _programModeDeterminer->DetermineProgramMode(
-      isCopyFilesToMultipleFoldersMode,
+      isCopyFileFastsToMultipleFoldersMode,
       is7ZipMode,
       isExampleLinuxIniFileMode,
       isExampleWindowsIniFileMode);
@@ -50,9 +50,9 @@ CloudundancyArgs CloudundancyArgsParser::ParseStringArgs(const vector<string>& s
       static_cast<int>(ProgramMode::SevenZip),
       "--ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders");
 
-   _fileSystem->ThrowIfFilePathIsNotEmptyAndDoesNotExist(cloudundancyArgs.iniFilePath);
-   _fileSystem->ThrowIfFilePathIsNotEmptyAndDoesNotExist(cloudundancyArgs.sevenZipModeIniFilePath);
-   _fileSystem->ThrowIfFilePathIsNotEmptyAndDoesNotExist(cloudundancyArgs.sevenZipFileCopyingIniFilePath);
+   _rawFileSystem->ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExist(cloudundancyArgs.iniFilePath);
+   _rawFileSystem->ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExist(cloudundancyArgs.sevenZipModeIniFilePath);
+   _rawFileSystem->ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExist(cloudundancyArgs.sevenZipFileCopyingIniFilePath);
    if (is7ZipMode)
    {
       _console->WriteLine("[Cloudundancy] Running program 7z to confirm 7z is present on the PATH");

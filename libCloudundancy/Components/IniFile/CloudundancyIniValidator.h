@@ -1,11 +1,10 @@
 #pragma once
-class FileSystem;
 
 class CloudundancyIniValidator
 {
    friend class CloudundancyIniValidatorTests;
 private:
-   unique_ptr<const FileSystem> _fileSystem;
+   unique_ptr<const Utils::RawFileSystem> _rawFileSystem;
 public:
    CloudundancyIniValidator();
    virtual ~CloudundancyIniValidator();

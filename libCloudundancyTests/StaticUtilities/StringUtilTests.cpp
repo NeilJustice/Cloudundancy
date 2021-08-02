@@ -26,28 +26,28 @@ struct UserType
 
 TEST(ConcatStrings_ReturnsStringsConcatenatedIntoAString)
 {
-   ARE_EQUAL("", String::ConcatStrings(""));
-   ARE_EQUAL("1", String::ConcatStrings("1"));
-   ARE_EQUAL("12", String::ConcatStrings("1", "2"));
-   ARE_EQUAL("123", String::ConcatStrings("1", "2", "3"));
+   ARE_EQUAL("", Utils::String::ConcatStrings(""));
+   ARE_EQUAL("1", Utils::String::ConcatStrings("1"));
+   ARE_EQUAL("12", Utils::String::ConcatStrings("1", "2"));
+   ARE_EQUAL("123", Utils::String::ConcatStrings("1", "2", "3"));
 
    const string str1 = "str1";
    string_view str2 = "str2";
    const char* const str3 = "str3";
-   ARE_EQUAL("str1str2str3", String::ConcatStrings(str1, str2, str3));
+   ARE_EQUAL("str1str2str3", Utils::String::ConcatStrings(str1, str2, str3));
 }
 
 TEST(ConcatValues_ReturnsValuesConcatenatedIntoAString)
 {
-   ARE_EQUAL("", String::ConcatValues(""));
-   ARE_EQUAL("1", String::ConcatValues("1"));
-   ARE_EQUAL("12", String::ConcatValues("1", "2"));
-   ARE_EQUAL("123", String::ConcatValues("1", "2", "3"));
+   ARE_EQUAL("", Utils::String::ConcatValues(""));
+   ARE_EQUAL("1", Utils::String::ConcatValues("1"));
+   ARE_EQUAL("12", Utils::String::ConcatValues("1", "2"));
+   ARE_EQUAL("123", Utils::String::ConcatValues("1", "2", "3"));
 
    const UserType userType1(1);
    const string str = "hello";
    const UserType userType3(3);
-   ARE_EQUAL("1hello3", String::ConcatValues(userType1, str, userType3));
+   ARE_EQUAL("1hello3", Utils::String::ConcatValues(userType1, str, userType3));
 }
 
 TEST3X3(Contains_ReturnsTrueIfStringContainsSubstring,
@@ -64,7 +64,7 @@ TEST3X3(Contains_ReturnsTrueIfStringContainsSubstring,
    true, "abc def ghi", "c d",
    true, "a\r\n_bc_", "bc")
 {
-   ARE_EQUAL(expectedReturnValue, String::Contains(str, substring));
+   ARE_EQUAL(expectedReturnValue, Utils::String::Contains(str, substring));
 }
 
 TEST3X3(CaseInsensitiveContains_ReturnsTrueIfStringCaseInsensitiveContainsSubstring,
@@ -81,7 +81,7 @@ TEST3X3(CaseInsensitiveContains_ReturnsTrueIfStringCaseInsensitiveContainsSubstr
    true, "abc def ghi", "c d",
    true, "a\r\n_bc_", "bc")
 {
-   ARE_EQUAL(expectedReturnValue, String::CaseInsensitiveContains(str, substring));
+   ARE_EQUAL(expectedReturnValue, Utils::String::CaseInsensitiveContains(str, substring));
 }
 
 TEST4X4(ReplaceFirst_ReturnsReplacedString,
@@ -94,7 +94,7 @@ TEST4X4(ReplaceFirst_ReturnsReplacedString,
    "C:\\Folder\\Subfolder\\File.ext", "C:\\Folder\\Subfolder\\", "", "File.ext",
    " 1 2 3 3 ", " 3 ", " 4 ", " 1 2 4 3 ")
 {
-   const string replacedString = String::ReplaceFirst(str, substring, replacement);
+   const string replacedString = Utils::String::ReplaceFirst(str, substring, replacement);
    ARE_EQUAL(expectedReturnValue, replacedString);
 }
 
@@ -106,7 +106,7 @@ TEST4X4(RegexReplace_ReturnsRegexReplacedString,
    "A", "a", "b", "A",
    "123 -> 456", "\\d\\d\\d -> ", "|", "|456")
 {
-   const string replacedString = String::RegexReplace(str, pattern, replacement);
+   const string replacedString = Utils::String::RegexReplace(str, pattern, replacement);
    ARE_EQUAL(expectedReturnValue, replacedString);
 }
 
@@ -122,7 +122,7 @@ TEST3X3(StartsWith_ReturnsTrueIfStringStartsWithSubstring,
    "aa", "a", true,
    "aa", "aa", true)
 {
-   ARE_EQUAL(expectedReturnValue, String::StartsWith(str, substring));
+   ARE_EQUAL(expectedReturnValue, Utils::String::StartsWith(str, substring));
 }
 
 TEST3X3(Split_ReturnsStringSplitOnCharacterSeparator,
@@ -138,7 +138,7 @@ TEST3X3(Split_ReturnsStringSplitOnCharacterSeparator,
    "a|b|c", '|', vector<string>{"a", "b", "c"},
    ",a|b|c||", '|', vector<string>{",a", "b", "c", ""})
 {
-   const vector<string> splitString = String::Split(str, separator);
+   const vector<string> splitString = Utils::String::Split(str, separator);
    VECTORS_ARE_EQUAL(expectedReturnValue, splitString);
 }
 
@@ -149,7 +149,7 @@ TEST2X2(TrimWhitespace_ReturnsStringWithLeadingAndTrailingSpacesAndTabsRemoved,
    " \tabc \t", "abc",
    " \t \t TextA \t TextB \t ", "TextA \t TextB")
 {
-   const string strWithWhitespaceTrimmed = String::TrimWhitespace(str);
+   const string strWithWhitespaceTrimmed = Utils::String::TrimWhitespace(str);
    ARE_EQUAL(expectedReturnValue, strWithWhitespaceTrimmed);
 }
 

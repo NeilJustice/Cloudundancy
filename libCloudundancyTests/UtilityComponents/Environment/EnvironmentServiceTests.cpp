@@ -120,20 +120,20 @@ AFACT(MachineName_ReturnsResultOfCallingGetComputerNameA)
 AFACT(UserName_ReturnsResultOfCallingGetUserNameA)
 EVIDENCE
 
-class EnvironmentServiceSelfMocked : public Metal::Mock<EnvironmentService>
+class EnvironmentServiceSelfMocked : public Metal::Mock<Utils::EnvironmentService>
 {
 public:
    METALMOCK_NONVOID0_CONST(string, MachineName)
    METALMOCK_NONVOID0_CONST(string, UserName)
 } _environmentServiceSelfMocked;
 
-EnvironmentService _environmentService;
+Utils::EnvironmentService _environmentService;
 // Function Pointers
 METALMOCK_NONVOID0_FREE(fs::path, current_path)
 METALMOCK_NONVOID2_FREE(BOOL, GetComputerNameA, LPSTR, LPDWORD)
 METALMOCK_NONVOID2_FREE(BOOL, GetUserNameA, LPSTR, LPDWORD)
 // Constant Components
-AsserterMock* _asserterMock = nullptr;
+Utils::AsserterMock* _asserterMock = nullptr;
 
 STARTUP
 {
@@ -142,12 +142,12 @@ STARTUP
    _environmentService._call_GetComputerNameA = BIND_2ARG_METALMOCK_OBJECT(GetComputerNameAMock);
    _environmentService._call_GetUserNameA = BIND_2ARG_METALMOCK_OBJECT(GetUserNameAMock);
    // Constant Components
-   _environmentService._asserter.reset(_asserterMock = new AsserterMock);
+   _environmentService._asserter.reset(_asserterMock = new Utils::AsserterMock);
 }
 
 TEST(DefaultConstructor_SetsFunctionPointers)
 {
-   EnvironmentService environmentService;
+   Utils::EnvironmentService environmentService;
    // Function Pointers
    STD_FUNCTION_TARGETS(GetComputerNameA, environmentService._call_GetComputerNameA);
    STD_FUNCTION_TARGETS(GetUserNameA, environmentService._call_GetUserNameA);

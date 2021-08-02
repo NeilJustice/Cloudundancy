@@ -8,7 +8,7 @@ AFACT(Transform_OneItemRange_CallsTransformerOnce)
 AFACT(Transform_TwoItemRange_CallsTransformerTwice)
 EVIDENCE
 
-using TransformerType = Transformer<T, TransformedT>;
+using TransformerType = Utils::Transformer<T, TransformedT>;
 TransformerType _transformer;
 
 static TransformedT PlusOne(const T& element)
@@ -18,7 +18,7 @@ static TransformedT PlusOne(const T& element)
 
 TEST(Transform_EmptyRange_DoesNothing)
 {
-   const vector<T> source;
+   const vector<T> source{};
    //
    const vector<TransformedT> dest = _transformer.Transform(source, PlusOne);
    //

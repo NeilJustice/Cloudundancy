@@ -2,14 +2,14 @@
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgram.h"
 class CloudundancyFileCopier;
 
-class CopyFilesToMultipleFoldersSubProgram : public CloudundancySubProgram
+class CopyFileFastsToMultipleFoldersSubProgram : public CloudundancySubProgram
 {
-   friend class CopyFilesToMultipleFoldersSubProgramTests;
+   friend class CopyFileFastsToMultipleFoldersSubProgramTests;
 private:
    // Constant Components
    unique_ptr<const CloudundancyFileCopier> _cloudundancyFileCopier;
 public:
-   CopyFilesToMultipleFoldersSubProgram();
-   virtual ~CopyFilesToMultipleFoldersSubProgram();
+   CopyFileFastsToMultipleFoldersSubProgram();
+   virtual ~CopyFileFastsToMultipleFoldersSubProgram();
    int Run(const CloudundancyArgs& args) override;
 };

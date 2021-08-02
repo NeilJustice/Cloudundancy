@@ -22,7 +22,7 @@ public:
    METALMOCK_VOID1_CONST(ConstMemberFunctionFunction, const ElementType&)
 };
 
-MemberFunctionForEacher<ClassType, ElementType> _memberFunctionForEacher;
+Utils::MemberFunctionForEacher<ClassType, ElementType> _memberFunctionForEacher;
 
 TEST(CallConstMemberFunctionForEachElement_EmptyElementsVector_DoesNotCallMemberFunction)
 {

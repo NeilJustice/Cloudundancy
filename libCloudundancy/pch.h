@@ -43,7 +43,7 @@ using namespace std;
 #include "libCloudundancy/Enums/WindowsColor.h"
 
 // libCloudundancy Exceptions
-#include "libCloudundancy/Exceptions/FileSystemException.h"
+#include "libCloudundancy/Exceptions/FileSystemExceptions.h"
 
 // libCloudundancy ValueTypes
 #include "libCloudundancy/ValueTypes/AbsoluteFilePathToRelativeDestinationFolderPath.h"
@@ -69,15 +69,15 @@ using namespace std;
 #include "libCloudundancy/UtilityComponents/Docopt/docopt.h"
 #include "libCloudundancy/UtilityComponents/Docopt/DocoptParser.h"
 #include "libCloudundancy/UtilityComponents/Environment/EnvironmentService.h"
+#include "libCloudundancy/UtilityComponents/ErrorHandling/ErrorCodeTranslator.h"
 #include "libCloudundancy/UtilityComponents/Exception/TryCatchCaller.h"
-#include "libCloudundancy/UtilityComponents/FileSystem/FileOpenerCloser.h"
-#include "libCloudundancy/UtilityComponents/FileSystem/FileSystem.h"
+#include "libCloudundancy/UtilityComponents/FileSystem/RawFileSystem.h"
 #include "libCloudundancy/UtilityComponents/FileSystem/RecursiveDirectoryIterator.h"
-#include "libCloudundancy/UtilityComponents/FunctionCallers/MemberFunctions/NonVoidOneArgMemberFunctionCaller.h"
-#include "libCloudundancy/UtilityComponents/FunctionCallers/MemberFunctions/NonVoidTwoArgMemberFunctionCaller.h"
-#include "libCloudundancy/UtilityComponents/FunctionCallers/MemberFunctions/VoidOneArgMemberFunctionCaller.h"
-#include "libCloudundancy/UtilityComponents/FunctionCallers/MemberFunctions/VoidThreeArgMemberFunctionCaller.h"
-#include "libCloudundancy/UtilityComponents/FunctionCallers/MemberFunctions/VoidTwoArgMemberFunctionCaller.h"
+#include "libCloudundancy/UtilityComponents/FunctionCallers/Member/NonVoidOneArgMemberFunctionCaller.h"
+#include "libCloudundancy/UtilityComponents/FunctionCallers/Member/NonVoidTwoArgMemberFunctionCaller.h"
+#include "libCloudundancy/UtilityComponents/FunctionCallers/Member/VoidOneArgMemberFunctionCaller.h"
+#include "libCloudundancy/UtilityComponents/FunctionCallers/Member/VoidThreeArgMemberFunctionCaller.h"
+#include "libCloudundancy/UtilityComponents/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
 #include "libCloudundancy/UtilityComponents/Iteration/ForEach/OneExtraArgMemberFunctionForEacher.h"
 #include "libCloudundancy/UtilityComponents/Iteration/Transform/OneExtraArgTransformer.h"
 #include "libCloudundancy/UtilityComponents/Memory/CharVectorAllocator.h"

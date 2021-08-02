@@ -9,19 +9,19 @@ EVIDENCE
 
 CloudundancyArgsParser _cloudundancyArgsParser;
 // Constant Components
-ConsoleMock* _consoleMock = nullptr;
-DocoptParserMock* _docoptParserMock = nullptr;
-FileSystemMock* _fileSystemMock = nullptr;
-ProcessRunnerMock* _processRunnerMock = nullptr;
+Utils::ConsoleMock* _consoleMock = nullptr;
+Utils::DocoptParserMock* _docoptParserMock = nullptr;
+Utils::RawFileSystemMock* _rawFileSystemMock = nullptr;
+Utils::ProcessRunnerMock* _processRunnerMock = nullptr;
 ProgramModeDeterminerMock* _programModeDeterminerMock = nullptr;
 
 STARTUP
 {
    // Constant Components
-   _cloudundancyArgsParser._console.reset(_consoleMock = new ConsoleMock);
-   _cloudundancyArgsParser._docoptParser.reset(_docoptParserMock = new DocoptParserMock);
-   _cloudundancyArgsParser._fileSystem.reset(_fileSystemMock = new FileSystemMock);
-   _cloudundancyArgsParser._processRunner.reset(_processRunnerMock = new ProcessRunnerMock);
+   _cloudundancyArgsParser._console.reset(_consoleMock = new Utils::ConsoleMock);
+   _cloudundancyArgsParser._docoptParser.reset(_docoptParserMock = new Utils::DocoptParserMock);
+   _cloudundancyArgsParser._rawFileSystem.reset(_rawFileSystemMock = new Utils::RawFileSystemMock);
+   _cloudundancyArgsParser._processRunner.reset(_processRunnerMock = new Utils::ProcessRunnerMock);
    _cloudundancyArgsParser._programModeDeterminer.reset(_programModeDeterminerMock = new ProgramModeDeterminerMock);
 }
 
@@ -31,7 +31,7 @@ TEST(DefaultConstructor_NewsComponents)
    // Constant Components
    DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._console);
    DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._docoptParser);
-   DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._fileSystem);
+   DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._rawFileSystem);
    DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._processRunner);
    DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._programModeDeterminer);
 }
@@ -44,11 +44,11 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    const map<string, docopt::Value> docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::Value>();
    _docoptParserMock->ParseArgsMock.Return(docoptArgs);
 
-   const bool isCopyFilesToMultipleFoldersMode = ZenUnit::Random<bool>();
+   const bool isCopyFileFastsToMultipleFoldersMode = ZenUnit::Random<bool>();
    const bool isExampleLinuxIniFileMode = ZenUnit::Random<bool>();
    const bool isExampleWindowsIniFileMode = ZenUnit::Random<bool>();
    _docoptParserMock->GetRequiredBoolMock.ReturnValues(
-      isCopyFilesToMultipleFoldersMode,
+      isCopyFileFastsToMultipleFoldersMode,
       is7ZipMode,
       isExampleLinuxIniFileMode,
       isExampleWindowsIniFileMode);
@@ -65,7 +65,7 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    _docoptParserMock->GetProgramModeSpecificRequiredStringMock.ReturnValues(
       sevenZipModeIniFilePath, sevenZipStagingFolderPath, sevenZipFileCopyingIniFilePath);
 
-   _fileSystemMock->ThrowIfFilePathIsNotEmptyAndDoesNotExistMock.Expect();
+   _rawFileSystemMock->ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExistMock.Expect();
 
    if (expectRun7zToConfirm7zIsInThePath)
    {
@@ -86,7 +86,7 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
       { docoptArgs, "example-windows-ini-file" }
    }));
    METALMOCK(_programModeDeterminerMock->DetermineProgramModeMock.CalledOnceWith(
-      isCopyFilesToMultipleFoldersMode,
+      isCopyFileFastsToMultipleFoldersMode,
       is7ZipMode,
       isExampleLinuxIniFileMode,
       isExampleWindowsIniFileMode));
@@ -101,7 +101,7 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
       { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::SevenZip),
         "--ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders" }
    }));
-   METALMOCK(_fileSystemMock->ThrowIfFilePathIsNotEmptyAndDoesNotExistMock.CalledAsFollows(
+   METALMOCK(_rawFileSystemMock->ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExistMock.CalledAsFollows(
    {
       { iniFilePath },
       { sevenZipModeIniFilePath },

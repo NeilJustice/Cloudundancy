@@ -9,9 +9,9 @@ shared_ptr<CloudundancySubProgram> CloudundancySubProgramFactory::NewCloudundanc
 {
    switch (programMode)
    {
-   case ProgramMode::CopyFilesAndFoldersToMultipleFolders:
+   case ProgramMode::CopyFileFastsAndFoldersToMultipleFolders:
    {
-      return make_shared<CopyFilesToMultipleFoldersSubProgram>();
+      return make_shared<CopyFileFastsToMultipleFoldersSubProgram>();
    }
    case ProgramMode::SevenZip:
    {

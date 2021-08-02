@@ -1,20 +1,23 @@
 #pragma once
 
-template<typename T, typename TransformedT>
-class Transformer
+namespace Utils
 {
-public:
-   virtual std::vector<TransformedT> Transform(const std::vector<T>& source, TransformedT(*transformer)(const T&)) const
+   template<typename T, typename TransformedT>
+   class Transformer
    {
-      const size_t sourceSize = source.size();
-      std::vector<TransformedT> dest(sourceSize);
-      for (size_t i = 0; i < sourceSize; ++i)
+   public:
+      virtual std::vector<TransformedT> Transform(const std::vector<T>& source, TransformedT(*transformer)(const T&)) const
       {
-         const T& element = source[i];
-         dest[i] = transformer(element);
+         const size_t sourceSize = source.size();
+         std::vector<TransformedT> dest(sourceSize);
+         for (size_t i = 0; i < sourceSize; ++i)
+         {
+            const T& element = source[i];
+            dest[i] = transformer(element);
+         }
+         return dest;
       }
-      return dest;
-   }
 
-   virtual ~Transformer() = default;
-};
+      virtual ~Transformer() = default;
+   };
+}

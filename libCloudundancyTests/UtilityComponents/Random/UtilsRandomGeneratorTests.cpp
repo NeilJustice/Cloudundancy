@@ -7,7 +7,7 @@ AFACT(RelativeFolderPath_ReturnsFilesystemPathWith0To2FoldersLeadingToARandomFol
 AFACT(RelativeFolderPaths_ReturnsVectorOfRandomFilesystemPathsBetweenSize0And2)
 EVIDENCE
 
-UtilsRandomGenerator _utilsRandomGenerator;
+Utils::UtilsRandomGenerator _utilsRandomGenerator;
 
 TEST(RelativeFilePath_ReturnsFilesystemPathWith0To2FoldersLeadingToARandomFilenameWithARandomFileExtension)
 {

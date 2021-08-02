@@ -69,7 +69,7 @@ TEST(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
    //
    const ProcessResult processResult = _linuxProcessRunner.FailFastRun(processName, arguments, ZenUnit::Random<bool>());
    //
-   const string expectedRunningProgramMessage = String::ConcatStrings("[Cloudundancy] Running program: ", processName, " ", arguments);
+   const string expectedRunningProgramMessage = Utils::String::ConcatStrings("[Cloudundancy] Running program: ", processName, " ", arguments);
    METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedRunningProgramMessage, Color::Yellow));
    METALMOCK(_caller_RunMock->CallConstMemberFunctionMock.CalledOnceWith(
       &LinuxProcessRunner::Run, &_linuxProcessRunner, processName, arguments));
@@ -92,9 +92,9 @@ TEST(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessageAndExitsProgramWithPro
    //
    METALMOCK(_caller_RunMock->CallConstMemberFunctionMock.CalledOnceWith(
       &LinuxProcessRunner::Run, &_linuxProcessRunner, processName, arguments));
-   const string expectedRunningProgramMessage = String::ConcatStrings("[Cloudundancy] Running program: ", processName, " ", arguments);
+   const string expectedRunningProgramMessage = Utils::String::ConcatStrings("[Cloudundancy] Running program: ", processName, " ", arguments);
    METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedRunningProgramMessage, Color::Yellow));
-   const string expectedProcessFailedErrorMessage = String::ConcatValues(
+   const string expectedProcessFailedErrorMessage = Utils::String::ConcatValues(
       "Process \"", processName, " ", arguments, "\" failed with exit code ", processResult.exitCode, '.');
    METALMOCK(_consoleMock->WriteLineAndExitMock.CalledOnceWith(expectedProcessFailedErrorMessage, runReturnValue.exitCode));
    ARE_EQUAL(runReturnValue, processResult);
@@ -137,7 +137,7 @@ TEST(ThrowIfWifexitedReturnValueIsNot1_WifexitedReturnValueIsNot1_ThrowsRuntimeE
    const pair<int, string> errnoAndErrnoDescription = _errorCodeTranslatorMock->GetErrnoWithDescriptionMock.ReturnRandom();
    const int wifexitedReturnValue = ZenUnit::RandomNotEqualToValue<int>(1);
    //
-   const string expectedExceptionMessage = String::ConcatValues(
+   const string expectedExceptionMessage = Utils::String::ConcatValues(
       "'WIFEXITED(waitPidStatus) did not return 1: ", errnoAndErrnoDescription.first,
       ". errno=", errnoAndErrnoDescription.first, " (", errnoAndErrnoDescription.second, ")");
    THROWS_EXCEPTION(_linuxProcessRunner.ThrowIfWifexitedReturnValueIsNot1(wifexitedReturnValue),
@@ -156,7 +156,7 @@ TEST(ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0_PosixSpawnpReturnValueIsNot0_
    const pair<int, string> errnoAndErrnoDescription = _errorCodeTranslatorMock->GetErrnoWithDescriptionMock.ReturnRandom();
    const int posixSpawnpReturnValue = ZenUnit::RandomNon0<int>();
    //
-   const string expectedExceptionMessage = String::ConcatValues(
+   const string expectedExceptionMessage = Utils::String::ConcatValues(
       "'posix_spawnp(&pid, processName.data(), nullptr, nullptr, argv.get(), nullptr)' returned non-0: ", posixSpawnpReturnValue,
       ". errno=", errnoAndErrnoDescription.first, " (", errnoAndErrnoDescription.second, ')');
    THROWS_EXCEPTION(_linuxProcessRunner.ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0(posixSpawnpReturnValue),
@@ -179,7 +179,7 @@ TEST(ThrowRuntimeErrorIfWaitPidReturnValueDoesNotEqualPid_WaitPidReturnValueDoes
    const pid_t waitpidReturnValue = ZenUnit::Random<pid_t>();
    const pid_t pid = ZenUnit::RandomNotEqualToValue<pid_t>(waitpidReturnValue);
    //
-   const string expectedExceptionMessage = String::ConcatValues(
+   const string expectedExceptionMessage = Utils::String::ConcatValues(
       "'waitpid(pid, &waitPidStatus, 0)' unexpectedly returned ", waitpidReturnValue, " which is not equal to pid ", pid,
       ". errno=", errnoAndErrnoDescription.first, " (", errnoAndErrnoDescription.second, ')');
    THROWS_EXCEPTION(_linuxProcessRunner.ThrowRuntimeErrorIfWaitPidReturnValueDoesNotEqualPid(waitpidReturnValue, pid),

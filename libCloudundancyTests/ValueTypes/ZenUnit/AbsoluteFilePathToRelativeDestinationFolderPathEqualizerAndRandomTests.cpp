@@ -19,13 +19,11 @@ TEST(TestableRandomAbsoluteFilePathToRelativeDestinationFolderPath_ReturnsAbsolu
    ZenUnit::RandomGeneratorMock randomGeneratorMock;
    fs::path absoluteSourceFilePath = randomGeneratorMock.FilesystemPathMock.ReturnRandom();
 
-   UtilsRandomGeneratorMock utilsRandomGeneratorMock;
+   Utils::UtilsRandomGeneratorMock utilsRandomGeneratorMock;
    fs::path relativeDestinationFolderPath = utilsRandomGeneratorMock.RelativeFolderPathMock.ReturnRandom();
    //
-   const AbsoluteFilePathToRelativeDestinationFolderPath
-      randomAbsoluteFilePathToRelativeDestinationFolderPath =
-      ZenUnit::TestableRandomAbsoluteFilePathToRelativeDestinationFolderPath(
-         &randomGeneratorMock, &utilsRandomGeneratorMock);
+   const AbsoluteFilePathToRelativeDestinationFolderPath randomAbsoluteFilePathToRelativeDestinationFolderPath =
+      ZenUnit::TestableRandomAbsoluteFilePathToRelativeDestinationFolderPath(&randomGeneratorMock, &utilsRandomGeneratorMock);
    //
    METALMOCK(randomGeneratorMock.FilesystemPathMock.CalledOnce());
    METALMOCK(utilsRandomGeneratorMock.RelativeFolderPathMock.CalledOnce());

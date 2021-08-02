@@ -6,11 +6,13 @@ AFACT(Run_PrintsExampleWindowsIniFile_Returns0)
 EVIDENCE
 
 ExampleWindowsIniFileSubProgram _exampleWindowsIniFileSubProgram;
-ConsoleMock* _consoleMock = nullptr;
+// Base Constant Components
+Utils::ConsoleMock* _consoleMock = nullptr;
 
 STARTUP
 {
-   _exampleWindowsIniFileSubProgram._console.reset(_consoleMock = new ConsoleMock);
+   // Base Constant Components
+   _exampleWindowsIniFileSubProgram._console.reset(_consoleMock = new Utils::ConsoleMock);
 }
 
 TEST(Run_PrintsExampleWindowsIniFile_Returns0)

@@ -24,8 +24,8 @@ static void FailReleaseAssertFunction()
    catch (const logic_error& e)
    {
       const char* const what = e.what();
-      IS_TRUE(String::Contains(what, "release_assert(1 == 0) failed in FailReleaseAssertFunction()"));
-      IS_TRUE(String::CaseInsensitiveContains(what, "ReleaseAssertTests.cpp(22)"));
+      IS_TRUE(Utils::String::Contains(what, "release_assert(1 == 0) failed in FailReleaseAssertFunction()"));
+      IS_TRUE(Utils::String::CaseInsensitiveContains(what, "ReleaseAssertTests.cpp(22)"));
    }
 }
 
@@ -48,11 +48,11 @@ TEST(release_assert_IsFalse_FromOperatorParentheses_ThrowsLogicError)
    {
       const char* const what = e.what();
 #if defined __linux__ || defined __APPLE__
-      IS_TRUE(String::Contains(what, "release_assert(false) failed in operator()()"));
+      IS_TRUE(Utils::String::Contains(what, "release_assert(false) failed in operator()()"));
 #elif _WIN32
-      IS_TRUE(String::Contains(what, "release_assert(false) failed in operator ()()"));
+      IS_TRUE(Utils::String::Contains(what, "release_assert(false) failed in operator ()()"));
 #endif
-      IS_TRUE(String::CaseInsensitiveContains(what, "ReleaseAssertTests.cpp(40)"));
+      IS_TRUE(Utils::String::CaseInsensitiveContains(what, "ReleaseAssertTests.cpp(40)"));
    }
 }
 

@@ -8,22 +8,22 @@ EVIDENCE
 
 CloudundancyIniValidator _cloudundancyIniValidator;
 // Function Callers
-using _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMockType =
-   MemberFunctionForEacherMock<CloudundancyIniValidator, fs::path>;
-_memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMockType*
-   _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMock = nullptr;
+using _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMockType = Utils::MemberFunctionForEacherMock<CloudundancyIniValidator, fs::path>;
+_memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMockType* _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMock = nullptr;
 // Constant Components
-FileSystemMock* _fileSystemMock = nullptr;
+Utils::RawFileSystemMock* _rawFileSystemMock = nullptr;
 
 STARTUP
 {
-   _cloudundancyIniValidator._fileSystem.reset(_fileSystemMock = new FileSystemMock);
+   // Constant Components
+   _cloudundancyIniValidator._rawFileSystem.reset(_rawFileSystemMock = new Utils::RawFileSystemMock);
 }
 
 TEST(DefaultConstructor_NewsFileSystem)
 {
    CloudundancyIniValidator cloudundancyIniValidator;
-   DELETE_TO_ASSERT_NEWED(cloudundancyIniValidator._fileSystem);
+   // Constant Components
+   DELETE_TO_ASSERT_NEWED(cloudundancyIniValidator._rawFileSystem);
 }
 
 TEST(ThrowIfZeroDestinationFolderPaths_DestinationFolderPathsIsEmpty_ThrowsFileSystemExceptionWithReasonMalformedFile)
@@ -32,11 +32,10 @@ TEST(ThrowIfZeroDestinationFolderPaths_DestinationFolderPathsIsEmpty_ThrowsFileS
    cloudundancyIni.destinationFolderPaths = {};
    //
    const fs::path cloudundancyIniPath = ZenUnit::Random<fs::path>();
-   const FileSystemException expectedFileSystemException(
-      FileSystemExceptionType::MalformedFile, cloudundancyIniPath, "cloudundancyIni.destinationFolderPaths cannot be empty");
-   const string expectedExceptionMessage = expectedFileSystemException.what();
+   const Utils::FileMalformedException expectedFileMalformedException(cloudundancyIniPath, "cloudundancyIni.destinationFolderPaths cannot be empty");
+   const string expectedExceptionMessage = expectedFileMalformedException.what();
    THROWS_EXCEPTION(_cloudundancyIniValidator.ThrowIfZeroDestinationFolderPaths(cloudundancyIni, cloudundancyIniPath),
-      FileSystemException, expectedExceptionMessage);
+      Utils::FileMalformedException, expectedExceptionMessage);
 }
 
 RUN_TESTS(CloudundancyIniValidatorTests)

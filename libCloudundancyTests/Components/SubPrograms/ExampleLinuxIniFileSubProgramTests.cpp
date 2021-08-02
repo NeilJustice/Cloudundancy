@@ -6,11 +6,13 @@ AFACT(Run_PrintsExampleLinuxIniFile_Returns0)
 EVIDENCE
 
 ExampleLinuxIniFileSubProgram _exampleLinuxIniFileSubProgram;
-ConsoleMock* _consoleMock = nullptr;
+// Base Constant Components
+Utils::ConsoleMock* _consoleMock = nullptr;
 
 STARTUP
 {
-   _exampleLinuxIniFileSubProgram._console.reset(_consoleMock = new ConsoleMock);
+   // Base Constant Components
+   _exampleLinuxIniFileSubProgram._console.reset(_consoleMock = new Utils::ConsoleMock);
 }
 
 TEST(Run_PrintsExampleLinuxIniFile_Returns0)

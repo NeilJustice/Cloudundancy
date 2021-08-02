@@ -6,7 +6,7 @@ AFACT(DefaultConstructor_SetsFunctionPointers_NewsAsserter)
 AFACT(TmNow_ReturnsTmNow)
 EVIDENCE
 
-CRTWatch _crtWatch;
+Utils::CRTWatch _crtWatch;
 // Function Pointers
 METALMOCK_NONVOID0_STATIC(chrono::time_point<chrono::system_clock>, chrono::system_clock, now)
 METALMOCK_NONVOID1_STATIC(long long, chrono::system_clock, to_time_t, const chrono::system_clock::time_point&)
@@ -16,7 +16,7 @@ METALMOCK_NONVOID1_FREE(tm*, localtime, const time_t* const)
 METALMOCK_NONVOID2_FREE(errno_t, _localtime64_s, tm*, const time_t*)
 #endif
 // Constant Components
-AsserterMock* _asserterMock = nullptr;
+Utils::AsserterMock* _asserterMock = nullptr;
 
 STARTUP
 {
@@ -29,12 +29,12 @@ STARTUP
    _crtWatch._call_localtime64_s = BIND_2ARG_METALMOCK_OBJECT(_localtime64_sMock);
 #endif
    // Constant Components
-   _crtWatch._asserter.reset(_asserterMock = new AsserterMock);
+   _crtWatch._asserter.reset(_asserterMock = new Utils::AsserterMock);
 }
 
 TEST(DefaultConstructor_SetsFunctionPointers_NewsAsserter)
 {
-   CRTWatch crtWatch;
+   Utils::CRTWatch crtWatch;
    // Function Pointers
    STD_FUNCTION_TARGETS(chrono::system_clock::now, crtWatch._call_system_clock_now);
    STD_FUNCTION_TARGETS(chrono::system_clock::to_time_t, crtWatch._call_to_time_t);

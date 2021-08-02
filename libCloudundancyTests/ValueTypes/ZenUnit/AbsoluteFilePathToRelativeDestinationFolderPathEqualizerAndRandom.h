@@ -13,7 +13,7 @@ namespace ZenUnit
    };
 
    AbsoluteFilePathToRelativeDestinationFolderPath TestableRandomAbsoluteFilePathToRelativeDestinationFolderPath(
-      const ZenUnit::RandomGenerator* randomGenerator, const UtilsRandomGenerator* utilsRandomGenerator);
+      const ZenUnit::RandomGenerator* randomGenerator, const Utils::UtilsRandomGenerator* utilsRandomGenerator);
    template<>
    AbsoluteFilePathToRelativeDestinationFolderPath Random<AbsoluteFilePathToRelativeDestinationFolderPath>();
 }

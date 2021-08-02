@@ -8,31 +8,31 @@ AFACT(IntegrationTest_RecursiveDirectoryIterator_EmptyFilePathIgnoreSubstrings_R
 AFACT(IntegrationTest_RecursiveDirectoryIterator_NonEmptyFilePathIgnoreSubstrings_ReturnsAllNonIgnoredFilePathsInAndBelowFolderPath)
 EVIDENCE
 
-RecursiveDirectoryIterator _recursiveDirectoryIterator;
-FileSystem _fileSystem;
+Utils::RecursiveDirectoryIterator _recursiveDirectoryIterator;
+Utils::RawFileSystem _rawFileSystem;
 const fs::path _rootFolderPath = "IntegrationTest_RecursiveDirectoryIterator";
 
 void CreateIntegrationTestingDirectoryStructure()
 {
-   _fileSystem.CreateTextFile(_rootFolderPath / "file1.txt", "");
-   _fileSystem.CreateTextFile(_rootFolderPath / "file2.ini", "");
-   _fileSystem.CreateTextFile(_rootFolderPath / "root.ignored_file_extension_1", "");
-   _fileSystem.CreateTextFile(_rootFolderPath / "root.ignored_file_extension_2", "");
+   _rawFileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "file1.txt", "");
+   _rawFileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "file2.ini", "");
+   _rawFileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "root.ignored_file_extension_1", "");
+   _rawFileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "root.ignored_file_extension_2", "");
 
-   _fileSystem.CreateTextFile(_rootFolderPath / "subdir1" / "file1.xml", "");
-   _fileSystem.CreateTextFile(_rootFolderPath / "subdir1" / "file2.json", "");
-   _fileSystem.CreateTextFile(_rootFolderPath / "subdir1" / "file3.ignored_file_extension_1", "");
-   _fileSystem.CreateTextFile(_rootFolderPath / "subdir1" / "file4.ignored_file_extension_2", "");
+   _rawFileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "subdir1" / "file1.xml", "");
+   _rawFileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "subdir1" / "file2.json", "");
+   _rawFileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "subdir1" / "file3.ignored_file_extension_1", "");
+   _rawFileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "subdir1" / "file4.ignored_file_extension_2", "");
 
-   _fileSystem.CreateTextFile(_rootFolderPath / "subdir2" / "file1.xml", "");
-   _fileSystem.CreateTextFile(_rootFolderPath / "subdir2" / "file2.json", "");
-   _fileSystem.CreateTextFile(_rootFolderPath / "subdir2" / "file3.ignored_file_extension_1", "");
-   _fileSystem.CreateTextFile(_rootFolderPath / "subdir2" / "file4.ignored_file_extension_2", "");
+   _rawFileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "subdir2" / "file1.xml", "");
+   _rawFileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "subdir2" / "file2.json", "");
+   _rawFileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "subdir2" / "file3.ignored_file_extension_1", "");
+   _rawFileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "subdir2" / "file4.ignored_file_extension_2", "");
 
-   _fileSystem.CreateTextFile(_rootFolderPath / "subdir3" / "subdir4" / "file1.html", "");
+   _rawFileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "subdir3" / "subdir4" / "file1.html", "");
 
-   _fileSystem.CreateTextFile(_rootFolderPath / "ignored_directory_name_1" / "file1.txt", "");
-   _fileSystem.CreateTextFile(_rootFolderPath / "ignored_directory_name_2" / "file1.txt", "");
+   _rawFileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "ignored_directory_name_1" / "file1.txt", "");
+   _rawFileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "ignored_directory_name_2" / "file1.txt", "");
 }
 
 STARTUP
@@ -42,12 +42,12 @@ STARTUP
 
 CLEANUP
 {
-   _fileSystem.DeleteFolder(_rootFolderPath);
+   _rawFileSystem.DeleteFolder(_rootFolderPath);
 }
 
 TEST(DefaultConstructor_NewsOneExtraArgTransformer_SetsFieldsToDefaultValues)
 {
-   RecursiveDirectoryIterator recursiveDirectoryIterator;
+   Utils::RecursiveDirectoryIterator recursiveDirectoryIterator;
    DELETE_TO_ASSERT_NEWED(recursiveDirectoryIterator._oneExtraArgTransformer);
 
    IS_DEFAULT_VALUE(recursiveDirectoryIterator._recursiveDirectoryIterator);

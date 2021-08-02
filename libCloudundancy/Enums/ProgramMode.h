@@ -3,7 +3,7 @@
 enum ProgramMode : unsigned char
 {
    Unset,
-   CopyFilesAndFoldersToMultipleFolders,
+   CopyFileFastsAndFoldersToMultipleFolders,
    SevenZip,
    ExampleLinuxIniFile,
    ExampleWindowsIniFile,

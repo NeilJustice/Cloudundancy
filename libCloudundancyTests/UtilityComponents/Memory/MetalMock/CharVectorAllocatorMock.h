@@ -1,8 +1,11 @@
 #pragma once
 #include "libCloudundancy/UtilityComponents/Memory/CharVectorAllocator.h"
 
-class CharVectorAllocatorMock : public Metal::Mock<CharVectorAllocator>
+namespace Utils
 {
-public:
-   METALMOCK_NONVOID1_CONST(vector<char>*, NewCharVector, size_t)
-};
+   class CharVectorAllocatorMock : public Metal::Mock<CharVectorAllocator>
+   {
+   public:
+      METALMOCK_NONVOID1_CONST(vector<char>*, NewCharVector, size_t)
+   };
+}

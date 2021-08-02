@@ -8,7 +8,7 @@ void ThrowLogicError(
    size_t lineNumber,
    const char* functionName)
 {
-   const string what = String::ConcatValues(
+   const string what = Utils::String::ConcatValues(
       "release_assert(", predicateExpressionText, ") failed in ",
       functionName, "()\n", filePath, "(", lineNumber, ")");
    throw logic_error(what);

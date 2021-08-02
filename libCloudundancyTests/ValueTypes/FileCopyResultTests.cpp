@@ -7,9 +7,9 @@ EVIDENCE
 
 TEST(DefaultConstructor_SetsFieldsTo0)
 {
-   const FileCopyResult defaultFileCopyResult;
+   const Utils::FileCopyResult defaultFileCopyResult;
    //
-   FileCopyResult expectedDefaultFileCopyResult;
+   Utils::FileCopyResult expectedDefaultFileCopyResult;
    expectedDefaultFileCopyResult.sourceFilePath = fs::path();
    expectedDefaultFileCopyResult.destinationFilePath = fs::path();
    expectedDefaultFileCopyResult.copySucceeded = false;
