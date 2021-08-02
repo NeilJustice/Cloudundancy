@@ -41,8 +41,8 @@ private:
    using _caller_CloseFileType = VoidTwoArgMemberFunctionCaller<RawFileSystem, const shared_ptr<FILE>&, const fs::path&>;
    unique_ptr<const _caller_CloseFileType> _caller_CloseFile;
 
-   using _caller_CreateFileInBinaryWriteModeType = NonVoidOneArgMemberFunctionCaller<shared_ptr<FILE>, RawFileSystem, const fs::path&>;
-   unique_ptr<_caller_CreateFileInBinaryWriteModeType> _caller_CreateFileInBinaryWriteMode;
+   using _caller_CreateFileType = NonVoidOneArgMemberFunctionCaller<shared_ptr<FILE>, RawFileSystem, const fs::path&>;
+   unique_ptr<_caller_CreateFileType> _caller_CreateFile;
 
    using _caller_ReadFileSizeType = NonVoidOneArgMemberFunctionCaller<size_t, RawFileSystem, const shared_ptr<FILE>&>;
    unique_ptr<const _caller_ReadFileSizeType> _caller_ReadFileSize;
@@ -63,9 +63,11 @@ private:
 public:
    RawFileSystem();
    virtual ~RawFileSystem();
+   virtual void AppendTextToClosedFile(const fs::path& filePath, string_view text) const;
    virtual void CloseFile(const shared_ptr<FILE>& filePointer, const fs::path& filePath) const;
    virtual void CreateFileWithTextIfDoesNotExist(const fs::path& filePath, string_view fileText) const;
    virtual shared_ptr<FILE> CreateFileInBinaryWriteMode(const fs::path& filePath) const;
+   virtual shared_ptr<FILE> CreateOrOpenFileInBinaryAppendMode(const fs::path& filePath) const;
    virtual string ReadTextFromOpenFile(const shared_ptr<FILE>& filePointer) const;
    virtual shared_ptr<FILE> OpenFileInTextReadMode(const fs::path& filePath) const;
    virtual void WriteTextToOpenFile(const shared_ptr<FILE>& filePointer, string_view text) const;

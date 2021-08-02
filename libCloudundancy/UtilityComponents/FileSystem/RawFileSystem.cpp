@@ -26,7 +26,7 @@ RawFileSystem::RawFileSystem()
    , _call_fs_exists(static_cast<std_filesystem_exists_FunctionOverloadType>(fs::exists))
    // Function Callers
    , _caller_CloseFile(make_unique<_caller_CloseFileType>())
-   , _caller_CreateFileInBinaryWriteMode(make_unique<_caller_CreateFileInBinaryWriteModeType>())
+   , _caller_CreateFile(make_unique<_caller_CreateFileType>())
    , _caller_ReadFileSize(make_unique<_caller_ReadFileSizeType>())
    , _caller_WriteTextToOpenFile(make_unique<_caller_WriteTextToOpenFileType>())
 #if defined __linux__
@@ -42,6 +42,15 @@ RawFileSystem::RawFileSystem()
 
 RawFileSystem::~RawFileSystem()
 {
+}
+
+void RawFileSystem::AppendTextToClosedFile(const fs::path& filePath, string_view text) const
+{
+   const shared_ptr<FILE> filePointer = _caller_CreateFile->CallConstMemberFunction(&RawFileSystem::CreateOrOpenFileInBinaryAppendMode, this, filePath);
+   const size_t textSize = text.size();
+   const size_t numberOfBytesAppended = _call_fwrite(text.data(), 1, textSize, filePointer.get());
+   _asserter->ThrowIfSizeTsNotEqual(textSize, numberOfBytesAppended,
+      "_call_fwrite(text.data(), 1, textSize, appendModeTextFileHandle) unexpectedly did not return textSize");
 }
 
 void RawFileSystem::CloseFile(const shared_ptr<FILE>& filePointer, const fs::path& filePath) const
@@ -61,8 +70,7 @@ void RawFileSystem::CreateFileWithTextIfDoesNotExist(const fs::path& filePath, s
    const bool fileExists = _call_fs_exists(filePath);
    if (!fileExists)
    {
-      const shared_ptr<FILE> textFilePointer =
-         _caller_CreateFileInBinaryWriteMode->CallConstMemberFunction(&RawFileSystem::CreateFileInBinaryWriteMode, this, filePath);
+      const shared_ptr<FILE> textFilePointer = _caller_CreateFile->CallConstMemberFunction(&RawFileSystem::CreateFileInBinaryWriteMode, this, filePath);
       _caller_WriteTextToOpenFile->CallConstMemberFunction(&RawFileSystem::WriteTextToOpenFile, this, textFilePointer, fileText);
    }
 }
@@ -73,6 +81,16 @@ shared_ptr<FILE> RawFileSystem::CreateFileInBinaryWriteMode(const fs::path& file
    shared_ptr<FILE> filePointer = _caller_CreateOrOpenFileOnLinux->CallConstMemberFunction(&RawFileSystem::CreateOrOpenFileOnLinux, this, filePath, "wb");
 #elif defined _WIN32
    shared_ptr<FILE> filePointer = _caller_CreateOrOpenFileOnWindows->CallConstMemberFunction(&RawFileSystem::CreateOrOpenFileOnWindows, this, filePath, L"wb");
+#endif
+   return filePointer;
+}
+
+shared_ptr<FILE> RawFileSystem::CreateOrOpenFileInBinaryAppendMode(const fs::path& filePath) const
+{
+#if defined __linux__
+   shared_ptr<FILE> filePointer = _caller_CreateOrOpenFileOnLinux->CallConstMemberFunction(&RawFileSystem::CreateOrOpenFileOnLinux, this, filePath, "ab");
+#elif defined _WIN32
+   shared_ptr<FILE> filePointer = _caller_CreateOrOpenFileOnWindows->CallConstMemberFunction(&RawFileSystem::CreateOrOpenFileOnWindows, this, filePath, L"ab");
 #endif
    return filePointer;
 }

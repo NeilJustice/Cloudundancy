@@ -1,4 +1,5 @@
 #pragma once
+class FileSystem;
 class ProgramModeDeterminer;
 
 class CloudundancyArgsParser

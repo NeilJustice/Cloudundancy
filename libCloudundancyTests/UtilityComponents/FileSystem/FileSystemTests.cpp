@@ -32,7 +32,6 @@ AFACT(TryCopyFile_SourceFileIsEmpty_CreatesParentFoldersForDestinationFile_Creat
 AFACT(TryCopyFile_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile_WritesSourceFileBytesToDestinationFilePath_ReturnsCopySucceededFileCopyResult)
 AFACT(TryCopyFileWithStdFilesystemCopyFile_CreatesParentFoldersForDestinationFile_CopiesSourceFileToDestinationFileByCallingStdFilesystemCopyFile)
 // File Writes
-AFACT(AppendText_CreatesParentDirectoryToFilePath_AppendsTimestampedTextToFile)
 AFACT(CreateTextFile_CreatesParentDirectoryToFilePath_CreatesFileInTextWriteMode_WritesFileTextToFile_ClosesFile)
 // Misc
 AFACT(DeleteFolder_CallsStdFileSystemRemoveAllOnFolderPath)
@@ -363,8 +362,7 @@ TEST(TryCopyFile_SourceFileIsEmpty_CreatesParentFoldersForDestinationFile_Create
    const fs::path expectedParentPathOfDestinationFilePath = destinationFilePath.parent_path();
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    METALMOCK(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentPathOfDestinationFilePath));
-   METALMOCK(_caller_ReadFileBytesMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &FileSystem::ReadFileBytes, &_fileSystem, sourceFilePath));
+   METALMOCK(_caller_ReadFileBytesMock->CallConstMemberFunctionMock.CalledOnceWith(&FileSystem::ReadFileBytes, &_fileSystem, sourceFilePath));
    METALMOCK(_fileOpenerCloserMock->CreateWriteModeBinaryFileMock.CalledOnceWith(destinationFilePath));
    METALMOCK(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(0, 0,
       "fwrite() in FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) unexpectedly returned numberOfBytesWritten != sourceFileBytesSize"));
@@ -405,8 +403,7 @@ TEST(TryCopyFile_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile_Wri
    //
    const size_t expectedSourceFileBytesSize = sourceFileBytes->size();
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
-   METALMOCK(_caller_ReadFileBytesMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &FileSystem::ReadFileBytes, &_fileSystem, sourceFilePath));
+   METALMOCK(_caller_ReadFileBytesMock->CallConstMemberFunctionMock.CalledOnceWith(&FileSystem::ReadFileBytes, &_fileSystem, sourceFilePath));
    const fs::path expectedParentPathOfDestinationFilePath = destinationFilePath.parent_path();
    METALMOCK(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentPathOfDestinationFilePath));
    METALMOCK(_fileOpenerCloserMock->CreateWriteModeBinaryFileMock.CalledOnceWith(destinationFilePath));
@@ -450,34 +447,6 @@ TEST(TryCopyFileWithStdFilesystemCopyFile_CreatesParentFoldersForDestinationFile
 }
 
 // File Writes
-
-TEST(AppendText_CreatesParentDirectoryToFilePath_AppendsTimestampedTextToFile)
-{
-   _call_fs_create_directoriesMock.ReturnRandom();
-
-   FILE appendModeTextFileHandle{};
-   _fileOpenerCloserMock->OpenAppendModeTextFileMock.Return(&appendModeTextFileHandle);
-
-   _fileOpenerCloserMock->CloseFileMock.Expect();
-
-   const size_t numberOfBytesWritten = fwriteMock.ReturnRandom();
-
-   _asserterMock->ThrowIfSizeTsNotEqualMock.Expect();
-
-   const fs::path filePath = ZenUnit::Random<fs::path>();
-   const string text = ZenUnit::Random<string>();
-   //
-   _fileSystem.AppendText(filePath, text);
-   //
-   const fs::path expectedParentFolderPath = filePath.parent_path();
-   METALMOCK(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentFolderPath));
-   METALMOCK(_fileOpenerCloserMock->OpenAppendModeTextFileMock.CalledOnceWith(filePath));
-   const size_t expectedTextSize = text.size();
-   METALMOCK(fwriteMock.CalledOnceWith(text.data(), 1, expectedTextSize, &appendModeTextFileHandle));
-   METALMOCK(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(expectedTextSize, numberOfBytesWritten,
-      "fwrite(text.data(), 1, textSize, appendModeTextFileHandle) unexpectedly did not return textSize"));
-   METALMOCK(_fileOpenerCloserMock->CloseFileMock.CalledOnceWith(&appendModeTextFileHandle));
-}
 
 TEST(CreateTextFile_CreatesParentDirectoryToFilePath_CreatesFileInTextWriteMode_WritesFileTextToFile_ClosesFile)
 {

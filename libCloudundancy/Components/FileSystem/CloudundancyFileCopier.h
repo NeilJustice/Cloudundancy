@@ -1,6 +1,7 @@
 #pragma once
 class CloudundancyIniFileReader;
 class CloudundancyLogFileWriter;
+class FileSystem;
 
 class CloudundancyFileCopier
 {

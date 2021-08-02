@@ -115,8 +115,7 @@ vector<string> FileSystem::ReadFileLinesWhichMustBeNonEmpty(const fs::path& file
 FileCopyResult FileSystem::TryCopyFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const
 {
    _stopwatch->Start();
-   shared_ptr<const vector<char>> sourceFileBytes = _caller_ReadFileBytes->CallConstMemberFunction(
-      &FileSystem::ReadFileBytes, this, sourceFilePath);
+   shared_ptr<const vector<char>> sourceFileBytes = _caller_ReadFileBytes->CallConstMemberFunction(&FileSystem::ReadFileBytes, this, sourceFilePath);
    const fs::path parentPathOfDestinationFilePath = destinationFilePath.parent_path();
    _call_fs_create_directories(parentPathOfDestinationFilePath);
    FILE* const writeModeDestinationBinaryFileHandle = _fileOpenerCloser->CreateWriteModeBinaryFile(destinationFilePath);

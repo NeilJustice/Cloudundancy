@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "libCloudundancy/UtilityComponents/FileSystem/RecursiveDirectoryIterator.h"
-#include "libCloudundancyTests/UtilityComponents/FileSystem/MetalMock/FileSystemMock.h"
 #include "libCloudundancyTests/UtilityComponents/Iteration/Transform/MetalMock/OneExtraArgTransformerMock.h"
 
 TESTS(RecursiveDirectoryIteratorIntegrationTests)
