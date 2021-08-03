@@ -17,8 +17,8 @@ EVIDENCE
 
 CloudundancyProgram _cloudundancyProgram;
 // Function Callers
-METALMOCK_NONVOID2_STATIC(vector<string>, Vector, ArgcArgvToStringVector, int, char**)
-METALMOCK_NONVOID1_STATIC(string, Type, GetExceptionClassNameAndMessage, const exception*)
+METALMOCK_NONVOID1_FREE(string, _call_Type_GetExceptionClassNameAndMessage, const exception*)
+METALMOCK_NONVOID2_FREE(vector<string>, _call_Vector_ArgcArgvToStringVector, int, char**)
 // Function Callers
 Utils::TryCatchCallerMock<CloudundancyProgram, const vector<string>&>* _tryCatchCallerMock = nullptr;
 // Constant Components
@@ -34,8 +34,8 @@ Utils::StopwatchMock* _stopwatchMock = nullptr;
 STARTUP
 {
    // Function Pointers
-   _cloudundancyProgram._call_Type_GetExceptionClassNameAndMessage = BIND_1ARG_METALMOCK_OBJECT(GetExceptionClassNameAndMessageMock);
-   _cloudundancyProgram._call_Vector_ArgcArgvToStringVector = BIND_2ARG_METALMOCK_OBJECT(ArgcArgvToStringVectorMock);
+   _cloudundancyProgram._call_Type_GetExceptionClassNameAndMessage = BIND_1ARG_METALMOCK_OBJECT(_call_Type_GetExceptionClassNameAndMessageMock);
+   _cloudundancyProgram._call_Vector_ArgcArgvToStringVector = BIND_2ARG_METALMOCK_OBJECT(_call_Vector_ArgcArgvToStringVectorMock);
    // Function Callers
    _cloudundancyProgram._tryCatchCaller.reset(_tryCatchCallerMock = new Utils::TryCatchCallerMock<CloudundancyProgram, const vector<string>&>);
    // Constant Components
@@ -80,7 +80,7 @@ TEST(Main_ArgcIs1_WriteLinesCommandLineUsage_Returns0)
 
 TEST(Main_ArgcIs2OrGreater_CallsTryCatchCallRunWithStringArgs_ReturnsExitCodeFromCallingRun)
 {
-   const vector<string> stringArgs = ArgcArgvToStringVectorMock.ReturnRandom();
+   const vector<string> stringArgs = _call_Vector_ArgcArgvToStringVectorMock.ReturnRandom();
 
    int tryCatchCallReturnValue = ZenUnit::Random<int>();
    _tryCatchCallerMock->TryCatchCallNonConstMemberFunctionMock.Return(tryCatchCallReturnValue);
@@ -92,7 +92,7 @@ TEST(Main_ArgcIs2OrGreater_CallsTryCatchCallRunWithStringArgs_ReturnsExitCodeFro
    //
    const int exitCode = _cloudundancyProgram.Main(argc, const_cast<char**>(argv));
    //
-   METALMOCK(ArgcArgvToStringVectorMock.CalledOnceWith(argc, const_cast<char**>(argv)));
+   METALMOCK(_call_Vector_ArgcArgvToStringVectorMock.CalledOnceWith(argc, const_cast<char**>(argv)));
    METALMOCK(_tryCatchCallerMock->TryCatchCallNonConstMemberFunctionMock.CalledOnceWith(
       &_cloudundancyProgram, &CloudundancyProgram::Run, stringArgs, &CloudundancyProgram::ExceptionHandler));
    ARE_EQUAL(tryCatchCallReturnValue, exitCode);
@@ -161,7 +161,7 @@ TEST2X2(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSu
 
 TEST(ExceptionHandler_PrintsExceptionClassNameAndMessage_Returns1)
 {
-   const string exceptionTypeNameAndMessage = GetExceptionClassNameAndMessageMock.ReturnRandom();
+   const string exceptionTypeNameAndMessage = _call_Type_GetExceptionClassNameAndMessageMock.ReturnRandom();
 
    _consoleMock->WriteLineMock.Expect();
 
@@ -176,9 +176,8 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndMessage_Returns1)
    //
    const int exitCode = _cloudundancyProgram.ExceptionHandler(ex, stringArgs);
    //
-   METALMOCK(GetExceptionClassNameAndMessageMock.CalledOnceWith(&ex));
-   const string expectedFullExceptionErrorMessage =
-      "\n[Cloudundancy]     Error: Exception thrown: " + exceptionTypeNameAndMessage;
+   METALMOCK(_call_Type_GetExceptionClassNameAndMessageMock.CalledOnceWith(&ex));
+   const string expectedFullExceptionErrorMessage = "\n[Cloudundancy]     Error: Exception thrown: " + exceptionTypeNameAndMessage;
    METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
       string_view(expectedFullExceptionErrorMessage),
