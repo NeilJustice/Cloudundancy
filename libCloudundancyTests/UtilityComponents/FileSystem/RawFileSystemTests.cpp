@@ -800,8 +800,9 @@ TEST(Windows__CreateOrOpenFileOnWindows_CreatesParentDirectoriesForFilePath_Call
 {
    _call_fs_create_directoriesMock.ReturnRandom();
 
-   FILE* const rawFilePointer = tmpfile();
-   _call_wfsopenMock.Return(rawFilePointer);
+   FILE* tempFilePointer = nullptr;
+   tmpfile_s(&tempFilePointer);
+   _call_wfsopenMock.Return(tempFilePointer);
 
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const wchar_t* const fileOpenMode = ZenUnit::Random<const wchar_t*>();
@@ -811,7 +812,7 @@ TEST(Windows__CreateOrOpenFileOnWindows_CreatesParentDirectoriesForFilePath_Call
    const fs::path expectedParentDirectoryPath = filePath.parent_path();
    METALMOCK(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentDirectoryPath));
    METALMOCK(_call_wfsopenMock.CalledOnceWith(filePath.c_str(), fileOpenMode, _SH_DENYWR));
-   ARE_EQUAL(rawFilePointer, sharedFilePointer.get());
+   ARE_EQUAL(tempFilePointer, sharedFilePointer.get());
 }
 
 TEST(Windows__CreateOrOpenFileOnWindows_CreatesParentDirectoriesForFilePath_CallswfsopenWhichReturnsNullptr_ThrowsRuntimeError)

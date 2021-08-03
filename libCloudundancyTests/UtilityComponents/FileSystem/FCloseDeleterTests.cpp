@@ -59,24 +59,26 @@ TEST(CallOperator_FILEFilenoFieldIsNot0_CallsFCloseOnFilePointerWhichReturnsNon0
 TEST(CallOperator_FILEPlaceholderFieldIsNotNull_CallsFCloseOnFilePointerWhichReturns0_DoesNotThrowRuntimeError)
 {
    _call_fcloseMock.Return(0);
-   FILE* const rawFilePointer = tmpfile();
+   FILE* tempFilePointer = nullptr;
+   tmpfile_s(&tempFilePointer);
    //
-   _fcloseDeleter(rawFilePointer);
+   _fcloseDeleter(tempFilePointer);
    //
-   METALMOCK(_call_fcloseMock.CalledOnceWith(rawFilePointer));
+   METALMOCK(_call_fcloseMock.CalledOnceWith(tempFilePointer));
 }
 
 TEST(CallOperator_FILEPlaceholderFieldIsNotNull_CallsFCloseOnFilePointerWhichReturnsNon0_ThrowsRuntimeError)
 {
    const int fcloseReturnValue = ZenUnit::RandomNon0<int>();
    _call_fcloseMock.Return(fcloseReturnValue);
-   FILE* const rawFilePointer = tmpfile();
+   FILE* tempFilePointer = nullptr;
+   tmpfile_s(&tempFilePointer);
    //
    const string expectedExceptionMessage = Utils::String::ConcatValues("fclose(rawFilePointer) returned ", fcloseReturnValue);
-   THROWS_EXCEPTION(_fcloseDeleter(rawFilePointer),
+   THROWS_EXCEPTION(_fcloseDeleter(tempFilePointer),
       runtime_error, expectedExceptionMessage);
    //
-   METALMOCK(_call_fcloseMock.CalledOnceWith(rawFilePointer));
+   METALMOCK(_call_fcloseMock.CalledOnceWith(tempFilePointer));
 }
 
 #endif
