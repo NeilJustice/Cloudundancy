@@ -61,9 +61,8 @@ CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudunda
       else if (inSourceFilesAndFoldersToCopySection)
       {
          const FilePathLineNumberLineText fileCopyInstructionLine(cloudundancyIniPath, lineNumber, iniFileLine);
-         CloudundancyIniCopyInstruction cloudundancyIniCopyInstruction =
-            _caller_ParseFileCopyInstructionLine->CallConstMemberFunction(
-               &CloudundancyIniFileReader::ParseFileCopyInstructionLine, this, fileCopyInstructionLine);
+         CloudundancyIniCopyInstruction cloudundancyIniCopyInstruction = _caller_ParseFileCopyInstructionLine->CallConstMemberFunction(
+            &CloudundancyIniFileReader::ParseFileCopyInstructionLine, this, fileCopyInstructionLine);
          cloudundancyIni.cloudundancyIniCopyInstructions.emplace_back(std::move(cloudundancyIniCopyInstruction));
       }
       else

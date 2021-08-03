@@ -597,8 +597,11 @@ TEST(ReadFileText_ReadsFileSizeWhichReturns0_ClosesFile_ReturnsEmptyString)
    //
    const string fileText = _rawFileSystem.ReadFileText(filePath);
    //
-   METALMOCK(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(&Utils::RawFileSystem::OpenFileInTextReadMode, &_rawFileSystem, filePath));
-   METALMOCK(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(&Utils::RawFileSystem::ReadFileSize, &_rawFileSystem, readModeTextFilePointer));
+   METALMOCK(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &Utils::RawFileSystem::OpenFileInTextReadMode, &_rawFileSystem, filePath));
+   METALMOCK(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &Utils::RawFileSystem::ReadFileSize, &_rawFileSystem, readModeTextFilePointer));
+   ARE_EQUAL("", fileText);
 }
 
 static constexpr size_t FileSize = 64;
@@ -614,7 +617,7 @@ struct _fread_CallHistoryValues
    FILE* rawFilePointer = nullptr;
 } _fread_CallHistory;
 
-size_t fread_CallInstead(void* buffer, size_t elementSize, size_t elementCount, FILE* rawFilePointer)
+size_t _call_fread_CallInstead(void* buffer, size_t elementSize, size_t elementCount, FILE* rawFilePointer)
 {
    ++_fread_CallHistory.numberOfCalls;
 
@@ -629,7 +632,7 @@ size_t fread_CallInstead(void* buffer, size_t elementSize, size_t elementCount, 
    return _fread_CallHistory.returnValue;
 }
 
-void fread_AssertCalledOnceWith(size_t expectedElementSize, size_t expectedElementCount, FILE* expectedRawFilePointer)
+void _call_fread_AssertCalledOnceWith(size_t expectedElementSize, size_t expectedElementCount, FILE* expectedRawFilePointer)
 {
    ARE_EQUAL(1, _fread_CallHistory.numberOfCalls);
    ARE_EQUAL(expectedElementSize, _fread_CallHistory.elementSize);
@@ -644,21 +647,23 @@ TEST(ReadFileText_ReadsFileSizeWhichReturnsGreaterThan0_ReadsFileBytesIntoString
 
    _caller_ReadFileSizeMock->CallConstMemberFunctionMock.Return(FileSize);
 
-   const size_t numberOfBytesRead = ZenUnit::Random<size_t>();
-   _fread_CallHistory.returnValue = numberOfBytesRead;
+   _fread_CallHistory.returnValue = FileSize;
    const array<char, FileSize> bufferReturnValue = ZenUnit::RandomStdArray<char, FileSize>();
    _fread_CallHistory.bufferReturnValue = bufferReturnValue;
    _call_freadMock.CallInstead(std::bind(
-      &RawFileSystemTests::fread_CallInstead, this, placeholders::_1, placeholders::_2, placeholders::_3, placeholders::_4));
+      &RawFileSystemTests::_call_fread_CallInstead, this, placeholders::_1, placeholders::_2, placeholders::_3, placeholders::_4));
 
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
-   _rawFileSystem.ReadFileText(filePath);
+   const string fileText = _rawFileSystem.ReadFileText(filePath);
    //
    METALMOCK(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(
       &Utils::RawFileSystem::OpenFileInTextReadMode, &_rawFileSystem, filePath));
-   METALMOCK(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(&Utils::RawFileSystem::ReadFileSize, &_rawFileSystem, readModeTextFilePointer));
-   fread_AssertCalledOnceWith(1, FileSize, readModeTextFilePointer.get());
+   METALMOCK(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &Utils::RawFileSystem::ReadFileSize, &_rawFileSystem, readModeTextFilePointer));
+   _call_fread_AssertCalledOnceWith(1, FileSize, readModeTextFilePointer.get());
+   const string expectedFileText(bufferReturnValue.data(), _fread_CallHistory.returnValue);
+   ARE_EQUAL(expectedFileText, fileText);
 }
 
 TEST(SetCurrentPath_CallsFSCurrentPathWithFolderPath)

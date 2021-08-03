@@ -231,11 +231,13 @@ namespace Utils
       const shared_ptr<FILE> textReadModeFilePointer =
          _caller_CreateOrOpenFileFunction->CallConstMemberFunction(&RawFileSystem::OpenFileInTextReadMode, this, filePath);
       const size_t fileSize = _caller_ReadFileSize->CallConstMemberFunction(&RawFileSystem::ReadFileSize, this, textReadModeFilePointer);
-      string fileText(fileSize, 0);
+      vector<char> fileBytesBuffer(fileSize, 0);
+      size_t numberOfTextModeBytesRead = 0;
       if (fileSize > 0)
       {
-         _call_fread(const_cast<char*>(&fileText[0]), 1, fileSize, textReadModeFilePointer.get());
+         numberOfTextModeBytesRead = _call_fread(fileBytesBuffer.data(), 1, fileSize, textReadModeFilePointer.get());
       }
+      string fileText(fileBytesBuffer.data(), numberOfTextModeBytesRead);
       return fileText;
    }
 
