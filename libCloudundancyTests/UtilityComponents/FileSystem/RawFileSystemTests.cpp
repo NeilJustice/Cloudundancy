@@ -651,8 +651,6 @@ TEST(ReadFileText_ReadsFileSizeWhichReturnsGreaterThan0_ReadsFileBytesIntoString
    _call_freadMock.CallInstead(std::bind(
       &RawFileSystemTests::fread_CallInstead, this, placeholders::_1, placeholders::_2, placeholders::_3, placeholders::_4));
 
-   _asserterMock->ThrowIfSizeTsNotEqualMock.Expect();
-
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
    _rawFileSystem.ReadFileText(filePath);
@@ -661,8 +659,6 @@ TEST(ReadFileText_ReadsFileSizeWhichReturnsGreaterThan0_ReadsFileBytesIntoString
       &Utils::RawFileSystem::OpenFileInTextReadMode, &_rawFileSystem, filePath));
    METALMOCK(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(&Utils::RawFileSystem::ReadFileSize, &_rawFileSystem, readModeTextFilePointer));
    fread_AssertCalledOnceWith(1, FileSize, readModeTextFilePointer.get());
-   METALMOCK(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(FileSize, numberOfBytesRead,
-      "_call_fread(const_cast<char*>(&fileText[0]), 1, fileSize, filePointer.get()) unexpectedly returned numberOfBytesRead != fileSize"));
 }
 
 TEST(SetCurrentPath_CallsFSCurrentPathWithFolderPath)

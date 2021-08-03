@@ -228,15 +228,13 @@ namespace Utils
 
    string RawFileSystem::ReadFileText(const fs::path& filePath) const
    {
-      const shared_ptr<FILE> textReadModeFilePointer = _caller_CreateOrOpenFileFunction->CallConstMemberFunction(
-         &RawFileSystem::OpenFileInTextReadMode, this, filePath);
+      const shared_ptr<FILE> textReadModeFilePointer =
+         _caller_CreateOrOpenFileFunction->CallConstMemberFunction(&RawFileSystem::OpenFileInTextReadMode, this, filePath);
       const size_t fileSize = _caller_ReadFileSize->CallConstMemberFunction(&RawFileSystem::ReadFileSize, this, textReadModeFilePointer);
       string fileText(fileSize, 0);
       if (fileSize > 0)
       {
-         const size_t numberOfBytesRead = _call_fread(const_cast<char*>(&fileText[0]), 1, fileSize, textReadModeFilePointer.get());
-         _asserter->ThrowIfSizeTsNotEqual(fileSize, numberOfBytesRead,
-            "_call_fread(const_cast<char*>(&fileText[0]), 1, fileSize, filePointer.get()) unexpectedly returned numberOfBytesRead != fileSize");
+         _call_fread(const_cast<char*>(&fileText[0]), 1, fileSize, textReadModeFilePointer.get());
       }
       return fileText;
    }

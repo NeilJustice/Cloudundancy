@@ -29,8 +29,8 @@ CloudundancyFileCopier _cloudundancyFileCopier;
 
 // Function Pointers
 METALMOCK_VOID1_FREE(_call_exit, int)
-METALMOCK_NONVOID3_STATIC(string, String, ReplaceFirst, const string&, const string&, const string&)
-METALMOCK_NONVOID1_STATIC(string, Type, GetExceptionClassNameAndMessage, const exception*)
+METALMOCK_NONVOID3_STATIC(string, String, _call_String_ReplaceFirst, const string&, const string&, const string&)
+METALMOCK_NONVOID1_STATIC(string, Type, _call_Type_GetExceptionClassNameAndMessage, const exception*)
 
 // Function Callers
 using _memberCaller_CopyFileFastFunctionsMockType = Utils::VoidTwoArgMemberFunctionCallerMock<
@@ -74,8 +74,8 @@ STARTUP
 {
    // Function Pointers
    _cloudundancyFileCopier._call_exit = BIND_1ARG_METALMOCK_OBJECT(_call_exitMock);
-   _cloudundancyFileCopier._call_String_ReplaceFirst = BIND_3ARG_METALMOCK_OBJECT(ReplaceFirstMock);
-   _cloudundancyFileCopier._call_Type_GetExceptionClassNameAndMessage = BIND_1ARG_METALMOCK_OBJECT(GetExceptionClassNameAndMessageMock);
+   _cloudundancyFileCopier._call_String_ReplaceFirst = BIND_3ARG_METALMOCK_OBJECT(_call_String_ReplaceFirstMock);
+   _cloudundancyFileCopier._call_Type_GetExceptionClassNameAndMessage = BIND_1ARG_METALMOCK_OBJECT(_call_Type_GetExceptionClassNameAndMessageMock);
    // Function Callers
    _cloudundancyFileCopier._memberCaller_CopyFileFastFunctions.reset(_memberCaller_CopyFileFastFunctionsMock = new _memberCaller_CopyFileFastFunctionsMockType);
    _cloudundancyFileCopier._memberCaller_CopyNestedFileToFolder.reset(_memberCaller_CopyNestedFileToFolderMock = new _memberCaller_CopyNestedFileToFolderMockType);
@@ -244,7 +244,7 @@ TEST(DoCopyFileFastsAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_C
 
 TEST(ExceptionHandlerForDoCopyFileFastsAndFoldersToDestinationFolder_WritesExceptionMessageToConsole_AppendsExceptionMessageToCloudundancyLogFile_RethrowsException)
 {
-   const string exceptionClassNameAndMessage = GetExceptionClassNameAndMessageMock.ReturnRandom();
+   const string exceptionClassNameAndMessage = _call_Type_GetExceptionClassNameAndMessageMock.ReturnRandom();
 
    _cloudundancyLogFileWriterMock->AppendTextToCloudundancyLogFileInFolderMock.Expect();
 
@@ -259,7 +259,7 @@ TEST(ExceptionHandlerForDoCopyFileFastsAndFoldersToDestinationFolder_WritesExcep
       ex, destinationFolderPath_cloudundancyIni),
       runtime_error, exceptionClassNameAndMessage);
    //
-   METALMOCK(GetExceptionClassNameAndMessageMock.CalledOnceWith(&ex));
+   METALMOCK(_call_Type_GetExceptionClassNameAndMessageMock.CalledOnceWith(&ex));
    const string expectedErrorMessage = Utils::String::ConcatStrings(
       "Exception thrown while copying files to destination folder ", destinationFolderPath.string(), ": ", exceptionClassNameAndMessage);
    METALMOCK(_cloudundancyLogFileWriterMock->AppendTextToCloudundancyLogFileInFolderMock.CalledOnceWith(
@@ -326,7 +326,7 @@ TEST(CopyNonIgnoredFilesInAndBelowFolderToFolder_CopiesNonIgnoredFilesToFolderUn
 
 TEST(CopyNestedFileToFolder_RelativeDestinationFolderPathIsDot_CopiesNestedFileToFolderWithSlashDotSlashNotPresentInTheDestinationFilePath)
 {
-   const fs::path sourceFilePathRelativeToSourceFolderPath = ReplaceFirstMock.ReturnRandom();
+   const fs::path sourceFilePathRelativeToSourceFolderPath = _call_String_ReplaceFirstMock.ReturnRandom();
 
    const Utils::FileCopyResult fileCopyResult = _memberCaller_CopyFileFastMock->CallConstMemberFunctionMock.ReturnRandom();
 
@@ -339,7 +339,7 @@ TEST(CopyNestedFileToFolder_RelativeDestinationFolderPathIsDot_CopiesNestedFileT
    //
    _cloudundancyFileCopier.CopyNestedFileToFolder(sourceFilePath, cloudundancyIniCopyInstruction, destinationFolderPath);
    //
-   METALMOCK(ReplaceFirstMock.CalledOnceWith(
+   METALMOCK(_call_String_ReplaceFirstMock.CalledOnceWith(
       sourceFilePath.string(), cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath.string(), ""));
    const fs::path expectedDestinationFilePath =
       destinationFolderPath /
@@ -352,7 +352,7 @@ TEST(CopyNestedFileToFolder_RelativeDestinationFolderPathIsDot_CopiesNestedFileT
 
 TEST(CopyNestedFileToFolder_RelativeDestinationFolderPathIsNotDot_CopiesNestedFileToFolderWithRelativeDestinationFolderPathPresentInTheDestinationFilePath)
 {
-   const fs::path sourceFilePathRelativeToSourceFolderPath = ReplaceFirstMock.ReturnRandom();
+   const fs::path sourceFilePathRelativeToSourceFolderPath = _call_String_ReplaceFirstMock.ReturnRandom();
 
    const Utils::FileCopyResult fileCopyResult = _memberCaller_CopyFileFastMock->CallConstMemberFunctionMock.ReturnRandom();
 
@@ -364,7 +364,7 @@ TEST(CopyNestedFileToFolder_RelativeDestinationFolderPathIsNotDot_CopiesNestedFi
    //
    _cloudundancyFileCopier.CopyNestedFileToFolder(sourceFilePath, cloudundancyIniCopyInstruction, destinationFolderPath);
    //
-   METALMOCK(ReplaceFirstMock.CalledOnceWith(
+   METALMOCK(_call_String_ReplaceFirstMock.CalledOnceWith(
       sourceFilePath.string(), cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath.string(), ""));
    const fs::path expectedDestinationFilePath =
       destinationFolderPath /
