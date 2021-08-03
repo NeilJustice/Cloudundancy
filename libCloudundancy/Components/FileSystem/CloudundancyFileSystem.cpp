@@ -8,6 +8,7 @@ CloudundancyFileSystem::CloudundancyFileSystem()
    // Function Callers
    , _forEacher_DeleteContentsOfFolderExceptForFileName(make_unique<_forEacher_DeleteContentsOfFolderExceptForFileNameType>())
    // Constant Components
+   , _console(make_unique<Utils::Console>())
    , _rawFileSystem(make_unique<Utils::RawFileSystem>())
 {
    _call_fs_exists = _call_fs_exists_as_assignable_function_overload_pointer;
@@ -23,19 +24,19 @@ void CloudundancyFileSystem::DeleteMultipleFolderContentsExceptForFile(const vec
       folderPaths, &CloudundancyFileSystem::DeleteFolderContentsExceptForFile, this, exceptFileName);
 }
 
-void CloudundancyFileSystem::DeleteFolderContentsExceptForFile(const fs::path& /*folderPath*/, string_view /*exceptFileName*/) const
+void CloudundancyFileSystem::DeleteFolderContentsExceptForFile(const fs::path& folderPath, string_view exceptFileName) const
 {
-   //const bool folderPathExists = _call_fs_exists(folderPath);
-   //if (!folderPathExists)
-   //{
-   //   return;
-   //}
-   //const fs::path exceptFilePath = folderPath / exceptFileName;
-   //const string textOfExceptFile = _caller_ReadFileText->CallConstMemberFunction(&FileSystem::ReadFileText, this, exceptFilePath);
-   //_call_fs_remove_all(folderPath);
-   //_caller_CreateTextFile->CallConstMemberFunction(&FileSystem::CreateTextFile, this, exceptFilePath, textOfExceptFile);
-   //const string deletedFolderMessage = Utils::String::ConcatStrings("[Cloudundancy] Deleted folder ", folderPath.string(), " except for ", exceptFileName);
-   //_console->WriteLine(deletedFolderMessage);
+   const bool folderPathExists = _call_fs_exists(folderPath);
+   if (!folderPathExists)
+   {
+      return;
+   }
+   const fs::path exceptFilePath = folderPath / exceptFileName;
+   const string textOfExceptFile = _rawFileSystem->ReadFileText(exceptFilePath);
+   _rawFileSystem->DeleteFolder(folderPath);
+   _rawFileSystem->CreateFileWithTextIfDoesNotExist(exceptFilePath, textOfExceptFile);
+   const string deletedFolderMessage = Utils::String::ConcatStrings("[Cloudundancy] Deleted folder ", folderPath.string(), " except for ", exceptFileName);
+   _console->WriteLine(deletedFolderMessage);
 }
 
 bool CloudundancyFileSystem::IsFileSizeGreaterThanOrEqualTo2GB(const fs::path& filePath) const

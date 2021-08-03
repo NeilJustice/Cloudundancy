@@ -51,7 +51,7 @@ namespace Utils
       function<bool(const fs::path&)> _call_fs_exists;
 
       using fs_remove_all_FunctionOverloadType = unsigned long long(*)(const fs::path&);
-      function<uintmax_t(const fs::path&)> _call_fs_remove_all;
+      function<unsigned long long(const fs::path&)> _call_fs_remove_all;
       // Function Callers
       using _caller_CreateOrOpenFileFunctionType = Utils::NonVoidOneArgMemberFunctionCaller<shared_ptr<FILE>, RawFileSystem, const fs::path&>;
       unique_ptr<_caller_CreateOrOpenFileFunctionType> _caller_CreateOrOpenFileFunction;

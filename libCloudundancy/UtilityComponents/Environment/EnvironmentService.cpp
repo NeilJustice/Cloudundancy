@@ -1,14 +1,10 @@
 #include "pch.h"
 #include "libCloudundancy/UtilityComponents/Environment/EnvironmentService.h"
-#if defined __linux__ || defined __APPLE__
-#include <pwd.h>
-#endif
 
 namespace Utils
 {
 #if defined __linux__ || defined __APPLE__
    EnvironmentService::EnvironmentService() noexcept
-
       // Function Pointers
       : _call_filesystem_current_path(static_cast<fs::path(*)()>(fs::current_path))
       , _call_gethostname(gethostname)

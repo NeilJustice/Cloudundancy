@@ -12,6 +12,7 @@ private:
    using _forEacher_DeleteContentsOfFolderExceptForFileNameType = Utils::OneExtraArgMemberFunctionForEacher<CloudundancyFileSystem, fs::path, string_view>;
    unique_ptr<const _forEacher_DeleteContentsOfFolderExceptForFileNameType> _forEacher_DeleteContentsOfFolderExceptForFileName;
    // Constant Components
+   unique_ptr<const Utils::Console> _console;
    unique_ptr<const Utils::RawFileSystem> _rawFileSystem;
 public:
    CloudundancyFileSystem();
