@@ -17,12 +17,6 @@ R"(
 # Linux
 /etc/fstab -> Linux
 
-# Jenkins
-/var/lib/jenkins/config.xml                                   -> Jenkins
-/var/lib/jenkins/build-failure-analyzer.xml                   -> Jenkins
-/var/lib/jenkins/io.jenkins.plugins.casc.CasCGlobalConfig.xml -> Jenkins
-/var/lib/jenkins/jobs/                                        -> Jenkins/jobs
-
 # VS Code
 /home/neil/.config/Code/User/keybindings.json -> VSCode
 /home/neil/.config/Code/User/settings.json    -> VSCode

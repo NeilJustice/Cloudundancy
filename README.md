@@ -25,8 +25,8 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
 * [Cloudundancy code structure as it appears in Visual Studio 2019 on Windows](#cloudundancy-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
 * [Linux Jenkins jobs which build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy's C++ code and Mypy-Flake8-Pylint-SonarQube scan Cloudundancy's CI/CD Python code](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-and-undefinedbehaviorsanitize-cloudundancys-c-code-and-mypy-flake8-pylint-sonarqube-scan-cloudundancys-cicd-python-code)
 * [Windows Jenkins jobs which build and Cppcheck Cloudundancy's C++ code and Mypy-Flake8-Pylint-SonarQube scan Cloudundancy's CI/CD Python code](#windows-jenkins-jobs-which-build-and-cppcheck-cloudundancys-c-code-and-mypy-flake8-pylint-sonarqube-scan-cloudundancys-cicd-python-code)
-* [How to build binary cloudundancy on Linux with Clang](#how-to-build-binary-cloudundancy-on-linux-with-clang)
-* [How to build executable Cloudundancy.exe on Windows with Visual Studio 2019](#how-to-build-executable-cloudundancyexe-on-windows-with-visual-studio-2019)
+* [Steps to build binary cloudundancy on Linux with Clang](#steps-to-build-binary-cloudundancy-on-linux-with-clang)
+* [Steps to build executable Cloudundancy.exe on Windows with Visual Studio 2019](#steps-to-build-executable-cloudundancyexe-on-windows-with-visual-studio-2019)
 
 ## Cloudundancy command line usage
 
@@ -63,12 +63,6 @@ Cloudundancy program mode `example-linux-ini-file` prints an example Linux Cloud
 
 # Linux
 /etc/fstab -> Linux
-
-# Jenkins
-/var/lib/jenkins/config.xml                                   -> Jenkins
-/var/lib/jenkins/build-failure-analyzer.xml                   -> Jenkins
-/var/lib/jenkins/io.jenkins.plugins.casc.CasCGlobalConfig.xml -> Jenkins
-/var/lib/jenkins/jobs/                                        -> Jenkins/jobs
 
 # VS Code
 /home/neil/.config/Code/User/keybindings.json -> VSCode
@@ -115,7 +109,6 @@ C:\VS2019\VC#\Snippets\1033\Visual C#\CSharpSnippets.snippet                    
 # Critical folders to backup
 # Source folder paths ending in a '\' or '/' character are interpretted as folders and not files to be backed up
 C:\Users\UserName\Documents\WindowsPowerShell\ -> PowerShell
-C:\Jenkins\jobs\ -> Jenkins\jobs
 
 [FileSubpathsToNotCopy]
 # In the [FileSubpathsToNotCopy] section, case-insensitive file path substrings can be listed
@@ -123,15 +116,6 @@ C:\Jenkins\jobs\ -> Jenkins\jobs
 
 # PowerShell Modules folder to not copy, as PowerShell modules can be easily reinstalled
 PowerShell\Modules\
-
-# Jenkins jobs folder file paths to not backup so as to only backup Jenkins job config.xml files
-\builds\
-\cobertura\
-\lastStable
-\lastSuccessful\
-\atomic
-nextBuildNumber
-scm-polling.log
 ```
 
 ![Example Windows Cloudundancy .ini File](Screenshots/ExampleWindowsCloudundancyIniFile.png)
@@ -268,17 +252,13 @@ Shown in this screenshot is function `CloudundancyArgsParser::ParseStringArgs` w
 
 ## Linux Jenkins jobs Which build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy's C++ code and Mypy-Flake8-Pylint-SonarQube scan Cloudundancy's CI/CD Python code
 
-A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Fedora 34 with Clang 12.0.0 and GCC 11.1.1 to statically analyze and unit test Cloudundancy:
-
 ![Linux Cloudundancy Jenkins jobs](Screenshots/Linux/LinuxCloudundancyJenkinsJobs.png)
 
 ## Windows Jenkins jobs which build and Cppcheck Cloudundancy's C++ code and Mypy-Flake8-Pylint-SonarQube scan Cloudundancy's CI/CD Python code
 
-A Jenkins Blue Ocean build pipeline builds the following Cloudundancy Jenkins jobs on Windows 10 with Visual Studio 2019 to statically analyze and unit test Cloudundancy:
-
 ![Cloudundancy Windows Jenkins jobs](Screenshots/Windows/WindowsJenkinsJobs.png)
 
-## How to build binary cloudundancy on Linux with Clang
+## Steps to build binary cloudundancy on Linux with Clang
 
 ```bash
 git clone https://github.com/NeilJustice/Cloudundancy
@@ -291,7 +271,7 @@ Resulting binary `/usr/local/bin/cloudundancy`:
 
 ![Binary cloudundancy on Linux](Screenshots/Linux/LinuxBinaryCloudundancy.png)
 
-## How to build executable Cloudundancy.exe on Windows with Visual Studio 2019
+## Steps to build executable Cloudundancy.exe on Windows with Visual Studio 2019
 
 ```powershell
 git clone https://github.com/NeilJustice/Cloudundancy

@@ -49,7 +49,6 @@ C:\VS2019\VC#\Snippets\1033\Visual C#\CSharpSnippets.snippet                    
 # Critical folders to backup
 # Source folder paths ending in a '\' or '/' character are interpretted as folders and not files to be backed up
 C:\Users\UserName\Documents\WindowsPowerShell\ -> PowerShell
-C:\Jenkins\jobs\ -> Jenkins\jobs
 
 [FileSubpathsToNotCopy]
 # In the [FileSubpathsToNotCopy] section, case-insensitive file path substrings can be listed
@@ -57,15 +56,6 @@ C:\Jenkins\jobs\ -> Jenkins\jobs
 
 # PowerShell Modules folder to not copy, as PowerShell modules can be easily reinstalled
 PowerShell\Modules\
-
-# Jenkins jobs folder file paths to not backup so as to only backup Jenkins job config.xml files
-\builds\
-\cobertura\
-\lastStable
-\lastSuccessful\
-\atomic
-nextBuildNumber
-scm-polling.log
 )";
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedExampleWindowsIniFileText));
    IS_ZERO(exitCode);
