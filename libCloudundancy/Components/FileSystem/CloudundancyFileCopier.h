@@ -43,7 +43,7 @@ private:
    unique_ptr<const CloudundancyIniFileReader> _cloudundancyIniFileReader;
    unique_ptr<const CloudundancyLogFileWriter> _cloudundancyLogFileWriter;
    unique_ptr<const Utils::Console> _console;
-   unique_ptr<const Utils::RawFileSystem> _rawFileSystem;
+   unique_ptr<const Utils::FileSystem> _fileSystem;
    unique_ptr<const Utils::TryCatchCaller<CloudundancyFileCopier, const pair<fs::path, CloudundancyIni>&>> _tryCatchCaller;
 
    // Mutable Components

@@ -18,7 +18,7 @@ private:
 
    // Constant Components
    unique_ptr<const CloudundancyIniValidator> _cloudundancyIniValidator;
-   unique_ptr<const Utils::RawFileSystem> _rawFileSystem;
+   unique_ptr<const Utils::FileSystem> _fileSystem;
 public:
    CloudundancyIniFileReader() noexcept;
    virtual ~CloudundancyIniFileReader();

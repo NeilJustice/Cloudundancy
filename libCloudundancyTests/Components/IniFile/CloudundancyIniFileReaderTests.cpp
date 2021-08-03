@@ -22,7 +22,7 @@ VoidOneArgMemberFunctionCallerMockType* _callerMock_ThrowIfSourceFileOrFolderDoe
 
 // Constant Components
 CloudundancyIniValidatorMock* _cloudundancyIniValidatorMock = nullptr;
-Utils::RawFileSystemMock* _rawFileSystemMock = nullptr;
+Utils::FileSystemMock* _fileSystemMock = nullptr;
 
 STARTUP
 {
@@ -31,7 +31,7 @@ STARTUP
    _cloudundancyIniFile._caller_ThrowIfSourceFileOrFolderDoesNotExist.reset(_callerMock_ThrowIfSourceFileOrFolderDoesNotExist = new VoidOneArgMemberFunctionCallerMockType);
    // Constant Components
    _cloudundancyIniFile._cloudundancyIniValidator.reset(_cloudundancyIniValidatorMock = new CloudundancyIniValidatorMock);
-   _cloudundancyIniFile._rawFileSystem.reset(_rawFileSystemMock = new Utils::RawFileSystemMock);
+   _cloudundancyIniFile._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
@@ -42,7 +42,7 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(cloudundancyIniFile._caller_ThrowIfSourceFileOrFolderDoesNotExist);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(cloudundancyIniFile._cloudundancyIniValidator);
-   DELETE_TO_ASSERT_NEWED(cloudundancyIniFile._rawFileSystem);
+   DELETE_TO_ASSERT_NEWED(cloudundancyIniFile._fileSystem);
 }
 
 TEST(ReadIniFile_ParsesCloudundancyIniFile_ValidatesCloudundancyIni_ReturnsCloudundancyIni)
@@ -70,7 +70,7 @@ TEST(ReadIniFile_ParsesCloudundancyIniFile_ValidatesCloudundancyIni_ReturnsCloud
       filePathIgnoreSubstring1,
       filePathIgnoreSubstring2
    };
-   _rawFileSystemMock->ReadFileLinesWhichMustBeNonEmptyMock.Return(iniFileLines);
+   _fileSystemMock->ReadFileLinesWhichMustBeNonEmptyMock.Return(iniFileLines);
 
    const CloudundancyIniCopyInstruction fileCopyInstruction1
       = ZenUnit::Random<CloudundancyIniCopyInstruction>();
@@ -84,7 +84,7 @@ TEST(ReadIniFile_ParsesCloudundancyIniFile_ValidatesCloudundancyIni_ReturnsCloud
    //
    const CloudundancyIni cloudundancyIni = _cloudundancyIniFile.ReadIniFile(cloudundancyIniPath);
    //
-   METALMOCK(_rawFileSystemMock->ReadFileLinesWhichMustBeNonEmptyMock.CalledOnceWith(cloudundancyIniPath));
+   METALMOCK(_fileSystemMock->ReadFileLinesWhichMustBeNonEmptyMock.CalledOnceWith(cloudundancyIniPath));
    CloudundancyIni expectedCloudundancyIni;
    expectedCloudundancyIni.iniFileLines = iniFileLines;
    expectedCloudundancyIni.destinationFolderPaths =
@@ -158,19 +158,19 @@ TEST1X1(ParseFileCopyInstructionLine_LineContainsOneSpaceArrowSpace_ReturnsExpec
 
 TEST(ThrowIfSourceFileOrFolderDoesNotExist_SourceFileOrFolderPathExists_DoesNotThrowException)
 {
-   _rawFileSystemMock->FileOrFolderExistsMock.Return(true);
+   _fileSystemMock->FileOrFolderExistsMock.Return(true);
    const CloudundancyIniCopyInstruction cloudundancyIniCopyInstruction =
       ZenUnit::Random<CloudundancyIniCopyInstruction>();
    const FilePathLineNumberLineText filePathLineNumberLineText = ZenUnit::Random<FilePathLineNumberLineText>();
    //
    _cloudundancyIniFile.ThrowIfSourceFileOrFolderDoesNotExist(cloudundancyIniCopyInstruction);
    //
-   METALMOCK(_rawFileSystemMock->FileOrFolderExistsMock.CalledOnceWith(cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath));
+   METALMOCK(_fileSystemMock->FileOrFolderExistsMock.CalledOnceWith(cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath));
 }
 
 TEST(ThrowIfSourceFileOrFolderDoesNotExist_SourceFileOrFolderPathDoesNotExist_ThrowsFileSystemException)
 {
-   _rawFileSystemMock->FileOrFolderExistsMock.Return(false);
+   _fileSystemMock->FileOrFolderExistsMock.Return(false);
 
    const CloudundancyIniCopyInstruction cloudundancyIniCopyInstruction = ZenUnit::Random<CloudundancyIniCopyInstruction>();
 
@@ -180,7 +180,7 @@ TEST(ThrowIfSourceFileOrFolderDoesNotExist_SourceFileOrFolderPathDoesNotExist_Th
    THROWS_EXCEPTION(_cloudundancyIniFile.ThrowIfSourceFileOrFolderDoesNotExist(cloudundancyIniCopyInstruction),
       Utils::FileNotFoundException, expectedExceptionMessage);
    //
-   METALMOCK(_rawFileSystemMock->FileOrFolderExistsMock.CalledOnceWith(cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath));
+   METALMOCK(_fileSystemMock->FileOrFolderExistsMock.CalledOnceWith(cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath));
 }
 
 RUN_TESTS(CloudundancyIniFileReaderTests)

@@ -21,7 +21,7 @@ CloudundancyFileCopier::CloudundancyFileCopier() noexcept
    , _cloudundancyIniFileReader(make_unique<CloudundancyIniFileReader>())
    , _cloudundancyLogFileWriter(make_unique<CloudundancyLogFileWriter>())
    , _console(make_unique<Utils::Console>())
-   , _rawFileSystem(make_unique<Utils::RawFileSystem>())
+   , _fileSystem(make_unique<Utils::FileSystem>())
    , _tryCatchCaller(make_unique<Utils::TryCatchCaller<CloudundancyFileCopier, const pair<fs::path, CloudundancyIni>&>>())
    // Mutable Components
    , _recursiveDirectoryIterator(make_unique<Utils::RecursiveDirectoryIterator>())
@@ -194,11 +194,11 @@ Utils::FileCopyResult CloudundancyFileCopier::CopyFileToFile(
    const bool sourceFileSizeIsGreaterThanOrEqualTo2GB = _cloudundancyFileSystem->FileSizeIsGreaterThanOrEqualTo2GB(sourceFilePath);
    if (sourceFileSizeIsGreaterThanOrEqualTo2GB)
    {
-      fileCopyResult = _rawFileSystem->CopyFileToFileLargerThan2GB(sourceFilePath, destinationFilePath);
+      fileCopyResult = _fileSystem->CopyFileToFileLargerThan2GB(sourceFilePath, destinationFilePath);
    }
    else
    {
-      fileCopyResult = _rawFileSystem->CopyFileToFile(sourceFilePath, destinationFilePath);
+      fileCopyResult = _fileSystem->CopyFileToFile(sourceFilePath, destinationFilePath);
    }
    return fileCopyResult;
 }

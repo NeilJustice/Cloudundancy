@@ -3,7 +3,7 @@
 
 CloudundancyIniValidator::CloudundancyIniValidator()
    // Constant Components
-   : _rawFileSystem(make_unique<Utils::RawFileSystem>())
+   : _fileSystem(make_unique<Utils::FileSystem>())
 {
 }
 

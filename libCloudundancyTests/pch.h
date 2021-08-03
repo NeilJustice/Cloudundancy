@@ -49,7 +49,7 @@ using namespace std;
 #include "libCloudundancyTests/UtilityComponents/Docopt/MetalMock/DocoptParserMock.h"
 #include "libCloudundancyTests/UtilityComponents/Environment/MetalMock/EnvironmentServiceMock.h"
 #include "libCloudundancyTests/UtilityComponents/Exception/MetalMock/TryCatchCallerMock.h"
-#include "libCloudundancyTests/UtilityComponents/FileSystem/MetalMock/RawFileSystemMock.h"
+#include "libCloudundancyTests/UtilityComponents/FileSystem/MetalMock/FileSystemMock.h"
 #include "libCloudundancyTests/UtilityComponents/FileSystem/MetalMock/RecursiveDirectoryIteratorMock.h"
 #include "libCloudundancyTests/UtilityComponents/FunctionCallers/Member/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
 #include "libCloudundancyTests/UtilityComponents/FunctionCallers/Member/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"

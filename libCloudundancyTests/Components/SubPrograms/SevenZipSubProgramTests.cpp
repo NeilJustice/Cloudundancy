@@ -21,7 +21,7 @@ Utils::ConsoleMock* _consoleMock = nullptr;
 // Constant Components
 CloudundancyFileCopierMock* _cloudundancyFileCopierMock = nullptr;
 CloudundancyFileSystemMock* _cloudundancyFileSystemMock = nullptr;
-Utils::RawFileSystemMock* _rawFileSystemMock = nullptr;
+Utils::FileSystemMock* _fileSystemMock = nullptr;
 Utils::ProcessRunnerMock* _processRunnerMock = nullptr;
 Utils::StopwatchMock* _stopwatchMock = nullptr;
 // Mutable Componants
@@ -36,7 +36,7 @@ STARTUP
    // Constant Components
    _sevenZipSubProgram._cloudundancyFileCopier.reset(_cloudundancyFileCopierMock = new CloudundancyFileCopierMock);
    _sevenZipSubProgram._cloudundancyFileSystem.reset(_cloudundancyFileSystemMock = new CloudundancyFileSystemMock);
-   _sevenZipSubProgram._rawFileSystem.reset(_rawFileSystemMock = new Utils::RawFileSystemMock);
+   _sevenZipSubProgram._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
    _sevenZipSubProgram._processRunner.reset(_processRunnerMock = new Utils::ProcessRunnerMock);
    _sevenZipSubProgram._stopwatch.reset(_stopwatchMock = new Utils::StopwatchMock);
    // Mutable Componants
@@ -53,7 +53,7 @@ TEST(DefaultConstructor_NewsComponents)
    // Constant Components
    DELETE_TO_ASSERT_NEWED(sevenZipSubProgram._cloudundancyFileCopier);
    DELETE_TO_ASSERT_NEWED(sevenZipSubProgram._cloudundancyFileSystem);
-   DELETE_TO_ASSERT_NEWED(sevenZipSubProgram._rawFileSystem);
+   DELETE_TO_ASSERT_NEWED(sevenZipSubProgram._fileSystem);
    DELETE_TO_ASSERT_NEWED(sevenZipSubProgram._processRunner);
    DELETE_TO_ASSERT_NEWED(sevenZipSubProgram._watch);
    // Mutable Componants
@@ -117,7 +117,7 @@ TEST(SevenZipBackupStagingFolder_Writes7ZipFileToFolder7ZipFileBackslashCloudund
 
    _stopwatchMock->StartMock.Expect();
 
-   _rawFileSystemMock->SetCurrentPathMock.Expect();
+   _fileSystemMock->SetCurrentPathMock.Expect();
 
    const string dateTimeNowForFileNames = _watchMock->DateTimeNowForFileNamesMock.ReturnRandom();
 
@@ -129,7 +129,7 @@ TEST(SevenZipBackupStagingFolder_Writes7ZipFileToFolder7ZipFileBackslashCloudund
    _sevenZipSubProgram.SevenZipBackupStagingFolder(args);
    //
    METALMOCK(_stopwatchMock->StartMock.CalledOnce());
-   METALMOCK(_rawFileSystemMock->SetCurrentPathMock.CalledOnceWith(args.sevenZipStagingFolderPath));
+   METALMOCK(_fileSystemMock->SetCurrentPathMock.CalledOnceWith(args.sevenZipStagingFolderPath));
    METALMOCK(_watchMock->DateTimeNowForFileNamesMock.CalledOnce());
    const string expectedSevenZipCommandLineArguments = Utils::String::ConcatStrings("a 7ZipFile/CloudundancyBackup_", dateTimeNowForFileNames, ".7z -r -mx9");
    METALMOCK(_processRunnerMock->FailFastRunMock.CalledOnceWith("7z", expectedSevenZipCommandLineArguments, true));

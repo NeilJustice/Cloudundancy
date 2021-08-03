@@ -9,7 +9,7 @@ SevenZipSubProgram::SevenZipSubProgram()
    // Constant Components
    , _cloudundancyFileCopier(std::make_unique<CloudundancyFileCopier>())
    , _cloudundancyFileSystem(make_unique<CloudundancyFileSystem>())
-   , _rawFileSystem(make_unique<Utils::RawFileSystem>())
+   , _fileSystem(make_unique<Utils::FileSystem>())
    , _processRunner(std::make_unique<Utils::ProcessRunner>())
    , _watch(std::make_unique<Utils::Watch>())
    // Mutable Components
@@ -67,7 +67,7 @@ void SevenZipSubProgram::SevenZipBackupStagingFolder(const CloudundancyArgs& arg
    const string sevenZippingMessage = Utils::String::ConcatStrings("\n[Cloudundancy] 7-zipping ", args.sevenZipStagingFolderPath.string(), "...");
    _console->WriteLineColor(sevenZippingMessage, Color::Teal);
    _stopwatch->Start();
-   _rawFileSystem->SetCurrentPath(args.sevenZipStagingFolderPath);
+   _fileSystem->SetCurrentPath(args.sevenZipStagingFolderPath);
    const string dateTimeNowForFileNames = _watch->DateTimeNowForFileNames();
    const string sevenZipCommandLineArguments = Utils::String::ConcatStrings("a 7ZipFile/CloudundancyBackup_", dateTimeNowForFileNames, ".7z -r -mx9");
    _processRunner->FailFastRun("7z", sevenZipCommandLineArguments, true);

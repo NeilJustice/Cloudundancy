@@ -71,7 +71,7 @@ using namespace std;
 #include "libCloudundancy/UtilityComponents/Environment/EnvironmentService.h"
 #include "libCloudundancy/UtilityComponents/ErrorHandling/ErrorCodeTranslator.h"
 #include "libCloudundancy/UtilityComponents/Exception/TryCatchCaller.h"
-#include "libCloudundancy/UtilityComponents/FileSystem/RawFileSystem.h"
+#include "libCloudundancy/UtilityComponents/FileSystem/FileSystem.h"
 #include "libCloudundancy/UtilityComponents/FileSystem/RecursiveDirectoryIterator.h"
 #include "libCloudundancy/UtilityComponents/FunctionCallers/Member/NonVoidOneArgMemberFunctionCaller.h"
 #include "libCloudundancy/UtilityComponents/FunctionCallers/Member/NonVoidTwoArgMemberFunctionCaller.h"

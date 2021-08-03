@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "libCloudundancy/Components/FileSystem/CloudundancyLogFileWriter.h"
-#include "libCloudundancy/UtilityComponents/FileSystem/RawFileSystem.h"
+#include "libCloudundancy/UtilityComponents/FileSystem/FileSystem.h"
 
 CloudundancyLogFileWriter::CloudundancyLogFileWriter()
    // Constant Components
-   : _rawFileSystem(make_unique<Utils::RawFileSystem>())
+   : _fileSystem(make_unique<Utils::FileSystem>())
    , _watch(make_unique<Utils::Watch>())
 {
 }
@@ -19,5 +19,5 @@ void CloudundancyLogFileWriter::AppendTextToCloudundancyLogFileInFolder(const fs
    const string dateTimeNow = _watch->DateTimeNow();
    const string timestampedBackupStartedMessage = Utils::String::ConcatStrings(dateTimeNow, "|", text, "\n");
    const fs::path cloudundancyLogFilePath = folderPath / "Cloudundancy.log";
-   _rawFileSystem->AppendTextToClosedFile(cloudundancyLogFilePath, timestampedBackupStartedMessage);
+   _fileSystem->AppendTextToClosedFile(cloudundancyLogFilePath, timestampedBackupStartedMessage);
 }

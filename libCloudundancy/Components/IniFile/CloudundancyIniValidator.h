@@ -4,7 +4,7 @@ class CloudundancyIniValidator
 {
    friend class CloudundancyIniValidatorTests;
 private:
-   unique_ptr<const Utils::RawFileSystem> _rawFileSystem;
+   unique_ptr<const Utils::FileSystem> _fileSystem;
 public:
    CloudundancyIniValidator();
    virtual ~CloudundancyIniValidator();

@@ -11,19 +11,19 @@ CloudundancyIniValidator _cloudundancyIniValidator;
 using _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMockType = Utils::MemberFunctionForEacherMock<CloudundancyIniValidator, fs::path>;
 _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMockType* _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMock = nullptr;
 // Constant Components
-Utils::RawFileSystemMock* _rawFileSystemMock = nullptr;
+Utils::FileSystemMock* _fileSystemMock = nullptr;
 
 STARTUP
 {
    // Constant Components
-   _cloudundancyIniValidator._rawFileSystem.reset(_rawFileSystemMock = new Utils::RawFileSystemMock);
+   _cloudundancyIniValidator._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
 }
 
 TEST(DefaultConstructor_NewsFileSystem)
 {
    CloudundancyIniValidator cloudundancyIniValidator;
    // Constant Components
-   DELETE_TO_ASSERT_NEWED(cloudundancyIniValidator._rawFileSystem);
+   DELETE_TO_ASSERT_NEWED(cloudundancyIniValidator._fileSystem);
 }
 
 TEST(ThrowIfZeroDestinationFolderPaths_DestinationFolderPathsIsEmpty_ThrowsFileSystemExceptionWithReasonMalformedFile)

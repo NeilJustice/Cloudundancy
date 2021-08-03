@@ -1,5 +1,5 @@
 #pragma once
-class RawFileSystemTests;
+class FileSystemTests;
 
 namespace Utils
 {
@@ -21,9 +21,9 @@ namespace Utils
 
    class StopwatchFactory;
 
-   class RawFileSystem
+   class FileSystem
    {
-      friend class ::RawFileSystemTests;
+      friend class ::FileSystemTests;
    private:
       // C Function Pointers
       function<int(FILE*)> _call_fclose;
@@ -53,26 +53,26 @@ namespace Utils
       using fs_remove_all_FunctionOverloadType = unsigned long long(*)(const fs::path&);
       function<unsigned long long(const fs::path&)> _call_fs_remove_all;
       // Function Callers
-      using _caller_CreateOrOpenFileFunctionType = Utils::NonVoidOneArgMemberFunctionCaller<shared_ptr<FILE>, RawFileSystem, const fs::path&>;
+      using _caller_CreateOrOpenFileFunctionType = Utils::NonVoidOneArgMemberFunctionCaller<shared_ptr<FILE>, FileSystem, const fs::path&>;
       unique_ptr<_caller_CreateOrOpenFileFunctionType> _caller_CreateOrOpenFileFunction;
 
-      using _caller_ReadFileBytesType = NonVoidOneArgMemberFunctionCaller<shared_ptr<const vector<char>>, RawFileSystem, const fs::path&>;
+      using _caller_ReadFileBytesType = NonVoidOneArgMemberFunctionCaller<shared_ptr<const vector<char>>, FileSystem, const fs::path&>;
       unique_ptr<const _caller_ReadFileBytesType> _caller_ReadFileBytes;
 
-      using _caller_ReadFileSizeType = Utils::NonVoidOneArgMemberFunctionCaller<size_t, RawFileSystem, const shared_ptr<FILE>&>;
+      using _caller_ReadFileSizeType = Utils::NonVoidOneArgMemberFunctionCaller<size_t, FileSystem, const shared_ptr<FILE>&>;
       unique_ptr<const _caller_ReadFileSizeType> _caller_ReadFileSize;
 
-      using _caller_ReadFileTextType = Utils::NonVoidOneArgMemberFunctionCaller<string, RawFileSystem, const fs::path&>;
+      using _caller_ReadFileTextType = Utils::NonVoidOneArgMemberFunctionCaller<string, FileSystem, const fs::path&>;
       unique_ptr<const _caller_ReadFileTextType> _caller_ReadFileText;
 
-      using _caller_WriteTextToOpenFileType = Utils::VoidTwoArgMemberFunctionCaller<RawFileSystem, const shared_ptr<FILE>&, string_view>;
+      using _caller_WriteTextToOpenFileType = Utils::VoidTwoArgMemberFunctionCaller<FileSystem, const shared_ptr<FILE>&, string_view>;
       unique_ptr<const _caller_WriteTextToOpenFileType> _caller_WriteTextToOpenFile;
 
 #if defined __linux__
-      using _caller_CreateOrOpenFileOnLinuxType = Utils::NonVoidTwoArgMemberFunctionCaller<shared_ptr<FILE>, RawFileSystem, const fs::path&, const char*>;
+      using _caller_CreateOrOpenFileOnLinuxType = Utils::NonVoidTwoArgMemberFunctionCaller<shared_ptr<FILE>, FileSystem, const fs::path&, const char*>;
       unique_ptr<const _caller_CreateOrOpenFileOnLinuxType> _caller_CreateOrOpenFileOnLinux;
 #elif defined _WIN32
-      using _caller_CreateOrOpenFileOnWindowsType = Utils::NonVoidTwoArgMemberFunctionCaller<shared_ptr<FILE>, RawFileSystem, const fs::path&, const wchar_t*>;
+      using _caller_CreateOrOpenFileOnWindowsType = Utils::NonVoidTwoArgMemberFunctionCaller<shared_ptr<FILE>, FileSystem, const fs::path&, const wchar_t*>;
       unique_ptr<const _caller_CreateOrOpenFileOnWindowsType> _caller_CreateOrOpenFileOnWindows;
 #endif
       // Constant Callers
@@ -81,8 +81,8 @@ namespace Utils
       unique_ptr<const Utils::ErrorCodeTranslator> _errorCodeTranslator;
       unique_ptr<const StopwatchFactory> _stopwatchFactory;
    public:
-      RawFileSystem();
-      virtual ~RawFileSystem();
+      FileSystem();
+      virtual ~FileSystem();
       // File Open Functions
       virtual shared_ptr<FILE> CreateFileInBinaryWriteMode(const fs::path& filePath) const;
       virtual shared_ptr<FILE> CreateOrOpenFileInBinaryAppendMode(const fs::path& filePath) const;

@@ -11,7 +11,7 @@ CloudundancyArgsParser _cloudundancyArgsParser;
 // Constant Components
 Utils::ConsoleMock* _consoleMock = nullptr;
 Utils::DocoptParserMock* _docoptParserMock = nullptr;
-Utils::RawFileSystemMock* _rawFileSystemMock = nullptr;
+Utils::FileSystemMock* _fileSystemMock = nullptr;
 Utils::ProcessRunnerMock* _processRunnerMock = nullptr;
 ProgramModeDeterminerMock* _programModeDeterminerMock = nullptr;
 
@@ -20,7 +20,7 @@ STARTUP
    // Constant Components
    _cloudundancyArgsParser._console.reset(_consoleMock = new Utils::ConsoleMock);
    _cloudundancyArgsParser._docoptParser.reset(_docoptParserMock = new Utils::DocoptParserMock);
-   _cloudundancyArgsParser._rawFileSystem.reset(_rawFileSystemMock = new Utils::RawFileSystemMock);
+   _cloudundancyArgsParser._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
    _cloudundancyArgsParser._processRunner.reset(_processRunnerMock = new Utils::ProcessRunnerMock);
    _cloudundancyArgsParser._programModeDeterminer.reset(_programModeDeterminerMock = new ProgramModeDeterminerMock);
 }
@@ -31,7 +31,7 @@ TEST(DefaultConstructor_NewsComponents)
    // Constant Components
    DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._console);
    DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._docoptParser);
-   DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._rawFileSystem);
+   DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._fileSystem);
    DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._processRunner);
    DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._programModeDeterminer);
 }
@@ -65,7 +65,7 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    _docoptParserMock->GetProgramModeSpecificRequiredStringMock.ReturnValues(
       sevenZipModeIniFilePath, sevenZipStagingFolderPath, sevenZipFileCopyingIniFilePath);
 
-   _rawFileSystemMock->ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExistMock.Expect();
+   _fileSystemMock->ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExistMock.Expect();
 
    if (expectRun7zToConfirm7zIsInThePath)
    {
@@ -101,7 +101,7 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
       { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::SevenZip),
         "--ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders" }
    }));
-   METALMOCK(_rawFileSystemMock->ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExistMock.CalledAsFollows(
+   METALMOCK(_fileSystemMock->ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExistMock.CalledAsFollows(
    {
       { iniFilePath },
       { sevenZipModeIniFilePath },

@@ -62,7 +62,7 @@ CloudundancyIniFileReaderMock* _cloudundancyIniFileReaderMock = nullptr;
 CloudundancyFileSystemMock* _cloudundancyFileSystemMock = nullptr;
 CloudundancyLogFileWriterMock* _cloudundancyLogFileWriterMock = nullptr;
 Utils::ConsoleMock* _consoleMock = nullptr;
-Utils::RawFileSystemMock* _rawFileSystemMock = nullptr;
+Utils::FileSystemMock* _fileSystemMock = nullptr;
 using TryCatchCallerMockType = Utils::TryCatchCallerMock<CloudundancyFileCopier, const pair<fs::path, CloudundancyIni>&>;
 TryCatchCallerMockType* _tryCatchCallerMock = nullptr;
 
@@ -88,7 +88,7 @@ STARTUP
    _cloudundancyFileCopier._cloudundancyIniFileReader.reset(_cloudundancyIniFileReaderMock = new CloudundancyIniFileReaderMock);
    _cloudundancyFileCopier._cloudundancyLogFileWriter.reset(_cloudundancyLogFileWriterMock = new CloudundancyLogFileWriterMock);
    _cloudundancyFileCopier._console.reset(_consoleMock = new Utils::ConsoleMock);
-   _cloudundancyFileCopier._rawFileSystem.reset(_rawFileSystemMock = new Utils::RawFileSystemMock);
+   _cloudundancyFileCopier._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
    _cloudundancyFileCopier._tryCatchCaller.reset(_tryCatchCallerMock = new TryCatchCallerMockType);
    // Mutable Components
    _cloudundancyFileCopier._recursiveDirectoryIterator.reset(_recursiveDirectoryIteratorMock = new Utils::RecursiveDirectoryIteratorMock);
@@ -113,7 +113,7 @@ TEST(DefaultConstructor_SetsFunctionsAndNewsComponents)
    DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._cloudundancyFileSystem);
    DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._cloudundancyIniFileReader);
    DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._console);
-   DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._rawFileSystem);
+   DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._fileSystem);
    DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._tryCatchCaller);
    // Mutable Components
    DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._recursiveDirectoryIterator);
@@ -383,7 +383,7 @@ TEST(CopyFileToFile_FileSizeIsGreaterThanOrEqualTo2GB_CopiesFileWithStdFilesyste
    _cloudundancyFileSystemMock->FileSizeIsGreaterThanOrEqualTo2GBMock.Return(true);
 
    const Utils::FileCopyResult fileCopyResult = ZenUnit::Random<Utils::FileCopyResult>();
-   _rawFileSystemMock->CopyFileToFileLargerThan2GBMock.Return(fileCopyResult);
+   _fileSystemMock->CopyFileToFileLargerThan2GBMock.Return(fileCopyResult);
 
    const fs::path sourceFilePath = ZenUnit::Random<fs::path>();
    const fs::path destinationFilePath = ZenUnit::Random<fs::path>();
@@ -395,7 +395,7 @@ TEST(CopyFileToFile_FileSizeIsGreaterThanOrEqualTo2GB_CopiesFileWithStdFilesyste
       "     to ", destinationFilePath.string(), ". ");
    METALMOCK(_consoleMock->WriteMock.CalledOnceWith(expectedCopyingFileMessage));
    METALMOCK(_cloudundancyFileSystemMock->FileSizeIsGreaterThanOrEqualTo2GBMock.CalledOnceWith(sourceFilePath));
-   METALMOCK(_rawFileSystemMock->CopyFileToFileLargerThan2GBMock.CalledOnceWith(sourceFilePath, destinationFilePath));
+   METALMOCK(_fileSystemMock->CopyFileToFileLargerThan2GBMock.CalledOnceWith(sourceFilePath, destinationFilePath));
    ARE_EQUAL(fileCopyResult, returnedFileCopyResult);
 }
 
@@ -404,7 +404,7 @@ TEST(CopyFileToFile_FileSizeIsLessThan2GB_CopiesFileWithCStyleCopyFileToFile_Ret
    _consoleMock->WriteMock.Expect();
 
    _cloudundancyFileSystemMock->FileSizeIsGreaterThanOrEqualTo2GBMock.Return(false);
-   const Utils::FileCopyResult fileCopyResult = _rawFileSystemMock->CopyFileToFileMock.ReturnRandom();
+   const Utils::FileCopyResult fileCopyResult = _fileSystemMock->CopyFileToFileMock.ReturnRandom();
 
    const fs::path sourceFilePath = ZenUnit::Random<fs::path>();
    const fs::path destinationFilePath = ZenUnit::Random<fs::path>();
@@ -416,7 +416,7 @@ TEST(CopyFileToFile_FileSizeIsLessThan2GB_CopiesFileWithCStyleCopyFileToFile_Ret
       "     to ", destinationFilePath.string(), ". ");
    METALMOCK(_consoleMock->WriteMock.CalledOnceWith(expectedCopyingFileMessage));
    METALMOCK(_cloudundancyFileSystemMock->FileSizeIsGreaterThanOrEqualTo2GBMock.CalledOnceWith(sourceFilePath));
-   METALMOCK(_rawFileSystemMock->CopyFileToFileMock.CalledOnceWith(sourceFilePath, destinationFilePath));
+   METALMOCK(_fileSystemMock->CopyFileToFileMock.CalledOnceWith(sourceFilePath, destinationFilePath));
    ARE_EQUAL(fileCopyResult, returnedFileCopyResult);
 }
 

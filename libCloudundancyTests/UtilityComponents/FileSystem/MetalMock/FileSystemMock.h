@@ -1,9 +1,9 @@
 #pragma once
-#include "libCloudundancy/UtilityComponents/FileSystem/RawFileSystem.h"
+#include "libCloudundancy/UtilityComponents/FileSystem/FileSystem.h"
 
 namespace Utils
 {
-   class RawFileSystemMock : public Metal::Mock<RawFileSystem>
+   class FileSystemMock : public Metal::Mock<FileSystem>
    {
    public:
       // File Open Functions

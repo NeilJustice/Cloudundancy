@@ -16,7 +16,7 @@ private:
    unique_ptr<const _forEacher_DeleteContentsOfFolderExceptForFileNameType> _forEacher_DeleteContentsOfFolderExceptForFileName;
    // Constant Components
    unique_ptr<const Utils::Console> _console;
-   unique_ptr<const Utils::RawFileSystem> _rawFileSystem;
+   unique_ptr<const Utils::FileSystem> _fileSystem;
 public:
    CloudundancyFileSystem();
    virtual ~CloudundancyFileSystem();

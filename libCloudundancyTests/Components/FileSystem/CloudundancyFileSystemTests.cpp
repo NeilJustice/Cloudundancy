@@ -19,7 +19,7 @@ using _forEacher_DeleteContentsOfFolderExceptForFileNameMockType = Utils::OneExt
 _forEacher_DeleteContentsOfFolderExceptForFileNameMockType* _forEacher_DeleteContentsOfFolderExceptForFileNameMock = nullptr;
 // Constant Components
 Utils::ConsoleMock* _consoleMock = nullptr;
-Utils::RawFileSystemMock* _rawFileSystemMock = nullptr;
+Utils::FileSystemMock* _fileSystemMock = nullptr;
 
 STARTUP
 {
@@ -30,7 +30,7 @@ STARTUP
    _cloudundancyFileSystem._forEacher_DeleteContentsOfFolderExceptForFileName.reset(_forEacher_DeleteContentsOfFolderExceptForFileNameMock = new _forEacher_DeleteContentsOfFolderExceptForFileNameMockType);
    // Constant Components
    _cloudundancyFileSystem._console.reset(_consoleMock = new Utils::ConsoleMock);
-   _cloudundancyFileSystem._rawFileSystem.reset(_rawFileSystemMock = new Utils::RawFileSystemMock);
+   _cloudundancyFileSystem._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
@@ -43,7 +43,7 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(cloudundancyFileSystem._forEacher_DeleteContentsOfFolderExceptForFileName);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(cloudundancyFileSystem._console);
-   DELETE_TO_ASSERT_NEWED(cloudundancyFileSystem._rawFileSystem);
+   DELETE_TO_ASSERT_NEWED(cloudundancyFileSystem._fileSystem);
 }
 
 TEST(DeleteFolderContentsExceptForFile_FolderDoesNotExist_DoesNothing)
@@ -61,11 +61,11 @@ TEST(DeleteFolderContentsExceptForFile_FolderExists_DeletesFolderContentsExceptF
 {
    _call_fs_existsMock.Return(true);
 
-   const string textOfExceptFile = _rawFileSystemMock->ReadFileTextMock.ReturnRandom();
+   const string textOfExceptFile = _fileSystemMock->ReadFileTextMock.ReturnRandom();
 
-   _rawFileSystemMock->DeleteFolderMock.Expect();
+   _fileSystemMock->DeleteFolderMock.Expect();
 
-   _rawFileSystemMock->CreateFileWithTextIfDoesNotExistMock.Expect();
+   _fileSystemMock->CreateFileWithTextIfDoesNotExistMock.Expect();
 
    _consoleMock->WriteLineMock.Expect();
 
@@ -76,9 +76,9 @@ TEST(DeleteFolderContentsExceptForFile_FolderExists_DeletesFolderContentsExceptF
    //
    METALMOCK(_call_fs_existsMock.CalledOnceWith(folderPath));
    const fs::path expectedExceptFilePath = folderPath / exceptFileName;
-   METALMOCK(_rawFileSystemMock->ReadFileTextMock.CalledOnceWith(expectedExceptFilePath));
-   METALMOCK(_rawFileSystemMock->DeleteFolderMock.CalledOnceWith(folderPath));
-   METALMOCK(_rawFileSystemMock->CreateFileWithTextIfDoesNotExistMock.CalledOnceWith(expectedExceptFilePath, textOfExceptFile));
+   METALMOCK(_fileSystemMock->ReadFileTextMock.CalledOnceWith(expectedExceptFilePath));
+   METALMOCK(_fileSystemMock->DeleteFolderMock.CalledOnceWith(folderPath));
+   METALMOCK(_fileSystemMock->CreateFileWithTextIfDoesNotExistMock.CalledOnceWith(expectedExceptFilePath, textOfExceptFile));
    const string expectedDeletedFolderMessage = Utils::String::ConcatStrings("[Cloudundancy] Deleted folder ", folderPath.string(), " except for ", exceptFileName);
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedDeletedFolderMessage));
 }

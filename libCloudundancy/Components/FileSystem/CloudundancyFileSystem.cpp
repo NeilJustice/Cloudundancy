@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/Components/FileSystem/CloudundancyFileSystem.h"
-#include "libCloudundancy/UtilityComponents/FileSystem/RawFileSystem.h"
+#include "libCloudundancy/UtilityComponents/FileSystem/FileSystem.h"
 
 CloudundancyFileSystem::CloudundancyFileSystem()
    // Function Pointers
@@ -10,7 +10,7 @@ CloudundancyFileSystem::CloudundancyFileSystem()
    , _forEacher_DeleteContentsOfFolderExceptForFileName(make_unique<_forEacher_DeleteContentsOfFolderExceptForFileNameType>())
    // Constant Components
    , _console(make_unique<Utils::Console>())
-   , _rawFileSystem(make_unique<Utils::RawFileSystem>())
+   , _fileSystem(make_unique<Utils::FileSystem>())
 {
    _call_fs_exists = _call_fs_exists_as_assignable_function_overload_pointer;
 }
@@ -33,9 +33,9 @@ void CloudundancyFileSystem::DeleteFolderContentsExceptForFile(const fs::path& f
       return;
    }
    const fs::path exceptFilePath = folderPath / exceptFileName;
-   const string textOfExceptFile = _rawFileSystem->ReadFileText(exceptFilePath);
-   _rawFileSystem->DeleteFolder(folderPath);
-   _rawFileSystem->CreateFileWithTextIfDoesNotExist(exceptFilePath, textOfExceptFile);
+   const string textOfExceptFile = _fileSystem->ReadFileText(exceptFilePath);
+   _fileSystem->DeleteFolder(folderPath);
+   _fileSystem->CreateFileWithTextIfDoesNotExist(exceptFilePath, textOfExceptFile);
    const string deletedFolderMessage = Utils::String::ConcatStrings("[Cloudundancy] Deleted folder ", folderPath.string(), " except for ", exceptFileName);
    _console->WriteLine(deletedFolderMessage);
 }

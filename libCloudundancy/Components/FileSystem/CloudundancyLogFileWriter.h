@@ -5,7 +5,7 @@ class CloudundancyLogFileWriter
    friend class CloudundancyLogFileWriterTests;
 private:
    // Constant Comopnents
-   unique_ptr<const Utils::RawFileSystem> _rawFileSystem;
+   unique_ptr<const Utils::FileSystem> _fileSystem;
    unique_ptr<const Utils::Watch> _watch;
 public:
    CloudundancyLogFileWriter();

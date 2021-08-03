@@ -14,7 +14,7 @@ private:
    // Constant Components
    unique_ptr<const CloudundancyFileCopier> _cloudundancyFileCopier;
    unique_ptr<const CloudundancyFileSystem> _cloudundancyFileSystem;
-   unique_ptr<const Utils::RawFileSystem> _rawFileSystem;
+   unique_ptr<const Utils::FileSystem> _fileSystem;
    unique_ptr<const Utils::ProcessRunner> _processRunner;
    unique_ptr<const Utils::Watch> _watch;
    // Mutable Components
