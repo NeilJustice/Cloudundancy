@@ -26,7 +26,7 @@ int SevenZipSubProgram::Run(const CloudundancyArgs& args)
    _voidOneArgFunctionCaller->CallConstMemberFunction(
       &SevenZipSubProgram::DeleteBackupStagingFolder, this, args);
    _voidOneArgFunctionCaller->CallConstMemberFunction(
-      &SevenZipSubProgram::CopyFileFastsAndFoldersToBackupStagingFolder, this, args);
+      &SevenZipSubProgram::CopyFileToFilesAndFoldersToBackupStagingFolder, this, args);
    _voidOneArgFunctionCaller->CallConstMemberFunction(
       &SevenZipSubProgram::SevenZipBackupStagingFolder, this, args);
    _voidOneArgFunctionCaller->CallConstMemberFunction(
@@ -39,13 +39,13 @@ int SevenZipSubProgram::Run(const CloudundancyArgs& args)
 void SevenZipSubProgram::Copy7ZipFileToDestinationFolders(const CloudundancyArgs& args) const
 {
    _console->WriteLine("[Cloudundancy] Copying .7z file to [DestinationFolders]...");
-   _cloudundancyFileCopier->CopyFileFastsAndFoldersToMultipleDestinationFolders(args.sevenZipFileCopyingIniFilePath, false);
+   _cloudundancyFileCopier->CopyFileToFilesAndFoldersToMultipleDestinationFolders(args.sevenZipFileCopyingIniFilePath, false);
    _console->WriteLineColor("\n[Cloudundancy] Successfully copied .7z file to [DestinationFolders]", Color::Green);
 }
 
-void SevenZipSubProgram::CopyFileFastsAndFoldersToBackupStagingFolder(const CloudundancyArgs& args) const
+void SevenZipSubProgram::CopyFileToFilesAndFoldersToBackupStagingFolder(const CloudundancyArgs& args) const
 {
-   _cloudundancyFileCopier->CopyFileFastsAndFoldersToMultipleDestinationFolders(args.sevenZipModeIniFilePath, false);
+   _cloudundancyFileCopier->CopyFileToFilesAndFoldersToMultipleDestinationFolders(args.sevenZipModeIniFilePath, false);
 }
 
 void SevenZipSubProgram::DeleteBackupStagingFolder(const CloudundancyArgs& args) const

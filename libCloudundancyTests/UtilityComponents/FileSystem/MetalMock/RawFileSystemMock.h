@@ -13,8 +13,8 @@ namespace Utils
       METALMOCK_NONVOID1_CONST(shared_ptr<FILE>, OpenFileInTextReadMode, const fs::path&)
       // Behavior Functions
       METALMOCK_VOID2_CONST(AppendTextToClosedFile, const fs::path&, string_view)
-      METALMOCK_NONVOID2_CONST(Utils::FileCopyResult, CopyFileFast, const fs::path&, const fs::path&)
-      METALMOCK_NONVOID2_CONST(Utils::FileCopyResult, CopyFileFastLargerThan2GB, const fs::path&, const fs::path&)
+      METALMOCK_NONVOID2_CONST(Utils::FileCopyResult, CopyFileToFile, const fs::path&, const fs::path&)
+      METALMOCK_NONVOID2_CONST(Utils::FileCopyResult, CopyFileToFileLargerThan2GB, const fs::path&, const fs::path&)
       METALMOCK_VOID2_CONST(CloseFile, const shared_ptr<FILE>&, const fs::path&)
       METALMOCK_VOID2_CONST(CreateFileWithTextIfDoesNotExist, const fs::path&, string_view)
       METALMOCK_VOID1_CONST(DeleteFolder, const fs::path&)

@@ -135,7 +135,7 @@ namespace Utils
       }
    }
 
-   Utils::FileCopyResult RawFileSystem::CopyFileFast(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const
+   Utils::FileCopyResult RawFileSystem::CopyFileToFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const
    {
       const shared_ptr<Stopwatch> stopwatch = _stopwatchFactory->NewStopwatch();
       stopwatch->Start();
@@ -151,7 +151,7 @@ namespace Utils
          numberOfBytesWritten = _call_fwrite(sourceFileBytes->data(), 1, sourceFileSize, binaryWriteModeDestinationFilePointer.get());
       }
       _asserter->ThrowIfSizeTsNotEqual(sourceFileSize, numberOfBytesWritten,
-         "fwrite() in Utils::RawFileSystem::CopyFileFast(const fs::path& sourceFilePath, const fs::path& destinationFilePath) unexpectedly returned numberOfBytesWritten != sourceFileSize");
+         "fwrite() in Utils::RawFileSystem::CopyFileToFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) unexpectedly returned numberOfBytesWritten != sourceFileSize");
       Utils::FileCopyResult successFileCopyResult;
       successFileCopyResult.sourceFilePath = sourceFilePath;
       successFileCopyResult.destinationFilePath = destinationFilePath;
@@ -160,7 +160,7 @@ namespace Utils
       return successFileCopyResult;
    }
 
-   Utils::FileCopyResult RawFileSystem::CopyFileFastLargerThan2GB(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const
+   Utils::FileCopyResult RawFileSystem::CopyFileToFileLargerThan2GB(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const
    {
       const shared_ptr<Stopwatch> stopwatch = _stopwatchFactory->NewStopwatch();
       stopwatch->Start();

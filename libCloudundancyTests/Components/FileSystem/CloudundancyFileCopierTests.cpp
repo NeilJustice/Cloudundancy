@@ -6,21 +6,21 @@
 
 TESTS(CloudundancyFileCopierTests)
 AFACT(DefaultConstructor_SetsFunctionsAndNewsComponents)
-AFACT(CopyFileFastsAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFirstIsTrue_DeletesDestinationFolders_CopiesFilesAndFoldersToFolders)
+AFACT(CopyFileToFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFirstIsTrue_DeletesDestinationFolders_CopiesFilesAndFoldersToFolders)
 // Private Functions
 AFACT(CopyFilesAndFoldersToDestinationFolder_TryCatchCallsDoCopyFilesAndFoldersToDestinationFolder)
 AFACT(DoCopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesNonSkippedSourceFilesToDestinationFolder_AppendBackupSuccessfulToLogFile)
 AFACT(DoCopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesNonSkippedSourceFilesToDestinationFolder_AppendBackupSuccessfulToLogFile)
 AFACT(ExceptionHandlerForDoCopyFilesAndFoldersToDestinationFolder_WritesExceptionMessageToConsole_AppendsExceptionMessageToCloudundancyLogFile_RethrowsException)
-AFACT(CopyFileOrFolderToFolder_SourcePathHasAFileName_CallsCopyFileFastToFolder)
+AFACT(CopyFileOrFolderToFolder_SourcePathHasAFileName_CallsCopyFileToFileToFolder)
 FACTS(CopyFileOrFolderToFolder_SourcePathDoesNotHaveAFileNameMeaningItIsAFolder_CallsRecursivelyCopyNonIgnoredFilesToFolder)
 AFACT(CopyNonIgnoredFilesInAndBelowFolderToFolder_CopiesNonIgnoredFilesToFolderUntilRecursiveDirectoryIteratorReturnsNoMoreFiles)
 AFACT(CopyNestedFileToFolder_RelativeDestinationFolderPathIsDot_CopiesNestedFileToFolderWithSlashDotSlashNotPresentInTheDestinationFilePath)
 AFACT(CopyNestedFileToFolder_RelativeDestinationFolderPathIsNotDot_CopiesNestedFileToFolderWithRelativeDestinationFolderPathPresentInTheDestinationFilePath)
-AFACT(CopyFileFast_FileSizeIsGreaterThanOrEqualTo2GB_CopiesFileWithStdFilesystemCopyFileFast_ReturnsFileCopyResult)
-AFACT(CopyFileFast_FileSizeIsLessThan2GB_CopiesFileWithCStyleCopyFileFast_ReturnsFileCopyResult)
-AFACT(CopyFileFastToFolder_RelativeDestinationFolderPathIsADot_DoesNotJoinDotCharacter_CallsCopyFileFast)
-AFACT(CopyFileFastToFolder_RelativeDestinationFolderPathIsNotADot_JoinsRelativeDestinationFolder_CallsCopyFileFast)
+AFACT(CopyFileToFile_FileSizeIsGreaterThanOrEqualTo2GB_CopiesFileWithStdFilesystemCopyFileToFile_ReturnsFileCopyResult)
+AFACT(CopyFileToFile_FileSizeIsLessThan2GB_CopiesFileWithCStyleCopyFileToFile_ReturnsFileCopyResult)
+AFACT(CopyFileToFileToFolder_RelativeDestinationFolderPathIsADot_DoesNotJoinDotCharacter_CallsCopyFileToFile)
+AFACT(CopyFileToFileToFolder_RelativeDestinationFolderPathIsNotADot_JoinsRelativeDestinationFolder_CallsCopyFileToFile)
 AFACT(WriteCopiedMessageOrExitWithCode1IfCopyFailed_CopySucceeded_WritesCopiedAndDurationInMilliseconds)
 AFACT(WriteCopiedMessageOrExitWithCode1IfCopyFailed_CopyFailed_WritesCopyFailedAndDurationInMillisecondsAndCopyFailureReason_AppendsErrorToCloudundancyLog_ExitsProgramWithCode1)
 EVIDENCE
@@ -33,17 +33,17 @@ METALMOCK_NONVOID3_FREE(string, _call_String_ReplaceFirst, const string&, const 
 METALMOCK_NONVOID1_FREE(string, _call_Type_GetExceptionClassNameAndMessage, const exception*)
 
 // Function Callers
-using _memberCaller_CopyFileFastFunctionsMockType = Utils::VoidTwoArgMemberFunctionCallerMock<
+using _memberCaller_CopyFileToFileFunctionsMockType = Utils::VoidTwoArgMemberFunctionCallerMock<
    CloudundancyFileCopier, const CloudundancyIniCopyInstruction&, const fs::path&>;
-_memberCaller_CopyFileFastFunctionsMockType* _memberCaller_CopyFileFastFunctionsMock = nullptr;
+_memberCaller_CopyFileToFileFunctionsMockType* _memberCaller_CopyFileToFileFunctionsMock = nullptr;
 
 using _memberCaller_CopyNestedFileToFolderMockType = Utils::VoidThreeArgMemberFunctionCallerMock<
    CloudundancyFileCopier, const fs::path&, const CloudundancyIniCopyInstruction&, const fs::path&>;
 _memberCaller_CopyNestedFileToFolderMockType* _memberCaller_CopyNestedFileToFolderMock = nullptr;
 
-using _memberCaller_CopyFileFastMockType = Utils::NonVoidTwoArgMemberFunctionCallerMock<
+using _memberCaller_CopyFileToFileMockType = Utils::NonVoidTwoArgMemberFunctionCallerMock<
    Utils::FileCopyResult, CloudundancyFileCopier, const fs::path&, const fs::path&>;
-_memberCaller_CopyFileFastMockType* _memberCaller_CopyFileFastMock = nullptr;
+_memberCaller_CopyFileToFileMockType* _memberCaller_CopyFileToFileMock = nullptr;
 
 using _memberForEacher_CopyEachFileOrFolderToFolderMockType = Utils::OneExtraArgMemberFunctionForEacherMock<
    CloudundancyFileCopier, fs::path, const CloudundancyIni&>;
@@ -77,9 +77,9 @@ STARTUP
    _cloudundancyFileCopier._call_String_ReplaceFirst = BIND_3ARG_METALMOCK_OBJECT(_call_String_ReplaceFirstMock);
    _cloudundancyFileCopier._call_Type_GetExceptionClassNameAndMessage = BIND_1ARG_METALMOCK_OBJECT(_call_Type_GetExceptionClassNameAndMessageMock);
    // Function Callers
-   _cloudundancyFileCopier._memberCaller_CopyFileFastFunctions.reset(_memberCaller_CopyFileFastFunctionsMock = new _memberCaller_CopyFileFastFunctionsMockType);
+   _cloudundancyFileCopier._memberCaller_CopyFileToFileFunctions.reset(_memberCaller_CopyFileToFileFunctionsMock = new _memberCaller_CopyFileToFileFunctionsMockType);
    _cloudundancyFileCopier._memberCaller_CopyNestedFileToFolder.reset(_memberCaller_CopyNestedFileToFolderMock = new _memberCaller_CopyNestedFileToFolderMockType);
-   _cloudundancyFileCopier._memberCaller_CopyFileFast.reset(_memberCaller_CopyFileFastMock = new _memberCaller_CopyFileFastMockType);
+   _cloudundancyFileCopier._memberCaller_CopyFileToFile.reset(_memberCaller_CopyFileToFileMock = new _memberCaller_CopyFileToFileMockType);
    _cloudundancyFileCopier._memberForEacher_CopyEachFileOrFolderToFolder.reset(_memberForEacher_CopyEachFileOrFolderToFolderMock = new _memberForEacher_CopyEachFileOrFolderToFolderMockType);
    _cloudundancyFileCopier._memberForEacher_CopyFileOrFolderToFolder.reset(_memberForEacher_CopyFileOrFolderToFolderMock = new _memberForEacher_CopyFileOrFolderToFolderMockType);
    _cloudundancyFileCopier._memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailed.reset(_memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMock = new _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMockType);
@@ -103,9 +103,9 @@ TEST(DefaultConstructor_SetsFunctionsAndNewsComponents)
    STD_FUNCTION_TARGETS(Utils::String::ReplaceFirst, cloudundancyFileCopier._call_String_ReplaceFirst);
    STD_FUNCTION_TARGETS(Type::GetExceptionClassNameAndMessage, cloudundancyFileCopier._call_Type_GetExceptionClassNameAndMessage);
    // Function Callers
-   DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._memberCaller_CopyFileFastFunctions);
+   DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._memberCaller_CopyFileToFileFunctions);
    DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._memberCaller_CopyNestedFileToFolder);
-   DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._memberCaller_CopyFileFast);
+   DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._memberCaller_CopyFileToFile);
    DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._memberForEacher_CopyEachFileOrFolderToFolder);
    DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._memberForEacher_CopyFileOrFolderToFolder);
    DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailed);
@@ -120,7 +120,7 @@ TEST(DefaultConstructor_SetsFunctionsAndNewsComponents)
    DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._stopwatch);
 }
 
-TEST(CopyFileFastsAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFirstIsTrue_DeletesDestinationFolders_CopiesFilesAndFoldersToFolders)
+TEST(CopyFileToFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFirstIsTrue_DeletesDestinationFolders_CopiesFilesAndFoldersToFolders)
 {
    const CloudundancyIni cloudundancyIni = _cloudundancyIniFileReaderMock->ReadIniFileMock.ReturnRandom();
 
@@ -136,7 +136,7 @@ TEST(CopyFileFastsAndFoldersToMultipleDestinationFolders_DeleteDestinationFolder
 
    const fs::path iniFilePath = ZenUnit::Random<fs::path>();
    //
-   _cloudundancyFileCopier.CopyFileFastsAndFoldersToMultipleDestinationFolders(iniFilePath, true);
+   _cloudundancyFileCopier.CopyFileToFilesAndFoldersToMultipleDestinationFolders(iniFilePath, true);
    //
    METALMOCK(_cloudundancyIniFileReaderMock->ReadIniFileMock.CalledOnceWith(iniFilePath));
    const string expectedCopyingMessage = Utils::String::ConcatStrings(
@@ -153,7 +153,7 @@ TEST(CopyFileFastsAndFoldersToMultipleDestinationFolders_DeleteDestinationFolder
       &_cloudundancyFileCopier, cloudundancyIni));
 }
 
-TEST(CopyFileFastsAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFirstIsFalse_DoesNotDeleteDestinationFolders_CopiesFilesAndFoldersToFolders)
+TEST(CopyFileToFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFirstIsFalse_DoesNotDeleteDestinationFolders_CopiesFilesAndFoldersToFolders)
 {
    const CloudundancyIni cloudundancyIni = _cloudundancyIniFileReaderMock->ReadIniFileMock.ReturnRandom();
 
@@ -166,7 +166,7 @@ TEST(CopyFileFastsAndFoldersToMultipleDestinationFolders_DeleteDestinationFolder
 
    const fs::path iniFilePath = ZenUnit::Random<fs::path>();
    //
-   _cloudundancyFileCopier.CopyFileFastsAndFoldersToMultipleDestinationFolders(iniFilePath, false);
+   _cloudundancyFileCopier.CopyFileToFilesAndFoldersToMultipleDestinationFolders(iniFilePath, false);
    //
    METALMOCK(_cloudundancyIniFileReaderMock->ReadIniFileMock.CalledOnceWith(iniFilePath));
    const string expectedCopyingMessage = Utils::String::ConcatStrings(
@@ -266,16 +266,16 @@ TEST(ExceptionHandlerForDoCopyFilesAndFoldersToDestinationFolder_WritesException
       destinationFolderPath, expectedErrorMessage));
 }
 
-TEST(CopyFileOrFolderToFolder_SourcePathHasAFileName_CallsCopyFileFastToFolder)
+TEST(CopyFileOrFolderToFolder_SourcePathHasAFileName_CallsCopyFileToFileToFolder)
 {
-   _memberCaller_CopyFileFastFunctionsMock->CallConstMemberFunctionMock.Expect();
+   _memberCaller_CopyFileToFileFunctionsMock->CallConstMemberFunctionMock.Expect();
    const fs::path destinationFolderPath = ZenUnit::Random<fs::path>();
    const CloudundancyIniCopyInstruction cloudundancyIniCopyInstruction =
       ZenUnit::Random<CloudundancyIniCopyInstruction>();
    //
    _cloudundancyFileCopier.CopyFileOrFolderToFolder(cloudundancyIniCopyInstruction, destinationFolderPath);
    //
-   METALMOCK(_memberCaller_CopyFileFastFunctionsMock->CallConstMemberFunctionMock.CalledOnceWith(
+   METALMOCK(_memberCaller_CopyFileToFileFunctionsMock->CallConstMemberFunctionMock.CalledOnceWith(
       &CloudundancyFileCopier::CopyFileToFolder,
       &_cloudundancyFileCopier, cloudundancyIniCopyInstruction, destinationFolderPath));
 }
@@ -285,14 +285,14 @@ TEST1X1(CopyFileOrFolderToFolder_SourcePathDoesNotHaveAFileNameMeaningItIsAFolde
    "FolderNameA/",
    "FolderNameB\\")
 {
-   _memberCaller_CopyFileFastFunctionsMock->CallConstMemberFunctionMock.Expect();
+   _memberCaller_CopyFileToFileFunctionsMock->CallConstMemberFunctionMock.Expect();
    const fs::path destinationFolderPath = ZenUnit::Random<fs::path>();
    CloudundancyIniCopyInstruction cloudundancyIniCopyInstruction = ZenUnit::Random<CloudundancyIniCopyInstruction>();
    cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath = sourceFileOrFolderPath;
    //
    _cloudundancyFileCopier.CopyFileOrFolderToFolder(cloudundancyIniCopyInstruction, destinationFolderPath);
    //
-   METALMOCK(_memberCaller_CopyFileFastFunctionsMock->CallConstMemberFunctionMock.CalledOnceWith(
+   METALMOCK(_memberCaller_CopyFileToFileFunctionsMock->CallConstMemberFunctionMock.CalledOnceWith(
       &CloudundancyFileCopier::CopyNonIgnoredFilesInAndBelowFolderToFolder,
       &_cloudundancyFileCopier, cloudundancyIniCopyInstruction, destinationFolderPath));
 }
@@ -328,7 +328,7 @@ TEST(CopyNestedFileToFolder_RelativeDestinationFolderPathIsDot_CopiesNestedFileT
 {
    const fs::path sourceFilePathRelativeToSourceFolderPath = _call_String_ReplaceFirstMock.ReturnRandom();
 
-   const Utils::FileCopyResult fileCopyResult = _memberCaller_CopyFileFastMock->CallConstMemberFunctionMock.ReturnRandom();
+   const Utils::FileCopyResult fileCopyResult = _memberCaller_CopyFileToFileMock->CallConstMemberFunctionMock.ReturnRandom();
 
    _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMock->CallConstMemberFunctionMock.Expect();
 
@@ -344,8 +344,8 @@ TEST(CopyNestedFileToFolder_RelativeDestinationFolderPathIsDot_CopiesNestedFileT
    const fs::path expectedDestinationFilePath =
       destinationFolderPath /
       sourceFilePathRelativeToSourceFolderPath;
-   METALMOCK(_memberCaller_CopyFileFastMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &CloudundancyFileCopier::CopyFileFast, &_cloudundancyFileCopier, sourceFilePath, expectedDestinationFilePath));
+   METALMOCK(_memberCaller_CopyFileToFileMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &CloudundancyFileCopier::CopyFileToFile, &_cloudundancyFileCopier, sourceFilePath, expectedDestinationFilePath));
    METALMOCK(_memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMock->CallConstMemberFunctionMock.CalledOnceWith(
       &CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed, &_cloudundancyFileCopier, fileCopyResult, destinationFolderPath));
 }
@@ -354,7 +354,7 @@ TEST(CopyNestedFileToFolder_RelativeDestinationFolderPathIsNotDot_CopiesNestedFi
 {
    const fs::path sourceFilePathRelativeToSourceFolderPath = _call_String_ReplaceFirstMock.ReturnRandom();
 
-   const Utils::FileCopyResult fileCopyResult = _memberCaller_CopyFileFastMock->CallConstMemberFunctionMock.ReturnRandom();
+   const Utils::FileCopyResult fileCopyResult = _memberCaller_CopyFileToFileMock->CallConstMemberFunctionMock.ReturnRandom();
 
    _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMock->CallConstMemberFunctionMock.Expect();
 
@@ -370,59 +370,59 @@ TEST(CopyNestedFileToFolder_RelativeDestinationFolderPathIsNotDot_CopiesNestedFi
       destinationFolderPath /
       cloudundancyIniCopyInstruction.relativeDestinationFolderPath /
       sourceFilePathRelativeToSourceFolderPath;
-   METALMOCK(_memberCaller_CopyFileFastMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &CloudundancyFileCopier::CopyFileFast, &_cloudundancyFileCopier, sourceFilePath, expectedDestinationFilePath));
+   METALMOCK(_memberCaller_CopyFileToFileMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &CloudundancyFileCopier::CopyFileToFile, &_cloudundancyFileCopier, sourceFilePath, expectedDestinationFilePath));
    METALMOCK(_memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMock->CallConstMemberFunctionMock.CalledOnceWith(
       &CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed, &_cloudundancyFileCopier, fileCopyResult, destinationFolderPath));
 }
 
-TEST(CopyFileFast_FileSizeIsGreaterThanOrEqualTo2GB_CopiesFileWithStdFilesystemCopyFileFast_ReturnsFileCopyResult)
+TEST(CopyFileToFile_FileSizeIsGreaterThanOrEqualTo2GB_CopiesFileWithStdFilesystemCopyFileToFile_ReturnsFileCopyResult)
 {
    _consoleMock->WriteMock.Expect();
 
    _cloudundancyFileSystemMock->FileSizeIsGreaterThanOrEqualTo2GBMock.Return(true);
 
    const Utils::FileCopyResult fileCopyResult = ZenUnit::Random<Utils::FileCopyResult>();
-   _rawFileSystemMock->CopyFileFastLargerThan2GBMock.Return(fileCopyResult);
+   _rawFileSystemMock->CopyFileToFileLargerThan2GBMock.Return(fileCopyResult);
 
    const fs::path sourceFilePath = ZenUnit::Random<fs::path>();
    const fs::path destinationFilePath = ZenUnit::Random<fs::path>();
    //
-   const Utils::FileCopyResult returnedFileCopyResult = _cloudundancyFileCopier.CopyFileFast(sourceFilePath, destinationFilePath);
+   const Utils::FileCopyResult returnedFileCopyResult = _cloudundancyFileCopier.CopyFileToFile(sourceFilePath, destinationFilePath);
    //
    const string expectedCopyingFileMessage = Utils::String::ConcatStrings(
       "Copying ", sourceFilePath.string(), "\n",
       "     to ", destinationFilePath.string(), ". ");
    METALMOCK(_consoleMock->WriteMock.CalledOnceWith(expectedCopyingFileMessage));
    METALMOCK(_cloudundancyFileSystemMock->FileSizeIsGreaterThanOrEqualTo2GBMock.CalledOnceWith(sourceFilePath));
-   METALMOCK(_rawFileSystemMock->CopyFileFastLargerThan2GBMock.CalledOnceWith(sourceFilePath, destinationFilePath));
+   METALMOCK(_rawFileSystemMock->CopyFileToFileLargerThan2GBMock.CalledOnceWith(sourceFilePath, destinationFilePath));
    ARE_EQUAL(fileCopyResult, returnedFileCopyResult);
 }
 
-TEST(CopyFileFast_FileSizeIsLessThan2GB_CopiesFileWithCStyleCopyFileFast_ReturnsFileCopyResult)
+TEST(CopyFileToFile_FileSizeIsLessThan2GB_CopiesFileWithCStyleCopyFileToFile_ReturnsFileCopyResult)
 {
    _consoleMock->WriteMock.Expect();
 
    _cloudundancyFileSystemMock->FileSizeIsGreaterThanOrEqualTo2GBMock.Return(false);
-   const Utils::FileCopyResult fileCopyResult = _rawFileSystemMock->CopyFileFastMock.ReturnRandom();
+   const Utils::FileCopyResult fileCopyResult = _rawFileSystemMock->CopyFileToFileMock.ReturnRandom();
 
    const fs::path sourceFilePath = ZenUnit::Random<fs::path>();
    const fs::path destinationFilePath = ZenUnit::Random<fs::path>();
    //
-   const Utils::FileCopyResult returnedFileCopyResult = _cloudundancyFileCopier.CopyFileFast(sourceFilePath, destinationFilePath);
+   const Utils::FileCopyResult returnedFileCopyResult = _cloudundancyFileCopier.CopyFileToFile(sourceFilePath, destinationFilePath);
    //
    const string expectedCopyingFileMessage = Utils::String::ConcatStrings(
       "Copying ", sourceFilePath.string(), "\n",
       "     to ", destinationFilePath.string(), ". ");
    METALMOCK(_consoleMock->WriteMock.CalledOnceWith(expectedCopyingFileMessage));
    METALMOCK(_cloudundancyFileSystemMock->FileSizeIsGreaterThanOrEqualTo2GBMock.CalledOnceWith(sourceFilePath));
-   METALMOCK(_rawFileSystemMock->CopyFileFastMock.CalledOnceWith(sourceFilePath, destinationFilePath));
+   METALMOCK(_rawFileSystemMock->CopyFileToFileMock.CalledOnceWith(sourceFilePath, destinationFilePath));
    ARE_EQUAL(fileCopyResult, returnedFileCopyResult);
 }
 
-TEST(CopyFileFastToFolder_RelativeDestinationFolderPathIsADot_DoesNotJoinDotCharacter_CallsCopyFileFast)
+TEST(CopyFileToFileToFolder_RelativeDestinationFolderPathIsADot_DoesNotJoinDotCharacter_CallsCopyFileToFile)
 {
-   const Utils::FileCopyResult fileCopyResult = _memberCaller_CopyFileFastMock->CallConstMemberFunctionMock.ReturnRandom();
+   const Utils::FileCopyResult fileCopyResult = _memberCaller_CopyFileToFileMock->CallConstMemberFunctionMock.ReturnRandom();
 
    _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMock->CallConstMemberFunctionMock.Expect();
 
@@ -435,15 +435,15 @@ TEST(CopyFileFastToFolder_RelativeDestinationFolderPathIsADot_DoesNotJoinDotChar
    const fs::path& expectedSourceFilePath = cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath;
    const fs::path expectedSourceFileName = cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath.filename();
    const fs::path expectedDestinationFilePath = destinationFolderPath / expectedSourceFileName;
-   METALMOCK(_memberCaller_CopyFileFastMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &CloudundancyFileCopier::CopyFileFast, &_cloudundancyFileCopier, expectedSourceFilePath, expectedDestinationFilePath));
+   METALMOCK(_memberCaller_CopyFileToFileMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &CloudundancyFileCopier::CopyFileToFile, &_cloudundancyFileCopier, expectedSourceFilePath, expectedDestinationFilePath));
    METALMOCK(_memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMock->CallConstMemberFunctionMock.CalledOnceWith(
       &CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed, &_cloudundancyFileCopier, fileCopyResult, destinationFolderPath));
 }
 
-TEST(CopyFileFastToFolder_RelativeDestinationFolderPathIsNotADot_JoinsRelativeDestinationFolder_CallsCopyFileFast)
+TEST(CopyFileToFileToFolder_RelativeDestinationFolderPathIsNotADot_JoinsRelativeDestinationFolder_CallsCopyFileToFile)
 {
-   const Utils::FileCopyResult fileCopyResult = _memberCaller_CopyFileFastMock->CallConstMemberFunctionMock.ReturnRandom();
+   const Utils::FileCopyResult fileCopyResult = _memberCaller_CopyFileToFileMock->CallConstMemberFunctionMock.ReturnRandom();
 
    _memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMock->CallConstMemberFunctionMock.Expect();
 
@@ -456,8 +456,8 @@ TEST(CopyFileFastToFolder_RelativeDestinationFolderPathIsNotADot_JoinsRelativeDe
    const fs::path expectedSourceFileName = cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath.filename();
    const fs::path expectedDestinationFilePath =
       destinationFolderPath / cloudundancyIniCopyInstruction.relativeDestinationFolderPath / expectedSourceFileName;
-   METALMOCK(_memberCaller_CopyFileFastMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &CloudundancyFileCopier::CopyFileFast, &_cloudundancyFileCopier, expectedSourceFilePath, expectedDestinationFilePath));
+   METALMOCK(_memberCaller_CopyFileToFileMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &CloudundancyFileCopier::CopyFileToFile, &_cloudundancyFileCopier, expectedSourceFilePath, expectedDestinationFilePath));
    METALMOCK(_memberCaller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMock->CallConstMemberFunctionMock.CalledOnceWith(
       &CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed, &_cloudundancyFileCopier, fileCopyResult, destinationFolderPath));
 }

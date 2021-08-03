@@ -44,11 +44,11 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    const map<string, docopt::Value> docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::Value>();
    _docoptParserMock->ParseArgsMock.Return(docoptArgs);
 
-   const bool isCopyFileFastsToMultipleFoldersMode = ZenUnit::Random<bool>();
+   const bool isCopyFileToFilesToMultipleFoldersMode = ZenUnit::Random<bool>();
    const bool isExampleLinuxIniFileMode = ZenUnit::Random<bool>();
    const bool isExampleWindowsIniFileMode = ZenUnit::Random<bool>();
    _docoptParserMock->GetRequiredBoolMock.ReturnValues(
-      isCopyFileFastsToMultipleFoldersMode,
+      isCopyFileToFilesToMultipleFoldersMode,
       is7ZipMode,
       isExampleLinuxIniFileMode,
       isExampleWindowsIniFileMode);
@@ -86,7 +86,7 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
       { docoptArgs, "example-windows-ini-file" }
    }));
    METALMOCK(_programModeDeterminerMock->DetermineProgramModeMock.CalledOnceWith(
-      isCopyFileFastsToMultipleFoldersMode,
+      isCopyFileToFilesToMultipleFoldersMode,
       is7ZipMode,
       isExampleLinuxIniFileMode,
       isExampleWindowsIniFileMode));

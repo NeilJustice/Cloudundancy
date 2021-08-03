@@ -25,7 +25,7 @@ public:
    int Run(const CloudundancyArgs& args) override;
 private:
    void Copy7ZipFileToDestinationFolders(const CloudundancyArgs& args) const;
-   void CopyFileFastsAndFoldersToBackupStagingFolder(const CloudundancyArgs& args) const;
+   void CopyFileToFilesAndFoldersToBackupStagingFolder(const CloudundancyArgs& args) const;
    void DeleteBackupStagingFolder(const CloudundancyArgs& args) const;
    void SevenZipBackupStagingFolder(const CloudundancyArgs& args) const;
 };

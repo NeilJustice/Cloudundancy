@@ -4,7 +4,7 @@ class ProgramModeDeterminer
 {
 public:
    virtual ProgramMode DetermineProgramMode(
-      bool isCopyFileFastsToMultipleFoldersMode,
+      bool isCopyFileToFilesToMultipleFoldersMode,
       bool is7ZipMode,
       bool isExampleLinuxIniFileMode,
       bool isExampleWindowsIniFileMode) const;

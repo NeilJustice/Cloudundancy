@@ -20,12 +20,12 @@ CloudundancyArgs CloudundancyArgsParser::ParseStringArgs(const vector<string>& s
 {
    const map<string, docopt::Value> docoptArgs = _docoptParser->ParseArgs(CloudundancyArgs::CommandLineUsage, stringArgs);
    CloudundancyArgs cloudundancyArgs;
-   const bool isCopyFileFastsToMultipleFoldersMode = _docoptParser->GetRequiredBool(docoptArgs, "copy-files-to-multiple-folders");
+   const bool isCopyFileToFilesToMultipleFoldersMode = _docoptParser->GetRequiredBool(docoptArgs, "copy-files-to-multiple-folders");
    const bool is7ZipMode = _docoptParser->GetRequiredBool(docoptArgs, "7zip-files-then-copy-the-7zip-file-to-multiple-folders");
    const bool isExampleLinuxIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "example-linux-ini-file");
    const bool isExampleWindowsIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "example-windows-ini-file");
    cloudundancyArgs.programMode = _programModeDeterminer->DetermineProgramMode(
-      isCopyFileFastsToMultipleFoldersMode,
+      isCopyFileToFilesToMultipleFoldersMode,
       is7ZipMode,
       isExampleLinuxIniFileMode,
       isExampleWindowsIniFileMode);

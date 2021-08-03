@@ -92,8 +92,8 @@ namespace Utils
       // Behavior Functions
       virtual void AppendTextToClosedFile(const fs::path& filePath, string_view text) const;
       virtual void CloseFile(const shared_ptr<FILE>& filePointer, const fs::path& filePath) const;
-      virtual Utils::FileCopyResult CopyFileFast(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const;
-      virtual Utils::FileCopyResult CopyFileFastLargerThan2GB(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const;
+      virtual Utils::FileCopyResult CopyFileToFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const;
+      virtual Utils::FileCopyResult CopyFileToFileLargerThan2GB(const fs::path& sourceFilePath, const fs::path& destinationFilePath) const;
       virtual void CreateFileWithTextIfDoesNotExist(const fs::path& filePath, string_view fileText) const;
       virtual void DeleteFolder(const fs::path& folderPath) const;
       virtual vector<string> ReadFileLinesWhichMustBeNonEmpty(const fs::path& filePath) const;

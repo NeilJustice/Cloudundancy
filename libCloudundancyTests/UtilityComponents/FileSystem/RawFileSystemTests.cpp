@@ -29,8 +29,8 @@ AFACT(Windows__OpenFileInTextReadMode_ReturnsSharedPtrFromCallingCreateOrOpenFil
 AFACT(AppendTextToClosedFile_OpensFileInBinaryAppendMode_AppendsText_ImplicitlyClosesFile)
 AFACT(CloseFile_fcloseReturnValueIsNot0_ThrowsRuntimeError)
 AFACT(CloseFile_fcloseReturnValueIs0_Returns)
-AFACT(CopyFileFast_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile_WritesSourceFileBytesToDestinationFilePath_ReturnsCopySucceededFileCopyResult)
-AFACT(CopyFileFastLargerThan2GB_CreatesParentFoldersForDestinationFile_CopiesSourceFileToDestinationFileByCallingStdFilesystemCopyFileFast)
+AFACT(CopyFileToFile_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile_WritesSourceFileBytesToDestinationFilePath_ReturnsCopySucceededFileCopyResult)
+AFACT(CopyFileToFileLargerThan2GB_CreatesParentFoldersForDestinationFile_CopiesSourceFileToDestinationFileByCallingStdFilesystemCopyFileToFile)
 AFACT(CreateFileWithTextIfDoesNotExist_FileExists_DoesNothing)
 AFACT(CreateFileWithTextIfDoesNotExist_FileDoesNotExist_CreateFileWithFileText)
 AFACT(DeleteFolder_CallsFSRemoveAllOnFolderPath)
@@ -377,7 +377,7 @@ TEST(CloseFile_fcloseReturnValueIsNot0_ThrowsRuntimeError)
    METALMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
 }
 
-TEST(CopyFileFast_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile_WritesSourceFileBytesToDestinationFilePath_ReturnsCopySucceededFileCopyResult)
+TEST(CopyFileToFile_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile_WritesSourceFileBytesToDestinationFilePath_ReturnsCopySucceededFileCopyResult)
 {
    const shared_ptr<Utils::StopwatchMock> stopwatchMock = make_shared<Utils::StopwatchMock>();
    _stopwatchFactoryMock->NewStopwatchMock.Return(stopwatchMock);
@@ -400,7 +400,7 @@ TEST(CopyFileFast_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile_Wr
    const fs::path sourceFilePath = ZenUnit::Random<fs::path>();
    const fs::path destinationFilePath = ZenUnit::Random<fs::path>();
    //
-   const Utils::FileCopyResult fileCopyResult = _rawFileSystem.CopyFileFast(sourceFilePath, destinationFilePath);
+   const Utils::FileCopyResult fileCopyResult = _rawFileSystem.CopyFileToFile(sourceFilePath, destinationFilePath);
    //
    METALMOCK(_stopwatchFactoryMock->NewStopwatchMock.CalledOnce());
    const size_t expectedSourceFileBytesSize = sourceFileBytes->size();
@@ -412,7 +412,7 @@ TEST(CopyFileFast_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile_Wr
       &Utils::RawFileSystem::CreateFileInBinaryWriteMode, &_rawFileSystem, destinationFilePath));
    METALMOCK(_call_fwriteMock.CalledOnceWith(sourceFileBytes->data(), 1, expectedSourceFileBytesSize, binaryWriteModeDestinationFilePointer.get()));
    METALMOCK(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(expectedSourceFileBytesSize, numberOfBytesWritten,
-      "fwrite() in Utils::RawFileSystem::CopyFileFast(const fs::path& sourceFilePath, const fs::path& destinationFilePath) unexpectedly returned numberOfBytesWritten != sourceFileSize"));
+      "fwrite() in Utils::RawFileSystem::CopyFileToFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) unexpectedly returned numberOfBytesWritten != sourceFileSize"));
    METALMOCK(stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
    Utils::FileCopyResult expectedReturnValue;
    expectedReturnValue.sourceFilePath = sourceFilePath;
@@ -422,7 +422,7 @@ TEST(CopyFileFast_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile_Wr
    ARE_EQUAL(expectedReturnValue, fileCopyResult);
 }
 
-TEST(CopyFileFastLargerThan2GB_CreatesParentFoldersForDestinationFile_CopiesSourceFileToDestinationFileByCallingStdFilesystemCopyFileFast)
+TEST(CopyFileToFileLargerThan2GB_CreatesParentFoldersForDestinationFile_CopiesSourceFileToDestinationFileByCallingStdFilesystemCopyFileToFile)
 {
    const shared_ptr<Utils::StopwatchMock> stopwatchMock = make_shared<Utils::StopwatchMock>();
    stopwatchMock->StartMock.Expect();
@@ -437,7 +437,7 @@ TEST(CopyFileFastLargerThan2GB_CreatesParentFoldersForDestinationFile_CopiesSour
    const fs::path sourceFilePath = ZenUnit::Random<fs::path>();
    const fs::path destinationFilePath = ZenUnit::Random<fs::path>();
    //
-   const Utils::FileCopyResult fileCopyResult = _rawFileSystem.CopyFileFastLargerThan2GB(sourceFilePath, destinationFilePath);
+   const Utils::FileCopyResult fileCopyResult = _rawFileSystem.CopyFileToFileLargerThan2GB(sourceFilePath, destinationFilePath);
    //
    const fs::path expectedParentPathOfDestinationFilePath = destinationFilePath.parent_path();
    METALMOCK(_stopwatchFactoryMock->NewStopwatchMock.CalledOnce());
