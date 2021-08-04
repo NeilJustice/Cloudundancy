@@ -2,7 +2,7 @@
 #if defined __linux__ || defined __APPLE__
 
 #include "libCloudundancy/UtilityComponents/Process/Linux/LinuxProcessRunner.h"
-#include "libCloudundancyTests/Components/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
+#include "libCloudundancyTests/UtilityComponents/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
 
 TESTS(LinuxProcessRunnerTests)
 AFACT(DefaultConstructor_NewsComponents)
@@ -20,26 +20,26 @@ AFACT(ThrowRuntimeErrorIfWaitPidReturnValueDoesNotEqualPid_WaitPidReturnValueEqu
 AFACT(ThrowRuntimeErrorIfWaitPidReturnValueDoesNotEqualPid_WaitPidReturnValueDoesNotEqualPid_ThrowsRuntimeError)
 EVIDENCE
 
-LinuxProcessRunner _linuxProcessRunner;
+Utils::LinuxProcessRunner _linuxProcessRunner;
 // Function Callers
-using _caller_Run_MockType = NonVoidTwoArgMemberFunctionCallerMock<ProcessResult, LinuxProcessRunner, string_view, string_view>;
+using _caller_Run_MockType = Utils::NonVoidTwoArgMemberFunctionCallerMock<Utils::ProcessResult, Utils::LinuxProcessRunner, string_view, string_view>;
 _caller_Run_MockType* _caller_RunMock = nullptr;
 // Constant Components
-ConsoleMock* _consoleMock = nullptr;
-ErrorCodeTranslatorMock* _errorCodeTranslatorMock = nullptr;
+Utils::ConsoleMock* _consoleMock = nullptr;
+Utils::ErrorCodeTranslatorMock* _errorCodeTranslatorMock = nullptr;
 
 STARTUP
 {
    // Function Callers
    _linuxProcessRunner._caller_Run.reset(_caller_RunMock = new _caller_Run_MockType);
    // Constant Components
-   _linuxProcessRunner._console.reset(_consoleMock = new ConsoleMock);
-   _linuxProcessRunner._errorCodeTranslator.reset(_errorCodeTranslatorMock = new ErrorCodeTranslatorMock);
+   _linuxProcessRunner._console.reset(_consoleMock = new Utils::ConsoleMock);
+   _linuxProcessRunner._errorCodeTranslator.reset(_errorCodeTranslatorMock = new Utils::ErrorCodeTranslatorMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
 {
-   LinuxProcessRunner linuxProcessRunner;
+   Utils::LinuxProcessRunner linuxProcessRunner;
    // Function Callers
    DELETE_TO_ASSERT_NEWED(linuxProcessRunner._caller_Run);
    // Constant Components
@@ -49,7 +49,7 @@ TEST(DefaultConstructor_NewsComponents)
 
 TEST(Run_RunsProcessWithArguments_ReturnsProcessResult)
 {
-   const ProcessResult processResult = _linuxProcessRunner.Run("wc", "--help");
+   const Utils::ProcessResult processResult = _linuxProcessRunner.Run("wc", "--help");
    //
    ARE_EQUAL("wc", processResult.processName);
    ARE_EQUAL("--help", processResult.arguments);
@@ -60,25 +60,25 @@ TEST(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
 {
    _consoleMock->WriteLineColorMock.Expect();
 
-   ProcessResult runReturnValue = ZenUnit::Random<ProcessResult>();
+   Utils::ProcessResult runReturnValue = ZenUnit::Random<Utils::ProcessResult>();
    runReturnValue.exitCode = 0;
    _caller_RunMock->CallConstMemberFunctionMock.Return(runReturnValue);
 
    const string processName = ZenUnit::Random<string>();
    const string arguments = ZenUnit::Random<string>();
    //
-   const ProcessResult processResult = _linuxProcessRunner.FailFastRun(processName, arguments, ZenUnit::Random<bool>());
+   const Utils::ProcessResult processResult = _linuxProcessRunner.FailFastRun(processName, arguments, ZenUnit::Random<bool>());
    //
    const string expectedRunningProgramMessage = Utils::String::ConcatStrings("[Cloudundancy] Running program: ", processName, " ", arguments);
    METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedRunningProgramMessage, Color::Yellow));
    METALMOCK(_caller_RunMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &LinuxProcessRunner::Run, &_linuxProcessRunner, processName, arguments));
+      &Utils::LinuxProcessRunner::Run, &_linuxProcessRunner, processName, arguments));
    ARE_EQUAL(runReturnValue, processResult);
 }
 
 TEST(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessageAndExitsProgramWithProcessExitCode)
 {
-   ProcessResult runReturnValue = ZenUnit::Random<ProcessResult>();
+   Utils::ProcessResult runReturnValue = ZenUnit::Random<Utils::ProcessResult>();
    runReturnValue.exitCode = ZenUnit::RandomNon0<int>();
    _caller_RunMock->CallConstMemberFunctionMock.Return(runReturnValue);
 
@@ -88,10 +88,10 @@ TEST(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessageAndExitsProgramWithPro
    const string processName = ZenUnit::Random<string>();
    const string arguments = ZenUnit::Random<string>();
    //
-   const ProcessResult processResult = _linuxProcessRunner.FailFastRun(processName, arguments, ZenUnit::Random<bool>());
+   const Utils::ProcessResult processResult = _linuxProcessRunner.FailFastRun(processName, arguments, ZenUnit::Random<bool>());
    //
    METALMOCK(_caller_RunMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &LinuxProcessRunner::Run, &_linuxProcessRunner, processName, arguments));
+      &Utils::LinuxProcessRunner::Run, &_linuxProcessRunner, processName, arguments));
    const string expectedRunningProgramMessage = Utils::String::ConcatStrings("[Cloudundancy] Running program: ", processName, " ", arguments);
    METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedRunningProgramMessage, Color::Yellow));
    const string expectedProcessFailedErrorMessage = Utils::String::ConcatValues(

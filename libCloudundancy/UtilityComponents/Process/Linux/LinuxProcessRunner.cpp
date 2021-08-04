@@ -1,7 +1,7 @@
 #include "pch.h"
 #if defined __linux__ || defined __APPLE__
 
-#include "libCloudundancy/Components/ErrorHandling/ErrorCodeTranslator.h"
+#include "libCloudundancy/UtilityComponents/ErrorHandling/ErrorCodeTranslator.h"
 #include "libCloudundancy/UtilityComponents/Process/Linux/LinuxProcessRunner.h"
 #include <spawn.h>
 #include <sys/wait.h>

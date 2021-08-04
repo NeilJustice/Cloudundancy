@@ -194,24 +194,24 @@ TEST(Linux__CreateFileInBinaryWriteMode_ReturnsSharedFilePointerCreatedWithFileO
    _caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.Return(binaryWriteModeFilePointer);
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
-   const shared_ptr<FILE> returnedTextFilePointer = _fileSystem.CreateFileInBinaryWriteMode(filePath);
+   const shared_ptr<FILE> returnedFilePointer = _fileSystem.CreateFileInBinaryWriteMode(filePath);
    //
    METALMOCK(_caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.CalledOnceWith(
       &Utils::FileSystem::CreateOrOpenFileOnLinux, &_fileSystem, filePath, "wb"));
-   ARE_EQUAL(filePointer, returnedTextFilePointer);
+   ARE_EQUAL(binaryWriteModeFilePointer, returnedFilePointer);
 }
 
 TEST(Linux__CreateOrOpenFileInBinaryAppendMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_ab)
 {
-   const shared_ptr<FILE> filePointer = make_shared<FILE>();
-   _caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.Return(filePointer);
+   const shared_ptr<FILE> binaryAppendModeFilePointer = make_shared<FILE>();
+   _caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.Return(binaryAppendModeFilePointer);
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
    const shared_ptr<FILE> returnedFilePointer = _fileSystem.CreateOrOpenFileInBinaryAppendMode(filePath);
    //
    METALMOCK(_caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.CalledOnceWith(
       &Utils::FileSystem::CreateOrOpenFileOnLinux, &_fileSystem, filePath, "ab"));
-   ARE_EQUAL(filePointer, returnedFilePointer);
+   ARE_EQUAL(binaryAppendModeFilePointer, returnedFilePointer);
 }
 
 struct fopen_CallHistory
@@ -251,8 +251,8 @@ TEST(Linux__OpenFileInBinaryReadMode_ReturnsSharedPtrFromCallingCreateOrOpenFile
    const shared_ptr<FILE> returnedFilePointer = _fileSystem.OpenFileInBinaryReadMode(filePath);
    //
    METALMOCK(_caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &Utils::FileSystem::_caller_CreateOrOpenFileOnLinux, &_fileSystem, filePath, "rb"));
-   ARE_EQUAL(filePointer, returnedFilePointer);
+      &Utils::FileSystem::CreateOrOpenFileOnLinux, &_fileSystem, filePath, "rb"));
+   ARE_EQUAL(binaryReadModeFilePointer, returnedFilePointer);
 }
 
 TEST(Linux__OpenFileInTextReadMode_ReturnsSharedPtrFromCallingCreateOrOpenFileOnLinux)
@@ -264,7 +264,7 @@ TEST(Linux__OpenFileInTextReadMode_ReturnsSharedPtrFromCallingCreateOrOpenFileOn
    const shared_ptr<FILE> returnedFilePointer = _fileSystem.OpenFileInTextReadMode(filePath);
    //
    METALMOCK(_caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &Utils::FileSystem::_caller_CreateOrOpenFileOnLinux, &_fileSystem, filePath, "r"));
+      &Utils::FileSystem::CreateOrOpenFileOnLinux, &_fileSystem, filePath, "r"));
    ARE_EQUAL(textReadModeFilePointer, returnedFilePointer);
 }
 
@@ -755,19 +755,19 @@ TEST(Linux__CreateOrOpenFileOnLinux_CreatesParentDirectoriesForFilePath_fopenRet
    _call_fs_create_directoriesMock.ReturnRandom();
 
    FILE* const textModeWriteFilePointer = tmpfile();
-   _fopen_CallHistory.returnValue = &textModeWriteFilePointer;
+   _fopen_CallHistory.returnValue = textModeWriteFilePointer;
 
    _call_fopenMock.CallInstead(std::bind(&FileSystemTests::fopen_CallInsteadFunction, this, placeholders::_1, placeholders::_2));
 
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const char* const fileOpenMode = ZenUnit::Random<const char*>();
    //
-   const shared_ptr<FILE> returnedTextModeWriteFilePointer = _fileSystem.CreateOrOpenFileOnLinux(filePath, fileOpenMode);
+   const shared_ptr<FILE> returnedFilePointer = _fileSystem.CreateOrOpenFileOnLinux(filePath, fileOpenMode);
    //
    const fs::path expectedParentDirectoryPath = filePath.parent_path();
    METALMOCK(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentDirectoryPath));
    _fopen_CallHistory.AssertCalledOnceWith(filePath.c_str(), fileOpenMode);
-   ARE_EQUAL(&textModeWriteFilePointer, returnedTextModeWriteFilePointer.get());
+   ARE_EQUAL(textModeWriteFilePointer, returnedFilePointer.get());
 }
 
 TEST(Linux__CreateOrOpenFileOnLinux_CreatesParentDirectoriesForFilePath_fopenReturnsNullptr_ThrowsRuntimeError)

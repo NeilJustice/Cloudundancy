@@ -1,9 +1,10 @@
 #pragma once
+class CloudundancyArgsParserTests;
 class ProgramModeDeterminer;
 
 class CloudundancyArgsParser
 {
-   friend class CloudundancyArgsParserTests;
+   friend class ::CloudundancyArgsParserTests;
 private:
    // Constant Components
    unique_ptr<const Utils::Console> _console;

@@ -160,7 +160,7 @@ TEST2X2(ColorToWindowsColor_ReturnsWindowsColorForColor,
 
 TEST(Linux__SetTextColor_CallsColorToLinuxColor_InsertionOperatorsLinuxColorToCout)
 {
-   class ConsoleColorerSelfMocked : public Metal::Mock<ConsoleColorer>
+   class ConsoleColorerSelfMocked : public Metal::Mock<Utils::ConsoleColorer>
    {
    public:
       METALMOCK_NONVOID1_CONST(const char*, ColorToLinuxColor, Color)

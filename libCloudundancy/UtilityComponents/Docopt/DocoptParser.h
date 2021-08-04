@@ -10,7 +10,7 @@ namespace Utils
 {
    class DocoptParser
    {
-      friend class DocoptParserTests;
+      friend class ::DocoptParserTests;
    private:
       function<map<string, docopt::Value>(string, const vector<string>&, bool help, string, bool)> _call_docopt_docopt;
    public:

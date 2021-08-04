@@ -10,7 +10,7 @@ namespace Utils
 {
    class LinuxProcessRunner
    {
-      friend class LinuxProcessRunnerTests;
+      friend class ::LinuxProcessRunnerTests;
    private:
       // Function Callers
       using _caller_Run_Type = const NonVoidTwoArgMemberFunctionCaller<ProcessResult, LinuxProcessRunner, string_view, string_view>;
