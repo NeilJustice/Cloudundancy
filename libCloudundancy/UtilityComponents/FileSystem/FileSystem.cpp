@@ -4,6 +4,7 @@
 #include "libCloudundancy/UtilityComponents/ErrorHandling/ErrorCodeTranslator.h"
 #include "libCloudundancy/UtilityComponents/FileSystem/FCloseDeleter.h"
 #include "libCloudundancy/UtilityComponents/FileSystem/FileSystem.h"
+#include "libCloudundancy/UtilityComponents/FileSystem/PassthroughFileSystem.h"
 #include "libCloudundancy/UtilityComponents/FunctionCallers/Member/NonVoidOneArgMemberFunctionCaller.h"
 #include "libCloudundancy/UtilityComponents/FunctionCallers/Member/NonVoidTwoArgMemberFunctionCaller.h"
 #include "libCloudundancy/UtilityComponents/FunctionCallers/Member/VoidOneArgMemberFunctionCaller.h"
@@ -32,7 +33,6 @@ namespace Utils
       , _call_fs_create_directories(static_cast<fs_create_directories_FunctionOverloadType>(fs::create_directories))
       , _call_fs_current_path(static_cast<fs_current_path_FunctionOverloadType>(fs::current_path))
       , _call_fs_exists(static_cast<fs_exists_FunctionOverloadType>(fs::exists))
-      , _call_fs_remove_all(static_cast<fs_remove_all_FunctionOverloadType>(fs::remove_all))
       // Function Callers
       , _caller_CreateOrOpenFileFunction(make_unique<_caller_CreateOrOpenFileFunctionType>())
       , _caller_ReadFileBytes(make_unique<_caller_ReadFileBytesType>())
@@ -48,6 +48,7 @@ namespace Utils
       , _asserter(make_unique<Asserter>())
       , _charVectorAllocator(make_unique<CharVectorAllocator>())
       , _errorCodeTranslator(make_unique<ErrorCodeTranslator>())
+      , _passthroughFileSystem(make_unique<PassthroughFileSystem>())
       , _stopwatchFactory(make_unique<StopwatchFactory>())
    {
    }
@@ -84,7 +85,7 @@ namespace Utils
 
    void FileSystem::DeleteFolder(const fs::path& folderPath) const
    {
-      _call_fs_remove_all(folderPath);
+      _passthroughFileSystem->remove_all(folderPath);
    }
 
    shared_ptr<FILE> FileSystem::OpenFileInBinaryReadMode(const fs::path& filePath) const

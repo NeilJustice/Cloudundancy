@@ -4,6 +4,7 @@
 #include "libCloudundancyTests/UtilityComponents/Assertion/MetalMock/AsserterMock.h"
 #include "libCloudundancyTests/UtilityComponents/Memory/MetalMock/CharVectorAllocatorMock.h"
 #include "libCloudundancyTests/UtilityComponents/FileSystem/MetalMock/FileSystemMock.h"
+#include "libCloudundancyTests/UtilityComponents/FileSystem/MetalMock/PassthroughFileSystemMock.h"
 #include "libCloudundancyTests/UtilityComponents/FunctionCallers/Member/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
 #include "libCloudundancyTests/UtilityComponents/FunctionCallers/Member/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
 #include "libCloudundancyTests/UtilityComponents/FunctionCallers/Member/MetalMock/VoidOneArgMemberFunctionCallerMock.h"
@@ -33,7 +34,7 @@ AFACT(CopyFileToFile_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile
 AFACT(CopyFileToFileLargerThan2GB_CreatesParentFoldersForDestinationFile_CopiesSourceFileToDestinationFileByCallingStdFilesystemCopyFileToFile)
 AFACT(CreateFileWithTextIfDoesNotExist_FileExists_DoesNothing)
 AFACT(CreateFileWithTextIfDoesNotExist_FileDoesNotExist_CreateFileWithFileText)
-AFACT(DeleteFolder_CallsFSRemoveAllOnFolderPath)
+AFACT(DeleteFolder_CallsTestableFileSystemremove_all)
 AFACT(FileOrFolderExists_ReturnsResultOfCallingStdFileSystemExists)
 AFACT(ReadFileBytes_OpensFileInBinaryReadMode_FileSizeIs0_ClosesFile_ReturnsSharedPtrToEmptyCharVector)
 AFACT(ReadFileBytes_OpensFileInBinaryReadMode_FileSizeIsNot0_ReadsFileBytes_ClosesFile_ReturnsSharedPtrToFileBytes)
@@ -74,7 +75,6 @@ METALMOCK_NONVOID3_FREE(bool, _call_fs_copy_file, const fs::path&, const fs::pat
 METALMOCK_NONVOID1_FREE(bool, _call_fs_create_directories, const fs::path&)
 METALMOCK_VOID1_FREE(_call_fs_current_path, const fs::path&)
 METALMOCK_NONVOID1_FREE(bool, _call_fs_exists, const fs::path&)
-METALMOCK_NONVOID1_FREE(unsigned long long, _call_fs_remove_all, const fs::path&)
 
 // Function Callers
 using _caller_CreateOrOpenFileFunctionMockType = Utils::NonVoidOneArgMemberFunctionCallerMock<shared_ptr<FILE>, Utils::FileSystem, const fs::path&>;
@@ -104,6 +104,7 @@ _caller_CreateOrOpenFileOnWindowsMockType* _caller_CreateOrOpenFileOnWindowsMock
 Utils::AsserterMock* _asserterMock = nullptr;
 Utils::CharVectorAllocatorMock* _charVectorAllocatorMock = nullptr;
 Utils::ErrorCodeTranslatorMock* _errorCodeTranslatorMock = nullptr;
+PassthroughFileSystemMock* _passthroughFileSystemMock = nullptr;
 Utils::StopwatchFactoryMock* _stopwatchFactoryMock = nullptr;
 
 STARTUP
@@ -125,7 +126,6 @@ STARTUP
    _fileSystem._call_fs_create_directories = BIND_1ARG_METALMOCK_OBJECT(_call_fs_create_directoriesMock);
    _fileSystem._call_fs_current_path = BIND_1ARG_METALMOCK_OBJECT(_call_fs_current_pathMock);
    _fileSystem._call_fs_exists = BIND_1ARG_METALMOCK_OBJECT(_call_fs_existsMock);
-   _fileSystem._call_fs_remove_all = BIND_1ARG_METALMOCK_OBJECT(_call_fs_remove_allMock);
    // Function Callers
    _fileSystem._caller_CreateOrOpenFileFunction.reset(_caller_CreateOrOpenFileFunctionMock = new _caller_CreateOrOpenFileFunctionMockType);
    _fileSystem._caller_ReadFileBytes.reset(_caller_ReadFileBytesMock = new _caller_ReadFileBytesMockType);
@@ -141,6 +141,7 @@ STARTUP
    _fileSystem._asserter.reset(_asserterMock = new Utils::AsserterMock);
    _fileSystem._charVectorAllocator.reset(_charVectorAllocatorMock = new Utils::CharVectorAllocatorMock);
    _fileSystem._errorCodeTranslator.reset(_errorCodeTranslatorMock = new Utils::ErrorCodeTranslatorMock);
+   _fileSystem._passthroughFileSystem.reset(_passthroughFileSystemMock = new PassthroughFileSystemMock);
    _fileSystem._stopwatchFactory.reset(_stopwatchFactoryMock = new Utils::StopwatchFactoryMock);
 }
 
@@ -165,7 +166,6 @@ TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
    STD_FUNCTION_TARGETS_OVERLOAD(Utils::FileSystem::fs_create_directories_FunctionOverloadType, fs::create_directories, fileSystem._call_fs_create_directories);
    STD_FUNCTION_TARGETS_OVERLOAD(Utils::FileSystem::fs_current_path_FunctionOverloadType, fs::current_path, fileSystem._call_fs_current_path);
    STD_FUNCTION_TARGETS_OVERLOAD(Utils::FileSystem::fs_exists_FunctionOverloadType, fs::exists, fileSystem._call_fs_exists);
-   STD_FUNCTION_TARGETS_OVERLOAD(Utils::FileSystem::fs_remove_all_FunctionOverloadType, fs::remove_all, fileSystem._call_fs_remove_all);
 #endif
    // Function Callers
    DELETE_TO_ASSERT_NEWED(fileSystem._caller_CreateOrOpenFileFunction);
@@ -181,6 +181,7 @@ TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
    DELETE_TO_ASSERT_NEWED(fileSystem._asserter);
    DELETE_TO_ASSERT_NEWED(fileSystem._charVectorAllocator);
    DELETE_TO_ASSERT_NEWED(fileSystem._errorCodeTranslator);
+   DELETE_TO_ASSERT_NEWED(fileSystem._passthroughFileSystem);
    DELETE_TO_ASSERT_NEWED(fileSystem._stopwatchFactory);
 }
 
@@ -485,14 +486,14 @@ TEST(CreateFileWithTextIfDoesNotExist_FileDoesNotExist_CreateFileWithFileText)
    METALMOCK(_call_fs_existsMock.CalledOnceWith(filePath));
 }
 
-TEST(DeleteFolder_CallsFSRemoveAllOnFolderPath)
+TEST(DeleteFolder_CallsTestableFileSystemremove_all)
 {
-   _call_fs_remove_allMock.ReturnRandom();
+   _passthroughFileSystemMock->remove_allMock.ReturnRandom();
    const fs::path folderPath = ZenUnit::Random<fs::path>();
    //
    _fileSystem.DeleteFolder(folderPath);
    //
-   METALMOCK(_call_fs_remove_allMock.CalledOnceWith(folderPath));
+   METALMOCK(_passthroughFileSystemMock->remove_allMock.CalledOnceWith(folderPath));
 }
 
 TEST(FileOrFolderExists_ReturnsResultOfCallingStdFileSystemExists)

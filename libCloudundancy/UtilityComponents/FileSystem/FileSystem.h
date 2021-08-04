@@ -1,5 +1,6 @@
 #pragma once
 class FileSystemTests;
+class PassthroughFileSystem;
 
 namespace Utils
 {
@@ -49,9 +50,6 @@ namespace Utils
 
       using fs_exists_FunctionOverloadType = bool(*)(const fs::path&);
       function<bool(const fs::path&)> _call_fs_exists;
-
-      using fs_remove_all_FunctionOverloadType = unsigned long long(*)(const fs::path&);
-      function<unsigned long long(const fs::path&)> _call_fs_remove_all;
       // Function Callers
       using _caller_CreateOrOpenFileFunctionType = Utils::NonVoidOneArgMemberFunctionCaller<shared_ptr<FILE>, FileSystem, const fs::path&>;
       unique_ptr<_caller_CreateOrOpenFileFunctionType> _caller_CreateOrOpenFileFunction;
@@ -79,6 +77,7 @@ namespace Utils
       unique_ptr<const Utils::Asserter> _asserter;
       unique_ptr<const CharVectorAllocator> _charVectorAllocator;
       unique_ptr<const Utils::ErrorCodeTranslator> _errorCodeTranslator;
+      unique_ptr<const PassthroughFileSystem> _passthroughFileSystem;
       unique_ptr<const StopwatchFactory> _stopwatchFactory;
    public:
       FileSystem();

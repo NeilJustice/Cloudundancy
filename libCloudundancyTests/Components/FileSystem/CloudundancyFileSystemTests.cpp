@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/Components/FileSystem/CloudundancyFileSystem.h"
+#include "libCloudundancyTests/UtilityComponents/FileSystem/MetalMock/PassthroughFileSystemMock.h"
 
 TESTS(CloudundancyFileSystemTests)
 AFACT(DefaultConstructor_NewsComponents)
@@ -13,24 +14,24 @@ EVIDENCE
 CloudundancyFileSystem _cloudundancyFileSystem;
 // Function Pointers
 METALMOCK_NONVOID1_FREE(bool, _call_fs_exists, const fs::path&)
-METALMOCK_NONVOID1_FREE(unsigned long long, _call_fs_file_size, const fs::path&)
 // Function Callers
 using _forEacher_DeleteContentsOfFolderExceptForFileNameMockType = Utils::OneExtraArgMemberFunctionForEacherMock<CloudundancyFileSystem, fs::path, string_view>;
 _forEacher_DeleteContentsOfFolderExceptForFileNameMockType* _forEacher_DeleteContentsOfFolderExceptForFileNameMock = nullptr;
 // Constant Components
 Utils::ConsoleMock* _consoleMock = nullptr;
 Utils::FileSystemMock* _fileSystemMock = nullptr;
+PassthroughFileSystemMock* _passthroughFileSystemMock = nullptr;
 
 STARTUP
 {
    // Function Pointers
    _cloudundancyFileSystem._call_fs_exists = BIND_1ARG_METALMOCK_OBJECT(_call_fs_existsMock);
-   _cloudundancyFileSystem._call_fs_file_size = BIND_1ARG_METALMOCK_OBJECT(_call_fs_file_sizeMock);
    // Function Callers
    _cloudundancyFileSystem._forEacher_DeleteContentsOfFolderExceptForFileName.reset(_forEacher_DeleteContentsOfFolderExceptForFileNameMock = new _forEacher_DeleteContentsOfFolderExceptForFileNameMockType);
    // Constant Components
    _cloudundancyFileSystem._console.reset(_consoleMock = new Utils::ConsoleMock);
    _cloudundancyFileSystem._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
+   _cloudundancyFileSystem._passthroughFileSystem.reset(_passthroughFileSystemMock = new PassthroughFileSystemMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
@@ -39,13 +40,13 @@ TEST(DefaultConstructor_NewsComponents)
    // Function Pointers
 #ifdef _WIN32
    STD_FUNCTION_TARGETS_OVERLOAD(CloudundancyFileSystem::fs_exists_FunctionOverloadType, fs::exists, cloudundancyFileSystem._call_fs_exists);
-   STD_FUNCTION_TARGETS_OVERLOAD(CloudundancyFileSystem::fs_file_size_FunctionOverloadType, fs::file_size, cloudundancyFileSystem._call_fs_file_size);
 #endif
    // Function Callers
    DELETE_TO_ASSERT_NEWED(cloudundancyFileSystem._forEacher_DeleteContentsOfFolderExceptForFileName);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(cloudundancyFileSystem._console);
    DELETE_TO_ASSERT_NEWED(cloudundancyFileSystem._fileSystem);
+   DELETE_TO_ASSERT_NEWED(cloudundancyFileSystem._passthroughFileSystem);
 }
 
 TEST(DeleteFolderContentsExceptForFile_FolderDoesNotExist_DoesNothing)
@@ -102,12 +103,12 @@ TEST1X1(FileSizeIsGreaterThanOrEqualTo2GB_FileSizeIsLessThan2GB_ReturnsFalse,
    2ULL * 1024ULL * 1024ULL * 1024ULL - 2ULL,
    2ULL * 1024ULL * 1024ULL * 1024ULL - 1ULL)
 {
-   _call_fs_file_sizeMock.Return(fileSizeInBytes);
+   _passthroughFileSystemMock->file_sizeMock.Return(fileSizeInBytes);
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
    const bool fileSizeIsGreaterThanOrEqualTo2GB = _cloudundancyFileSystem.FileSizeIsGreaterThanOrEqualTo2GB(filePath);
    //
-   METALMOCK(_call_fs_file_sizeMock.CalledOnceWith(filePath));
+   METALMOCK(_passthroughFileSystemMock->file_sizeMock.CalledOnceWith(filePath));
    IS_FALSE(fileSizeIsGreaterThanOrEqualTo2GB);
 }
 
@@ -117,12 +118,12 @@ TEST1X1(FileSizeIsGreaterThanOrEqualTo2GB_FileSizeIsGreaterThanOrEqualTo2GB_Retu
    2ULL * 1024ULL * 1024ULL * 1024ULL + 1ULL,
    2ULL * 1024ULL * 1024ULL * 1024ULL + 2ULL)
 {
-   _call_fs_file_sizeMock.Return(fileSizeInBytes);
+   _passthroughFileSystemMock->file_sizeMock.Return(fileSizeInBytes);
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
    const bool fileSizeIsGreaterThanOrEqualTo2GB = _cloudundancyFileSystem.FileSizeIsGreaterThanOrEqualTo2GB(filePath);
    //
-   METALMOCK(_call_fs_file_sizeMock.CalledOnceWith(filePath));
+   METALMOCK(_passthroughFileSystemMock->file_sizeMock.CalledOnceWith(filePath));
    IS_TRUE(fileSizeIsGreaterThanOrEqualTo2GB);
 }
 
