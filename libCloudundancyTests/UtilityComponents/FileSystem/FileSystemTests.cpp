@@ -40,6 +40,8 @@ AFACT(ReadFileBytes_OpensFileInBinaryReadMode_FileSizeIs0_ClosesFile_ReturnsShar
 AFACT(ReadFileBytes_OpensFileInBinaryReadMode_FileSizeIsNot0_ReadsFileBytes_ClosesFile_ReturnsSharedPtrToFileBytes)
 AFACT(ReadFileText_ReadsFileSizeWhichReturns0_ClosesFile_ReturnsEmptyString)
 AFACT(ReadFileText_ReadsFileSizeWhichReturnsGreaterThan0_ReadsFileBytesIntoString_ClosesFile_ReturnsFileTextString)
+AFACT(ReadFileLinesWhichMustBeNonEmpty_FileTextIsEmpty_ThrowsFileSystemException)
+FACTS(ReadFileLinesWhichMustBeNonEmpty_FileTextIsNotEmpty_ReturnsFileTextSplitOnNewlines)
 AFACT(SetCurrentPath_CallsFSCurrentPathWithFolderPath)
 AFACT(ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExist_FilePathIsEmpty_DoesNothing)
 AFACT(ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExist_FilePathIsNotEmpty_FilePathExists_DoesNothing)
@@ -576,8 +578,6 @@ TEST2X2(ReadFileLinesWhichMustBeNonEmpty_FileTextIsNotEmpty_ReturnsFileTextSplit
    "Line1\nLine2\nLine3", vector<string>{ "Line1", "Line2", "Line3" },
    "Line1\n\n\n", vector<string>{ "Line1", "", "" })
 {
-   const shared_ptr<Utils::StopwatchMock> stopwatchMock = make_shared<Utils::StopwatchMock>();
-   _stopwatchFactoryMock->NewStopwatchMock.Return(stopwatchMock);
    _caller_ReadFileTextMock->CallConstMemberFunctionMock.Return(fileText);
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
