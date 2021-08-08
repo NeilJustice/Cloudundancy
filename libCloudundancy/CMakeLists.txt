@@ -42,6 +42,15 @@ file(GLOB_RECURSE Sources *.h *.cpp *.ui)
 source_group("" FILES ${Sources})
 
 add_library(libCloudundancy ${Sources})
+if(UNIX)
+   set_target_properties(libCloudundancy PROPERTIES DEBUG_OUTPUT_NAME "CloudundancyDebug")
+   set_target_properties(libCloudundancy PROPERTIES RELEASE_OUTPUT_NAME "CloudundancyRelease")
+   set_target_properties(libCloudundancy PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "CloudundancyRelWithDebInfo")
+elseif(MSVC)
+   set_target_properties(libCloudundancy PROPERTIES DEBUG_OUTPUT_NAME "libCloudundancyDebug")
+   set_target_properties(libCloudundancy PROPERTIES RELEASE_OUTPUT_NAME "libCloudundancyRelease")
+   set_target_properties(libCloudundancy PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "libCloudundancyRelWithDebInfo")
+endif()
 
 IfMSVCEnablePrecompiledHeaders()
 
