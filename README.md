@@ -25,8 +25,8 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
 * [Cloudundancy code structure as it appears in Visual Studio 2019 on Windows](#cloudundancy-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
 * [Linux Jenkins jobs which build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy's C++ code and Mypy-Flake8-Pylint-SonarQube scan Cloudundancy's CI/CD Python code](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-and-undefinedbehaviorsanitize-cloudundancys-c-code-and-mypy-flake8-pylint-sonarqube-scan-cloudundancys-cicd-python-code)
 * [Windows Jenkins jobs which build and Cppcheck Cloudundancy's C++ code and Mypy-Flake8-Pylint-SonarQube scan Cloudundancy's CI/CD Python code](#windows-jenkins-jobs-which-build-and-cppcheck-cloudundancys-c-code-and-mypy-flake8-pylint-sonarqube-scan-cloudundancys-cicd-python-code)
-* [Steps to build binary cloudundancy on Linux with Clang](#steps-to-build-binary-cloudundancy-on-linux-with-clang)
-* [Steps to build executable Cloudundancy.exe on Windows with Visual Studio 2019](#steps-to-build-executable-cloudundancyexe-on-windows-with-visual-studio-2019)
+* [4 steps to build binary cloudundancy on Linux with Clang](#4-steps-to-build-binary-cloudundancy-on-linux-with-clang)
+* [4 steps to build executable Cloudundancy.exe on Windows with Visual Studio 2019](#4-steps-to-build-executable-cloudundancyexe-on-windows-with-visual-studio-2019)
 
 ## Cloudundancy command line usage
 
@@ -184,7 +184,7 @@ Resulting contents of `C:\CloudundancyTesting\OneDrive\Cloudundancy.log`:
 
 ![CloudundancyTesting OneDrive Cloudundancy.log](Screenshots/CloudundancyTestingOneDriveCloudundancyLog.png)
 
-Now one day should access to your Google account or Microsoft account become not possible by way of a variety of rare but possible potential scenarios, peace of mind can be had by knowing you have cloud-redundant backups of your files made with the help of Cloudundancy.
+Now one day should access to your Google or Microsoft accounts become unavailable by way of a variety of unlikely but possible potential scenarios, peace of mind can be had by way of having cloud-redundant backups made with Cloudundancy.
 
 ### 7zip-files-then-copy-the-7zip-file-to-multiple-folders
 
@@ -250,7 +250,7 @@ Shown in this screenshot is function `CloudundancyArgsParser::ParseStringArgs` w
 
 ![CloudundancyArgsParser.cpp](Screenshots/CloudundancyArgsParser.png)
 
-## Linux Jenkins jobs Which build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy's C++ code and Mypy-Flake8-Pylint-SonarQube scan Cloudundancy's CI/CD Python code
+## Linux Jenkins jobs which build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy's C++ code and Mypy-Flake8-Pylint-SonarQube scan Cloudundancy's CI/CD Python code
 
 ![Linux Cloudundancy Jenkins jobs](Screenshots/Linux/LinuxCloudundancyJenkinsJobs.png)
 
@@ -258,7 +258,7 @@ Shown in this screenshot is function `CloudundancyArgsParser::ParseStringArgs` w
 
 ![Cloudundancy Windows Jenkins jobs](Screenshots/Windows/WindowsJenkinsJobs.png)
 
-## Steps to build binary cloudundancy on Linux with Clang
+## 4 steps to build binary cloudundancy on Linux with Clang
 
 ```bash
 git clone https://github.com/NeilJustice/Cloudundancy
@@ -271,7 +271,7 @@ Resulting binary `/usr/local/bin/cloudundancy`:
 
 ![Binary cloudundancy on Linux](Screenshots/Linux/LinuxBinaryCloudundancy.png)
 
-## Steps to build executable Cloudundancy.exe on Windows with Visual Studio 2019
+## 4 steps to build executable Cloudundancy.exe on Windows with Visual Studio 2019
 
 ```powershell
 git clone https://github.com/NeilJustice/Cloudundancy
