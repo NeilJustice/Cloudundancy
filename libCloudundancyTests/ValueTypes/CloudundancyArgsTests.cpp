@@ -10,7 +10,6 @@ TEST(CommandLineUsage_IsExpectedString)
 {
    ARE_EQUAL(
 R"(Cloudundancy v0.11.0 - Creates cloud-redundant and device-redundant file backups
-https://github.com/NeilJustice/Cloudundancy
 
 Usage:
    cloudundancy example-linux-ini-file
