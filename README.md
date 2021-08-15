@@ -133,11 +133,11 @@ cloudundancy copy-files-to-multiple-folders
 
 Cloudundancy program mode `copy-files-to-multiple-folders` copies files and folders listed in a Cloudundancy.ini file to multiple destination folders, which most notably can be automatic cloud-uploading Google Drive and Microsoft OneDrive folders on Windows for achieving cloud-redundant file backups, or multiple USB drive directories for achieving device-redundant file backups.
 
-`copy-files-to-multiple-folders` console output on Linux:
+Console output on Linux for `cloudundancy copy-files-to-multiple-folders --ini-file=/code/dotfiles/LinuxCloudundancy.ini --delete-destination-folders-first`:
 
-![Linux copy-files-to-multiple-folders part 1](Screenshots/Linux/CopyFilesToMultipleFoldersPart1.png)
+![Linux copy-files-to-multiple-folders part 1](Screenshots/Linux/copy-files-to-multiple-folders-part1.png)
 
-![Linux copy-files-to-multiple-folders part 2](Screenshots/Linux/CopyFilesToMultipleFoldersPart2.png)
+![Linux copy-files-to-multiple-folders part 2](Screenshots/Linux/copy-files-to-multiple-folders-part2.png)
 
 As an example on Windows, imagine the following folder structure at `C:\CloudundancyTesting`:
 
