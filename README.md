@@ -30,10 +30,11 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
 
 ## Cloudundancy command line usage
 
-```prolog
+```ini
 Cloudundancy v0.11.0
 Copies configurable file and folder paths to configurable file and folder paths.
-Destination folder paths can be set to C:\GoogleDrive and C:\OneDrive to create cloud-redundant backups.
+For example, destination folder paths can be set to C:\GoogleDrive and C:\OneDrive
+to create cloud-redundant backups by way of automatic cloud uploading.
 
 Usage:
    cloudundancy example-linux-ini-file
