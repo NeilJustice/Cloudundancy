@@ -127,7 +127,8 @@ Cloudundancy program mode `example-windows-ini-file` as a screenshot:
 ### copy-files-to-multiple-folders
 
 ```prolog
-cloudundancy copy-files-to-multiple-folders --ini-file=<CloudundancyIniFilePath> [--delete-destination-folders-first]
+cloudundancy copy-files-to-multiple-folders
+   --ini-file=<CloudundancyIniFilePath> [--delete-destination-folders-first]
 ```
 
 Cloudundancy program mode `copy-files-to-multiple-folders` copies files and folders listed in a Cloudundancy.ini file to multiple destination folders, which most notably can be automatic cloud-uploading Google Drive and Microsoft OneDrive folders on Windows for achieving cloud-redundant file backups, or multiple USB drive directories for achieving device-redundant file backups.
@@ -194,9 +195,9 @@ Now one day should access to your Google or Microsoft accounts become unavailabl
 
 ```prolog
 cloudundancy 7zip-files-then-copy-the-7zip-file-to-multiple-folders
-      --ini-file-to-copy-files-to-7zip-staging-folder=<CloudundancyIniFilePath>
-      --7zip-staging-folder=<FolderPath>
-      --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=<CloudundancyIniFilePath>
+   --ini-file-to-copy-files-to-7zip-staging-folder=<CloudundancyIniFilePath>
+   --7zip-staging-folder=<FolderPath>
+   --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=<CloudundancyIniFilePath>
 ```
 
 Program mode `7zip-files-then-copy-the-7zip-file-to-multiple-folders` performs the following steps to backup files to a .7z file and then copy the .7z file to multiple destination folders:
