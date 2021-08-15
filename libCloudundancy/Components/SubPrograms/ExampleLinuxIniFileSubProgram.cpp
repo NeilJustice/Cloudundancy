@@ -24,12 +24,6 @@ R"(
 
 [FileSubpathsToNotCopy]
 /.git/
-/builds/
-/cobertura/
-/lastStable
-/lastSuccessful/
-nextBuildNumber
-scm-polling.log
 )";
    _console->WriteLine(exampleLinuxIniFileText);
    return 0;

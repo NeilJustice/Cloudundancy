@@ -43,12 +43,6 @@ R"(
 
 [FileSubpathsToNotCopy]
 /.git/
-/builds/
-/cobertura/
-/lastStable
-/lastSuccessful/
-nextBuildNumber
-scm-polling.log
 )";
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedExampleLinuxIniFileText));
    IS_ZERO(exitCode);

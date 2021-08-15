@@ -51,35 +51,7 @@ Usage:
 
 ### example-linux-ini-file
 
-Cloudundancy program mode `example-linux-ini-file` prints an example Linux Cloudundancy .ini file which shows how to achieve triple backups of files to one GitHub repo folder and two USB drives.
-
-```ini
-[DestinationFolders]
-/code/dotfiles/LinuxCloudundancy
-/home/neil/BlackUSB/LinuxCloudundancy
-/home/neil/SilverUSB/LinuxCloudundancy
-
-[SourceFilesAndFolders]
-# dotfiles
-/code/dotfiles/linux/ -> dotfiles
-
-# Linux
-/etc/fstab -> Linux
-
-# VS Code
-/home/neil/.config/Code/User/keybindings.json -> VSCode
-/home/neil/.config/Code/User/settings.json    -> VSCode
-/home/neil/.config/Code/User/snippets/        -> VSCode/Snippets
-
-[FileSubpathsToNotCopy]
-/.git/
-/builds/
-/cobertura/
-/lastStable
-/lastSuccessful/
-nextBuildNumber
-scm-polling.log
-```
+Cloudundancy program mode `example-linux-ini-file` prints an example Linux Cloudundancy .ini file which shows how to achieve triple backups of files to one GitHub repo folder and two USB drives:
 
 ![Example Linux Cloudundancy .ini file](Screenshots/Linux/example-linux-ini-file.png)
 
