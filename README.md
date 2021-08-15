@@ -80,7 +80,7 @@ nextBuildNumber
 scm-polling.log
 ```
 
-![Example Linux Cloudundancy .ini file](Screenshots/Linux/ExampleLinuxIniFile.png)
+![Example Linux Cloudundancy .ini file](Screenshots/Linux/example-linux-ini-file.png)
 
 ### example-windows-ini-file
 
