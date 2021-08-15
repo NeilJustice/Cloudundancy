@@ -30,8 +30,8 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
 
 ## Cloudundancy command line usage
 
-```cpp
-Cloudundancy v0.11.0 - Creates cloud-redundant and device-redundant file backups
+```prolog
+Cloudundancy v0.11.0 - Copies configurable files and folders to configurable folders
 
 Usage:
    cloudundancy example-linux-ini-file
@@ -123,8 +123,8 @@ Cloudundancy program mode `example-windows-ini-file` as a screenshot:
 
 ### copy-files-to-multiple-folders
 
-```
-Cloudundancy copy-files-to-multiple-folders --ini-file=<CloudundancyIniFilePath> [--delete-destination-folders-first]
+```prolog
+cloudundancy copy-files-to-multiple-folders --ini-file=<CloudundancyIniFilePath> [--delete-destination-folders-first]
 ```
 
 Cloudundancy program mode `copy-files-to-multiple-folders` copies files and folders listed in a Cloudundancy.ini file to multiple destination folders, which most notably can be automatic cloud-uploading Google Drive and Microsoft OneDrive folders on Windows for achieving cloud-redundant file backups, or multiple USB drive directories for achieving device-redundant file backups.
@@ -165,7 +165,7 @@ ignored_filename
 
 Here is the console output when the following Cloudundancy command line is run to achieve cloud-redundant backups of business-critical files to folders `C:\CloudundancyTesting\GoogleDrive` and `C:\CloudundancyTesting\OneDrive`:
 
-`Cloudundancy.exe copy-files-to-multiple-folders --ini-file=C:\CloudundancyTesting\Cloudundancy.ini --delete-destination-folders-first`:
+Console output for `Cloudundancy.exe copy-files-to-multiple-folders --ini-file=C:\CloudundancyTesting\Cloudundancy.ini --delete-destination-folders-first`:
 
 ![Windows copy-files-to-multiple-folders console out](Screenshots/WindowsCopyFilesToMultipleFoldersConsoleOutput.png)
 
@@ -189,8 +189,8 @@ Now one day should access to your Google or Microsoft accounts become unavailabl
 
 ### 7zip-files-then-copy-the-7zip-file-to-multiple-folders
 
-```
-Cloudundancy 7zip-files-then-copy-the-7zip-file-to-multiple-folders
+```prolog
+cloudundancy 7zip-files-then-copy-the-7zip-file-to-multiple-folders
       --ini-file-to-copy-files-to-7zip-staging-folder=<CloudundancyIniFilePath>
       --7zip-staging-folder=<FolderPath>
       --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=<CloudundancyIniFilePath>
@@ -216,9 +216,9 @@ As an example, imagine you had the following folder structure and were intereste
 
 ![Cloudundancy 7-Zip testing folder](Screenshots/Cloudundancy7ZipTestingFolder.png)
 
-Here is what happens when the following Cloudundancy command line is run:
+Console output on Windows when the following command line is run:
 
-```
+```prolog
 Cloudundancy.exe 7zip-files-then-copy-the-7zip-file-to-multiple-folders
    --ini-file-to-copy-files-to-7zip-staging-folder=C:\Cloudundancy7ZipTesting\CodeFolderTo7ZipStagingFolderCopyingStep.ini
    --7zip-staging-folder=C:\Cloudundancy7ZipTesting\7ZipStagingFolder
@@ -241,7 +241,7 @@ GitHub repos successfully 7-Zipped and copied to a OneDrive folder:
 
 ## Cloudundancy code structure as it appears in Visual Studio Code on Linux
 
-Seen in this screenshot is the call to `_cloudundancyIniFileReader->ReadIniFile(iniFilePath`) for reading the Cloudundancy .ini file:
+Shown in this screenshot is the call to `_cloudundancyIniFileReader->ReadIniFile(iniFilePath`) for reading the Cloudundancy .ini file:
 
 ![Cloudundancy code structure as it appears Visual Studio Code on Linux](Screenshots/Linux/CloudundancyCodeStructureInVSCode.png)
 
