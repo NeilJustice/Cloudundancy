@@ -92,10 +92,6 @@ C:\Users\UserName\Documents\WindowsPowerShell\ -> PowerShell
 PowerShell\Modules\
 ```
 
-Cloudundancy program mode `example-windows-ini-file` as a screenshot:
-
-![Example Windows Cloudundancy .ini File](Screenshots/Windows/ExampleWindowsIniFile.png)
-
 ### copy-files-to-multiple-folders
 
 ```prolog
