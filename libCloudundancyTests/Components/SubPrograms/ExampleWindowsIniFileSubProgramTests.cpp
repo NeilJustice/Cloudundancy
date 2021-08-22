@@ -51,8 +51,7 @@ C:\VS2019\VC#\Snippets\1033\Visual C#\CSharpSnippets.snippet                    
 C:\Users\UserName\Documents\WindowsPowerShell\ -> PowerShell
 
 [FileSubpathsToNotCopy]
-# In the [FileSubpathsToNotCopy] section, case-insensitive file path substrings can be listed
-# so as to not copy files matching the listed case-insensitive file path substrings
+# In the [FileSubpathsToNotCopy] section, case-sensitive file path substrings can be listed one per line
 
 # PowerShell Modules folder to not copy, as PowerShell modules can be easily reinstalled
 PowerShell\Modules\

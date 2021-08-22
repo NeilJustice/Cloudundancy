@@ -4,7 +4,9 @@
 
 Cloudundancy is a cross-platform C++ command line program for quickly copying a configurable list of files and folders to a configurable list of destination folders to achieve cloud-redundant and device-redundant backups of files.
 
-For example, on Windows in a Cloudundancy.ini file, destination folders can be configured to be automatic cloud-uploading Google Drive and Microsoft OneDrive folders located at C:\GoogleDrive and C:\OneDrive, for example. When Cloudundancy then runs to copy business-critical files to C:\GoogleDrive and C:\OneDrive, cloud-redundant backups will be created by way of the Google Drive client and the Microsoft OneDrive client automatically uploading folder contents to their respective clouds.
+For example, on Windows in a Cloudundancy.ini file, destination folders can be configured to be automatic-cloud-uploading Google Drive and Microsoft OneDrive folders `C:\GoogleDrive\CloudundancyBackups` and `C:\OneDrive\CloudundancyBackups`. Double-USB backups can also be achieved by adding USB drive paths `E:\CloudundancyBackups` and `F:\CloudundancyBackups` to the Cloudundancy.ini file.
+
+On Linux, a Bash script can be written to run Google Drive command line `drive push` from `~/googledrive` after having run Cloudundancy to copy business-critical files to `~/googledrive`.
 
 |Build Type|Build Status|
 |----------|------------|
@@ -31,10 +33,10 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
 ## Cloudundancy command line usage
 
 ```ini
-Cloudundancy v0.11.0
+Cloudundancy v0.12.0
 Copies configurable file and folder paths to configurable file and folder paths.
-For example, destination folder paths can be set to C:\GoogleDrive and C:\OneDrive
-to create cloud-redundant backups by way of automatic cloud uploading.
+For example, on Windows, destination folder paths can be set to C:\GoogleDrive and C:\OneDrive
+to achieve cloud-redundant backups by way of automatic cloud uploading.
 
 Usage:
    cloudundancy example-linux-ini-file
@@ -85,8 +87,7 @@ C:\VS2019\VC#\Snippets\1033\Visual C#\CSharpSnippets.snippet                    
 C:\Users\UserName\Documents\WindowsPowerShell\ -> PowerShell
 
 [FileSubpathsToNotCopy]
-# In the [FileSubpathsToNotCopy] section, case-insensitive file path substrings can be listed
-# so as to not copy files matching the listed case-insensitive file path substrings
+# In the [FileSubpathsToNotCopy] section, case-sensitive file path substrings can be listed one per line
 
 # PowerShell Modules folder to not copy, as PowerShell modules can be easily reinstalled
 PowerShell\Modules\

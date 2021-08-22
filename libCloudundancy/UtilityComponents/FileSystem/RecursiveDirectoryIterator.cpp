@@ -42,7 +42,7 @@ namespace Utils
             continue;
          }
          const fs::path& nextFilePath = nextDirectoryEntry.path();
-         const bool filePathIsIgnored = FilePathCaseInsensitiveContainsAnySubstring(nextFilePath, _fileSubpathsToIgnore);
+         const bool filePathIsIgnored = FilePathContainsAnySubstring(nextFilePath, _fileSubpathsToIgnore);
          if (filePathIsIgnored)
          {
             continue;
@@ -66,7 +66,7 @@ namespace Utils
 
    // Private Functions
 
-   bool RecursiveDirectoryIterator::FilePathCaseInsensitiveContainsAnySubstring(const fs::path& filePath, const vector<string>& filePathIgnoreSubstrings)
+   bool RecursiveDirectoryIterator::FilePathContainsAnySubstring(const fs::path& filePath, const vector<string>& filePathIgnoreSubstrings)
    {
       if (filePathIgnoreSubstrings.empty())
       {
@@ -76,7 +76,7 @@ namespace Utils
       const bool doIgnoreFilePath = std::any_of(
          filePathIgnoreSubstrings.cbegin(), filePathIgnoreSubstrings.cend(), [&](const string& ignoredFilePathSubstring)
          {
-            if (Utils::String::CaseInsensitiveContains(filePathAsString, ignoredFilePathSubstring))
+            if (Utils::String::Contains(filePathAsString, ignoredFilePathSubstring))
             {
                return true;
             }

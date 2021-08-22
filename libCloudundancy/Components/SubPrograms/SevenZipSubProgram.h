@@ -9,8 +9,8 @@ class SevenZipSubProgram : public CloudundancySubProgram
    friend class SevenZipSubProgramTests;
 private:
    // Function Callers
-   using VoidOneArgFunctionCallerType = Utils::VoidOneArgMemberFunctionCaller<SevenZipSubProgram, const CloudundancyArgs&>;
-   unique_ptr<const VoidOneArgFunctionCallerType> _voidOneArgFunctionCaller;
+   using VoidOneArgMemberFunctionCallerType = Utils::VoidOneArgMemberFunctionCaller<SevenZipSubProgram, const CloudundancyArgs&>;
+   unique_ptr<const VoidOneArgMemberFunctionCallerType> _voidOneArgMemberFunctionCaller;
    // Constant Components
    unique_ptr<const CloudundancyFileCopier> _cloudundancyFileCopier;
    unique_ptr<const CloudundancyFileSystem> _cloudundancyFileSystem;

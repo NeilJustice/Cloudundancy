@@ -16,6 +16,7 @@ void CreateIntegrationTestingDirectoryStructure()
 {
    _fileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "file1.txt", "");
    _fileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "file2.ini", "");
+   _fileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "root.Ignored_File_Extension", ""),
    _fileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "root.ignored_file_extension_1", "");
    _fileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "root.ignored_file_extension_2", "");
 
@@ -77,6 +78,7 @@ TEST(IntegrationTest_RecursiveDirectoryIterator_EmptyFilePathIgnoreSubstrings_Re
    const fs::path path15 = _recursiveDirectoryIterator.NextNonIgnoredFilePath();
    const fs::path path16 = _recursiveDirectoryIterator.NextNonIgnoredFilePath();
    const fs::path path17 = _recursiveDirectoryIterator.NextNonIgnoredFilePath();
+   const fs::path path18 = _recursiveDirectoryIterator.NextNonIgnoredFilePath();
    const vector<fs::path> actualFilePaths =
    {
       path1,
@@ -95,13 +97,15 @@ TEST(IntegrationTest_RecursiveDirectoryIterator_EmptyFilePathIgnoreSubstrings_Re
       path14,
       path15,
       path16,
-      path17
+      path17,
+      path18
    };
    //
    const vector<fs::path> expectedFilePaths =
    {
       _rootFolderPath / "file1.txt",
       _rootFolderPath / "file2.ini",
+      _rootFolderPath / "root.Ignored_File_Extension",
       _rootFolderPath / "root.ignored_file_extension_1",
       _rootFolderPath / "root.ignored_file_extension_2",
 
@@ -145,6 +149,7 @@ TEST(IntegrationTest_RecursiveDirectoryIterator_NonEmptyFilePathIgnoreSubstrings
    const fs::path path7 = _recursiveDirectoryIterator.NextNonIgnoredFilePath();
    const fs::path path8 = _recursiveDirectoryIterator.NextNonIgnoredFilePath();
    const fs::path path9 = _recursiveDirectoryIterator.NextNonIgnoredFilePath();
+   const fs::path path10 = _recursiveDirectoryIterator.NextNonIgnoredFilePath();
    const vector<fs::path> actualFilePaths =
    {
       path1,
@@ -155,13 +160,15 @@ TEST(IntegrationTest_RecursiveDirectoryIterator_NonEmptyFilePathIgnoreSubstrings
       path6,
       path7,
       path8,
-      path9
+      path9,
+      path10
    };
    //
    const vector<fs::path> expectedFilePaths =
    {
       _rootFolderPath / "file1.txt",
       _rootFolderPath / "file2.ini",
+      _rootFolderPath / "root.Ignored_File_Extension",
 
       _rootFolderPath / "subdir1" / "file1.xml",
       _rootFolderPath / "subdir1" / "file2.json",

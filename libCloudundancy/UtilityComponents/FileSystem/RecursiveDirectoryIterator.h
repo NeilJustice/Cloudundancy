@@ -41,6 +41,6 @@ namespace Utils
       virtual fs::path NextNonIgnoredFilePath();
       virtual void RecursivelyDeleteAllFilesExceptIgnoredFileSubpaths();
    private:
-      static bool FilePathCaseInsensitiveContainsAnySubstring(const fs::path& filePath, const vector<string>& filePathIgnoreSubstrings);
+      static bool FilePathContainsAnySubstring(const fs::path& filePath, const vector<string>& filePathIgnoreSubstrings);
    };
 }

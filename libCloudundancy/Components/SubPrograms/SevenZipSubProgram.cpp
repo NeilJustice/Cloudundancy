@@ -5,7 +5,7 @@
 
 SevenZipSubProgram::SevenZipSubProgram()
    // Function Callers
-   : _voidOneArgFunctionCaller(make_unique<VoidOneArgFunctionCallerType>())
+   : _voidOneArgMemberFunctionCaller(make_unique<VoidOneArgMemberFunctionCallerType>())
    // Constant Components
    , _cloudundancyFileCopier(std::make_unique<CloudundancyFileCopier>())
    , _cloudundancyFileSystem(make_unique<CloudundancyFileSystem>())
@@ -23,14 +23,10 @@ SevenZipSubProgram::~SevenZipSubProgram()
 
 int SevenZipSubProgram::Run(const CloudundancyArgs& args)
 {
-   _voidOneArgFunctionCaller->CallConstMemberFunction(
-      &SevenZipSubProgram::DeleteBackupStagingFolder, this, args);
-   _voidOneArgFunctionCaller->CallConstMemberFunction(
-      &SevenZipSubProgram::CopyFileToFilesAndFoldersToBackupStagingFolder, this, args);
-   _voidOneArgFunctionCaller->CallConstMemberFunction(
-      &SevenZipSubProgram::SevenZipBackupStagingFolder, this, args);
-   _voidOneArgFunctionCaller->CallConstMemberFunction(
-      &SevenZipSubProgram::Copy7ZipFileToDestinationFolders, this, args);
+   _voidOneArgMemberFunctionCaller->CallConstMemberFunction(&SevenZipSubProgram::DeleteBackupStagingFolder, this, args);
+   _voidOneArgMemberFunctionCaller->CallConstMemberFunction(&SevenZipSubProgram::CopyFileToFilesAndFoldersToBackupStagingFolder, this, args);
+   _voidOneArgMemberFunctionCaller->CallConstMemberFunction(&SevenZipSubProgram::SevenZipBackupStagingFolder, this, args);
+   _voidOneArgMemberFunctionCaller->CallConstMemberFunction(&SevenZipSubProgram::Copy7ZipFileToDestinationFolders, this, args);
    return 0;
 }
 
