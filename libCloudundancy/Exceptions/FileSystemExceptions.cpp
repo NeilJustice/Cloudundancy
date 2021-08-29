@@ -26,10 +26,10 @@ namespace Utils
    {
    }
 
-	FileOpenException::FileOpenException(const fs::path& filePath, int errnoValue, string_view errnoDescription)
-		: runtime_error(MakeFilePathErrnoDescriptionExceptionMessage(filePath, errnoValue, errnoDescription))
-	{
-	}
+   FileOpenException::FileOpenException(const fs::path& filePath, int errnoValue, string_view errnoDescription)
+      : runtime_error(MakeFilePathErrnoDescriptionExceptionMessage(filePath, errnoValue, errnoDescription))
+   {
+   }
 
    FileMalformedException::FileMalformedException(const fs::path& filePath, string_view reason)
       : runtime_error(MakeFilePathReasonExceptionMessage(filePath, reason))
@@ -37,8 +37,8 @@ namespace Utils
 
    }
 
-	FileMalformedException::FileMalformedException(const fs::path& filePath, size_t lineNumber, string_view reason)
-		: runtime_error(MakeFilePathLineNumberReasonExceptionMessage(filePath, lineNumber, reason))
-	{
-	}
+   FileMalformedException::FileMalformedException(const fs::path& filePath, size_t lineNumber, string_view reason)
+      : runtime_error(MakeFilePathLineNumberReasonExceptionMessage(filePath, lineNumber, reason))
+   {
+   }
 }

@@ -29,7 +29,7 @@ TEST(FileOpenException_WhatReturnsExpected)
    //
    const string expectedExceptionMessage = Utils::String::ConcatValues(filePath.string(), ": errno=", errnoValue, " (", errnoDescription, ")");
    const string actualExceptionMessage = ex.what();
-	ARE_EQUAL(expectedExceptionMessage, actualExceptionMessage);
+   ARE_EQUAL(expectedExceptionMessage, actualExceptionMessage);
 }
 
 TEST(FileMalformedException_NonLineNumberOverload_WhatReturnsExpected)
@@ -54,7 +54,7 @@ TEST(FileMalformedException_LineNumberOverload_WhatReturnsExpected)
    //
    const string expectedExceptionMessage = Utils::String::ConcatValues(filePath.string(), '(', lineNumber, "): ", reason);
    const string actualExceptionMessage = ex.what();
-	ARE_EQUAL(expectedExceptionMessage, actualExceptionMessage);
+   ARE_EQUAL(expectedExceptionMessage, actualExceptionMessage);
 }
 
 RUN_TESTS(FileSystemExceptionsTests)
