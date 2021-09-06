@@ -10,7 +10,7 @@ On Linux, a Bash script can be written to run Google Drive command line `drive p
 
 |Build Type|Build Status|
 |----------|------------|
-|GitHub Actions Debug and Release build - ubuntu-latest Clang 11.0.0 / GCC 9.3.0|[![Cloudundancy](https://github.com/NeilJustice/Cloudundancy/actions/workflows/build.yml/badge.svg)](https://github.com/NeilJustice/Cloudundancy/actions/workflows/build.yml)|
+|GitHub Actions Debug and Release build - ubuntu-latest Clang 11 / GCC 9|[![Cloudundancy](https://github.com/NeilJustice/Cloudundancy/actions/workflows/build.yml/badge.svg)](https://github.com/NeilJustice/Cloudundancy/actions/workflows/build.yml)|
 |AppVeyor Debug and Release build - Visual Studio 2019 x64|<a href="https://ci.appveyor.com/project/NeilJustice/Cloudundancy"><img src="https://ci.appveyor.com/api/projects/status/ygwr3rb9spwhy4u0?svg=true"/></a>|
 |Codecov.io code coverage for Cloudundancy's C++ and CloudundancyDevOpsPython|[![codecov](https://codecov.io/gh/NeilJustice/Cloudundancy/branch/main/graph/badge.svg?token=ruXbRPB1CQ)](https://codecov.io/gh/NeilJustice/Cloudundancy)|
 |SonarCloud scan of CloudundancyDevOpsPython - the Python code which builds and tests Cloudundancy|[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NeilJustice_Cloudundancy&metric=alert_status)](https://sonarcloud.io/dashboard?id=NeilJustice_Cloudundancy)|
