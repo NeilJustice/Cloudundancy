@@ -46,9 +46,9 @@ void SevenZipSubProgram::CopyFileToFilesAndFoldersToBackupStagingFolder(const Cl
 
 void SevenZipSubProgram::DeleteBackupStagingFolder(const CloudundancyArgs& args) const
 {
+   _stopwatch->Start();
    const string deletingMessage = Utils::String::ConcatStrings("[Cloudundancy] Deleting ", args.sevenZipStagingFolderPath.string());
    _console->WriteLine(deletingMessage);
-   _stopwatch->Start();
 
    _cloudundancyFileSystem->DeleteFolderContentsExceptForFile(args.sevenZipStagingFolderPath, "Cloudundancy.log");
 
@@ -60,9 +60,9 @@ void SevenZipSubProgram::DeleteBackupStagingFolder(const CloudundancyArgs& args)
 
 void SevenZipSubProgram::SevenZipBackupStagingFolder(const CloudundancyArgs& args) const
 {
+   _stopwatch->Start();
    const string sevenZippingMessage = Utils::String::ConcatStrings("\n[Cloudundancy] 7-zipping ", args.sevenZipStagingFolderPath.string(), "...");
    _console->WriteLineColor(sevenZippingMessage, Color::Teal);
-   _stopwatch->Start();
    _fileSystem->SetCurrentPath(args.sevenZipStagingFolderPath);
    const string dateTimeNowForFileNames = _watch->DateTimeNowForFileNames();
    const string sevenZipCommandLineArguments = Utils::String::ConcatStrings("a 7ZipFile/CloudundancyBackup_", dateTimeNowForFileNames, ".7z -r -mx9");

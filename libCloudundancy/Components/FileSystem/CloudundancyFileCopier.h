@@ -68,10 +68,10 @@ private:
       const fs::path& sourceFilePath, const CloudundancyIniCopyInstruction& cloudundancyIniCopyInstruction, const fs::path& destinationFolderPath) const;
    void CopyNonIgnoredFilesInAndBelowFolderToFolder(
       const CloudundancyIniCopyInstruction& cloudundancyIniCopyInstruction, const fs::path& destinationFolderPath) const;
-   void CopyFileToFolder(
-      const CloudundancyIniCopyInstruction& cloudundancyIniCopyInstruction, const fs::path& destinationFolderPath) const;
    Utils::FileCopyResult CopyFileToFile(
       const fs::path& sourceFilePath, const fs::path& destinationFilePath) const;
+   void CopyFileToFolder(
+      const CloudundancyIniCopyInstruction& cloudundancyIniCopyInstruction, const fs::path& destinationFolderPath) const;
    void WriteCopiedMessageOrExitWithCode1IfCopyFailed(
       const Utils::FileCopyResult& fileCopyResult, const fs::path& destinationFolderPath) const;
 };

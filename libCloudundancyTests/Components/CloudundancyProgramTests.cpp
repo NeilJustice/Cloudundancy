@@ -134,26 +134,27 @@ TEST2X2(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSu
    const string expectedRunningLine = "[Cloudundancy]     Running: " + expectedSpaceJoinedArgs;
    const string expectedMachineNameLine = "[Cloudundancy] MachineName: " + machineName;
    const string expectedUserNameLine = "[Cloudundancy]    UserName: " + userName;
-
-   METALMOCK(_stopwatchMock->StartMock.CalledOnce());
-   METALMOCK(_environmentServiceMock->MachineNameMock.CalledOnce());
-   METALMOCK(_environmentServiceMock->UserNameMock.CalledOnce());
-   METALMOCK(_watchMock->DateTimeNowMock.CalledNTimes(2));
-   METALMOCK(_cloudundancyArgsParserMock->ParseStringArgsMock.CalledOnceWith(stringArgs));
-   METALMOCK(_cloudundancySubProgramFactoryMock->NewCloudundancySubProgramMock.CalledOnceWith(args.programMode));
-   METALMOCK(cloudundancySubProgramMock->RunMock.CalledOnceWith(args));
-   METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
-   {
-      string_view(expectedRunningLine),
-      string_view(expectedMachineNameLine),
-      string_view(expectedUserNameLine),
-      string_view("[Cloudundancy]   StartTime: " + startTime),
-      string_view("[Cloudundancy]  EndTime: " + endTime),
-      string_view("[Cloudundancy] Duration: " + elapsedSeconds + " seconds"),
-   }));
    const string expectedExitCodeLine = "[Cloudundancy] ExitCode: " + to_string(subProgramExitCode);
-   METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedExitCodeLine, expectedExitCodeLineColor));
-   METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
+   METALMOCK(_consoleMock->WriteLineMock.CalledNTimes(6));
+   METALMOCK(_watchMock->DateTimeNowMock.CalledNTimes(2));
+
+   METALMOCKTHEN(_stopwatchMock->StartMock.CalledOnce()).Then(
+   METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith(expectedRunningLine))).Then(
+   METALMOCKTHEN(_environmentServiceMock->MachineNameMock.CalledOnce())).Then(
+   METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith(expectedMachineNameLine))).Then(
+   METALMOCKTHEN(_environmentServiceMock->UserNameMock.CalledOnce())).Then(
+   METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith(expectedUserNameLine))).Then(
+   METALMOCKTHEN(_watchMock->DateTimeNowMock.Called())).Then(
+   METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith("[Cloudundancy]   StartTime: " + startTime))).Then(
+   METALMOCKTHEN(_cloudundancyArgsParserMock->ParseStringArgsMock.CalledOnceWith(stringArgs))).Then(
+   METALMOCKTHEN(_cloudundancySubProgramFactoryMock->NewCloudundancySubProgramMock.CalledOnceWith(args.programMode))).Then(
+   METALMOCKTHEN(cloudundancySubProgramMock->RunMock.CalledOnceWith(args))).Then(
+
+   METALMOCKTHEN(_watchMock->DateTimeNowMock.Called())).Then(
+   METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith("[Cloudundancy]  EndTime: " + endTime))).Then(
+   METALMOCKTHEN(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce())).Then(
+   METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith("[Cloudundancy] Duration: " + elapsedSeconds + " seconds"))).Then(
+   METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedExitCodeLine, expectedExitCodeLineColor)));
    ARE_EQUAL(subProgramExitCode, exitCode);
 }
 

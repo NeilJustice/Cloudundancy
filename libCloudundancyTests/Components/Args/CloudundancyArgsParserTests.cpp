@@ -94,12 +94,9 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    METALMOCK(_docoptParserMock->GetOptionalBoolMock.CalledOnceWith(docoptArgs, "--delete-destination-folders-first"));
    METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledAsFollows(
    {
-      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::SevenZip),
-        "--ini-file-to-copy-files-to-7zip-staging-folder" },
-      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::SevenZip),
-        "--7zip-staging-folder" },
-      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::SevenZip),
-        "--ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders" }
+      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::SevenZip), "--ini-file-to-copy-files-to-7zip-staging-folder" },
+      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::SevenZip), "--7zip-staging-folder" },
+      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::SevenZip), "--ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders" }
    }));
    METALMOCK(_fileSystemMock->ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExistMock.CalledAsFollows(
    {
