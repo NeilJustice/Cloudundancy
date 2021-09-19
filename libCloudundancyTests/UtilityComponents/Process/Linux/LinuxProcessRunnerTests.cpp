@@ -121,10 +121,10 @@ TEST(MakeArgv_ArgumentsAreNotEmpty_ReturnsProcessNameFollowedBySpaceSeparatedArg
    //
    const unique_ptr<char*[]> argv = _linuxProcessRunner.MakeArgv(processName, arguments);
    //
-   ARE_EQUAL(processName.c_str(), argv.get()[0]);
-   ARE_EQUAL(argument1.c_str(), argv.get()[1]);
-   ARE_EQUAL(argument2.c_str(), argv.get()[2]);
-   ARE_EQUAL(nullptr, argv.get()[3]);
+   IS_NOT_NULLPTR(argv.get()[0]);
+   IS_NOT_NULLPTR(argv.get()[1]);
+   IS_NOT_NULLPTR(argv.get()[2]);
+   IS_NULLPTR(argv.get()[3]);
 }
 
 TEST(ThrowIfWifexitedReturnValueIsNot1_WifexitedReturnValueIs1_DoesNothing)
