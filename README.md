@@ -95,7 +95,7 @@ PowerShell\Modules\
 
 ### copy-files-to-multiple-folders
 
-```prolog
+```ini
 cloudundancy copy-files-to-multiple-folders
    --ini-file=<CloudundancyIniFilePath> [--delete-destination-folders-first]
 ```
@@ -160,7 +160,7 @@ Resulting contents of `C:\CloudundancyTesting\OneDrive\Cloudundancy.log`:
 
 ### 7zip-files-then-copy-the-7zip-file-to-multiple-folders
 
-```prolog
+```ini
 cloudundancy 7zip-files-then-copy-the-7zip-file-to-multiple-folders
    --ini-file-to-copy-files-to-7zip-staging-folder=<CloudundancyIniFilePath>
    --7zip-staging-folder=<FolderPath>
@@ -189,7 +189,7 @@ As an example, consider the following folder structure:
 
 Console output on Windows for the following Cloudundancy 7-zip command line:
 
-```prolog
+```ini
 Cloudundancy.exe 7zip-files-then-copy-the-7zip-file-to-multiple-folders
    --ini-file-to-copy-files-to-7zip-staging-folder=C:\Cloudundancy7ZipTesting\CodeFolderTo7ZipStagingFolderCopyingStep.ini
    --7zip-staging-folder=C:\Cloudundancy7ZipTesting\7ZipStagingFolder
