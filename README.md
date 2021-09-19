@@ -61,7 +61,7 @@ Cloudundancy program mode `example-linux-ini-file` prints an example Linux Cloud
 
 Cloudundancy program mode `example-windows-ini-file` prints an example Windows Cloudundancy .ini file which shows how to achieve quintuple backups of files to two automatic cloud-uploading folders (C:\GoogleDrive and C:\OneDrive), one GitHub repo folder (C:\GitHubRepos), and two USB drives (D: and E:).
 
-```ini
+```
 [DestinationFolders]
 # Cloud-redundant backups to Google's cloud, Microsoft's cloud, and GitHub's cloud
 C:\GoogleDrive\CloudundancyBackups
@@ -117,26 +117,6 @@ As an example on Windows, imagine the following folder structure at `C:\Cloudund
 With `Cloudundancy.ini` being as follows to instruct Cloudundancy to backup business-critical files and folders present in `C:\CloudundancyTesting`, except for file paths containing case-sensitive substrings `ignored_filename` or `.ignored_file_extension`:
 
 ![CloudundancyTesting .ini file](Screenshots/CloudundancyTestingIniFile.png)
-
-`Cloudundancy.ini` in text format:
-
-```ini
-[DestinationFolders]
-C:\CloudundancyTesting\GoogleDrive
-C:\CloudundancyTesting\OneDrive
-
-[SourceFilesAndFolders]
-C:\CloudundancyTesting\BusinessCriticalFile1.txt -> .
-C:\CloudundancyTesting\BusinessCriticalFile2.txt -> .
-C:\CloudundancyTesting\BusinessCriticalFile3.txt -> .
-C:\CloudundancyTesting\BusinessCriticalFolder1\  -> BusinessCriticalFolder1
-C:\CloudundancyTesting\BusinessCriticalFolder2\  -> BusinessCriticalFolder2
-C:\CloudundancyTesting\BusinessCriticalFolder3\  -> RenamedBusinessCriticalFolder3
-
-[FileSubpathsToNotCopy]
-ignored_filename
-.ignored_file_extension
-```
 
 Console output for `Cloudundancy.exe copy-files-to-multiple-folders --ini-file=C:\CloudundancyTesting\Cloudundancy.ini --delete-destination-folders-first`:
 
