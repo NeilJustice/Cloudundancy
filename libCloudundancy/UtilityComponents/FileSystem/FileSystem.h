@@ -14,9 +14,6 @@ namespace Utils
    template<typename ReturnType, typename ClassType, typename Arg1Type, typename Arg2Type>
    class NonVoidTwoArgMemberFunctionCaller;
 
-   template<typename ClassType, typename Arg1Type>
-   class VoidOneArgMemberFunctionCaller;
-
    template<typename ClassType, typename Arg1Type, typename Arg2Type>
    class VoidTwoArgMemberFunctionCaller;
 

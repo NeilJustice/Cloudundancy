@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "libCloudundancy/Exceptions/FileSystemExceptions.h"
-#include "libCloudundancyTests/UtilityComponents/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
 #include "libCloudundancyTests/UtilityComponents/Assertion/MetalMock/AsserterMock.h"
-#include "libCloudundancyTests/UtilityComponents/Memory/MetalMock/CharVectorAllocatorMock.h"
+#include "libCloudundancyTests/UtilityComponents/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
 #include "libCloudundancyTests/UtilityComponents/FileSystem/MetalMock/FileSystemMock.h"
 #include "libCloudundancyTests/UtilityComponents/FileSystem/MetalMock/PassthroughFileSystemMock.h"
+#include "libCloudundancyTests/UtilityComponents/Memory/MetalMock/CharVectorAllocatorMock.h"
 #include "libCloudundancyTests/UtilityComponents/FunctionCallers/Member/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
 #include "libCloudundancyTests/UtilityComponents/FunctionCallers/Member/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
 #include "libCloudundancyTests/UtilityComponents/FunctionCallers/Member/MetalMock/VoidOneArgMemberFunctionCallerMock.h"
@@ -633,7 +633,7 @@ size_t _call_fread_CallInstead(void* buffer, size_t elementSize, size_t elementC
    return _fread_CallHistory.returnValue;
 }
 
-void _call_fread_AssertCalledOnceWith(size_t expectedElementSize, size_t expectedElementCount, FILE* expectedRawFilePointer)
+void _call_fread_AssertCalledOnceWith(size_t expectedElementSize, size_t expectedElementCount, FILE* expectedRawFilePointer) const
 {
    ARE_EQUAL(1, _fread_CallHistory.numberOfCalls);
    ARE_EQUAL(expectedElementSize, _fread_CallHistory.elementSize);
