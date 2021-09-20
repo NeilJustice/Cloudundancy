@@ -56,7 +56,7 @@ namespace Utils
 
    // Private Functions
 
-   unique_ptr<char*[]> LinuxProcessRunner::MakeArgv(string_view processName, string_view arguments) const
+   unique_ptr<char*[]> LinuxProcessRunner::MakeArgv(string_view processName, string_view arguments)
    {
       const vector<string> spaceSplitArguments = Utils::String::Split(arguments, ' ');
       constexpr size_t ProcessNameArgv = 1;
