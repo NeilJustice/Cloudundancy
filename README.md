@@ -33,7 +33,7 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
 ## Cloudundancy command line usage
 
 ```ini
-Cloudundancy v0.12.0
+Cloudundancy v1.0.0
 Copies configurable file and folder paths to configurable file and folder paths.
 For example, on Windows, destination folder paths can be set to C:\GoogleDrive and C:\OneDrive
 to achieve cloud-redundant backups by way of automatic cloud uploading.
