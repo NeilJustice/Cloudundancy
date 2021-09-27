@@ -493,8 +493,7 @@ TEST(WriteCopiedMessageOrExitWithCode1IfCopyFailed_CopyFailed_WritesCopyFailedAn
       ". Reason: ", fileCopyResult.copyFailureReason);
    const string expectedCopyFailedConsoleMessage = Utils::String::ConcatValues(
       "Copy failed [", fileCopyResult.durationInMilliseconds, "ms]: ", fileCopyResult.copyFailureReason, "\n\n[Cloudundancy] ExitCode: 1");
-   METALMOCKTHEN(_cloudundancyLogFileWriterMock->AppendTextToCloudundancyLogFileInFolderMock.CalledOnceWith(
-      destinationFolderPath, expectedCopyFailedLogFileMessage)).Then(
+   METALMOCKTHEN(_cloudundancyLogFileWriterMock->AppendTextToCloudundancyLogFileInFolderMock.CalledOnceWith(destinationFolderPath, expectedCopyFailedLogFileMessage)).Then(
    METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedCopyFailedConsoleMessage, Color::Red))).Then(
    METALMOCKTHEN(_call_exitMock.CalledOnceWith(1)));
 }
