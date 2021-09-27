@@ -19,7 +19,7 @@ namespace ZenUnit
       randomProcessResult.arguments = randomGenerator->String();
       randomProcessResult.exitCode = randomGenerator->Int();
       randomProcessResult.standardOutputAndError = randomGenerator->String();
-      randomProcessResult.durationInMilliseconds = randomGenerator->UnsignedInt();
+      randomProcessResult.durationInMilliseconds = randomGenerator->Unsigned();
       return randomProcessResult;
    }
 

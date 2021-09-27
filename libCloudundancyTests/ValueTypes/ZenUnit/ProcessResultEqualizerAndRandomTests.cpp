@@ -28,13 +28,13 @@ TEST(TestableRandomProcessResult_ReturnsProcessResultWithAllRandomFields)
 
    const int exitCode = randomGeneratorMock.IntMock.ReturnRandom();
 
-   const unsigned durationInMilliseconds = randomGeneratorMock.UnsignedIntMock.ReturnRandom();
+   const unsigned durationInMilliseconds = randomGeneratorMock.UnsignedMock.ReturnRandom();
    //
    const Utils::ProcessResult randomProcessResult = ZenUnit::TestableRandomProcessResult(&randomGeneratorMock);
    //
    METALMOCK(randomGeneratorMock.StringMock.CalledNTimes(3));
    METALMOCK(randomGeneratorMock.IntMock.CalledOnce());
-   METALMOCK(randomGeneratorMock.UnsignedIntMock.CalledOnce());
+   METALMOCK(randomGeneratorMock.UnsignedMock.CalledOnce());
    Utils::ProcessResult expectedRandomProcessResult;
    expectedRandomProcessResult.processName = processName;
    expectedRandomProcessResult.arguments = arguments;
