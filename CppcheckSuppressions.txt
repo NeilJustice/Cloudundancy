@@ -2,14 +2,12 @@
 *:*MetalMock.h
 allocaCalled:*
 noExplicitConstructor:libCloudundancy/UtilityComponents/Docopt/docopt.h:56
+preprocessorErrorDirective:*
 syntaxError:*
 unmatchedSuppression:*
 unusedFunction:libCloudundancyTests/ValueTypes/ZenUnit/AbsoluteFilePathToRelativeDestinationFolderPathEqualizerAndRandom.cpp:24
 unusedFunction:libCloudundancyTests/ValueTypes/ZenUnit/ProcessResultEqualizerAndRandom.cpp:28
 unusedFunction:libCloudundancyTests/ValueTypes/ZenUnit/tmZenUnitEqualizerAndRandom.cpp:35
-
-# Linux
-preprocessorErrorDirective:/usr/include/c++/v1/__config:104
 
 # Windows
 AssignmentAddressToInteger:libCloudundancy\UtilityComponents\Time\Watch.cpp:57
