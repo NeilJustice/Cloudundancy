@@ -9,7 +9,7 @@ class CloudundancyFileCopier
    friend class CloudundancyFileCopierTests;
 private:
    // Function Pointers
-   function<void(int)> _call_exit;
+   function<void(int)> _call_quick_exit;
    function<string(const string&, const string&, const string&)> _call_String_ReplaceFirst;
    function<string(const exception*)> _call_Type_GetExceptionClassNameAndMessage;
 

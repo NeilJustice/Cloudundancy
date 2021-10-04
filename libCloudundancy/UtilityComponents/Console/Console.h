@@ -10,7 +10,7 @@ namespace Utils
       friend class ::ConsoleTests;
    private:
       // Function Pointers
-      function<void(int)> _call_exit;
+      function<void(int)> _call_quick_exit;
       // Mutable Components
       unique_ptr<Utils::ConsoleColorer> _consoleColorer;
    public:

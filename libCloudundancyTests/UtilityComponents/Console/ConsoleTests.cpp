@@ -16,14 +16,14 @@ EVIDENCE
 
 Utils::Console _console;
 // Function Pointers
-METALMOCK_VOID1_FREE(_call_exit, int)
+METALMOCK_VOID1_FREE(_call_quick_exit, int)
 // Mutable Components
 Utils::ConsoleColorerMock* _consoleColorerMock = nullptr;
 
 STARTUP
 {
    // Function Pointers
-   _console._call_exit = BIND_1ARG_METALMOCK_OBJECT(_call_exitMock);
+   _console._call_quick_exit = BIND_1ARG_METALMOCK_OBJECT(_call_quick_exitMock);
    // Mutable Components
    _console._consoleColorer.reset(_consoleColorerMock = new Utils::ConsoleColorerMock);
 }
@@ -34,7 +34,7 @@ TEST(DefaultConstructor_NewsConsoleColorer)
    // Function Pointers
    DELETE_TO_ASSERT_NEWED(console._consoleColorer);
    // Mutable Components
-   STD_FUNCTION_TARGETS(_exit, console._call_exit);
+   STD_FUNCTION_TARGETS(_exit, console._call_quick_exit);
 }
 
 TEST(Write_WritesMessageWithoutNewline)
@@ -69,12 +69,12 @@ TEST(WriteLineIf_DoPrintMessageIsTrue_WritesMessageToCoutWithNewline)
 
 TEST(WriteLineAndExit_WritesMessageAndNewline_ExitsWithExitCode)
 {
-   _call_exitMock.Expect();
+   _call_quick_exitMock.Expect();
    const int exitCode = ZenUnit::Random<int>();
    //
    _console.WriteLineAndExit(ZenUnit::Random<string>(), exitCode);
    //
-   METALMOCK(_call_exitMock.CalledOnceWith(exitCode));
+   METALMOCK(_call_quick_exitMock.CalledOnceWith(exitCode));
 }
 
 TEST(WriteLineColor_SetsConsoleTextColor_WritesMessageThenNewline_UnsetsColor)

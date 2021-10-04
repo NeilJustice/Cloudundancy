@@ -5,7 +5,7 @@ namespace Utils
 {
    Console::Console()
       // Function Pointers
-      : _call_exit(_exit)
+      : _call_quick_exit(_exit)
       // Mutable Components
       , _consoleColorer(make_unique<Utils::ConsoleColorer>())
 
@@ -45,7 +45,7 @@ namespace Utils
    void Console::WriteLineAndExit(string_view message, int exitCode) const
    {
       cout << message << '\n';
-      _call_exit(exitCode);
+      _call_quick_exit(exitCode);
    }
 
    void Console::WriteLineColor(string_view message, Color color) const

@@ -28,7 +28,7 @@ EVIDENCE
 CloudundancyFileCopier _cloudundancyFileCopier;
 
 // Function Pointers
-METALMOCK_VOID1_FREE(_call_exit, int)
+METALMOCK_VOID1_FREE(_call_quick_exit, int)
 METALMOCK_NONVOID3_FREE(string, _call_String_ReplaceFirst, const string&, const string&, const string&)
 METALMOCK_NONVOID1_FREE(string, _call_Type_GetExceptionClassNameAndMessage, const exception*)
 
@@ -73,7 +73,7 @@ Utils::StopwatchMock* _stopwatchMock = nullptr;
 STARTUP
 {
    // Function Pointers
-   _cloudundancyFileCopier._call_exit = BIND_1ARG_METALMOCK_OBJECT(_call_exitMock);
+   _cloudundancyFileCopier._call_quick_exit = BIND_1ARG_METALMOCK_OBJECT(_call_quick_exitMock);
    _cloudundancyFileCopier._call_String_ReplaceFirst = BIND_3ARG_METALMOCK_OBJECT(_call_String_ReplaceFirstMock);
    _cloudundancyFileCopier._call_Type_GetExceptionClassNameAndMessage = BIND_1ARG_METALMOCK_OBJECT(_call_Type_GetExceptionClassNameAndMessageMock);
    // Function Callers
@@ -99,7 +99,7 @@ TEST(DefaultConstructor_SetsFunctionsAndNewsComponents)
 {
    CloudundancyFileCopier cloudundancyFileCopier;
    // Function Pointers
-   STD_FUNCTION_TARGETS(exit, cloudundancyFileCopier._call_exit);
+   STD_FUNCTION_TARGETS(quick_exit, cloudundancyFileCopier._call_quick_exit);
    STD_FUNCTION_TARGETS(Utils::String::ReplaceFirst, cloudundancyFileCopier._call_String_ReplaceFirst);
    STD_FUNCTION_TARGETS(Type::GetExceptionClassNameAndMessage, cloudundancyFileCopier._call_Type_GetExceptionClassNameAndMessage);
    // Function Callers
@@ -480,7 +480,7 @@ TEST(WriteCopiedMessageOrExitWithCode1IfCopyFailed_CopyFailed_WritesCopyFailedAn
 {
    _consoleMock->WriteLineColorMock.Expect();
    _cloudundancyLogFileWriterMock->AppendTextToCloudundancyLogFileInFolderMock.Expect();
-   _call_exitMock.Expect();
+   _call_quick_exitMock.Expect();
    Utils::FileCopyResult fileCopyResult = ZenUnit::Random<Utils::FileCopyResult>();
    fileCopyResult.copySucceeded = false;
    const fs::path destinationFolderPath = ZenUnit::Random<fs::path>();
@@ -494,7 +494,7 @@ TEST(WriteCopiedMessageOrExitWithCode1IfCopyFailed_CopyFailed_WritesCopyFailedAn
       "Copy failed [", fileCopyResult.durationInMilliseconds, "ms]: ", fileCopyResult.copyFailureReason, "\n\n[Cloudundancy] ExitCode: 1");
    METALMOCKTHEN(_cloudundancyLogFileWriterMock->AppendTextToCloudundancyLogFileInFolderMock.CalledOnceWith(destinationFolderPath, expectedCopyFailedLogFileMessage)).Then(
    METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedCopyFailedConsoleMessage, Color::Red))).Then(
-   METALMOCKTHEN(_call_exitMock.CalledOnceWith(1)));
+   METALMOCKTHEN(_call_quick_exitMock.CalledOnceWith(1)));
 }
 
 RUN_TESTS(CloudundancyFileCopierTests)
