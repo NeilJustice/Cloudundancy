@@ -20,7 +20,7 @@ cppcheck \
    -I /usr/local/include/ZenUnitAndMetalMock \
    -I libCloudundancy \
    -I . \
-   -j 48 \
+   -j 64 \
    --output-file=cppcheck_results.txt \
    --error-exitcode=1 \
    .
