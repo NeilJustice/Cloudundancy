@@ -165,7 +165,7 @@ public:
    string computerNameCharsReturnValue;
    BOOL returnValue = FALSE;
 
-   BOOL CallInstead(CHAR* outComputerNameChars, DWORD* computerNameCharsSize)
+   BOOL CallInstead(CHAR* outComputerNameChars, const DWORD* computerNameCharsSize)
    {
       ++numberOfCalls;
       _outComputerNameCharsArg = outComputerNameChars;
@@ -211,7 +211,7 @@ public:
    string usernameCharsReturnValue;
    BOOL returnValue = FALSE;
 
-   BOOL CallInstead(CHAR* outUserNameChars, DWORD* usernameCharsSize)
+   BOOL CallInstead(CHAR* outUserNameChars, const DWORD* usernameCharsSize)
    {
       ++numberOfCalls;
       _outUserNameCharsArg = outUserNameChars;

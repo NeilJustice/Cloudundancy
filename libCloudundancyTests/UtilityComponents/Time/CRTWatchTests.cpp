@@ -101,7 +101,7 @@ struct _localtime64_sCallHistory
    tm dereferencedOutTmArgument;
    time_t dereferencedTimeTArgument = 0;
 
-   errno_t RecordCall(tm* outTm, const time_t* timeT)
+   errno_t RecordCall(const tm* outTm, const time_t* timeT)
    {
       ++numberOfCalls;
       dereferencedOutTmArgument = *outTm;
