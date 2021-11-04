@@ -1,6 +1,7 @@
 #!/bin/bash
 set -v
 
+cores=$(grep -c ^processor /proc/cpuinfo)
 cppcheck \
    --enable=all \
    --cppcheck-build-dir=Cppcheck \
@@ -20,7 +21,7 @@ cppcheck \
    -I /usr/local/include/ZenUnitAndMetalMock \
    -I libCloudundancy \
    -I . \
-   -j 64 \
+   -j "$cores" \
    --output-file=cppcheck_results.txt \
    --error-exitcode=1 \
    .
