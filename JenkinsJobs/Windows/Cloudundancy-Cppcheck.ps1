@@ -1,3 +1,4 @@
+$numberOfLogicalProcessors = (Get-CimInstance -ClassName Win32_ComputerSystem).NumberOfLogicalProcessors
 cppcheck.exe `
    --enable=all `
    --cppcheck-build-dir=Cppcheck `
@@ -17,7 +18,7 @@ cppcheck.exe `
    -I C:\include\ZenUnitAndMetalMock `
    -I libCloudundancy `
    -I . `
-   -j 64 `
+   -j $numberOfLogicalProcessors `
    --output-file=cppcheck_results.txt `
    --error-exitcode=1 `
    .
