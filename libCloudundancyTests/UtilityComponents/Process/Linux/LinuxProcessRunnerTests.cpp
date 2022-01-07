@@ -135,7 +135,7 @@ TEST(ThrowIfWifexitedReturnValueIsNot1_WifexitedReturnValueIs1_DoesNothing)
 TEST(ThrowIfWifexitedReturnValueIsNot1_WifexitedReturnValueIsNot1_ThrowsRuntimeError)
 {
    const pair<int, string> errnoAndErrnoDescription = _errorCodeTranslatorMock->GetErrnoWithDescriptionMock.ReturnRandom();
-   const int wifexitedReturnValue = ZenUnit::RandomNotEqualToValue<int>(1);
+   const int wifexitedReturnValue = ZenUnit::RandomNotEqualTo<int>(1);
    //
    const string expectedExceptionMessage = Utils::String::ConcatValues(
       "'WIFEXITED(waitPidStatus) did not return 1: ", errnoAndErrnoDescription.first,
@@ -177,7 +177,7 @@ TEST(ThrowRuntimeErrorIfWaitPidReturnValueDoesNotEqualPid_WaitPidReturnValueDoes
 {
    const pair<int, string> errnoAndErrnoDescription = _errorCodeTranslatorMock->GetErrnoWithDescriptionMock.ReturnRandom();
    const pid_t waitpidReturnValue = ZenUnit::Random<pid_t>();
-   const pid_t pid = ZenUnit::RandomNotEqualToValue<pid_t>(waitpidReturnValue);
+   const pid_t pid = ZenUnit::RandomNotEqualTo<pid_t>(waitpidReturnValue);
    //
    const string expectedExceptionMessage = Utils::String::ConcatValues(
       "'waitpid(pid, &waitPidStatus, 0)' unexpectedly returned ", waitpidReturnValue, " which is not equal to pid ", pid,

@@ -102,7 +102,7 @@ TEST(GetRequiredBool_ArgInMap_ReturnsValue)
 TEST(GetProgramModeSpecificRequiredString_ProgramModeValueDoesNotEqualComparisonProgramModeValue_ReturnsEmptyString)
 {
    const int programModeAsInt = ZenUnit::Random<int>();
-   const int fieldIsRequiredIfProgramModeIntEqualsThisValue = ZenUnit::RandomNotEqualToValue<int>(programModeAsInt);
+   const int fieldIsRequiredIfProgramModeIntEqualsThisValue = ZenUnit::RandomNotEqualTo<int>(programModeAsInt);
    //
    const string argValue = _docoptParser.GetProgramModeSpecificRequiredString(
       _docoptArgs, programModeAsInt, fieldIsRequiredIfProgramModeIntEqualsThisValue, _argName);
