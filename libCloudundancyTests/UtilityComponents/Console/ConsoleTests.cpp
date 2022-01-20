@@ -7,7 +7,8 @@ TESTS(ConsoleTests)
 AFACT(DefaultConstructor_NewsConsoleColorer)
 AFACT(Write_WritesMessageWithoutNewline)
 AFACT(WriteLine_WritesMessageAndNewline)
-AFACT(WriteLines_WritesLinesToCoutWithNewline)
+AFACT(WriteLines_EmptyStringsVector_DoesNothing)
+AFACT(WriteLines_NonEmptyStringsVector_WritesStringsToConsole)
 AFACT(WriteLineIf_DoPrintMessageIsFalse_Returns)
 AFACT(WriteLineIf_DoPrintMessageIsTrue_WritesMessageToCoutWithNewline)
 AFACT(WriteLineAndExit_WritesMessageAndNewline_ExitsWithExitCode)
@@ -51,10 +52,16 @@ TEST(WriteLine_WritesMessageAndNewline)
    DOES_NOT_THROW(_console.WriteLine(stringView));
 }
 
-TEST(WriteLines_WritesLinesToCoutWithNewline)
+TEST(WriteLines_EmptyStringsVector_DoesNothing)
 {
-   const vector<string> lines = ZenUnit::RandomVector<string>();
-   _console.WriteLines(lines);
+   const vector<string> emptyLines;
+   _console.WriteLines(emptyLines);
+}
+
+TEST(WriteLines_NonEmptyStringsVector_WritesStringsToConsole)
+{
+   const vector<string> nonEmptyLines = ZenUnit::RandomNonEmptyVector<string>();
+   _console.WriteLines(nonEmptyLines);
 }
 
 TEST(WriteLineIf_DoPrintMessageIsFalse_Returns)
