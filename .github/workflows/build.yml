@@ -24,8 +24,8 @@ jobs:
           path: ${{ env.pythonLocation }}
           key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
 
-      - name: Install apt packages
-        run: sudo apt-get install ninja-build
+      - name: Install lld and ninja-build
+        run: sudo apt-get install lld ninja-build
 
       - name: Install lcov if g++-10 Release
         run: sudo apt-get install lcov
