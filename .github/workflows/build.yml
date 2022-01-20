@@ -81,7 +81,7 @@ jobs:
         if: ${{ matrix.cxx == 'g++-10' && matrix.cmake_build_type == 'Release' }}
         
       - name: Print .comment section of binary cloudundancy to confirm linked with LLD
-        run: run: readelf --string-dump .comment "${{matrix.cmake_build_type}}/Cloudundancy/cloudundancy"
+        run: readelf --string-dump .comment "${{matrix.cmake_build_type}}/Cloudundancy/cloudundancy"
 
       - name: Install and run lcov 1.15 then upload to Codecov.io if g++-10 Release
         run: |
