@@ -215,54 +215,6 @@ namespace std
    };
 }
 
-inline ostream& operator<<(ostream& os, const docopt::Value& docoptValue)
-{
-   if (docoptValue.IsBool())
-   {
-      const bool docoptValueAsBool = docoptValue.AsBool();
-      os << (docoptValueAsBool ? "true" : "false");
-   }
-   else if (docoptValue.IsLong())
-   {
-      const long docoptValueAsLong = docoptValue.AsLong();
-      os << docoptValueAsLong;
-   }
-   else if (docoptValue.IsSizeT())
-   {
-      const size_t docoptValueAsSizeT = docoptValue.AsSizeT();
-      os << docoptValueAsSizeT;
-   }
-   else if (docoptValue.IsString())
-   {
-      const string& docoptValueAsString = docoptValue.AsString();
-      os << '"' << docoptValueAsString << '"';
-   }
-   else if (docoptValue.IsStringList())
-   {
-      const vector<string>& docoptValueAsStringList = docoptValue.AsStringList();
-      os << "[";
-      bool first = true;
-      for (const string& el : docoptValueAsStringList)
-      {
-         if (first)
-         {
-            first = false;
-         }
-         else
-         {
-            os << ", ";
-         }
-         os << '"' << el << '"';
-      }
-      os << "]";
-   }
-   else
-   {
-      os << "null";
-   }
-   return os;
-}
-
 namespace docopt
 {
    inline Value::Value(bool boolValue)
@@ -2014,5 +1966,53 @@ namespace docopt
          cout << doc << '\n';
          exit(-1);
       }
+   }
+
+   inline ostream& operator<<(ostream& os, const docopt::Value& docoptValue)
+   {
+      if (docoptValue.IsBool())
+      {
+         const bool docoptValueAsBool = docoptValue.AsBool();
+         os << (docoptValueAsBool ? "true" : "false");
+      }
+      else if (docoptValue.IsLong())
+      {
+         const long docoptValueAsLong = docoptValue.AsLong();
+         os << docoptValueAsLong;
+      }
+      else if (docoptValue.IsSizeT())
+      {
+         const size_t docoptValueAsSizeT = docoptValue.AsSizeT();
+         os << docoptValueAsSizeT;
+      }
+      else if (docoptValue.IsString())
+      {
+         const string& docoptValueAsString = docoptValue.AsString();
+         os << '"' << docoptValueAsString << '"';
+      }
+      else if (docoptValue.IsStringList())
+      {
+         const vector<string>& docoptValueAsStringList = docoptValue.AsStringList();
+         os << "[";
+         bool first = true;
+         for (const string& el : docoptValueAsStringList)
+         {
+            if (first)
+            {
+               first = false;
+            }
+            else
+            {
+               os << ", ";
+            }
+            os << '"' << el << '"';
+         }
+         os << "]";
+      }
+      else
+      {
+         os << "null";
+      }
+      return os;
    }
 }
