@@ -1,4 +1,4 @@
-$numberOfLogicalProcessors = (Get-CimInstance -ClassName Win32_ComputerSystem).NumberOfLogicalProcessors
+$numberOfLogicalProcessorsDividedBy2 = (Get-CimInstance -ClassName Win32_ComputerSystem).NumberOfLogicalProcessors / 2
 cppcheck.exe `
    --enable=all `
    --cppcheck-build-dir=Cppcheck `
@@ -29,7 +29,7 @@ cppcheck.exe `
    -I C:\include\ZenUnitAndMetalMock `
    -I libCloudundancy `
    -I . `
-   -j $numberOfLogicalProcessors `
+   -j $numberOfLogicalProcessorsDividedBy2 `
    --output-file=cppcheck_results.txt `
    --error-exitcode=1 `
    .
