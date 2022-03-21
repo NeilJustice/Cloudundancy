@@ -59,6 +59,8 @@ Cppcheck/files.txt
 *.a1
 *.a2
 *.a3
+*.a5
 *.s2
 *.s4
+*.s6
 cppcheck_results.txt
