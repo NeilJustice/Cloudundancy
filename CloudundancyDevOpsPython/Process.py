@@ -38,7 +38,7 @@ def run(command: str) -> Tuple[str, str]:
    completedProcess = subprocess.run(shlexedCommand, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False)
    stdout = bytes_to_utf8(completedProcess.stdout)
    stderr = bytes_to_utf8(completedProcess.stderr)
-   return (stdout, stderr)
+   return stdout, stderr
 
 def run_and_get_exit_code(command: str) -> int:
    singleQuotedCommand = f'\'{command}\''
