@@ -195,14 +195,14 @@ TEST(Windows__SetTextColor_CallsSetConsoleTextAttributeToWindowsColor)
    const HANDLE stdOutHandle = reinterpret_cast<HANDLE>(ZenUnit::Random<unsigned long long>());
    consoleColorerSelfMocked.GetStdHandleMock.Return(stdOutHandle);
 
-   const WindowsColor windowsTextColor = ZenUnit::RandomEnum<WindowsColor>(WindowsColor::MaxValue);
+   const WindowsColor windowsTextColor = ZenUnit::RandomEnum<WindowsColor>();
    consoleColorerSelfMocked.ColorToWindowsColorMock.Return(windowsTextColor);
 
    const BOOL didSetConsoleTextAttr = consoleColorerSelfMocked.SetConsoleTextAttributeMock.ReturnRandom();
 
    consoleColorerSelfMocked._asserterMock->ThrowIfIntsNotEqualMock.Expect();
 
-   const Color textColor = ZenUnit::RandomEnum<Color>(Color::MaxValue);
+   const Color textColor = ZenUnit::RandomEnum<Color>();
    //
    consoleColorerSelfMocked.PlatformSpecificSetTextColor(textColor);
    //

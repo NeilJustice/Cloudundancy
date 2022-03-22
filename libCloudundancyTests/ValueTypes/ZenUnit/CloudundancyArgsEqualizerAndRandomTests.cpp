@@ -10,7 +10,7 @@ EVIDENCE
 TEST(ZenUnitEqualizer_ThrowsIfAnyFieldNotEqual)
 {
    ZENUNIT_EQUALIZER_TEST_SETUP(CloudundancyArgs);
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyArgs, programMode, ZenUnit::RandomNon0Enum<ProgramMode>(ProgramMode::MaxValue));
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyArgs, programMode, ZenUnit::RandomNon0Enum<ProgramMode>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyArgs, iniFilePath, ZenUnit::Random<fs::path>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyArgs, deleteDestinationFoldersFirst, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyArgs, sevenZipModeIniFilePath, ZenUnit::Random<fs::path>());
