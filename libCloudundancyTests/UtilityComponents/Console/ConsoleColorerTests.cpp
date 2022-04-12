@@ -166,7 +166,7 @@ TEST(Linux__SetTextColor_CallsColorToLinuxColor_InsertionOperatorsLinuxColorToCo
       METALMOCK_NONVOID1_CONST(const char*, ColorToLinuxColor, Color)
    } consoleColorerSelfMocked;
    consoleColorerSelfMocked.ColorToLinuxColorMock.ReturnRandom();
-   const Color color = ZenUnit::RandomEnum<Color>(Color::MaxValue);
+   const Color color = ZenUnit::RandomEnum<Color>();
    //
    consoleColorerSelfMocked.PlatformSpecificSetTextColor(color);
    //
