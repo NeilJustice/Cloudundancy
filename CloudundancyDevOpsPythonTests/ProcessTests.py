@@ -30,7 +30,7 @@ class ProcessTests(unittest.TestCase):
       self.command = Random.string()
       self.shlexedCommand = Random.string()
       self.currentWorkingDirectory = Random.string()
-      self.ExpectedPylintcommand = 'pylint --rcfile=.pylintrc --init-hook=\"sys.path.append(\'.\')\" '
+      self.ExpectedPylintcommand = 'pylint --rcfile=.pylintrc '
 
    def test_bytes_to_utf8_string_ReturnsBytesDecodedToUtf8String(self):
       self.assertEqual('', Process.bytes_to_utf8(b''))

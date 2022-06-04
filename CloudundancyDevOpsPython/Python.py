@@ -4,7 +4,7 @@ import platform
 import sys
 from CloudundancyDevOpsPython import Process
 
-PylintCommand = 'pylint --rcfile=.pylintrc --score=n --init-hook=\"sys.path.append(\'.\')\" '
+PylintCommand = 'pylint --rcfile=.pylintrc --score=n '
 
 def run_flake8() -> None:
    flake8Command = 'flake8 --config=.flake8 --show-source --benchmark'
