@@ -8,7 +8,7 @@
     </ProjectHome>
     <StartupFile>MypyFlake8PylintThenRunTestsWithCoverage.py</StartupFile>
     <SearchPath>..\</SearchPath>
-    <WorkingDirectory>D:\Code\Cloudundancy\CloudundancyDevOpsPython</WorkingDirectory>
+    <WorkingDirectory>C:\Code\Cloudundancy\CloudundancyDevOpsPython</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>DevOpsPython</Name>
     <RootNamespace>DevOpsPython</RootNamespace>

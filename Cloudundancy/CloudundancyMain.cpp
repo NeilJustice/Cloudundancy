@@ -27,8 +27,8 @@ using namespace std;
 #include "libCloudundancy/UtilityComponents/Time/Watch.h"
 
 // Production Cloudundancy command lines:
-// copy-files-to-multiple-folders --ini-file=D:\Code\dotfiles\WindowsCloudundancy.ini --delete-destination-folders-first
-// 7zip-files-then-copy-the-7zip-file-to-multiple-folders --ini-file-to-copy-files-to-7zip-staging-folder=D:\Code\dotfiles\WindowsCloudundancy_CopyCodeFolderTo7ZipStagingFolder.ini --7zip-staging-folder=D:\CodeFolderBackupStaging --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=D:\Code\dotfiles\WindowsCloudundancy_Copy7ZipFileFromStagingFolderToMultipleFolders.ini
+// copy-files-to-multiple-folders --ini-file=C:\Code\dotfiles\WindowsCloudundancy.ini --delete-destination-folders-first
+// 7zip-files-then-copy-the-7zip-file-to-multiple-folders --ini-file-to-copy-files-to-7zip-staging-folder=C:\Code\dotfiles\WindowsCloudundancy_CopyCodeFolderTo7ZipStagingFolder.ini --7zip-staging-folder=C:\CodeFolderBackupStaging --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=C:\Code\dotfiles\WindowsCloudundancy_Copy7ZipFileFromStagingFolderToMultipleFolders.ini
 
 // Testing Cloudundancy command lines:
 // copy-files-to-multiple-folders --ini-file=D:\CloudundancyTesting\Cloudundancy.ini --delete-destination-folders-first
