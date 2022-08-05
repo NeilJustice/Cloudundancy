@@ -24,11 +24,11 @@ Cloudundancy is rigorously unit tested with <a href="https://github.com/NeilJust
    * [copy-files-to-multiple-folders](#copy-files-to-multiple-folders)
    * [7zip-files-then-copy-the-7zip-file-to-multiple-folders](#7zip-files-then-copy-the-7zip-file-to-multiple-folders)
 * [Cloudundancy code structure as it appears in Visual Studio Code on Linux](#cloudundancy-code-structure-as-it-appears-in-visual-studio-code-on-linux)
-* [Cloudundancy code structure as it appears in Visual Studio 2019 on Windows](#cloudundancy-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
+* [Cloudundancy code structure as it appears in Visual Studio 2022 on Windows](#cloudundancy-code-structure-as-it-appears-in-visual-studio-2022-on-windows)
 * [Linux Jenkins jobs which build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy's C++ code and Mypy-Flake8-Pylint-SonarQube scan Cloudundancy's CI/CD Python code](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-and-undefinedbehaviorsanitize-cloudundancys-c-code-and-mypy-flake8-pylint-sonarqube-scan-cloudundancys-cicd-python-code)
 * [Windows Jenkins jobs which build and Cppcheck Cloudundancy's C++ code and Mypy-Flake8-Pylint-SonarQube scan Cloudundancy's CI/CD Python code](#windows-jenkins-jobs-which-build-and-cppcheck-cloudundancys-c-code-and-mypy-flake8-pylint-sonarqube-scan-cloudundancys-cicd-python-code)
 * [4 steps to build binary cloudundancy on Linux with Clang](#4-steps-to-build-binary-cloudundancy-on-linux-with-clang)
-* [4 steps to build executable Cloudundancy.exe on Windows with Visual Studio 2019](#4-steps-to-build-executable-cloudundancyexe-on-windows-with-visual-studio-2019)
+* [4 steps to build executable Cloudundancy.exe on Windows with Visual Studio 2022](#4-steps-to-build-executable-cloudundancyexe-on-windows-with-visual-studio-2022)
 
 ## Cloudundancy command line usage
 
@@ -79,9 +79,9 @@ E:\CloudundancyBackups
 # Critical files to backup
 C:\CriticalFiles\KeePassFile.kdbx -> .
 C:\CriticalFiles\PersonalFinancesSpreadsheet.xlsx -> .
-C:\VS2019\Common7\IDE\VC\Snippets\1033\Visual C++\C++Snippets.snippet                              -> Snippets
-C:\VS2019\Common7\IDE\Extensions\Microsoft\Python\Core\Snippets\1033\Python\PythonSnippets.snippet -> Snippets
-C:\VS2019\VC#\Snippets\1033\Visual C#\CSharpSnippets.snippet                                       -> Snippets
+C:\VS2022\Common7\IDE\VC\Snippets\1033\Visual C++\C++Snippets.snippet                              -> Snippets
+C:\VS2022\Common7\IDE\Extensions\Microsoft\Python\Core\Snippets\1033\Python\PythonSnippets.snippet -> Snippets
+C:\VS2022\VC#\Snippets\1033\Visual C#\CSharpSnippets.snippet                                       -> Snippets
 
 # Critical folders to backup
 # Source folder paths ending in a '\' or '/' character are interpretted as folders instead of files
@@ -192,15 +192,11 @@ GitHub repos successfully 7-Zipped and copied to a OneDrive folder:
 
 ## Cloudundancy code structure as it appears in Visual Studio Code on Linux
 
-Shown in this screenshot is the call to `_cloudundancyIniFileReader->ReadIniFile(iniFilePath`) for reading the Cloudundancy .ini file:
-
 ![Cloudundancy code structure as it appears Visual Studio Code on Linux](Screenshots/Linux/CloudundancyCodeStructureInVSCode.png)
 
-## Cloudundancy code structure as it appears in Visual Studio 2019 on Windows
+## Cloudundancy code structure as it appears in Visual Studio 2022 on Windows
 
-Shown in this screenshot is function `CloudundancyArgsParser::ParseStringArgs` which uses the excellent single-header command line arguments parsing  library [docopt.cpp](https://github.com/docopt/docopt.cpp) to parse Cloudundancy's command line arguments:
-
-![CloudundancyArgsParser.cpp](Screenshots/CloudundancyArgsParser.png)
+![CloudundancyArgsParser.cpp](Screenshots/Windows/CloudundancyCodeInVisualStudio2022.png)
 
 ## Linux Jenkins jobs which build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy's C++ code and Mypy-Flake8-Pylint-SonarQube scan Cloudundancy's CI/CD Python code
 
@@ -223,7 +219,7 @@ Resulting binary `/usr/local/bin/cloudundancy`:
 
 ![Binary cloudundancy on Linux](Screenshots/Linux/LinuxBinaryCloudundancy.png)
 
-## 4 steps to build executable Cloudundancy.exe on Windows with Visual Studio 2019
+## 4 steps to build executable Cloudundancy.exe on Windows with Visual Studio 2022
 
 ```powershell
 git clone https://github.com/NeilJustice/Cloudundancy
