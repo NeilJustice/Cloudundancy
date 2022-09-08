@@ -62,7 +62,6 @@ public:
       std::ostringstream oss;
       for (int i = static_cast<int>(vectorSize - 1); i >= 0; --i)
       {
-         const T& element = vec[i];
          if (i > 0)
          {
             oss << separator;

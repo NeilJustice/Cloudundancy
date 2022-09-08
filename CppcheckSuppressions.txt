@@ -2,6 +2,7 @@
 *:*MetalMock.h
 *:libCloudundancy\UtilityComponents\Docopt\docopt.h
 allocaCalled:*
+constVariable:libCloudundancy\StaticUtilities\StringUtil.h:14
 mismatchingContainerIterator:*
 noExplicitConstructor:libCloudundancy/UtilityComponents/Docopt/docopt.h:56
 preprocessorErrorDirective:*
