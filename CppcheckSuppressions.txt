@@ -1,5 +1,6 @@
 *:*ZenUnit.h
 *:*MetalMock.h
+*:libCloudundancy\UtilityComponents\Docopt\docopt.h
 allocaCalled:*
 mismatchingContainerIterator:*
 noExplicitConstructor:libCloudundancy/UtilityComponents/Docopt/docopt.h:56
