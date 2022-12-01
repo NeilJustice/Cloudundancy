@@ -177,17 +177,15 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndMessage_Returns1)
    //
    const int exitCode = _cloudundancyProgram.ExceptionHandler(ex, stringArgs);
    //
-   METALMOCK(_call_Type_GetExceptionClassNameAndMessageMock.CalledOnceWith(&ex));
    const string expectedFullExceptionErrorMessage = "\n[Cloudundancy]     Error: Exception thrown: " + exceptionTypeNameAndMessage;
-   METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
-   {
-      string_view(expectedFullExceptionErrorMessage),
-      string_view("[Cloudundancy]   EndTime: " + endTime),
-      string_view("[Cloudundancy]  Duration: " + elapsedSeconds + " seconds")
-   }));
-   METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith("[Cloudundancy]  ExitCode: 1", Color::Red));
-   METALMOCK(_watchMock->DateTimeNowMock.CalledOnce());
-   METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
+   METALMOCK(_consoleMock->WriteLineMock.CalledNTimes(3));
+   METALMOCKTHEN(_call_Type_GetExceptionClassNameAndMessageMock.CalledOnceWith(&ex)).Then(
+   METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith(expectedFullExceptionErrorMessage))).Then(
+   METALMOCKTHEN(_watchMock->DateTimeNowMock.CalledOnce())).Then(
+   METALMOCKTHEN(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce())).Then(
+   METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith("[Cloudundancy]   EndTime: " + endTime))).Then(
+   METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith("[Cloudundancy]  Duration: " + elapsedSeconds + " seconds"))).Then(
+   METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith("[Cloudundancy]  ExitCode: 1", Color::Red)));
    ARE_EQUAL(1, exitCode);
 }
 
