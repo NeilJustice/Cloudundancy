@@ -37,6 +37,6 @@ C:\Users\UserName\Documents\WindowsPowerShell\ -> PowerShell
 # PowerShell Modules folder to not copy, as PowerShell modules can be easily reinstalled
 PowerShell\Modules\
 )";
-   _console->WriteLine(exampleWindowsIniFileText);
+   p_console->WriteLine(exampleWindowsIniFileText);
    return 0;
 }

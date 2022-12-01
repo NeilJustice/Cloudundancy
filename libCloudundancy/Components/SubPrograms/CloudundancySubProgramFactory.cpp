@@ -31,7 +31,3 @@ shared_ptr<CloudundancySubProgram> CloudundancySubProgramFactory::NewCloudundanc
    }
    }
 }
-
-CloudundancySubProgramFactory::~CloudundancySubProgramFactory()
-{
-}

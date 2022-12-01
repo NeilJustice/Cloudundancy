@@ -10,14 +10,14 @@ EVIDENCE
 
 CopyFileToFilesToMultipleFoldersSubProgram _copyFilesToMultipleFoldersSubProgram;
 // Base Constant Components
-Utils::ConsoleMock* _consoleMock = nullptr;
+Utils::ConsoleMock* p_consoleMock = nullptr;
 // Constant Components
 CloudundancyFileCopierMock* _cloudundancyFileCopierMock = nullptr;
 
 STARTUP
 {
    // Base Constant Components
-   _copyFilesToMultipleFoldersSubProgram._console.reset(_consoleMock = new Utils::ConsoleMock);
+   _copyFilesToMultipleFoldersSubProgram.p_console.reset(p_consoleMock = new Utils::ConsoleMock);
    // Constant Components
    _copyFilesToMultipleFoldersSubProgram._cloudundancyFileCopier.reset(_cloudundancyFileCopierMock = new CloudundancyFileCopierMock);
 }
@@ -31,7 +31,7 @@ TEST(DefaultConstructor_NewsComponents)
 TEST(Run_SetsArgs_CallsCopyFilteredFilesAndFoldersToDestinationFolders_Returns0)
 {
    _cloudundancyFileCopierMock->CopyFilteredFilesAndFoldersToDestinationFoldersMock.Expect();
-   _consoleMock->WriteLineColorMock.Expect();
+   p_consoleMock->WriteLineColorMock.Expect();
 
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
@@ -39,7 +39,7 @@ TEST(Run_SetsArgs_CallsCopyFilteredFilesAndFoldersToDestinationFolders_Returns0)
    //
    METALMOCKTHEN(_cloudundancyFileCopierMock->CopyFilteredFilesAndFoldersToDestinationFoldersMock.CalledOnceWith(
       args.iniFilePath, args.deleteDestinationFoldersFirst)).Then(
-   METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith(
+   METALMOCKTHEN(p_consoleMock->WriteLineColorMock.CalledOnceWith(
       "\n[Cloudundancy] OverallBackupResult: Successfully copied all [SourceFilesAndFolders] to all [DestinationFolders]",
       Color::Green)));
    IS_ZERO(exitCode);

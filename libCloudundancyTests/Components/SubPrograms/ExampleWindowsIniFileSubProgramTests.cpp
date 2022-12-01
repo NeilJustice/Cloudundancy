@@ -7,17 +7,17 @@ EVIDENCE
 
 ExampleWindowsIniFileSubProgram _exampleWindowsIniFileSubProgram;
 // Base Constant Components
-Utils::ConsoleMock* _consoleMock = nullptr;
+Utils::ConsoleMock* p_consoleMock = nullptr;
 
 STARTUP
 {
    // Base Constant Components
-   _exampleWindowsIniFileSubProgram._console.reset(_consoleMock = new Utils::ConsoleMock);
+   _exampleWindowsIniFileSubProgram.p_console.reset(p_consoleMock = new Utils::ConsoleMock);
 }
 
 TEST(Run_PrintsExampleWindowsIniFile_Returns0)
 {
-   _consoleMock->WriteLineMock.Expect();
+   p_consoleMock->WriteLineMock.Expect();
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
    const int exitCode = _exampleWindowsIniFileSubProgram.Run(args);
@@ -56,7 +56,7 @@ C:\Users\UserName\Documents\WindowsPowerShell\ -> PowerShell
 # PowerShell Modules folder to not copy, as PowerShell modules can be easily reinstalled
 PowerShell\Modules\
 )";
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedExampleWindowsIniFileText));
+   METALMOCK(p_consoleMock->WriteLineMock.CalledOnceWith(expectedExampleWindowsIniFileText));
    IS_ZERO(exitCode);
 }
 

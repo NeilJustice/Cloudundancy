@@ -23,16 +23,16 @@ EVIDENCE
 
 Utils::ConsoleColorer _consoleColorer;
 // Function Pointers
-METALMOCK_NONVOID1_FREE(int, fileno, FILE*)
-METALMOCK_NONVOID1_FREE(int, isatty, int)
+METALMOCK_NONVOID1_FREE(int, _call_fileno, FILE*)
+METALMOCK_NONVOID1_FREE(int, _call_isatty, int)
 // Constant Components
 Utils::AsserterMock* _asserterMock = nullptr;
 
 STARTUP
 {
    // Function Pointers
-   _consoleColorer._call_fileno = BIND_1ARG_METALMOCK_OBJECT(filenoMock);
-   _consoleColorer._call_isatty = BIND_1ARG_METALMOCK_OBJECT(isattyMock);
+   _consoleColorer._call_fileno = BIND_1ARG_METALMOCK_OBJECT(_call_filenoMock);
+   _consoleColorer._call_isatty = BIND_1ARG_METALMOCK_OBJECT(_call_isattyMock);
    // Constant Components
    _consoleColorer._asserter.reset(_asserterMock = new Utils::AsserterMock);
 }
@@ -40,7 +40,6 @@ STARTUP
 TEST(DefaultConstructor_SetsFunctionPointers_SetsBoolFieldsToFalse)
 {
    Utils::ConsoleColorer consoleColorer;
-   //
    // Function Pointers
 #ifdef _WIN32
    STD_FUNCTION_TARGETS(_fileno, consoleColorer._call_fileno);
@@ -245,13 +244,13 @@ TEST2X2(SupportsColor_CallsFileno_CallsIsAtty_ReturnsTrueIfIsAttyReturnValueIsNo
    1, true,
    2, true)
 {
-   const int stdoutFileHandle = filenoMock.ReturnRandom();
-   isattyMock.Return(isattyReturnValue);
+   const int stdoutFileHandle = _call_filenoMock.ReturnRandom();
+   _call_isattyMock.Return(isattyReturnValue);
    //
    const bool supportsColor = _consoleColorer.SupportsColor();
    //
-   METALMOCKTHEN(filenoMock.CalledOnceWith(stdout)).Then(
-   METALMOCKTHEN(isattyMock.CalledOnceWith(stdoutFileHandle)));
+   METALMOCKTHEN(_call_filenoMock.CalledOnceWith(stdout)).Then(
+   METALMOCKTHEN(_call_isattyMock.CalledOnceWith(stdoutFileHandle)));
    ARE_EQUAL(expectedReturnValue, supportsColor);
 }
 

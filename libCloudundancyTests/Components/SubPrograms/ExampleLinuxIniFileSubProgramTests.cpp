@@ -7,17 +7,17 @@ EVIDENCE
 
 ExampleLinuxIniFileSubProgram _exampleLinuxIniFileSubProgram;
 // Base Constant Components
-Utils::ConsoleMock* _consoleMock = nullptr;
+Utils::ConsoleMock* p_consoleMock = nullptr;
 
 STARTUP
 {
    // Base Constant Components
-   _exampleLinuxIniFileSubProgram._console.reset(_consoleMock = new Utils::ConsoleMock);
+   _exampleLinuxIniFileSubProgram.p_console.reset(p_consoleMock = new Utils::ConsoleMock);
 }
 
 TEST(Run_PrintsExampleLinuxIniFile_Returns0)
 {
-   _consoleMock->WriteLineMock.Expect();
+   p_consoleMock->WriteLineMock.Expect();
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
    const int exitCode = _exampleLinuxIniFileSubProgram.Run(args);
@@ -44,7 +44,7 @@ R"(
 [FileSubpathsToNotCopy]
 /.git/
 )";
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedExampleLinuxIniFileText));
+   METALMOCK(p_consoleMock->WriteLineMock.CalledOnceWith(expectedExampleLinuxIniFileText));
    IS_ZERO(exitCode);
 }
 

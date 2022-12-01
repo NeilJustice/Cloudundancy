@@ -11,7 +11,8 @@ CloudundancySubProgram _cloudundancySubProgram;
 TEST(DefaultConstructor_NewsConsole)
 {
    CloudundancySubProgram cloudundancySubProgram;
-   DELETE_TO_ASSERT_NEWED(cloudundancySubProgram._console);
+   // Constant Components
+   DELETE_TO_ASSERT_NEWED(cloudundancySubProgram.p_console);
 }
 
 TEST(Run_Returns0)

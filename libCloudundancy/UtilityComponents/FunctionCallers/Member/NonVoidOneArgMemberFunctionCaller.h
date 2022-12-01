@@ -8,7 +8,8 @@ namespace Utils
    public:
       virtual ReturnType CallConstMemberFunction(
          ReturnType(ClassType::* constMemberFunction)(ArgType) const,
-         const ClassType* constClassPointer, ArgType arg) const
+         const ClassType* constClassPointer,
+         ArgType arg) const
       {
          ReturnType returnValue = (constClassPointer->*constMemberFunction)(arg);
          return returnValue;
@@ -16,7 +17,8 @@ namespace Utils
 
       virtual ReturnType CallNonConstMemberFunction(
          ReturnType(ClassType::*nonConstMemberFunction)(ArgType),
-         ClassType* nonConstClassPointer, ArgType arg) const
+         ClassType* nonConstClassPointer,
+         ArgType arg) const
       {
          ReturnType returnValue = (nonConstClassPointer->*nonConstMemberFunction)(arg);
          return returnValue;

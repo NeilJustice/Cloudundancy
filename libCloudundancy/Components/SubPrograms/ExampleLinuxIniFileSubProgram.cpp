@@ -25,6 +25,6 @@ R"(
 [FileSubpathsToNotCopy]
 /.git/
 )";
-   _console->WriteLine(exampleLinuxIniFileText);
+   p_console->WriteLine(exampleLinuxIniFileText);
    return 0;
 }

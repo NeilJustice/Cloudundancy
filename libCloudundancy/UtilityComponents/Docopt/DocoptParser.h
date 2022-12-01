@@ -12,6 +12,7 @@ namespace Utils
    {
       friend class ::DocoptParserTests;
    private:
+      // Function Callers
       function<map<string, docopt::Value>(string, const vector<string>&, bool help, string, bool)> _call_docopt_docopt;
    public:
       DocoptParser();

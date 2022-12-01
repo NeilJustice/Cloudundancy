@@ -9,7 +9,6 @@ CloudundancyLogFileWriter::CloudundancyLogFileWriter()
 {
 }
 
-
 CloudundancyLogFileWriter::~CloudundancyLogFileWriter()
 {
 }

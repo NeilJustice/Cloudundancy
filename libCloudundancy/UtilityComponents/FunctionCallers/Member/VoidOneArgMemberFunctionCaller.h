@@ -10,14 +10,16 @@ namespace Utils
 
       virtual void CallConstMemberFunction(
          void (ClassType::*constMemberFunction)(ArgType) const,
-         const ClassType* constClassPointer, ArgType arg) const
+         const ClassType* constClassPointer, 
+         ArgType arg) const
       {
          (constClassPointer->*constMemberFunction)(arg);
       }
 
       virtual void CallNonConstCallMemberFunction(
          void (ClassType::*nonConstMemberFunction)(ArgType),
-         ClassType* nonConstClassPointer, ArgType arg) const
+         ClassType* nonConstClassPointer, 
+         ArgType arg) const
       {
          (nonConstClassPointer->*nonConstMemberFunction)(arg);
       }

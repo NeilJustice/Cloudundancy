@@ -3,7 +3,7 @@
 
 CloudundancySubProgram::CloudundancySubProgram()
    // Constant Components
-   : _console(make_unique<Utils::Console>())
+   : p_console(make_unique<Utils::Console>())
 {
 }
 

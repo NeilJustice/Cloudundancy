@@ -7,9 +7,6 @@ AFACT(ThrowIfZeroDestinationFolderPaths_DestinationFolderPathsIsEmpty_ThrowsFile
 EVIDENCE
 
 CloudundancyIniValidator _cloudundancyIniValidator;
-// Function Callers
-using _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMockType = Utils::MemberFunctionForEacherMock<CloudundancyIniValidator, fs::path>;
-_memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMockType* _memberForEacher_AppendBackupStartedToCloudundancyLogFileInDestinationFolderMock = nullptr;
 // Constant Components
 Utils::FileSystemMock* _fileSystemMock = nullptr;
 
