@@ -1,6 +1,5 @@
 #pragma once
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgram.h"
-struct CloudundancyArgs;
 class CloudundancyFileCopier;
 class CloudundancyFileSystem;
 

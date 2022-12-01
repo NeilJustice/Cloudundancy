@@ -135,7 +135,7 @@ TEST(GetNameT_ThrownExceptionSubclass_ReturnsBaseClassNameAndNotSubclassName)
 
 TEST(GetExceptionClassNameAndMessage_ReturnsExceptionClassNameColonSpaceExceptionMessage__DefaultExceptionTestCase)
 {
-   const exception ex;
+   const exception ex{};
 #if defined __linux__ || defined __APPLE__
    ARE_EQUAL("std::exception: std::exception", Type::GetExceptionClassNameAndMessage(&ex));
 #elif _WIN32
