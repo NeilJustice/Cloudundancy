@@ -1,4 +1,7 @@
 #include "pch.h"
+#if defined __linux__
+#include <string.h> // strerror_r
+#endif
 #include "libCloudundancy/StaticUtilities/GetLinuxErrno.h"
 #include "libCloudundancy/UtilityComponents/ErrorHandling/ErrorCodeTranslator.h"
 
