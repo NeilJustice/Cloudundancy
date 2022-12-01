@@ -62,11 +62,10 @@ namespace Utils
    {
 #if defined __linux__
       shared_ptr<FILE> binaryWriteModeFilePointer =
-         _caller_CreateOrOpenFileOnLinux->CallConstMemberFunction(&FileSystem::CreateOrOpenFileOnLinux, this, filePath, "wb");
+         _caller_CreateOrOpenFileOnLinux->CallConstMemberFunction(this, &FileSystem::CreateOrOpenFileOnLinux, filePath, "wb");
 #elif defined _WIN32
       shared_ptr<FILE> binaryWriteModeFilePointer =
-         _caller_CreateOrOpenFileOnWindows->CallConstMemberFunction(
-            this, &FileSystem::CreateOrOpenFileOnWindows, filePath, L"wb");
+         _caller_CreateOrOpenFileOnWindows->CallConstMemberFunction(this, &FileSystem::CreateOrOpenFileOnWindows, filePath, L"wb");
 #endif
       return binaryWriteModeFilePointer;
    }
