@@ -43,8 +43,7 @@ namespace Utils
    {
       const string runningMessage = Utils::String::ConcatStrings("[Cloudundancy] Running program: ", processName, " ", arguments);
       _console->WriteLineColor(runningMessage, Color::Yellow);
-      ProcessResult processResult = _caller_Run->CallConstMemberFunction(
-         &LinuxProcessRunner::Run, this, processName, arguments);
+      ProcessResult processResult = _caller_Run->CallConstMemberFunction(this, &LinuxProcessRunner::Run, processName, arguments);
       if (processResult.exitCode != 0)
       {
          const string processFailedErrorMessage = Utils::String::ConcatValues(
