@@ -139,7 +139,7 @@ namespace Utils
    {
       const shared_ptr<Stopwatch> stopwatch = _stopwatchFactory->NewStopwatch();
       stopwatch->Start();
-      shared_ptr<const vector<char>> sourceFileBytes =
+      const shared_ptr<const vector<char>> sourceFileBytes =
          _caller_ReadFileBytes->CallConstMemberFunction(&FileSystem::ReadFileBytes, this, sourceFilePath);
       const fs::path parentPathOfDestinationFilePath = destinationFilePath.parent_path();
       _call_fs_create_directories(parentPathOfDestinationFilePath);
@@ -180,9 +180,10 @@ namespace Utils
       const bool fileExists = _call_fs_exists(filePath);
       if (!fileExists)
       {
-         const shared_ptr<FILE> binaryWriteModeFilePointer =
-            _caller_CreateOrOpenFileFunction->CallConstMemberFunction(&FileSystem::CreateFileInBinaryWriteMode, this, filePath);
-         _caller_WriteTextToOpenFile->CallConstMemberFunction(&FileSystem::WriteTextToOpenFile, this, binaryWriteModeFilePointer, fileText);
+         const shared_ptr<FILE> binaryWriteModeFilePointer = _caller_CreateOrOpenFileFunction->CallConstMemberFunction(
+            &FileSystem::CreateFileInBinaryWriteMode, this, filePath);
+         _caller_WriteTextToOpenFile->CallConstMemberFunction(
+            &FileSystem::WriteTextToOpenFile, this, binaryWriteModeFilePointer, fileText);
       }
    }
 
@@ -202,11 +203,10 @@ namespace Utils
          shared_ptr<const vector<char>> emptyFileBytes = make_shared<vector<char>>(vector<char>{});
          return emptyFileBytes;
       }
-      const unique_ptr<vector<char>> fileBytesBuffer(_charVectorAllocator->NewCharVector(fileSize));
-      const size_t numberOfBytesRead = _call_fread(&(*fileBytesBuffer)[0], 1, fileSize, binaryReadModeFilePointer.get());
+      shared_ptr<vector<char>> fileBytes(_charVectorAllocator->NewCharVector(fileSize));
+      const size_t numberOfBytesRead = _call_fread(&(*fileBytes)[0], 1, fileSize, binaryReadModeFilePointer.get());
       _asserter->ThrowIfSizeTsNotEqual(fileSize, numberOfBytesRead,
          "fread() in Utils::FileSystem::ReadFileBytes(const fs::path& filePath) unexpectedly did not return fileSize");
-      shared_ptr<const vector<char>> fileBytes = make_shared<vector<char>>(*fileBytesBuffer);
       return fileBytes;
    }
 

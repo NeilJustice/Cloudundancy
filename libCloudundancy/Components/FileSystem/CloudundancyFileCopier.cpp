@@ -176,16 +176,13 @@ Utils::FileCopyResult CloudundancyFileCopier::CopyFileToFile(
       "Copying ", sourceFilePath.string(), "\n",
       "     to ", destinationFilePath.string(), ". ");
    _console->Write(copyingFileMessage);
-   Utils::FileCopyResult fileCopyResult;
    const bool sourceFileSizeIsGreaterThanOrEqualTo2GB = _cloudundancyFileSystem->FileSizeIsGreaterThanOrEqualTo2GB(sourceFilePath);
    if (sourceFileSizeIsGreaterThanOrEqualTo2GB)
    {
-      fileCopyResult = _fileSystem->CopyFileToFileLargerThan2GB(sourceFilePath, destinationFilePath);
+      Utils::FileCopyResult fileCopyResult = _fileSystem->CopyFileToFileLargerThan2GB(sourceFilePath, destinationFilePath);
+      return fileCopyResult;
    }
-   else
-   {
-      fileCopyResult = _fileSystem->CopyFileToFile(sourceFilePath, destinationFilePath);
-   }
+   Utils::FileCopyResult fileCopyResult = _fileSystem->CopyFileToFile(sourceFilePath, destinationFilePath);
    return fileCopyResult;
 }
 

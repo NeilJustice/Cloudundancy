@@ -180,25 +180,25 @@ TEST(Windows__SetTextColor_CallsSetConsoleTextAttributeToWindowsColor)
    class ConsoleColorerSelfMocked : public Metal::Mock<Utils::ConsoleColorer>
    {
    public:
-      METALMOCK_NONVOID1_FREE(HANDLE, GetStdHandle, DWORD)
-      METALMOCK_NONVOID2_FREE(BOOL, SetConsoleTextAttribute, HANDLE, WORD)
+      METALMOCK_NONVOID1_FREE(HANDLE, _call_GetStdHandle, DWORD)
+      METALMOCK_NONVOID2_FREE(BOOL, _call_SetConsoleTextAttribute, HANDLE, WORD)
       METALMOCK_NONVOID1_CONST(WindowsColor, ColorToWindowsColor, Color)
       Utils::AsserterMock* _asserterMock = nullptr;
       ConsoleColorerSelfMocked()
       {
-         _call_GetStdHandle = BIND_1ARG_METALMOCK_OBJECT(GetStdHandleMock);
-         _call_SetConsoleTextAttribute = BIND_2ARG_METALMOCK_OBJECT(SetConsoleTextAttributeMock);
+         _call_GetStdHandle = BIND_1ARG_METALMOCK_OBJECT(_call_GetStdHandleMock);
+         _call_SetConsoleTextAttribute = BIND_2ARG_METALMOCK_OBJECT(_call_SetConsoleTextAttributeMock);
          _asserter.reset(_asserterMock = new Utils::AsserterMock);
       }
    } consoleColorerSelfMocked;
 
    const HANDLE stdOutHandle = reinterpret_cast<HANDLE>(ZenUnit::Random<unsigned long long>());
-   consoleColorerSelfMocked.GetStdHandleMock.Return(stdOutHandle);
+   consoleColorerSelfMocked._call_GetStdHandleMock.Return(stdOutHandle);
 
    const WindowsColor windowsTextColor = ZenUnit::RandomEnum<WindowsColor>();
    consoleColorerSelfMocked.ColorToWindowsColorMock.Return(windowsTextColor);
 
-   const BOOL didSetConsoleTextAttr = consoleColorerSelfMocked.SetConsoleTextAttributeMock.ReturnRandom();
+   const BOOL didSetConsoleTextAttr = consoleColorerSelfMocked._call_SetConsoleTextAttributeMock.ReturnRandom();
 
    consoleColorerSelfMocked._asserterMock->ThrowIfIntsNotEqualMock.Expect();
 
@@ -206,9 +206,9 @@ TEST(Windows__SetTextColor_CallsSetConsoleTextAttributeToWindowsColor)
    //
    consoleColorerSelfMocked.PlatformSpecificSetTextColor(textColor);
    //
-   METALMOCKTHEN(consoleColorerSelfMocked.GetStdHandleMock.CalledOnceWith(STD_OUTPUT_HANDLE)).Then(
+   METALMOCKTHEN(consoleColorerSelfMocked._call_GetStdHandleMock.CalledOnceWith(STD_OUTPUT_HANDLE)).Then(
    METALMOCKTHEN(consoleColorerSelfMocked.ColorToWindowsColorMock.CalledOnceWith(textColor))).Then(
-   METALMOCKTHEN(consoleColorerSelfMocked.SetConsoleTextAttributeMock.CalledOnceWith(stdOutHandle, static_cast<WORD>(windowsTextColor)))).Then(
+   METALMOCKTHEN(consoleColorerSelfMocked._call_SetConsoleTextAttributeMock.CalledOnceWith(stdOutHandle, static_cast<WORD>(windowsTextColor)))).Then(
    METALMOCKTHEN(consoleColorerSelfMocked._asserterMock->ThrowIfIntsNotEqualMock.CalledOnceWith(1, static_cast<int>(didSetConsoleTextAttr),
       "SetConsoleTextAttribute() unexpectedly did not return 1")));
 }
@@ -218,7 +218,6 @@ TEST(Windows__SetTextColor_CallsSetConsoleTextAttributeToWindowsColor)
 TEST(SetSupportsColorIfUnset_SupportsColorBeenSetIsTrue_DoesNothing)
 {
    _consoleColorer._supportsColorHasBeenSet = true;
-   //
    _consoleColorer.SetSupportsColorIfUnset();
 }
 
