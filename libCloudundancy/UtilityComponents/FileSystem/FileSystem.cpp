@@ -139,7 +139,8 @@ namespace Utils
    {
       const shared_ptr<Stopwatch> stopwatch = _stopwatchFactory->NewStopwatch();
       stopwatch->Start();
-      shared_ptr<const vector<char>> sourceFileBytes = _caller_ReadFileBytes->CallConstMemberFunction(&FileSystem::ReadFileBytes, this, sourceFilePath);
+      shared_ptr<const vector<char>> sourceFileBytes =
+         _caller_ReadFileBytes->CallConstMemberFunction(&FileSystem::ReadFileBytes, this, sourceFilePath);
       const fs::path parentPathOfDestinationFilePath = destinationFilePath.parent_path();
       _call_fs_create_directories(parentPathOfDestinationFilePath);
       const shared_ptr<FILE> binaryWriteModeDestinationFilePointer =
@@ -152,7 +153,7 @@ namespace Utils
       }
       _asserter->ThrowIfSizeTsNotEqual(sourceFileSize, numberOfBytesWritten,
          "fwrite() in Utils::FileSystem::CopyFileToFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) unexpectedly returned numberOfBytesWritten != sourceFileSize");
-      Utils::FileCopyResult successFileCopyResult;
+      Utils::FileCopyResult successFileCopyResult{};
       successFileCopyResult.sourceFilePath = sourceFilePath;
       successFileCopyResult.destinationFilePath = destinationFilePath;
       successFileCopyResult.copySucceeded = true;
@@ -166,7 +167,7 @@ namespace Utils
       stopwatch->Start();
       const fs::path parentFolderPathForDestinationFile = destinationFilePath.parent_path();
       _call_fs_create_directories(parentFolderPathForDestinationFile);
-      Utils::FileCopyResult fileCopyResult;
+      Utils::FileCopyResult fileCopyResult{};
       fileCopyResult.sourceFilePath = sourceFilePath;
       fileCopyResult.destinationFilePath = destinationFilePath;
       fileCopyResult.copySucceeded = _call_fs_copy_file(sourceFilePath, destinationFilePath, fs::copy_options::overwrite_existing);
@@ -320,10 +321,12 @@ namespace Utils
    size_t FileSystem::ReadFileSize(const shared_ptr<FILE>& filePointer) const
    {
       const int fseekEndReturnValue = _call_fseek(filePointer.get(), 0, SEEK_END);
-      _asserter->ThrowIfIntsNotEqual(0, fseekEndReturnValue, "fseek(filePointer.get(), 0, SEEK_END) in FileSystem::FileSize() unexpectedly did not return 0");
+      _asserter->ThrowIfIntsNotEqual(
+         0, fseekEndReturnValue, "fseek(filePointer.get(), 0, SEEK_END) in FileSystem::FileSize() unexpectedly did not return 0");
       const long ftellReturnValue = _call_ftell(filePointer.get());
       const int fseekSetReturnValue = _call_fseek(filePointer.get(), 0, SEEK_SET);
-      _asserter->ThrowIfIntsNotEqual(0, fseekSetReturnValue, "fseek(filePointer.get(), 0, SEEK_SET) in FileSystem::FileSize() unexpectedly did not return 0");
+      _asserter->ThrowIfIntsNotEqual(
+         0, fseekSetReturnValue, "fseek(filePointer.get(), 0, SEEK_SET) in FileSystem::FileSize() unexpectedly did not return 0");
       const size_t fileSizeInBytes = static_cast<size_t>(ftellReturnValue);
       return fileSizeInBytes;
    }

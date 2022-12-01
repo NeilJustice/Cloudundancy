@@ -35,7 +35,7 @@ TEST(CallConstMemberFunctionWithEachElement_EmptyElementsVector_DoesNotCallMembe
 
 TEST(CallConstMemberFunctionWithEachElement_TwoElementsVector_CallsThisPointerBoundFuncTwice)
 {
-   ClassTypeMock classInstance;
+   ClassTypeMock classInstance{};
    const ElementType element1 = ZenUnit::Random<ElementType>();
    const ElementType element2 = ZenUnit::Random<ElementType>();
    classInstance.elements = { element1, element2 };
@@ -54,7 +54,7 @@ TEST(CallConstMemberFunctionWithEachElement_TwoElementsVector_CallsThisPointerBo
 
 TEST(CodeCoverage_ClassType_TwoArgConstMemberFunctionFunction)
 {
-   const ClassType classType;
+   const ClassType classType{};
    classType.TwoArgConstMemberFunctionFunction(ElementType{}, ExtraArgType{});
 };
 

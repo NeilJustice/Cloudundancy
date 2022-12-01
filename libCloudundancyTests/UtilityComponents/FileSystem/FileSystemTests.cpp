@@ -417,7 +417,7 @@ TEST(CopyFileToFile_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile_
    METALMOCK(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(expectedSourceFileBytesSize, numberOfBytesWritten,
       "fwrite() in Utils::FileSystem::CopyFileToFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) unexpectedly returned numberOfBytesWritten != sourceFileSize"));
    METALMOCK(stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
-   Utils::FileCopyResult expectedReturnValue;
+   Utils::FileCopyResult expectedReturnValue{};
    expectedReturnValue.sourceFilePath = sourceFilePath;
    expectedReturnValue.destinationFilePath = destinationFilePath;
    expectedReturnValue.copySucceeded = true;
@@ -448,7 +448,7 @@ TEST(CopyFileToFileLargerThan2GB_CreatesParentFoldersForDestinationFile_CopiesSo
    METALMOCK(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentPathOfDestinationFilePath));
    METALMOCK(_call_fs_copy_fileMock.CalledOnceWith(sourceFilePath, destinationFilePath, fs::copy_options::overwrite_existing));
    METALMOCK(stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
-   Utils::FileCopyResult expectedFileCopyResult;
+   Utils::FileCopyResult expectedFileCopyResult{};
    expectedFileCopyResult.sourceFilePath = sourceFilePath;
    expectedFileCopyResult.destinationFilePath = destinationFilePath;
    expectedFileCopyResult.copySucceeded = copyFileReturnValue;
@@ -583,7 +583,8 @@ TEST2X2(ReadFileLinesWhichMustBeNonEmpty_FileTextIsNotEmpty_ReturnsFileTextSplit
    //
    const vector<string> fileLines = _fileSystem.ReadFileLinesWhichMustBeNonEmpty(filePath);
    //
-   METALMOCK(_caller_ReadFileTextMock->CallConstMemberFunctionMock.CalledOnceWith(&Utils::FileSystem::ReadFileText, &_fileSystem, filePath));
+   METALMOCK(_caller_ReadFileTextMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &Utils::FileSystem::ReadFileText, &_fileSystem, filePath));
    VECTORS_ARE_EQUAL(expectedReturnValue, fileLines);
 }
 

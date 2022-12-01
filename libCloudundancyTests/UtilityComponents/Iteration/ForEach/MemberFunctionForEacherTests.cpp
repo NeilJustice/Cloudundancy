@@ -33,7 +33,7 @@ TEST(CallConstMemberFunctionWithEachElement_EmptyElementsVector_DoesNotCallMembe
 
 TEST(CallConstMemberFunctionWithEachElement_TwoElementsVector_CallsMemberFunctionForEachEachElement)
 {
-   ClassTypeMock classInstance;
+   ClassTypeMock classInstance{};
    const ElementType element1 = ZenUnit::Random<ElementType>();
    const ElementType element2 = ZenUnit::Random<ElementType>();
    classInstance.elements = { element1, element2 };
@@ -51,7 +51,7 @@ TEST(CallConstMemberFunctionWithEachElement_TwoElementsVector_CallsMemberFunctio
 
 TEST(CodeCoverage_ClassType_ConstMemberFunctionFunction)
 {
-   const ClassType classType;
+   const ClassType classType{};
    classType.ConstMemberFunctionFunction(ElementType{});
 };
 
