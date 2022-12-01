@@ -51,19 +51,6 @@ namespace Utils
       }
    }
 
-   void RecursiveDirectoryIterator::RecursivelyDeleteAllFilesExceptIgnoredFileSubpaths()
-   {
-      while (true)
-      {
-         const fs::path nextNonIgnoredFilePath = NextNonIgnoredFilePath();
-         if (nextNonIgnoredFilePath == fs::path())
-         {
-            break;
-         }
-         _call_fs_remove(nextNonIgnoredFilePath);
-      }
-   }
-
    // Private Functions
 
    bool RecursiveDirectoryIterator::FilePathContainsAnySubstring(const fs::path& filePath, const vector<string>& filePathIgnoreSubstrings)

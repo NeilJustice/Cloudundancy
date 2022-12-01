@@ -39,7 +39,6 @@ namespace Utils
       virtual void SetFileSubpathsToIgnore(const vector<string>& fileSubpathsToIgnore);
       virtual void InitializeIteratorAtFolderPath(const fs::path& folderPath);
       virtual fs::path NextNonIgnoredFilePath();
-      virtual void RecursivelyDeleteAllFilesExceptIgnoredFileSubpaths();
    private:
       static bool FilePathContainsAnySubstring(const fs::path& filePath, const vector<string>& filePathIgnoreSubstrings);
    };

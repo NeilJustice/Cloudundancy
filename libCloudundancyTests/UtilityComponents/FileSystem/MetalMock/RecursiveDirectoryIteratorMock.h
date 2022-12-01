@@ -9,6 +9,5 @@ namespace Utils
       METALMOCK_VOID1(SetFileSubpathsToIgnore, const vector<string>&)
       METALMOCK_VOID1(InitializeIteratorAtFolderPath, const fs::path&)
       METALMOCK_NONVOID0(fs::path, NextNonIgnoredFilePath)
-      METALMOCK_VOID0(RecursivelyDeleteAllFilesExceptIgnoredFileSubpaths)
    };
 }
