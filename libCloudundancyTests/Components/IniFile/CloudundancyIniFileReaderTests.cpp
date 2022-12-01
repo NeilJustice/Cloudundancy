@@ -104,12 +104,12 @@ TEST(ReadIniFile_ParsesCloudundancyIniFile_ValidatesCloudundancyIni_ReturnsCloud
    };
    const FilePathLineNumberLineText expectedFilePathLineNumberLineText1(cloudundancyIniPath, 9, filePathA + " -> SuffixA");
    const FilePathLineNumberLineText expectedFilePathLineNumberLineText2(cloudundancyIniPath, 10, filePathB + "\t ->  SuffixB");
-   METALMOCK(_callerMock_ParseFileCopyInstructionLine->CallConstMemberFunctionMock.CalledAsFollows(
-   {
-      { &CloudundancyIniFileReader::ParseFileCopyInstructionLine, &_cloudundancyIniFile, expectedFilePathLineNumberLineText1 },
-      { &CloudundancyIniFileReader::ParseFileCopyInstructionLine, &_cloudundancyIniFile, expectedFilePathLineNumberLineText2 }
-   }));
-   METALMOCK(_cloudundancyIniValidatorMock->ThrowIfZeroDestinationFolderPathsMock.CalledOnceWith(cloudundancyIni, cloudundancyIniPath));
+   METALMOCK(_callerMock_ParseFileCopyInstructionLine->CallConstMemberFunctionMock.CalledNTimes(2));
+   METALMOCKTHEN(_callerMock_ParseFileCopyInstructionLine->CallConstMemberFunctionMock.CalledWith(
+      &CloudundancyIniFileReader::ParseFileCopyInstructionLine, &_cloudundancyIniFile, expectedFilePathLineNumberLineText1)).Then(
+   METALMOCKTHEN(_callerMock_ParseFileCopyInstructionLine->CallConstMemberFunctionMock.CalledWith(
+      &CloudundancyIniFileReader::ParseFileCopyInstructionLine, &_cloudundancyIniFile, expectedFilePathLineNumberLineText2))).Then(
+   METALMOCKTHEN(_cloudundancyIniValidatorMock->ThrowIfZeroDestinationFolderPathsMock.CalledOnceWith(cloudundancyIni, cloudundancyIniPath)));
    ARE_EQUAL(expectedCloudundancyIni, cloudundancyIni);
 }
 
@@ -125,7 +125,8 @@ TEST1X1(ParseFileCopyInstructionLine_LineDoesNotContainSpaceArrowSpace_OrLineCon
    filePathLineNumberLineText.lineText = lineText;
    //
    const string exceptionMessage = "Cloudundancy .ini file line does not contain required substring \" -> \"";
-   Utils::FileMalformedException expectedFileSystemException(filePathLineNumberLineText.filePath, filePathLineNumberLineText.lineNumber, exceptionMessage);
+   Utils::FileMalformedException expectedFileSystemException(
+      filePathLineNumberLineText.filePath, filePathLineNumberLineText.lineNumber, exceptionMessage);
    const string expectedExceptionMessage = expectedFileSystemException.what();
    THROWS_EXCEPTION(_cloudundancyIniFile.ParseFileCopyInstructionLine(filePathLineNumberLineText),
       Utils::FileMalformedException, expectedExceptionMessage);
@@ -148,7 +149,7 @@ TEST1X1(ParseFileCopyInstructionLine_LineContainsOneSpaceArrowSpace_ReturnsExpec
    const CloudundancyIniCopyInstruction cloudundancyIniCopyInstruction =
       _cloudundancyIniFile.ParseFileCopyInstructionLine(filePathLineNumberLineText);
    //
-   CloudundancyIniCopyInstruction expectedFileCopyInstruction;
+   CloudundancyIniCopyInstruction expectedFileCopyInstruction{};
    expectedFileCopyInstruction.absoluteSourceFileOrFolderPath = sourceFilePath;
    expectedFileCopyInstruction.relativeDestinationFolderPath = relativeDestinationFolderPath;
    METALMOCK(_callerMock_ThrowIfSourceFileOrFolderDoesNotExist->CallConstMemberFunctionMock.CalledOnceWith(

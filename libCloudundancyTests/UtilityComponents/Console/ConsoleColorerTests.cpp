@@ -103,8 +103,8 @@ TEST1X1(SetTextColor_ColorIsNotWhite_ConsoleSupportsColorIsTrue_SetsTextColor_Re
    //
    const bool didSetTextColor = consoleColorerSelfMocked.SetTextColor(nonWhiteColor);
    //
-   METALMOCK(consoleColorerSelfMocked.SetSupportsColorIfUnsetMock.CalledOnce());
-   METALMOCK(consoleColorerSelfMocked.PlatformSpecificSetTextColorMock.CalledOnceWith(nonWhiteColor));
+   METALMOCKTHEN(consoleColorerSelfMocked.SetSupportsColorIfUnsetMock.CalledOnce()).Then(
+   METALMOCKTHEN(consoleColorerSelfMocked.PlatformSpecificSetTextColorMock.CalledOnceWith(nonWhiteColor)));
    IS_TRUE(didSetTextColor);
 }
 
@@ -206,11 +206,11 @@ TEST(Windows__SetTextColor_CallsSetConsoleTextAttributeToWindowsColor)
    //
    consoleColorerSelfMocked.PlatformSpecificSetTextColor(textColor);
    //
-   METALMOCK(consoleColorerSelfMocked.GetStdHandleMock.CalledOnceWith(STD_OUTPUT_HANDLE));
-   METALMOCK(consoleColorerSelfMocked.ColorToWindowsColorMock.CalledOnceWith(textColor));
-   METALMOCK(consoleColorerSelfMocked.SetConsoleTextAttributeMock.CalledOnceWith(stdOutHandle, static_cast<WORD>(windowsTextColor)));
-   METALMOCK(consoleColorerSelfMocked._asserterMock->ThrowIfIntsNotEqualMock.CalledOnceWith(1, static_cast<int>(didSetConsoleTextAttr),
-      "SetConsoleTextAttribute() unexpectedly did not return 1"));
+   METALMOCKTHEN(consoleColorerSelfMocked.GetStdHandleMock.CalledOnceWith(STD_OUTPUT_HANDLE)).Then(
+   METALMOCKTHEN(consoleColorerSelfMocked.ColorToWindowsColorMock.CalledOnceWith(textColor))).Then(
+   METALMOCKTHEN(consoleColorerSelfMocked.SetConsoleTextAttributeMock.CalledOnceWith(stdOutHandle, static_cast<WORD>(windowsTextColor)))).Then(
+   METALMOCKTHEN(consoleColorerSelfMocked._asserterMock->ThrowIfIntsNotEqualMock.CalledOnceWith(1, static_cast<int>(didSetConsoleTextAttr),
+      "SetConsoleTextAttribute() unexpectedly did not return 1")));
 }
 
 #endif
@@ -251,8 +251,8 @@ TEST2X2(SupportsColor_CallsFileno_CallsIsAtty_ReturnsTrueIfIsAttyReturnValueIsNo
    //
    const bool supportsColor = _consoleColorer.SupportsColor();
    //
-   METALMOCK(filenoMock.CalledOnceWith(stdout));
-   METALMOCK(isattyMock.CalledOnceWith(stdoutFileHandle));
+   METALMOCKTHEN(filenoMock.CalledOnceWith(stdout)).Then(
+   METALMOCKTHEN(isattyMock.CalledOnceWith(stdoutFileHandle)));
    ARE_EQUAL(expectedReturnValue, supportsColor);
 }
 

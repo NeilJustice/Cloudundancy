@@ -99,8 +99,8 @@ TEST(GetErrnoWithDescription_ReturnsErrnoValueWithDescription)
    //
    const pair<int, string> errnoWithDescription = errorCodeTranslatorSelfMocked.GetErrnoWithDescription();
    //
-   METALMOCK(errorCodeTranslatorSelfMocked._call_errnoMock.CalledOnce());
-   METALMOCK(errorCodeTranslatorSelfMocked.GetErrnoDescriptionMock.CalledOnceWith(errnoValue));
+   METALMOCKTHEN(errorCodeTranslatorSelfMocked._call_errnoMock.CalledOnce()).Then(
+   METALMOCKTHEN(errorCodeTranslatorSelfMocked.GetErrnoDescriptionMock.CalledOnceWith(errnoValue)));
    const pair<int, string> expectedErrnoWithDescription(errnoValue, errnoDescription);
    ARE_EQUAL(expectedErrnoWithDescription, errnoWithDescription);
 }
@@ -141,8 +141,8 @@ TEST(GetWindowsLastErrorWithDescription_GetLastErrorReturnsNon0_ReturnsLastError
    const pair<DWORD, string> windowsLastErrorWithDescription =
       _errorCodeTranslatorSelfMocked.GetWindowsLastErrorWithDescription();
    //
-   METALMOCK(_errorCodeTranslatorSelfMocked._call_GetLastErrorMock.CalledOnce());
-   METALMOCK(_errorCodeTranslatorSelfMocked.GetWindowsLastErrorDescriptionMock.CalledOnceWith(windowsLastError));
+   METALMOCKTHEN(_errorCodeTranslatorSelfMocked._call_GetLastErrorMock.CalledOnce()).Then(
+   METALMOCKTHEN(_errorCodeTranslatorSelfMocked.GetWindowsLastErrorDescriptionMock.CalledOnceWith(windowsLastError)));
    const pair<DWORD, string> expectedWindowsLastErrorWithDescription(windowsLastError, windowsLastErrorDescription);
    ARE_EQUAL(expectedWindowsLastErrorWithDescription, windowsLastErrorWithDescription);
 }

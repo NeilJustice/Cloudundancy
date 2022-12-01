@@ -343,11 +343,11 @@ TEST(AppendTextToClosedFile_OpensFileInBinaryAppendMode_AppendsText_ImplicitlyCl
    //
    _fileSystem.AppendTextToClosedFile(filePath, text);
    //
-   METALMOCK(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &Utils::FileSystem::CreateOrOpenFileInBinaryAppendMode, &_fileSystem, filePath));
-   METALMOCK(_call_fwriteMock.CalledOnceWith(text.data(), 1, text.size(), appendModeBinaryFilePointer.get()));
-   METALMOCK(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(text.size(), numberOfBytesAppended,
-      "_call_fwrite(text.data(), 1, textSize, appendModeTextFileHandle) unexpectedly did not return textSize"));
+   METALMOCKTHEN(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &Utils::FileSystem::CreateOrOpenFileInBinaryAppendMode, &_fileSystem, filePath)).Then(
+   METALMOCKTHEN(_call_fwriteMock.CalledOnceWith(text.data(), 1, text.size(), appendModeBinaryFilePointer.get()))).Then(
+   METALMOCKTHEN(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(text.size(), numberOfBytesAppended,
+      "_call_fwrite(text.data(), 1, textSize, appendModeTextFileHandle) unexpectedly did not return textSize")));
 }
 
 TEST(CloseFile_fcloseReturnValueIs0_Returns)
@@ -376,8 +376,8 @@ TEST(CloseFile_fcloseReturnValueIsNot0_ThrowsRuntimeError)
    THROWS_EXCEPTION(_fileSystem.CloseFile(filePointer, filePath),
       runtime_error, expectedExceptionMessage);
    //
-   METALMOCK(_call_fcloseMock.CalledOnceWith(filePointer.get()));
-   METALMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
+   METALMOCKTHEN(_call_fcloseMock.CalledOnceWith(filePointer.get())).Then(
+   METALMOCKTHEN(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce()));
 }
 
 TEST(CopyFileToFile_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile_WritesSourceFileBytesToDestinationFilePath_ReturnsCopySucceededFileCopyResult)
@@ -405,18 +405,27 @@ TEST(CopyFileToFile_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile_
    //
    const Utils::FileCopyResult fileCopyResult = _fileSystem.CopyFileToFile(sourceFilePath, destinationFilePath);
    //
-   METALMOCK(_stopwatchFactoryMock->NewStopwatchMock.CalledOnce());
    const size_t expectedSourceFileBytesSize = sourceFileBytes->size();
-   METALMOCK(stopwatchMock->StartMock.CalledOnce());
-   METALMOCK(_caller_ReadFileBytesMock->CallConstMemberFunctionMock.CalledOnceWith(&Utils::FileSystem::ReadFileBytes, &_fileSystem, sourceFilePath));
    const fs::path expectedParentPathOfDestinationFilePath = destinationFilePath.parent_path();
-   METALMOCK(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentPathOfDestinationFilePath));
-   METALMOCK(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &Utils::FileSystem::CreateFileInBinaryWriteMode, &_fileSystem, destinationFilePath));
-   METALMOCK(_call_fwriteMock.CalledOnceWith(sourceFileBytes->data(), 1, expectedSourceFileBytesSize, binaryWriteModeDestinationFilePointer.get()));
-   METALMOCK(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(expectedSourceFileBytesSize, numberOfBytesWritten,
-      "fwrite() in Utils::FileSystem::CopyFileToFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) unexpectedly returned numberOfBytesWritten != sourceFileSize"));
-   METALMOCK(stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
+   METALMOCKTHEN(_stopwatchFactoryMock->NewStopwatchMock.CalledOnce()).Then(
+
+   METALMOCKTHEN(stopwatchMock->StartMock.CalledOnce())).Then(
+
+   METALMOCKTHEN(_caller_ReadFileBytesMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &Utils::FileSystem::ReadFileBytes, &_fileSystem, sourceFilePath))).Then(
+
+   METALMOCKTHEN(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentPathOfDestinationFilePath))).Then(
+
+   METALMOCKTHEN(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &Utils::FileSystem::CreateFileInBinaryWriteMode, &_fileSystem, destinationFilePath))).Then(
+
+   METALMOCKTHEN(_call_fwriteMock.CalledOnceWith(
+      sourceFileBytes->data(), 1, expectedSourceFileBytesSize, binaryWriteModeDestinationFilePointer.get()))).Then(
+
+   METALMOCKTHEN(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(expectedSourceFileBytesSize, numberOfBytesWritten,
+      "fwrite() in Utils::FileSystem::CopyFileToFile(const fs::path& sourceFilePath, const fs::path& destinationFilePath) unexpectedly returned numberOfBytesWritten != sourceFileSize")));
+
+   METALMOCKTHEN(stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
    Utils::FileCopyResult expectedReturnValue{};
    expectedReturnValue.sourceFilePath = sourceFilePath;
    expectedReturnValue.destinationFilePath = destinationFilePath;
@@ -443,11 +452,11 @@ TEST(CopyFileToFileLargerThan2GB_CreatesParentFoldersForDestinationFile_CopiesSo
    const Utils::FileCopyResult fileCopyResult = _fileSystem.CopyFileToFileLargerThan2GB(sourceFilePath, destinationFilePath);
    //
    const fs::path expectedParentPathOfDestinationFilePath = destinationFilePath.parent_path();
-   METALMOCK(_stopwatchFactoryMock->NewStopwatchMock.CalledOnce());
-   METALMOCK(stopwatchMock->StartMock.CalledOnce());
-   METALMOCK(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentPathOfDestinationFilePath));
-   METALMOCK(_call_fs_copy_fileMock.CalledOnceWith(sourceFilePath, destinationFilePath, fs::copy_options::overwrite_existing));
-   METALMOCK(stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce());
+   METALMOCKTHEN(_stopwatchFactoryMock->NewStopwatchMock.CalledOnce()).Then(
+   METALMOCKTHEN(stopwatchMock->StartMock.CalledOnce())).Then(
+   METALMOCKTHEN(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentPathOfDestinationFilePath))).Then(
+   METALMOCKTHEN(_call_fs_copy_fileMock.CalledOnceWith(sourceFilePath, destinationFilePath, fs::copy_options::overwrite_existing))).Then(
+   METALMOCKTHEN(stopwatchMock->StopAndGetElapsedMillisecondsMock.CalledOnce()));
    Utils::FileCopyResult expectedFileCopyResult{};
    expectedFileCopyResult.sourceFilePath = sourceFilePath;
    expectedFileCopyResult.destinationFilePath = destinationFilePath;
@@ -481,10 +490,10 @@ TEST(CreateFileWithTextIfDoesNotExist_FileDoesNotExist_CreateFileWithFileText)
    //
    _fileSystem.CreateFileWithTextIfDoesNotExist(filePath, fileText);
    //
-   METALMOCK(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &Utils::FileSystem::CreateFileInBinaryWriteMode, &_fileSystem, filePath));
-   METALMOCK(_caller_WriteTextToOpenFileMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &Utils::FileSystem::WriteTextToOpenFile, &_fileSystem, writeModeBinaryFilePointer, fileText));
+   METALMOCKTHEN(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &Utils::FileSystem::CreateFileInBinaryWriteMode, &_fileSystem, filePath)).Then(
+   METALMOCKTHEN(_caller_WriteTextToOpenFileMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &Utils::FileSystem::WriteTextToOpenFile, &_fileSystem, writeModeBinaryFilePointer, fileText)));
    METALMOCK(_call_fs_existsMock.CalledOnceWith(filePath));
 }
 
@@ -520,10 +529,10 @@ TEST(ReadFileBytes_OpensFileInBinaryReadMode_FileSizeIs0_ClosesFile_ReturnsShare
    //
    const shared_ptr<const vector<char>> fileBytes = _fileSystem.ReadFileBytes(filePath);
    //
-   METALMOCK(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &Utils::FileSystem::OpenFileInBinaryReadMode, &_fileSystem, filePath));
-   METALMOCK(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &Utils::FileSystem::ReadFileSize, &_fileSystem, binaryReadModeFilePointer));
+   METALMOCKTHEN(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &Utils::FileSystem::OpenFileInBinaryReadMode, &_fileSystem, filePath)).Then(
+   METALMOCKTHEN(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &Utils::FileSystem::ReadFileSize, &_fileSystem, binaryReadModeFilePointer)));
    IS_EMPTY(*fileBytes);
 }
 
@@ -547,14 +556,14 @@ TEST(ReadFileBytes_OpensFileInBinaryReadMode_FileSizeIsNot0_ReadsFileBytes_Close
    //
    const shared_ptr<const vector<char>> fileBytes = _fileSystem.ReadFileBytes(filePath);
    //
-   METALMOCK(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &Utils::FileSystem::OpenFileInBinaryReadMode, &_fileSystem, filePath));
-   METALMOCK(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &Utils::FileSystem::ReadFileSize, &_fileSystem, binaryReadModeFilePointer));
-   METALMOCK(_charVectorAllocatorMock->NewCharVectorMock.CalledOnceWith(fileSize));
-   METALMOCK(_call_freadMock.CalledOnceWith(expected0thBytesBufferByte, 1, fileSize, binaryReadModeFilePointer.get()));
-   METALMOCK(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(fileSize, numberOfBytesRead,
-      "fread() in Utils::FileSystem::ReadFileBytes(const fs::path& filePath) unexpectedly did not return fileSize"));
+   METALMOCKTHEN(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &Utils::FileSystem::OpenFileInBinaryReadMode, &_fileSystem, filePath)).Then(
+   METALMOCKTHEN(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &Utils::FileSystem::ReadFileSize, &_fileSystem, binaryReadModeFilePointer))).Then(
+   METALMOCKTHEN(_charVectorAllocatorMock->NewCharVectorMock.CalledOnceWith(fileSize))).Then(
+   METALMOCKTHEN(_call_freadMock.CalledOnceWith(expected0thBytesBufferByte, 1, fileSize, binaryReadModeFilePointer.get()))).Then(
+   METALMOCKTHEN(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(fileSize, numberOfBytesRead,
+      "fread() in Utils::FileSystem::ReadFileBytes(const fs::path& filePath) unexpectedly did not return fileSize")));
    const vector<char> expectedFileBytes(fileSize);
    VECTORS_ARE_EQUAL(expectedFileBytes, *fileBytes);
 }
@@ -599,10 +608,10 @@ TEST(ReadFileText_ReadsFileSizeWhichReturns0_ClosesFile_ReturnsEmptyString)
    //
    const string fileText = _fileSystem.ReadFileText(filePath);
    //
-   METALMOCK(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &Utils::FileSystem::OpenFileInTextReadMode, &_fileSystem, filePath));
-   METALMOCK(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &Utils::FileSystem::ReadFileSize, &_fileSystem, readModeTextFilePointer));
+   METALMOCKTHEN(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &Utils::FileSystem::OpenFileInTextReadMode, &_fileSystem, filePath)).Then(
+   METALMOCKTHEN(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &Utils::FileSystem::ReadFileSize, &_fileSystem, readModeTextFilePointer)));
    ARE_EQUAL("", fileText);
 }
 
@@ -659,10 +668,10 @@ TEST(ReadFileText_ReadsFileSizeWhichReturnsGreaterThan0_ReadsFileBytesIntoString
    //
    const string fileText = _fileSystem.ReadFileText(filePath);
    //
-   METALMOCK(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &Utils::FileSystem::OpenFileInTextReadMode, &_fileSystem, filePath));
-   METALMOCK(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &Utils::FileSystem::ReadFileSize, &_fileSystem, readModeTextFilePointer));
+   METALMOCKTHEN(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &Utils::FileSystem::OpenFileInTextReadMode, &_fileSystem, filePath)).Then(
+   METALMOCKTHEN(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &Utils::FileSystem::ReadFileSize, &_fileSystem, readModeTextFilePointer)));
    _call_fread_AssertCalledOnceWith(1, FileSize, readModeTextFilePointer.get());
    const string expectedFileText(bufferReturnValue.data(), _fread_CallHistory.returnValue);
    ARE_EQUAL(expectedFileText, fileText);
@@ -720,11 +729,11 @@ TEST(WriteTextToOpenFile_CallsFWriteOnFilePointerWithText_CallsFFlushOnFilePoint
    _fileSystem.WriteTextToOpenFile(textFilePointer, text);
    //
    const size_t textSize = text.size();
-   METALMOCK(_call_fwriteMock.CalledOnceWith(text.data(), 1, textSize, textFilePointer.get()));
-   METALMOCK(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(
-      textSize, numberOfBytesWritten, "fwrite() unexpectedly returned numberOfBytesWritten != textSize"));
-   METALMOCK(_call_fflushMock.CalledOnceWith(textFilePointer.get()));
-   METALMOCK(_asserterMock->ThrowIfIntsNotEqualMock.CalledOnceWith(0, flushReturnValue, "fflush() unexpectedly did not return 0"));
+   METALMOCKTHEN(_call_fwriteMock.CalledOnceWith(text.data(), 1, textSize, textFilePointer.get())).Then(
+   METALMOCKTHEN(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(
+      textSize, numberOfBytesWritten, "fwrite() unexpectedly returned numberOfBytesWritten != textSize"))).Then(
+   METALMOCKTHEN(_call_fflushMock.CalledOnceWith(textFilePointer.get()))).Then(
+   METALMOCKTHEN(_asserterMock->ThrowIfIntsNotEqualMock.CalledOnceWith(0, flushReturnValue, "fflush() unexpectedly did not return 0")));
 }
 
 TEST(WriteBytesToOpenFile_CallsFWriteOnFilePointerWithBytes_CallsFFlushOnFilePointer)
@@ -741,11 +750,11 @@ TEST(WriteBytesToOpenFile_CallsFWriteOnFilePointerWithBytes_CallsFFlushOnFilePoi
    _fileSystem.WriteBytesToOpenFile(filePointer, bytes.data(), bytes.size());
    //
    const size_t bytesLength = bytes.size();
-   METALMOCK(_call_fwriteMock.CalledOnceWith(bytes.data(), 1, bytes.size(), filePointer.get()));
-   METALMOCK(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(
-      bytesLength, numberOfBytesWritten, "fwrite() unexpectedly returned numberOfBytesWritten != bytesLength"));
-   METALMOCK(_call_fflushMock.CalledOnceWith(filePointer.get()));
-   METALMOCK(_asserterMock->ThrowIfIntsNotEqualMock.CalledOnceWith(0, flushReturnValue, "fflush() unexpectedly did not return 0"));
+   METALMOCKTHEN(_call_fwriteMock.CalledOnceWith(bytes.data(), 1, bytes.size(), filePointer.get())).Then(
+   METALMOCKTHEN(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(
+      bytesLength, numberOfBytesWritten, "fwrite() unexpectedly returned numberOfBytesWritten != bytesLength"))).Then(
+   METALMOCKTHEN(_call_fflushMock.CalledOnceWith(filePointer.get()))).Then(
+   METALMOCKTHEN(_asserterMock->ThrowIfIntsNotEqualMock.CalledOnceWith(0, flushReturnValue, "fflush() unexpectedly did not return 0")));
 }
 
 // Private Functions
@@ -812,8 +821,8 @@ TEST(Windows__CreateOrOpenFileOnWindows_CreatesParentDirectoriesForFilePath_Call
    const shared_ptr<FILE> sharedFilePointer = _fileSystem.CreateOrOpenFileOnWindows(filePath, fileOpenMode);
    //
    const fs::path expectedParentDirectoryPath = filePath.parent_path();
-   METALMOCK(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentDirectoryPath));
-   METALMOCK(_call_wfsopenMock.CalledOnceWith(filePath.c_str(), fileOpenMode, _SH_DENYWR));
+   METALMOCKTHEN(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentDirectoryPath)).Then(
+   METALMOCKTHEN(_call_wfsopenMock.CalledOnceWith(filePath.c_str(), fileOpenMode, _SH_DENYWR)));
    ARE_EQUAL(tempFilePointer, sharedFilePointer.get());
 }
 
@@ -834,9 +843,9 @@ TEST(Windows__CreateOrOpenFileOnWindows_CreatesParentDirectoriesForFilePath_Call
       runtime_error, expectedExceptionMessage);
    //
    const fs::path expectedParentDirectoryPath = filePath.parent_path();
-   METALMOCK(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentDirectoryPath));
-   METALMOCK(_call_wfsopenMock.CalledOnceWith(filePath.c_str(), fileOpenMode, _SH_DENYWR));
-   METALMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
+   METALMOCKTHEN(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentDirectoryPath)).Then(
+   METALMOCKTHEN(_call_wfsopenMock.CalledOnceWith(filePath.c_str(), fileOpenMode, _SH_DENYWR))).Then(
+   METALMOCKTHEN(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce()));
 }
 
 #endif
@@ -855,17 +864,16 @@ TEST(ReadFileSize_CallsFSeekEndThenFTellToDetermineSizeOfFileInBytes)
    //
    const size_t fileSizeInBytes = _fileSystem.ReadFileSize(filePointer);
    //
-   METALMOCK(_call_fseekMock.CalledAsFollows(
-   {
-      { filePointer.get(), 0, SEEK_END },
-      { filePointer.get(), 0, SEEK_SET }
-   }));
-   METALMOCK(_asserterMock->ThrowIfIntsNotEqualMock.CalledAsFollows(
-   {
-      { 0, fseekEndReturnValue, "fseek(filePointer.get(), 0, SEEK_END) in FileSystem::FileSize() unexpectedly did not return 0" },
-      { 0, fseekSetReturnValue, "fseek(filePointer.get(), 0, SEEK_SET) in FileSystem::FileSize() unexpectedly did not return 0" }
-   }));
-   METALMOCK(_call_ftellMock.CalledOnceWith(filePointer.get()));
+   METALMOCK(_call_fseekMock.CalledNTimes(2));
+   METALMOCK(_asserterMock->ThrowIfIntsNotEqualMock.CalledNTimes(2));
+
+   METALMOCKTHEN(_call_fseekMock.CalledWith(filePointer.get(), 0, SEEK_END)).Then(
+   METALMOCKTHEN(_asserterMock->ThrowIfIntsNotEqualMock.CalledWith(
+      0, fseekEndReturnValue, "fseek(filePointer.get(), 0, SEEK_END) in FileSystem::FileSize() unexpectedly did not return 0"))).Then(
+   METALMOCKTHEN(_call_ftellMock.CalledOnceWith(filePointer.get()))).Then(
+   METALMOCKTHEN(_call_fseekMock.CalledWith(filePointer.get(), 0, SEEK_SET))).Then(
+   METALMOCKTHEN(_asserterMock->ThrowIfIntsNotEqualMock.CalledWith(
+      0, fseekSetReturnValue, "fseek(filePointer.get(), 0, SEEK_SET) in FileSystem::FileSize() unexpectedly did not return 0")));
    ARE_EQUAL(static_cast<size_t>(ftellReturnValue), fileSizeInBytes);
 }
 

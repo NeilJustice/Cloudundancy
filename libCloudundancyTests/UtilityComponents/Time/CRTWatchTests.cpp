@@ -137,11 +137,11 @@ TEST(TmNow_ReturnsTmNow)
    //
    const tm tmNow = _crtWatch.TmNow();
    //
-   METALMOCK(nowMock.CalledOnce());
-   METALMOCK(to_time_tMock.CalledOnceWith(nowTimePoint));
+   METALMOCKTHEN(nowMock.CalledOnce()).Then(
+   METALMOCKTHEN(to_time_tMock.CalledOnceWith(nowTimePoint))).Then(
+   METALMOCKTHEN(_asserterMock->ThrowIfIntsNotEqualMock.CalledOnceWith(
+      0, _localtime64_sCallHistory.returnValue, "_localtime64_s(&nowAsTm, &nowAsTimeT) unexpectedly returned non-0")));
    _localtime64_sCallHistory.AssertCalledOnceWith(tm{}, nowAsTimeT);
-   METALMOCK(_asserterMock->ThrowIfIntsNotEqualMock.CalledOnceWith(
-      0, _localtime64_sCallHistory.returnValue, "_localtime64_s(&nowAsTm, &nowAsTimeT) unexpectedly returned non-0"));
 }
 
 #endif

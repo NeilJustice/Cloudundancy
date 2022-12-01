@@ -77,43 +77,56 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    //
    const CloudundancyArgs args = _cloudundancyArgsParser.ParseStringArgs(stringArgs);
    //
-   METALMOCK(_docoptParserMock->ParseArgsMock.CalledOnceWith(CloudundancyArgs::CommandLineUsage, stringArgs));
-   METALMOCK(_docoptParserMock->GetRequiredBoolMock.CalledAsFollows(
-   {
-      { docoptArgs, "copy-files-to-multiple-folders" },
-      { docoptArgs, "7zip-files-then-copy-the-7zip-file-to-multiple-folders" },
-      { docoptArgs, "example-linux-ini-file" },
-      { docoptArgs, "example-windows-ini-file" }
-   }));
-   METALMOCK(_programModeDeterminerMock->DetermineProgramModeMock.CalledOnceWith(
+   METALMOCK(_docoptParserMock->GetRequiredBoolMock.CalledNTimes(4));
+   METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledNTimes(3));
+   METALMOCK(_fileSystemMock->ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExistMock.CalledNTimes(3));
+
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledOnceWith(CloudundancyArgs::CommandLineUsage, stringArgs)).Then(
+
+   METALMOCKTHEN(_docoptParserMock->GetRequiredBoolMock.CalledWith(
+      docoptArgs, "copy-files-to-multiple-folders"))).Then(
+
+   METALMOCKTHEN(_docoptParserMock->GetRequiredBoolMock.CalledWith(
+      docoptArgs, "7zip-files-then-copy-the-7zip-file-to-multiple-folders"))).Then(
+
+   METALMOCKTHEN(_docoptParserMock->GetRequiredBoolMock.CalledWith(
+      docoptArgs, "example-linux-ini-file"))).Then(
+
+   METALMOCKTHEN(_docoptParserMock->GetRequiredBoolMock.CalledWith(
+      docoptArgs, "example-windows-ini-file"))).Then(
+
+   METALMOCKTHEN(_programModeDeterminerMock->DetermineProgramModeMock.CalledOnceWith(
       isCopyFileToFilesToMultipleFoldersMode,
       is7ZipMode,
       isExampleLinuxIniFileMode,
-      isExampleWindowsIniFileMode));
-   METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptArgs, "--ini-file"));
-   METALMOCK(_docoptParserMock->GetOptionalBoolMock.CalledOnceWith(docoptArgs, "--delete-destination-folders-first"));
-   METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledAsFollows(
-   {
-      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::SevenZip), "--ini-file-to-copy-files-to-7zip-staging-folder" },
-      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::SevenZip), "--7zip-staging-folder" },
-      { docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::SevenZip), "--ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders" }
-   }));
-   METALMOCK(_fileSystemMock->ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExistMock.CalledAsFollows(
-   {
-      { iniFilePath },
-      { sevenZipModeIniFilePath },
-      { sevenZipFileCopyingIniFilePath }
-   }));
+      isExampleWindowsIniFileMode))).Then(
+
+   METALMOCKTHEN(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptArgs, "--ini-file"))).Then(
+
+   METALMOCKTHEN(_docoptParserMock->GetOptionalBoolMock.CalledOnceWith(docoptArgs, "--delete-destination-folders-first"))).Then(
+
+   METALMOCKTHEN(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledWith(
+      docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::SevenZip), "--ini-file-to-copy-files-to-7zip-staging-folder"))).Then(
+
+   METALMOCKTHEN(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledWith(
+      docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::SevenZip), "--7zip-staging-folder"))).Then(
+
+   METALMOCKTHEN(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledWith(
+      docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::SevenZip), "--ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders"))).Then(
+
+   METALMOCKTHEN(_fileSystemMock->ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExistMock.CalledWith(iniFilePath))).Then(
+   METALMOCKTHEN(_fileSystemMock->ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExistMock.CalledWith(sevenZipModeIniFilePath))).Then(
+   METALMOCKTHEN(_fileSystemMock->ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExistMock.CalledWith(sevenZipFileCopyingIniFilePath)));
+
    if (expectRun7zToConfirm7zIsInThePath)
    {
-      METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
-      {
-         { "[Cloudundancy] Running program 7z to confirm 7z is present on the PATH" },
-         { "[Cloudundancy] 7z ran and exited with code 0 and is therefore confirmed to be present on the PATH\n" }
-      }));
-      METALMOCK(_processRunnerMock->FailFastRunMock.CalledOnceWith("7z", "", false));
+      METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith(
+         "[Cloudundancy] Running program 7z to confirm 7z is present on the PATH")).Then(
+      METALMOCKTHEN(_processRunnerMock->FailFastRunMock.CalledOnceWith("7z", "", false))).Then(
+      METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith(
+         "[Cloudundancy] 7z ran and exited with code 0 and is therefore confirmed to be present on the PATH\n")));
    }
-   CloudundancyArgs expectedArgs;
+   CloudundancyArgs expectedArgs{};
    expectedArgs.programMode = programMode;
    expectedArgs.iniFilePath = iniFilePath;
    expectedArgs.deleteDestinationFoldersFirst = deleteDestinationFoldersFirst;

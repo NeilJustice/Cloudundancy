@@ -93,8 +93,8 @@ TEST(WriteLineColor_SetsConsoleTextColor_WritesMessageThenNewline_UnsetsColor)
    //
    _console.WriteLineColor(message, color);
    //
-   METALMOCK(_consoleColorerMock->SetTextColorMock.CalledOnceWith(color));
-   METALMOCK(_consoleColorerMock->UnsetTextColorMock.CalledOnceWith(didSetTextColor));
+   METALMOCKTHEN(_consoleColorerMock->SetTextColorMock.CalledOnceWith(color)).Then(
+   METALMOCKTHEN(_consoleColorerMock->UnsetTextColorMock.CalledOnceWith(didSetTextColor)));
 }
 
 RUN_TESTS(ConsoleTests)

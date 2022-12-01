@@ -92,9 +92,9 @@ TEST(Main_ArgcIs2OrGreater_CallsTryCatchCallRunWithStringArgs_ReturnsExitCodeFro
    //
    const int exitCode = _cloudundancyProgram.Main(argc, const_cast<char**>(argv));
    //
-   METALMOCK(_call_Vector_ArgcArgvToStringVectorMock.CalledOnceWith(argc, const_cast<char**>(argv)));
-   METALMOCK(_tryCatchCallerMock->TryCatchCallNonConstMemberFunctionMock.CalledOnceWith(
-      &_cloudundancyProgram, &CloudundancyProgram::Run, stringArgs, &CloudundancyProgram::ExceptionHandler));
+   METALMOCKTHEN(_call_Vector_ArgcArgvToStringVectorMock.CalledOnceWith(argc, const_cast<char**>(argv))).Then(
+   METALMOCKTHEN(_tryCatchCallerMock->TryCatchCallNonConstMemberFunctionMock.CalledOnceWith(
+      &_cloudundancyProgram, &CloudundancyProgram::Run, stringArgs, &CloudundancyProgram::ExceptionHandler)));
    ARE_EQUAL(tryCatchCallReturnValue, exitCode);
 }
 
