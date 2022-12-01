@@ -17,6 +17,7 @@
 
 #include <array>
 #include <functional>
+#include <iostream>
 #include <unordered_map>
 namespace fs = std::filesystem;
 using namespace std;

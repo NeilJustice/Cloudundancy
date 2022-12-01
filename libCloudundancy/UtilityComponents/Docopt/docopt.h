@@ -8,7 +8,6 @@
 #pragma warning(disable: 26812) // The enum type 'boost::detail::local_counted_base::count_type' is unscoped. Prefer 'enum class' over 'enum'
 #endif
 #include <functional>
-#include <iostream>
 #include <map>
 #include <regex>
 #include <unordered_set>
