@@ -3,8 +3,8 @@
 
 template<typename ElementType, typename ExtraArgType>
 TEMPLATE_TESTS(OneExtraArgMemberFunctionForEacherTests, ElementType, ExtraArgType)
-AFACT(CallConstMemberFunctionForEachElement_EmptyElementsVector_DoesNotCallMemberFunction)
-AFACT(CallConstMemberFunctionForEachElement_TwoElementsVector_CallsThisPointerBoundFuncTwice)
+AFACT(CallConstMemberFunctionWithEachElement_EmptyElementsVector_DoesNotCallMemberFunction)
+AFACT(CallConstMemberFunctionWithEachElement_TwoElementsVector_CallsThisPointerBoundFuncTwice)
 AFACT(CodeCoverage_ClassType_TwoArgConstMemberFunctionFunction)
 EVIDENCE
 
@@ -26,14 +26,14 @@ public:
 
 Utils::OneExtraArgMemberFunctionForEacher<ClassType, ElementType, ExtraArgType> _oneExtraArgMemberFunctionForEacher;
 
-TEST(CallConstMemberFunctionForEachElement_EmptyElementsVector_DoesNotCallMemberFunction)
+TEST(CallConstMemberFunctionWithEachElement_EmptyElementsVector_DoesNotCallMemberFunction)
 {
    const ClassTypeMock classInstance{};
-   _oneExtraArgMemberFunctionForEacher.CallConstMemberFunctionForEachElement(
+   _oneExtraArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(
       classInstance.elements, &ClassType::TwoArgConstMemberFunctionFunction, &classInstance, ZenUnit::Random<ExtraArgType>());
 }
 
-TEST(CallConstMemberFunctionForEachElement_TwoElementsVector_CallsThisPointerBoundFuncTwice)
+TEST(CallConstMemberFunctionWithEachElement_TwoElementsVector_CallsThisPointerBoundFuncTwice)
 {
    ClassTypeMock classInstance;
    const ElementType element1 = ZenUnit::Random<ElementType>();
@@ -42,7 +42,7 @@ TEST(CallConstMemberFunctionForEachElement_TwoElementsVector_CallsThisPointerBou
    classInstance.TwoArgConstMemberFunctionFunctionMock.Expect();
    const ExtraArgType extraArg = ZenUnit::Random<ExtraArgType>();
    //
-   _oneExtraArgMemberFunctionForEacher.CallConstMemberFunctionForEachElement(
+   _oneExtraArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(
       classInstance.elements, &ClassType::TwoArgConstMemberFunctionFunction, &classInstance, extraArg);
    //
    classInstance.TwoArgConstMemberFunctionFunctionMock.CalledAsFollows(

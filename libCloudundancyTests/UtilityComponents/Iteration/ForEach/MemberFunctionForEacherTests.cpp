@@ -3,8 +3,8 @@
 
 template<typename ElementType>
 TEMPLATE_TESTS(MemberFunctionForEacherTests, ElementType)
-AFACT(CallConstMemberFunctionForEachElement_EmptyElementsVector_DoesNotCallMemberFunction)
-AFACT(CallConstMemberFunctionForEachElement_TwoElementsVector_CallsMemberFunctionForEachEachElement)
+AFACT(CallConstMemberFunctionWithEachElement_EmptyElementsVector_DoesNotCallMemberFunction)
+AFACT(CallConstMemberFunctionWithEachElement_TwoElementsVector_CallsMemberFunctionForEachEachElement)
 AFACT(CodeCoverage_ClassType_ConstMemberFunctionFunction)
 EVIDENCE
 
@@ -24,14 +24,14 @@ public:
 
 Utils::MemberFunctionForEacher<ClassType, ElementType> _memberFunctionForEacher;
 
-TEST(CallConstMemberFunctionForEachElement_EmptyElementsVector_DoesNotCallMemberFunction)
+TEST(CallConstMemberFunctionWithEachElement_EmptyElementsVector_DoesNotCallMemberFunction)
 {
    const ClassTypeMock classInstance{};
-   _memberFunctionForEacher.CallConstMemberFunctionForEachElement(
+   _memberFunctionForEacher.CallConstMemberFunctionWithEachElement(
       classInstance.elements, &ClassType::ConstMemberFunctionFunction, &classInstance);
 }
 
-TEST(CallConstMemberFunctionForEachElement_TwoElementsVector_CallsMemberFunctionForEachEachElement)
+TEST(CallConstMemberFunctionWithEachElement_TwoElementsVector_CallsMemberFunctionForEachEachElement)
 {
    ClassTypeMock classInstance;
    const ElementType element1 = ZenUnit::Random<ElementType>();
@@ -39,7 +39,7 @@ TEST(CallConstMemberFunctionForEachElement_TwoElementsVector_CallsMemberFunction
    classInstance.elements = { element1, element2 };
    classInstance.ConstMemberFunctionFunctionMock.Expect();
    //
-   _memberFunctionForEacher.CallConstMemberFunctionForEachElement(
+   _memberFunctionForEacher.CallConstMemberFunctionWithEachElement(
       classInstance.elements, &ClassType::ConstMemberFunctionFunction, &classInstance);
    //
    classInstance.ConstMemberFunctionFunctionMock.CalledAsFollows(

@@ -22,7 +22,7 @@ CloudundancyFileSystem::~CloudundancyFileSystem()
 
 void CloudundancyFileSystem::DeleteMultipleFolderContentsExceptForFile(const vector<fs::path>& folderPaths, string_view exceptFileName) const
 {
-   _forEacher_DeleteContentsOfFolderExceptForFileName->CallConstMemberFunctionForEachElement(
+   _forEacher_DeleteContentsOfFolderExceptForFileName->CallConstMemberFunctionWithEachElement(
       folderPaths, &CloudundancyFileSystem::DeleteFolderContentsExceptForFile, this, exceptFileName);
 }
 

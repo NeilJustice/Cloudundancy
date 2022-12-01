@@ -88,13 +88,13 @@ TEST(DeleteFolderContentsExceptForFile_FolderExists_DeletesFolderContentsExceptF
 
 TEST(DeleteMultipleFolderContentsExceptForFile_CallsDeleteContentsOfFolderExceptForFileNameOnEachFolderPath)
 {
-   _forEacher_DeleteContentsOfFolderExceptForFileNameMock->CallConstMemberFunctionForEachElementMock.Expect();
+   _forEacher_DeleteContentsOfFolderExceptForFileNameMock->CallConstMemberFunctionWithEachElementMock.Expect();
    const vector<fs::path> folderPaths = ZenUnit::RandomVector<fs::path>();
    const string exceptFileName = ZenUnit::Random<string>();
    //
    _cloudundancyFileSystem.DeleteMultipleFolderContentsExceptForFile(folderPaths, exceptFileName);
    //
-   METALMOCK(_forEacher_DeleteContentsOfFolderExceptForFileNameMock->CallConstMemberFunctionForEachElementMock.CalledOnceWith(
+   METALMOCK(_forEacher_DeleteContentsOfFolderExceptForFileNameMock->CallConstMemberFunctionWithEachElementMock.CalledOnceWith(
       folderPaths, &CloudundancyFileSystem::DeleteFolderContentsExceptForFile, &_cloudundancyFileSystem, exceptFileName));
 }
 

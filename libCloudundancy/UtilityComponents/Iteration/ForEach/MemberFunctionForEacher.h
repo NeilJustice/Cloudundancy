@@ -8,7 +8,7 @@ namespace Utils
    public:
       using ConstMemberFunctionType = void(ClassType::*)(const ElementType&) const;
 
-      virtual void CallConstMemberFunctionForEachElement(
+      virtual void CallConstMemberFunctionWithEachElement(
          const std::vector<ElementType>& elements,
          ConstMemberFunctionType constMemberFunction,
          const ClassType* constClassPointer) const

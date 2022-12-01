@@ -8,7 +8,7 @@ namespace Utils
    {
    public:
       using ConstMemberFunctionType = void(ClassType::*)(const ElementType&) const;
-      METALMOCK_VOID3_CONST(CallConstMemberFunctionForEachElement,
+      METALMOCK_VOID3_CONST(CallConstMemberFunctionWithEachElement,
          const vector<ElementType>&, ConstMemberFunctionType, const ClassType*)
    };
 }

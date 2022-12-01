@@ -9,7 +9,7 @@ namespace Utils
    {
    public:
       using ConstMemberFunctionType = void(ClassType::*)(const ElementType&, ExtraArgType) const;
-      METALMOCK_VOID4_CONST(CallConstMemberFunctionForEachElement,
+      METALMOCK_VOID4_CONST(CallConstMemberFunctionWithEachElement,
          const vector<ElementType>&, ConstMemberFunctionType, const ClassType*, ExtraArgType)
    };
 }
