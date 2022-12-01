@@ -61,8 +61,9 @@ CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudunda
       else if (inSourceFilesAndFoldersToCopySection)
       {
          const FilePathLineNumberLineText fileCopyInstructionLine(cloudundancyIniPath, lineNumber, iniFileLine);
-         CloudundancyIniCopyInstruction cloudundancyIniCopyInstruction = _caller_ParseFileCopyInstructionLine->CallConstMemberFunction(
-            &CloudundancyIniFileReader::ParseFileCopyInstructionLine, this, fileCopyInstructionLine);
+         CloudundancyIniCopyInstruction cloudundancyIniCopyInstruction =
+            _caller_ParseFileCopyInstructionLine->CallConstMemberFunction(
+               this, &CloudundancyIniFileReader::ParseFileCopyInstructionLine, fileCopyInstructionLine);
          cloudundancyIni.cloudundancyIniCopyInstructions.emplace_back(std::move(cloudundancyIniCopyInstruction));
       }
       else
@@ -89,7 +90,7 @@ CloudundancyIniCopyInstruction CloudundancyIniFileReader::ParseFileCopyInstructi
    cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath = pipeSplitLine[0];
    cloudundancyIniCopyInstruction.relativeDestinationFolderPath = pipeSplitLine[1];
    _caller_ThrowIfSourceFileOrFolderDoesNotExist->CallConstMemberFunction(
-      &CloudundancyIniFileReader::ThrowIfSourceFileOrFolderDoesNotExist, this, cloudundancyIniCopyInstruction);
+      this, &CloudundancyIniFileReader::ThrowIfSourceFileOrFolderDoesNotExist, cloudundancyIniCopyInstruction);
    return cloudundancyIniCopyInstruction;
 }
 

@@ -104,7 +104,7 @@ namespace Utils
       const string runningMessage = Utils::String::ConcatStrings("[Cloudundancy] Running program: ", processName, " ", arguments);
       _console->WriteLineColor(runningMessage, Color::Yellow);
       const ProcessResult processResult = _caller_Run->CallConstMemberFunction(
-         &WindowsProcessRunner::Run, this, processName, arguments);
+         this, &WindowsProcessRunner::Run, processName, arguments);
       _console->WriteLineIf(doPrintStandardOutput, processResult.standardOutputAndError);
       if (processResult.exitCode != 0)
       {

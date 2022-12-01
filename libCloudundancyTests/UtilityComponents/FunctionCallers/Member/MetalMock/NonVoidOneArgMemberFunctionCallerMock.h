@@ -8,6 +8,6 @@ namespace Utils
    {
    public:
       using MemberFunctionType = ReturnType (ClassType::*)(ArgType) const;
-      METALMOCK_NONVOID3_CONST(ReturnType, CallConstMemberFunction, MemberFunctionType, const ClassType*, ArgType)
+      METALMOCK_NONVOID3_CONST(ReturnType, CallConstMemberFunction, const ClassType*, MemberFunctionType, ArgType)
    };
 }

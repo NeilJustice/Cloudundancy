@@ -54,7 +54,7 @@ TEST(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
    METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith(
       expectedRunningProgramMessage, Color::Yellow)).Then(
    METALMOCKTHEN(_caller_RunMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &Utils::WindowsProcessRunner::Run, &_windowsProcessRunner, processName, arguments))).Then(
+      &_windowsProcessRunner, &Utils::WindowsProcessRunner::Run, processName, arguments))).Then(
    METALMOCKTHEN(_consoleMock->WriteLineIfMock.CalledOnceWith(
       doPrintStandardOutput, processResult.standardOutputAndError)));
    ARE_EQUAL(runReturnValue, processResult);
@@ -81,7 +81,7 @@ TEST(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessage_CallsExitWithProcessE
       "Process \"", processName, " ", arguments, "\" failed with exit code ", processResult.exitCode, '.');
    METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedRunningProgramMessage, Color::Yellow)).Then(
    METALMOCKTHEN(_caller_RunMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &Utils::WindowsProcessRunner::Run, &_windowsProcessRunner, processName, arguments))).Then(
+      &_windowsProcessRunner, &Utils::WindowsProcessRunner::Run, processName, arguments))).Then(
    METALMOCKTHEN(_consoleMock->WriteLineIfMock.CalledOnceWith(doPrintStandardOutput, processResult.standardOutputAndError))).Then(
    METALMOCKTHEN(_consoleMock->WriteLineAndExitMock.CalledOnceWith(expectedProcessFailedErrorMessage, runReturnValue.exitCode)));
    ARE_EQUAL(runReturnValue, processResult);

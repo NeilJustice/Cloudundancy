@@ -39,7 +39,8 @@ TEST(CallConstMemberFunction_CallsConstMemberFunctionOnce_ReturnsReturnValue)
    const Class constInstance{};
    const ArgType arg = ZenUnit::Random<ArgType>();
    //
-   const ReturnType returnValue = _nonVoidOneArgMemberFunctionCaller.CallConstMemberFunction(&Class::ConstMemberFunction, &constInstance, arg);
+   const ReturnType returnValue =
+      _nonVoidOneArgMemberFunctionCaller.CallConstMemberFunction(&constInstance, &Class::ConstMemberFunction, arg);
    //
    VECTORS_ARE_EQUAL(vector<ArgType>{arg}, constInstance.args);
    ARE_EQUAL(constInstance.returnValue, returnValue);
@@ -50,7 +51,8 @@ TEST(CallNonConstMemberFunction_CallsNonConstMemberFunctionOnce_ReturnsReturnVal
    Class nonConstInstance{};
    const ArgType arg = ZenUnit::Random<ArgType>();
    //
-   const ReturnType returnValue = _nonVoidOneArgMemberFunctionCaller.CallNonConstMemberFunction(&Class::NonConstMemberFunction, &nonConstInstance, arg);
+   const ReturnType returnValue =
+      _nonVoidOneArgMemberFunctionCaller.CallNonConstMemberFunction(&nonConstInstance, &Class::NonConstMemberFunction, arg);
    //
    VECTORS_ARE_EQUAL(vector<ArgType>{arg}, nonConstInstance.args);
    ARE_EQUAL(nonConstInstance.returnValue, returnValue);

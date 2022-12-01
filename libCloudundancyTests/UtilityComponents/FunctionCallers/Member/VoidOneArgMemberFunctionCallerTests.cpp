@@ -25,32 +25,36 @@ public:
 
 TEST(CallConstMemberFunction_CallsConstMemberFunction)
 {
-   Class c;
+   const Class constClassInstance{};
    Utils::VoidOneArgMemberFunctionCaller<Class, ArgType> oneArgVoidMemberFunctionCaller{};
-   IS_EMPTY(c.calls);
+   IS_EMPTY(constClassInstance.calls);
    //
-   oneArgVoidMemberFunctionCaller.CallConstMemberFunction(&Class::ConstMemberVoidFunction, &c, ArgType{ 1 });
+   oneArgVoidMemberFunctionCaller.CallConstMemberFunction(
+      &constClassInstance, &Class::ConstMemberVoidFunction, ArgType{ 1 });
    //
-   VECTORS_ARE_EQUAL(vector<ArgType>{ 1 }, c.calls);
+   VECTORS_ARE_EQUAL(vector<ArgType>{ 1 }, constClassInstance.calls);
    //
-   oneArgVoidMemberFunctionCaller.CallConstMemberFunction(&Class::ConstMemberVoidFunction, &c, ArgType{ 2 });
+   oneArgVoidMemberFunctionCaller.CallConstMemberFunction(
+      &constClassInstance, &Class::ConstMemberVoidFunction, ArgType{ 2 });
    //
-   VECTORS_ARE_EQUAL((vector<ArgType>{ 1, 2 }), c.calls);
+   VECTORS_ARE_EQUAL((vector<ArgType>{ 1, 2 }), constClassInstance.calls);
 }
 
 TEST(CallNonConstCallMemberFunction_CallsNonConstMemberFunction)
 {
-   Class c;
+   Class nonConstClassInstance{};
    Utils::VoidOneArgMemberFunctionCaller<Class, ArgType> oneArgVoidMemberFunctionCaller{};
-   IS_EMPTY(c.calls);
+   IS_EMPTY(nonConstClassInstance.calls);
    //
-   oneArgVoidMemberFunctionCaller.CallNonConstCallMemberFunction(&Class::NonConstMemberVoidFunction, &c, ArgType{ 1 });
+   oneArgVoidMemberFunctionCaller.CallNonConstCallMemberFunction(
+      &nonConstClassInstance, &Class::NonConstMemberVoidFunction, ArgType{ 1 });
    //
-   VECTORS_ARE_EQUAL(vector<ArgType>{ 1 }, c.calls);
+   VECTORS_ARE_EQUAL(vector<ArgType>{ 1 }, nonConstClassInstance.calls);
    //
-   oneArgVoidMemberFunctionCaller.CallNonConstCallMemberFunction(&Class::NonConstMemberVoidFunction, &c, ArgType{ 2 });
+   oneArgVoidMemberFunctionCaller.CallNonConstCallMemberFunction(
+      &nonConstClassInstance, &Class::NonConstMemberVoidFunction, ArgType{ 2 });
    //
-   VECTORS_ARE_EQUAL((vector<ArgType>{ 1, 2 }), c.calls);
+   VECTORS_ARE_EQUAL((vector<ArgType>{ 1, 2 }), nonConstClassInstance.calls);
 }
 
 RUN_TEMPLATE_TESTS(VoidOneArgMemberFunctionCallerTests, int)

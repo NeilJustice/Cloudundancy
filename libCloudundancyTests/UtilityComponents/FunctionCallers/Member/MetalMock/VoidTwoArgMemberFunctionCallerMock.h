@@ -8,9 +8,9 @@ namespace Utils
    {
    public:
       using ConstMemberFunctionType = void (ClassType::*)(Arg1Type, Arg2Type) const;
-      METALMOCK_VOID4_CONST(CallConstMemberFunction, ConstMemberFunctionType, const ClassType*, Arg1Type, Arg2Type)
+      METALMOCK_VOID4_CONST(CallConstMemberFunction, const ClassType*, ConstMemberFunctionType, Arg1Type, Arg2Type)
 
       using NonConstMemberFunctionType = void (ClassType::*)(Arg1Type, Arg2Type);
-      METALMOCK_VOID4_CONST(CallNonConstMemberFunction, NonConstMemberFunctionType, ClassType*, Arg1Type, Arg2Type)
+      METALMOCK_VOID4_CONST(CallNonConstMemberFunction, ClassType*, NonConstMemberFunctionType, Arg1Type, Arg2Type)
    };
 }

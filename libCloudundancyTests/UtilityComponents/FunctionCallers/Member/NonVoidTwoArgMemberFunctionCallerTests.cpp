@@ -43,7 +43,7 @@ TEST(CallConstMemberFunction_CallsNonVoidConstMemberFunctionOnce_ReturnsReturnVa
    const Class classInstance;
    //
    const ReturnType returnValue = _nonVoidTwoArgMemberFunctionCaller.CallConstMemberFunction(
-      &Class::NonVoidConstMemberFunction, &classInstance, _arg1, _arg2);
+      &classInstance, &Class::NonVoidConstMemberFunction, _arg1, _arg2);
    //
    const vector<pair<Arg1Type, Arg2Type>> expectedCalls =
    {
@@ -58,7 +58,7 @@ TEST(CallNonConstMemberFunction_CallsNonVoidNonConstMemberFunctionOnce_ReturnsRe
    Class classInstance;
    //
    const ReturnType returnValue = _nonVoidTwoArgMemberFunctionCaller.CallNonConstMemberFunction(
-      &Class::NonVoidNonConstMemberFunction, &classInstance, _arg1, _arg2);
+      &classInstance, &Class::NonVoidNonConstMemberFunction, _arg1, _arg2);
    //
    const vector<pair<Arg1Type, Arg2Type>> expectedCalls =
    {

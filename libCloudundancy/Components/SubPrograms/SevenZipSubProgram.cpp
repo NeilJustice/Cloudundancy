@@ -23,10 +23,10 @@ SevenZipSubProgram::~SevenZipSubProgram()
 
 int SevenZipSubProgram::Run(const CloudundancyArgs& args)
 {
-   _voidOneArgMemberFunctionCaller->CallConstMemberFunction(&SevenZipSubProgram::DeleteBackupStagingFolder, this, args);
-   _voidOneArgMemberFunctionCaller->CallConstMemberFunction(&SevenZipSubProgram::CopyFileToFilesAndFoldersToBackupStagingFolder, this, args);
-   _voidOneArgMemberFunctionCaller->CallConstMemberFunction(&SevenZipSubProgram::SevenZipBackupStagingFolder, this, args);
-   _voidOneArgMemberFunctionCaller->CallConstMemberFunction(&SevenZipSubProgram::Copy7ZipFileToDestinationFolders, this, args);
+   _voidOneArgMemberFunctionCaller->CallConstMemberFunction(this, &SevenZipSubProgram::DeleteBackupStagingFolder, args);
+   _voidOneArgMemberFunctionCaller->CallConstMemberFunction(this, &SevenZipSubProgram::CopyFileToFilesAndFoldersToBackupStagingFolder, args);
+   _voidOneArgMemberFunctionCaller->CallConstMemberFunction(this, &SevenZipSubProgram::SevenZipBackupStagingFolder, args);
+   _voidOneArgMemberFunctionCaller->CallConstMemberFunction(this, &SevenZipSubProgram::Copy7ZipFileToDestinationFolders, args);
    return 0;
 }
 

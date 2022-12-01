@@ -29,14 +29,14 @@ TEST(ConstCall_CallsConstMemberFunctionOnce)
    Utils::VoidTwoArgMemberFunctionCaller<Class, Arg1Type, Arg2Type> voidTwoArgMemberFunctionCaller;
    //
    voidTwoArgMemberFunctionCaller.CallConstMemberFunction(
-      &Class::ConstMemberFunction, &constClassInstance, Arg1Type{ 1 }, Arg2Type{ 2 });
+      &constClassInstance, &Class::ConstMemberFunction, Arg1Type{ 1 }, Arg2Type{ 2 });
    //
    vector<pair<Arg1Type, Arg2Type>> expectedFunctionCallArguments = { { Arg1Type{ 1 }, Arg2Type{ 2 } } };
    VECTORS_ARE_EQUAL(expectedFunctionCallArguments, constClassInstance.functionCallArguments);
 
 
    voidTwoArgMemberFunctionCaller.CallConstMemberFunction(
-      &Class::ConstMemberFunction, &constClassInstance, Arg1Type{ 3 }, Arg2Type{ 4 });
+      &constClassInstance, &Class::ConstMemberFunction, Arg1Type{ 3 }, Arg2Type{ 4 });
    //
    expectedFunctionCallArguments.emplace_back(Arg1Type{ 3 }, Arg2Type{ 4 });
    VECTORS_ARE_EQUAL(expectedFunctionCallArguments, constClassInstance.functionCallArguments);
@@ -44,21 +44,21 @@ TEST(ConstCall_CallsConstMemberFunctionOnce)
 
 TEST(NonConstCall_CallsNonConstMemberFunctionOnce)
 {
-   Class classInstance{};
+   Class nonConstClassInstance{};
    Utils::VoidTwoArgMemberFunctionCaller<Class, Arg1Type, Arg2Type> voidTwoArgMemberFunctionCaller;
    //
    voidTwoArgMemberFunctionCaller.CallNonConstMemberFunction(
-      &Class::NonConstMemberFunction, &classInstance, Arg1Type{ 1 }, Arg2Type{ 2 });
+      &nonConstClassInstance, &Class::NonConstMemberFunction, Arg1Type{ 1 }, Arg2Type{ 2 });
    //
    vector<pair<Arg1Type, Arg2Type>> expectedFunctionCallArguments = { { Arg1Type{ 1 }, Arg2Type{ 2 } } };
-   VECTORS_ARE_EQUAL(expectedFunctionCallArguments, classInstance.functionCallArguments);
+   VECTORS_ARE_EQUAL(expectedFunctionCallArguments, nonConstClassInstance.functionCallArguments);
 
 
    voidTwoArgMemberFunctionCaller.CallNonConstMemberFunction(
-      &Class::NonConstMemberFunction, &classInstance, Arg1Type{ 3 }, Arg2Type{ 4 });
+      &nonConstClassInstance, &Class::NonConstMemberFunction, Arg1Type{ 3 }, Arg2Type{ 4 });
    //
    expectedFunctionCallArguments.emplace_back(Arg1Type{ 3 }, Arg2Type{ 4 });
-   VECTORS_ARE_EQUAL(expectedFunctionCallArguments, classInstance.functionCallArguments);
+   VECTORS_ARE_EQUAL(expectedFunctionCallArguments, nonConstClassInstance.functionCallArguments);
 }
 
 RUN_TEMPLATE_TESTS(VoidTwoArgMemberFunctionCallerTests, int, char)

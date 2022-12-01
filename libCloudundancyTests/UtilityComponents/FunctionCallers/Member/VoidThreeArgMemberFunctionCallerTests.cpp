@@ -25,40 +25,40 @@ public:
 
 TEST(ConstCall_CallsConstMemberFunctionOnce)
 {
-   Class classInstance{};
+   const Class constClassInstance{};
    Utils::VoidThreeArgMemberFunctionCaller<Class, Arg1Type, Arg2Type, Arg3Type> voidThreeArgMemberFunctionCaller;
    //
    voidThreeArgMemberFunctionCaller.ConstCall(
-      &Class::ConstMemberFunction, &classInstance, Arg1Type{ 1 }, Arg2Type{ 2 }, Arg3Type{ 3 });
+      &constClassInstance, &Class::ConstMemberFunction, Arg1Type{ 1 }, Arg2Type{ 2 }, Arg3Type{ 3 });
    //
    vector<tuple<Arg1Type, Arg2Type, Arg3Type>> expectedCalls = { { Arg1Type{ 1 }, Arg2Type{ 2 }, Arg3Type{ 3 } } };
-   VECTORS_ARE_EQUAL(expectedCalls, classInstance.calls);
+   VECTORS_ARE_EQUAL(expectedCalls, constClassInstance.calls);
 
 
    voidThreeArgMemberFunctionCaller.ConstCall(
-      &Class::ConstMemberFunction, &classInstance, Arg1Type{ 3 }, Arg2Type{ 4 }, Arg3Type{ 5 });
+      &constClassInstance, &Class::ConstMemberFunction, Arg1Type{ 3 }, Arg2Type{ 4 }, Arg3Type{ 5 });
    //
    expectedCalls.emplace_back(Arg1Type{ 3 }, Arg2Type{ 4 }, Arg3Type{ 5 });
-   VECTORS_ARE_EQUAL(expectedCalls, classInstance.calls);
+   VECTORS_ARE_EQUAL(expectedCalls, constClassInstance.calls);
 }
 
 TEST(NonConstCall_CallsNonConstMemberFunctionOnce)
 {
-   Class classInstance{};
+   Class nonConstClassInstance{};
    Utils::VoidThreeArgMemberFunctionCaller<Class, Arg1Type, Arg2Type, Arg3Type> voidThreeArgMemberFunctionCaller;
    //
    voidThreeArgMemberFunctionCaller.NonConstCall(
-      &Class::NonConstMemberFunction, &classInstance, Arg1Type{ 1 }, Arg2Type{ 2 }, Arg3Type{ 3 });
+      &nonConstClassInstance, &Class::NonConstMemberFunction, Arg1Type{ 1 }, Arg2Type{ 2 }, Arg3Type{ 3 });
    //
    vector<tuple<Arg1Type, Arg2Type, Arg3Type>> expectedCalls = { { Arg1Type{ 1 }, Arg2Type{ 2 }, Arg3Type{ 3 } } };
-   VECTORS_ARE_EQUAL(expectedCalls, classInstance.calls);
+   VECTORS_ARE_EQUAL(expectedCalls, nonConstClassInstance.calls);
 
 
    voidThreeArgMemberFunctionCaller.NonConstCall(
-      &Class::NonConstMemberFunction, &classInstance, Arg1Type{ 3 }, Arg2Type{ 4 }, Arg3Type{ 5 });
+      &nonConstClassInstance, &Class::NonConstMemberFunction, Arg1Type{ 3 }, Arg2Type{ 4 }, Arg3Type{ 5 });
    //
    expectedCalls.emplace_back(Arg1Type{ 3 }, Arg2Type{ 4 }, Arg3Type{ 5 });
-   VECTORS_ARE_EQUAL(expectedCalls, classInstance.calls);
+   VECTORS_ARE_EQUAL(expectedCalls, nonConstClassInstance.calls);
 }
 
 RUN_TEMPLATE_TESTS(VoidThreeArgMemberFunctionCallerTests, int, char, unsigned)

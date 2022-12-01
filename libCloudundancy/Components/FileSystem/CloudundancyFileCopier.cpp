@@ -115,14 +115,12 @@ void CloudundancyFileCopier::CopyFileOrFolderToFolder(
    if (sourcePathIsAFile)
    {
       _caller_CopyFileToFileFunctions->CallConstMemberFunction(
-         &CloudundancyFileCopier::CopyFileToFolder,
-         this, cloudundancyIniCopyInstruction, destinationFolderPath);
+         this, &CloudundancyFileCopier::CopyFileToFolder, cloudundancyIniCopyInstruction, destinationFolderPath);
    }
    else
    {
       _caller_CopyFileToFileFunctions->CallConstMemberFunction(
-         &CloudundancyFileCopier::CopyNonIgnoredFilesInAndBelowFolderToFolder,
-         this, cloudundancyIniCopyInstruction, destinationFolderPath);
+         this, &CloudundancyFileCopier::CopyNonIgnoredFilesInAndBelowFolderToFolder, cloudundancyIniCopyInstruction, destinationFolderPath);
    }
 }
 
@@ -146,9 +144,9 @@ void CloudundancyFileCopier::CopyNestedFileToFolder(
          sourceFilePathRelativeToSourceFolderPath;
    }
    const Utils::FileCopyResult fileCopyResult = _caller_CopyFileToFile->CallConstMemberFunction(
-      &CloudundancyFileCopier::CopyFileToFile, this, sourceFilePath, destinationFilePath);
+      this, &CloudundancyFileCopier::CopyFileToFile, sourceFilePath, destinationFilePath);
    _caller_WriteCopiedMessageOrExitWithCode1IfCopyFailed->CallConstMemberFunction(
-      &CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed, this, fileCopyResult, destinationFolderPath);
+      this, &CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed, fileCopyResult, destinationFolderPath);
 }
 
 void CloudundancyFileCopier::CopyNonIgnoredFilesInAndBelowFolderToFolder(
@@ -164,8 +162,8 @@ void CloudundancyFileCopier::CopyNonIgnoredFilesInAndBelowFolderToFolder(
          break;
       }
       _caller_CopyNestedFileToFolder->ConstCall(
-         &CloudundancyFileCopier::CopyNestedFileToFolder,
-         this, nonIgnoredSourceFilePath, cloudundancyIniCopyInstruction, destinationFolderPath);
+         this, &CloudundancyFileCopier::CopyNestedFileToFolder,
+         nonIgnoredSourceFilePath, cloudundancyIniCopyInstruction, destinationFolderPath);
    }
 }
 
@@ -201,9 +199,9 @@ void CloudundancyFileCopier::CopyFileToFolder(
       destinationFilePath = destinationFolderPath / cloudundancyIniCopyInstruction.relativeDestinationFolderPath / sourceFileName;
    }
    const Utils::FileCopyResult fileCopyResult = _caller_CopyFileToFile->CallConstMemberFunction(
-      &CloudundancyFileCopier::CopyFileToFile, this, sourceFilePath, destinationFilePath);
+      this, &CloudundancyFileCopier::CopyFileToFile, sourceFilePath, destinationFilePath);
    _caller_WriteCopiedMessageOrExitWithCode1IfCopyFailed->CallConstMemberFunction(
-      &CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed, this, fileCopyResult, destinationFolderPath);
+      this, &CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed, fileCopyResult, destinationFolderPath);
 }
 
 void CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed(
