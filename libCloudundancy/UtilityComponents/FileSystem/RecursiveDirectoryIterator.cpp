@@ -7,7 +7,7 @@ namespace Utils
       // Function Pointers
       : _call_fs_remove(static_cast<FilesystemRemoveOverloadFunctionType>(fs::remove))
       // Function Callers
-      , _oneExtraArgTransformer(make_unique<OneExtraArgTransformerType>())
+      , _oneExtraArgTransformer(make_unique<TwoArgStaticFunctionTransformerType>())
    {
    }
 

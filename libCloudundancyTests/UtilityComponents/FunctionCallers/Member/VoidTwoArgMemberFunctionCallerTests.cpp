@@ -3,8 +3,8 @@
 
 template<typename Arg1Type, typename Arg2Type>
 TEMPLATE_TESTS(VoidTwoArgMemberFunctionCallerTests, Arg1Type, Arg2Type)
-AFACT(ConstCall_CallsConstMemberFunctionOnce)
-AFACT(NonConstCall_CallsNonConstMemberFunctionOnce)
+AFACT(CallConstMemberFunction_CallsConstMemberFunctionOnce)
+AFACT(CallNonConstMemberFunction_CallsNonConstMemberFunctionOnce)
 EVIDENCE
 
 class Class
@@ -23,7 +23,7 @@ public:
    }
 };
 
-TEST(ConstCall_CallsConstMemberFunctionOnce)
+TEST(CallConstMemberFunction_CallsConstMemberFunctionOnce)
 {
    const Class constClassInstance{};
    Utils::VoidTwoArgMemberFunctionCaller<Class, Arg1Type, Arg2Type> voidTwoArgMemberFunctionCaller;
@@ -42,7 +42,7 @@ TEST(ConstCall_CallsConstMemberFunctionOnce)
    VECTORS_ARE_EQUAL(expectedFunctionCallArguments, constClassInstance.functionCallArguments);
 }
 
-TEST(NonConstCall_CallsNonConstMemberFunctionOnce)
+TEST(CallNonConstMemberFunction_CallsNonConstMemberFunctionOnce)
 {
    Class nonConstClassInstance{};
    Utils::VoidTwoArgMemberFunctionCaller<Class, Arg1Type, Arg2Type> voidTwoArgMemberFunctionCaller;

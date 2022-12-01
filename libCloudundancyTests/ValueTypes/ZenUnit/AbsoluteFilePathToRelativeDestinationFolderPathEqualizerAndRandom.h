@@ -1,4 +1,8 @@
 #pragma once
+namespace Utils
+{
+   class UtilsRandomGenerator;
+}
 #include "libCloudundancy/ValueTypes/AbsoluteFilePathToRelativeDestinationFolderPath.h"
 
 namespace ZenUnit

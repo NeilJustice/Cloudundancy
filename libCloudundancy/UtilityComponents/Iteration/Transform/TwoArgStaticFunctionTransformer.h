@@ -7,7 +7,7 @@ namespace Utils
       typename SourceContainerType,
       typename TransformFunctionType,
       typename ExtraArgType>
-   class OneExtraArgTransformer
+   class TwoArgStaticFunctionTransformer
    {
    public:
       virtual TransformedContainerType Transform(
@@ -28,6 +28,6 @@ namespace Utils
          return transformedElements;
       }
 
-      virtual ~OneExtraArgTransformer() = default;
+      virtual ~TwoArgStaticFunctionTransformer() = default;
    };
 }

@@ -10,7 +10,7 @@ private:
    bool(*_call_fs_exists_as_assignable_function_overload_pointer)(const fs::path&);
    function<bool(const fs::path&)> _call_fs_exists;
    // Function Callers
-   using _forEacher_DeleteContentsOfFolderExceptForFileNameType = Utils::OneExtraArgMemberFunctionForEacher<CloudundancyFileSystem, fs::path, string_view>;
+   using _forEacher_DeleteContentsOfFolderExceptForFileNameType = Utils::TwoArgMemberFunctionForEacher<CloudundancyFileSystem, fs::path, string_view>;
    unique_ptr<const _forEacher_DeleteContentsOfFolderExceptForFileNameType> _forEacher_DeleteContentsOfFolderExceptForFileName;
    // Constant Components
    unique_ptr<const Utils::Console> _console;

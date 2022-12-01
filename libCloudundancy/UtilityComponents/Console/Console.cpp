@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/UtilityComponents/Console/Console.h"
+#include <iostream>
 
 namespace Utils
 {

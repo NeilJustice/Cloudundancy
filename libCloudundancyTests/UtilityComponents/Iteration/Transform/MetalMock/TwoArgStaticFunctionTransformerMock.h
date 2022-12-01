@@ -1,5 +1,5 @@
 #pragma once
-#include "libCloudundancy/UtilityComponents/Iteration/Transform/OneExtraArgTransformer.h"
+#include "libCloudundancy/UtilityComponents/Iteration/Transform/TwoArgStaticFunctionTransformer.h"
 
 namespace Utils
 {
@@ -8,8 +8,8 @@ namespace Utils
       typename SourceContainerType,
       typename TransformFunctionType,
       typename ExtraArgType>
-   class OneExtraArgTransformerMock : public Metal::Mock<
-      OneExtraArgTransformer<TransformedContainerType, SourceContainerType, TransformFunctionType, ExtraArgType>>
+   class TwoArgStaticFunctionTransformerMock : public Metal::Mock<
+      TwoArgStaticFunctionTransformer<TransformedContainerType, SourceContainerType, TransformFunctionType, ExtraArgType>>
    {
    public:
       METALMOCK_NONVOID3_CONST(TransformedContainerType, Transform, const SourceContainerType&, TransformFunctionType, ExtraArgType)

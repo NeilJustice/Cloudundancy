@@ -6,9 +6,7 @@ namespace Utils
    class ForEacher
    {
    public:
-      ForEacher() {}
-
-      virtual void ForEach(const CollectionType& collection, FunctionType func) const
+      virtual void CallFunctionWithEachElement(const CollectionType& collection, FunctionType func) const
       {
          const auto collectionConstEnd = collection.cend();
          for (auto iter = collection.cbegin(); iter != collectionConstEnd; ++iter)

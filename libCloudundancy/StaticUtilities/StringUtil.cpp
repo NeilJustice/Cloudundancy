@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/StaticUtilities/StringUtil.h"
+#include <regex>
 
 namespace Utils
 {

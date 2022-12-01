@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "libCloudundancy/UtilityComponents/Iteration/ForEach/OneExtraArgMemberFunctionForEacher.h"
+#include "libCloudundancy/UtilityComponents/Iteration/ForEach/TwoArgMemberFunctionForEacher.h"
 
 template<typename ElementType, typename ExtraArgType>
-TEMPLATE_TESTS(OneExtraArgMemberFunctionForEacherTests, ElementType, ExtraArgType)
+TEMPLATE_TESTS(TwoArgMemberFunctionForEacherTests, ElementType, ExtraArgType)
 AFACT(CallConstMemberFunctionWithEachElement_EmptyElementsVector_DoesNotCallMemberFunction)
 AFACT(CallConstMemberFunctionWithEachElement_TwoElementsVector_CallsThisPointerBoundFuncTwice)
 AFACT(CodeCoverage_ClassType_TwoArgConstMemberFunctionFunction)
@@ -24,12 +24,12 @@ public:
    METALMOCK_VOID2_CONST(TwoArgConstMemberFunctionFunction, const ElementType&, ExtraArgType)
 };
 
-Utils::OneExtraArgMemberFunctionForEacher<ClassType, ElementType, ExtraArgType> _oneExtraArgMemberFunctionForEacher;
+Utils::TwoArgMemberFunctionForEacher<ClassType, ElementType, ExtraArgType> _twoArgMemberFunctionForEacher;
 
 TEST(CallConstMemberFunctionWithEachElement_EmptyElementsVector_DoesNotCallMemberFunction)
 {
    const ClassTypeMock classInstance{};
-   _oneExtraArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(
+   _twoArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(
       classInstance.elements, &ClassType::TwoArgConstMemberFunctionFunction, &classInstance, ZenUnit::Random<ExtraArgType>());
 }
 
@@ -42,7 +42,7 @@ TEST(CallConstMemberFunctionWithEachElement_TwoElementsVector_CallsThisPointerBo
    classInstance.TwoArgConstMemberFunctionFunctionMock.Expect();
    const ExtraArgType extraArg = ZenUnit::Random<ExtraArgType>();
    //
-   _oneExtraArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(
+   _twoArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(
       classInstance.elements, &ClassType::TwoArgConstMemberFunctionFunction, &classInstance, extraArg);
    //
    classInstance.TwoArgConstMemberFunctionFunctionMock.CalledAsFollows(
@@ -58,5 +58,5 @@ TEST(CodeCoverage_ClassType_TwoArgConstMemberFunctionFunction)
    classType.TwoArgConstMemberFunctionFunction(ElementType{}, ExtraArgType{});
 };
 
-RUN_TEMPLATE_TESTS(OneExtraArgMemberFunctionForEacherTests, int, int)
-THEN_RUN_TEMPLATE_TESTS(OneExtraArgMemberFunctionForEacherTests, double, char)
+RUN_TEMPLATE_TESTS(TwoArgMemberFunctionForEacherTests, int, int)
+THEN_RUN_TEMPLATE_TESTS(TwoArgMemberFunctionForEacherTests, double, char)

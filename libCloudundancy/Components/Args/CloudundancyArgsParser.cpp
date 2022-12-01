@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "libCloudundancy/Components/Args/CloudundancyArgsParser.h"
 #include "libCloudundancy/Components/Args/ProgramModeDeterminer.h"
+#include "libCloudundancy/UtilityComponents/Docopt/DocoptParser.h"
 
 CloudundancyArgsParser::CloudundancyArgsParser()
    // Constant Components

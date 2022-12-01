@@ -40,7 +40,7 @@ STARTUP
 
 TEST(CallConstMemberFunction_CallsNonVoidConstMemberFunctionOnce_ReturnsReturnValue)
 {
-   const Class classInstance;
+   const Class classInstance{};
    //
    const ReturnType returnValue = _nonVoidTwoArgMemberFunctionCaller.CallConstMemberFunction(
       &classInstance, &Class::NonVoidConstMemberFunction, _arg1, _arg2);
@@ -55,7 +55,7 @@ TEST(CallConstMemberFunction_CallsNonVoidConstMemberFunctionOnce_ReturnsReturnVa
 
 TEST(CallNonConstMemberFunction_CallsNonVoidNonConstMemberFunctionOnce_ReturnsReturnValue)
 {
-   Class classInstance;
+   Class classInstance{};
    //
    const ReturnType returnValue = _nonVoidTwoArgMemberFunctionCaller.CallNonConstMemberFunction(
       &classInstance, &Class::NonVoidNonConstMemberFunction, _arg1, _arg2);

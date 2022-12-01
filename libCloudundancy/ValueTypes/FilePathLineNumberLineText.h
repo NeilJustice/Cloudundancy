@@ -11,11 +11,11 @@ struct FilePathLineNumberLineText
 };
 
 #ifdef _WIN32
-   #ifdef _DEBUG
-      static_assert(sizeof(FilePathLineNumberLineText) == 88);
-   #else
-      static_assert(sizeof(FilePathLineNumberLineText) == 72);
-   #endif
+#ifdef _DEBUG
+static_assert(sizeof(FilePathLineNumberLineText) == 88);
 #else
-   static_assert(sizeof(FilePathLineNumberLineText) == 80);
+static_assert(sizeof(FilePathLineNumberLineText) == 72);
+#endif
+#else
+static_assert(sizeof(FilePathLineNumberLineText) == 80);
 #endif

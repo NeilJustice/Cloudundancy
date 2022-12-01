@@ -1,5 +1,5 @@
 #pragma once
-struct ProcessResult;
+#include "libCloudundancy/ValueTypes/ProcessResult.h"
 
 namespace ZenUnit
 {

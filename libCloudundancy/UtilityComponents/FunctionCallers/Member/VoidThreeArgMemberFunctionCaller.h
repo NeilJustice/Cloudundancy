@@ -6,7 +6,7 @@ namespace Utils
    class VoidThreeArgMemberFunctionCaller
    {
    public:
-      virtual void ConstCall(
+      virtual void CallConstMemberFunction(
          const ClassType* classPointer,
          void (ClassType::*constMemberFunction)(Arg1Type, Arg2Type, Arg3Type) const,
          Arg1Type arg1,
@@ -16,7 +16,7 @@ namespace Utils
          (classPointer->*constMemberFunction)(arg1, arg2, arg3);
       }
 
-      virtual void NonConstCall(
+      virtual void CallNonConstMemberFunction(
          ClassType* classPointer,
          void (ClassType::*nonConstMemberFunction)(Arg1Type, Arg2Type, Arg3Type),
          Arg1Type arg1,

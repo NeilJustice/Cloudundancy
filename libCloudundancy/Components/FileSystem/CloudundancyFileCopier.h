@@ -30,11 +30,11 @@ private:
       CloudundancyFileCopier, const Utils::FileCopyResult&, const fs::path&>;
    unique_ptr<const _caller_WriteCopiedMessageOrExitWithCode1IfCopyFailedType> _caller_WriteCopiedMessageOrExitWithCode1IfCopyFailed;
 
-   using _forEacher_CopyEachFileOrFolderToFolderType = Utils::OneExtraArgMemberFunctionForEacher<
+   using _forEacher_CopyEachFileOrFolderToFolderType = Utils::TwoArgMemberFunctionForEacher<
       CloudundancyFileCopier, fs::path, const CloudundancyIni&>;
    unique_ptr<const _forEacher_CopyEachFileOrFolderToFolderType> _forEacher_CopyEachFileOrFolderToFolder;
 
-   using _forEacher_CopyFileOrFolderToFolderType = Utils::OneExtraArgMemberFunctionForEacher<
+   using _forEacher_CopyFileOrFolderToFolderType = Utils::TwoArgMemberFunctionForEacher<
       CloudundancyFileCopier, CloudundancyIniCopyInstruction, const fs::path&>;
    unique_ptr<const _forEacher_CopyFileOrFolderToFolderType> _forEacher_CopyFileOrFolderToFolder;
 

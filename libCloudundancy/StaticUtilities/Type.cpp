@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/StaticUtilities/Type.h"
+#include <regex>
 
 unordered_map<const char*, string> Type::s_mangledToDemangledTypeName;
 

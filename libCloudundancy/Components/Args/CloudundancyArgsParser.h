@@ -1,4 +1,8 @@
 #pragma once
+namespace Utils
+{
+   class DocoptParser;
+}
 class CloudundancyArgsParserTests;
 class ProgramModeDeterminer;
 

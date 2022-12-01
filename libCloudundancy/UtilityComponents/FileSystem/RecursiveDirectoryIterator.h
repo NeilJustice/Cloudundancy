@@ -7,7 +7,7 @@ namespace Utils
       typename SourceContainerType,
       typename TransformFunctionType,
       typename ExtraArgType>
-   class OneExtraArgTransformer;
+   class TwoArgStaticFunctionTransformer;
 }
 class RecursiveDirectoryIteratorTests;
 class RecursiveDirectoryIteratorIntegrationTests;
@@ -23,12 +23,12 @@ namespace Utils
       using FilesystemRemoveOverloadFunctionType = bool(*)(const fs::path&);
       function<bool(const fs::path&)> _call_fs_remove;
       // Function Callers
-      using OneExtraArgTransformerType = OneExtraArgTransformer<
+      using TwoArgStaticFunctionTransformerType = TwoArgStaticFunctionTransformer<
          vector<AbsoluteFilePathToRelativeDestinationFolderPath>,
          vector<CloudundancyIniCopyInstruction>,
          AbsoluteFilePathToRelativeDestinationFolderPath(*)(size_t, const CloudundancyIniCopyInstruction&, const vector<string>&),
          const vector<string>&>;
-      unique_ptr<const OneExtraArgTransformerType> _oneExtraArgTransformer;
+      unique_ptr<const TwoArgStaticFunctionTransformerType> _oneExtraArgTransformer;
 
       // Mutable Fields
       fs::recursive_directory_iterator _recursiveDirectoryIterator;

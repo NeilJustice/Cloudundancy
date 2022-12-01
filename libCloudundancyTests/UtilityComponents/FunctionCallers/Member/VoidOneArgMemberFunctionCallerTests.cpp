@@ -4,7 +4,7 @@
 template<typename ArgType>
 TEMPLATE_TESTS(VoidOneArgMemberFunctionCallerTests, ArgType)
 AFACT(CallConstMemberFunction_CallsConstMemberFunction)
-AFACT(CallNonConstCallMemberFunction_CallsNonConstMemberFunction)
+AFACT(CallCallNonConstMemberFunctionMemberFunction_CallsNonConstMemberFunction)
 EVIDENCE
 
 class Class
@@ -40,18 +40,18 @@ TEST(CallConstMemberFunction_CallsConstMemberFunction)
    VECTORS_ARE_EQUAL((vector<ArgType>{ 1, 2 }), constClassInstance.calls);
 }
 
-TEST(CallNonConstCallMemberFunction_CallsNonConstMemberFunction)
+TEST(CallCallNonConstMemberFunctionMemberFunction_CallsNonConstMemberFunction)
 {
    Class nonConstClassInstance{};
    Utils::VoidOneArgMemberFunctionCaller<Class, ArgType> oneArgVoidMemberFunctionCaller{};
    IS_EMPTY(nonConstClassInstance.calls);
    //
-   oneArgVoidMemberFunctionCaller.CallNonConstCallMemberFunction(
+   oneArgVoidMemberFunctionCaller.CallCallNonConstMemberFunctionMemberFunction(
       &nonConstClassInstance, &Class::NonConstMemberVoidFunction, ArgType{ 1 });
    //
    VECTORS_ARE_EQUAL(vector<ArgType>{ 1 }, nonConstClassInstance.calls);
    //
-   oneArgVoidMemberFunctionCaller.CallNonConstCallMemberFunction(
+   oneArgVoidMemberFunctionCaller.CallCallNonConstMemberFunctionMemberFunction(
       &nonConstClassInstance, &Class::NonConstMemberVoidFunction, ArgType{ 2 });
    //
    VECTORS_ARE_EQUAL((vector<ArgType>{ 1, 2 }), nonConstClassInstance.calls);

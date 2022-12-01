@@ -6,9 +6,9 @@ template<
    class CollectionType,
    typename T>
 TEMPLATE_TESTS(ForEacherTests, CollectionType, T)
-AFACT(ForEach_EmptyCollection_DoesNotCallFunc)
-AFACT(ForEach_OneElementCollection_CallsFunctionWithElement)
-AFACT(ForEach_TwoElementCollection_CallsFunctionWithEachElement)
+AFACT(CallFunctionWithEachElement_EmptyCollection_DoesNotCallFunc)
+AFACT(CallFunctionWithEachElement_OneElementCollection_CallsFunctionWithElement)
+AFACT(CallFunctionWithEachElement_TwoElementCollection_CallsFunctionWithEachElement)
 EVIDENCE
 
 static void Function(const T& /*element*/)
@@ -23,17 +23,17 @@ static void ThrowsIfCalled(const T& /*element*/)
 using ForEacherType = Utils::ForEacher<CollectionType<T>, void (*)(const T&)>;
 ForEacherType _forEacher;
 
-TEST(ForEach_EmptyCollection_DoesNotCallFunc)
+TEST(CallFunctionWithEachElement_EmptyCollection_DoesNotCallFunc)
 {
    const CollectionType<T> emptyEollection{};
    //
-   DOES_NOT_THROW(_forEacher.ForEach(emptyEollection, ThrowsIfCalled));
+   DOES_NOT_THROW(_forEacher.CallFunctionWithEachElement(emptyEollection, ThrowsIfCalled));
    //
    THROWS_EXCEPTION(ThrowsIfCalled(T()), runtime_error, "Unexpectedly called"); // Code coverage
    Function(0); // Code coverage
 }
 
-TEST(ForEach_OneElementCollection_CallsFunctionWithElement)
+TEST(CallFunctionWithEachElement_OneElementCollection_CallsFunctionWithElement)
 {
    const CollectionType<T> collection = { 1 };
 
@@ -43,12 +43,12 @@ TEST(ForEach_OneElementCollection_CallsFunctionWithElement)
 
    Utils::ForEacher<CollectionType<T>, decltype(_call_Function)> forEacher{};
    //
-   forEacher.ForEach(collection,_call_Function);
+   forEacher.CallFunctionWithEachElement(collection,_call_Function);
    //
    METALMOCK(FunctionMock.CalledOnceWith(1));
 }
 
-TEST(ForEach_TwoElementCollection_CallsFunctionWithEachElement)
+TEST(CallFunctionWithEachElement_TwoElementCollection_CallsFunctionWithEachElement)
 {
    const CollectionType<T> collection = { 1, 2 };
 
@@ -58,7 +58,7 @@ TEST(ForEach_TwoElementCollection_CallsFunctionWithEachElement)
 
    Utils::ForEacher<CollectionType<T>, decltype(_call_Function)> forEacher{};
    //
-   forEacher.ForEach(collection,_call_Function);
+   forEacher.CallFunctionWithEachElement(collection,_call_Function);
    //
    METALMOCK(FunctionMock.CalledAsFollows({ 1, 2 }));
 }

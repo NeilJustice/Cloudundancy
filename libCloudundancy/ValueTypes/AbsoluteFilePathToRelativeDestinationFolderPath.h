@@ -7,11 +7,11 @@ struct AbsoluteFilePathToRelativeDestinationFolderPath
 };
 
 #ifdef _WIN32
-   #ifdef _DEBUG
-      static_assert(sizeof(AbsoluteFilePathToRelativeDestinationFolderPath) == 80);
-   #else
-      static_assert(sizeof(AbsoluteFilePathToRelativeDestinationFolderPath) == 64);
-   #endif
+#ifdef _DEBUG
+static_assert(sizeof(AbsoluteFilePathToRelativeDestinationFolderPath) == 80);
 #else
-   static_assert(sizeof(AbsoluteFilePathToRelativeDestinationFolderPath) == 80);
+static_assert(sizeof(AbsoluteFilePathToRelativeDestinationFolderPath) == 64);
+#endif
+#else
+static_assert(sizeof(AbsoluteFilePathToRelativeDestinationFolderPath) == 80);
 #endif

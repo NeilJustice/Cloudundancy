@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libCloudundancy/UtilityComponents/Iteration/Transform/OneExtraArgTransformer.h"
+#include "libCloudundancy/UtilityComponents/Iteration/Transform/TwoArgStaticFunctionTransformer.h"
 
 template<
    template<typename...>
@@ -7,13 +7,13 @@ template<
    template<typename...>
    class SourceContainerType, typename SourceElementType,
    typename ExtraArgType>
-TEMPLATE_TESTS(OneExtraArgTransformerTests, TransformedContainerType, TransformedElementType, SourceContainerType, SourceElementType, ExtraArgType)
+TEMPLATE_TESTS(TwoArgStaticFunctionTransformerTests, TransformedContainerType, TransformedElementType, SourceContainerType, SourceElementType, ExtraArgType)
 AFACT(Transform_EmptyRange_DoesNothing)
 AFACT(Transform_OneItemRange_CallsTransformerOnce)
 AFACT(Transform_TwoItemRange_CallsTransformerTwice)
 EVIDENCE
 
-using TransformerType = Utils::OneExtraArgTransformer<
+using TransformerType = Utils::TwoArgStaticFunctionTransformer<
    TransformedContainerType<TransformedElementType>,
    SourceContainerType<SourceElementType>,
    TransformedElementType(*)(size_t, SourceElementType, ExtraArgType),
@@ -61,7 +61,7 @@ TEST(Transform_OneItemRange_CallsTransformerOnce)
 
 TEST(Transform_TwoItemRange_CallsTransformerTwice)
 {
-   const Utils::OneExtraArgTransformer<
+   const Utils::TwoArgStaticFunctionTransformer<
       TransformedContainerType<TransformedElementType>,
       SourceContainerType<SourceElementType>,
       decltype(TransformFunction),
@@ -81,8 +81,8 @@ TEST(Transform_TwoItemRange_CallsTransformerTwice)
    ARE_EQUAL(expectedTransformedElements, transformedElements);
 }
 
-RUN_TEMPLATE_TESTS(OneExtraArgTransformerTests, vector, int, vector, int, int)
-THEN_RUN_TEMPLATE_TESTS(OneExtraArgTransformerTests, vector, double, vector, int, unsigned)
+RUN_TEMPLATE_TESTS(TwoArgStaticFunctionTransformerTests, vector, int, vector, int, int)
+THEN_RUN_TEMPLATE_TESTS(TwoArgStaticFunctionTransformerTests, vector, double, vector, int, unsigned)
 
 template<
    template<typename...>
@@ -90,5 +90,5 @@ template<
    template<typename...>
    class SourceContainerType,
    typename SourceElementType, typename ExtraArgType>
-vector<tuple<size_t, SourceElementType, ExtraArgType>> OneExtraArgTransformerTests<
+vector<tuple<size_t, SourceElementType, ExtraArgType>> TwoArgStaticFunctionTransformerTests<
    TransformedContainerType, TransformedElementType, SourceContainerType, SourceElementType, ExtraArgType>::s_transformFunctionCalls;

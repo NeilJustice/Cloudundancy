@@ -1,11 +1,11 @@
 #pragma once
-#include "libCloudundancy/UtilityComponents/Iteration/ForEach/OneExtraArgMemberFunctionForEacher.h"
+#include "libCloudundancy/UtilityComponents/Iteration/ForEach/TwoArgMemberFunctionForEacher.h"
 
 namespace Utils
 {
    template<typename ClassType, typename ElementType, typename ExtraArgType>
-   class OneExtraArgMemberFunctionForEacherMock :
-      public Metal::Mock<OneExtraArgMemberFunctionForEacher<ClassType, ElementType, ExtraArgType>>
+   class TwoArgMemberFunctionForEacherMock :
+      public Metal::Mock<TwoArgMemberFunctionForEacher<ClassType, ElementType, ExtraArgType>>
    {
    public:
       using ConstMemberFunctionType = void(ClassType::*)(const ElementType&, ExtraArgType) const;
