@@ -79,12 +79,12 @@ TEST(Run_DeletesCodeBackupFolder_CopiesCodeToBackupStagingFolder_SevenZipsBackup
 
 TEST(CopyFileToFilesAndFoldersToBackupStagingFolder_CopiesSourceFilesAndFoldersToBackupStagingFolder_PrintsElapsedSeconds)
 {
-   _cloudundancyFileCopierMock->CopyFileToFilesAndFoldersToMultipleDestinationFoldersMock.Expect();
+   _cloudundancyFileCopierMock->CopyFilteredFilesAndFoldersToDestinationFoldersMock.Expect();
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
    _sevenZipSubProgram.CopyFileToFilesAndFoldersToBackupStagingFolder(args);
    //
-   METALMOCK(_cloudundancyFileCopierMock->CopyFileToFilesAndFoldersToMultipleDestinationFoldersMock.CalledOnceWith(args.sevenZipModeIniFilePath, false));
+   METALMOCK(_cloudundancyFileCopierMock->CopyFilteredFilesAndFoldersToDestinationFoldersMock.CalledOnceWith(args.sevenZipModeIniFilePath, false));
 }
 
 TEST(DeleteBackupStagingFolder_PrintsDeleting_DeletesBackupStagingFolder_PrintsDeletedInElapsedSeconds)
@@ -142,13 +142,13 @@ TEST(Copy7ZipFileToDestinationFolders_DoesSo_PrintsElapsedSeconds)
 {
    _consoleMock->WriteLineMock.Expect();
    _consoleMock->WriteLineColorMock.Expect();
-   _cloudundancyFileCopierMock->CopyFileToFilesAndFoldersToMultipleDestinationFoldersMock.Expect();
+   _cloudundancyFileCopierMock->CopyFilteredFilesAndFoldersToDestinationFoldersMock.Expect();
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
    _sevenZipSubProgram.Copy7ZipFileToDestinationFolders(args);
    //
    METALMOCKTHEN(_consoleMock->WriteLineMock.CalledOnceWith("[Cloudundancy] Copying .7z file to [DestinationFolders]...")).Then(
-   METALMOCKTHEN(_cloudundancyFileCopierMock->CopyFileToFilesAndFoldersToMultipleDestinationFoldersMock.CalledOnceWith(args.sevenZipFileCopyingIniFilePath, false))).Then(
+   METALMOCKTHEN(_cloudundancyFileCopierMock->CopyFilteredFilesAndFoldersToDestinationFoldersMock.CalledOnceWith(args.sevenZipFileCopyingIniFilePath, false))).Then(
    METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith("\n[Cloudundancy] Successfully copied .7z file to [DestinationFolders]", Color::Green)));
 }
 

@@ -35,13 +35,13 @@ int SevenZipSubProgram::Run(const CloudundancyArgs& args)
 void SevenZipSubProgram::Copy7ZipFileToDestinationFolders(const CloudundancyArgs& args) const
 {
    _console->WriteLine("[Cloudundancy] Copying .7z file to [DestinationFolders]...");
-   _cloudundancyFileCopier->CopyFileToFilesAndFoldersToMultipleDestinationFolders(args.sevenZipFileCopyingIniFilePath, false);
+   _cloudundancyFileCopier->CopyFilteredFilesAndFoldersToDestinationFolders(args.sevenZipFileCopyingIniFilePath, false);
    _console->WriteLineColor("\n[Cloudundancy] Successfully copied .7z file to [DestinationFolders]", Color::Green);
 }
 
 void SevenZipSubProgram::CopyFileToFilesAndFoldersToBackupStagingFolder(const CloudundancyArgs& args) const
 {
-   _cloudundancyFileCopier->CopyFileToFilesAndFoldersToMultipleDestinationFolders(args.sevenZipModeIniFilePath, false);
+   _cloudundancyFileCopier->CopyFilteredFilesAndFoldersToDestinationFolders(args.sevenZipModeIniFilePath, false);
 }
 
 void SevenZipSubProgram::DeleteBackupStagingFolder(const CloudundancyArgs& args) const

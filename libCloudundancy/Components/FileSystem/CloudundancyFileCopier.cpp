@@ -33,7 +33,7 @@ CloudundancyFileCopier::~CloudundancyFileCopier()
 {
 }
 
-void CloudundancyFileCopier::CopyFileToFilesAndFoldersToMultipleDestinationFolders(
+void CloudundancyFileCopier::CopyFilteredFilesAndFoldersToDestinationFolders(
    const fs::path& iniFilePath, bool deleteDestinationFoldersFirst) const
 {
    const CloudundancyIni cloudundancyIni = _cloudundancyIniFileReader->ReadIniFile(iniFilePath);

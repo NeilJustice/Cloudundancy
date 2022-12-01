@@ -5,7 +5,7 @@
 
 TESTS(CopyFileToFilesToMultipleFoldersSubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
-AFACT(Run_SetsArgs_CallsCopyFileToFilesAndFoldersToMultipleDestinationFolders_Returns0)
+AFACT(Run_SetsArgs_CallsCopyFilteredFilesAndFoldersToDestinationFolders_Returns0)
 EVIDENCE
 
 CopyFileToFilesToMultipleFoldersSubProgram _copyFilesToMultipleFoldersSubProgram;
@@ -28,16 +28,16 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(copyFilesAndFoldersToMultipleFoldersSubProgram._cloudundancyFileCopier);
 }
 
-TEST(Run_SetsArgs_CallsCopyFileToFilesAndFoldersToMultipleDestinationFolders_Returns0)
+TEST(Run_SetsArgs_CallsCopyFilteredFilesAndFoldersToDestinationFolders_Returns0)
 {
-   _cloudundancyFileCopierMock->CopyFileToFilesAndFoldersToMultipleDestinationFoldersMock.Expect();
+   _cloudundancyFileCopierMock->CopyFilteredFilesAndFoldersToDestinationFoldersMock.Expect();
    _consoleMock->WriteLineColorMock.Expect();
 
    const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
    const int exitCode = _copyFilesToMultipleFoldersSubProgram.Run(args);
    //
-   METALMOCKTHEN(_cloudundancyFileCopierMock->CopyFileToFilesAndFoldersToMultipleDestinationFoldersMock.CalledOnceWith(
+   METALMOCKTHEN(_cloudundancyFileCopierMock->CopyFilteredFilesAndFoldersToDestinationFoldersMock.CalledOnceWith(
       args.iniFilePath, args.deleteDestinationFoldersFirst)).Then(
    METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith(
       "\n[Cloudundancy] OverallBackupResult: Successfully copied all [SourceFilesAndFolders] to all [DestinationFolders]",

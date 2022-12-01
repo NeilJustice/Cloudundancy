@@ -6,7 +6,7 @@
 
 TESTS(CloudundancyFileCopierTests)
 AFACT(DefaultConstructor_SetsFunctionsAndNewsComponents)
-AFACT(CopyFileToFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFirstIsTrue_DeletesDestinationFolders_CopiesFilesAndFoldersToFolders)
+AFACT(CopyFilteredFilesAndFoldersToDestinationFolders_DeleteDestinationFoldersFirstIsTrue_DeletesDestinationFolders_CopiesFilesAndFoldersToFolders)
 // Private Functions
 AFACT(CopyFilesAndFoldersToDestinationFolder_TryCatchCallsDoCopyFilesAndFoldersToDestinationFolder)
 AFACT(DoCopyFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesNonSkippedSourceFilesToDestinationFolder_AppendBackupSuccessfulToLogFile)
@@ -120,7 +120,7 @@ TEST(DefaultConstructor_SetsFunctionsAndNewsComponents)
    DELETE_TO_ASSERT_NEWED(cloudundancyFileCopier._stopwatch);
 }
 
-TEST(CopyFileToFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFirstIsTrue_DeletesDestinationFolders_CopiesFilesAndFoldersToFolders)
+TEST(CopyFilteredFilesAndFoldersToDestinationFolders_DeleteDestinationFoldersFirstIsTrue_DeletesDestinationFolders_CopiesFilesAndFoldersToFolders)
 {
    const CloudundancyIni cloudundancyIni = _cloudundancyIniFileReaderMock->ReadIniFileMock.ReturnRandom();
 
@@ -136,7 +136,7 @@ TEST(CopyFileToFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFold
 
    const fs::path iniFilePath = ZenUnit::Random<fs::path>();
    //
-   _cloudundancyFileCopier.CopyFileToFilesAndFoldersToMultipleDestinationFolders(iniFilePath, true);
+   _cloudundancyFileCopier.CopyFilteredFilesAndFoldersToDestinationFolders(iniFilePath, true);
    //
    const string expectedCopyingMessage = Utils::String::ConcatStrings(
       "[Cloudundancy] Copying [SourceFilesAndFolders] to [DestinationFolders] as listed in ", iniFilePath.string(), ":\n");
@@ -152,7 +152,7 @@ TEST(CopyFileToFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFold
       &_cloudundancyFileCopier, cloudundancyIni)));
 }
 
-TEST(CopyFileToFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFoldersFirstIsFalse_DoesNotDeleteDestinationFolders_CopiesFilesAndFoldersToFolders)
+TEST(CopyFilteredFilesAndFoldersToDestinationFolders_DeleteDestinationFoldersFirstIsFalse_DoesNotDeleteDestinationFolders_CopiesFilesAndFoldersToFolders)
 {
    const CloudundancyIni cloudundancyIni = _cloudundancyIniFileReaderMock->ReadIniFileMock.ReturnRandom();
 
@@ -165,7 +165,7 @@ TEST(CopyFileToFilesAndFoldersToMultipleDestinationFolders_DeleteDestinationFold
 
    const fs::path iniFilePath = ZenUnit::Random<fs::path>();
    //
-   _cloudundancyFileCopier.CopyFileToFilesAndFoldersToMultipleDestinationFolders(iniFilePath, false);
+   _cloudundancyFileCopier.CopyFilteredFilesAndFoldersToDestinationFolders(iniFilePath, false);
    //
    const string expectedCopyingMessage = Utils::String::ConcatStrings(
       "[Cloudundancy] Copying [SourceFilesAndFolders] to [DestinationFolders] as listed in ", iniFilePath.string(), ":\n");
