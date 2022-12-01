@@ -95,7 +95,7 @@ TEST(DeleteMultipleFolderContentsExceptForFile_CallsDeleteContentsOfFolderExcept
    _cloudundancyFileSystem.DeleteMultipleFolderContentsExceptForFile(folderPaths, exceptFileName);
    //
    METALMOCK(_forEacher_DeleteContentsOfFolderExceptForFileNameMock->CallConstMemberFunctionWithEachElementMock.CalledOnceWith(
-      folderPaths, &CloudundancyFileSystem::DeleteFolderContentsExceptForFile, &_cloudundancyFileSystem, exceptFileName));
+      folderPaths, &_cloudundancyFileSystem, &CloudundancyFileSystem::DeleteFolderContentsExceptForFile, exceptFileName));
 }
 
 TEST1X1(FileSizeIsGreaterThanOrEqualTo2GB_FileSizeIsLessThan2GB_ReturnsFalse,

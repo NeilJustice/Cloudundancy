@@ -10,13 +10,13 @@ namespace Utils
 
       virtual void CallConstMemberFunctionWithEachElement(
          const std::vector<ElementType>& elements,
-         ConstMemberFunctionType constMemberFunction,
          const ClassType* constClassPointer,
-         ExtraArgType extraArg) const
+         ConstMemberFunctionType constMemberFunction,
+         ExtraArgType arg2) const
       {
          for (const ElementType& element : elements)
          {
-            (constClassPointer->*constMemberFunction)(element, extraArg);
+            (constClassPointer->*constMemberFunction)(element, arg2);
          }
       }
 

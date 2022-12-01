@@ -148,8 +148,9 @@ TEST(CopyFilteredFilesAndFoldersToDestinationFolders_DeleteDestinationFoldersFir
    METALMOCKTHEN(_recursiveDirectoryIteratorMock->SetFileSubpathsToIgnoreMock.CalledOnceWith(cloudundancyIni.fileSubpathsToIgnore))).Then(
    METALMOCKTHEN(_forEacher_CopyEachFileOrFolderToFolderMock->CallConstMemberFunctionWithEachElementMock.CalledOnceWith(
       cloudundancyIni.destinationFolderPaths,
+      &_cloudundancyFileCopier,
       &CloudundancyFileCopier::CopyFilteredFilesAndFoldersToDestinationFolder,
-      &_cloudundancyFileCopier, cloudundancyIni)));
+      cloudundancyIni)));
 }
 
 TEST(CopyFilteredFilesAndFoldersToDestinationFolders_DeleteDestinationFoldersFirstIsFalse_DoesNotDeleteDestinationFolders_CopiesFilesAndFoldersToFolders)
@@ -175,8 +176,9 @@ TEST(CopyFilteredFilesAndFoldersToDestinationFolders_DeleteDestinationFoldersFir
    METALMOCKTHEN(_recursiveDirectoryIteratorMock->SetFileSubpathsToIgnoreMock.CalledOnceWith(cloudundancyIni.fileSubpathsToIgnore))).Then(
    METALMOCKTHEN(_forEacher_CopyEachFileOrFolderToFolderMock->CallConstMemberFunctionWithEachElementMock.CalledOnceWith(
       cloudundancyIni.destinationFolderPaths,
+      &_cloudundancyFileCopier,
       &CloudundancyFileCopier::CopyFilteredFilesAndFoldersToDestinationFolder,
-      &_cloudundancyFileCopier, cloudundancyIni)));
+      cloudundancyIni)));
 }
 
 // Private Functions
@@ -236,8 +238,9 @@ TEST(DoCopyFilteredFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFi
    METALMOCKTHEN(_stopwatchMock->StartMock.CalledOnce())).Then(
    METALMOCKTHEN(_forEacher_CopyFileOrFolderToFolderMock->CallConstMemberFunctionWithEachElementMock.CalledOnceWith(
       cloudundancyIni.cloudundancyIniCopyInstructions,
+      &_cloudundancyFileCopier,
       &CloudundancyFileCopier::CopyFileOrFolderToFolder,
-      &_cloudundancyFileCopier, destinationFolderPath))).Then(
+      destinationFolderPath))).Then(
    METALMOCKTHEN(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce())).Then(
    METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledWith(expectedFolderBackupResultSuccessMessage, Color::Green))).Then(
    METALMOCKTHEN(_consoleMock->WriteLineMock.CalledOnceWith(expectedFolderBackupDurationMessage))).Then(

@@ -51,7 +51,7 @@ void CloudundancyFileCopier::CopyFilteredFilesAndFoldersToDestinationFolders(
    _recursiveDirectoryIterator->SetFileSubpathsToIgnore(cloudundancyIni.fileSubpathsToIgnore);
    _forEacher_CopyEachFileOrFolderToFolder->CallConstMemberFunctionWithEachElement(
       cloudundancyIni.destinationFolderPaths,
-      &CloudundancyFileCopier::CopyFilteredFilesAndFoldersToDestinationFolder, this, cloudundancyIni);
+      this, &CloudundancyFileCopier::CopyFilteredFilesAndFoldersToDestinationFolder, cloudundancyIni);
 }
 
 // Private Functions
@@ -80,7 +80,7 @@ void CloudundancyFileCopier::DoCopyFilteredFilesAndFoldersToDestinationFolder(
 
    _forEacher_CopyFileOrFolderToFolder->CallConstMemberFunctionWithEachElement(
       cloudundancyIni.cloudundancyIniCopyInstructions,
-      &CloudundancyFileCopier::CopyFileOrFolderToFolder, this, destinationFolderPath);
+      this, &CloudundancyFileCopier::CopyFileOrFolderToFolder, destinationFolderPath);
 
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string folderBackupResultSuccessMessage = Utils::String::ConcatStrings(

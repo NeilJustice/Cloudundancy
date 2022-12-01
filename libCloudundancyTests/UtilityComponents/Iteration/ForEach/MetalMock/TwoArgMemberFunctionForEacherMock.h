@@ -3,13 +3,13 @@
 
 namespace Utils
 {
-   template<typename ClassType, typename ElementType, typename ExtraArgType>
+   template<typename ClassType, typename ElementType, typename Arg2Type>
    class TwoArgMemberFunctionForEacherMock :
-      public Metal::Mock<TwoArgMemberFunctionForEacher<ClassType, ElementType, ExtraArgType>>
+      public Metal::Mock<TwoArgMemberFunctionForEacher<ClassType, ElementType, Arg2Type>>
    {
    public:
-      using ConstMemberFunctionType = void(ClassType::*)(const ElementType&, ExtraArgType) const;
+      using ConstMemberFunctionType = void(ClassType::*)(const ElementType&, Arg2Type) const;
       METALMOCK_VOID4_CONST(CallConstMemberFunctionWithEachElement,
-         const vector<ElementType>&, ConstMemberFunctionType, const ClassType*, ExtraArgType)
+         const vector<ElementType>&, const ClassType*, ConstMemberFunctionType, Arg2Type)
    };
 }

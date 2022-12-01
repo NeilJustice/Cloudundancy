@@ -23,7 +23,7 @@ CloudundancyFileSystem::~CloudundancyFileSystem()
 void CloudundancyFileSystem::DeleteMultipleFolderContentsExceptForFile(const vector<fs::path>& folderPaths, string_view exceptFileName) const
 {
    _forEacher_DeleteContentsOfFolderExceptForFileName->CallConstMemberFunctionWithEachElement(
-      folderPaths, &CloudundancyFileSystem::DeleteFolderContentsExceptForFile, this, exceptFileName);
+      folderPaths, this, &CloudundancyFileSystem::DeleteFolderContentsExceptForFile, exceptFileName);
 }
 
 void CloudundancyFileSystem::DeleteFolderContentsExceptForFile(const fs::path& folderPath, string_view exceptFileName) const
@@ -37,7 +37,8 @@ void CloudundancyFileSystem::DeleteFolderContentsExceptForFile(const fs::path& f
    const string textOfExceptFile = _fileSystem->ReadFileText(exceptFilePath);
    _fileSystem->DeleteFolder(folderPath);
    _fileSystem->CreateFileWithTextIfDoesNotExist(exceptFilePath, textOfExceptFile);
-   const string deletedFolderMessage = Utils::String::ConcatStrings("[Cloudundancy] Deleted folder ", folderPath.string(), " except for ", exceptFileName);
+   const string deletedFolderMessage = Utils::String::ConcatStrings(
+      "[Cloudundancy] Deleted folder ", folderPath.string(), " except for ", exceptFileName);
    _console->WriteLine(deletedFolderMessage);
 }
 
