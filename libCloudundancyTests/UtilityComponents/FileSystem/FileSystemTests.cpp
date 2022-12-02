@@ -200,7 +200,7 @@ TEST(Linux__CreateFileInBinaryWriteMode_ReturnsSharedFilePointerCreatedWithFileO
    const shared_ptr<FILE> returnedFilePointer = _fileSystem.CreateFileInBinaryWriteMode(filePath);
    //
    METALMOCK(_caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &Utils::FileSystem::CreateOrOpenFileOnLinux, &_fileSystem, filePath, "wb"));
+      &_fileSystem, &Utils::FileSystem::CreateOrOpenFileOnLinux, filePath, "wb"));
    ARE_EQUAL(binaryWriteModeFilePointer, returnedFilePointer);
 }
 
@@ -213,7 +213,7 @@ TEST(Linux__CreateOrOpenFileInBinaryAppendMode_ReturnsSharedFilePointerCreatedWi
    const shared_ptr<FILE> returnedFilePointer = _fileSystem.CreateOrOpenFileInBinaryAppendMode(filePath);
    //
    METALMOCK(_caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &Utils::FileSystem::CreateOrOpenFileOnLinux, &_fileSystem, filePath, "ab"));
+      &_fileSystem, &Utils::FileSystem::CreateOrOpenFileOnLinux, filePath, "ab"));
    ARE_EQUAL(binaryAppendModeFilePointer, returnedFilePointer);
 }
 
