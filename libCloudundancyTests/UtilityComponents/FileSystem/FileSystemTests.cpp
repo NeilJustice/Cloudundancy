@@ -343,8 +343,7 @@ TEST(AppendTextToClosedFile_OpensFileInBinaryAppendMode_AppendsText_ImplicitlyCl
    //
    _fileSystem.AppendTextToClosedFile(filePath, text);
    //
-   METALMOCKTHEN(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &_fileSystem, &Utils::FileSystem::CreateOrOpenFileInBinaryAppendMode, filePath)).Then(
+   METALMOCKTHEN(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(&_fileSystem, &Utils::FileSystem::CreateOrOpenFileInBinaryAppendMode, filePath)).Then(
    METALMOCKTHEN(_call_fwriteMock.CalledOnceWith(text.data(), 1, text.size(), appendModeBinaryFilePointer.get()))).Then(
    METALMOCKTHEN(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(text.size(), numberOfBytesAppended,
       "_call_fwrite(text.data(), 1, textSize, appendModeTextFileHandle) unexpectedly did not return textSize")));
