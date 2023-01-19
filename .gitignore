@@ -51,9 +51,6 @@ htmlcov/
 .coverage
 coverage.xml
 
-# SonarQube
-.scannerwork/
-
 # Cppcheck
 Cppcheck/files.txt
 *.a1
