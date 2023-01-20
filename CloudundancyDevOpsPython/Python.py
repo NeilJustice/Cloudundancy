@@ -7,7 +7,7 @@ from CloudundancyDevOpsPython import Process
 PylintCommand = 'pylint --rcfile=.pylintrc --score=n '
 
 def run_flake8() -> None:
-   flake8Command = 'flake8 --config=.flake8 --show-source --benchmark'
+   flake8Command = 'flake8 -j 61 --config=.flake8 --show-source --benchmark'
    Process.fail_fast_run(flake8Command)
 
 def run_mypy() -> None:
