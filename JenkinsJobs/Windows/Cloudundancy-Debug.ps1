@@ -1,6 +1,4 @@
 param($fastWindowsDebugBuildMode = "ON")
-Set-PSDebug -Trace 1
-
 $env:PYTHONPATH="."
 python.exe -u CloudundancyDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
    --solution-name=Cloudundancy `
@@ -9,6 +7,4 @@ python.exe -u CloudundancyDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
    --tests-project=libCloudundancyTests `
    --cmake-definitions="-DFastWindowsDebugBuildMode=$fastWindowsDebugBuildMode" `
    --no-install
-
-Set-PSDebug -Trace 0
 exit $LastExitCode
