@@ -60,7 +60,9 @@ TEST(CallFunctionWithEachElement_TwoElementCollection_CallsFunctionWithEachEleme
    //
    forEacher.CallFunctionWithEachElement(collection,_call_Function);
    //
-   METALMOCK(FunctionMock.CalledAsFollows({ 1, 2 }));
+   METALMOCK(FunctionMock.CalledNTimes(2));
+   METALMOCKTHEN(FunctionMock.CalledWith(1)).Then(
+   METALMOCKTHEN(FunctionMock.CalledWith(2)));
 }
 
 RUN_TEMPLATE_TESTS(ForEacherTests, vector, int)

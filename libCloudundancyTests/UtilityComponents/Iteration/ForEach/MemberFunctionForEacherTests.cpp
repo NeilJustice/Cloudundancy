@@ -42,11 +42,9 @@ TEST(CallConstMemberFunctionWithEachElement_TwoElementsVector_CallsMemberFunctio
    _memberFunctionForEacher.CallConstMemberFunctionWithEachElement(
       classInstance.elements, &ClassType::ConstMemberFunctionFunction, &classInstance);
    //
-   classInstance.ConstMemberFunctionFunctionMock.CalledAsFollows(
-   {
-      { element1 },
-      { element2 }
-   });
+   METALMOCK(classInstance.ConstMemberFunctionFunctionMock.CalledNTimes(2));
+   METALMOCKTHEN(classInstance.ConstMemberFunctionFunctionMock.CalledWith(element1)).Then(
+   METALMOCKTHEN(classInstance.ConstMemberFunctionFunctionMock.CalledWith(element2)));
 }
 
 TEST(CodeCoverage_ClassType_ConstMemberFunctionFunction)

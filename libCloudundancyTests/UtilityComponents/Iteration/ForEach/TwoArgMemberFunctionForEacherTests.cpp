@@ -41,17 +41,14 @@ TEST(CallConstMemberFunctionWithEachElement_TwoElementsVector_CallsThisPointerBo
    const ElementType element2 = ZenUnit::Random<ElementType>();
    classInstanceMock.elements = { element1, element2 };
    classInstanceMock.TwoArgConstMemberFunctionFunctionMock.Expect();
-   const Arg2Type extraArg = ZenUnit::Random<Arg2Type>();
+   const Arg2Type arg2 = ZenUnit::Random<Arg2Type>();
    //
    _twoArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(
-      classInstanceMock.elements, &classInstanceMock,
-      &ClassType::TwoArgConstMemberFunctionFunction, extraArg);
+      classInstanceMock.elements, &classInstanceMock, &ClassType::TwoArgConstMemberFunctionFunction, arg2);
    //
-   classInstanceMock.TwoArgConstMemberFunctionFunctionMock.CalledAsFollows(
-   {
-      { element1, extraArg },
-      { element2, extraArg }
-   });
+   METALMOCK(classInstanceMock.TwoArgConstMemberFunctionFunctionMock.CalledNTimes(2));
+   METALMOCKTHEN(classInstanceMock.TwoArgConstMemberFunctionFunctionMock.CalledWith(element1, arg2)).Then(
+   METALMOCKTHEN(classInstanceMock.TwoArgConstMemberFunctionFunctionMock.CalledWith(element2, arg2)));
 }
 
 TEST(CodeCoverage_ClassType_TwoArgConstMemberFunctionFunction)
