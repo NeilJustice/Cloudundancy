@@ -14,26 +14,26 @@ const fs::path _rootFolderPath = "IntegrationTest_RecursiveDirectoryIterator";
 
 void CreateIntegrationTestingDirectoryStructure()
 {
-   _fileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "file1.txt", "");
-   _fileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "file2.ini", "");
-   _fileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "root.Ignored_File_Extension", ""),
-   _fileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "root.ignored_file_extension_1", "");
-   _fileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "root.ignored_file_extension_2", "");
+   _fileSystem.CreateTextFileIfDoesNotExist(_rootFolderPath / "file1.txt", "");
+   _fileSystem.CreateTextFileIfDoesNotExist(_rootFolderPath / "file2.ini", "");
+   _fileSystem.CreateTextFileIfDoesNotExist(_rootFolderPath / "root.Ignored_File_Extension", ""),
+   _fileSystem.CreateTextFileIfDoesNotExist(_rootFolderPath / "root.ignored_file_extension_1", "");
+   _fileSystem.CreateTextFileIfDoesNotExist(_rootFolderPath / "root.ignored_file_extension_2", "");
 
-   _fileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "subdir1" / "file1.xml", "");
-   _fileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "subdir1" / "file2.json", "");
-   _fileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "subdir1" / "file3.ignored_file_extension_1", "");
-   _fileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "subdir1" / "file4.ignored_file_extension_2", "");
+   _fileSystem.CreateTextFileIfDoesNotExist(_rootFolderPath / "subdir1" / "file1.xml", "");
+   _fileSystem.CreateTextFileIfDoesNotExist(_rootFolderPath / "subdir1" / "file2.json", "");
+   _fileSystem.CreateTextFileIfDoesNotExist(_rootFolderPath / "subdir1" / "file3.ignored_file_extension_1", "");
+   _fileSystem.CreateTextFileIfDoesNotExist(_rootFolderPath / "subdir1" / "file4.ignored_file_extension_2", "");
 
-   _fileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "subdir2" / "file1.xml", "");
-   _fileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "subdir2" / "file2.json", "");
-   _fileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "subdir2" / "file3.ignored_file_extension_1", "");
-   _fileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "subdir2" / "file4.ignored_file_extension_2", "");
+   _fileSystem.CreateTextFileIfDoesNotExist(_rootFolderPath / "subdir2" / "file1.xml", "");
+   _fileSystem.CreateTextFileIfDoesNotExist(_rootFolderPath / "subdir2" / "file2.json", "");
+   _fileSystem.CreateTextFileIfDoesNotExist(_rootFolderPath / "subdir2" / "file3.ignored_file_extension_1", "");
+   _fileSystem.CreateTextFileIfDoesNotExist(_rootFolderPath / "subdir2" / "file4.ignored_file_extension_2", "");
 
-   _fileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "subdir3" / "subdir4" / "file1.html", "");
+   _fileSystem.CreateTextFileIfDoesNotExist(_rootFolderPath / "subdir3" / "subdir4" / "file1.html", "");
 
-   _fileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "ignored_directory_name_1" / "file1.txt", "");
-   _fileSystem.CreateFileWithTextIfDoesNotExist(_rootFolderPath / "ignored_directory_name_2" / "file1.txt", "");
+   _fileSystem.CreateTextFileIfDoesNotExist(_rootFolderPath / "ignored_directory_name_1" / "file1.txt", "");
+   _fileSystem.CreateTextFileIfDoesNotExist(_rootFolderPath / "ignored_directory_name_2" / "file1.txt", "");
 }
 
 STARTUP

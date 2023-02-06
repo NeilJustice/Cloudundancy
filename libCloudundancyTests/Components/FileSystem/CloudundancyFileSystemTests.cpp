@@ -68,7 +68,7 @@ TEST(DeleteFolderContentsExceptForFile_FolderExists_DeletesFolderContentsExceptF
 
    _fileSystemMock->DeleteFolderMock.Expect();
 
-   _fileSystemMock->CreateFileWithTextIfDoesNotExistMock.Expect();
+   _fileSystemMock->CreateTextFileIfDoesNotExistMock.Expect();
 
    _consoleMock->WriteLineMock.Expect();
 
@@ -82,7 +82,7 @@ TEST(DeleteFolderContentsExceptForFile_FolderExists_DeletesFolderContentsExceptF
    METALMOCKTHEN(_call_fs_existsMock.CalledOnceWith(folderPath)).Then(
    METALMOCKTHEN(_fileSystemMock->ReadFileTextMock.CalledOnceWith(expectedExceptFilePath))).Then(
    METALMOCKTHEN(_fileSystemMock->DeleteFolderMock.CalledOnceWith(folderPath))).Then(
-   METALMOCKTHEN(_fileSystemMock->CreateFileWithTextIfDoesNotExistMock.CalledOnceWith(expectedExceptFilePath, textOfExceptFile))).Then(
+   METALMOCKTHEN(_fileSystemMock->CreateTextFileIfDoesNotExistMock.CalledOnceWith(expectedExceptFilePath, textOfExceptFile))).Then(
    METALMOCKTHEN(_consoleMock->WriteLineMock.CalledOnceWith(expectedDeletedFolderMessage)));
 }
 

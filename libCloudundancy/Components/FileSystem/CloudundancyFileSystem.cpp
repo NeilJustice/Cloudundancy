@@ -36,7 +36,7 @@ void CloudundancyFileSystem::DeleteFolderContentsExceptForFile(const fs::path& f
    const fs::path exceptFilePath = folderPath / exceptFileName;
    const string textOfExceptFile = _fileSystem->ReadFileText(exceptFilePath);
    _fileSystem->DeleteFolder(folderPath);
-   _fileSystem->CreateFileWithTextIfDoesNotExist(exceptFilePath, textOfExceptFile);
+   _fileSystem->CreateTextFileIfDoesNotExist(exceptFilePath, textOfExceptFile);
    const string deletedFolderMessage = Utils::String::ConcatStrings(
       "[Cloudundancy] Deleted folder ", folderPath.string(), " except for ", exceptFileName);
    _console->WriteLine(deletedFolderMessage);

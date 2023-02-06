@@ -175,7 +175,7 @@ namespace Utils
       return fileCopyResult;
    }
 
-   void FileSystem::CreateFileWithTextIfDoesNotExist(const fs::path& filePath, string_view fileText) const
+   void FileSystem::CreateTextFileIfDoesNotExist(const fs::path& filePath, string_view fileText) const
    {
       const bool fileExists = _call_fs_exists(filePath);
       if (!fileExists)

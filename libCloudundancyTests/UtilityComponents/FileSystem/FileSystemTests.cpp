@@ -32,8 +32,8 @@ AFACT(CloseFile_fcloseReturnValueIsNot0_ThrowsRuntimeError)
 AFACT(CloseFile_fcloseReturnValueIs0_Returns)
 AFACT(CopyFileToFile_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile_WritesSourceFileBytesToDestinationFilePath_ReturnsCopySucceededFileCopyResult)
 AFACT(CopyFileToFileLargerThan2GB_CreatesParentFoldersForDestinationFile_CopiesSourceFileToDestinationFileByCallingStdFilesystemCopyFileToFile)
-AFACT(CreateFileWithTextIfDoesNotExist_FileExists_DoesNothing)
-AFACT(CreateFileWithTextIfDoesNotExist_FileDoesNotExist_CreateFileWithFileText)
+AFACT(CreateTextFileIfDoesNotExist_FileExists_DoesNothing)
+AFACT(CreateTextFileIfDoesNotExist_FileDoesNotExist_CreateFileWithFileText)
 AFACT(DeleteFolder_CallsTestableFileSystemremove_all)
 AFACT(FileOrFolderExists_ReturnsResultOfCallingStdFileSystemExists)
 AFACT(ReadFileBytes_OpensFileInBinaryReadMode_FileSizeIs0_ClosesFile_ReturnsSharedPtrToEmptyCharVector)
@@ -464,18 +464,18 @@ TEST(CopyFileToFileLargerThan2GB_CreatesParentFoldersForDestinationFile_CopiesSo
    ARE_EQUAL(expectedFileCopyResult, fileCopyResult);
 }
 
-TEST(CreateFileWithTextIfDoesNotExist_FileExists_DoesNothing)
+TEST(CreateTextFileIfDoesNotExist_FileExists_DoesNothing)
 {
    _call_fs_existsMock.Return(true);
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const string fileText = ZenUnit::Random<string>();
    //
-   _fileSystem.CreateFileWithTextIfDoesNotExist(filePath, fileText);
+   _fileSystem.CreateTextFileIfDoesNotExist(filePath, fileText);
    //
    METALMOCK(_call_fs_existsMock.CalledOnceWith(filePath));
 }
 
-TEST(CreateFileWithTextIfDoesNotExist_FileDoesNotExist_CreateFileWithFileText)
+TEST(CreateTextFileIfDoesNotExist_FileDoesNotExist_CreateFileWithFileText)
 {
    _call_fs_existsMock.Return(false);
 
@@ -487,7 +487,7 @@ TEST(CreateFileWithTextIfDoesNotExist_FileDoesNotExist_CreateFileWithFileText)
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const string fileText = ZenUnit::Random<string>();
    //
-   _fileSystem.CreateFileWithTextIfDoesNotExist(filePath, fileText);
+   _fileSystem.CreateTextFileIfDoesNotExist(filePath, fileText);
    //
    METALMOCKTHEN(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_fileSystem, &Utils::FileSystem::CreateFileInBinaryWriteMode, filePath)).Then(
