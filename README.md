@@ -21,10 +21,11 @@ On Linux, a Bash script can be written to run Google Drive command line `drive p
    * [7zip-files-then-copy-the-7zip-file-to-multiple-folders](#7zip-files-then-copy-the-7zip-file-to-multiple-folders)
 * [Cloudundancy code structure as it appears in Visual Studio Code on Linux](#cloudundancy-code-structure-as-it-appears-in-visual-studio-code-on-linux)
 * [Cloudundancy code structure as it appears in Visual Studio 2022 on Windows](#cloudundancy-code-structure-as-it-appears-in-visual-studio-2022-on-windows)
-* [Linux Jenkins jobs which build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy's C++ code and Mypy-Flake8-Pylint Cloudundancy's CI/CD Python code](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-and-undefinedbehaviorsanitize-cloudundancys-c-code-and-mypy-flake8-pylint-cloudundancys-cicd-python-code)
-* [Windows Jenkins jobs which build and Cppcheck Cloudundancy's C++ code and Mypy-Flake8-Pylint Cloudundancy's CI/CD Python code](#windows-jenkins-jobs-which-build-and-cppcheck-cloudundancys-c-code-and-mypy-flake8-pylint-cloudundancys-cicd-python-code)
+* [Linux Jenkins jobs](#linux-jenkins-jobs)
+* [Windows Jenkins jobs](#windows-jenkins-jobs)
 * [4 steps to build binary cloudundancy on Linux with Clang](#4-steps-to-build-binary-cloudundancy-on-linux-with-clang)
 * [4 steps to build executable Cloudundancy.exe on Windows with Visual Studio 2022](#4-steps-to-build-executable-cloudundancyexe-on-windows-with-visual-studio-2022)
+* [Thanks to](#thanks-to)
 
 ## Cloudundancy command line usage
 
@@ -194,11 +195,11 @@ GitHub repos successfully 7-Zipped and copied to a OneDrive folder:
 
 ![CloudundancyArgsParser.cpp](Screenshots/Windows/CloudundancyCodeInVisualStudio2022.png)
 
-## Linux Jenkins jobs which build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize Cloudundancy's C++ code and Mypy-Flake8-Pylint Cloudundancy's CI/CD Python code
+## Linux Jenkins jobs
 
 ![Linux Cloudundancy Jenkins jobs](Screenshots/Linux/LinuxCloudundancyJenkinsJobs.png)
 
-## Windows Jenkins jobs which build and Cppcheck Cloudundancy's C++ code and Mypy-Flake8-Pylint Cloudundancy's CI/CD Python code
+## Windows Jenkins jobs
 
 ![Cloudundancy Windows Jenkins jobs](Screenshots/Windows/WindowsJenkinsJobs.png)
 
@@ -227,3 +228,7 @@ cmake --build . --config Release --target install
 Resulting executable `C:\bin\Cloudundancy.exe`:
 
 ![Cloudundancy.exe on Windows](Screenshots/CloudundancyDotExe.png)
+
+## Thanks to
+
+<a href="https://brandmark.io">brandmark.io</a> for Cloudundancy's logo
