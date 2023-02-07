@@ -231,4 +231,4 @@ Resulting executable `C:\bin\Cloudundancy.exe`:
 
 ## Thanks to
 
-<a href="https://brandmark.io">brandmark.io</a> for Cloudundancy's logo
+<a href="https://brandmark.io">brandmark.io</a> for Cloudundancy's AI-generated logo
