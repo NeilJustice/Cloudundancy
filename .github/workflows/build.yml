@@ -100,3 +100,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         if: ${{ matrix.cxx == 'g++-10' && matrix.cmake_build_type == 'Release' }}
+
+      - name: tree GITHUB_WORKSPACE
+        run: tree $GITHUB_WORKSPACE
+
+      - name: Archive binary cloudundancy
+        uses: actions/upload-artifact@v3
+        with:
+          name: cloudundancy
+          path: Release/Cloudundancy/cloudundancy
+        if: ${{ matrix.cxx == 'clang++' && matrix.cmake_build_type == 'Release' }}
