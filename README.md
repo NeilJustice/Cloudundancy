@@ -51,13 +51,13 @@ Usage:
 
 ### example-linux-ini-file
 
-Cloudundancy program mode `example-linux-ini-file` prints an example Linux Cloudundancy .ini file which shows how to achieve triple backups of files to one GitHub repo folder and two USB drives:
+Program mode `example-linux-ini-file` prints an example Linux Cloudundancy .ini file which shows how to achieve triple backups of files to one GitHub repo folder and two USB drives:
 
 ![Example Linux Cloudundancy .ini file](Screenshots/Linux/example-linux-ini-file.png)
 
 ### example-windows-ini-file
 
-Cloudundancy program mode `example-windows-ini-file` prints an example Windows Cloudundancy .ini file which shows how to achieve quintuple backups of files to two automatic cloud-uploading folders (C:\GoogleDrive and C:\OneDrive), one GitHub repo folder (C:\GitHubRepos), and two USB drives (D: and E:).
+Program mode `example-windows-ini-file` prints an example Windows Cloudundancy .ini file which shows how to achieve quintuple backups of files to two automatic cloud-uploading folders (C:\GoogleDrive and C:\OneDrive), one GitHub repo folder (C:\GitHubRepos), and two USB drives (D: and E:).
 
 ```
 [DestinationFolders]
@@ -98,7 +98,7 @@ cloudundancy copy-files-to-multiple-folders
    --ini-file=<CloudundancyIniFilePath> [--delete-destination-folders-first]
 ```
 
-Cloudundancy program mode `copy-files-to-multiple-folders` copies files and folders listed in a Cloudundancy.ini file to multiple destination folders.
+Program mode `copy-files-to-multiple-folders` copies files and folders listed in a Cloudundancy.ini file to multiple destination folders.
 
 Most notably, destination folders can be configured to automatic cloud-uploading Google Drive and Microsoft OneDrive folders on Windows for achieving cloud-redundant file backups.
 
@@ -232,4 +232,4 @@ Resulting executable `C:\bin\Cloudundancy.exe`:
 
 ## Thanks to
 
-<a href="https://brandmark.io">brandmark.io</a> for Cloudundancy's AI-generated logo
+<a href="https://brandmark.io">brandmark.io</a> for Cloudundancy's logo
