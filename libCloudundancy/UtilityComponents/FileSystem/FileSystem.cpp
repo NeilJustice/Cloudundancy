@@ -212,12 +212,12 @@ namespace Utils
 
    vector<string> FileSystem::ReadFileLinesWhichMustBeNonEmpty(const fs::path& filePath) const
    {
-      const string fileText = _caller_ReadFileText->CallConstMemberFunction(this, &FileSystem::ReadFileText, filePath);
+      string fileText = _caller_ReadFileText->CallConstMemberFunction(this, &FileSystem::ReadFileText, filePath);
       if (fileText.empty())
       {
          throw FileMalformedException(filePath, "File cannot be empty");
       }
-      istringstream fileTextIStringStream(fileText);
+      istringstream fileTextIStringStream(std::move(fileText));
       vector<string> fileLines;
       string currentFileLine;
       while (getline(fileTextIStringStream, currentFileLine))
