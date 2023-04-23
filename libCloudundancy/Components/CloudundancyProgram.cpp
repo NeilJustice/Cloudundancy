@@ -14,12 +14,12 @@ CloudundancyProgram::CloudundancyProgram() noexcept
    // Constant Components
    , _cloudundancyArgsParser(make_unique<CloudundancyArgsParser>())
    , _cloudundancySubProgramFactory(make_unique<CloudundancySubProgramFactory>())
-   , _console(make_unique<Time::Console>())
+   , _console(make_unique<Utils::Console>())
    , _cloudundancyFileCopier(make_unique<CloudundancyFileCopier>())
    , _environmentService(make_unique<Utils::EnvironmentService>())
-   , _watch(make_unique<Time::Watch>())
+   , _watch(make_unique<Utils::Watch>())
    // Mutable Components
-   , _stopwatch(make_unique<Time::Stopwatch>())
+   , _stopwatch(make_unique<Utils::Stopwatch>())
 {
 }
 

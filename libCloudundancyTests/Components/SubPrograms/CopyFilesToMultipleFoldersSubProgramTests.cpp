@@ -10,14 +10,14 @@ EVIDENCE
 
 CopyFileToFilesToMultipleFoldersSubProgram _copyFilesToMultipleFoldersSubProgram;
 // Base Constant Components
-Time::ConsoleMock* p_consoleMock = nullptr;
+Utils::ConsoleMock* p_consoleMock = nullptr;
 // Constant Components
 CloudundancyFileCopierMock* _cloudundancyFileCopierMock = nullptr;
 
 STARTUP
 {
    // Base Constant Components
-   _copyFilesToMultipleFoldersSubProgram.p_console.reset(p_consoleMock = new Time::ConsoleMock);
+   _copyFilesToMultipleFoldersSubProgram.p_console.reset(p_consoleMock = new Utils::ConsoleMock);
    // Constant Components
    _copyFilesToMultipleFoldersSubProgram._cloudundancyFileCopier.reset(_cloudundancyFileCopierMock = new CloudundancyFileCopierMock);
 }

@@ -10,7 +10,7 @@ FACTS(DateTimeNowForFileNames_ReturnsYYYYDashMMDashDDTHHDashMMDashSS)
 AFACT(TMNow_ReturnstmNow__CodeCoverage)
 EVIDENCE
 
-class WatchSelfMocked : public Metal::Mock<Time::Watch>
+class WatchSelfMocked : public Metal::Mock<Utils::Watch>
 {
 public:
    METALMOCK_NONVOID0_CONST(tm, TMNow)
@@ -27,7 +27,7 @@ STARTUP
 
 TEST(DefaultConstructor_NewsCRTWatch)
 {
-   Time::Watch watch;
+   Utils::Watch watch;
    // Constant Components
    DELETE_TO_ASSERT_NEWED(watch._crtWatch);
 }
@@ -75,7 +75,7 @@ TEST7X7(DateTimeNowForFileNames_ReturnsYYYYDashMMDashDDTHHDashMMDashSS,
 
 TEST(TMNow_ReturnstmNow__CodeCoverage)
 {
-   Time::Watch watch;
+   Utils::Watch watch;
    //
    const tm tmNow = watch.TMNow();
    //

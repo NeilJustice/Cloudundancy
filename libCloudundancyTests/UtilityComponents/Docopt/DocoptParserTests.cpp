@@ -18,7 +18,7 @@ AFACT(GetOptionalString_ArgNotInMap_ReturnsEmptyString)
 AFACT(GetOptionalString_ArgInMapWithStringValue_ReturnsValue)
 EVIDENCE
 
-Time::DocoptParser _docoptParser;
+Utils::DocoptParser _docoptParser;
 // Function Pointers
 METALMOCK_NONVOID5_FREE(map<string COMMA docopt::Value>, docopt, const string&, const vector<string>&, bool, const string&, bool)
 
@@ -37,7 +37,7 @@ STARTUP
 
 TEST(Constructor_SetsDocoptFunctionPointer)
 {
-   Time::DocoptParser docoptParser;
+   Utils::DocoptParser docoptParser;
    // Function Pointers
    STD_FUNCTION_TARGETS(docopt::docopt, docoptParser._call_docopt_docopt);
 }

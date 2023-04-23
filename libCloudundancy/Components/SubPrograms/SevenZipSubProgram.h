@@ -15,9 +15,9 @@ private:
    unique_ptr<const CloudundancyFileSystem> _cloudundancyFileSystem;
    unique_ptr<const Utils::FileSystem> _fileSystem;
    unique_ptr<const Utils::ProcessRunner> _processRunner;
-   unique_ptr<const Time::Watch> _watch;
+   unique_ptr<const Utils::Watch> _watch;
    // Mutable Components
-   unique_ptr<Time::Stopwatch> _stopwatch;
+   unique_ptr<Utils::Stopwatch> _stopwatch;
 public:
    SevenZipSubProgram();
    virtual ~SevenZipSubProgram();

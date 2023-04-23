@@ -20,12 +20,12 @@ CloudundancyFileCopier::CloudundancyFileCopier() noexcept
    , _cloudundancyFileSystem(make_unique<CloudundancyFileSystem>())
    , _cloudundancyIniFileReader(make_unique<CloudundancyIniFileReader>())
    , _cloudundancyLogFileWriter(make_unique<CloudundancyLogFileWriter>())
-   , _console(make_unique<Time::Console>())
+   , _console(make_unique<Utils::Console>())
    , _fileSystem(make_unique<Utils::FileSystem>())
    , _tryCatchCaller(make_unique<Utils::TryCatchCaller<CloudundancyFileCopier, const pair<fs::path, CloudundancyIni>&>>())
    // Mutable Components
    , _recursiveDirectoryIterator(make_unique<Utils::RecursiveDirectoryIterator>())
-   , _stopwatch(make_unique<Time::Stopwatch>())
+   , _stopwatch(make_unique<Utils::Stopwatch>())
 {
 }
 

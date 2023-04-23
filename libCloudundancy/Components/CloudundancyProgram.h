@@ -21,12 +21,12 @@ private:
    // Constant Components
    unique_ptr<const CloudundancyArgsParser> _cloudundancyArgsParser;
    unique_ptr<const CloudundancySubProgramFactory> _cloudundancySubProgramFactory;
-   unique_ptr<const Time::Console> _console;
+   unique_ptr<const Utils::Console> _console;
    unique_ptr<const CloudundancyFileCopier> _cloudundancyFileCopier;
    unique_ptr<const Utils::EnvironmentService> _environmentService;
-   unique_ptr<const Time::Watch> _watch;
+   unique_ptr<const Utils::Watch> _watch;
    // Mutable Components
-   unique_ptr<Time::Stopwatch> _stopwatch;
+   unique_ptr<Utils::Stopwatch> _stopwatch;
 public:
    CloudundancyProgram() noexcept;
    virtual ~CloudundancyProgram();

@@ -7,7 +7,7 @@ namespace Utils
       // Function Pointers
       : _call_quick_exit(_exit)
       // Mutable Components
-      , _consoleColorer(make_unique<Time::ConsoleColorer>())
+      , _consoleColorer(make_unique<Utils::ConsoleColorer>())
 
    {
    }

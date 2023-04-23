@@ -107,7 +107,7 @@ Utils::AsserterMock* _asserterMock = nullptr;
 Utils::CharVectorAllocatorMock* _charVectorAllocatorMock = nullptr;
 Utils::ErrorCodeTranslatorMock* _errorCodeTranslatorMock = nullptr;
 PassthroughFileSystemMock* _passthroughFileSystemMock = nullptr;
-Time::StopwatchFactoryMock* _stopwatchFactoryMock = nullptr;
+Utils::StopwatchFactoryMock* _stopwatchFactoryMock = nullptr;
 
 STARTUP
 {
@@ -144,7 +144,7 @@ STARTUP
    _fileSystem._charVectorAllocator.reset(_charVectorAllocatorMock = new Utils::CharVectorAllocatorMock);
    _fileSystem._errorCodeTranslator.reset(_errorCodeTranslatorMock = new Utils::ErrorCodeTranslatorMock);
    _fileSystem._passthroughFileSystem.reset(_passthroughFileSystemMock = new PassthroughFileSystemMock);
-   _fileSystem._stopwatchFactory.reset(_stopwatchFactoryMock = new Time::StopwatchFactoryMock);
+   _fileSystem._stopwatchFactory.reset(_stopwatchFactoryMock = new Utils::StopwatchFactoryMock);
 }
 
 TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
@@ -381,7 +381,7 @@ TEST(CloseFile_fcloseReturnValueIsNot0_ThrowsRuntimeError)
 
 TEST(CopyFileToFile_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile_WritesSourceFileBytesToDestinationFilePath_ReturnsCopySucceededFileCopyResult)
 {
-   const shared_ptr<Time::StopwatchMock> stopwatchMock = make_shared<Time::StopwatchMock>();
+   const shared_ptr<Utils::StopwatchMock> stopwatchMock = make_shared<Utils::StopwatchMock>();
    _stopwatchFactoryMock->NewStopwatchMock.Return(stopwatchMock);
    stopwatchMock->StartMock.Expect();
 
@@ -435,7 +435,7 @@ TEST(CopyFileToFile_SourceFileIsNotEmpty_CreatesParentFoldersForDestinationFile_
 
 TEST(CopyFileToFileLargerThan2GB_CreatesParentFoldersForDestinationFile_CopiesSourceFileToDestinationFileByCallingStdFilesystemCopyFileToFile)
 {
-   const shared_ptr<Time::StopwatchMock> stopwatchMock = make_shared<Time::StopwatchMock>();
+   const shared_ptr<Utils::StopwatchMock> stopwatchMock = make_shared<Utils::StopwatchMock>();
    stopwatchMock->StartMock.Expect();
    _stopwatchFactoryMock->NewStopwatchMock.Return(stopwatchMock);
 

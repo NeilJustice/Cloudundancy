@@ -15,14 +15,14 @@ Utils::WindowsProcessRunner _windowsProcessRunner;
 using _caller_Run_MockType = Utils::NonVoidTwoArgMemberFunctionCallerMock<Utils::ProcessResult, Utils::WindowsProcessRunner, string_view, string_view>;
 _caller_Run_MockType* _caller_RunMock = nullptr;
 // Constant Components
-Time::ConsoleMock* _consoleMock = nullptr;
+Utils::ConsoleMock* _consoleMock = nullptr;
 
 STARTUP
 {
    // Function Callers
    _windowsProcessRunner._caller_Run.reset(_caller_RunMock = new _caller_Run_MockType);
    // Constant Components
-   _windowsProcessRunner._console.reset(_consoleMock = new Time::ConsoleMock);
+   _windowsProcessRunner._console.reset(_consoleMock = new Utils::ConsoleMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)

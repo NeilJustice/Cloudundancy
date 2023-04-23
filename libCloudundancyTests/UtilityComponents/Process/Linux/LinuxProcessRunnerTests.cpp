@@ -25,7 +25,7 @@ Utils::LinuxProcessRunner _linuxProcessRunner;
 using _caller_Run_MockType = Utils::NonVoidTwoArgMemberFunctionCallerMock<Utils::ProcessResult, Utils::LinuxProcessRunner, string_view, string_view>;
 _caller_Run_MockType* _caller_RunMock = nullptr;
 // Constant Components
-Time::ConsoleMock* _consoleMock = nullptr;
+Utils::ConsoleMock* _consoleMock = nullptr;
 Utils::ErrorCodeTranslatorMock* _errorCodeTranslatorMock = nullptr;
 
 STARTUP
@@ -33,7 +33,7 @@ STARTUP
    // Function Callers
    _linuxProcessRunner._caller_Run.reset(_caller_RunMock = new _caller_Run_MockType);
    // Constant Components
-   _linuxProcessRunner._console.reset(_consoleMock = new Time::ConsoleMock);
+   _linuxProcessRunner._console.reset(_consoleMock = new Utils::ConsoleMock);
    _linuxProcessRunner._errorCodeTranslator.reset(_errorCodeTranslatorMock = new Utils::ErrorCodeTranslatorMock);
 }
 

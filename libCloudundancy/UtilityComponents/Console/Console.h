@@ -12,7 +12,7 @@ namespace Utils
       // Function Pointers
       function<void(int)> _call_quick_exit;
       // Mutable Components
-      unique_ptr<Time::ConsoleColorer> _consoleColorer;
+      unique_ptr<Utils::ConsoleColorer> _consoleColorer;
    public:
       Console();
       virtual ~Console();

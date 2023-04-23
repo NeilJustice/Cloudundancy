@@ -15,23 +15,23 @@ AFACT(WriteLineAndExit_WritesMessageAndNewline_ExitsWithExitCode)
 AFACT(WriteLineColor_SetsConsoleTextColor_WritesMessageThenNewline_UnsetsColor)
 EVIDENCE
 
-Time::Console _console;
+Utils::Console _console;
 // Function Pointers
 METALMOCK_VOID1_FREE(_call_quick_exit, int)
 // Mutable Components
-Time::ConsoleColorerMock* _consoleColorerMock = nullptr;
+Utils::ConsoleColorerMock* _consoleColorerMock = nullptr;
 
 STARTUP
 {
    // Function Pointers
    _console._call_quick_exit = BIND_1ARG_METALMOCK_OBJECT(_call_quick_exitMock);
    // Mutable Components
-   _console._consoleColorer.reset(_consoleColorerMock = new Time::ConsoleColorerMock);
+   _console._consoleColorer.reset(_consoleColorerMock = new Utils::ConsoleColorerMock);
 }
 
 TEST(DefaultConstructor_NewsConsoleColorer)
 {
-   Time::Console console;
+   Utils::Console console;
    // Function Pointers
    DELETE_TO_ASSERT_NEWED(console._consoleColorer);
    // Mutable Components

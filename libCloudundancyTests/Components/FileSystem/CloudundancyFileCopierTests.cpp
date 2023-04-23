@@ -61,14 +61,14 @@ _forEacher_CopyFileOrFolderToFolderMockType* _forEacher_CopyFileOrFolderToFolder
 CloudundancyIniFileReaderMock* _cloudundancyIniFileReaderMock = nullptr;
 CloudundancyFileSystemMock* _cloudundancyFileSystemMock = nullptr;
 CloudundancyLogFileWriterMock* _cloudundancyLogFileWriterMock = nullptr;
-Time::ConsoleMock* _consoleMock = nullptr;
+Utils::ConsoleMock* _consoleMock = nullptr;
 Utils::FileSystemMock* _fileSystemMock = nullptr;
 using TryCatchCallerMockType = Utils::TryCatchCallerMock<CloudundancyFileCopier, const pair<fs::path, CloudundancyIni>&>;
 TryCatchCallerMockType* _tryCatchCallerMock = nullptr;
 
 // Mutable Components
 Utils::RecursiveDirectoryIteratorMock* _recursiveDirectoryIteratorMock = nullptr;
-Time::StopwatchMock* _stopwatchMock = nullptr;
+Utils::StopwatchMock* _stopwatchMock = nullptr;
 
 STARTUP
 {
@@ -87,12 +87,12 @@ STARTUP
    _cloudundancyFileCopier._cloudundancyFileSystem.reset(_cloudundancyFileSystemMock = new CloudundancyFileSystemMock);
    _cloudundancyFileCopier._cloudundancyIniFileReader.reset(_cloudundancyIniFileReaderMock = new CloudundancyIniFileReaderMock);
    _cloudundancyFileCopier._cloudundancyLogFileWriter.reset(_cloudundancyLogFileWriterMock = new CloudundancyLogFileWriterMock);
-   _cloudundancyFileCopier._console.reset(_consoleMock = new Time::ConsoleMock);
+   _cloudundancyFileCopier._console.reset(_consoleMock = new Utils::ConsoleMock);
    _cloudundancyFileCopier._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
    _cloudundancyFileCopier._tryCatchCaller.reset(_tryCatchCallerMock = new TryCatchCallerMockType);
    // Mutable Components
    _cloudundancyFileCopier._recursiveDirectoryIterator.reset(_recursiveDirectoryIteratorMock = new Utils::RecursiveDirectoryIteratorMock);
-   _cloudundancyFileCopier._stopwatch.reset(_stopwatchMock = new Time::StopwatchMock);
+   _cloudundancyFileCopier._stopwatch.reset(_stopwatchMock = new Utils::StopwatchMock);
 }
 
 TEST(DefaultConstructor_SetsFunctionsAndNewsComponents)

@@ -10,13 +10,13 @@ EVIDENCE
 CloudundancyLogFileWriter _cloudundancyLogFileWriter;
 // Constant Components
 Utils::FileSystemMock* _fileSystemMock = nullptr;
-Time::WatchMock* _watchMock = nullptr;
+Utils::WatchMock* _watchMock = nullptr;
 
 STARTUP
 {
    // Constant Components
    _cloudundancyLogFileWriter._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
-   _cloudundancyLogFileWriter._watch.reset(_watchMock = new Time::WatchMock);
+   _cloudundancyLogFileWriter._watch.reset(_watchMock = new Utils::WatchMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
