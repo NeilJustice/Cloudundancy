@@ -18,7 +18,7 @@ METALMOCK_NONVOID1_FREE(bool, _call_fs_exists, const fs::path&)
 using _forEacher_DeleteContentsOfFolderExceptForFileNameMockType = Utils::TwoArgMemberFunctionForEacherMock<CloudundancyFileSystem, fs::path, string_view>;
 _forEacher_DeleteContentsOfFolderExceptForFileNameMockType* _forEacher_DeleteContentsOfFolderExceptForFileNameMock = nullptr;
 // Constant Components
-Utils::ConsoleMock* _consoleMock = nullptr;
+Time::ConsoleMock* _consoleMock = nullptr;
 Utils::FileSystemMock* _fileSystemMock = nullptr;
 PassthroughFileSystemMock* _passthroughFileSystemMock = nullptr;
 
@@ -29,7 +29,7 @@ STARTUP
    // Function Callers
    _cloudundancyFileSystem._forEacher_DeleteContentsOfFolderExceptForFileName.reset(_forEacher_DeleteContentsOfFolderExceptForFileNameMock = new _forEacher_DeleteContentsOfFolderExceptForFileNameMockType);
    // Constant Components
-   _cloudundancyFileSystem._console.reset(_consoleMock = new Utils::ConsoleMock);
+   _cloudundancyFileSystem._console.reset(_consoleMock = new Time::ConsoleMock);
    _cloudundancyFileSystem._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
    _cloudundancyFileSystem._passthroughFileSystem.reset(_passthroughFileSystemMock = new PassthroughFileSystemMock);
 }

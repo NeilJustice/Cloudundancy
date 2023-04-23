@@ -11,7 +11,7 @@ AFACT(StopAndGetElapsedMicroseconds_StartPreviouslyCalled_ReturnsElapsedMicrosec
 FACTS(StopAndGetElapsedSeconds_StartPreviouslyCalled_SetsStartTimeBackToDefault_ReturnsElapsedSecondsWithMillisecondResolution)
 EVIDENCE
 
-Utils::Stopwatch _stopwatch;
+Time::Stopwatch _stopwatch;
 METALMOCK_NONVOID0_STATIC(chrono::time_point<chrono::high_resolution_clock>, chrono::high_resolution_clock, now)
 
 STARTUP
@@ -21,7 +21,7 @@ STARTUP
 
 TEST(DefaultConstructor_SetsNowFunction)
 {
-   const Utils::Stopwatch stopwatch;
+   const Time::Stopwatch stopwatch;
    STD_FUNCTION_TARGETS(chrono::high_resolution_clock::now, stopwatch._call_high_resolution_clock_now);
    ARE_EQUAL(chrono::time_point<chrono::high_resolution_clock>(), stopwatch._startTime);
 }

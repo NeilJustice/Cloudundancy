@@ -9,8 +9,8 @@ EVIDENCE
 
 CloudundancyArgsParser _cloudundancyArgsParser;
 // Constant Components
-Utils::ConsoleMock* _consoleMock = nullptr;
-Utils::DocoptParserMock* _docoptParserMock = nullptr;
+Time::ConsoleMock* _consoleMock = nullptr;
+Time::DocoptParserMock* _docoptParserMock = nullptr;
 Utils::FileSystemMock* _fileSystemMock = nullptr;
 Utils::ProcessRunnerMock* _processRunnerMock = nullptr;
 ProgramModeDeterminerMock* _programModeDeterminerMock = nullptr;
@@ -18,8 +18,8 @@ ProgramModeDeterminerMock* _programModeDeterminerMock = nullptr;
 STARTUP
 {
    // Constant Components
-   _cloudundancyArgsParser._console.reset(_consoleMock = new Utils::ConsoleMock);
-   _cloudundancyArgsParser._docoptParser.reset(_docoptParserMock = new Utils::DocoptParserMock);
+   _cloudundancyArgsParser._console.reset(_consoleMock = new Time::ConsoleMock);
+   _cloudundancyArgsParser._docoptParser.reset(_docoptParserMock = new Time::DocoptParserMock);
    _cloudundancyArgsParser._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
    _cloudundancyArgsParser._processRunner.reset(_processRunnerMock = new Utils::ProcessRunnerMock);
    _cloudundancyArgsParser._programModeDeterminer.reset(_programModeDeterminerMock = new ProgramModeDeterminerMock);

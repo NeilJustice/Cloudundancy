@@ -7,12 +7,12 @@ EVIDENCE
 
 ExampleLinuxIniFileSubProgram _exampleLinuxIniFileSubProgram;
 // Base Constant Components
-Utils::ConsoleMock* p_consoleMock = nullptr;
+Time::ConsoleMock* p_consoleMock = nullptr;
 
 STARTUP
 {
    // Base Constant Components
-   _exampleLinuxIniFileSubProgram.p_console.reset(p_consoleMock = new Utils::ConsoleMock);
+   _exampleLinuxIniFileSubProgram.p_console.reset(p_consoleMock = new Time::ConsoleMock);
 }
 
 TEST(Run_PrintsExampleLinuxIniFile_Returns0)

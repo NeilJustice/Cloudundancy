@@ -5,8 +5,8 @@
 
 CloudundancyArgsParser::CloudundancyArgsParser()
    // Constant Components
-   : _console(make_unique<Utils::Console>())
-   , _docoptParser(make_unique<Utils::DocoptParser>())
+   : _console(make_unique<Time::Console>())
+   , _docoptParser(make_unique<Time::DocoptParser>())
    , _fileSystem(make_unique<Utils::FileSystem>())
    , _processRunner(make_unique<Utils::ProcessRunner>())
    , _programModeDeterminer(make_unique<ProgramModeDeterminer>())

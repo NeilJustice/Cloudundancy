@@ -11,9 +11,9 @@ SevenZipSubProgram::SevenZipSubProgram()
    , _cloudundancyFileSystem(make_unique<CloudundancyFileSystem>())
    , _fileSystem(make_unique<Utils::FileSystem>())
    , _processRunner(std::make_unique<Utils::ProcessRunner>())
-   , _watch(std::make_unique<Utils::Watch>())
+   , _watch(std::make_unique<Time::Watch>())
    // Mutable Components
-   , _stopwatch(std::make_unique<Utils::Stopwatch>())
+   , _stopwatch(std::make_unique<Time::Stopwatch>())
 {
 }
 

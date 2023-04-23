@@ -17,30 +17,30 @@ SevenZipSubProgram _sevenZipSubProgram;
 using VoidOneArgMemberFunctionCallerMockType = Utils::VoidOneArgMemberFunctionCallerMock<SevenZipSubProgram, const CloudundancyArgs&>;
 VoidOneArgMemberFunctionCallerMockType* _voidOneArgMemberFunctionCallerMock = nullptr;
 // Base Constant Components
-Utils::ConsoleMock* p_consoleMock = nullptr;
+Time::ConsoleMock* p_consoleMock = nullptr;
 // Constant Components
 CloudundancyFileCopierMock* _cloudundancyFileCopierMock = nullptr;
 CloudundancyFileSystemMock* _cloudundancyFileSystemMock = nullptr;
 Utils::FileSystemMock* _fileSystemMock = nullptr;
 Utils::ProcessRunnerMock* _processRunnerMock = nullptr;
-Utils::StopwatchMock* _stopwatchMock = nullptr;
+Time::StopwatchMock* _stopwatchMock = nullptr;
 // Mutable Componants
-Utils::WatchMock* _watchMock = nullptr;
+Time::WatchMock* _watchMock = nullptr;
 
 STARTUP
 {
    // Function Callers
    _sevenZipSubProgram._voidOneArgMemberFunctionCaller.reset(_voidOneArgMemberFunctionCallerMock = new VoidOneArgMemberFunctionCallerMockType);
    // Base Constant Components
-   _sevenZipSubProgram.p_console.reset(p_consoleMock = new Utils::ConsoleMock);
+   _sevenZipSubProgram.p_console.reset(p_consoleMock = new Time::ConsoleMock);
    // Constant Components
    _sevenZipSubProgram._cloudundancyFileCopier.reset(_cloudundancyFileCopierMock = new CloudundancyFileCopierMock);
    _sevenZipSubProgram._cloudundancyFileSystem.reset(_cloudundancyFileSystemMock = new CloudundancyFileSystemMock);
    _sevenZipSubProgram._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
    _sevenZipSubProgram._processRunner.reset(_processRunnerMock = new Utils::ProcessRunnerMock);
-   _sevenZipSubProgram._stopwatch.reset(_stopwatchMock = new Utils::StopwatchMock);
+   _sevenZipSubProgram._stopwatch.reset(_stopwatchMock = new Time::StopwatchMock);
    // Mutable Componants
-   _sevenZipSubProgram._watch.reset(_watchMock = new Utils::WatchMock);
+   _sevenZipSubProgram._watch.reset(_watchMock = new Time::WatchMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)

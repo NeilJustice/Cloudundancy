@@ -6,7 +6,7 @@ class CloudundancyLogFileWriter
 private:
    // Constant Comopnents
    unique_ptr<const Utils::FileSystem> _fileSystem;
-   unique_ptr<const Utils::Watch> _watch;
+   unique_ptr<const Time::Watch> _watch;
 public:
    CloudundancyLogFileWriter();
    virtual ~CloudundancyLogFileWriter();

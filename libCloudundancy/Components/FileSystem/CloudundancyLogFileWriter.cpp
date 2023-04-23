@@ -5,7 +5,7 @@
 CloudundancyLogFileWriter::CloudundancyLogFileWriter()
    // Constant Components
    : _fileSystem(make_unique<Utils::FileSystem>())
-   , _watch(make_unique<Utils::Watch>())
+   , _watch(make_unique<Time::Watch>())
 {
 }
 

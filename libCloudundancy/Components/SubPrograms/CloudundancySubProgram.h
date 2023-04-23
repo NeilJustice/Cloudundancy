@@ -8,7 +8,7 @@ class CloudundancySubProgram
    friend class ExampleWindowsIniFileSubProgramTests;
 protected:
    // Constant Components
-   unique_ptr<const Utils::Console> p_console;
+   unique_ptr<const Time::Console> p_console;
 public:
    CloudundancySubProgram();
    virtual ~CloudundancySubProgram();

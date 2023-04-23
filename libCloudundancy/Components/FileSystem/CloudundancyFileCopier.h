@@ -42,13 +42,13 @@ private:
    unique_ptr<const CloudundancyFileSystem> _cloudundancyFileSystem;
    unique_ptr<const CloudundancyIniFileReader> _cloudundancyIniFileReader;
    unique_ptr<const CloudundancyLogFileWriter> _cloudundancyLogFileWriter;
-   unique_ptr<const Utils::Console> _console;
+   unique_ptr<const Time::Console> _console;
    unique_ptr<const Utils::FileSystem> _fileSystem;
    unique_ptr<const Utils::TryCatchCaller<CloudundancyFileCopier, const pair<fs::path, CloudundancyIni>&>> _tryCatchCaller;
 
    // Mutable Components
    unique_ptr<Utils::RecursiveDirectoryIterator> _recursiveDirectoryIterator;
-   unique_ptr<Utils::Stopwatch> _stopwatch;
+   unique_ptr<Time::Stopwatch> _stopwatch;
 public:
    CloudundancyFileCopier() noexcept;
    virtual ~CloudundancyFileCopier();

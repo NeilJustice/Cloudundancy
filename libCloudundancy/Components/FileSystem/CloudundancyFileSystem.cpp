@@ -9,7 +9,7 @@ CloudundancyFileSystem::CloudundancyFileSystem()
    // Function Callers
    , _forEacher_DeleteContentsOfFolderExceptForFileName(make_unique<_forEacher_DeleteContentsOfFolderExceptForFileNameType>())
    // Constant Components
-   , _console(make_unique<Utils::Console>())
+   , _console(make_unique<Time::Console>())
    , _fileSystem(make_unique<Utils::FileSystem>())
    , _passthroughFileSystem(make_unique<PassthroughFileSystem>())
 {

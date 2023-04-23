@@ -7,12 +7,12 @@ EVIDENCE
 
 ExampleWindowsIniFileSubProgram _exampleWindowsIniFileSubProgram;
 // Base Constant Components
-Utils::ConsoleMock* p_consoleMock = nullptr;
+Time::ConsoleMock* p_consoleMock = nullptr;
 
 STARTUP
 {
    // Base Constant Components
-   _exampleWindowsIniFileSubProgram.p_console.reset(p_consoleMock = new Utils::ConsoleMock);
+   _exampleWindowsIniFileSubProgram.p_console.reset(p_consoleMock = new Time::ConsoleMock);
 }
 
 TEST(Run_PrintsExampleWindowsIniFile_Returns0)
