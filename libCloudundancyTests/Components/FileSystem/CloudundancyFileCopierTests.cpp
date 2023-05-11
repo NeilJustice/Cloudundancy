@@ -380,8 +380,7 @@ TEST(CopyNestedFileToFolder_RelativeDestinationFolderPathIsNotDot_CopiesNestedFi
       destinationFolderPath /
       cloudundancyIniCopyInstruction.relativeDestinationFolderPath /
       sourceFilePathRelativeToSourceFolderPath;
-   METALMOCKTHEN(_call_String_ReplaceFirstMock.CalledOnceWith(
-      sourceFilePath.string(), cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath.string(), "")).Then(
+   METALMOCKTHEN(_call_String_ReplaceFirstMock.CalledOnceWith(sourceFilePath.string(), cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath.string(), "")).Then(
    METALMOCKTHEN(_caller_CopyFileToFileMock->CallConstMemberFunctionMock.CalledOnceWith(&_cloudundancyFileCopier, &CloudundancyFileCopier::CopyFileToFile, sourceFilePath, expectedDestinationFilePath))).Then(
    METALMOCKTHEN(_caller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_cloudundancyFileCopier, &CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed, fileCopyResult, destinationFolderPath)));
