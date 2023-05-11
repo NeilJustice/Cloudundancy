@@ -41,7 +41,7 @@ TEST(CallFunctionWithEachElement_OneElementCollection_CallsFunctionWithElement)
    FunctionMock.Expect();
    function<void(const T&)>_call_Function = BIND_1ARG_METALMOCK_OBJECT(FunctionMock);
 
-   Utils::ForEacher<CollectionType<T>, decltype(_call_Function)> forEacher;
+   Utils::ForEacher<CollectionType<T>, decltype(_call_Function)> forEacher{};
    //
    forEacher.CallFunctionWithEachElement(collection,_call_Function);
    //
@@ -56,7 +56,7 @@ TEST(CallFunctionWithEachElement_TwoElementCollection_CallsFunctionWithEachEleme
    FunctionMock.Expect();
    function<void(const T&)>_call_Function = BIND_1ARG_METALMOCK_OBJECT(FunctionMock);
 
-   Utils::ForEacher<CollectionType<T>, decltype(_call_Function)> forEacher;
+   Utils::ForEacher<CollectionType<T>, decltype(_call_Function)> forEacher{};
    //
    forEacher.CallFunctionWithEachElement(collection,_call_Function);
    //
