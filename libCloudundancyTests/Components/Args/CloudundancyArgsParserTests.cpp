@@ -120,11 +120,9 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
 
    if (expectRun7zToConfirm7zIsInThePath)
    {
-      METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith(
-         "[Cloudundancy] Running program 7z to confirm 7z is present on the PATH")).Then(
+      METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith("[Cloudundancy] Running program 7z to confirm 7z is present on the PATH")).Then(
       METALMOCKTHEN(_processRunnerMock->FailFastRunMock.CalledOnceWith("7z", "", false))).Then(
-      METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith(
-         "[Cloudundancy] 7z ran and exited with code 0 and is therefore confirmed to be present on the PATH\n")));
+      METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith("[Cloudundancy] 7z ran and exited with code 0 and is therefore confirmed to be present on the PATH\n")));
    }
    CloudundancyArgs expectedArgs{};
    expectedArgs.programMode = programMode;
