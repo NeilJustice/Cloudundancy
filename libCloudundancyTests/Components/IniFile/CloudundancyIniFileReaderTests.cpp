@@ -105,10 +105,8 @@ TEST(ReadIniFile_ParsesCloudundancyIniFile_ValidatesCloudundancyIni_ReturnsCloud
    const FilePathLineNumberLineText expectedFilePathLineNumberLineText1(cloudundancyIniPath, 9, filePathA + " -> SuffixA");
    const FilePathLineNumberLineText expectedFilePathLineNumberLineText2(cloudundancyIniPath, 10, filePathB + "\t ->  SuffixB");
    METALMOCK(_callerMock_ParseFileCopyInstructionLine->CallConstMemberFunctionMock.CalledNTimes(2));
-   METALMOCKTHEN(_callerMock_ParseFileCopyInstructionLine->CallConstMemberFunctionMock.CalledWith(
-      &_cloudundancyIniFile, &CloudundancyIniFileReader::ParseFileCopyInstructionLine, expectedFilePathLineNumberLineText1)).Then(
-   METALMOCKTHEN(_callerMock_ParseFileCopyInstructionLine->CallConstMemberFunctionMock.CalledWith(
-      &_cloudundancyIniFile, &CloudundancyIniFileReader::ParseFileCopyInstructionLine, expectedFilePathLineNumberLineText2))).Then(
+   METALMOCKTHEN(_callerMock_ParseFileCopyInstructionLine->CallConstMemberFunctionMock.CalledWith(&_cloudundancyIniFile, &CloudundancyIniFileReader::ParseFileCopyInstructionLine, expectedFilePathLineNumberLineText1)).Then(
+   METALMOCKTHEN(_callerMock_ParseFileCopyInstructionLine->CallConstMemberFunctionMock.CalledWith(&_cloudundancyIniFile, &CloudundancyIniFileReader::ParseFileCopyInstructionLine, expectedFilePathLineNumberLineText2))).Then(
    METALMOCKTHEN(_cloudundancyIniValidatorMock->ThrowIfZeroDestinationFolderPathsMock.CalledOnceWith(cloudundancyIni, cloudundancyIniPath)));
    ARE_EQUAL(expectedCloudundancyIni, cloudundancyIni);
 }
