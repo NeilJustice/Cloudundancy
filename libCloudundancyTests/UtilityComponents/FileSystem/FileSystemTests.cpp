@@ -529,8 +529,7 @@ TEST(ReadFileBytes_OpensFileInBinaryReadMode_FileSizeIs0_ClosesFile_ReturnsShare
    const shared_ptr<const vector<char>> fileBytes = _fileSystem.ReadFileBytes(filePath);
    //
    METALMOCKTHEN(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(&_fileSystem, &Utils::FileSystem::OpenFileInBinaryReadMode, filePath)).Then(
-   METALMOCKTHEN(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &_fileSystem, &Utils::FileSystem::ReadFileSize, binaryReadModeFilePointer)));
+   METALMOCKTHEN(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(&_fileSystem, &Utils::FileSystem::ReadFileSize, binaryReadModeFilePointer)));
    IS_EMPTY(*fileBytes);
 }
 
@@ -554,10 +553,8 @@ TEST(ReadFileBytes_OpensFileInBinaryReadMode_FileSizeIsNot0_ReadsFileBytes_Close
    //
    const shared_ptr<const vector<char>> fileBytes = _fileSystem.ReadFileBytes(filePath);
    //
-   METALMOCKTHEN(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &_fileSystem, &Utils::FileSystem::OpenFileInBinaryReadMode, filePath)).Then(
-   METALMOCKTHEN(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &_fileSystem, &Utils::FileSystem::ReadFileSize, binaryReadModeFilePointer))).Then(
+   METALMOCKTHEN(_caller_CreateOrOpenFileFunctionMock->CallConstMemberFunctionMock.CalledOnceWith(&_fileSystem, &Utils::FileSystem::OpenFileInBinaryReadMode, filePath)).Then(
+   METALMOCKTHEN(_caller_ReadFileSizeMock->CallConstMemberFunctionMock.CalledOnceWith(&_fileSystem, &Utils::FileSystem::ReadFileSize, binaryReadModeFilePointer))).Then(
    METALMOCKTHEN(_charVectorAllocatorMock->NewCharVectorMock.CalledOnceWith(fileSize))).Then(
    METALMOCKTHEN(_call_freadMock.CalledOnceWith(expected0thBytesBufferByte, 1, fileSize, binaryReadModeFilePointer.get()))).Then(
    METALMOCKTHEN(_asserterMock->ThrowIfSizeTsNotEqualMock.CalledOnceWith(fileSize, numberOfBytesRead,
