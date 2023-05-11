@@ -69,17 +69,10 @@ TEST(Run_DeletesCodeBackupFolder_CopiesCodeToBackupStagingFolder_SevenZipsBackup
    //
    METALMOCK(_voidOneArgMemberFunctionCallerMock->CallConstMemberFunctionMock.CalledNTimes(4));
 
-   METALMOCKTHEN(_voidOneArgMemberFunctionCallerMock->CallConstMemberFunctionMock.CalledWith(
-      &_sevenZipSubProgram, &SevenZipSubProgram::DeleteBackupStagingFolder, args)).Then(
-
-   METALMOCKTHEN(_voidOneArgMemberFunctionCallerMock->CallConstMemberFunctionMock.CalledWith(
-      &_sevenZipSubProgram, &SevenZipSubProgram::CopyFileToFilesAndFoldersToBackupStagingFolder, args))).Then(
-
-   METALMOCKTHEN(_voidOneArgMemberFunctionCallerMock->CallConstMemberFunctionMock.CalledWith(
-      &_sevenZipSubProgram, &SevenZipSubProgram::SevenZipBackupStagingFolder, args))).Then(
-
-   METALMOCKTHEN(_voidOneArgMemberFunctionCallerMock->CallConstMemberFunctionMock.CalledWith(
-      &_sevenZipSubProgram, &SevenZipSubProgram::Copy7ZipFileToDestinationFolders, args)));
+   METALMOCKTHEN(_voidOneArgMemberFunctionCallerMock->CallConstMemberFunctionMock.CalledWith(&_sevenZipSubProgram, &SevenZipSubProgram::DeleteBackupStagingFolder, args)).Then(
+   METALMOCKTHEN(_voidOneArgMemberFunctionCallerMock->CallConstMemberFunctionMock.CalledWith(&_sevenZipSubProgram, &SevenZipSubProgram::CopyFileToFilesAndFoldersToBackupStagingFolder, args))).Then(
+   METALMOCKTHEN(_voidOneArgMemberFunctionCallerMock->CallConstMemberFunctionMock.CalledWith(&_sevenZipSubProgram, &SevenZipSubProgram::SevenZipBackupStagingFolder, args))).Then(
+   METALMOCKTHEN(_voidOneArgMemberFunctionCallerMock->CallConstMemberFunctionMock.CalledWith(&_sevenZipSubProgram, &SevenZipSubProgram::Copy7ZipFileToDestinationFolders, args)));
    IS_ZERO(exitCode);
 }
 
