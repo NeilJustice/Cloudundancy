@@ -35,7 +35,7 @@ endmacro()
 
 macro(IfMSVCAddRunTestsPostBuildStep)
    if(MSVC)
-      add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND $(TargetPath) --random --always-exit-0)
+      add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND if not defined JENKINS_HOME $(TargetPath) --random --always-exit-0)
    endif()
 endmacro()
 
