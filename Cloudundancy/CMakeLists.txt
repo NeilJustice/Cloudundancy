@@ -11,6 +11,7 @@ if(UNIX)
 endif()
 
 target_link_libraries(Cloudundancy libCloudundancy)
+set_property(TARGET Cloudundancy PROPERTY CXX_STANDARD 20)
 if(UNIX)
    target_link_libraries(Cloudundancy stdc++fs)
 endif()
