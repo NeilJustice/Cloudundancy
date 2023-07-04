@@ -3,7 +3,7 @@ include(${CMAKE_SOURCE_DIR}/CMakeMacros.cmake)
 
 include_directories(${CMAKE_SOURCE_DIR})
 if(UNIX)
-   include_directories(${CMAKE_CURRENT_SOURCE_DIR}) # Includes directory libCloudundancy so that pch.h can be found
+   include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 endif()
 
 folder_source_group(Components)
@@ -48,6 +48,9 @@ if(UNIX)
 elseif(MSVC)
    set_target_properties(libCloudundancy PROPERTIES DEBUG_OUTPUT_NAME "libCloudundancyDebug")
    set_target_properties(libCloudundancy PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "libCloudundancyRelWithDebInfo")
+
+   replace(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/Ob1" "/Ob2")
+   append(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/Oi /Ot /GS- /arch:AVX2 /fp:fast")
 endif()
 
 IfMSVCEnablePrecompiledHeaders()

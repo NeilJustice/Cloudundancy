@@ -37,7 +37,7 @@ if(UNIX)
    endif()
 elseif(MSVC)
    set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-   set(CMAKE_CXX_FLAGS "/std:c++latest /EHsc /Wall /WX /permissive- /sdl /MP")
+   set(CMAKE_CXX_FLAGS "/std:c++20 /EHsc /Wall /WX /permissive- /sdl /MP")
    replace(CMAKE_EXE_LINKER_FLAGS_DEBUG "/debug" "/DEBUG:FASTLINK")
    replace(CMAKE_EXE_LINKER_FLAGS_RELEASE "/INCREMENTAL:NO" "/INCREMENTAL")
    if(FastWindowsDebugBuildMode)
@@ -55,7 +55,7 @@ add_subdirectory(Cloudundancy)
 add_subdirectory(libCloudundancy)
 add_subdirectory(libCloudundancyTests)
 
-set(CMAKE_CONFIGURATION_TYPES "Debug;Release;RelWithDebInfo")
+set(CMAKE_CONFIGURATION_TYPES "Debug;RelWithDebInfo")
 
 if(UNIX)
    include(ProcessorCount)
@@ -64,4 +64,3 @@ if(UNIX)
       find -name "*.cpp" -not -path "*/CMakeFiles/*" -print0 | xargs -0 -n 1 -P ${NumberOfCores} -t clang-tidy -p ${CMAKE_BUILD_TYPE}
       WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} VERBATIM USES_TERMINAL)
 endif()
-

@@ -4,6 +4,6 @@ python.exe -u CloudundancyDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
    --cmake-generator="Visual Studio 17 2022" `
    --cmake-build-type=Release `
    --tests-project-name=libCloudundancyTests `
-   --cmake-definitions="-DFastWindowsReleaseBuildMode=ON" `
+   --cmake-definitions="" `
    --no-install
 exit $LastExitCode

@@ -3,7 +3,7 @@ include(${CMAKE_SOURCE_DIR}/CMakeMacros.cmake)
 
 include_directories(${CMAKE_SOURCE_DIR})
 if(UNIX)
-   include_directories(${CMAKE_CURRENT_SOURCE_DIR}) # Includes directory libCloudundancyTests so that pch.h can be found
+   include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 endif()
 include_directories(${ZenUnitAndMetalMockIncludeDirectory})
 
@@ -81,6 +81,12 @@ set_property(TARGET libCloudundancyTests PROPERTY CXX_STANDARD 20)
 target_link_libraries(libCloudundancyTests libCloudundancy)
 if(UNIX AND NOT APPLE)
    target_link_libraries(libCloudundancyTests stdc++fs)
+endif()
+if(MSVC)
+   replace(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/O2" "/Od")
+   replace(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/Ob2" "/Ob0")
+   replace(CMAKE_EXE_LINKER_FLAGS_DEBUG "/debug" "/DEBUG:FASTLINK")
+   replace(CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO "/debug" "")
 endif()
 
 IfMSVCEnablePrecompiledHeaders()
