@@ -2,7 +2,7 @@
 #include "libCloudundancy/UtilityComponents/FileSystem/RecursiveDirectoryIterator.h"
 
 TESTS(RecursiveDirectoryIteratorTests)
-AFACT(DefaultConstructor_SetsFilesystemRemoveFunctionPointer_NewsTwoArgStaticFunctionTransformer)
+AFACT(DefaultConstructor_SetsFilesystemRemoveFunctionPointer)
 EVIDENCE
 
 Utils::RecursiveDirectoryIterator _recursiveDirectoryIterator;
@@ -18,14 +18,13 @@ public:
    }
 } _recursiveDirectoryIteratorSelfMocked;
 
-TEST(DefaultConstructor_SetsFilesystemRemoveFunctionPointer_NewsTwoArgStaticFunctionTransformer)
+TEST(DefaultConstructor_SetsFilesystemRemoveFunctionPointer)
 {
    Utils::RecursiveDirectoryIterator recursiveDirectoryIterator;
 #ifdef _WIN32
    using FilesystemRemoveOverloadFunctionType = bool(*)(const fs::path&);
    STD_FUNCTION_TARGETS_OVERLOAD(FilesystemRemoveOverloadFunctionType, fs::remove, recursiveDirectoryIterator._call_fs_remove);
 #endif
-   DELETE_TO_ASSERT_NEWED(recursiveDirectoryIterator._oneExtraArgTransformer);
 }
 
 RUN_TESTS(RecursiveDirectoryIteratorTests)

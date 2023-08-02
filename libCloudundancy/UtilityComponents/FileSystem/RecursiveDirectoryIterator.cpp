@@ -6,8 +6,6 @@ namespace Utils
    RecursiveDirectoryIterator::RecursiveDirectoryIterator() noexcept
       // Function Pointers
       : _call_fs_remove(static_cast<FilesystemRemoveOverloadFunctionType>(fs::remove))
-      // Function Callers
-      , _oneExtraArgTransformer(make_unique<TwoArgStaticFunctionTransformerType>())
    {
    }
 

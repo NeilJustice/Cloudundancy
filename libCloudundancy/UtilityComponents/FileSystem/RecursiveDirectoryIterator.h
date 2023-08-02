@@ -1,13 +1,4 @@
 #pragma once
-namespace Utils
-{
-   template<
-      typename TransformedContainerType,
-      typename SourceContainerType,
-      typename TransformFunctionType,
-      typename ExtraArgType>
-   class TwoArgStaticFunctionTransformer;
-}
 class RecursiveDirectoryIteratorTests;
 class RecursiveDirectoryIteratorIntegrationTests;
 
@@ -21,13 +12,6 @@ namespace Utils
       // Function Pointers
       using FilesystemRemoveOverloadFunctionType = bool(*)(const fs::path&);
       function<bool(const fs::path&)> _call_fs_remove;
-      // Function Callers
-      using TwoArgStaticFunctionTransformerType = TwoArgStaticFunctionTransformer<
-         vector<AbsoluteFilePathToRelativeDestinationFolderPath>,
-         vector<CloudundancyIniCopyInstruction>,
-         AbsoluteFilePathToRelativeDestinationFolderPath(*)(size_t, const CloudundancyIniCopyInstruction&, const vector<string>&),
-         const vector<string>&>;
-      unique_ptr<const TwoArgStaticFunctionTransformerType> _oneExtraArgTransformer;
 
       // Mutable Fields
       fs::recursive_directory_iterator _recursiveDirectoryIterator;

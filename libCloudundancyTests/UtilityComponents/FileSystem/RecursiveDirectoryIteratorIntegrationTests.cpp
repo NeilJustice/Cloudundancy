@@ -1,9 +1,8 @@
 #include "pch.h"
 #include "libCloudundancy/UtilityComponents/FileSystem/RecursiveDirectoryIterator.h"
-#include "libCloudundancyTests/UtilityComponents/Iteration/Transform/MetalMock/TwoArgStaticFunctionTransformerMock.h"
 
 TESTS(RecursiveDirectoryIteratorIntegrationTests)
-AFACT(DefaultConstructor_NewsTwoArgStaticFunctionTransformer_SetsFieldsToDefaultValues)
+AFACT(DefaultConstructor_SetsFieldsToDefaultValues)
 AFACT(IntegrationTest_RecursiveDirectoryIterator_EmptyFilePathIgnoreSubstrings_ReturnsAllFilePathsInAndBelowFolderPath)
 AFACT(IntegrationTest_RecursiveDirectoryIterator_NonEmptyFilePathIgnoreSubstrings_ReturnsAllNonIgnoredFilePathsInAndBelowFolderPath)
 EVIDENCE
@@ -46,11 +45,9 @@ CLEANUP
    _fileSystem.DeleteFolder(_rootFolderPath);
 }
 
-TEST(DefaultConstructor_NewsTwoArgStaticFunctionTransformer_SetsFieldsToDefaultValues)
+TEST(DefaultConstructor_SetsFieldsToDefaultValues)
 {
    Utils::RecursiveDirectoryIterator recursiveDirectoryIterator;
-   DELETE_TO_ASSERT_NEWED(recursiveDirectoryIterator._oneExtraArgTransformer);
-
    IS_DEFAULT_VALUE(recursiveDirectoryIterator._recursiveDirectoryIterator);
    ARE_EQUAL(vector<string>(), recursiveDirectoryIterator._fileSubpathsToIgnore);
 }
