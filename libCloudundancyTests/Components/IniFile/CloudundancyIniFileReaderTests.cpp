@@ -14,8 +14,8 @@ EVIDENCE
 CloudundancyIniFileReader _cloudundancyIniFile;
 
 // Function Callers
-using NonVoidOneArgMemberFunctionCallerMockMockType = Utils::NonVoidOneArgMemberFunctionCallerMock<CloudundancyIniCopyInstruction, CloudundancyIniFileReader, const FilePathLineNumberLineText&>;
-NonVoidOneArgMemberFunctionCallerMockMockType* _callerMock_ParseFileCopyInstructionLine = nullptr;
+using NonVoidOneArgMemberFunctionCallerMockType = Utils::NonVoidOneArgMemberFunctionCallerMock<CloudundancyIniCopyInstruction, CloudundancyIniFileReader, const FilePathLineNumberLineText&>;
+NonVoidOneArgMemberFunctionCallerMockType* _callerMock_ParseFileCopyInstructionLine = nullptr;
 
 using VoidOneArgMemberFunctionCallerMockType = Utils::VoidOneArgMemberFunctionCallerMock<CloudundancyIniFileReader, const CloudundancyIniCopyInstruction&>;
 VoidOneArgMemberFunctionCallerMockType* _callerMock_ThrowIfSourceFileOrFolderDoesNotExist = nullptr;
@@ -27,7 +27,7 @@ Utils::FileSystemMock* _fileSystemMock = nullptr;
 STARTUP
 {
    // Function Callers
-   _cloudundancyIniFile._caller_ParseFileCopyInstructionLine.reset(_callerMock_ParseFileCopyInstructionLine = new NonVoidOneArgMemberFunctionCallerMockMockType);
+   _cloudundancyIniFile._caller_ParseFileCopyInstructionLine.reset(_callerMock_ParseFileCopyInstructionLine = new NonVoidOneArgMemberFunctionCallerMockType);
    _cloudundancyIniFile._caller_ThrowIfSourceFileOrFolderDoesNotExist.reset(_callerMock_ThrowIfSourceFileOrFolderDoesNotExist = new VoidOneArgMemberFunctionCallerMockType);
    // Constant Components
    _cloudundancyIniFile._cloudundancyIniValidator.reset(_cloudundancyIniValidatorMock = new CloudundancyIniValidatorMock);
