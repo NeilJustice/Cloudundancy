@@ -41,7 +41,6 @@ file(GLOB_RECURSE Sources *.h *.cpp *.ui)
 source_group("" FILES ${Sources})
 
 add_library(libCloudundancy ${Sources})
-set_property(TARGET libCloudundancy PROPERTY CXX_STANDARD 20)
 if(UNIX)
    set_target_properties(libCloudundancy PROPERTIES DEBUG_OUTPUT_NAME "CloudundancyDebug")
    set_target_properties(libCloudundancy PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "CloudundancyRelWithDebInfo")

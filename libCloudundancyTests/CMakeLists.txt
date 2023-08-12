@@ -76,7 +76,6 @@ file(GLOB_RECURSE Sources *.h *.cpp)
 source_group("" FILES ${Sources})
 
 add_executable(libCloudundancyTests ${Sources})
-set_property(TARGET libCloudundancyTests PROPERTY CXX_STANDARD 20)
 
 target_link_libraries(libCloudundancyTests libCloudundancy)
 if(UNIX AND NOT APPLE)
