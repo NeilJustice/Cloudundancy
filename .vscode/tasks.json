@@ -142,25 +142,6 @@
          ]
       },
       {
-         "type": "shell",
-         "label": "Check Syntax Of Active File",
-         "command": "/usr/bin/clang++",
-         "args": [
-            "-fsyntax-only",
-            "-std=c++1z",
-            "-I/code/Cloudundancy",
-            "-I/code/Cloudundancy/libCloudundancy",
-            "-I/code/Cloudundancy/libCloudundancyTests",
-            "${file}"
-         ],
-         "options": {
-            "cwd": "${workspaceFolder}"
-         },
-         "problemMatcher": [
-            "$gcc"
-         ]
-      },
-      {
          "label": "Run Python Current File",
          "type": "shell",
          "command": "PYTHONPATH=. python ${file}",
