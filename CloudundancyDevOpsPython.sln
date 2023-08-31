@@ -15,7 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ConfigurationFiles", "Confi
 		.pylintrc = .pylintrc
 		mypy.ini = mypy.ini
 		pytest.ini = pytest.ini
-		..\sonar-project.properties = ..\sonar-project.properties
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Linux", "Linux", "{AC3A658D-B158-4CEB-A7DB-4089B8C0ACF2}"
