@@ -3,7 +3,6 @@
 CMakeFiles/
 Debug/
 Release/
-ReleaseCI/
 *.cmake
 !CMakeMacros.cmake
 CMakeCache.txt
@@ -21,27 +20,27 @@ build.ninja
 x64/
 *.dat
 *.db
-*.opendb
-*.sln
-!CloudundancyDevOpsPython.sln
-*.suo
+*.exe
 *.filters
 *.i
+*.ilk
 *.ipch
 *.lib
-*.exe
 *.obj
-*.pdb
-*.user
-*.ilk
+*.opendb
 *.pch
-*.vcxproj
-*.tlog
+*.pdb
+*.sln
+*.suo
 *.tmp
+*.tlog
+*.user
 *.psess
+*.vcxproj
 *.vspx
 debug.log
 install_manifest.txt
+!CloudundancyDevOpsPython.sln
 
 # Python
 __pycache__/
