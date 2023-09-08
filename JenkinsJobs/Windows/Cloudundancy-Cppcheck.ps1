@@ -26,9 +26,10 @@ cppcheck.exe `
    -DMETALMOCK_NONVOID2_CONST `
    -DMETALMOCK_NONVOID2_FREE `
    -DMETALMOCK_NONVOID0 `
-   -I C:\include\ZenUnitAndMetalMock `
-   -I libCloudundancy `
    -I . `
+   -I C:\include\ZenUnitAndMetalMock `
+   -I "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um" `
+   -I libCloudundancy `
    -j $numberOfLogicalProcessorsDividedBy2 `
    --output-file=cppcheck_results.txt `
    --error-exitcode=1 `

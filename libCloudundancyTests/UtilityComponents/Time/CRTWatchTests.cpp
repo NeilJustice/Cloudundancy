@@ -117,7 +117,7 @@ struct _localtime64_sCallHistory
    }
 } _localtime64_sCallHistory;
 
-errno_t _localtime64_sCallInstead(tm* outTm, const time_t* timeT)
+errno_t _localtime64_sCallInstead(const tm* outTm, const time_t* timeT)
 {
    return _localtime64_sCallHistory.RecordCall(outTm, timeT);
 }

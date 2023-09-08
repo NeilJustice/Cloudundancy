@@ -4,6 +4,7 @@
 allocaCalled:*
 constVariable:libCloudundancy\StaticUtilities\StringUtil.h:14
 mismatchingContainerIterator:*
+missingIncludeSystem:*
 noExplicitConstructor:libCloudundancy/UtilityComponents/Docopt/docopt.h:56
 preprocessorErrorDirective:*
 syntaxError:*

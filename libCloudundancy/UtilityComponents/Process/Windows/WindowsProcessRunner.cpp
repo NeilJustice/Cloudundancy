@@ -36,12 +36,13 @@ namespace Utils
       constexpr size_t NullSize = 1;
       const size_t argumentsSize = arguments.empty() ? NullSize : SpaceSize + arguments.size() + NullSize;
       const size_t commandLineSize = processName.size() + argumentsSize;
-      const unique_ptr<CHAR[]> commandLineChars(new CHAR[commandLineSize]);
+      const unique_ptr<char[]> commandLineChars(new char[commandLineSize]);
       memcpy(commandLineChars.get(), processName.data(), processName.size());
       if (!arguments.empty())
       {
          commandLineChars[processName.size()] = ' ';
-         memcpy(commandLineChars.get() + processName.size() + SpaceSize, arguments.data(), arguments.size());
+         char* const argumentsPointer = reinterpret_cast<char*>(commandLineChars.get()) + processName.size() + SpaceSize;
+         memcpy(argumentsPointer, arguments.data(), arguments.size());
       }
       commandLineChars[commandLineSize - 1] = '\0';
       STARTUPINFOA startupInfo{};
@@ -118,7 +119,7 @@ namespace Utils
    string WindowsProcessRunner::ReadPipe(HANDLE pipeHandle)
    {
       DWORD numberOfCharsRead = 0;
-      CHAR standardOutputBuffer[4096]{};
+      char standardOutputBuffer[4096]{};
       const BOOL didReadStandardOutput = ReadFile(
          pipeHandle, standardOutputBuffer, sizeof(standardOutputBuffer), &numberOfCharsRead, nullptr);
       release_assert(didReadStandardOutput == TRUE);

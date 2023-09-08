@@ -19,6 +19,10 @@ TEST(tmEqualizer_ThrowsZenUnitAnomalyIfAnyFieldNotEqual)
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_wday, ZenUnit::RandomNon0<int>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_yday, ZenUnit::RandomNon0<int>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(tm, tm_isdst, ZenUnit::RandomNon0<int>());
+
+   tm expectedTm{};
+   tm actualTm{};
+   ZenUnit::Equalizer<tm>::AssertEqual(expectedTm, actualTm); // Function coverage for Cppcheck
 }
 
 TEST(TestableRandomtm_ReturnsTmWithAllRandomFields)
