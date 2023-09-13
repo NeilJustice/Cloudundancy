@@ -1,6 +1,6 @@
 <p align="center"> 
 <img src="Screenshots/CloudundancyLogo.png" width="64%"><br>
-<img src="https://img.shields.io/badge/c%2B%2B-20-blue.svg"/>
+<img src="https://img.shields.io/badge/c%2B%2B-23-blue.svg"/>
 <a href="https://github.com/NeilJustice/Cloudundancy/actions/workflows/build.yml"><img src="https://github.com/NeilJustice/Cloudundancy/actions/workflows/build.yml/badge.svg"></a>
 <a href="https://ci.appveyor.com/project/NeilJustice/Cloudundancy"><img src="https://ci.appveyor.com/api/projects/status/ygwr3rb9spwhy4u0?svg=true"></a>
 <a href="https://codecov.io/gh/NeilJustice/Cloudundancy"><img src="https://codecov.io/gh/NeilJustice/Cloudundancy/branch/master/graph/badge.svg?token=khcIKQTiuu"></a>
