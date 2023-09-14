@@ -27,7 +27,7 @@ jobs:
         run: sudo apt-get install lcov
         if: ${{ matrix.cxx == 'g++-11' && matrix.cmake_build_type == 'Release' }}
 
-      - uses: actions/setup-python@v1
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
