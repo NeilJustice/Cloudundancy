@@ -8,12 +8,12 @@ EVIDENCE
 
 Utils::CRTWatch _crtWatch;
 // Function Pointers
-METALMOCK_NONVOID0_STATIC(chrono::time_point<chrono::system_clock>, chrono::system_clock, now)
-METALMOCK_NONVOID1_STATIC(long long, chrono::system_clock, to_time_t, const chrono::system_clock::time_point&)
+METALMOCK_NONVOID0_STATIC_OR_FREE(chrono::time_point<chrono::system_clock>, _call_system_clock_now)
+METALMOCK_NONVOID1_STATIC_OR_FREE(long long, _call_to_time_t, const chrono::system_clock::time_point&)
 #if defined __linux__ || defined __APPLE__
-METALMOCK_NONVOID1_FREE(tm*, localtime, const time_t* const)
+METALMOCK_NONVOID1_STATIC_OR_FREE(tm*, localtime, const time_t* const)
 #elif _WIN32
-METALMOCK_NONVOID2_FREE(errno_t, _localtime64_s, tm*, const time_t*)
+METALMOCK_NONVOID2_STATIC_OR_FREE(errno_t, _localtime64_s, tm*, const time_t*)
 #endif
 // Constant Components
 Utils::AsserterMock* _asserterMock = nullptr;
@@ -21,8 +21,8 @@ Utils::AsserterMock* _asserterMock = nullptr;
 STARTUP
 {
    // Function Pointers
-   _crtWatch._call_system_clock_now = BIND_0ARG_METALMOCK_OBJECT(nowMock);
-   _crtWatch._call_to_time_t = BIND_1ARG_METALMOCK_OBJECT(to_time_tMock);
+   _crtWatch._call_system_clock_now = BIND_0ARG_METALMOCK_OBJECT(_call_system_clock_nowMock);
+   _crtWatch._call_to_time_t = BIND_1ARG_METALMOCK_OBJECT(_call_to_time_tMock);
 #if defined __linux__ || defined __APPLE__
    _crtWatch._call_localtime = BIND_1ARG_METALMOCK_OBJECT(localtimeMock);
 #elif _WIN32
@@ -125,9 +125,9 @@ errno_t _localtime64_sCallInstead(const tm* outTm, const time_t* timeT)
 TEST(TmNow_ReturnsTmNow)
 {
    const chrono::time_point<chrono::system_clock> nowTimePoint = chrono::system_clock::now();
-   nowMock.Return(nowTimePoint);
+   _call_system_clock_nowMock.Return(nowTimePoint);
 
-   const time_t nowAsTimeT = to_time_tMock.ReturnRandom();
+   const time_t nowAsTimeT = _call_to_time_tMock.ReturnRandom();
 
    _localtime64_sCallHistory.returnValue = ZenUnit::Random<errno_t>();
    _localtime64_sMock.CallInstead(std::bind(
@@ -137,8 +137,8 @@ TEST(TmNow_ReturnsTmNow)
    //
    const tm tmNow = _crtWatch.TmNow();
    //
-   METALMOCKTHEN(nowMock.CalledOnce()).Then(
-   METALMOCKTHEN(to_time_tMock.CalledOnceWith(nowTimePoint))).Then(
+   METALMOCKTHEN(_call_system_clock_nowMock.CalledOnce()).Then(
+   METALMOCKTHEN(_call_to_time_tMock.CalledOnceWith(nowTimePoint))).Then(
    METALMOCKTHEN(_asserterMock->ThrowIfIntsNotEqualMock.CalledOnceWith(
       0, _localtime64_sCallHistory.returnValue, "_localtime64_s(&nowAsTm, &nowAsTimeT) unexpectedly returned non-0")));
    _localtime64_sCallHistory.AssertCalledOnceWith(tm{}, nowAsTimeT);

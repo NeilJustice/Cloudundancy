@@ -61,22 +61,22 @@ EVIDENCE
 
 Utils::FileSystem _fileSystem;
 // C Function Pointers
-METALMOCK_NONVOID1_FREE(int, _call_fclose, FILE*)
-METALMOCK_NONVOID1_FREE(int, _call_fflush, FILE*)
-METALMOCK_NONVOID4_FREE(size_t, _call_fread, void*, size_t, size_t, FILE*)
-METALMOCK_NONVOID3_FREE(int, _call_fseek, FILE*, long, int)
-METALMOCK_NONVOID1_FREE(long, _call_ftell, FILE*)
+METALMOCK_NONVOID1_STATIC_OR_FREE(int, _call_fclose, FILE*)
+METALMOCK_NONVOID1_STATIC_OR_FREE(int, _call_fflush, FILE*)
+METALMOCK_NONVOID4_STATIC_OR_FREE(size_t, _call_fread, void*, size_t, size_t, FILE*)
+METALMOCK_NONVOID3_STATIC_OR_FREE(int, _call_fseek, FILE*, long, int)
+METALMOCK_NONVOID1_STATIC_OR_FREE(long, _call_ftell, FILE*)
 #if defined __linux__
-METALMOCK_NONVOID2_FREE(FILE*, _call_fopen, const char*, const char*)
+METALMOCK_NONVOID2_STATIC_OR_FREE(FILE*, _call_fopen, const char*, const char*)
 #elif defined _WIN32
-METALMOCK_NONVOID3_FREE(FILE*, _call_wfsopen, const wchar_t*, const wchar_t*, int)
+METALMOCK_NONVOID3_STATIC_OR_FREE(FILE*, _call_wfsopen, const wchar_t*, const wchar_t*, int)
 #endif
-METALMOCK_NONVOID4_FREE(size_t, _call_fwrite, const void*, size_t, size_t, FILE*)
+METALMOCK_NONVOID4_STATIC_OR_FREE(size_t, _call_fwrite, const void*, size_t, size_t, FILE*)
 // std::filesystem Function Pointers
-METALMOCK_NONVOID3_FREE(bool, _call_fs_copy_file, const fs::path&, const fs::path&, fs::copy_options)
-METALMOCK_NONVOID1_FREE(bool, _call_fs_create_directories, const fs::path&)
-METALMOCK_VOID1_FREE(_call_fs_current_path, const fs::path&)
-METALMOCK_NONVOID1_FREE(bool, _call_fs_exists, const fs::path&)
+METALMOCK_NONVOID3_STATIC_OR_FREE(bool, _call_fs_copy_file, const fs::path&, const fs::path&, fs::copy_options)
+METALMOCK_NONVOID1_STATIC_OR_FREE(bool, _call_fs_create_directories, const fs::path&)
+METALMOCK_VOID1_STATIC_OR_FREE(_call_fs_current_path, const fs::path&)
+METALMOCK_NONVOID1_STATIC_OR_FREE(bool, _call_fs_exists, const fs::path&)
 
 // Function Callers
 using _caller_CreateOrOpenFileFunctionMockType = Utils::NonVoidOneArgMemberFunctionCallerMock<shared_ptr<FILE>, Utils::FileSystem, const fs::path&>;

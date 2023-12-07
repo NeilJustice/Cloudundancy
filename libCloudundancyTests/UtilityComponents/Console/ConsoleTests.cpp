@@ -17,7 +17,7 @@ EVIDENCE
 
 Utils::Console _console;
 // Function Pointers
-METALMOCK_VOID1_FREE(_call_quick_exit, int)
+METALMOCK_VOID1_STATIC_OR_FREE(_call_quick_exit, int)
 // Mutable Components
 Utils::ConsoleColorerMock* _consoleColorerMock = nullptr;
 

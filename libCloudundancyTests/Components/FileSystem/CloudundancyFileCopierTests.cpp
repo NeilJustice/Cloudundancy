@@ -28,9 +28,9 @@ EVIDENCE
 CloudundancyFileCopier _cloudundancyFileCopier;
 
 // Function Pointers
-METALMOCK_VOID1_FREE(_call_quick_exit, int)
-METALMOCK_NONVOID3_FREE(string, _call_String_ReplaceFirst, const string&, const string&, const string&)
-METALMOCK_NONVOID1_FREE(string, _call_Type_GetExceptionClassNameAndMessage, const exception*)
+METALMOCK_VOID1_STATIC_OR_FREE(_call_quick_exit, int)
+METALMOCK_NONVOID3_STATIC_OR_FREE(string, _call_String_ReplaceFirst, const string&, const string&, const string&)
+METALMOCK_NONVOID1_STATIC_OR_FREE(string, _call_Type_GetExceptionClassNameAndMessage, const exception*)
 
 // Function Callers
 using _caller_CopyFileToFileFunctionsMockType = Utils::VoidTwoArgMemberFunctionCallerMock<

@@ -14,7 +14,7 @@ EVIDENCE
 
 Utils::FCloseDeleter _fcloseDeleter;
 // Function Pointers
-METALMOCK_NONVOID1_FREE(int, _call_fclose, FILE*)
+METALMOCK_NONVOID1_STATIC_OR_FREE(int, _call_fclose, FILE*)
 
 STARTUP
 {

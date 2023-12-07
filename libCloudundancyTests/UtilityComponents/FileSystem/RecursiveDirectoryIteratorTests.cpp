@@ -10,11 +10,11 @@ Utils::RecursiveDirectoryIterator _recursiveDirectoryIterator;
 class RecursiveDirectoryIteratorSelfMocked : public Metal::Mock<Utils::RecursiveDirectoryIterator>
 {
 public:
-   METALMOCK_NONVOID1_STATIC(bool, std::filesystem, remove, const fs::path&)
+   METALMOCK_NONVOID1_STATIC_OR_FREE(bool, _call_fs_remove, const fs::path&)
    METALMOCK_NONVOID0(fs::path, NextNonIgnoredFilePath)
    RecursiveDirectoryIteratorSelfMocked()
    {
-      _call_fs_remove = BIND_1ARG_METALMOCK_OBJECT(removeMock);
+      _call_fs_remove = BIND_1ARG_METALMOCK_OBJECT(_call_fs_removeMock);
    }
 } _recursiveDirectoryIteratorSelfMocked;
 

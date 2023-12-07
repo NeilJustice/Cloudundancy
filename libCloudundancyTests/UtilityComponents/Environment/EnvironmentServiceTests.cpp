@@ -19,10 +19,10 @@ public:
 
 Utils::EnvironmentService _environmentService;
 // Function Pointers
-METALMOCK_NONVOID0_FREE(fs::path, current_path)
-METALMOCK_NONVOID2_FREE(int, gethostname, char*, size_t)
-METALMOCK_NONVOID0_FREE(uid_t, geteuid)
-METALMOCK_NONVOID1_FREE(struct passwd*, getpwuid, uid_t)
+METALMOCK_NONVOID0_STATIC_OR_FREE(fs::path, current_path)
+METALMOCK_NONVOID2_STATIC_OR_FREE(int, gethostname, char*, size_t)
+METALMOCK_NONVOID0_STATIC_OR_FREE(uid_t, geteuid)
+METALMOCK_NONVOID1_STATIC_OR_FREE(struct passwd*, getpwuid, uid_t)
 // Constant Components
 Utils::AsserterMock* _asserterMock = nullptr;
 
@@ -129,9 +129,9 @@ public:
 
 Utils::EnvironmentService _environmentService;
 // Function Pointers
-METALMOCK_NONVOID0_FREE(fs::path, current_path)
-METALMOCK_NONVOID2_FREE(BOOL, GetComputerNameA, LPSTR, LPDWORD)
-METALMOCK_NONVOID2_FREE(BOOL, GetUserNameA, LPSTR, LPDWORD)
+METALMOCK_NONVOID0_STATIC_OR_FREE(fs::path, current_path)
+METALMOCK_NONVOID2_STATIC_OR_FREE(BOOL, GetComputerNameA, LPSTR, LPDWORD)
+METALMOCK_NONVOID2_STATIC_OR_FREE(BOOL, GetUserNameA, LPSTR, LPDWORD)
 // Constant Components
 Utils::AsserterMock* _asserterMock = nullptr;
 

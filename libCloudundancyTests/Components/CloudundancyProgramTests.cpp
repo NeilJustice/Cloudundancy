@@ -17,8 +17,8 @@ EVIDENCE
 
 CloudundancyProgram _cloudundancyProgram;
 // Function Callers
-METALMOCK_NONVOID1_FREE(string, _call_Type_GetExceptionClassNameAndMessage, const exception*)
-METALMOCK_NONVOID2_FREE(vector<string>, _call_Vector_ArgcArgvToStringVector, int, char**)
+METALMOCK_NONVOID1_STATIC_OR_FREE(string, _call_Type_GetExceptionClassNameAndMessage, const exception*)
+METALMOCK_NONVOID2_STATIC_OR_FREE(vector<string>, _call_Vector_ArgcArgvToStringVector, int, char**)
 // Function Callers
 Utils::TryCatchCallerMock<CloudundancyProgram, const vector<string>&>* _tryCatchCallerMock = nullptr;
 // Constant Components

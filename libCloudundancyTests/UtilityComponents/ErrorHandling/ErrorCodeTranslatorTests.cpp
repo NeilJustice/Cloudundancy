@@ -30,21 +30,21 @@ EVIDENCE
 Utils::ErrorCodeTranslator _errorCodeTranslator;
 
 #if defined __linux__ || defined __APPLE__
-METALMOCK_NONVOID3_FREE(char*, strerror_r, int, char*, size_t)
+METALMOCK_NONVOID3_FREE(char*, _call_strerror_r, int, char*, size_t)
 #elif _WIN32
-METALMOCK_NONVOID3_FREE(errno_t, strerror_s, char*, size_t, int)
-METALMOCK_NONVOID0_FREE(unsigned long, GetLastError)
+METALMOCK_NONVOID3_STATIC_OR_FREE(errno_t, _call_strerror_s, char*, size_t, int)
+METALMOCK_NONVOID0_STATIC_OR_FREE(unsigned long, _call_GetLastError)
 #endif
-METALMOCK_NONVOID0_FREE(int*, _call_errno)
+METALMOCK_NONVOID0_STATIC_OR_FREE(int*, _call_errno)
 
 STARTUP
 {
    _errorCodeTranslator._call_errno = BIND_0ARG_METALMOCK_OBJECT(_call_errnoMock);
 #if defined __linux__ || defined __APPLE__
-   _errorCodeTranslator._call_strerror_r = BIND_3ARG_METALMOCK_OBJECT(strerror_rMock);
+   _errorCodeTranslator._call_strerror_r = BIND_3ARG_METALMOCK_OBJECT(_call_strerror_rMock);
 #elif _WIN32
-   _errorCodeTranslator._call_strerror_s = BIND_3ARG_METALMOCK_OBJECT(strerror_sMock);
-   _errorCodeTranslator._call_GetLastError = BIND_0ARG_METALMOCK_OBJECT(GetLastErrorMock);
+   _errorCodeTranslator._call_strerror_s = BIND_3ARG_METALMOCK_OBJECT(_call_strerror_sMock);
+   _errorCodeTranslator._call_GetLastError = BIND_0ARG_METALMOCK_OBJECT(_call_GetLastErrorMock);
 #endif
 }
 
@@ -88,7 +88,7 @@ TEST(GetErrnoWithDescription_ReturnsErrnoValueWithDescription)
    class ErrorCodeTranslatorSelfMocked : public Metal::Mock<Utils::ErrorCodeTranslator>
    {
    public:
-      METALMOCK_NONVOID0_FREE(int*, _call_errno)
+      METALMOCK_NONVOID0_STATIC_OR_FREE(int*, _call_errno)
          ErrorCodeTranslatorSelfMocked()
       {
          _call_errno = BIND_0ARG_METALMOCK_OBJECT(_call_errnoMock);
@@ -113,7 +113,7 @@ TEST(GetErrnoWithDescription_ReturnsErrnoValueWithDescription)
 class ErrorCodeTranslatorSelfMocked : public Metal::Mock<Utils::ErrorCodeTranslator>
 {
 public:
-   METALMOCK_NONVOID0_FREE(DWORD, _call_GetLastError)
+   METALMOCK_NONVOID0_STATIC_OR_FREE(DWORD, _call_GetLastError)
       ErrorCodeTranslatorSelfMocked()
    {
       _call_GetLastError = BIND_0ARG_METALMOCK_OBJECT(_call_GetLastErrorMock);
@@ -200,7 +200,7 @@ TEST(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
    const string errnoDescriptionChars = ZenUnit::Random<string>();
    _strerror_r_CallHistory.returnValue = const_cast<char*>(errnoDescriptionChars.c_str());
    _strerror_r_CallHistory.outErrnoDescriptionCharsReturnValue = ZenUnit::Random<string>();
-   strerror_rMock.CallInstead(std::bind(&ErrorCodeTranslatorTests::strerror_r_CallInstead,
+   _call_strerror_rMock.CallInstead(std::bind(&ErrorCodeTranslatorTests::strerror_r_CallInstead,
       this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
    const int errnoValue = ZenUnit::Random<int>();
    //
@@ -255,7 +255,7 @@ errno_t _strerror_s_CallInstead(char* outErrnoDescriptionChars, size_t outErrnoD
 TEST(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
 {
    _strerror_s_CallHistory.outErrnoDescriptionCharsReturnValue = ZenUnit::Random<string>();
-   strerror_sMock.CallInstead(std::bind(&ErrorCodeTranslatorTests::_strerror_s_CallInstead,
+   _call_strerror_sMock.CallInstead(std::bind(&ErrorCodeTranslatorTests::_strerror_s_CallInstead,
       this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
    const int errnoValue = ZenUnit::Random<int>();
    //

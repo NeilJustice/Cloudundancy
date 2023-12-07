@@ -13,7 +13,7 @@ EVIDENCE
 
 CloudundancyFileSystem _cloudundancyFileSystem;
 // Function Pointers
-METALMOCK_NONVOID1_FREE(bool, _call_fs_exists, const fs::path&)
+METALMOCK_NONVOID1_STATIC_OR_FREE(bool, _call_fs_exists, const fs::path&)
 // Function Callers
 using _forEacher_DeleteContentsOfFolderExceptForFileNameMockType = Utils::TwoArgMemberFunctionForEacherMock<CloudundancyFileSystem, fs::path, string_view>;
 _forEacher_DeleteContentsOfFolderExceptForFileNameMockType* _forEacher_DeleteContentsOfFolderExceptForFileNameMock = nullptr;

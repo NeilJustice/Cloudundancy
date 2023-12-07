@@ -37,32 +37,32 @@ TEST(CallFunctionWithEachElement_OneElementCollection_CallsFunctionWithElement)
 {
    const CollectionType<T> collection = { 1 };
 
-   METALMOCK_VOID1_STATIC(ForEacherTests, Function, const T&);
-   FunctionMock.Expect();
-   function<void(const T&)>_call_Function = BIND_1ARG_METALMOCK_OBJECT(FunctionMock);
+   METALMOCK_VOID1_STATIC_OR_FREE(_call_Function, const T&);
+   _call_FunctionMock.Expect();
+   function<void(const T&)>_call_Function = BIND_1ARG_METALMOCK_OBJECT(_call_FunctionMock);
 
    Utils::ForEacher<CollectionType<T>, decltype(_call_Function)> forEacher{}; // LCOV_EXCL_LINE
    //
    forEacher.CallFunctionWithEachElement(collection,_call_Function);
    //
-   METALMOCK(FunctionMock.CalledOnceWith(1));
+   METALMOCK(_call_FunctionMock.CalledOnceWith(1));
 }
 
 TEST(CallFunctionWithEachElement_TwoElementCollection_CallsFunctionWithEachElement)
 {
    const CollectionType<T> collection = { 1, 2 };
 
-   METALMOCK_VOID1_STATIC(ForEacherTests, Function, const T&);
-   FunctionMock.Expect();
-   function<void(const T&)>_call_Function = BIND_1ARG_METALMOCK_OBJECT(FunctionMock);
+   METALMOCK_VOID1_STATIC_OR_FREE(_call_Function, const T&);
+   _call_FunctionMock.Expect();
+   function<void(const T&)>_call_Function = BIND_1ARG_METALMOCK_OBJECT(_call_FunctionMock);
 
    Utils::ForEacher<CollectionType<T>, decltype(_call_Function)> forEacher{}; // LCOV_EXCL_LINE
    //
    forEacher.CallFunctionWithEachElement(collection,_call_Function);
    //
-   METALMOCK(FunctionMock.CalledNTimes(2));
-   METALMOCKTHEN(FunctionMock.CalledWith(1)).Then(
-   METALMOCKTHEN(FunctionMock.CalledWith(2)));
+   METALMOCK(_call_FunctionMock.CalledNTimes(2));
+   METALMOCKTHEN(_call_FunctionMock.CalledWith(1)).Then(
+   METALMOCKTHEN(_call_FunctionMock.CalledWith(2)));
 }
 
 RUN_TEMPLATE_TESTS(ForEacherTests, vector, int)

@@ -20,7 +20,7 @@ EVIDENCE
 
 Utils::DocoptParser _docoptParser;
 // Function Pointers
-METALMOCK_NONVOID5_FREE(map<string COMMA docopt::Value>, docopt, const string&, const vector<string>&, bool, const string&, bool)
+METALMOCK_NONVOID5_STATIC_OR_FREE(map<string COMMA docopt::Value>, _call_docopt, const string&, const vector<string>&, bool, const string&, bool)
 
 map<string, docopt::Value> _docoptArgs;
 string _argName;
@@ -28,7 +28,7 @@ string _expectedOutOfRangeExceptionMessage;
 
 STARTUP
 {
-   _docoptParser._call_docopt_docopt = BIND_5ARG_METALMOCK_OBJECT(docoptMock);
+   _docoptParser._call_docopt_docopt = BIND_5ARG_METALMOCK_OBJECT(_call_docoptMock);
 
    _docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::Value>();
    _argName = ZenUnit::Random<string>() + "_argName";
@@ -54,7 +54,7 @@ TEST(ParseArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
 TEST(ParseArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
 {
    const map<string, docopt::Value> docoptReturnValue = ZenUnit::RandomOrderedMap<string, docopt::Value>();
-   docoptMock.Return(docoptReturnValue);
+   _call_docoptMock.Return(docoptReturnValue);
 
    const string usage = ZenUnit::Random<string>();
    const vector<string> nonEmptyArgv(ZenUnit::RandomBetween<size_t>(1, 2));
@@ -63,7 +63,7 @@ TEST(ParseArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
    //
    const vector<string> expectedNonEmptyArgvWithoutFirstArgument(
       nonEmptyArgv.data() + 1, nonEmptyArgv.data() + nonEmptyArgv.size());
-   METALMOCK(docoptMock.CalledOnceWith(usage, expectedNonEmptyArgvWithoutFirstArgument, true, "", false));
+   METALMOCK(_call_docoptMock.CalledOnceWith(usage, expectedNonEmptyArgvWithoutFirstArgument, true, "", false));
    ARE_EQUAL(docoptReturnValue, docoptValues);
 }
 
