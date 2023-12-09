@@ -30,7 +30,7 @@ EVIDENCE
 Utils::ErrorCodeTranslator _errorCodeTranslator;
 
 #if defined __linux__ || defined __APPLE__
-METALMOCK_NONVOID3_FREE(char*, _call_strerror_r, int, char*, size_t)
+METALMOCK_NONVOID3_STATIC_OR_FREE(char*, _call_strerror_r, int, char*, size_t)
 #elif _WIN32
 METALMOCK_NONVOID3_STATIC_OR_FREE(errno_t, _call_strerror_s, char*, size_t, int)
 METALMOCK_NONVOID0_STATIC_OR_FREE(unsigned long, _call_GetLastError)
