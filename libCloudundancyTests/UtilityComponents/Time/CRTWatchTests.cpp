@@ -80,14 +80,14 @@ TEST(TmNow_ReturnsTmNow)
    const chrono::time_point<chrono::system_clock> nowTimePoint = chrono::system_clock::now();
    _call_system_clock_nowMock.Return(nowTimePoint);
 
-   const time_t nowAsTimeT = to_time_tMock.ReturnRandom();
+   const time_t nowAsTimeT = _call_to_time_tMock.ReturnRandom();
 
    localtimeMock.CallInstead(std::bind(&CRTWatchTests::localtime_CallInstead, this, std::placeholders::_1));
    //
    const tm tmNow = _crtWatch.TmNow();
    //
    METALMOCK(_call_system_clock_nowMock.CalledOnce());
-   METALMOCK(to_time_tMock.CalledOnceWith(nowTimePoint));
+   METALMOCK(_call_to_time_tMock.CalledOnceWith(nowTimePoint));
    _localtimeCallHistory.AssertCalledOnceWith(nowAsTimeT);
    ARE_EQUAL(_localtimeCallHistory.returnValue, tmNow);
 }
