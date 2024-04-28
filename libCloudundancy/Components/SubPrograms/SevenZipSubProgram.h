@@ -20,7 +20,7 @@ private:
    unique_ptr<Utils::Stopwatch> _stopwatch;
 public:
    SevenZipSubProgram();
-   virtual ~SevenZipSubProgram();
+   ~SevenZipSubProgram() override;
    int Run(const CloudundancyArgs& args) override;
 private:
    void Copy7ZipFileToDestinationFolders(const CloudundancyArgs& args) const;

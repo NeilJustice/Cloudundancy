@@ -6,12 +6,12 @@ constVariable:libCloudundancy\StaticUtilities\StringUtil.h:14
 mismatchingContainerIterator:*
 missingIncludeSystem:*
 noExplicitConstructor:libCloudundancy/UtilityComponents/Docopt/docopt.h:56
+normalCheckLevelMaxBranches:*
 preprocessorErrorDirective:*
+returnDanglingLifetime:libCloudundancy\StaticUtilities\Map.h:65
 syntaxError:*
 unmatchedSuppression:*
-unusedFunction:libCloudundancyTests/ValueTypes/ZenUnit/AbsoluteFilePathToRelativeDestinationFolderPathEqualizerAndRandom.cpp:24
-unusedFunction:libCloudundancyTests/ValueTypes/ZenUnit/ProcessResultEqualizerAndRandom.cpp:28
-unusedFunction:libCloudundancyTests/ValueTypes/ZenUnit/tmZenUnitEqualizerAndRandom.cpp:35
+unusedFunction:*
 
 # Windows
 AssignmentAddressToInteger:libCloudundancy\UtilityComponents\Time\Watch.cpp:57

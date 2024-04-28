@@ -10,6 +10,6 @@ private:
    unique_ptr<const CloudundancyFileCopier> _cloudundancyFileCopier;
 public:
    CopyFileToFilesToMultipleFoldersSubProgram();
-   virtual ~CopyFileToFilesToMultipleFoldersSubProgram();
+   virtual ~CopyFileToFilesToMultipleFoldersSubProgram() override;
    int Run(const CloudundancyArgs& args) override;
 };

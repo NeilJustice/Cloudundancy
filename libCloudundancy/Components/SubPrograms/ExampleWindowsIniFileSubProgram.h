@@ -4,6 +4,6 @@
 class ExampleWindowsIniFileSubProgram : public CloudundancySubProgram
 {
 public:
+   ~ExampleWindowsIniFileSubProgram() override = default;
    int Run(const CloudundancyArgs& args) override;
-   ~ExampleWindowsIniFileSubProgram() = default;
 };
