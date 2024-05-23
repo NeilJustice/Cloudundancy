@@ -4,7 +4,6 @@
 <a href="https://github.com/NeilJustice/Cloudundancy/actions/workflows/build.yml"><img src="https://github.com/NeilJustice/Cloudundancy/actions/workflows/build.yml/badge.svg"></a>
 <a href="https://ci.appveyor.com/project/NeilJustice/Cloudundancy"><img src="https://ci.appveyor.com/api/projects/status/ygwr3rb9spwhy4u0?svg=true"></a>
 <a href="https://codecov.io/gh/NeilJustice/Cloudundancy"><img src="https://codecov.io/gh/NeilJustice/Cloudundancy/branch/master/graph/badge.svg?token=khcIKQTiuu"></a>
-<a href="https://sonarcloud.io/dashboard?id=NeilJustice_Cloudundancy"><img src="https://sonarcloud.io/api/project_badges/measure?project=NeilJustice_Cloudundancy&metric=alert_status"></a>
 <img src="Screenshots/Dependencies-0-brightgreen.svg" />
 </p>
 
@@ -22,8 +21,8 @@ On Linux, a Bash script can be written to run Google Drive command line `drive p
    * [7zip-files-then-copy-the-7zip-file-to-multiple-folders](#7zip-files-then-copy-the-7zip-file-to-multiple-folders)
 * [Cloudundancy code structure as it appears in Visual Studio Code on Linux](#cloudundancy-code-structure-as-it-appears-in-visual-studio-code-on-linux)
 * [Cloudundancy code structure as it appears in Visual Studio 2022 on Windows](#cloudundancy-code-structure-as-it-appears-in-visual-studio-2022-on-windows)
-* [Linux Jenkins jobs](#linux-jenkins-jobs)
-* [Windows Jenkins jobs](#windows-jenkins-jobs)
+* [Linux Jenkins jobs which build and statically analyze Cloudundancy](#linux-jenkins-jobs-which-build-and-statically-analyze-cloudundancy)
+* [Windows Jenkins jobs which build and statically analyze Cloudundancy](#windows-jenkins-jobs-which-build-and-statically-analyze-cloudundancy)
 * [4 steps to build binary cloudundancy on Linux with Clang](#4-steps-to-build-binary-cloudundancy-on-linux-with-clang)
 * [4 steps to build executable Cloudundancy.exe on Windows with Visual Studio 2022](#4-steps-to-build-executable-cloudundancyexe-on-windows-with-visual-studio-2022)
 * [Thanks to](#thanks-to)
@@ -196,11 +195,11 @@ GitHub repos successfully 7-Zipped and copied to a OneDrive folder:
 
 ![CloudundancyArgsParser.cpp](Screenshots/Windows/CloudundancyCodeInVisualStudio2022.png)
 
-## Linux Jenkins jobs
+## Linux Jenkins jobs which build and statically analyze Cloudundancy
 
 ![Linux Cloudundancy Jenkins jobs](Screenshots/Linux/LinuxCloudundancyJenkinsJobs.png)
 
-## Windows Jenkins jobs
+## Windows Jenkins jobs which build and statically analyze Cloudundancy
 
 ![Cloudundancy Windows Jenkins jobs](Screenshots/Windows/WindowsJenkinsJobs.png)
 
