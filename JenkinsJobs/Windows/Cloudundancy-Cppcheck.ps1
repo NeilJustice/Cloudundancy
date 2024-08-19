@@ -27,7 +27,7 @@ cppcheck.exe `
    -DMETALMOCK_NONVOID2_STATIC_OR_FREE `
    -DMETALMOCK_NONVOID0 `
    -I . `
-   -I C:\include\ZenUnitAndMetalMock `
+   -I X:\include\ZenUnitAndMetalMock `
    -I "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um" `
    -I libCloudundancy `
    -j $numberOfLogicalProcessors `

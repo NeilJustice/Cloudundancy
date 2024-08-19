@@ -91,7 +91,7 @@ TEST4X4(ReplaceFirst_ReturnsReplacedString,
    "a", "A", "", "a",
    "\r\n\r\n", "\r", "", "\n\r\n",
    "aa", "a", "b", "ba",
-   "C:\\Folder\\Subfolder\\File.ext", "C:\\Folder\\Subfolder\\", "", "File.ext",
+   "X:\\Folder\\Subfolder\\File.ext", "X:\\Folder\\Subfolder\\", "", "File.ext",
    " 1 2 3 3 ", " 3 ", " 4 ", " 1 2 4 3 ")
 {
    const string replacedString = Utils::String::ReplaceFirst(str, substring, replacement);
