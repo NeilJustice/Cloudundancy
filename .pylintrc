@@ -4,7 +4,7 @@ max-line-length=130
 max-args=7
 
 [MASTER]
-disable=missing-docstring,invalid-name,line-too-long,no-value-for-parameter,no-member,multiple-imports,missing-final-newline,expression-not-assigned,wrong-import-position,broad-except
+disable=missing-docstring,invalid-name,line-too-long,no-value-for-parameter,no-member,multiple-imports,missing-final-newline,expression-not-assigned,wrong-import-position,broad-except,too-many-positional-arguments
 
 [REPORTS]
 output-format=text
