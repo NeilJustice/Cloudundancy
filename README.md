@@ -4,7 +4,6 @@
 <a href="https://github.com/NeilJustice/Cloudundancy/actions/workflows/build.yml"><img src="https://github.com/NeilJustice/Cloudundancy/actions/workflows/build.yml/badge.svg"></a>
 <a href="https://ci.appveyor.com/project/NeilJustice/Cloudundancy"><img src="https://ci.appveyor.com/api/projects/status/ygwr3rb9spwhy4u0?svg=true"></a>
 <a href="https://codecov.io/gh/NeilJustice/Cloudundancy"><img src="https://codecov.io/gh/NeilJustice/Cloudundancy/branch/master/graph/badge.svg?token=khcIKQTiuu"></a>
-<img src="Screenshots/Dependencies-0-brightgreen.svg" />
 </p>
 
 Cloudundancy is a cross-platform C++ command line program for quickly copying a configurable list of files and folders to a configurable list of destination folders to achieve cloud-redundant and device-redundant backups of files.
