@@ -1,4 +1,5 @@
 import glob
+import multiprocessing
 import os
 import platform
 import sys
@@ -21,11 +22,14 @@ class PythonTests(unittest.TestCase):
 
    @staticmethod
    @patch('CloudundancyDevOpsPython.Process.fail_fast_run', spec_set=True)
-   def test_run_flake8_RunsFlake8WithFlake8Config(_1):
+   @patch('multiprocessing.cpu_count', spec_set=True)
+   def test_run_flake8_RunsFlake8WithFlake8Config(_1, _2):
+      cpuCount = Random.integer()
+      multiprocessing.cpu_count.return_value = cpuCount
       #
       Python.run_flake8()
       #
-      expectedFlake8Command = 'flake8 -j 61 --config=.flake8 --show-source --benchmark'
+      expectedFlake8Command = f'flake8 -j {cpuCount} --config=.flake8 --show-source --benchmark'
       Process.fail_fast_run.assert_called_once_with(expectedFlake8Command)
 
    @staticmethod

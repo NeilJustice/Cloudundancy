@@ -8,12 +8,12 @@
     </ProjectHome>
     <StartupFile>MypyFlake8PylintThenRunTestsWithCoverage.py</StartupFile>
     <SearchPath>..\</SearchPath>
-    <WorkingDirectory>C:\Code\Cloudundancy\CloudundancyDevOpsPython</WorkingDirectory>
+    <WorkingDirectory>C:\Code\Cloudundancy</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>DevOpsPython</Name>
     <RootNamespace>DevOpsPython</RootNamespace>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>--project=CloudundancyDevOpsPython --run-tests-with-coverage-python-file=CloudundancyDevOpsPythonTests/RunAllWithCoverage.py</CommandLineArguments>
+    <CommandLineArguments>--run-tests-with-coverage-python-file=CloudundancyDevOpsPythonTests/RunAllWithCoverage.py</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
     <IsWindowsApplication>False</IsWindowsApplication>
     <InterpreterArguments>
