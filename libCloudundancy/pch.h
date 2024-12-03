@@ -51,7 +51,7 @@ using namespace std;
 #include "libCloudundancy/StaticUtilities/StringUtil.h"
 #include "libCloudundancy/StaticUtilities/Type.h"
 #include "libCloudundancy/StaticUtilities/Vector.h"
-#include "libCloudundancy/UtilityComponents/Assertion/Asserter.h"
+#include "libCloudundancy/UtilityComponents/Asserters/Asserter.h"
 #include "libCloudundancy/UtilityComponents/Console/Console.h"
 #include "libCloudundancy/UtilityComponents/Console/ConsoleColorer.h"
 #include "libCloudundancy/UtilityComponents/Environment/EnvironmentService.h"
