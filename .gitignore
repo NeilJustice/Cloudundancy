@@ -10,6 +10,7 @@ libCloudundancyTests/IntegrationTest_RecursiveDirectoryIterator/
 
 # Linux
 covhtml/
+build_errors.txt
 build.ninja
 *.o
 *.profdata

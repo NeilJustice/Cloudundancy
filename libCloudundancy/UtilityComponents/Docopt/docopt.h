@@ -8,6 +8,7 @@
 #pragma warning(disable: 26812) // The enum type 'boost::detail::local_counted_base::count_type' is unscoped. Prefer 'enum class' over 'enum'
 #endif
 #include <functional>
+#include <iostream>
 #include <map>
 #include <regex>
 #include <unordered_set>
@@ -237,13 +238,13 @@ namespace docopt
    inline Value::Value(string v)
       : kind(Kind::String)
    {
-      new (&variant.strValue) string(move(v));
+      new (&variant.strValue) string(std::move(v));
    }
 
    inline Value::Value(vector<string> v)
       : kind(Kind::StringList)
    {
-      new (&variant.strList) vector<string>(move(v));
+      new (&variant.strList) vector<string>(std::move(v));
    }
 
    inline Value::Value(const Value& other)
@@ -278,10 +279,10 @@ namespace docopt
       switch (kind)
       {
       case Kind::String:
-         new (&variant.strValue) string(move(other.variant.strValue));
+         new (&variant.strValue) string(std::move(other.variant.strValue));
          break;
       case Kind::StringList:
-         new (&variant.strList) vector<string>(move(other.variant.strList));
+         new (&variant.strList) vector<string>(std::move(other.variant.strList));
          break;
       case Kind::Bool:
          variant.boolValue = other.variant.boolValue;
@@ -306,7 +307,7 @@ namespace docopt
    inline Value& Value::operator=(Value&& other) noexcept
    {
       this->~Value();
-      new (this) Value(move(other));
+      new (this) Value(std::move(other));
       return *this;
    }
 
@@ -423,7 +424,7 @@ namespace docopt
       str.erase(strEnd + 1);
       const size_t strBegin = str.find_first_not_of(whitespace);
       str.erase(0, strBegin);
-      return move(str);
+      return std::move(str);
    }
 
    inline vector<string> split(const string& str, size_t pos = 0)
@@ -459,7 +460,7 @@ namespace docopt
          get<1>(ret) = point;
          str.resize(i);
       }
-      get<0>(ret) = move(str);
+      get<0>(ret) = std::move(str);
       return ret;
    }
 
@@ -557,8 +558,8 @@ namespace docopt
       virtual pair<size_t, shared_ptr<LeafPattern>> SingleMatch(const vector<shared_ptr<Pattern>>&) const = 0;
    public:
       LeafPattern(string name, Value value = {})
-         : _name(move(name))
-         , _value(move(value))
+         : _name(std::move(name))
+         , _value(std::move(value))
       {
       }
 
@@ -590,7 +591,7 @@ namespace docopt
 
       void setValue(Value&& value)
       {
-         _value = move(value);
+         _value = std::move(value);
       }
 
       virtual const string& Name() const override
@@ -615,7 +616,7 @@ namespace docopt
       vector<shared_ptr<Pattern>> fChildren;
    public:
       BranchPattern(vector<shared_ptr<Pattern>> children = {})
-         : fChildren(move(children))
+         : fChildren(std::move(children))
       {
       }
 
@@ -662,7 +663,7 @@ namespace docopt
 
       void setChildren(vector<shared_ptr<Pattern>> children)
       {
-         fChildren = move(children);
+         fChildren = std::move(children);
       }
 
       const vector<shared_ptr<Pattern>>& children() const
@@ -714,7 +715,7 @@ namespace docopt
    {
    public:
       explicit CommandArgumentLeafPattern(string name, Value v = Value{ false })
-         : ArgumentLeafPattern(move(name), move(v))
+         : ArgumentLeafPattern(std::move(name), std::move(v))
       {
       }
    protected:
@@ -739,9 +740,9 @@ namespace docopt
          string longOption,
          int argcount = 0,
          Value v = Value{ false })
-         : LeafPattern(longOption.empty() ? shortOption : longOption, move(v))
-         , _shortOption(move(shortOption))
-         , _longOption(move(longOption))
+         : LeafPattern(longOption.empty() ? shortOption : longOption, std::move(v))
+         , _shortOption(std::move(shortOption))
+         , _longOption(std::move(longOption))
          , _argCount(argcount)
       {
          // From Python:
@@ -836,11 +837,11 @@ namespace docopt
    {
       vector<vector<shared_ptr<Pattern>>> result;
       vector<vector<shared_ptr<Pattern>>> groups;
-      groups.emplace_back(move(pattern));
+      groups.emplace_back(std::move(pattern));
       while (!groups.empty())
       {
          // pop off the first element
-         auto children = move(groups[0]);
+         auto children = std::move(groups[0]);
          groups.erase(groups.begin());
          // find the first branch node in the list
          auto child_iter = find_if(children.begin(), children.end(), [](const shared_ptr<Pattern>& p)
@@ -850,11 +851,11 @@ namespace docopt
          // no branch nodes left : expansion is complete for this grouping
          if (child_iter == children.end())
          {
-            result.emplace_back(move(children));
+            result.emplace_back(std::move(children));
             continue;
          }
          // pop the child from the list
-         auto child = move(*child_iter);
+         auto child = std::move(*child_iter);
          children.erase(child_iter);
          // expand the branch in the appropriate way
          if (EitherBranchPattern* either = dynamic_cast<EitherBranchPattern*>(child.get()))
@@ -864,7 +865,7 @@ namespace docopt
             {
                vector<shared_ptr<Pattern>> group = { eitherChild };
                group.insert(group.end(), children.begin(), children.end());
-               groups.emplace_back(move(group));
+               groups.emplace_back(std::move(group));
             }
          }
          else if (OneOrMoreBranchPattern* oneOrMore = dynamic_cast<OneOrMoreBranchPattern*>(child.get()))
@@ -874,7 +875,7 @@ namespace docopt
             vector<shared_ptr<Pattern>> group = subchildren;
             group.insert(group.end(), subchildren.begin(), subchildren.end());
             group.insert(group.end(), children.begin(), children.end());
-            groups.emplace_back(move(group));
+            groups.emplace_back(std::move(group));
          }
          else
          {
@@ -883,7 +884,7 @@ namespace docopt
             // child.children + children
             vector<shared_ptr<Pattern>> group = branch->children();
             group.insert(group.end(), children.begin(), children.end());
-            groups.emplace_back(move(group));
+            groups.emplace_back(std::move(group));
          }
       }
       return result;
@@ -1140,7 +1141,7 @@ namespace docopt
             val = Value{match[1].str()};
          }
       }
-      return { move(shortOption), move(longOption), argcount, move(val) };
+      return { std::move(shortOption), std::move(longOption), argcount, std::move(val) };
    }
 #ifdef _WIN32
 #pragma warning(pop)
@@ -1182,8 +1183,8 @@ namespace docopt
             return false;
          }
       }
-      left = move(l);
-      collected = move(c);
+      left = std::move(l);
+      collected = std::move(c);
       return true;
    }
 
@@ -1218,8 +1219,8 @@ namespace docopt
       {
          return false;
       }
-      left = move(l);
-      collected = move(c);
+      left = std::move(l);
+      collected = std::move(c);
       return true;
    }
 
@@ -1235,7 +1236,7 @@ namespace docopt
          bool matched = pattern->Match(l, c);
          if (matched)
          {
-            outcomes.emplace_back(move(l), move(c));
+            outcomes.emplace_back(std::move(l), std::move(c));
          }
       }
       auto min = min_element(outcomes.begin(), outcomes.end(), [](const Outcome& o1, const Outcome& o2)
@@ -1247,7 +1248,7 @@ namespace docopt
          // (left, collected) unchanged
          return false;
       }
-      tie(left, collected) = move(*min);
+      tie(left, collected) = std::move(*min);
       return true;
    }
 
@@ -1259,7 +1260,7 @@ namespace docopt
       bool fIsParsingArgv;
    public:
       explicit Tokens(vector<string> tokens, bool isParsingArgv = true)
-         : fTokens(move(tokens))
+         : fTokens(std::move(tokens))
          , fIsParsingArgv(isParsingArgv)
       {
       }
@@ -1339,7 +1340,7 @@ namespace docopt
 
       string pop()
       {
-         return move(fTokens.at(fIndex++));
+         return std::move(fTokens.at(fIndex++));
       }
 
       bool isParsingArgv() const
@@ -1467,7 +1468,7 @@ namespace docopt
          vector<string> prefixes = longOptions(similar.begin(), similar.end());
          string error = "'" + longOpt + "' is not a unique prefix: ";
          error.append(join(prefixes.begin(), prefixes.end(), ", "));
-         throw Tokens::OptionError(move(error));
+         throw Tokens::OptionError(std::move(error));
       }
       else if (similar.empty())
       {
@@ -1488,7 +1489,7 @@ namespace docopt
             if (val)
             {
                string error = o->longOption() + " must not have an argument";
-               throw Tokens::OptionError(move(error));
+               throw Tokens::OptionError(std::move(error));
             }
          }
          else
@@ -1499,14 +1500,14 @@ namespace docopt
                if (token.empty() || token == "--")
                {
                   string error = o->longOption() + " requires an argument";
-                  throw Tokens::OptionError(move(error));
+                  throw Tokens::OptionError(std::move(error));
                }
                val = Value{tokens.pop()};
             }
          }
          if (tokens.isParsingArgv())
          {
-            o->setValue(val ? move(val) : Value{ true });
+            o->setValue(val ? std::move(val) : Value{ true });
          }
          ret.push_back(o);
       }
@@ -1537,7 +1538,7 @@ namespace docopt
          if (similar.size() > 1)
          {
             string error = shortOpt + " is specified ambiguously " + to_string(similar.size()) + " times";
-            throw Tokens::OptionError(move(error));
+            throw Tokens::OptionError(std::move(error));
          }
          else if (similar.empty())
          {
@@ -1562,7 +1563,7 @@ namespace docopt
                   if (ttoken.empty() || ttoken == "--")
                   {
                      string error = shortOpt + " requires an argument";
-                     throw Tokens::OptionError(move(error));
+                     throw Tokens::OptionError(std::move(error));
                   }
                   val = Value{tokens.pop()};
                }
@@ -1575,7 +1576,7 @@ namespace docopt
             }
             if (tokens.isParsingArgv())
             {
-               o->setValue(val ? move(val) : Value{ true });
+               o->setValue(val ? std::move(val) : Value{ true });
             }
             ret.push_back(o);
          }
@@ -1600,7 +1601,7 @@ namespace docopt
          {
             throw DocoptLanguageError("Mismatched '['");
          }
-         ret.emplace_back(make_shared<OptionalBranchPattern>(move(expr)));
+         ret.emplace_back(make_shared<OptionalBranchPattern>(std::move(expr)));
       }
       else if (token == "(")
       {
@@ -1611,7 +1612,7 @@ namespace docopt
          {
             throw DocoptLanguageError("Mismatched '('");
          }
-         ret.emplace_back(make_shared<RequiredBranchPattern>(move(expr)));
+         ret.emplace_back(make_shared<RequiredBranchPattern>(std::move(expr)));
       }
       else if (token == "options")
       {
@@ -1651,12 +1652,12 @@ namespace docopt
          auto atom = parse_atom(tokens, outOptions);
          if (tokens.current() == "...")
          {
-            ret.emplace_back(make_shared<OneOrMoreBranchPattern>(move(atom)));
+            ret.emplace_back(make_shared<OneOrMoreBranchPattern>(std::move(atom)));
             tokens.pop();
          }
          else
          {
-            move(atom.begin(), atom.end(), back_inserter(ret));
+            std::move(atom.begin(), atom.end(), back_inserter(ret));
          }
       }
       return ret;
@@ -1666,18 +1667,18 @@ namespace docopt
    {
       if (seq.size() == 1)
       {
-         return move(seq[0]);
+         return std::move(seq[0]);
       }
-      return make_shared<RequiredBranchPattern>(move(seq));
+      return make_shared<RequiredBranchPattern>(std::move(seq));
    }
 
    static shared_ptr<Pattern> maybe_collapse_to_either(vector<shared_ptr<Pattern>>&& seq)
    {
       if (seq.size() == 1)
       {
-         return move(seq[0]);
+         return std::move(seq[0]);
       }
-      return make_shared<EitherBranchPattern>(move(seq));
+      return make_shared<EitherBranchPattern>(std::move(seq));
    }
 
    vector<shared_ptr<Pattern>> parse_expr(Tokens& tokens, vector<OptionLeafPattern>& outOptions)
@@ -1689,14 +1690,14 @@ namespace docopt
          return seq;
       }
       vector<shared_ptr<Pattern>> ret;
-      ret.emplace_back(maybe_collapse_to_required(move(seq)));
+      ret.emplace_back(maybe_collapse_to_required(std::move(seq)));
       while (tokens.current() == "|")
       {
          tokens.pop();
          seq = parse_seq(tokens, outOptions);
-         ret.emplace_back(maybe_collapse_to_required(move(seq)));
+         ret.emplace_back(maybe_collapse_to_required(std::move(seq)));
       }
-      return { maybe_collapse_to_either(move(ret)) };
+      return { maybe_collapse_to_either(std::move(ret)) };
    }
 
    static RequiredBranchPattern parse_pattern(const string& source, vector<OptionLeafPattern>& outOptions)
@@ -1708,7 +1709,7 @@ namespace docopt
          throw DocoptLanguageError("Unexpected ending: '" + tokens.the_rest() + "'");
       }
       release_assert(result.size() == 1 && "top level is always one big");
-      return RequiredBranchPattern{ move(result) };
+      return RequiredBranchPattern{ std::move(result) };
    }
 
    static string formal_usage(const string& section)
@@ -1755,12 +1756,12 @@ namespace docopt
          else if (starts_with(token, "--"))
          {
             auto&& parsed = parse_long(tokens, outOptions);
-            move(parsed.begin(), parsed.end(), back_inserter(ret));
+            std::move(parsed.begin(), parsed.end(), back_inserter(ret));
          }
          else if (token[0] == '-' && token != "-")
          {
             auto&& parsed = parse_short(tokens, outOptions);
-            move(parsed.begin(), parsed.end(), back_inserter(ret));
+            std::move(parsed.begin(), parsed.end(), back_inserter(ret));
          }
          else if (options_first)
          {
@@ -1870,9 +1871,9 @@ namespace docopt
          {
             return make_shared<OptionLeafPattern>(*opt);
          });
-         options_shortcut->setChildren(move(children));
+         options_shortcut->setChildren(std::move(children));
       }
-      return { move(pattern), move(options) };
+      return { std::move(pattern), std::move(options) };
    }
 #ifdef _WIN32
 #pragma warning(pop)
