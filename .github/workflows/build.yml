@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          
+
       - name: Download ZenUnit.h
         run: |
            curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/ZenUnit.h"
@@ -22,7 +22,7 @@ jobs:
 
       - name: Install lld and ninja-build
         run: sudo apt-get install lld ninja-build
-        
+
       - name: Install lcov Perl dependencies if g++-11 Release
         run: sudo apt-get install libcapture-tiny-perl libdatetime-perl
         if: ${{ matrix.cxx == 'g++-11' && matrix.cmake_build_type == 'Release' }}
@@ -80,18 +80,18 @@ jobs:
           CXX: "/usr/bin/${{ matrix.cxx }}"
           PYTHONPATH: "."
         if: ${{ matrix.cxx == 'g++-11' && matrix.cmake_build_type == 'Release' }}
-        
+
       - name: Print .comment section of binary cloudundancy to confirm linked with LLD
         run: readelf --string-dump .comment "${{matrix.cmake_build_type}}/Cloudundancy/cloudundancy"
 
-      - name: Install and run lcov 2.1 then upload to Codecov.io if g++-11 Release
+      - name: Install and run lcov 2.3-beta then upload to Codecov.io if g++-11 Release
         run: |
-          mkdir -p lcov_2_1
-          wget https://github.com/linux-test-project/lcov/releases/download/v2.1/lcov-2.1.tar.gz --output-document="lcov_2_1/lcov-2.1.tar.gz"
-          tar xf "lcov_2_1/lcov-2.1.tar.gz" --strip-components=1 --directory lcov_2_1
-          lcov_2_1/bin/lcov --version
-          lcov_2_1/bin/lcov --directory . --capture --output-file coverage.info
-          lcov_2_1/bin/lcov --list coverage.info
+          mkdir -p lcov_2_3
+          wget https://github.com/linux-test-project/lcov/releases/download/v2.3-beta/lcov-2.3.tar.gz --output-document="lcov_2_3/lcov-2.3.tar.gz"
+          tar xf "lcov_2_3/lcov-2.3.tar.gz" --strip-components=1 --directory lcov_2_3
+          lcov_2_3/bin/lcov --version
+          lcov_2_3/bin/lcov --directory . --capture --ignore-errors inconsistent --output-file coverage.info
+          lcov_2_3/bin/lcov --list coverage.info
           bash <(curl -s https://codecov.io/bash) -f coverage.info -t ${{ secrets.CODECOV_TOKEN }} || echo "Codecov did not collect coverage reports"
         if: ${{ matrix.cxx == 'g++-11' && matrix.cmake_build_type == 'Release' }}
 
@@ -104,3 +104,4 @@ jobs:
           name: cloudundancy
           path: Release/Cloudundancy/cloudundancy
         if: ${{ matrix.cxx == 'clang++' && matrix.cmake_build_type == 'Release' }}
+
