@@ -42,17 +42,16 @@ source_group("" FILES ${Sources})
 
 add_library(libCloudundancy ${Sources})
 if(UNIX)
+   target_precompile_headers(libCloudundancy PRIVATE pch.h)
    set_target_properties(libCloudundancy PROPERTIES DEBUG_OUTPUT_NAME "CloudundancyDebug")
    set_target_properties(libCloudundancy PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "CloudundancyRelWithDebInfo")
 elseif(MSVC)
-   set_target_properties(libCloudundancy PROPERTIES DEBUG_OUTPUT_NAME "libCloudundancyDebug")
-   set_target_properties(libCloudundancy PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "libCloudundancyRelWithDebInfo")
-
+   IfMSVCEnablePrecompiledHeaders()
    replace(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/Ob1" "/Ob2")
    append(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/Oi /Ot /GS- /arch:AVX2 /fp:fast")
+   set_target_properties(libCloudundancy PROPERTIES DEBUG_OUTPUT_NAME "libCloudundancyDebug")
+   set_target_properties(libCloudundancy PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "libCloudundancyRelWithDebInfo")
 endif()
-
-IfMSVCEnablePrecompiledHeaders()
 
 if(UNIX)
    if(LCovCodeCoverageMode)
