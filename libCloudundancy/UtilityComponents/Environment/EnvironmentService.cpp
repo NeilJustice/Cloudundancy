@@ -28,7 +28,7 @@ namespace Utils
    string EnvironmentService::UserName() const
    {
       const uid_t uidValue = _call_geteuid();
-      struct passwd* const passwdValue = _call_getpwuid(uidValue);
+      const struct passwd* const passwdValue = _call_getpwuid(uidValue);
       string username(passwdValue->pw_name);
       return username;
    }
