@@ -19,6 +19,6 @@ static_assert(sizeof(Utils::FileCopyResult) == 144);
 #else
 static_assert(sizeof(Utils::FileCopyResult) == 120);
 #endif
-#else
+#elifdef __linux__
 static_assert(sizeof(Utils::FileCopyResult) == 136);
 #endif

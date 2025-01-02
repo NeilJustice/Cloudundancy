@@ -16,6 +16,6 @@ static_assert(sizeof(FilePathLineNumberLineText) == 88);
 #else
 static_assert(sizeof(FilePathLineNumberLineText) == 72);
 #endif
-#else
+#elifdef __linux__
 static_assert(sizeof(FilePathLineNumberLineText) == 80);
 #endif

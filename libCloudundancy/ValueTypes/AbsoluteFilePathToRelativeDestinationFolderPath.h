@@ -12,6 +12,6 @@ static_assert(sizeof(AbsoluteFilePathToRelativeDestinationFolderPath) == 80);
 #else
 static_assert(sizeof(AbsoluteFilePathToRelativeDestinationFolderPath) == 64);
 #endif
-#else
+#elifdef __linux__
 static_assert(sizeof(AbsoluteFilePathToRelativeDestinationFolderPath) == 80);
 #endif

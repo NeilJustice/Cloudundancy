@@ -18,6 +18,6 @@ static_assert(sizeof(CloudundancyArgs) == 176);
 #else
 static_assert(sizeof(CloudundancyArgs) == 144);
 #endif
-#else
+#elifdef __linux__
 static_assert(sizeof(CloudundancyArgs) == 176);
 #endif

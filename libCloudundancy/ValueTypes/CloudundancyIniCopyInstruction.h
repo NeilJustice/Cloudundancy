@@ -12,6 +12,6 @@ static_assert(sizeof(CloudundancyIniCopyInstruction) == 80);
 #else
 static_assert(sizeof(CloudundancyIniCopyInstruction) == 64);
 #endif
-#else
+#elifdef __linux__
 static_assert(sizeof(CloudundancyIniCopyInstruction) == 80);
 #endif

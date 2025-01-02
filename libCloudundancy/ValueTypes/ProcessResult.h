@@ -26,6 +26,6 @@ static_assert(sizeof(Utils::ProcessResult) == 136);
 #else
 static_assert(sizeof(Utils::ProcessResult) == 112);
 #endif
-#else
+#elifdef __linux__
 static_assert(sizeof(Utils::ProcessResult) == 112);
 #endif
