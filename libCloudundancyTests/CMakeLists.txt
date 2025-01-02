@@ -1,6 +1,7 @@
 project(libCloudundancyTests)
 include(${CMAKE_SOURCE_DIR}/CMakeMacros.cmake)
 
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include_directories(${CMAKE_SOURCE_DIR})
 if(UNIX)
    include_directories(${CMAKE_CURRENT_SOURCE_DIR})
