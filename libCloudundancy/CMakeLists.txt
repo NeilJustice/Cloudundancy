@@ -54,9 +54,9 @@ elseif(MSVC)
    replace(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/Ob1" "/Ob2")
    append(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/Oi /Ot /GS- /arch:AVX2 /fp:fast")
 
-   set_target_properties(libCloudundancy PROPERTIES UNITY_BUILD ON)
-   set_target_properties(libCloudundancy PROPERTIES UNITY_BUILD_BATCH_SIZE 8)
-   append(CMAKE_CXX_FLAGS "/FIpch.h")
+   #set_target_properties(libCloudundancy PROPERTIES UNITY_BUILD ON)
+   #set_target_properties(libCloudundancy PROPERTIES UNITY_BUILD_BATCH_SIZE 8)
+   #append(CMAKE_CXX_FLAGS "/FIpch.h")
 
    set_target_properties(libCloudundancy PROPERTIES DEBUG_OUTPUT_NAME "libCloudundancyDebug")
    set_target_properties(libCloudundancy PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "libCloudundancyRelWithDebInfo")
