@@ -18,7 +18,6 @@ testNames = [
 class BuildAndInstallCPlusPlusProgramTests(unittest.TestCase):
    def setUp(self):
       self.solutionName = Random.string()
-      self.cmakeGenerator = Random.string()
       self.cmakeBuildType = Random.string()
       self.testsProjectName = Random.string()
       self.cmakeDefinitions = Random.string()
@@ -41,7 +40,6 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
             docopt.docopt.return_value =\
             {
                '--solution-name': self.solutionName,
-               '--cmake-generator': self.cmakeGenerator,
                '--cmake-build-type': self.cmakeBuildType,
                '--tests-project-name': self.testsProjectName,
                '--cmake-definitions': self.cmakeDefinitions,
@@ -57,10 +55,10 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
             platform.system.assert_called_once_with()
             if trueExpectLinuxFalseExpectWindows:
                BuildAndInstallCPlusPlusProgram.linux_cmake_build_test_install.assert_called_once_with(
-                  self.cmakeGenerator, self.cmakeBuildType, self.testsProjectName, self.cmakeDefinitions, self.doInstallProgram)
+                  self.cmakeBuildType, self.testsProjectName, self.cmakeDefinitions, self.doInstallProgram)
             else:
                BuildAndInstallCPlusPlusProgram.windows_cmake_build_test_install.assert_called_once_with(
-                  self.solutionName, self.cmakeGenerator, self.cmakeBuildType, self.testsProjectName, self.cmakeDefinitions, self.doInstallProgram)
+                  self.solutionName, self.cmakeBuildType, self.testsProjectName, self.cmakeDefinitions, self.doInstallProgram)
       testcase('Linux', True)
       testcase('linux', True)
       testcase('Windows', False)
@@ -74,9 +72,9 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
       doInstallProgram = Random.boolean()
       #
       BuildAndInstallCPlusPlusProgram.linux_cmake_build_test_install(
-         self.cmakeGenerator, self.cmakeBuildType, self.testsProjectName, self.cmakeDefinitions, doInstallProgram)
+         self.cmakeBuildType, self.testsProjectName, self.cmakeDefinitions, doInstallProgram)
       #
-      CMake.generate.assert_called_once_with(self.cmakeBuildType, self.cmakeGenerator, self.cmakeBuildType, self.cmakeDefinitions, '..')
+      CMake.generate.assert_called_once_with(self.cmakeBuildType, 'Ninja', self.cmakeBuildType, self.cmakeDefinitions, '..')
       expectedZenUnitTestsProgramCommand = f'{self.testsProjectName}/{self.testsProjectName} --test-runs=2 --random --max-test-milliseconds=1000 --exit-1-if-tests-skipped'
       self.assertEqual(2, len(Process.fail_fast_run.call_args_list))
       Process.fail_fast_run.assert_has_calls([
@@ -92,9 +90,9 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
       doInstallProgram = Random.boolean()
       #
       BuildAndInstallCPlusPlusProgram.windows_cmake_build_test_install(
-         self.solutionName, self.cmakeGenerator, self.cmakeBuildType, self.testsProjectName, self.cmakeDefinitions, doInstallProgram)
+         self.solutionName, self.cmakeBuildType, self.testsProjectName, self.cmakeDefinitions, doInstallProgram)
       #
-      CMake.generate.assert_called_once_with('.', self.cmakeGenerator, self.cmakeBuildType, self.cmakeDefinitions, '.')
+      CMake.generate.assert_called_once_with('.', 'Visual Studio 17 2022', self.cmakeBuildType, self.cmakeDefinitions, '.')
       expectedMSBuildCommand = f'MSBuild.exe {self.solutionName}.sln /p:Configuration={self.cmakeBuildType} /p:Platform=x64 /m'
       expectedZenUnitTestsProgramCommand = f'{self.testsProjectName}/{self.cmakeBuildType}/{self.testsProjectName}.exe --test-runs=2 --random --max-test-milliseconds=1000 --exit-1-if-tests-skipped'
       self.assertEqual(2, len(Process.fail_fast_run.call_args_list))
