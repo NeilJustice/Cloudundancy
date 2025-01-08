@@ -57,7 +57,6 @@ jobs:
         run: |
            python CloudundancyDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
               --solution-name=Cloudundancy \
-              --cmake-generator=Ninja \
               --cmake-build-type="${{matrix.cmake_build_type}}" \
               --cmake-definitions="-DFastLinuxDebugBuildMode=ON -DFastLinuxReleaseBuildMode=ON" \
               --tests-project-name=libCloudundancyTests \
@@ -71,7 +70,6 @@ jobs:
         run: |
            python CloudundancyDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
               --solution-name=Cloudundancy \
-              --cmake-generator=Ninja \
               --cmake-build-type="${{ matrix.cmake_build_type }}" \
               --cmake-definitions="-DLCovCodeCoverageMode=ON" \
               --tests-project-name=libCloudundancyTests \
