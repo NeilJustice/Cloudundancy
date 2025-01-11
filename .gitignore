@@ -2,7 +2,7 @@
 *.dir/
 CMakeFiles/
 Debug/
-Release/
+RelWithDebInfo/
 *.cmake
 !CMakeMacros.cmake
 CMakeCache.txt
