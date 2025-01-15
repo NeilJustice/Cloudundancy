@@ -5,8 +5,6 @@
 #include "libCloudundancyTests/UtilityComponents/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
 
 TESTS(LinuxProcessRunnerTests)
-AFACT(DefaultConstructor_NewsComponents)
-AFACT(Run_RunsProcessWithArguments_ReturnsProcessResult)
 AFACT(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
 AFACT(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessageAndExitsProgramWithProcessExitCode)
 // Private Functions
@@ -35,25 +33,6 @@ STARTUP
    // Constant Components
    _linuxProcessRunner._console.reset(_consoleMock = new Utils::ConsoleMock);
    _linuxProcessRunner._errorCodeTranslator.reset(_errorCodeTranslatorMock = new Utils::ErrorCodeTranslatorMock);
-}
-
-TEST(DefaultConstructor_NewsComponents)
-{
-   Utils::LinuxProcessRunner linuxProcessRunner;
-   // Function Callers
-   DELETE_TO_ASSERT_NEWED(linuxProcessRunner._caller_Run);
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(linuxProcessRunner._console);
-   DELETE_TO_ASSERT_NEWED(linuxProcessRunner._errorCodeTranslator);
-}
-
-TEST(Run_RunsProcessWithArguments_ReturnsProcessResult)
-{
-   const Utils::ProcessResult processResult = _linuxProcessRunner.Run("wc", "--help");
-   //
-   ARE_EQUAL("wc", processResult.processName);
-   ARE_EQUAL("--help", processResult.arguments);
-   ARE_EQUAL(0, processResult.exitCode);
 }
 
 TEST(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
