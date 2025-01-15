@@ -21,7 +21,8 @@ namespace Utils
    {
    }
 
-   ProcessResult LinuxProcessRunner::Run(string_view processName, string_view arguments) const // LCOV_EXCL_LINE
+   // LCOV_EXCL_START
+   ProcessResult LinuxProcessRunner::Run(string_view processName, string_view arguments) const
    {
       const unique_ptr<char*[]> argv = MakeArgv(processName, arguments);
       pid_t pid = 0;
@@ -38,6 +39,7 @@ namespace Utils
       processResult.exitCode = WEXITSTATUS(waitpidStatus);
       return processResult;
    }
+   // LCOV_EXCL_STOP
 
    ProcessResult LinuxProcessRunner::FailFastRun(string_view processName, string_view arguments, bool /*doPrintStandardOutput*/) const
    {
