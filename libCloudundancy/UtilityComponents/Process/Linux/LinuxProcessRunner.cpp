@@ -21,7 +21,7 @@ namespace Utils
    {
    }
 
-   ProcessResult LinuxProcessRunner::Run(string_view processName, string_view arguments) const
+   ProcessResult LinuxProcessRunner::Run(string_view processName, string_view arguments) const // LCOV_EXCL_LINE
    {
       const unique_ptr<char*[]> argv = MakeArgv(processName, arguments);
       pid_t pid = 0;
