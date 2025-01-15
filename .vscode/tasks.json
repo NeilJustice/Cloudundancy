@@ -6,7 +6,7 @@
          "label": "Build Debug",
          "command": "ninja",
          "args": [
-            ""
+            "-v"
          ],
          "options": {
             "cwd": "${workspaceRoot}/Debug"
@@ -25,35 +25,21 @@
       },
       {
          "type": "shell",
-         "label": "Build Release",
+         "label": "Build RelWithDebInfo",
          "command": "ninja",
          "args": [
-            ""
+            "-v"
          ],
          "options": {
-            "cwd": "${workspaceRoot}/Release"
+            "cwd": "${workspaceRoot}/RelWithDebInfo"
          },
          "problemMatcher": {
             "base" : "$gcc",
             "fileLocation": [
                "relative",
-               "/code/Cloudundancy/Release"
+               "/code/Cloudundancy/RelWithDebInfo"
             ]
          }
-      },
-      {
-         "type": "shell",
-         "label": "Run Debug Cloudundancy 7z",
-         "command": "${workspaceRoot}/Debug/Cloudundancy/Cloudundancy",
-         "args": [
-            "7zip-files-then-copy-the-7zip-file-to-multiple-folders",
-            "--ini-file-to-copy-files-to-7zip-staging-folder=/code/dotfiles/LinuxCloudundancy_CopyCodeFolderTo7ZipStagingFolder.ini",
-            "--7zip-staging-folde=/home/neil/code_7zip_staging",
-            "--ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=/code/dotfiles/LinuxCloudundancy_Copy7ZipFileFromStagingFolderToMultipleFolders.ini"
-         ],
-         "problemMatcher": [
-            "$gcc"
-         ]
       },
       {
          "type": "shell",
@@ -72,8 +58,8 @@
       },
       {
          "type": "shell",
-         "label": "Run Release Cloudundancy",
-         "command": "${workspaceRoot}/Release/Cloudundancy/Cloudundancy",
+         "label": "Run RelWithDebInfo Cloudundancy",
+         "command": "${workspaceRoot}/RelWithDebInfo/Cloudundancy/cloudundancy",
          "args": [
             ""
          ],
@@ -83,8 +69,8 @@
       },
       {
          "type": "shell",
-         "label": "Run Release libCloudundancyTests",
-         "command": "${workspaceRoot}/Release/libCloudundancyTests/libCloudundancyTests",
+         "label": "Run RelWithDebInfo libCloudundancyTests",
+         "command": "${workspaceRoot}/RelWithDebInfo/libCloudundancyTests/libCloudundancyTests",
          "args": [
             ""
          ],
@@ -108,92 +94,17 @@
       },
       {
          "type": "shell",
-         "label": "Clean Release",
+         "label": "Clean RelWithDebInfo",
          "command": "ninja",
          "args": [
             "clean"
          ],
          "options": {
-            "cwd": "${workspaceRoot}/Release"
+            "cwd": "${workspaceRoot}/RelWithDebInfo"
          },
          "problemMatcher": [
             "$gcc"
          ]
-      },
-      {
-         "type": "shell",
-         "label": "Compile Active File",
-         "command": "/usr/bin/clang++",
-         "args": [
-            "-c",
-            "-std=c++1z",
-            "-Wall",
-            "-Werror",
-            "-I/code/Cloudundancy",
-            "-I/code/Cloudundancy/libCloudundancy",
-            "-I/code/Cloudundancy/libCloudundancyTests",
-            "${file}"
-         ],
-         "options": {
-            "cwd": "${workspaceFolder}"
-         },
-         "problemMatcher": [
-            "$gcc"
-         ]
-      },
-      {
-         "label": "Run Python Current File",
-         "type": "shell",
-         "command": "PYTHONPATH=. python ${file}",
-         "options": {
-            "cwd": "${workspaceRoot}"
-         },
-         "presentation": {
-            "panel": "dedicated",
-            "showReuseMessage": false,
-            "clear": true
-         }
-      },
-      {
-         "label": "Run All Python Tests",
-         "type": "shell",
-         "command": "PYTHONPATH=CloudundancyDevOpsPython python CloudundancyDevOpsPythonTests/RunAll.py",
-         "options": {
-            "cwd": "${workspaceRoot}"
-         },
-         "presentation": {
-            "panel": "dedicated",
-            "showReuseMessage": false,
-            "clear": true
-         }
-      },
-      {
-         "label": "Pylint Current File",
-         "type": "shell",
-         "command": "pylint --rcfile=.pylintrc --score=n --init-hook=\"sys.path.append('.')\" ${file}",
-         "options": {
-            "cwd": "${workspaceRoot}"
-         },
-         "presentation": {
-            "panel": "dedicated",
-            "showReuseMessage": false,
-            "clear": true
-         },
-         "problemMatcher": []
-      },
-      {
-         "label": "Pylint All Python Files",
-         "type": "shell",
-         "command": "ag -g \"\\.py$\" -0 | xargs -0 pylint --rcfile=.pylintrc --score=n --init-hook=\"sys.path.append('.')\"",
-         "options": {
-            "cwd": "${workspaceRoot}"
-         },
-         "presentation": {
-            "panel": "dedicated",
-            "showReuseMessage": false,
-            "clear": true
-         },
-         "problemMatcher": []
       }
    ]
 }
