@@ -2,7 +2,6 @@
 class CloudundancyFileSystem;
 class CloudundancyIniFileReader;
 class CloudundancyLogFileWriter;
-class FileSystem;
 
 class CloudundancyFileCopier
 {

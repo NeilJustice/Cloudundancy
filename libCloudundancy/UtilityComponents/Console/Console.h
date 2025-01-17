@@ -1,10 +1,11 @@
 #pragma once
-#include "libCloudundancy/Enums/Color.h"
-#include "libCloudundancy/UtilityComponents/Console/ConsoleColorer.h"
 class ConsoleTests;
+enum class Color : unsigned char;
 
 namespace Utils
 {
+   class ConsoleColorer;
+
    class Console
    {
       friend class ::ConsoleTests;
@@ -12,7 +13,7 @@ namespace Utils
       // Function Pointers
       function<void(int)> _call_quick_exit;
       // Mutable Components
-      unique_ptr<Utils::ConsoleColorer> _consoleColorer;
+      unique_ptr<ConsoleColorer> _consoleColorer;
    public:
       Console();
       virtual ~Console();

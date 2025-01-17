@@ -1,10 +1,11 @@
 #pragma once
 #include "libCloudundancy/Enums/WindowsColor.h"
-#include "libCloudundancy/UtilityComponents/Asserters/Asserter.h"
 class ConsoleColorerTests;
 
 namespace Utils
 {
+   class Asserter;
+
    class ConsoleColorer
    {
       friend class ::ConsoleColorerTests;

@@ -7,6 +7,7 @@ class EnvironmentServiceTests;
 namespace Utils
 {
 #if defined __linux__ || defined __APPLE__
+   class Asserter;
 
    class EnvironmentService
    {

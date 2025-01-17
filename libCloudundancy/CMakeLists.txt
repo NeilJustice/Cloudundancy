@@ -43,11 +43,11 @@ source_group("" FILES ${Sources})
 
 add_library(libCloudundancy ${Sources})
 if(UNIX)
-   target_precompile_headers(libCloudundancy PRIVATE pch.h)
-
-   set_target_properties(libCloudundancy PROPERTIES UNITY_BUILD ON)
-   set_target_properties(libCloudundancy PROPERTIES UNITY_BUILD_BATCH_SIZE 8)
-
+   if(NOT IncludeWhatYouUseMode)
+      target_precompile_headers(libCloudundancy PRIVATE pch.h)
+      set_target_properties(libCloudundancy PROPERTIES UNITY_BUILD ON)
+      set_target_properties(libCloudundancy PROPERTIES UNITY_BUILD_BATCH_SIZE 8)
+   endif()
    set_target_properties(libCloudundancy PROPERTIES DEBUG_OUTPUT_NAME "CloudundancyDebug")
    set_target_properties(libCloudundancy PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "CloudundancyRelWithDebInfo")
 elseif(MSVC)
