@@ -48,7 +48,7 @@ namespace Utils
       _call_quick_exit(exitCode);
    }
 
-   void Console::WriteLineColor(string_view message, Color color) const
+   void Console::WriteLineColor(string_view message, Utils::Color color) const
    {
       const bool didSetTextColor = _consoleColorer->SetTextColor(color);
       cout << message << '\n';

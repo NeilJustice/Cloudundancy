@@ -41,7 +41,7 @@ TEST(Run_SetsArgs_CallsCopyFilteredFilesAndFoldersToDestinationFolders_Returns0)
       args.iniFilePath, args.deleteDestinationFoldersFirst)).Then(
    METALMOCKTHEN(p_consoleMock->WriteLineColorMock.CalledOnceWith(
       "\n[Cloudundancy] OverallBackupResult: Successfully copied all [SourceFilesAndFolders] to all [DestinationFolders]",
-      Color::Green)));
+      Utils::Color::Green)));
    IS_ZERO(exitCode);
 }
 

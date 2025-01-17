@@ -59,7 +59,7 @@ TEST(DefaultConstructor_SetsFunctionPointers_SetsBoolFieldsToFalse)
 
 TEST(SetTextColor_ColorIsWhite_ReturnsFalse)
 {
-   const Color color = Color::White;
+   const Utils::Color color = Utils::Color::White;
    //
    const bool didSetColor = _consoleColorer.SetTextColor(color);
    //
@@ -67,9 +67,9 @@ TEST(SetTextColor_ColorIsWhite_ReturnsFalse)
 }
 
 TEST1X1(SetTextColor_ColorIsNotWhite_CallsSetSupportsColorIfUnset_DoesNotSupportColor_ReturnsFalse,
-   Color nonWhiteColor,
-   Color::Green,
-   Color::Red)
+   Utils::Color nonWhiteColor,
+   Utils::Color::Green,
+   Utils::Color::Red)
 {
    class ConsoleColorerSelfMocked : public Metal::Mock<Utils::ConsoleColorer>
    {
@@ -86,15 +86,15 @@ TEST1X1(SetTextColor_ColorIsNotWhite_CallsSetSupportsColorIfUnset_DoesNotSupport
 }
 
 TEST1X1(SetTextColor_ColorIsNotWhite_ConsoleSupportsColorIsTrue_SetsTextColor_ReturnsTrue,
-   Color nonWhiteColor,
-   Color::Green,
-   Color::Red)
+   Utils::Color nonWhiteColor,
+   Utils::Color::Green,
+   Utils::Color::Red)
 {
    class ConsoleColorerSelfMocked : public Metal::Mock<Utils::ConsoleColorer>
    {
    public:
       METALMOCK_VOID0(SetSupportsColorIfUnset)
-      METALMOCK_VOID1_CONST(PlatformSpecificSetTextColor, Color)
+      METALMOCK_VOID1_CONST(PlatformSpecificSetTextColor, Utils::Color)
    } consoleColorerSelfMocked;
    consoleColorerSelfMocked.SetSupportsColorIfUnsetMock.Expect();
    consoleColorerSelfMocked.PlatformSpecificSetTextColorMock.Expect();
@@ -117,39 +117,39 @@ TEST(UnsetTextColor_DidPreviouslySetTextColorIsTrue_CallsSetTextColorWhite)
    class ConsoleColorerSelfMocked : public Metal::Mock<Utils::ConsoleColorer>
    {
    public:
-      METALMOCK_VOID1_CONST(PlatformSpecificSetTextColor, Color)
+      METALMOCK_VOID1_CONST(PlatformSpecificSetTextColor, Utils::Color)
    } consoleColorerSelfMocked;
    consoleColorerSelfMocked.PlatformSpecificSetTextColorMock.Expect();
    //
    consoleColorerSelfMocked.UnsetTextColor(true);
    //
-   METALMOCK(consoleColorerSelfMocked.PlatformSpecificSetTextColorMock.CalledOnceWith(Color::White));
+   METALMOCK(consoleColorerSelfMocked.PlatformSpecificSetTextColorMock.CalledOnceWith(Utils::Color::White));
 }
 
 // Private Functions
 
 TEST2X2(ColorToLinuxColor_ReturnsLinuxColorStringForColor,
-   Color color, const char* expectedReturnValue,
-   Color::Red, "\033[31m",
-   Color::White, "\033[0m",
-   Color::Teal, "\033[34m",
-   Color::Green, "\033[32m",
-   Color::Yellow, "\033[33m",
-   Color::Unset, "\033[0m")
+   Utils::Color color, const char* expectedReturnValue,
+   Utils::Color::Red, "\033[31m",
+   Utils::Color::White, "\033[0m",
+   Utils::Color::Teal, "\033[34m",
+   Utils::Color::Green, "\033[32m",
+   Utils::Color::Yellow, "\033[33m",
+   Utils::Color::Unset, "\033[0m")
 {
    const char* const linuxColor = _consoleColorer.ColorToLinuxColor(color);
    ARE_EQUAL(expectedReturnValue, linuxColor);
 }
 
 TEST2X2(ColorToWindowsColor_ReturnsWindowsColorForColor,
-   Color color, WindowsColor expectedReturnValue,
-   Color::Red, WindowsColor::Red,
-   Color::White, WindowsColor::White,
-   Color::Teal, WindowsColor::Teal,
-   Color::Green, WindowsColor::Green,
-   Color::Yellow, WindowsColor::Yellow,
-   Color::Unset, WindowsColor::White,
-   Color::MaxValue, WindowsColor::White)
+   Utils::Color color, WindowsColor expectedReturnValue,
+   Utils::Color::Red, WindowsColor::Red,
+   Utils::Color::White, WindowsColor::White,
+   Utils::Color::Teal, WindowsColor::Teal,
+   Utils::Color::Green, WindowsColor::Green,
+   Utils::Color::Yellow, WindowsColor::Yellow,
+   Utils::Color::Unset, WindowsColor::White,
+   Utils::Color::MaxValue, WindowsColor::White)
 {
    const WindowsColor windowsColor = _consoleColorer.ColorToWindowsColor(color);
    ARE_EQUAL(expectedReturnValue, windowsColor);
@@ -162,10 +162,10 @@ TEST(Linux__SetTextColor_CallsColorToLinuxColor_InsertionOperatorsLinuxColorToCo
    class ConsoleColorerSelfMocked : public Metal::Mock<Utils::ConsoleColorer>
    {
    public:
-      METALMOCK_NONVOID1_CONST(const char*, ColorToLinuxColor, Color)
+      METALMOCK_NONVOID1_CONST(const char*, ColorToLinuxColor, Utils::Color)
    } consoleColorerSelfMocked;
    consoleColorerSelfMocked.ColorToLinuxColorMock.ReturnRandom();
-   const Color color = ZenUnit::RandomEnum<Color>();
+   const Utils::Color color = ZenUnit::RandomEnum<Utils::Color>();
    //
    consoleColorerSelfMocked.PlatformSpecificSetTextColor(color);
    //
@@ -181,7 +181,7 @@ TEST(Windows__SetTextColor_CallsSetConsoleTextAttributeToWindowsColor)
    public:
       METALMOCK_NONVOID1_STATIC_OR_FREE(HANDLE, _call_GetStdHandle, DWORD)
       METALMOCK_NONVOID2_STATIC_OR_FREE(BOOL, _call_SetConsoleTextAttribute, HANDLE, WORD)
-      METALMOCK_NONVOID1_CONST(WindowsColor, ColorToWindowsColor, Color)
+      METALMOCK_NONVOID1_CONST(WindowsColor, ColorToWindowsColor, Utils::Color)
       Utils::AsserterMock* _asserterMock = nullptr;
       ConsoleColorerSelfMocked()
       {
@@ -201,7 +201,7 @@ TEST(Windows__SetTextColor_CallsSetConsoleTextAttributeToWindowsColor)
 
    consoleColorerSelfMocked._asserterMock->ThrowIfIntsNotEqualMock.Expect();
 
-   const Color textColor = ZenUnit::RandomEnum<Color>();
+   const Utils::Color textColor = ZenUnit::RandomEnum<Utils::Color>();
    //
    consoleColorerSelfMocked.PlatformSpecificSetTextColor(textColor);
    //

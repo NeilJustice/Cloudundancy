@@ -143,7 +143,7 @@ TEST(CopyFilteredFilesAndFoldersToDestinationFolders_DeleteDestinationFoldersFir
    METALMOCKTHEN(_cloudundancyIniFileReaderMock->ReadIniFileMock.CalledOnceWith(iniFilePath)).Then(
    METALMOCKTHEN(_consoleMock->WriteLineMock.CalledOnceWith("[Cloudundancy] Deleting [DestinationFolders] first because --delete-destination-folders-first is specified"))).Then(
    METALMOCKTHEN(_cloudundancyFileSystemMock->DeleteMultipleFolderContentsExceptForFileMock.CalledOnceWith(cloudundancyIni.destinationFolderPaths, "Cloudundancy.log"))).Then(
-   METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedCopyingMessage, Color::Teal))).Then(
+   METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedCopyingMessage, Utils::Color::Teal))).Then(
    METALMOCKTHEN(_consoleMock->WriteLinesMock.CalledOnceWith(cloudundancyIni.iniFileLines))).Then(
    METALMOCKTHEN(_recursiveDirectoryIteratorMock->SetFileSubpathsToIgnoreMock.CalledOnceWith(cloudundancyIni.fileSubpathsToIgnore))).Then(
    METALMOCKTHEN(_forEacher_CopyEachFileOrFolderToFolderMock->CallConstMemberFunctionWithEachElementMock.CalledOnceWith(
@@ -171,7 +171,7 @@ TEST(CopyFilteredFilesAndFoldersToDestinationFolders_DeleteDestinationFoldersFir
    const string expectedCopyingMessage = Utils::String::ConcatStrings(
       "[Cloudundancy] Copying [SourceFilesAndFolders] to [DestinationFolders] as listed in ", iniFilePath.string(), ":\n");
    METALMOCKTHEN(_cloudundancyIniFileReaderMock->ReadIniFileMock.CalledOnceWith(iniFilePath)).Then(
-   METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedCopyingMessage, Color::Teal))).Then(
+   METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedCopyingMessage, Utils::Color::Teal))).Then(
    METALMOCKTHEN(_consoleMock->WriteLinesMock.CalledOnceWith(cloudundancyIni.iniFileLines))).Then(
    METALMOCKTHEN(_recursiveDirectoryIteratorMock->SetFileSubpathsToIgnoreMock.CalledOnceWith(cloudundancyIni.fileSubpathsToIgnore))).Then(
    METALMOCKTHEN(_forEacher_CopyEachFileOrFolderToFolderMock->CallConstMemberFunctionWithEachElementMock.CalledOnceWith(
@@ -233,7 +233,7 @@ TEST(DoCopyFilteredFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFi
    const string expectedBackupSuccessfulLogFileMessage = Utils::String::ConcatStrings(
       "Cloudundancy backup successful in ", elapsedSeconds, " seconds");
 
-   METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledWith(expectedCopyingMessage, Color::Teal)).Then(
+   METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledWith(expectedCopyingMessage, Utils::Color::Teal)).Then(
    METALMOCKTHEN(_cloudundancyLogFileWriterMock->AppendTextToCloudundancyLogFileInFolderMock.CalledWith(destinationFolderPath, "Cloudundancy backup started"))).Then(
    METALMOCKTHEN(_stopwatchMock->StartMock.CalledOnce())).Then(
    METALMOCKTHEN(_forEacher_CopyFileOrFolderToFolderMock->CallConstMemberFunctionWithEachElementMock.CalledOnceWith(
@@ -242,7 +242,7 @@ TEST(DoCopyFilteredFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFi
       &CloudundancyFileCopier::CopyFileOrFolderToFolder,
       destinationFolderPath))).Then(
    METALMOCKTHEN(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce())).Then(
-   METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledWith(expectedFolderBackupResultSuccessMessage, Color::Green))).Then(
+   METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledWith(expectedFolderBackupResultSuccessMessage, Utils::Color::Green))).Then(
    METALMOCKTHEN(_consoleMock->WriteLineMock.CalledOnceWith(expectedFolderBackupDurationMessage))).Then(
    METALMOCKTHEN(_cloudundancyLogFileWriterMock->AppendTextToCloudundancyLogFileInFolderMock.CalledWith(destinationFolderPath, expectedBackupSuccessfulLogFileMessage)));
 }
@@ -482,7 +482,7 @@ TEST(WriteCopiedMessageOrExitWithCode1IfCopyFailed_CopySucceeded_WritesCopiedAnd
    _cloudundancyFileCopier.WriteCopiedMessageOrExitWithCode1IfCopyFailed(fileCopyResult, destinationFolderPath);
    //
    const string expectedCopiedMessage = Utils::String::ConcatValues("Copied [", fileCopyResult.durationInMilliseconds, "ms]\n");
-   METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedCopiedMessage, Color::Green));
+   METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedCopiedMessage, Utils::Color::Green));
 }
 
 TEST(WriteCopiedMessageOrExitWithCode1IfCopyFailed_CopyFailed_WritesCopyFailedAndDurationInMillisecondsAndCopyFailureReason_AppendsErrorToCloudundancyLog_ExitsProgramWithCode1)
@@ -502,7 +502,7 @@ TEST(WriteCopiedMessageOrExitWithCode1IfCopyFailed_CopyFailed_WritesCopyFailedAn
    const string expectedCopyFailedConsoleMessage = Utils::String::ConcatValues(
       "Copy failed [", fileCopyResult.durationInMilliseconds, "ms]: ", fileCopyResult.copyFailureReason, "\n\n[Cloudundancy] ExitCode: 1");
    METALMOCKTHEN(_cloudundancyLogFileWriterMock->AppendTextToCloudundancyLogFileInFolderMock.CalledOnceWith(destinationFolderPath, expectedCopyFailedLogFileMessage)).Then(
-   METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedCopyFailedConsoleMessage, Color::Red))).Then(
+   METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedCopyFailedConsoleMessage, Utils::Color::Red))).Then(
    METALMOCKTHEN(_call_quick_exitMock.CalledOnceWith(1)));
 }
 

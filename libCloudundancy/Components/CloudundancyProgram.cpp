@@ -71,7 +71,7 @@ int CloudundancyProgram::Run(const std::vector<std::string>& stringArgs)
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    _console->WriteLine("[Cloudundancy] Duration: "  + elapsedSeconds + " seconds");
    const string exitCodeLine = "[Cloudundancy] ExitCode: " + to_string(subProgramExitCode);
-   const Color color = subProgramExitCode == 0 ? Color::Green : Color::Red;
+   const Utils::Color color = subProgramExitCode == 0 ? Utils::Color::Green : Utils::Color::Red;
    _console->WriteLineColor(exitCodeLine, color);
    return subProgramExitCode;
 }
@@ -88,6 +88,6 @@ int CloudundancyProgram::ExceptionHandler(const exception& ex, const vector<stri
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    _console->WriteLine("[Cloudundancy]   EndTime: " + endTime);
    _console->WriteLine("[Cloudundancy]  Duration: " + elapsedSeconds + " seconds");
-   _console->WriteLineColor("[Cloudundancy]  ExitCode: 1", Color::Red);
+   _console->WriteLineColor("[Cloudundancy]  ExitCode: 1", Utils::Color::Red);
    return 1;
 }

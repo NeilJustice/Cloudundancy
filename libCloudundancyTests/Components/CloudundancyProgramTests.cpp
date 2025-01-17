@@ -99,10 +99,10 @@ TEST(Main_ArgcIs2OrGreater_CallsTryCatchCallRunWithStringArgs_ReturnsExitCodeFro
 }
 
 TEST2X2(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSubProgram_PrintsEndTimeAndElapsedTime_ExitsWithSubProgramExitCode_WritesExitCodeInGreenIf0OtherwiseRed,
-   int subProgramExitCode, Color expectedExitCodeLineColor,
-   0, Color::Green,
-   1, Color::Red,
-   2, Color::Red)
+   int subProgramExitCode, Utils::Color expectedExitCodeLineColor,
+   0, Utils::Color::Green,
+   1, Utils::Color::Red,
+   2, Utils::Color::Red)
 {
    _stopwatchMock->StartMock.Expect();
 
@@ -185,7 +185,7 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndMessage_Returns1)
    METALMOCKTHEN(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce())).Then(
    METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith("[Cloudundancy]   EndTime: " + endTime))).Then(
    METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith("[Cloudundancy]  Duration: " + elapsedSeconds + " seconds"))).Then(
-   METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith("[Cloudundancy]  ExitCode: 1", Color::Red)));
+   METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith("[Cloudundancy]  ExitCode: 1", Utils::Color::Red)));
    ARE_EQUAL(1, exitCode);
 }
 

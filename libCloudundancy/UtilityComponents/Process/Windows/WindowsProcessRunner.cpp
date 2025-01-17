@@ -103,7 +103,7 @@ namespace Utils
    ProcessResult WindowsProcessRunner::FailFastRun(string_view processName, string_view arguments, bool doPrintStandardOutput) const
    {
       const string runningMessage = Utils::String::ConcatStrings("[Cloudundancy] Running program: ", processName, " ", arguments);
-      _console->WriteLineColor(runningMessage, Color::Yellow);
+      _console->WriteLineColor(runningMessage, Utils::Color::Yellow);
       const ProcessResult processResult = _caller_Run->CallConstMemberFunction(
          this, &WindowsProcessRunner::Run, processName, arguments);
       _console->WriteLineIf(doPrintStandardOutput, processResult.standardOutputAndError);

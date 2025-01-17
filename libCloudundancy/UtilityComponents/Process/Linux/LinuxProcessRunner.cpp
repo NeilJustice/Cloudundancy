@@ -44,7 +44,7 @@ namespace Utils
    ProcessResult LinuxProcessRunner::FailFastRun(string_view processName, string_view arguments, bool /*doPrintStandardOutput*/) const
    {
       const string runningMessage = Utils::String::ConcatStrings("[Cloudundancy] Running program: ", processName, " ", arguments);
-      _console->WriteLineColor(runningMessage, Color::Yellow);
+      _console->WriteLineColor(runningMessage, Utils::Color::Yellow);
       ProcessResult processResult = _caller_Run->CallConstMemberFunction(this, &LinuxProcessRunner::Run, processName, arguments);
       if (processResult.exitCode != 0)
       {

@@ -1,12 +1,15 @@
 #pragma once
 
-enum class Color : unsigned char
+namespace Utils
 {
-   Unset,
-   Red,
-   White,
-   Teal,
-   Green,
-   Yellow,
-   MaxValue
-};
+   enum struct Color : unsigned char
+   {
+      Unset,
+      Red,
+      White,
+      Teal,
+      Green,
+      Yellow,
+      MaxValue
+   };
+}

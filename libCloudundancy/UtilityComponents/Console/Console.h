@@ -1,6 +1,6 @@
 #pragma once
+#include "libCloudundancy/Enums/Color.h"
 class ConsoleTests;
-enum class Color : unsigned char;
 
 namespace Utils
 {
@@ -22,6 +22,6 @@ namespace Utils
       virtual void WriteLines(const vector<string>& lines) const;
       virtual void WriteLineIf(bool doPrintMessage, string_view message) const;
       virtual void WriteLineAndExit(string_view message, int exitCode) const;
-      virtual void WriteLineColor(string_view message, Color color) const;
+      virtual void WriteLineColor(string_view message, Utils::Color color) const;
    };
 }

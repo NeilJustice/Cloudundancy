@@ -30,7 +30,7 @@ namespace Utils
 
    bool ConsoleColorer::SetTextColor(Color textColor)
    {
-      if (textColor == Color::White)
+      if (textColor == Utils::Color::White)
       {
          return false;
       }
@@ -47,7 +47,7 @@ namespace Utils
    {
       if (didPreviouslySetTextColor)
       {
-         PlatformSpecificSetTextColor(Color::White);
+         PlatformSpecificSetTextColor(Utils::Color::White);
       }
    }
 
@@ -57,12 +57,12 @@ namespace Utils
    {
       switch (textColor)
       {
-      case Color::Red: return "\033[31m";
-      case Color::White: return "\033[0m";
-      case Color::Teal: return "\033[34m";
-      case Color::Green: return "\033[32m";
-      case Color::Yellow: return "\033[33m";
-      case Color::Unset:
+      case Utils::Color::Red: return "\033[31m";
+      case Utils::Color::White: return "\033[0m";
+      case Utils::Color::Teal: return "\033[34m";
+      case Utils::Color::Green: return "\033[32m";
+      case Utils::Color::Yellow: return "\033[33m";
+      case Utils::Color::Unset:
       default: return "\033[0m";
       }
    }
@@ -71,12 +71,12 @@ namespace Utils
    {
       switch (textColor)
       {
-      case Color::Red: return WindowsColor::Red;
-      case Color::White: return WindowsColor::White;
-      case Color::Teal: return WindowsColor::Teal;
-      case Color::Green: return WindowsColor::Green;
-      case Color::Yellow: return WindowsColor::Yellow;
-      case Color::Unset:
+      case Utils::Color::Red: return WindowsColor::Red;
+      case Utils::Color::White: return WindowsColor::White;
+      case Utils::Color::Teal: return WindowsColor::Teal;
+      case Utils::Color::Green: return WindowsColor::Green;
+      case Utils::Color::Yellow: return WindowsColor::Yellow;
+      case Utils::Color::Unset:
       default: return WindowsColor::White;
       };
    }

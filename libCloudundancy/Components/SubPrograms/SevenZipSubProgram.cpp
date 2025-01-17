@@ -36,7 +36,7 @@ void SevenZipSubProgram::Copy7ZipFileToDestinationFolders(const CloudundancyArgs
 {
    p_console->WriteLine("[Cloudundancy] Copying .7z file to [DestinationFolders]...");
    _cloudundancyFileCopier->CopyFilteredFilesAndFoldersToDestinationFolders(args.sevenZipFileCopyingIniFilePath, false);
-   p_console->WriteLineColor("\n[Cloudundancy] Successfully copied .7z file to [DestinationFolders]", Color::Green);
+   p_console->WriteLineColor("\n[Cloudundancy] Successfully copied .7z file to [DestinationFolders]", Utils::Color::Green);
 }
 
 void SevenZipSubProgram::CopyFileToFilesAndFoldersToBackupStagingFolder(const CloudundancyArgs& args) const
@@ -62,7 +62,7 @@ void SevenZipSubProgram::SevenZipBackupStagingFolder(const CloudundancyArgs& arg
 {
    _stopwatch->Start();
    const string sevenZippingMessage = Utils::String::ConcatStrings("\n[Cloudundancy] 7-zipping ", args.sevenZipStagingFolderPath.string(), "...");
-   p_console->WriteLineColor(sevenZippingMessage, Color::Teal);
+   p_console->WriteLineColor(sevenZippingMessage, Utils::Color::Teal);
    _fileSystem->SetCurrentPath(args.sevenZipStagingFolderPath);
    const string dateTimeNowForFileNames = _watch->DateTimeNowForFileNames();
    const string sevenZipCommandLineArguments = Utils::String::ConcatStrings("a 7ZipFile/CloudundancyBackup_", dateTimeNowForFileNames, ".7z -r -mx9");
@@ -70,5 +70,5 @@ void SevenZipSubProgram::SevenZipBackupStagingFolder(const CloudundancyArgs& arg
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string sevenZippedMessage = Utils::String::ConcatStrings(
       "[Cloudundancy] 7-zipped ", args.sevenZipStagingFolderPath.string(), " in ", elapsedSeconds, " seconds\n");
-   p_console->WriteLineColor(sevenZippedMessage, Color::Green);
+   p_console->WriteLineColor(sevenZippedMessage, Utils::Color::Green);
 }

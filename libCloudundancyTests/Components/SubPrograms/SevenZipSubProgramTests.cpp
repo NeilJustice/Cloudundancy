@@ -129,12 +129,12 @@ TEST(SevenZipBackupStagingFolder_Writes7ZipFileToFolder7ZipFileBackslashCloudund
    const string expectedSevenZippingMessage = Utils::String::ConcatStrings("\n[Cloudundancy] 7-zipping ", args.sevenZipStagingFolderPath.string(), "...");
    const string expectedSevenZippedMessage = Utils::String::ConcatStrings("[Cloudundancy] 7-zipped ", args.sevenZipStagingFolderPath.string(), " in ", elapsedSeconds, " seconds\n");
    METALMOCKTHEN(_stopwatchMock->StartMock.CalledOnce()).Then(
-   METALMOCKTHEN(p_consoleMock->WriteLineColorMock.CalledWith(expectedSevenZippingMessage, Color::Teal))).Then(
+   METALMOCKTHEN(p_consoleMock->WriteLineColorMock.CalledWith(expectedSevenZippingMessage, Utils::Color::Teal))).Then(
    METALMOCKTHEN(_fileSystemMock->SetCurrentPathMock.CalledOnceWith(args.sevenZipStagingFolderPath))).Then(
    METALMOCKTHEN(_watchMock->DateTimeNowForFileNamesMock.CalledOnce())).Then(
    METALMOCKTHEN(_processRunnerMock->FailFastRunMock.CalledOnceWith("7z", expectedSevenZipCommandLineArguments, true))).Then(
    METALMOCKTHEN(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce())).Then(
-   METALMOCKTHEN(p_consoleMock->WriteLineColorMock.CalledWith(expectedSevenZippedMessage, Color::Green)));
+   METALMOCKTHEN(p_consoleMock->WriteLineColorMock.CalledWith(expectedSevenZippedMessage, Utils::Color::Green)));
 }
 
 TEST(Copy7ZipFileToDestinationFolders_DoesSo_PrintsElapsedSeconds)
@@ -148,7 +148,7 @@ TEST(Copy7ZipFileToDestinationFolders_DoesSo_PrintsElapsedSeconds)
    //
    METALMOCKTHEN(p_consoleMock->WriteLineMock.CalledOnceWith("[Cloudundancy] Copying .7z file to [DestinationFolders]...")).Then(
    METALMOCKTHEN(_cloudundancyFileCopierMock->CopyFilteredFilesAndFoldersToDestinationFoldersMock.CalledOnceWith(args.sevenZipFileCopyingIniFilePath, false))).Then(
-   METALMOCKTHEN(p_consoleMock->WriteLineColorMock.CalledOnceWith("\n[Cloudundancy] Successfully copied .7z file to [DestinationFolders]", Color::Green)));
+   METALMOCKTHEN(p_consoleMock->WriteLineColorMock.CalledOnceWith("\n[Cloudundancy] Successfully copied .7z file to [DestinationFolders]", Utils::Color::Green)));
 }
 
 RUN_TESTS(SevenZipSubProgramTests)

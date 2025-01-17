@@ -52,7 +52,7 @@ TEST(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
    const string expectedRunningProgramMessage = Utils::String::ConcatStrings(
       "[Cloudundancy] Running program: ", processName, " ", arguments);
    METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith(
-      expectedRunningProgramMessage, Color::Yellow)).Then(
+      expectedRunningProgramMessage, Utils::Color::Yellow)).Then(
    METALMOCKTHEN(_caller_RunMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_windowsProcessRunner, &Utils::WindowsProcessRunner::Run, processName, arguments))).Then(
    METALMOCKTHEN(_consoleMock->WriteLineIfMock.CalledOnceWith(
@@ -79,7 +79,7 @@ TEST(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessage_CallsExitWithProcessE
    const string expectedRunningProgramMessage = Utils::String::ConcatStrings("[Cloudundancy] Running program: ", processName, " ", arguments);
    const string expectedProcessFailedErrorMessage = Utils::String::ConcatValues(
       "Process \"", processName, " ", arguments, "\" failed with exit code ", processResult.exitCode, '.');
-   METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedRunningProgramMessage, Color::Yellow)).Then(
+   METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedRunningProgramMessage, Utils::Color::Yellow)).Then(
    METALMOCKTHEN(_caller_RunMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_windowsProcessRunner, &Utils::WindowsProcessRunner::Run, processName, arguments))).Then(
    METALMOCKTHEN(_consoleMock->WriteLineIfMock.CalledOnceWith(doPrintStandardOutput, processResult.standardOutputAndError))).Then(

@@ -44,7 +44,7 @@ void CloudundancyFileCopier::CopyFilteredFilesAndFoldersToDestinationFolders(
    }
    const string copyingMessage = Utils::String::ConcatStrings(
       "[Cloudundancy] Copying [SourceFilesAndFolders] to [DestinationFolders] as listed in ", iniFilePath.string(), ":\n");
-   _console->WriteLineColor(copyingMessage, Color::Teal);
+   _console->WriteLineColor(copyingMessage, Utils::Color::Teal);
 
    _console->WriteLines(cloudundancyIni.iniFileLines);
 
@@ -74,7 +74,7 @@ void CloudundancyFileCopier::DoCopyFilteredFilesAndFoldersToDestinationFolder(
 
    const string copyingMessage = Utils::String::ConcatStrings(
       "\n[Cloudundancy] Copying [SourceFilesAndFolders] to destination folder ", destinationFolderPath.string(), ":\n");
-   _console->WriteLineColor(copyingMessage, Color::Teal);
+   _console->WriteLineColor(copyingMessage, Utils::Color::Teal);
    _cloudundancyLogFileWriter->AppendTextToCloudundancyLogFileInFolder(destinationFolderPath, "Cloudundancy backup started");
    _stopwatch->Start();
 
@@ -85,7 +85,7 @@ void CloudundancyFileCopier::DoCopyFilteredFilesAndFoldersToDestinationFolder(
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string folderBackupResultSuccessMessage = Utils::String::ConcatStrings(
       "[Cloudundancy]   FolderBackupResult: Successfully copied [SourceFilesAndFolders] to ", destinationFolderPath.string());
-   _console->WriteLineColor(folderBackupResultSuccessMessage, Color::Green);
+   _console->WriteLineColor(folderBackupResultSuccessMessage, Utils::Color::Green);
 
    const string folderBackupDurationMessage = Utils::String::ConcatStrings("[Cloudundancy] FolderBackupDuration: ", elapsedSeconds, " seconds");
    _console->WriteLine(folderBackupDurationMessage);
@@ -211,7 +211,7 @@ void CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed(
    if (fileCopyResult.copySucceeded)
    {
       const string copiedMessage = Utils::String::ConcatStrings("Copied [", durationInMilliseconds, "ms]\n");
-      _console->WriteLineColor(copiedMessage, Color::Green);
+      _console->WriteLineColor(copiedMessage, Utils::Color::Green);
    }
    else
    {
@@ -222,7 +222,7 @@ void CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed(
 
       const string copyFailedConsoleMessage = Utils::String::ConcatStrings(
          "Copy failed [", durationInMilliseconds, "ms]: ", fileCopyResult.copyFailureReason, "\n\n[Cloudundancy] ExitCode: 1");
-      _console->WriteLineColor(copyFailedConsoleMessage, Color::Red);
+      _console->WriteLineColor(copyFailedConsoleMessage, Utils::Color::Red);
 
       _call_quick_exit(1);
    }
