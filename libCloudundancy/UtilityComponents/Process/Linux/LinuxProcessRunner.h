@@ -1,10 +1,6 @@
 #pragma once
 #if defined __linux__ || defined __APPLE__
-class Console;
-class ErrorCodeTranslator;
 class LinuxProcessRunnerTests;
-template<typename ReturnType, typename ClassType, typename Arg1Type, typename Arg2Type>
-class NonVoidTwoArgMemberFunctionCaller;
 
 namespace Utils
 {

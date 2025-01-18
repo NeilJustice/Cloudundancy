@@ -1,9 +1,13 @@
 #pragma once
-#include "libCloudundancy/UtilityComponents/Console/Console.h"
-#include "libCloudundancy/UtilityComponents/Exception/TryCatchCaller.h"
-#include "libCloudundancy/UtilityComponents/Environment/EnvironmentService.h"
-#include "libCloudundancy/UtilityComponents/Time/Stopwatch.h"
-#include "libCloudundancy/UtilityComponents/Time/Watch.h"
+namespace Utils
+{
+   class Console;
+   class EnvironmentService;
+   class Stopwatch;
+   template<typename ClassType, typename ArgumentType>
+   class TryCatchCaller;
+   class Watch;
+}
 class CloudundancyArgsParser;
 class CloudundancyFileCopier;
 class CloudundancySubProgramFactory;

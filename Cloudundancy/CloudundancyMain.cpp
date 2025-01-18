@@ -4,11 +4,6 @@
 #include <functional>
 namespace fs = std::filesystem;
 
-#if defined __linux__ || defined __APPLE__
-#include <memory>
-#include <unistd.h>
-#endif
-
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #define NOGDI
@@ -18,13 +13,6 @@ namespace fs = std::filesystem;
 using namespace std;
 
 #include "libCloudundancy/Components/CloudundancyProgram.h"
-#include "libCloudundancy/Enums/Color.h"
-#include "libCloudundancy/UtilityComponents/Asserters/Asserter.h"
-#include "libCloudundancy/UtilityComponents/Console/Console.h"
-#include "libCloudundancy/UtilityComponents/Environment/EnvironmentService.h"
-#include "libCloudundancy/UtilityComponents/Exception/TryCatchCaller.h"
-#include "libCloudundancy/UtilityComponents/Time/Stopwatch.h"
-#include "libCloudundancy/UtilityComponents/Time/Watch.h"
 
 // Production Cloudundancy command lines:
 // copy-files-to-multiple-folders --ini-file=C:\Code\dotfiles\WindowsCloudundancy.ini --delete-destination-folders-first

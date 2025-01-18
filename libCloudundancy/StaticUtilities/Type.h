@@ -1,7 +1,7 @@
 #pragma once
-#if defined __linux__ || defined __APPLE__
-#include <atomic>
-#include <cxxabi.h>
+#if defined __linux__
+#include <atomic> // IWYU pragma: keep
+#include <cxxabi.h> // IWYU pragma: keep
 #endif
 
 class Type

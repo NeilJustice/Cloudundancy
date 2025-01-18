@@ -2,7 +2,6 @@
 #include "libCloudundancy/Components/CloudundancyProgram.h"
 #include "libCloudundancyTests/Components/Args/MetalMock/CloudundancyArgsParserMock.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/CloudundancyFileCopierMock.h"
-#include "libCloudundancyTests/Components/IniFile/MetalMock/CloudundancyIniFileReaderMock.h"
 #include "libCloudundancyTests/Components/SubPrograms/MetalMock/CloudundancySubProgramFactoryMock.h"
 #include "libCloudundancyTests/Components/SubPrograms/MetalMock/CloudundancySubProgramMock.h"
 

@@ -1,6 +1,6 @@
 #pragma once
-#if defined __linux__ || defined __APPLE__
-#include <pwd.h>
+#if defined __linux__
+#include <pwd.h> // IWYU pragma: keep
 #endif
 class EnvironmentServiceTests;
 

@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "libCloudundancy/StaticUtilities/Type.h"
+#ifdef _WIN32
 #include <regex>
+#endif
 
 unordered_map<const char*, string> Type::s_mangledToDemangledTypeName;
 
