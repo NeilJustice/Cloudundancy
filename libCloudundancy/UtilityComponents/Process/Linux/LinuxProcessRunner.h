@@ -1,5 +1,5 @@
 #pragma once
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 class LinuxProcessRunnerTests;
 
 namespace Utils

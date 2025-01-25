@@ -3,7 +3,7 @@
 
 TESTS(FCloseDeleterTests)
 AFACT(DefaultConstructor_SetsFCloseFunctionPointer)
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 AFACT(CallOperator_FILEFilenoFieldIsNot0_CallsFCloseOnFilePointerWhichReturns0_DoesNotThrowRuntimeError)
 AFACT(CallOperator_FILEFilenoFieldIsNot0_CallsFCloseOnFilePointerWhichReturnsNon0_ThrowsRuntimeError)
 #elif defined _WIN32
@@ -29,7 +29,7 @@ TEST(DefaultConstructor_SetsFCloseFunctionPointer)
    STD_FUNCTION_TARGETS(fclose, fcloseDeleter._call_fclose);
 }
 
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 
 TEST(CallOperator_FILEFilenoFieldIsNot0_CallsFCloseOnFilePointerWhichReturns0_DoesNotThrowRuntimeError)
 {

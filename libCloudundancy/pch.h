@@ -10,7 +10,7 @@
 #pragma warning(pop)
 #endif
 
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    #include <memory>
    #include <unistd.h>
 #endif
@@ -23,11 +23,11 @@ namespace fs = std::filesystem;
 using namespace std;
 
 #ifdef _WIN32
-#define WIN32_LEAN_AND_MEAN
-#define NOGDI
-#define NOMINMAX
-#include <io.h> // _isatty()
-#include "Windows.h" // Windows process running of 7z.exe and console colors
+   #define WIN32_LEAN_AND_MEAN
+   #define NOGDI
+   #define NOMINMAX
+   #include <io.h> // _isatty()
+   #include "Windows.h" // Windows process running of 7z.exe and console colors
 #endif
 
 // libCloudundancy ValueTypes

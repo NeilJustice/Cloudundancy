@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libCloudundancy/UtilityComponents/Environment/EnvironmentService.h"
 
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 #include <pwd.h>
 
 TESTS(EnvironmentServiceTests)

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libCloudundancy/StaticUtilities/GetLinuxErrno.h"
 
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 int* GetLinuxErrno()
 {
    return &errno;

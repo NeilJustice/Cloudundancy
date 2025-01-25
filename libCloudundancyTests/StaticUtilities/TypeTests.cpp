@@ -26,7 +26,7 @@ class TemplateClass {};
 TEST(GetName_NonClassNonStructType_ReturnsTypeName)
 {
    ARE_EQUAL("int", *Type::GetName(1));
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    ARE_EQUAL("decltype(nullptr)", *Type::GetName(nullptr));
    ARE_EQUAL("char [1]", *Type::GetName(""));
    ARE_EQUAL("char [2]", *Type::GetName("a"));
@@ -44,7 +44,7 @@ TEST(GetName_NonClassNonStructType_ReturnsTypeName)
 TEST(GetName_ClassType_ReturnsTypeNameMinusClassSpace)
 {
    ARE_EQUAL("TypeTests::C", *Type::GetName(C()));
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    ARE_EQUAL("std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >", *Type::GetName<string>());
    ARE_EQUAL("std::ostream", *Type::GetName<decltype(cout)>());
 #elif _WIN32
@@ -80,7 +80,7 @@ TEST(GetName_ThrownExceptionSubclass_ReturnsSubclassNameAndNotException)
 TEST(GetNameT_NonClassNonStructType_ReturnsTypeName)
 {
    ARE_EQUAL("int", *Type::GetName<int>());
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    ARE_EQUAL("decltype(nullptr)", *Type::GetName<std::nullptr_t>());
    ARE_EQUAL("char [1]", *Type::GetName<decltype("")>());
    ARE_EQUAL("char [2]", *Type::GetName<decltype("a")>());
@@ -98,7 +98,7 @@ TEST(GetNameT_ClassType_ReturnsTypeNameMinusClassSpace)
    ARE_EQUAL("TypeTests::TemplateClass<TypeTests::C>", *Type::GetName<TemplateClass<C>>());
    ARE_EQUAL("TypeTests::TemplateClass<TypeTests::S>", *Type::GetName<TemplateClass<S>>());
    ARE_EQUAL("TypeTests::C", *Type::GetName<C>());
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    ARE_EQUAL("std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >", *Type::GetName<string>());
    ARE_EQUAL("std::ostream", *Type::GetName<decltype(cout)>());
 #elif _WIN32
@@ -136,7 +136,7 @@ TEST(GetNameT_ThrownExceptionSubclass_ReturnsBaseClassNameAndNotSubclassName)
 TEST(GetExceptionClassNameAndMessage_ReturnsExceptionClassNameColonSpaceExceptionMessage__DefaultExceptionTestCase)
 {
    const exception ex{};
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    ARE_EQUAL("std::exception: std::exception", Type::GetExceptionClassNameAndMessage(&ex));
 #elif _WIN32
    ARE_EQUAL("std::exception: Unknown exception", Type::GetExceptionClassNameAndMessage(&ex));

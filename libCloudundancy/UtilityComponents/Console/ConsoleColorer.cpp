@@ -83,7 +83,7 @@ namespace Utils
 
    void ConsoleColorer::PlatformSpecificSetTextColor(Color textColor) const
    {
-   #if defined __linux__ || defined __APPLE__
+   #if defined __linux__
       const char* const linuxColor = ColorToLinuxColor(textColor);
       std::cout << linuxColor;
    #elif _WIN32

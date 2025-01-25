@@ -1,5 +1,5 @@
 #include "pch.h"
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 
 #include "libCloudundancy/UtilityComponents/Process/Linux/LinuxProcessRunner.h"
 #include "libCloudundancyTests/UtilityComponents/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"

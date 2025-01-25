@@ -1,5 +1,5 @@
 #pragma once
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 #include "libCloudundancy/UtilityComponents/Process/Linux/LinuxProcessRunner.h"
 
 namespace Utils

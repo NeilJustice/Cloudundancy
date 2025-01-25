@@ -31,7 +31,7 @@ const std::string* Type::TypeInfoToTypeName(const std::type_info& typeInfo)
    return cachedDemangledTypeName;
 }
 
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 
 std::string Type::Demangle(const char* mangledTypeName)
 {

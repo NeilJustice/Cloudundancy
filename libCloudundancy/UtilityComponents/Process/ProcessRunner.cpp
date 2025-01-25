@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/UtilityComponents/Process/ProcessRunner.h"
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 #include "libCloudundancy/UtilityComponents/Process/Linux/LinuxProcessRunner.h"
 #elif _WIN32
 #include "libCloudundancy/UtilityComponents/Process/Windows/WindowsProcessRunner.h"
@@ -10,7 +10,7 @@ namespace Utils
 {
    ProcessRunner::ProcessRunner()
       // Constant Components
-   #if defined __linux__ || defined __APPLE__
+   #if defined __linux__
       : _osSpecificProcessRunner(make_unique<LinuxProcessRunner>())
    #elif _WIN32
       : _osSpecificProcessRunner(make_unique<WindowsProcessRunner>())

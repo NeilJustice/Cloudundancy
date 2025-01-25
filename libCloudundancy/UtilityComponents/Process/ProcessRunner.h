@@ -3,7 +3,7 @@ class ProcessRunnerTests;
 
 namespace Utils
 {
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    class LinuxProcessRunner;
 #elif _WIN32
    class WindowsProcessRunner;
@@ -14,7 +14,7 @@ namespace Utils
       friend class ::ProcessRunnerTests;
    private:
       // Constant Components
-   #if defined __linux__ || defined __APPLE__
+   #if defined __linux__
       unique_ptr<const LinuxProcessRunner> _osSpecificProcessRunner;
    #elif _WIN32
       unique_ptr<const WindowsProcessRunner> _osSpecificProcessRunner;

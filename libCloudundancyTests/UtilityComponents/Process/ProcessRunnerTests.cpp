@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/UtilityComponents/Process/ProcessRunner.h"
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 #include "libCloudundancyTests/UtilityComponents/Process/Linux/MetalMock/LinuxProcessRunnerMock.h"
 #elif _WIN32
 #include "libCloudundancyTests/UtilityComponents/Process/Windows/MetalMock/WindowsProcessRunnerMock.h"
@@ -14,7 +14,7 @@ EVIDENCE
 
 Utils::ProcessRunner _processRunner;
 // Constant Components
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 Utils::LinuxProcessRunnerMock* _osSpecificProcessRunnerMock = nullptr;
 #elif _WIN32
 Utils::WindowsProcessRunnerMock* _osSpecificProcessRunnerMock = nullptr;
@@ -23,7 +23,7 @@ Utils::WindowsProcessRunnerMock* _osSpecificProcessRunnerMock = nullptr;
 STARTUP
 {
    // Constant Components
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    _processRunner._osSpecificProcessRunner.reset(_osSpecificProcessRunnerMock = new Utils::LinuxProcessRunnerMock);
 #elif _WIN32
    _processRunner._osSpecificProcessRunner.reset(_osSpecificProcessRunnerMock = new Utils::WindowsProcessRunnerMock);
