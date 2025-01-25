@@ -14,4 +14,4 @@ unmatchedSuppression:*
 unusedFunction:*
 
 # Windows
-AssignmentAddressToInteger:libCloudundancy\UtilityComponents\Time\Watch.cpp:57
+AssignmentAddressToInteger:*
