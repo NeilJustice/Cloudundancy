@@ -23,9 +23,9 @@ E:\CloudundancyBackups
 # Critical files to backup
 C:\CriticalFiles\KeePassFile.kdbx -> .
 C:\CriticalFiles\PersonalFinancesSpreadsheet.xlsx -> .
-C:\VS2019\Common7\IDE\VC\Snippets\1033\Visual C++\C++Snippets.snippet                              -> Snippets
-C:\VS2019\Common7\IDE\Extensions\Microsoft\Python\Core\Snippets\1033\Python\PythonSnippets.snippet -> Snippets
-C:\VS2019\VC#\Snippets\1033\Visual C#\CSharpSnippets.snippet                                       -> Snippets
+C:\VS2022\Common7\IDE\VC\Snippets\1033\Visual C++\C++Snippets.snippet                              -> Snippets
+C:\VS2022\Common7\IDE\Extensions\Microsoft\Python\Core\Snippets\1033\Python\PythonSnippets.snippet -> Snippets
+C:\VS2022\VC#\Snippets\1033\Visual C#\CSharpSnippets.snippet                                       -> Snippets
 
 # Critical folders to backup
 # Source folder paths ending in a '\' or '/' character are interpretted as folders and not files to be backed up
