@@ -55,7 +55,7 @@ CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudunda
       }
       if (inDestinationFoldersSection)
       {
-         cloudundancyIni.destinationFolderPaths.emplace_back(iniFileLine);
+         cloudundancyIni.destinationFolderPaths.push_back(iniFileLine);
       }
       else if (inSourceFilesAndFoldersToCopySection)
       {
@@ -63,12 +63,12 @@ CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudunda
          CloudundancyIniCopyInstruction cloudundancyIniCopyInstruction =
             _caller_ParseFileCopyInstructionLine->CallConstMemberFunction(
                this, &CloudundancyIniFileReader::ParseFileCopyInstructionLine, fileCopyInstructionLine);
-         cloudundancyIni.cloudundancyIniCopyInstructions.emplace_back(std::move(cloudundancyIniCopyInstruction));
+         cloudundancyIni.cloudundancyIniCopyInstructions.push_back(cloudundancyIniCopyInstruction);
       }
       else
       {
          release_assert(inFileSubpathsToNotCopySection);
-         cloudundancyIni.fileSubpathsToIgnore.emplace_back(iniFileLine);
+         cloudundancyIni.fileSubpathsToIgnore.push_back(iniFileLine);
       }
    }
    _cloudundancyIniValidator->ThrowIfZeroDestinationFolderPaths(cloudundancyIni, cloudundancyIniPath);
