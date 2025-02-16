@@ -27,6 +27,6 @@ using namespace std;
 int main(int argc, char* argv[])
 {
    CloudundancyProgram cloudundancyProgram;
-   const int exitCode = cloudundancyProgram.Main(argc, argv);
+   int exitCode = cloudundancyProgram.Main(argc, argv);
    return exitCode;
 }
