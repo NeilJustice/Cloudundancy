@@ -45,19 +45,19 @@ int CloudundancyProgram::Run(const std::vector<std::string>& stringArgs)
    _stopwatch->Start();
 
    const string spaceJoinedArgs = Vector::Join(stringArgs, ' ');
-   const string runningLine = "[Cloudundancy]     Running: " + spaceJoinedArgs;
+   const string runningLine = Utils::String::ConcatStrings("[Cloudundancy]   Running: ", spaceJoinedArgs);
    _console->WriteLine(runningLine);
 
    const string machineName = _environmentService->MachineName();
-   const string machineNameLine = "[Cloudundancy] MachineName: " + machineName;
+   const string machineNameLine = Utils::String::ConcatStrings("[Cloudundancy]   Machine: ", machineName);
    _console->WriteLine(machineNameLine);
 
    const string userName = _environmentService->UserName();
-   const string userNameLine = "[Cloudundancy]    UserName: " + userName;
+   const string userNameLine = Utils::String::ConcatStrings("[Cloudundancy]      User: ", userName);
    _console->WriteLine(userNameLine);
 
    const string startTime = _watch->DateTimeNow();
-   const string startTimeLine = "[Cloudundancy]   StartTime: " + startTime;
+   const string startTimeLine = Utils::String::ConcatStrings("[Cloudundancy] StartTime: ", startTime);
    _console->WriteLine(startTimeLine);
 
    const CloudundancyArgs args = _cloudundancyArgsParser->ParseStringArgs(stringArgs);
@@ -65,12 +65,13 @@ int CloudundancyProgram::Run(const std::vector<std::string>& stringArgs)
    int exitCode = cloudundancySubProgram->Run(args);
 
    const string endTime = _watch->DateTimeNow();
-   const string endTimeLine = "[Cloudundancy]  EndTime: " + endTime;
+   const string endTimeLine = Utils::String::ConcatStrings("[Cloudundancy]  EndTime: ", endTime);
    _console->WriteLine(endTimeLine);
 
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
-   _console->WriteLine("[Cloudundancy] Duration: "  + elapsedSeconds + " seconds");
-   const string exitCodeLine = "[Cloudundancy] ExitCode: " + to_string(exitCode);
+   const string durationLine = Utils::String::ConcatStrings("[Cloudundancy] Duration: ", elapsedSeconds, " seconds");
+   _console->WriteLine(durationLine);
+   const string exitCodeLine = Utils::String::ConcatValues("[Cloudundancy] ExitCode: ", exitCode);
    const Utils::Color color = exitCode == 0 ? Utils::Color::Green : Utils::Color::Red;
    _console->WriteLineColor(exitCodeLine, color);
    return exitCode;

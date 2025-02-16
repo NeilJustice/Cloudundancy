@@ -130,10 +130,13 @@ TEST2X2(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSu
    const int exitCode = _cloudundancyProgram.Run(stringArgs);
    //
    const string expectedSpaceJoinedArgs = Vector::Join(stringArgs, ' ');
-   const string expectedRunningLine = "[Cloudundancy]     Running: " + expectedSpaceJoinedArgs;
-   const string expectedMachineNameLine = "[Cloudundancy] MachineName: " + machineName;
-   const string expectedUserNameLine = "[Cloudundancy]    UserName: " + userName;
-   const string expectedExitCodeLine = "[Cloudundancy] ExitCode: " + to_string(subProgramExitCode);
+   const string expectedRunningLine = Utils::String::ConcatStrings("[Cloudundancy]   Running: ", expectedSpaceJoinedArgs);
+   const string expectedMachineNameLine = Utils::String::ConcatStrings("[Cloudundancy]   Machine: ", machineName);
+   const string expectedUserNameLine = Utils::String::ConcatStrings("[Cloudundancy]      User: ", userName);
+   const string expectedStartTimeLine = Utils::String::ConcatStrings("[Cloudundancy] StartTime: ", startTime);
+   const string expectedEndTimeLine = Utils::String::ConcatStrings("[Cloudundancy]  EndTime: ", endTime);
+   const string expectedDurationLine = Utils::String::ConcatStrings("[Cloudundancy] Duration: ", elapsedSeconds, " seconds");
+   const string expectedExitCodeLine = Utils::String::ConcatValues("[Cloudundancy] ExitCode: ", subProgramExitCode);
    METALMOCK(_consoleMock->WriteLineMock.CalledNTimes(6));
    METALMOCK(_watchMock->DateTimeNowMock.CalledNTimes(2));
 
@@ -144,15 +147,15 @@ TEST2X2(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSu
    METALMOCKTHEN(_environmentServiceMock->UserNameMock.CalledOnce())).Then(
    METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith(expectedUserNameLine))).Then(
    METALMOCKTHEN(_watchMock->DateTimeNowMock.Called())).Then(
-   METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith("[Cloudundancy]   StartTime: " + startTime))).Then(
+   METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith(expectedStartTimeLine))).Then(
    METALMOCKTHEN(_cloudundancyArgsParserMock->ParseStringArgsMock.CalledOnceWith(stringArgs))).Then(
    METALMOCKTHEN(_cloudundancySubProgramFactoryMock->NewCloudundancySubProgramMock.CalledOnceWith(args.programMode))).Then(
    METALMOCKTHEN(cloudundancySubProgramMock->RunMock.CalledOnceWith(args))).Then(
 
    METALMOCKTHEN(_watchMock->DateTimeNowMock.Called())).Then(
-   METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith("[Cloudundancy]  EndTime: " + endTime))).Then(
+   METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith(expectedEndTimeLine))).Then(
    METALMOCKTHEN(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce())).Then(
-   METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith("[Cloudundancy] Duration: " + elapsedSeconds + " seconds"))).Then(
+   METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith(expectedDurationLine))).Then(
    METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedExitCodeLine, expectedExitCodeLineColor)));
    ARE_EQUAL(subProgramExitCode, exitCode);
 }
