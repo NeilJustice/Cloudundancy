@@ -35,7 +35,7 @@ int CloudundancyProgram::Main(int argc, char* argv[])
       return 0;
    }
    const vector<string> stringArgs = _call_Vector_ArgcArgvToStringVector(argc, argv);
-   const int exitCode = _tryCatchCaller->TryCatchCallNonConstMemberFunction(
+   int exitCode = _tryCatchCaller->TryCatchCallNonConstMemberFunction(
       this, &CloudundancyProgram::Run, stringArgs, &CloudundancyProgram::ExceptionHandler);
    return exitCode;
 }
@@ -62,7 +62,7 @@ int CloudundancyProgram::Run(const std::vector<std::string>& stringArgs)
 
    const CloudundancyArgs args = _cloudundancyArgsParser->ParseStringArgs(stringArgs);
    const shared_ptr<CloudundancySubProgram> cloudundancySubProgram = _cloudundancySubProgramFactory->NewCloudundancySubProgram(args.programMode);
-   const int subProgramExitCode = cloudundancySubProgram->Run(args);
+   int exitCode = cloudundancySubProgram->Run(args);
 
    const string endTime = _watch->DateTimeNow();
    const string endTimeLine = "[Cloudundancy]  EndTime: " + endTime;
@@ -70,10 +70,10 @@ int CloudundancyProgram::Run(const std::vector<std::string>& stringArgs)
 
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    _console->WriteLine("[Cloudundancy] Duration: "  + elapsedSeconds + " seconds");
-   const string exitCodeLine = "[Cloudundancy] ExitCode: " + to_string(subProgramExitCode);
-   const Utils::Color color = subProgramExitCode == 0 ? Utils::Color::Green : Utils::Color::Red;
+   const string exitCodeLine = "[Cloudundancy] ExitCode: " + to_string(exitCode);
+   const Utils::Color color = exitCode == 0 ? Utils::Color::Green : Utils::Color::Red;
    _console->WriteLineColor(exitCodeLine, color);
-   return subProgramExitCode;
+   return exitCode;
 }
 
 // Private Functions
