@@ -10,4 +10,4 @@ python -u CloudundancyDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
    --cmake-definitions="-DClangCodeCoverageMode=ON" \
    --no-install
 
-python /code/CodeCovSidekick/CodeCovSidekick.py --solution=Cloudundancy --tests-project=libCloudundancyTests
+LinuxCodeCoverageRunner measure-cplusplus-code-coverage --solution=Cloudundancy --tests-project=libCloudundancyTests
