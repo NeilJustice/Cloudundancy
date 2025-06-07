@@ -41,12 +41,12 @@ x64/
 *.vspx
 debug.log
 install_manifest.txt
-!CloudundancyDevOpsPython.sln
+!CloudundancyDevOpsPython/CloudundancyDevOpsPython.sln
 
 # Python
 __pycache__/
 CodeCoverageHTMLReport/
-CloudundancyDevOpsPythonTests/CoberturaCodeCoverageResults_CloudundancyDevOpsPythonTests.xml
+CloudundancyDevOpsPython/CloudundancyDevOpsPythonTests/CoberturaCodeCoverageResults_CloudundancyDevOpsPythonTests.xml
 htmlcov/
 .coverage
 coverage.xml
