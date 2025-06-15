@@ -15,10 +15,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Download ZenUnit.h
-        run: |
-           curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/ZenUnit.h"
-           curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/MetalMock.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/MetalMock.h"
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
+      - uses: actions/cache@v4
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('CloudundancyDevOpsPython/dev-requirements.txt') }}
 
       - name: Install lld and ninja-build
         run: sudo apt-get install lld ninja-build
@@ -27,48 +31,46 @@ jobs:
         run: sudo apt-get install libcapture-tiny-perl libdatetime-perl
         if: ${{ matrix.cxx == 'g++' && matrix.cmake_build_type == 'Release' }}
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
+      - name: Download ZenUnit.h
+        run: curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/ZenUnit.h"
 
-      - uses: actions/cache@v4
-        with:
-          path: ${{ env.pythonLocation }}
-          key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
+      - name: Download MetalMock.h
+        run: curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/MetalMock.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/MetalMock.h"
 
       - name: Install pip packages
-        run: pip install --upgrade --upgrade-strategy eager -r dev-requirements.txt
+        run: pip install --upgrade --upgrade-strategy eager -r CloudundancyDevOpsPython/dev-requirements.txt
 
       - name: Mypy, Flake8, Pylint, then run unit tests with coverage and pytest if g++ Release
+        working-directory: CloudundancyDevOpsPython
         run: python CloudundancyDevOpsPython/MypyFlake8PylintThenRunTestsWithCoverage.py --run-tests-with-coverage-python-file=CloudundancyDevOpsPythonTests/RunAllWithCoverage.py
         env:
-          PYTHONPATH: "."
+          PYTHONPATH: .
         if: ${{ matrix.cxx == 'g++' && matrix.cmake_build_type == 'Release' }}
 
       - name: Upload Python code coverage if g++ Release
         uses: codecov/codecov-action@v5
         with:
-          files: CloudundancyDevOpsPythonTests/CoberturaCodeCoverageResults_CloudundancyDevOpsPythonTests.xml
+          files: CloudundancyDevOpsPython/CloudundancyDevOpsPythonTests/CoberturaCodeCoverageResults_CloudundancyDevOpsPythonTests.xml
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
         if: ${{ matrix.cxx == 'g++' && matrix.cmake_build_type == 'Release' }}
 
       - name: Run BuildAndInstallCPlusPlusProgram.py in non code coverage mode if clang++ Debug/Release or g++ Debug
         run: |
-           python CloudundancyDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
+           python CloudundancyDevOpsPython/CloudundancyDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
               --solution-name=Cloudundancy \
-              --cmake-build-type="${{matrix.cmake_build_type}}" \
+              --cmake-build-type="${{ matrix.cmake_build_type }}" \
               --cmake-definitions="-DFastLinuxDebugBuildMode=ON -DFastLinuxReleaseBuildMode=ON" \
               --tests-project-name=libCloudundancyTests \
               --no-install
         env:
           CXX: "/usr/bin/${{ matrix.cxx }}"
-          PYTHONPATH: "."
+          PYTHONPATH: CloudundancyDevOpsPython
         if: ${{ matrix.cxx == 'clang++' || (matrix.cxx == 'g++' && matrix.cmake_build_type == 'Debug') }}
 
       - name: Run BuildAndInstallCPlusPlusProgram.py in code coverage mode if g++ Release
         run: |
-           python CloudundancyDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
+           python CloudundancyDevOpsPython/CloudundancyDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
               --solution-name=Cloudundancy \
               --cmake-build-type="${{ matrix.cmake_build_type }}" \
               --cmake-definitions="-DLCovCodeCoverageMode=ON" \
@@ -76,11 +78,11 @@ jobs:
               --no-install
         env:
           CXX: "/usr/bin/${{ matrix.cxx }}"
-          PYTHONPATH: "."
+          PYTHONPATH: CloudundancyDevOpsPython
         if: ${{ matrix.cxx == 'g++' && matrix.cmake_build_type == 'Release' }}
 
-      - name: Print .comment section of binary cloudundancy to confirm linked with LLD
-        run: readelf --string-dump .comment "${{matrix.cmake_build_type}}/Cloudundancy/cloudundancy"
+      - name: Print .comment section of binary libCloudundancyTests to confirm it was linked with LLD
+        run: readelf --string-dump .comment "${{matrix.cmake_build_type}}/libCloudundancyTests/libCloudundancyTests"
 
       - name: Install and run lcov 2.3.1 then upload to Codecov.io if g++ Release
         run: |
@@ -95,10 +97,3 @@ jobs:
 
       - name: tree GITHUB_WORKSPACE
         run: tree $GITHUB_WORKSPACE
-
-      - name: Archive binary cloudundancy
-        uses: actions/upload-artifact@v4
-        with:
-          name: cloudundancy
-          path: Release/Cloudundancy/cloudundancy
-        if: ${{ matrix.cxx == 'clang++' && matrix.cmake_build_type == 'Release' }}
