@@ -3,11 +3,9 @@ set -eu
 
 osname="$(uname --operating-system)"
 if [[ "$osname" == *"Linux" ]]; then
-   ./JenkinsJobs/Linux/Cloudundancy-Cppcheck.sh
    ./JenkinsJobs/Linux/Cloudundancy-DevOpsPython.sh
    ./JenkinsJobs/Linux/Cloudundancy-Debug-Clang.sh
 elif [ "$osname" == "Msys" ]; then
-   pwsh.exe JenkinsJobs/Windows/Cloudundancy-Cppcheck.ps1
    pwsh.exe JenkinsJobs/Windows/Cloudundancy-DevOpsPython.ps1
    pwsh.exe JenkinsJobs/Windows/Cloudundancy-Debug.ps1 "OFF"
 fi
