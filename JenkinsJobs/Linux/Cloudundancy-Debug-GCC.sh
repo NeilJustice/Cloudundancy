@@ -1,9 +1,9 @@
 #!/bin/bash
 set -ev
 
-export PYTHONPATH=.
+export PYTHONPATH=CloudundancyDevOpsPython
 export CXX=g++
-python -u CloudundancyDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
+python -u CloudundancyDevOpsPython/CloudundancyDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
    --solution-name=Cloudundancy \
    --cmake-build-type=Debug \
    --tests-project=libCloudundancyTests \
