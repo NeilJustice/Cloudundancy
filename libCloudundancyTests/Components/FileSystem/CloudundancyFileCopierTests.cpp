@@ -7,6 +7,7 @@
 TESTS(CloudundancyFileCopierTests)
 AFACT(DefaultConstructor_SetsFunctionsAndNewsComponents)
 AFACT(CopyFilteredFilesAndFoldersToDestinationFolders_DeleteDestinationFoldersFirstIsTrue_DeletesDestinationFolders_CopiesFilesAndFoldersToFolders)
+AFACT(CopyFilteredFilesAndFoldersToDestinationFolders_DeleteDestinationFoldersFirstIsFalse_DoesNotDeleteDestinationFolders_CopiesFilesAndFoldersToFolders)
 // Private Functions
 AFACT(CopyFilteredFilesAndFoldersToDestinationFolder_TryCatchCallsDoCopyFilteredFilesAndFoldersToDestinationFolder)
 AFACT(DoCopyFilteredFilesAndFoldersToDestinationFolder_AppendBackupStartedToLogFile_CopiesNonSkippedSourceFilesToDestinationFolder_AppendBackupSuccessfulToLogFile)
@@ -157,7 +158,7 @@ TEST(CopyFilteredFilesAndFoldersToDestinationFolders_DeleteDestinationFoldersFir
 {
    const CloudundancyIni cloudundancyIni = _cloudundancyIniFileReaderMock->ReadIniFileMock.ReturnRandom();
 
-   _consoleMock->WriteLineMock.Expect();
+   _consoleMock->WriteLineColorMock.Expect();
    _consoleMock->WriteLinesMock.Expect();
 
    _recursiveDirectoryIteratorMock->SetFileSubpathsToIgnoreMock.Expect();
