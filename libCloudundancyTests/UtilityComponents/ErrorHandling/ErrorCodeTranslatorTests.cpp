@@ -163,16 +163,6 @@ struct strerror_r_CallHistory
    string outErrnoDescriptionCharsReturnValue;
    size_t outErrnoDescriptionCharsSizeArgument = 0ULL;
 
-   char* RecordFunctionCall(int errnoValue, char* outErrnoDescriptionChars, size_t outErrnoDescriptionCharsSize)
-   {
-      ++numberOfCalls;
-      errnoValueArgument = errnoValue;
-      outErrnoDescriptionCharsArgument = outErrnoDescriptionChars;
-      strncpy(outErrnoDescriptionChars, outErrnoDescriptionCharsReturnValue.c_str(), outErrnoDescriptionCharsReturnValue.size());
-      outErrnoDescriptionCharsSizeArgument = outErrnoDescriptionCharsSize;
-      return returnValue;
-   }
-
    void AssertCalledOnceWith(int expectedErrnoValue, size_t expectedOutErrnoDescriptionCharsSize) const
    {
       ARE_EQUAL(1ULL, numberOfCalls);
