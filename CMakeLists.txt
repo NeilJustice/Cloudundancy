@@ -47,7 +47,7 @@ if(UNIX)
    endif()
 elseif(MSVC)
    set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-   set(CMAKE_CXX_FLAGS "/std:c++latest /EHsc /Wall /WX /permissive- /sdl /MP /bigobj")
+   set(CMAKE_CXX_FLAGS "/std:c++latest /EHsc /Wall /WX /permissive- /MP /bigobj")
 endif()
 
 add_subdirectory(Cloudundancy)
