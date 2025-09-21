@@ -4,4 +4,4 @@ coverage:
 ignore:
   - "ZenUnit.h"
   - "MetalMock.h"
-  - "libCloudundancy/UtilityComponents/Docopt/docopt.h"
+  - "libCloudundancy/Components/Docopt/docopt.h"
