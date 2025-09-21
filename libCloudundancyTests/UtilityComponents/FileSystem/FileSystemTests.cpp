@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/Exceptions/FileSystemExceptions.h"
-#include "libCloudundancyTests/UtilityComponents/Asserters/MetalMock/AsserterMock.h"
+#include "libCloudundancyTests/Components/Asserters/MetalMock/AsserterMock.h"
 #include "libCloudundancyTests/UtilityComponents/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
 #include "libCloudundancyTests/UtilityComponents/FileSystem/MetalMock/PassthroughFileSystemMock.h"
 #include "libCloudundancyTests/UtilityComponents/FunctionCallers/Member/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"

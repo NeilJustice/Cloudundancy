@@ -36,7 +36,7 @@ using namespace std;
 #include "libCloudundancy/StaticUtilities/StringUtil.h"
 #include "libCloudundancy/StaticUtilities/Type.h"
 #include "libCloudundancy/StaticUtilities/Vector.h"
-#include "libCloudundancyTests/UtilityComponents/Asserters/MetalMock/AsserterMock.h"
+#include "libCloudundancyTests/Components/Asserters/MetalMock/AsserterMock.h"
 #include "libCloudundancyTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
 #include "libCloudundancyTests/UtilityComponents/Console/MetalMock/ConsoleColorerMock.h"
 #include "libCloudundancyTests/UtilityComponents/Docopt/MetalMock/DocoptParserMock.h"
