@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libCloudundancy/Components/FileSystem/CloudundancyFileSystem.h"
-#include "libCloudundancy/UtilityComponents/FileSystem/FileSystem.h"
-#include "libCloudundancy/UtilityComponents/FileSystem/PassthroughFileSystem.h"
+#include "libCloudundancy/Components/FileSystem/FileSystem.h"
+#include "libCloudundancy/Components/FileSystem/PassthroughFileSystem.h"
 
 CloudundancyFileSystem::CloudundancyFileSystem()
    // Function Pointers

@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/Components/FileSystem/CloudundancyLogFileWriter.h"
-#include "libCloudundancyTests/UtilityComponents/FileSystem/MetalMock/FileSystemMock.h"
+#include "libCloudundancyTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 
 TESTS(CloudundancyLogFileWriterTests)
 AFACT(DefaultConstructor_NewsComponents)
