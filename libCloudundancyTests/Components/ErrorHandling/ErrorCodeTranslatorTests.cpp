@@ -108,7 +108,7 @@ TEST(GetErrnoWithDescription_ReturnsErrnoValueWithDescription)
    ARE_EQUAL(expectedErrnoWithDescription, errnoWithDescription);
 }
 
-#if _WIN32
+#ifdef _WIN32
 
 class ErrorCodeTranslatorSelfMocked : public Metal::Mock<Utils::ErrorCodeTranslator>
 {

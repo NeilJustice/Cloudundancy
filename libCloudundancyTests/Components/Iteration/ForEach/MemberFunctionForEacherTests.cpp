@@ -51,7 +51,7 @@ TEST(CodeCoverage_ClassType_ConstMemberFunctionFunction)
 {
    const ClassType classType{};
    classType.ConstMemberFunctionFunction(ElementType{});
-};
+}
 
 RUN_TEMPLATE_TESTS(MemberFunctionForEacherTests, int)
 THEN_RUN_TEMPLATE_TESTS(MemberFunctionForEacherTests, string)

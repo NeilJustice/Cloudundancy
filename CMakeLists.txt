@@ -3,11 +3,29 @@ project(Cloudundancy)
 include(${CMAKE_SOURCE_DIR}/CMakeMacros.cmake)
 
 if(UNIX)
-   set(CMAKE_CXX_FLAGS "-std=c++2b -Wall -Wextra -pedantic -Werror -pthread -Wno-unused-variable")
    if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-      append(CMAKE_CXX_FLAGS "-Wno-gnu-zero-variadic-macro-arguments")
+      set(CMAKE_CXX_FLAGS "-std=c++2b -Weverything -Werror \
+         -Wno-alloca \
+         -Wno-c++98-compat \
+         -Wno-c++98-compat-pedantic \
+         -Wno-covered-switch-default \
+         -Wno-deprecated-copy-with-dtor \
+         -Wno-disabled-macro-expansion \
+         -Wno-exit-time-destructors \
+         -Wno-extra-semi-stmt \
+         -Wno-global-constructors \
+         -Wno-missing-variable-declarations \
+         -Wno-padded \
+         -Wno-reserved-identifier \
+         -Wno-shadow-field-in-constructor \
+         -Wno-switch-enum \
+         -Wno-unsafe-buffer-usage \
+         -Wno-weak-vtables")
+      if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 21.0.0)
+         append(CMAKE_CXX_FLAGS "-Wno-nrvo")
+      endif ()
    elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-      append(CMAKE_CXX_FLAGS "-fuse-ld=lld")
+      set(CMAKE_CXX_FLAGS "-std=c++2b -Wall -Wextra -pedantic -Werror")
    endif()
    if(FastLinuxDebugBuildMode)
       replace(CMAKE_CXX_FLAGS_DEBUG "-g" "")

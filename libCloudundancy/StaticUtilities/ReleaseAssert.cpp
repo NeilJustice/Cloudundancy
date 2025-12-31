@@ -2,7 +2,7 @@
 #include "libCloudundancy/StaticUtilities/ReleaseAssert.h"
 #include "libCloudundancy/StaticUtilities/StringUtil.h"
 
-void ThrowLogicError(
+[[noreturn]] static void ThrowLogicError(
    const char* predicateExpressionText,
    const char* filePath,
    size_t lineNumber,

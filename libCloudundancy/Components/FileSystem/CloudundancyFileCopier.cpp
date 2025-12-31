@@ -95,7 +95,7 @@ void CloudundancyFileCopier::DoCopyFilteredFilesAndFoldersToDestinationFolder(
       destinationFolderPath, cloudundancyBackupSuccessfulMessage);
 }
 
-void CloudundancyFileCopier::ExceptionHandlerForDoCopyFilteredFilesAndFoldersToDestinationFolder(
+[[noreturn]] void CloudundancyFileCopier::ExceptionHandlerForDoCopyFilteredFilesAndFoldersToDestinationFolder(
    const exception& ex, const pair<fs::path, CloudundancyIni>& destinationFolderPath_cloudundancyIni) const
 {
    const fs::path& destinationFolderPath = destinationFolderPath_cloudundancyIni.first;

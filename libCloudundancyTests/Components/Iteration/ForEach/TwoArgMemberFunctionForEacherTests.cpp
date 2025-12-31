@@ -55,7 +55,7 @@ TEST(CodeCoverage_ClassType_TwoArgConstMemberFunctionFunction)
 {
    const ClassType classInstance{};
    classInstance.TwoArgConstMemberFunctionFunction(ElementType{}, Arg2Type{});
-};
+}
 
 RUN_TEMPLATE_TESTS(TwoArgMemberFunctionForEacherTests, int, int)
 THEN_RUN_TEMPLATE_TESTS(TwoArgMemberFunctionForEacherTests, double, char)

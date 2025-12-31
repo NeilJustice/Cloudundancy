@@ -60,7 +60,7 @@ private:
    void DoCopyFilteredFilesAndFoldersToDestinationFolder(
       const pair<fs::path, CloudundancyIni>& destinationFolderPath_cloudundancyIni) const;
 
-   void ExceptionHandlerForDoCopyFilteredFilesAndFoldersToDestinationFolder(
+   [[noreturn]] void ExceptionHandlerForDoCopyFilteredFilesAndFoldersToDestinationFolder(
       const exception& ex, const pair<fs::path, CloudundancyIni>& destinationFolderPath_cloudundancyIni) const;
 
    void CopyFileOrFolderToFolder(

@@ -15,7 +15,7 @@ static void Function(const T& /*element*/)
 {
 }
 
-static void ThrowsIfCalled(const T& /*element*/)
+[[noreturn]] static void ThrowsIfCalled(const T& /*element*/)
 {
    throw runtime_error("Unexpectedly called");
 }

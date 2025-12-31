@@ -92,7 +92,7 @@ namespace Utils
 
    string ErrorCodeTranslator::GetSystemErrorDescription(int systemErrorValue) const
    {
-   #if _WIN32
+   #ifdef _WIN32
       switch (systemErrorValue)
       {
       case ERROR_SHARING_VIOLATION:

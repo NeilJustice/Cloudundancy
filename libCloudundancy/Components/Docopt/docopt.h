@@ -628,12 +628,12 @@ namespace docopt
          return *this;
       }
 
-      virtual const string& Name() const override
+      [[noreturn]] virtual const string& Name() const override
       {
          throw runtime_error("Logic error: name() shouldnt be called on a BranchPattern");
       }
 
-      virtual const Value& getValue() const
+      [[noreturn]] virtual const Value& getValue() const
       {
          throw runtime_error("Logic error: name() shouldnt be called on a BranchPattern");
       }
