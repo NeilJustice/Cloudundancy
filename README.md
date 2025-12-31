@@ -190,10 +190,6 @@ CXX=clang++ cmake .. -DCMAKE_BUILD_TYPE=Release
 sudo cmake --build . --target install
 ```
 
-Resulting binary `/usr/local/bin/cloudundancy`:
-
-![Binary cloudundancy on Linux](Screenshots/Linux/LinuxBinaryCloudundancy.png)
-
 ## Steps to build executable Cloudundancy.exe on Windows with Visual Studio 2022
 
 ```powershell
@@ -202,10 +198,6 @@ cd Cloudundancy
 cmake . -G"Visual Studio 17 2022" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
 cmake --build . --config Release --target install
 ```
-
-Resulting executable `C:\bin\Cloudundancy.exe`:
-
-![Cloudundancy.exe on Windows](Screenshots/CloudundancyDotExe.png)
 
 ## Thanks to
 
