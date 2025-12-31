@@ -20,12 +20,8 @@ On Linux, a Bash script can be written to run a Google Drive CLI command such as
    * [example-windows-ini-file](#example-windows-ini-file)
    * [copy-files-to-multiple-folders](#copy-files-to-multiple-folders)
    * [7zip-files-then-copy-the-7zip-file-to-multiple-folders](#7zip-files-then-copy-the-7zip-file-to-multiple-folders)
-* [Cloudundancy code structure as it appears in Visual Studio Code on Linux](#cloudundancy-code-structure-as-it-appears-in-visual-studio-code-on-linux)
-* [Cloudundancy code structure as it appears in Visual Studio 2022 on Windows](#cloudundancy-code-structure-as-it-appears-in-visual-studio-2022-on-windows)
-* [Linux Jenkins jobs which build and statically analyze Cloudundancy](#linux-jenkins-jobs-which-build-and-statically-analyze-cloudundancy)
-* [Windows Jenkins jobs which build and statically analyze Cloudundancy](#windows-jenkins-jobs-which-build-and-statically-analyze-cloudundancy)
-* [4 steps to build binary cloudundancy on Linux with Clang](#4-steps-to-build-binary-cloudundancy-on-linux-with-clang)
-* [4 steps to build executable Cloudundancy.exe on Windows with Visual Studio 2022](#4-steps-to-build-executable-cloudundancyexe-on-windows-with-visual-studio-2022)
+* [Steps to build binary cloudundancy on Linux with Clang](#steps-to-build-binary-cloudundancy-on-linux-with-clang)
+* [Steps to build executable Cloudundancy.exe on Windows with Visual Studio 2022](#steps-to-build-executable-cloudundancyexe-on-windows-with-visual-studio-2022)
 * [Thanks to](#thanks-to)
 
 ## Cloudundancy command line usage
@@ -185,23 +181,7 @@ GitHub repos successfully 7-Zipped and copied to a OneDrive folder:
 
 ![One Drive .7z file contents](Screenshots/OneDrive7zFileContents.png)
 
-## Cloudundancy code structure as it appears in Visual Studio Code on Linux
-
-![Cloudundancy code structure as it appears Visual Studio Code on Linux](Screenshots/Linux/CloudundancyCodeStructureInVSCode.png)
-
-## Cloudundancy code structure as it appears in Visual Studio 2022 on Windows
-
-![CloudundancyArgsParser.cpp](Screenshots/Windows/CloudundancyCodeInVisualStudio2022.png)
-
-## Linux Jenkins jobs which build and statically analyze Cloudundancy
-
-![Linux Cloudundancy Jenkins jobs](Screenshots/Linux/LinuxCloudundancyJenkinsJobs.png)
-
-## Windows Jenkins jobs which build and statically analyze Cloudundancy
-
-![Cloudundancy Windows Jenkins jobs](Screenshots/Windows/WindowsJenkinsJobs.png)
-
-## 4 steps to build binary cloudundancy on Linux with Clang
+## Steps to build binary cloudundancy on Linux with Clang
 
 ```bash
 git clone https://github.com/NeilJustice/Cloudundancy
@@ -214,7 +194,7 @@ Resulting binary `/usr/local/bin/cloudundancy`:
 
 ![Binary cloudundancy on Linux](Screenshots/Linux/LinuxBinaryCloudundancy.png)
 
-## 4 steps to build executable Cloudundancy.exe on Windows with Visual Studio 2022
+## Steps to build executable Cloudundancy.exe on Windows with Visual Studio 2022
 
 ```powershell
 git clone https://github.com/NeilJustice/Cloudundancy
@@ -230,3 +210,4 @@ Resulting executable `C:\bin\Cloudundancy.exe`:
 ## Thanks to
 
 <a href="https://brandmark.io">brandmark.io</a> for Cloudundancy's logo
+
