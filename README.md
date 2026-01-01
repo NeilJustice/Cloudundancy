@@ -4,11 +4,11 @@
 
 |Build Type|Build Status|
 |----------|------------|
-|GitHub Actions Clang 18 and GCC 13|<a href="https://github.com/NeilJustice/Cloudundancy/actions/workflows/build.yml"><img src="https://github.com/NeilJustice/Cloudundancy/actions/workflows/build.yml/badge.svg"></a>|
-|AppVeyor Visual Studio 2022|<a href="https://ci.appveyor.com/project/NeilJustice/Cloudundancy"><img src="https://ci.appveyor.com/api/projects/status/ygwr3rb9spwhy4u0?svg=true"></a>
-|Codecov.io GCC lcov code coverage|<a href="https://codecov.io/gh/NeilJustice/Cloudundancy"><img src="https://codecov.io/gh/NeilJustice/Cloudundancy/branch/master/graph/badge.svg?token=khcIKQTiuu"></a>
+|Clang 18 and GCC 13 on ubuntu-latest|<a href="https://github.com/NeilJustice/Cloudundancy/actions/workflows/linux_build.yml"><img src="https://github.com/NeilJustice/Cloudundancy/actions/workflows/linux_build.yml/badge.svg"></a>|
+|VS2022 on windows-latest|<a href="https://github.com/NeilJustice/Cloudundancy/actions/workflows/windows_build.yml"><img src="https://github.com/NeilJustice/Cloudundancy/actions/workflows/windows_build.yml/badge.svg"></a>|
+|GCC lcov code coverage|<a href="https://codecov.io/gh/NeilJustice/Cloudundancy"><img src="https://codecov.io/gh/NeilJustice/Cloudundancy/branch/master/graph/badge.svg?token=khcIKQTiuu"></a>|
 
-Cloudundancy is a cross-platform C++23 command line program for quickly copying a configurable list of files and folders to a configurable list of destination folders to achieve cloud-redundant and device-redundant backups of files.
+Cloudundancy is a C++23 command line program for quickly copying a configurable list of files and folders to a configurable list of destination folders to achieve cloud-redundant and device-redundant backups of files.
 
 For example, on Windows in a Cloudundancy.ini file, destination folders can be configured to be automatic-cloud-uploading Google Drive and Microsoft OneDrive folders `C:\GoogleDrive\CloudundancyBackups` and `C:\OneDrive\CloudundancyBackups`. Double USB backups can also be achieved by adding USB drive paths such as `E:\CloudundancyBackups` and `F:\CloudundancyBackups` to a Cloudundancy.ini file.
 
