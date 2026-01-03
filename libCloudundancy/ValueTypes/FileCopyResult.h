@@ -14,11 +14,15 @@ namespace Utils
 }
 
 #ifdef _WIN32
-#ifdef _DEBUG
-static_assert(sizeof(Utils::FileCopyResult) == 144);
-#else
-static_assert(sizeof(Utils::FileCopyResult) == 120);
-#endif
+   #ifdef _DEBUG
+      static_assert(sizeof(Utils::FileCopyResult) == 144);
+   #else
+      static_assert(sizeof(Utils::FileCopyResult) == 120);
+   #endif
 #elifdef __linux__
-static_assert(sizeof(Utils::FileCopyResult) == 136);
+   #ifdef _LIBCPP_VERSION
+      static_assert(sizeof(Utils::FileCopyResult) == 96);
+   #else
+      static_assert(sizeof(Utils::FileCopyResult) == 136);
+   #endif
 #endif

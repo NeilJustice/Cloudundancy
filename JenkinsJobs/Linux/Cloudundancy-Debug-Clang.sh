@@ -7,5 +7,5 @@ python -u CloudundancyDevOpsPython/CloudundancyDevOpsPython/BuildAndInstallCPlus
    --solution-name=Cloudundancy \
    --cmake-build-type=Debug \
    --tests-project=libCloudundancyTests \
-   --cmake-definitions="-DFastLinuxDebugBuildMode=ON" \
+   --cmake-definitions="-DFastLinuxDebugBuildMode=OFF" \
    --no-install

@@ -9,10 +9,16 @@
 #ifdef _WIN32
 #pragma warning(pop)
 #endif
+#if defined __linux__
+   #ifdef _LIBCPP_VERSION
+      #include <algorithm>
+      #include <sstream>
+      #include <type_traits>
+   #endif
+#endif
 namespace fs = std::filesystem;
 using namespace std;
 
-#include "ZenUnitAndMetalMock/ZenUnit.h"
 #include "ZenUnitAndMetalMock/MetalMock.h"
 
 // libCloudundancy ValueTypes

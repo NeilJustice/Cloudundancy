@@ -7,11 +7,15 @@ struct CloudundancyIniCopyInstruction
 };
 
 #ifdef _WIN32
-#ifdef _DEBUG
-static_assert(sizeof(CloudundancyIniCopyInstruction) == 80);
-#else
-static_assert(sizeof(CloudundancyIniCopyInstruction) == 64);
-#endif
+   #ifdef _DEBUG
+      static_assert(sizeof(CloudundancyIniCopyInstruction) == 80);
+   #else
+      static_assert(sizeof(CloudundancyIniCopyInstruction) == 64);
+   #endif
 #elifdef __linux__
-static_assert(sizeof(CloudundancyIniCopyInstruction) == 80);
+   #ifdef _LIBCPP_VERSION
+      static_assert(sizeof(CloudundancyIniCopyInstruction) == 48);
+   #else
+      static_assert(sizeof(CloudundancyIniCopyInstruction) == 80);
+   #endif
 #endif

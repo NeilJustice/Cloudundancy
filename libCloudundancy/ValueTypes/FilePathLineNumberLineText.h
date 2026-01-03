@@ -11,11 +11,15 @@ struct FilePathLineNumberLineText
 };
 
 #ifdef _WIN32
-#ifdef _DEBUG
-static_assert(sizeof(FilePathLineNumberLineText) == 88);
-#else
-static_assert(sizeof(FilePathLineNumberLineText) == 72);
-#endif
+   #ifdef _DEBUG
+      static_assert(sizeof(FilePathLineNumberLineText) == 88);
+   #else
+      static_assert(sizeof(FilePathLineNumberLineText) == 72);
+   #endif
 #elifdef __linux__
-static_assert(sizeof(FilePathLineNumberLineText) == 80);
+   #ifdef _LIBCPP_VERSION
+      static_assert(sizeof(FilePathLineNumberLineText) == 56);
+   #else
+      static_assert(sizeof(FilePathLineNumberLineText) == 80);
+   #endif
 #endif

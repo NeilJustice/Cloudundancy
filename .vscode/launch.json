@@ -23,7 +23,7 @@
          "miDebuggerPath": "/usr/bin/gdb",
          "miDebuggerArgs": "--quiet",
          "preLaunchTask": "Build Debug",
-         "stopAtEntry": true,
+         "stopAtEntry": false,
          "symbolLoadInfo": {
             "loadAll": true,
             "exceptionList": ""

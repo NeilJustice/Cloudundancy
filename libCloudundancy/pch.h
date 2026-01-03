@@ -10,15 +10,19 @@
 #pragma warning(pop)
 #endif
 
-#if defined __linux__
-   #include <memory>
-   #include <unistd.h>
-#endif
-
 #include <array>
 #include <functional>
 #include <iostream>
 #include <unordered_map>
+#if defined __linux__
+   #include <memory>
+   #include <unistd.h>
+   #ifdef _LIBCPP_VERSION
+      #include <algorithm>
+      #include <sstream>
+      #include <type_traits>
+   #endif
+#endif
 namespace fs = std::filesystem;
 using namespace std;
 

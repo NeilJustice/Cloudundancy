@@ -4,7 +4,8 @@ include(${CMAKE_SOURCE_DIR}/CMakeMacros.cmake)
 
 if(UNIX)
    if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-      set(CMAKE_CXX_FLAGS "-std=c++2b -Weverything -Werror \
+      set(CMAKE_CXX_FLAGS "-std=c++2b -stdlib=libstdc++ \
+         -Weverything -Werror \
          -Wno-alloca \
          -Wno-c++98-compat \
          -Wno-c++98-compat-pedantic \

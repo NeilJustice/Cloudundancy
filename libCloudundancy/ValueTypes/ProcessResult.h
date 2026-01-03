@@ -21,11 +21,15 @@ namespace Utils
 }
 
 #ifdef _WIN32
-#ifdef _DEBUG
-static_assert(sizeof(Utils::ProcessResult) == 136);
-#else
-static_assert(sizeof(Utils::ProcessResult) == 112);
-#endif
+   #ifdef _DEBUG
+      static_assert(sizeof(Utils::ProcessResult) == 136);
+   #else
+      static_assert(sizeof(Utils::ProcessResult) == 112);
+   #endif
 #elifdef __linux__
-static_assert(sizeof(Utils::ProcessResult) == 112);
+   #ifdef _LIBCPP_VERSION
+      static_assert(sizeof(Utils::ProcessResult) == 88);
+   #else
+      static_assert(sizeof(Utils::ProcessResult) == 112);
+   #endif
 #endif

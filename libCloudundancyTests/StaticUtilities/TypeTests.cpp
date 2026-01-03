@@ -27,11 +27,14 @@ TEST(GetName_NonClassNonStructType_ReturnsTypeName)
 {
    ARE_EQUAL("int", *Type::GetName(1));
 #if defined __linux__
-   ARE_EQUAL("decltype(nullptr)", *Type::GetName(nullptr));
-   ARE_EQUAL("char [1]", *Type::GetName(""));
-   ARE_EQUAL("char [2]", *Type::GetName("a"));
-   const char* const ccp = "hello";
-   ARE_EQUAL("char const*", *Type::GetName(ccp));
+   #ifdef _LIBCPP_VERSION
+   #else
+      ARE_EQUAL("decltype(nullptr)", *Type::GetName(nullptr));
+      ARE_EQUAL("char [1]", *Type::GetName(""));
+      ARE_EQUAL("char [2]", *Type::GetName("a"));
+      const char* const ccp = "hello";
+      ARE_EQUAL("char const*", *Type::GetName(ccp));
+   #endif
 #elif _WIN32
    ARE_EQUAL("std::nullptr_t", *Type::GetName(nullptr));
    ARE_EQUAL("char const [1]", *Type::GetName(""));
@@ -45,8 +48,11 @@ TEST(GetName_ClassType_ReturnsTypeNameMinusClassSpace)
 {
    ARE_EQUAL("TypeTests::C", *Type::GetName(C()));
 #if defined __linux__
-   ARE_EQUAL("std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >", *Type::GetName<string>());
-   ARE_EQUAL("std::ostream", *Type::GetName<decltype(cout)>());
+   #ifdef _LIBCPP_VERSION
+   #else
+      ARE_EQUAL("std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >", *Type::GetName<string>());
+      ARE_EQUAL("std::ostream", *Type::GetName<decltype(cout)>());
+   #endif
 #elif _WIN32
    ARE_EQUAL("std::basic_string<char,std::char_traits<char>,std::allocator<char> >", *Type::GetName(string()));
    ARE_EQUAL("std::basic_ostream<char,std::char_traits<char> >", *Type::GetName(cout));
@@ -56,7 +62,12 @@ TEST(GetName_ClassType_ReturnsTypeNameMinusClassSpace)
 TEST(GetName_StructType_ReturnsTypeNameMinusStructSpace)
 {
    ARE_EQUAL("TypeTests::S", *Type::GetName(S()));
-   ARE_EQUAL("std::atomic<int>", *Type::GetName(atomic<int>()));
+#if defined __linux__
+   #ifdef _LIBCPP_VERSION
+   #else
+      ARE_EQUAL("std::atomic<int>", *Type::GetName(atomic<int>()));
+   #endif
+#endif
 }
 
 TEST(GetName_DeclaredAndRuntimeTypeIsDerived_ReturnsDerived)
@@ -81,10 +92,13 @@ TEST(GetNameT_NonClassNonStructType_ReturnsTypeName)
 {
    ARE_EQUAL("int", *Type::GetName<int>());
 #if defined __linux__
-   ARE_EQUAL("decltype(nullptr)", *Type::GetName<std::nullptr_t>());
-   ARE_EQUAL("char [1]", *Type::GetName<decltype("")>());
-   ARE_EQUAL("char [2]", *Type::GetName<decltype("a")>());
-   ARE_EQUAL("char const*", *Type::GetName<const char*>());
+   #ifdef _LIBCPP_VERSION
+   #else
+      ARE_EQUAL("decltype(nullptr)", *Type::GetName<std::nullptr_t>());
+      ARE_EQUAL("char [1]", *Type::GetName<decltype("")>());
+      ARE_EQUAL("char [2]", *Type::GetName<decltype("a")>());
+      ARE_EQUAL("char const*", *Type::GetName<const char*>());
+   #endif
 #elif _WIN32
    ARE_EQUAL("std::nullptr_t", *Type::GetName<std::nullptr_t>());
    ARE_EQUAL("char const [1]", *Type::GetName<decltype("")>());
@@ -99,8 +113,11 @@ TEST(GetNameT_ClassType_ReturnsTypeNameMinusClassSpace)
    ARE_EQUAL("TypeTests::TemplateClass<TypeTests::S>", *Type::GetName<TemplateClass<S>>());
    ARE_EQUAL("TypeTests::C", *Type::GetName<C>());
 #if defined __linux__
-   ARE_EQUAL("std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >", *Type::GetName<string>());
-   ARE_EQUAL("std::ostream", *Type::GetName<decltype(cout)>());
+   #ifdef _LIBCPP_VERSION
+   #else
+      ARE_EQUAL("std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >", *Type::GetName<string>());
+      ARE_EQUAL("std::ostream", *Type::GetName<decltype(cout)>());
+   #endif
 #elif _WIN32
    ARE_EQUAL("std::basic_string<char,std::char_traits<char>,std::allocator<char> >", *Type::GetName<string>());
    ARE_EQUAL("std::basic_ostream<char,std::char_traits<char> >", *Type::GetName<decltype(cout)>());
@@ -110,7 +127,12 @@ TEST(GetNameT_ClassType_ReturnsTypeNameMinusClassSpace)
 TEST(GetNameT_StructType_ReturnsTypeNameMinusStructSpace)
 {
    ARE_EQUAL("TypeTests::S", *Type::GetName<S>());
-   ARE_EQUAL("std::atomic<int>", *Type::GetName<atomic<int>>());
+#ifdef __linux__
+   #ifdef _LIBCPP_VERSION
+   #else
+      ARE_EQUAL("std::atomic<int>", *Type::GetName<atomic<int>>());
+   #endif
+#endif
 }
 
 TEST(GetNameT_ThrownExceptionSubclass_ReturnsBaseClassNameAndNotSubclassName)
@@ -137,7 +159,10 @@ TEST(GetExceptionClassNameAndMessage_ReturnsExceptionClassNameColonSpaceExceptio
 {
    const exception ex{};
 #if defined __linux__
-   ARE_EQUAL("std::exception: std::exception", Type::GetExceptionClassNameAndMessage(&ex));
+   #ifdef _LIBCPP_VERSION
+   #else
+      ARE_EQUAL("std::exception: std::exception", Type::GetExceptionClassNameAndMessage(&ex));
+   #endif
 #elif _WIN32
    ARE_EQUAL("std::exception: Unknown exception", Type::GetExceptionClassNameAndMessage(&ex));
 #endif
