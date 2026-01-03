@@ -1,17 +1,23 @@
 {
     "configurations": [
         {
-            "name": "Linux",
+            "name": "Linux-Clang",
+            "browse": {
+                "path": [
+                    "/usr/include",
+                    "/usr/local/include/ZenUnitAndMetalMock",
+                    "${workspaceFolder}/**"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "compilerPath": "/usr/bin/clang++",
+            "cppStandard": "c++23",
             "includePath": [
                 "/usr/include",
                 "/usr/local/include/ZenUnitAndMetalMock",
-                "${workspaceFolder}",
-                "${workspaceFolder}/libCloudundancy",
-                "${workspaceFolder}/libCloudundancyTests"
+                "${workspaceFolder}/**"
             ],
-            "intelliSenseMode": "clang-x64",
-            "compilerPath": "/usr/bin/clang",
-            "cppStandard": "c++23"
+            "intelliSenseMode": "clang-x64"
         }
     ],
     "version": 4

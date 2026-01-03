@@ -1,6 +1,35 @@
 {
    "version": "0.2.0",
    "configurations": [
+      {
+         "name": "Debug libCloudundancyTests",
+         "type": "cppdbg",
+         "request": "launch",
+         "cwd": "${workspaceFolder}",
+         "program": "${workspaceRoot}/Debug/libCloudundancyTests/libCloudundancyTests",
+         //"args": [ "" ],
+         "externalConsole": false,
+         "internalConsoleOptions": "openOnSessionStart",
+         "logging": {
+            "engineLogging": false,
+            "trace": false,
+            "traceResponse": false,
+            "programOutput": false,
+            "exceptions": false,
+            "moduleLoad": true,
+            "natvisDiagnostics": false
+         },
+         "MIMode": "gdb",
+         "miDebuggerPath": "/usr/bin/gdb",
+         "miDebuggerArgs": "--quiet",
+         "preLaunchTask": "Build Debug",
+         "stopAtEntry": true,
+         "symbolLoadInfo": {
+            "loadAll": true,
+            "exceptionList": ""
+         },
+         
+      }
       // {
       //    "name": "Debug Cloudundancy",
       //    "type": "cppdbg",
@@ -14,17 +43,6 @@
       //    "MIMode": "gdb",
       //    "miDebuggerPath": "/usr/bin/gdb",
       //    "preLaunchTask": "Build Debug"
-      // },
-      {
-         "name": "Debug libCloudundancyTests",
-         "type": "cppdbg",
-         "request": "launch",
-         "program": "${workspaceRoot}/Debug/libCloudundancyTests/libCloudundancyTests",
-         "stopAtEntry": true,
-         "cwd": "${workspaceFolder}",
-         "MIMode": "gdb",
-         "miDebuggerPath": "/usr/bin/gdb",
-         "preLaunchTask": "Build Debug"
-      }
+      // }
    ]
 }
