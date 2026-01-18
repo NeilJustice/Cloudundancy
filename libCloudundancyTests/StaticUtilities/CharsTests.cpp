@@ -16,9 +16,9 @@ EVIDENCE
 
 TEST(OneOrTwoDigitSizeTToTwoChars_ValueIs0_Writes00)
 {
-   char chars[2]{};
+   array<char, 2> chars{};
    //
-   Chars::OneOrTwoDigitSizeTToTwoChars(0, chars);
+   Chars::OneOrTwoDigitSizeTToTwoChars(0, chars.data());
    //
    ARE_EQUAL('0', chars[0]);
    ARE_EQUAL('0', chars[1]);
@@ -26,9 +26,9 @@ TEST(OneOrTwoDigitSizeTToTwoChars_ValueIs0_Writes00)
 
 TEST(OneOrTwoDigitSizeTToTwoChars_ValueIs1_Writes01)
 {
-   char chars[2]{};
+   array<char, 2> chars{};
    //
-   Chars::OneOrTwoDigitSizeTToTwoChars(1, chars);
+   Chars::OneOrTwoDigitSizeTToTwoChars(1, chars.data());
    //
    ARE_EQUAL('0', chars[0]);
    ARE_EQUAL('1', chars[1]);
@@ -36,9 +36,9 @@ TEST(OneOrTwoDigitSizeTToTwoChars_ValueIs1_Writes01)
 
 TEST(OneOrTwoDigitSizeTToTwoChars_ValueIs12_Writes12)
 {
-   char chars[2]{};
+   array<char, 2> chars{};
    //
-   Chars::OneOrTwoDigitSizeTToTwoChars(12, chars);
+   Chars::OneOrTwoDigitSizeTToTwoChars(12, chars.data());
    //
    ARE_EQUAL('1', chars[0]);
    ARE_EQUAL('2', chars[1]);
@@ -46,9 +46,9 @@ TEST(OneOrTwoDigitSizeTToTwoChars_ValueIs12_Writes12)
 
 TEST(OneOrTwoDigitSizeTToTwoChars_ValueIs99_Writes99)
 {
-   char chars[2]{};
+   array<char, 2> chars{};
    //
-   Chars::OneOrTwoDigitSizeTToTwoChars(99, chars);
+   Chars::OneOrTwoDigitSizeTToTwoChars(99, chars.data());
    //
    ARE_EQUAL('9', chars[0]);
    ARE_EQUAL('9', chars[1]);
@@ -81,9 +81,9 @@ TEST1X1(FourDigitSizeTToFourChars_ValueLessThan1000OrGreaterThan9999_ThrowsOutOf
 
 TEST(FourDigitSizeTToFourChars_ValueBetween_1000_WritesValueAsChars)
 {
-   char chars[4]{};
+   array<char, 4> chars{};
    //
-   Chars::FourDigitSizeTToFourChars(1000ULL, chars);
+   Chars::FourDigitSizeTToFourChars(1000ULL, chars.data());
    //
    ARE_EQUAL('1', chars[0]);
    ARE_EQUAL('0', chars[1]);
@@ -93,9 +93,9 @@ TEST(FourDigitSizeTToFourChars_ValueBetween_1000_WritesValueAsChars)
 
 TEST(FourDigitSizeTToFourChars_ValueBetween_1200_WritesValueAsChars)
 {
-   char chars[4]{};
+   array<char, 4> chars{};
    //
-   Chars::FourDigitSizeTToFourChars(1200ULL, chars);
+   Chars::FourDigitSizeTToFourChars(1200ULL, chars.data());
    //
    ARE_EQUAL('1', chars[0]);
    ARE_EQUAL('2', chars[1]);
@@ -105,9 +105,9 @@ TEST(FourDigitSizeTToFourChars_ValueBetween_1200_WritesValueAsChars)
 
 TEST(FourDigitSizeTToFourChars_ValueBetween_1230_WritesValueAsChars)
 {
-   char chars[4]{};
+   array<char, 4> chars{};
    //
-   Chars::FourDigitSizeTToFourChars(1230ULL, chars);
+   Chars::FourDigitSizeTToFourChars(1230ULL, chars.data());
    //
    ARE_EQUAL('1', chars[0]);
    ARE_EQUAL('2', chars[1]);
@@ -117,9 +117,9 @@ TEST(FourDigitSizeTToFourChars_ValueBetween_1230_WritesValueAsChars)
 
 TEST(FourDigitSizeTToFourChars_ValueBetween_1234_WritesValueAsChars)
 {
-   char chars[4]{};
+   array<char, 4> chars{};
    //
-   Chars::FourDigitSizeTToFourChars(1234ULL, chars);
+   Chars::FourDigitSizeTToFourChars(1234ULL, chars.data());
    //
    ARE_EQUAL('1', chars[0]);
    ARE_EQUAL('2', chars[1]);

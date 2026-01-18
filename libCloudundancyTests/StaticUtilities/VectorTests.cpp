@@ -14,15 +14,15 @@ EVIDENCE
 
 TEST(ArgcArgvToStringVector_ReturnsArgsAsStringVector)
 {
-   const char* const chars1[] = { "ExePath" };
+   const char* const chars1[] = { "ExePath" }; // NOLINT
    const vector<string> expectedArgsA = { "ExePath" };
    VECTORS_ARE_EQUAL(expectedArgsA, Vector::ArgcArgvToStringVector(1, const_cast<char**>(chars1)));
 
-   const char* const chars2[] = { "ExePath", "Arg1" };
+   const char* const chars2[] = { "ExePath", "Arg1" }; // NOLINT
    const vector<string> expectedArgsB = { "ExePath", "Arg1" };
    VECTORS_ARE_EQUAL(expectedArgsB, Vector::ArgcArgvToStringVector(2, const_cast<char**>(chars2)));
 
-   const char* const chars3[] = { "ExePath", "Arg1", "Arg2" };
+   const char* const chars3[] = { "ExePath", "Arg1", "Arg2" }; // NOLINT
    const vector<string> expectedArgsC = { "ExePath", "Arg1", "Arg2" };
    VECTORS_ARE_EQUAL(expectedArgsC, Vector::ArgcArgvToStringVector(3, const_cast<char**>(chars3)));
 }

@@ -6,6 +6,7 @@
 CloudundancyFileSystem::CloudundancyFileSystem()
    // Function Pointers
    : _call_fs_exists_as_assignable_function_overload_pointer(fs::exists)
+   , _call_fs_exists(_call_fs_exists_as_assignable_function_overload_pointer)
    // Function Callers
    , _forEacher_DeleteContentsOfFolderExceptForFileName(make_unique<_forEacher_DeleteContentsOfFolderExceptForFileNameType>())
    // Constant Components
@@ -13,7 +14,6 @@ CloudundancyFileSystem::CloudundancyFileSystem()
    , _fileSystem(make_unique<Utils::FileSystem>())
    , _passthroughFileSystem(make_unique<PassthroughFileSystem>())
 {
-   _call_fs_exists = _call_fs_exists_as_assignable_function_overload_pointer;
 }
 
 CloudundancyFileSystem::~CloudundancyFileSystem()

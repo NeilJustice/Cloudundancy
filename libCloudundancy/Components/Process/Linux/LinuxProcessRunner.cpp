@@ -24,7 +24,7 @@ namespace Utils
    // LCOV_EXCL_START
    ProcessResult LinuxProcessRunner::Run(string_view processName, string_view arguments) const
    {
-      const unique_ptr<char*[]> argv = MakeArgv(processName, arguments);
+      const unique_ptr<char*[]> argv = MakeArgv(processName, arguments); // NOLINT
       pid_t pid = 0;
       const int posixSpawnpReturnValue = posix_spawnp(&pid, processName.data(), nullptr, nullptr, argv.get(), nullptr);
       ThrowRuntimeErrorIfPosixSpawnpReturnValueNot0(posixSpawnpReturnValue);
@@ -57,12 +57,12 @@ namespace Utils
 
    // Private Functions
 
-   unique_ptr<char*[]> LinuxProcessRunner::MakeArgv(string_view processName, string_view arguments)
+   unique_ptr<char*[]> LinuxProcessRunner::MakeArgv(string_view processName, string_view arguments) // NOLINT
    {
       const vector<string> spaceSplitArguments = Utils::String::Split(arguments, ' ');
       constexpr size_t ProcessNameArgv = 1;
       constexpr size_t TerminatingNullArgv = 1;
-      unique_ptr<char*[]> argv = make_unique<char*[]>(ProcessNameArgv + spaceSplitArguments.size() + TerminatingNullArgv);
+      unique_ptr<char*[]> argv = make_unique<char*[]>(ProcessNameArgv + spaceSplitArguments.size() + TerminatingNullArgv); // NOLINT
       argv[0] = const_cast<char*>(processName.data());
       for (size_t i = 1; i <= spaceSplitArguments.size(); ++i)
       {

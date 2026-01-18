@@ -85,7 +85,7 @@ TEST(MakeArgv_ArgumentsAreEmpty_ReturnsProcessNameFollowedByNullptr)
 {
    const string processName = ZenUnit::Random<string>();
    //
-   const unique_ptr<char*[]> argv = Utils::LinuxProcessRunner::MakeArgv(processName, "");
+   const unique_ptr<char*[]> argv = Utils::LinuxProcessRunner::MakeArgv(processName, ""); // NOLINT
    //
    ARE_EQUAL(processName.c_str(), argv.get()[0]);
    ARE_EQUAL(nullptr, argv.get()[1]);
@@ -98,7 +98,7 @@ TEST(MakeArgv_ArgumentsAreNotEmpty_ReturnsProcessNameFollowedBySpaceSeparatedArg
    const string argument2 = ZenUnit::Random<string>();
    const string arguments = argument1 + " " + argument2;
    //
-   const unique_ptr<char*[]> argv = Utils::LinuxProcessRunner::MakeArgv(processName, arguments);
+   const unique_ptr<char*[]> argv = Utils::LinuxProcessRunner::MakeArgv(processName, arguments); // NOLINT
    //
    IS_NOT_NULLPTR(argv.get()[0]);
    IS_NOT_NULLPTR(argv.get()[1]);

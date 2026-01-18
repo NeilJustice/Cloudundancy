@@ -17,9 +17,9 @@ namespace Utils
    std::string Watch::DateTimeNow() const
    {
       const tm tmNow = TMNow();
-      char dateTimeNowChars[32]{};
-      strftime(dateTimeNowChars, sizeof(dateTimeNowChars), "%F %r", &tmNow);
-      std::string dateTimeNowString(dateTimeNowChars);
+      array<char, 32> dateTimeNowChars{};
+      strftime(dateTimeNowChars.data(), sizeof(dateTimeNowChars), "%F %r", &tmNow);
+      std::string dateTimeNowString(dateTimeNowChars.data());
       return dateTimeNowString;
    }
 
@@ -29,7 +29,7 @@ namespace Utils
       const tm tmNow = _crtWatch->TmNow();
       // 16 == strlen("2100-01-01T00-00-00")
       //               0123456789012345678
-      array<char, 19> chars;
+      array<char, 19> chars{};
       Write8601Date(tmNow, chars.data());
       chars[10] = 'T';
       Chars::OneOrTwoDigitSizeTToTwoChars(static_cast<size_t>(tmNow.tm_hour), chars.data() + 11);

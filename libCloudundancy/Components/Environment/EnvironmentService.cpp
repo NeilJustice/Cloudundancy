@@ -17,11 +17,11 @@ namespace Utils
 
    string EnvironmentService::MachineName() const
    {
-      char linuxMachineNameChars[65]{};
-      const int gethostnameResult = _call_gethostname(linuxMachineNameChars, sizeof(linuxMachineNameChars));
+      array<char, 65> linuxMachineNameChars{};
+      const int gethostnameResult = _call_gethostname(linuxMachineNameChars.data(), sizeof(linuxMachineNameChars));
       _asserter->ThrowIfIntsNotEqual(0, gethostnameResult,
          "_call_gethostname(hostname, sizeof(hostname)) unexpectedly did not return 0");
-      string linuxMachineName(linuxMachineNameChars);
+      string linuxMachineName(linuxMachineNameChars.data());
       return linuxMachineName;
    }
 

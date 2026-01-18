@@ -39,7 +39,7 @@ TEST(TestableRandomtm_ReturnsTmWithAllRandomFields)
    const tm randomTm = TestableRandomtm(&randomGeneratorMock);
    //
    METALMOCK(randomGeneratorMock.IntMock.CalledNTimes(9));
-   tm expectedRandomTm;
+   tm expectedRandomTm{};
    expectedRandomTm.tm_sec = tm_sec;
    expectedRandomTm.tm_min = tm_min;
    expectedRandomTm.tm_hour = tm_hour;

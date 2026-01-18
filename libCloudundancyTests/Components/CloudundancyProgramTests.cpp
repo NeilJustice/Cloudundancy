@@ -87,11 +87,11 @@ TEST(Main_ArgcIs2OrGreater_CallsTryCatchCallRunWithStringArgs_ReturnsExitCodeFro
    const int argc = 2;
    const string exePath = ZenUnit::Random<string>();
    const string commandLineArgument = ZenUnit::Random<string>();
-   const char* const argv[] = { exePath.c_str(), commandLineArgument.c_str() };
+   const char* const argv[] = { exePath.c_str(), commandLineArgument.c_str() }; // NOLINT
    //
    const int exitCode = _cloudundancyProgram.Main(argc, const_cast<char**>(argv));
    //
-   METALMOCKTHEN(_call_Vector_ArgcArgvToStringVectorMock.CalledOnceWith(argc, const_cast<char**>(argv))).Then(
+   METALMOCKTHEN(_call_Vector_ArgcArgvToStringVectorMock.CalledOnceWith(argc, const_cast<char**>(argv))).Then( // NOLINT
    METALMOCKTHEN(_tryCatchCallerMock->TryCatchCallNonConstMemberFunctionMock.CalledOnceWith(
       &_cloudundancyProgram, &CloudundancyProgram::Run, stringArgs, &CloudundancyProgram::ExceptionHandler)));
    ARE_EQUAL(tryCatchCallReturnValue, exitCode);

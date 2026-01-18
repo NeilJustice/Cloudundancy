@@ -12,7 +12,7 @@ EVIDENCE
 class Class
 {
 public:
-   mutable bool doThrowException;
+   mutable bool doThrowException = false;
    mutable vector<ArgumentType> calls;
    int exitCode;
 
@@ -21,11 +21,10 @@ public:
    int exceptionHandlerExitCode;
 
    Class()
-      : doThrowException(false)
+      : exitCode(ZenUnit::Random<int>())
+      , exceptionMessage(ZenUnit::Random<string>())
+      , exceptionHandlerExitCode(ZenUnit::Random<int>())
    {
-      exitCode = ZenUnit::Random<int>();
-      exceptionMessage = ZenUnit::Random<string>();
-      exceptionHandlerExitCode = ZenUnit::Random<int>();
    }
 
    int NonConstMemberFunction(ArgumentType argument)

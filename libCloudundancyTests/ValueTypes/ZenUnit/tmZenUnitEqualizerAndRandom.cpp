@@ -18,7 +18,7 @@ namespace ZenUnit
 
    tm TestableRandomtm(const RandomGenerator* randomGenerator)
    {
-      tm randomTm;
+      tm randomTm{};
       randomTm.tm_sec = randomGenerator->Int();
       randomTm.tm_min = randomGenerator->Int();
       randomTm.tm_hour = randomGenerator->Int();

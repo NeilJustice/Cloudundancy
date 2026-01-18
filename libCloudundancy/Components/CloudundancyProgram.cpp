@@ -27,7 +27,7 @@ CloudundancyProgram::~CloudundancyProgram()
 {
 }
 
-int CloudundancyProgram::Main(int argc, char* argv[])
+int CloudundancyProgram::Main(int argc, char* argv[]) // NOLINT
 {
    if (argc == 1)
    {

@@ -54,17 +54,27 @@ private:
    size_t numberOfCalls = 0;
    char* _outLinuxMachineNameChars = nullptr;
    size_t _linuxMachineNameCharsSize = 0;
+
+   string _outLinuxMachineNameCharsReturnValue;
+   int _returnValue = 0;
 public:
-   string outLinuxMachineNameCharsReturnValue;
-   int returnValue = 0;
+   void SetLinuxMachineNameCharsReturnValue(string_view linuxMachineNameCharsReturnValue)
+   {
+      _outLinuxMachineNameCharsReturnValue = linuxMachineNameCharsReturnValue;
+   }
+
+   void SetGetHostNameReturnValue(int getHostNameReturnValue)
+   {
+      _returnValue = getHostNameReturnValue;
+   }
 
    int CallInstead(char* outLinuxMachineNameChars, size_t linuxMachineNameCharsSize)
    {
       ++numberOfCalls;
       _outLinuxMachineNameChars = outLinuxMachineNameChars;
-      memcpy(outLinuxMachineNameChars, outLinuxMachineNameCharsReturnValue.c_str(), outLinuxMachineNameCharsReturnValue.size());
+      memcpy(outLinuxMachineNameChars, _outLinuxMachineNameCharsReturnValue.c_str(), _outLinuxMachineNameCharsReturnValue.size());
       _linuxMachineNameCharsSize = linuxMachineNameCharsSize;
-      return returnValue;
+      return _returnValue;
    }
 
    void CalledOnceWith(size_t expectedOutLinuxMachineNameCharsSize)
@@ -77,7 +87,10 @@ public:
 
 TEST(MachineName_ReturnsResultOfCallinggethostname)
 {
-   _gethostnameMock_CallInstead.outLinuxMachineNameCharsReturnValue = ZenUnit::Random<string>();
+   const string linuxMachineNameCharsReturnValue = ZenUnit::Random<string>();
+   _gethostnameMock_CallInstead.SetLinuxMachineNameCharsReturnValue(linuxMachineNameCharsReturnValue);
+   const int getHostnameReturnValue = ZenUnit::Random<int>();
+   _gethostnameMock_CallInstead.SetGetHostNameReturnValue(getHostnameReturnValue);
    gethostnameMock.CallInstead(std::bind(
       &gethostnameMock_CallInstead::CallInstead, &_gethostnameMock_CallInstead, placeholders::_1, placeholders::_2));
    _asserterMock->ThrowIfIntsNotEqualMock.Expect();
@@ -85,11 +98,11 @@ TEST(MachineName_ReturnsResultOfCallinggethostname)
    const string linuxMachineName = _environmentService.MachineName();
    //
    METALMOCK(_asserterMock->ThrowIfIntsNotEqualMock.CalledOnceWith(
-      0, _gethostnameMock_CallInstead.returnValue,
+      0, getHostnameReturnValue,
       "_call_gethostname(hostname, sizeof(hostname)) unexpectedly did not return 0"));
    _gethostnameMock_CallInstead.CalledOnceWith(65);
    const string expectedLinuxMachineName{};
-   ARE_EQUAL(_gethostnameMock_CallInstead.outLinuxMachineNameCharsReturnValue, linuxMachineName);
+   ARE_EQUAL(linuxMachineNameCharsReturnValue, linuxMachineName);
 }
 
 TEST(UserName_ReturnsResultOfCallinggetlogin_r)

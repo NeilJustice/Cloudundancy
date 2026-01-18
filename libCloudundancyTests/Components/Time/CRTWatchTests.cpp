@@ -55,6 +55,11 @@ struct localtimeCallHistory
    tm returnValue;
    time_t timeTArgument = 0;
 
+   localtimeCallHistory()
+      : returnValue()
+   {
+   }
+
    tm* RecordCall(const time_t* timeT)
    {
       ++numberOfCalls;
