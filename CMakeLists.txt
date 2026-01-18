@@ -15,12 +15,15 @@ if(UNIX)
          -Wno-exit-time-destructors \
          -Wno-extra-semi-stmt \
          -Wno-global-constructors \
+         -Wno-gnu-zero-variadic-macro-arguments \
+         -Wno-header-hygiene \
          -Wno-missing-variable-declarations \
          -Wno-padded \
          -Wno-reserved-identifier \
          -Wno-shadow-field-in-constructor \
          -Wno-switch-enum \
          -Wno-unsafe-buffer-usage \
+         -Wno-unused-template \
          -Wno-weak-vtables")
       if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 21.0.0)
          append(CMAKE_CXX_FLAGS "-Wno-nrvo")
