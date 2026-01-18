@@ -27,7 +27,7 @@ if(UNIX)
          -Wno-weak-vtables")
       if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 21.0.0)
          append(CMAKE_CXX_FLAGS "-Wno-nrvo")
-      endif ()
+      endif()
    elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
       set(CMAKE_CXX_FLAGS "-std=c++2b -Wall -Wextra -pedantic -Werror")
    endif()
@@ -41,6 +41,11 @@ if(UNIX)
    endif()
    if(ClangTidyMode)
       set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+      include(ProcessorCount)
+      ProcessorCount(NumberOfCores)
+      add_custom_target(clang-tidy COMMAND
+         find -name "*.cpp" -not -path "*/CMakeFiles/*" -print0 | xargs -0 -n 1 -P ${NumberOfCores} -t clang-tidy -p ${CMAKE_BUILD_TYPE} -config-file=/code/CMakeUtils/clang-tidy-config.txt -extra-arg=-std=c++2b -extra-arg=-Wno-unknown-warning-option
+         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} VERBATIM USES_TERMINAL)
       message("ClangTidyMode enabled: CMAKE_EXPORT_COMPILE_COMMANDS set to ON")
    elseif(ClangUndefinedBehaviorSanitizerMode)
       replace(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-g" "")
@@ -78,10 +83,3 @@ add_subdirectory(libCloudundancyTests)
 
 set(CMAKE_CONFIGURATION_TYPES "Debug;RelWithDebInfo")
 
-if(UNIX)
-   include(ProcessorCount)
-   ProcessorCount(NumberOfCores)
-   add_custom_target(clang-tidy COMMAND
-      find -name "*.cpp" -not -path "*/CMakeFiles/*" -print0 | xargs -0 -n 1 -P ${NumberOfCores} -t clang-tidy -p ${CMAKE_BUILD_TYPE}
-      WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} VERBATIM USES_TERMINAL)
-endif()
