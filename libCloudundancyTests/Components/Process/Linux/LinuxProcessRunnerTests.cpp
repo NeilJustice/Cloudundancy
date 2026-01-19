@@ -5,6 +5,7 @@
 #include "libCloudundancyTests/Components/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
 
 TESTS(LinuxProcessRunnerTests)
+AFACT(Run_DoesSo)
 AFACT(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
 AFACT(FailFastRun_RunReturnsNon0ExitCode_WritesErrorMessageAndExitsProgramWithProcessExitCode)
 // Private Functions
@@ -33,6 +34,13 @@ STARTUP
    // Constant Components
    _linuxProcessRunner._console.reset(_consoleMock = new Utils::ConsoleMock);
    _linuxProcessRunner._errorCodeTranslator.reset(_errorCodeTranslatorMock = new Utils::ErrorCodeTranslatorMock);
+}
+
+TEST(Run_DoesSo)
+{
+   const Utils::ProcessResult processResult = _linuxProcessRunner.Run("whoami", "");
+   //
+   IS_ZERO(0, processResult.exitCode);
 }
 
 TEST(FailFastRun_RunReturnsExitCode0_ReturnsProcessResult)
