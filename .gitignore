@@ -31,7 +31,7 @@ x64/
 *.opendb
 *.pch
 *.pdb
-*.sln
+*.slnx
 *.suo
 *.tmp
 *.tlog
