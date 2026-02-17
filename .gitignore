@@ -31,22 +31,19 @@ x64/
 *.opendb
 *.pch
 *.pdb
+*.psess
 *.slnx
 *.suo
 *.tmp
 *.tlog
 *.user
-*.psess
 *.vcxproj
 *.vspx
-debug.log
 install_manifest.txt
-!CloudundancyDevOpsPython/CloudundancyDevOpsPython.sln
 
 # Python
 __pycache__/
 CodeCoverageHTMLReport/
-CloudundancyDevOpsPython/CloudundancyDevOpsPythonTests/CoberturaCodeCoverageResults_CloudundancyDevOpsPythonTests.xml
 htmlcov/
 .coverage
 coverage.xml

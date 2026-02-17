@@ -1,8 +1,5 @@
-$env:PYTHONPATH="CloudundancyDevOpsPython"
-python.exe -u CloudundancyDevOpsPython\CloudundancyDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
+WindowsCPlusPlusBuilder.exe build-cpp-program `
    --solution-name=Cloudundancy `
-   --cmake-build-type=RelWithDebInfo `
-   --tests-project-name=libCloudundancyTests `
-   --cmake-definitions="-DCMAKE_INSTALL_PREFIX=C:\\" `
-   --install
+   --configuration=RelWithDebInfo `
+   --install=true
 exit $LastExitCode
