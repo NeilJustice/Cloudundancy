@@ -1,77 +1,88 @@
 #include "pch.h"
+#include "docopt/docopt.h"
 #include "libCloudundancy/Components/Docopt/DocoptParser.h"
+#include "libCloudundancy/StaticUtilities/Map.h"
 
-namespace Utils
+map<string, docopt::value> DocoptParser::ParseArgs(
+   const string& usage, const vector<string>& argv) const
 {
-   DocoptParser::DocoptParser()
-      : _call_docopt_docopt(docopt::docopt)
+   if (argv.empty())
    {
+      throw invalid_argument("argv cannot be empty");
    }
+   const vector<string> argvWithoutFirstArgument(argv.data() + 1, argv.data() + argv.size());
+   map<string, docopt::value> argPairs = docopt::docopt(
+      usage,
+      argvWithoutFirstArgument,
+      true,
+      "",
+      false);
+   return argPairs;
+}
 
-   DocoptParser::~DocoptParser()
+string DocoptParser::GetRequiredString(
+   const map<string, docopt::value>& docoptArgs, const string& argName) const
+{
+   const docopt::value docoptValue = Map::At(docoptArgs, argName);
+   const string& stringArg = docoptValue.asString();
+   return stringArg;
+}
+
+bool DocoptParser::GetRequiredBool(
+   const map<string, docopt::value>& docoptArgs, const string& argName) const
+{
+   const docopt::value docoptValue = Map::At(docoptArgs, argName);
+   const bool boolValue = docoptValue.asBool();
+   return boolValue;
+}
+
+string DocoptParser::GetProgramModeSpecificRequiredString(
+   const map<string, docopt::value>& docoptArgs, unsigned modeValue, unsigned fieldIsRequiredIfModeEqualsThisValue, const string& argName) const
+{
+   if (modeValue == fieldIsRequiredIfModeEqualsThisValue)
    {
+      const docopt::value docoptValue = Map::At(docoptArgs, argName);
+      const string& stringValue = docoptValue.asString();
+      return stringValue;
    }
+   return string();
+}
 
-   map<string, docopt::Value> DocoptParser::ParseArgs(const string& commandLineUsage, const vector<string>& argv) const
+bool DocoptParser::GetOptionalBool(
+   const map<string, docopt::value>& docoptArgs, const string& argName) const
+{
+   docopt::value docoptValue;
+   if (Map::TryGetValue(docoptArgs, argName, docoptValue))
    {
-      if (argv.empty())
-      {
-         throw invalid_argument("argv cannot be empty");
-      }
-      const vector<string> argvWithoutFirstArgument(argv.data() + 1, argv.data() + argv.size());
-      map<string, docopt::Value> argPairs =
-         _call_docopt_docopt(commandLineUsage, argvWithoutFirstArgument, true, "", false);
-      return argPairs;
-   }
-
-   string DocoptParser::GetRequiredString(const map<string, docopt::Value>& docoptArgs, const string& argName) const
-   {
-      const docopt::Value docoptValue = Map::At(docoptArgs, argName);
-      const string& stringArg = docoptValue.AsString();
-      return stringArg;
-   }
-
-   bool DocoptParser::GetRequiredBool(const map<string, docopt::Value>& docoptArgs, const string& argName) const
-   {
-      const docopt::Value docoptValue = Map::At(docoptArgs, argName);
-      const bool boolValue = docoptValue.AsBool();
+      const bool boolValue = docoptValue.asBool();
       return boolValue;
    }
+   return false;
+}
 
-   string DocoptParser::GetProgramModeSpecificRequiredString(
-      const map<string, docopt::Value>& docoptArgs,
-      int programModeAsInt,
-      int fieldIsRequiredIfProgramModeIntEqualsThisValue,
-      const string& argName) const
+string DocoptParser::GetOptionalString(
+   const map<string, docopt::value>& docoptArgs, const string& argName) const
+{
+   docopt::value docoptValue;
+   if (Map::TryGetValue(docoptArgs, argName, docoptValue))
    {
-      if (programModeAsInt == fieldIsRequiredIfProgramModeIntEqualsThisValue)
+      const string& stringValue = docoptValue.asString();
+      return stringValue;
+   }
+   return string();
+}
+
+string DocoptParser::GetOptionalStringWithDefaultValue(
+   const map<string, docopt::value>& docoptArgs, string_view argName, string_view defaultValue) const
+{
+   docopt::value docoptValue;
+   if (Map::TryGetValue(docoptArgs, string(argName), docoptValue))
+   {
+      if (docoptValue.isString())
       {
-         const docopt::Value docoptValue = Map::At(docoptArgs, argName);
-         const string& stringValue = docoptValue.AsString();
+         const string& stringValue = docoptValue.asString();
          return stringValue;
       }
-      return string();
    }
-
-   bool DocoptParser::GetOptionalBool(const map<string, docopt::Value>& docoptArgs, const string& argName) const
-   {
-      const pair<bool, docopt::Value> didGetDocoptValueAndDocoptValue = Map::TryGetValue(docoptArgs, argName);
-      if (!didGetDocoptValueAndDocoptValue.first)
-      {
-         return false;
-      }
-      const bool boolValue = didGetDocoptValueAndDocoptValue.second.AsBool();
-      return boolValue;
-   }
-
-   string DocoptParser::GetOptionalString(const map<string, docopt::Value>& docoptArgs, const string& argName) const
-   {
-      const pair<bool, docopt::Value> didGetDocoptValueAndDocoptValue = Map::TryGetValue(docoptArgs, argName);
-      if (!didGetDocoptValueAndDocoptValue.first)
-      {
-         return string();
-      }
-      const string& optionalStringValue = didGetDocoptValueAndDocoptValue.second.AsString();
-      return optionalStringValue;
-   }
+   return string(defaultValue);
 }

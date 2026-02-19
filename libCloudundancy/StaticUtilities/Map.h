@@ -1,20 +1,19 @@
 #pragma once
+#include "libCloudundancy/Compiler/CompilerHints.h"
 
 class Map
 {
 public:
-   Map() = delete;
-
    template<
       template<typename...>
       typename MapType,
-      typename KeyType, typename ValueType, typename... Types>
-      static const ValueType& At(const MapType<KeyType, ValueType, Types...>& m, const KeyType& key)
+   typename KeyType, typename ValueType, typename... Types>
+   static const ValueType& At(const MapType<KeyType, ValueType, Types...>& m, const KeyType& key)
    {
       try
       {
-         const ValueType& value = m.at(key);
-         return value;
+         const ValueType& Value = m.at(key);
+         return Value;
       }
       // When std::map::at() throws out_of_range, its what() text reads just "key not found",
       // not including in the message the key not found.
@@ -24,58 +23,25 @@ public:
       }
    }
 
-   template<typename MapType, typename KeyType>
-   static bool ContainsKey(const MapType& m, const KeyType& key)
+   template<typename MapType, typename KeyType, typename ValueType>
+   static bool TryGetValue(const MapType& m, const KeyType& key, ValueType& outValue)
    {
-      const bool keyIsInMap = m.find(key) != m.end();
-      return keyIsInMap;
-   }
-
-   template<
-      template<typename...>
-      typename MapType,
-      typename KeyType, typename ValueType>
-   static pair<bool, ValueType> TryGetValue(const MapType<KeyType, ValueType>& m, const KeyType& key)
-   {
-      const typename MapType<KeyType, ValueType>::const_iterator findIter = m.find(key);
+      const typename MapType::const_iterator findIter = m.find(key);
       if (findIter != m.end())
       {
-         const pair<bool, ValueType> trueAndValueInMap = { true, findIter->second };
-         return trueAndValueInMap;
+         outValue = findIter->second;
+         return true;
       }
-      const pair<bool, ValueType> falseAndDefaultValue = { false, ValueType{} };
-      return falseAndDefaultValue;
+      return false;
    }
 
-   template<typename MapType, typename KeyType, typename ValueType>
-   static ValueType* ThrowingInsert(MapType& m, const KeyType& key, const ValueType& value)
-   {
-      const size_t sizeBeforeInsert = m.size();
-      const auto insertedIter = m.insert(std::make_pair(key, value));
-      m[key] = value;
-      const size_t sizeAfterInsert = m.size();
-      if (sizeAfterInsert == sizeBeforeInsert)
-      {
-         std::ostringstream whatBuilder;
-         whatBuilder << "key already present in map: " << key;
-         const std::string what = whatBuilder.str();
-         throw std::invalid_argument(what);
-      }
-      ValueType* const valueInMap = &(*insertedIter.first).second;
-      return valueInMap;
-   }
+   Map() = delete;
 private:
    template<typename KeyType>
-   static
-#if defined __linux__
-   __attribute__((noreturn))
-#elif _WIN32
-   __declspec(noreturn)
-#endif
-   void ThrowKeyNotFound(const KeyType& key)
+   [[noreturn]] static NOINLINE void ThrowKeyNotFound(const KeyType& key)
    {
       std::ostringstream oss;
-      oss << "Key not found in map: [" << key << "]";
+      oss << "Error: Key not found in map: [" << key << "]";
       const std::string what(oss.str());
       throw std::out_of_range(what);
    }

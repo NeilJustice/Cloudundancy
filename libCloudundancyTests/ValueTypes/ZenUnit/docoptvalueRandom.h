@@ -1,8 +1,8 @@
 #pragma once
-#include "libCloudundancy/Components/Docopt/docopt.h"
+#include "libCloudundancy/docopt/docopt.h"
 
 namespace ZenUnit
 {
    template<>
-   docopt::Value Random();
+   docopt::value Random();
 }

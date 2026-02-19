@@ -13,6 +13,7 @@
 #include <array>
 #include <functional>
 #include <iostream>
+#include <map>
 #include <unordered_map>
 #if defined __linux__
    #include <memory>

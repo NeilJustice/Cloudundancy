@@ -10,7 +10,7 @@ EVIDENCE
 CloudundancyArgsParser _cloudundancyArgsParser;
 // Constant Components
 Utils::ConsoleMock* _consoleMock = nullptr;
-Utils::DocoptParserMock* _docoptParserMock = nullptr;
+DocoptParserMock* _docoptParserMock = nullptr;
 Utils::FileSystemMock* _fileSystemMock = nullptr;
 Utils::ProcessRunnerMock* _processRunnerMock = nullptr;
 ProgramModeDeterminerMock* _programModeDeterminerMock = nullptr;
@@ -19,7 +19,7 @@ STARTUP
 {
    // Constant Components
    _cloudundancyArgsParser._console.reset(_consoleMock = new Utils::ConsoleMock);
-   _cloudundancyArgsParser._docoptParser.reset(_docoptParserMock = new Utils::DocoptParserMock);
+   _cloudundancyArgsParser._docoptParser.reset(_docoptParserMock = new DocoptParserMock);
    _cloudundancyArgsParser._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
    _cloudundancyArgsParser._processRunner.reset(_processRunnerMock = new Utils::ProcessRunnerMock);
    _cloudundancyArgsParser._programModeDeterminer.reset(_programModeDeterminerMock = new ProgramModeDeterminerMock);
@@ -41,7 +41,7 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    false, false,
    true, true)
 {
-   const map<string, docopt::Value> docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::Value>();
+   const map<string, docopt::value> docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::value>();
    _docoptParserMock->ParseArgsMock.Return(docoptArgs);
 
    const bool isCopyFileToFilesToMultipleFoldersMode = ZenUnit::Random<bool>();

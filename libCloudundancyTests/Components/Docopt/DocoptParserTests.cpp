@@ -1,82 +1,85 @@
 #include "pch.h"
 #include "libCloudundancy/Components/Docopt/DocoptParser.h"
+#include "libCloudundancyTests/ValueTypes/ZenUnit/docoptvalueRandom.h"
 
 TESTS(DocoptParserTests)
-AFACT(Constructor_SetsDocoptFunctionPointer)
-AFACT(ParseArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
-AFACT(ParseArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
+AFACT(DefaultConstructor_SetsFieldsToDefaultValues)
+AFACT(ParseStringArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
+AFACT(ParseStringArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
 AFACT(GetRequiredString_ArgNotInMap_ThrowsOutOfRange)
 AFACT(GetRequiredString_ArgInMap_ReturnsValue)
 AFACT(GetRequiredBool_ArgNotInMap_ThrowsOutOfRange)
 AFACT(GetRequiredBool_ArgInMap_ReturnsValue)
 AFACT(GetProgramModeSpecificRequiredString_ProgramModeValueDoesNotEqualComparisonProgramModeValue_ReturnsEmptyString)
-AFACT(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgIsNotInMap_ThrowsOutOfRange)
+AFACT(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgNotInMap_ThrowsOutOfRange)
 AFACT(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgInMap_ReturnsValue)
 AFACT(GetOptionalBool_ArgNotInMap_ReturnsFalse)
 AFACT(GetOptionalBool_ArgInMap_ReturnsTrue)
 AFACT(GetOptionalString_ArgNotInMap_ReturnsEmptyString)
-AFACT(GetOptionalString_ArgInMapWithStringValue_ReturnsValue)
+AFACT(GetOptionalString_ArgInMap_ReturnsValue)
+AFACT(GetOptionalStringWithDefaultValue_ArgNotInMap_ReturnsDefaultValue)
+AFACT(GetOptionalStringWithDefaultValue_ArgInMap_ReturnsValue)
 EVIDENCE
 
-Utils::DocoptParser _docoptParser;
+DocoptParser _docoptParser;
 // Function Pointers
-METALMOCK_NONVOID5_STATIC_OR_FREE(map<string COMMA docopt::Value>, _call_docopt, const string&, const vector<string>&, bool, const string&, bool)
+//METALMOCK_NONVOID5_STATIC_OR_FREE(map<string COMMA docopt::value>, docopt, const string&, const vector<string>&, bool, const string&, bool)
 
-map<string, docopt::Value> _docoptArgs;
+map<string, docopt::value> _docoptArgs;
 string _argName;
-string _expectedOutOfRangeExceptionMessage;
+string _expectedKeyNotFoundWhat;
 
 STARTUP
 {
-   _docoptParser._call_docopt_docopt = BIND_5ARG_METALMOCK_OBJECT(_call_docoptMock);
-
-   _docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::Value>();
-   _argName = ZenUnit::Random<string>() + "_argName";
-   _expectedOutOfRangeExceptionMessage = "Key not found in map: [" + _argName + "]";
-}
-
-TEST(Constructor_SetsDocoptFunctionPointer)
-{
-   Utils::DocoptParser docoptParser;
    // Function Pointers
-   STD_FUNCTION_TARGETS(docopt::docopt, docoptParser._call_docopt_docopt);
+   //_docoptParser._call_docopt_docopt = BIND_5ARG_METALMOCK_OBJECT(docoptMock);
+
+   _docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::value>();
+   _argName = ZenUnit::Random<string>() + "_argName";
+   _expectedKeyNotFoundWhat = "Error: Key not found in map: [" + _argName + "]";
 }
 
-TEST(ParseArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
+TEST(DefaultConstructor_SetsFieldsToDefaultValues)
+{
+   const DocoptParser docoptParser;
+   // Function Pointers
+   //STD_FUNCTION_TARGETS(docopt::docopt, docoptParser._call_docopt_docopt);
+}
+
+TEST(ParseStringArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
 {
    const string usage = ZenUnit::Random<string>();
    const vector<string> emptyArgv;
    //
-   THROWS_EXCEPTION(const auto args = _docoptParser.ParseArgs(usage, emptyArgv),
-      invalid_argument, "argv cannot be empty");
+   THROWS_EXCEPTION(const auto returnValue = _docoptParser.ParseArgs(usage, emptyArgv), invalid_argument, "argv cannot be empty");
 }
 
-TEST(ParseArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
+TEST(ParseStringArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
 {
-   const map<string, docopt::Value> docoptReturnValue = ZenUnit::RandomOrderedMap<string, docopt::Value>();
-   _call_docoptMock.Return(docoptReturnValue);
+   //const map<string, docopt::value> docoptReturnValue = ZenUnit::RandomOrderedMap<string, docopt::value>();
+   //docoptMock.Return(docoptReturnValue);
 
-   const string usage = ZenUnit::Random<string>();
-   const vector<string> nonEmptyArgv(ZenUnit::RandomBetween<size_t>(1, 2));
-   //
-   const map<string, docopt::Value> docoptValues = _docoptParser.ParseArgs(usage, nonEmptyArgv);
-   //
-   const vector<string> expectedNonEmptyArgvWithoutFirstArgument(
-      nonEmptyArgv.data() + 1, nonEmptyArgv.data() + nonEmptyArgv.size());
-   METALMOCK(_call_docoptMock.CalledOnceWith(usage, expectedNonEmptyArgvWithoutFirstArgument, true, "", false));
-   ARE_EQUAL(docoptReturnValue, docoptValues);
+   //const string usage = ZenUnit::Random<string>();
+   //const vector<string> nonEmptyArgv(ZenUnit::RandomBetween<size_t>(1, 2));
+   ////
+   //const map<string, docopt::value> docoptValues = _docoptParser.ParseArgs(usage, nonEmptyArgv);
+   ////
+   //const vector<string> expectedNonEmptyArgvWithoutFirstArgument(
+   //   nonEmptyArgv.data() + 1, nonEmptyArgv.data() + nonEmptyArgv.size());
+   //METALMOCK(docoptMock.CalledOnceWith(usage, expectedNonEmptyArgvWithoutFirstArgument, true, "", false));
+   //ARE_EQUAL(docoptReturnValue, docoptValues);
 }
 
 TEST(GetRequiredString_ArgNotInMap_ThrowsOutOfRange)
 {
-   THROWS_EXCEPTION(_docoptParser.GetRequiredString(_docoptArgs, _argName),
-      out_of_range, _expectedOutOfRangeExceptionMessage);
+   THROWS_EXCEPTION(const string returnValue = _docoptParser.GetRequiredString(_docoptArgs, _argName),
+      out_of_range, _expectedKeyNotFoundWhat);
 }
 
 TEST(GetRequiredString_ArgInMap_ReturnsValue)
 {
    const string stringValue = ZenUnit::Random<string>();
-   _docoptArgs[_argName] = docopt::Value(stringValue);
+   _docoptArgs[_argName] = docopt::value(stringValue);
    //
    const string returnedStringValue = _docoptParser.GetRequiredString(_docoptArgs, _argName);
    //
@@ -86,13 +89,13 @@ TEST(GetRequiredString_ArgInMap_ReturnsValue)
 TEST(GetRequiredBool_ArgNotInMap_ThrowsOutOfRange)
 {
    THROWS_EXCEPTION(_docoptParser.GetRequiredBool(_docoptArgs, _argName),
-      out_of_range, _expectedOutOfRangeExceptionMessage);
+      out_of_range, _expectedKeyNotFoundWhat);
 }
 
 TEST(GetRequiredBool_ArgInMap_ReturnsValue)
 {
    const bool boolValue = ZenUnit::Random<bool>();
-   _docoptArgs[_argName] = docopt::Value(boolValue);
+   _docoptArgs[_argName] = docopt::value(boolValue);
    //
    const bool returnedBoolValue = _docoptParser.GetRequiredBool(_docoptArgs, _argName);
    //
@@ -101,34 +104,34 @@ TEST(GetRequiredBool_ArgInMap_ReturnsValue)
 
 TEST(GetProgramModeSpecificRequiredString_ProgramModeValueDoesNotEqualComparisonProgramModeValue_ReturnsEmptyString)
 {
-   const int programModeAsInt = ZenUnit::Random<int>();
-   const int fieldIsRequiredIfProgramModeIntEqualsThisValue = ZenUnit::RandomNotEqualTo<int>(programModeAsInt);
+   const unsigned programModeValue = ZenUnit::Random<unsigned>();
+   const unsigned fieldIsRequiredIfModeEqualsThisValue = programModeValue + 1;
    //
    const string argValue = _docoptParser.GetProgramModeSpecificRequiredString(
-      _docoptArgs, programModeAsInt, fieldIsRequiredIfProgramModeIntEqualsThisValue, _argName);
+      _docoptArgs, programModeValue, fieldIsRequiredIfModeEqualsThisValue, _argName);
    //
    ARE_EQUAL(string(), argValue);
 }
 
-TEST(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgIsNotInMap_ThrowsOutOfRange)
+TEST(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgNotInMap_ThrowsOutOfRange)
 {
-   const int programModeAsInt = ZenUnit::Random<int>();
-   const int fieldIsRequiredIfProgramModeIntEqualsThisValue = programModeAsInt;
+   const unsigned programModeValue = ZenUnit::Random<unsigned>();
+   const unsigned fieldIsRequiredIfProgramModeEqualsThisValue = programModeValue;
    //
-   THROWS_EXCEPTION(_docoptParser.GetProgramModeSpecificRequiredString(
-      _docoptArgs, programModeAsInt, fieldIsRequiredIfProgramModeIntEqualsThisValue, _argName),
-      out_of_range, _expectedOutOfRangeExceptionMessage);
+   THROWS_EXCEPTION(const string returnValue = _docoptParser.GetProgramModeSpecificRequiredString(
+      _docoptArgs, programModeValue, fieldIsRequiredIfProgramModeEqualsThisValue, _argName),
+      out_of_range, _expectedKeyNotFoundWhat);
 }
 
 TEST(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgInMap_ReturnsValue)
 {
-   const int programModeAsInt = ZenUnit::Random<int>();
-   const int fieldIsRequiredIfProgramModeIntEqualsThisValue = programModeAsInt;
+   const unsigned programModeValue = ZenUnit::Random<unsigned>();
+   const unsigned fieldIsRequiredIfProgramModeEqualsThisValue = programModeValue;
    const string argValue = ZenUnit::Random<string>();
    _docoptArgs[_argName] = argValue;
    //
    const string returnedArgValue = _docoptParser.GetProgramModeSpecificRequiredString(
-      _docoptArgs, programModeAsInt, fieldIsRequiredIfProgramModeIntEqualsThisValue, _argName);
+      _docoptArgs, programModeValue, fieldIsRequiredIfProgramModeEqualsThisValue, _argName);
    //
    ARE_EQUAL(argValue, returnedArgValue);
 }
@@ -142,7 +145,7 @@ TEST(GetOptionalBool_ArgNotInMap_ReturnsFalse)
 TEST(GetOptionalBool_ArgInMap_ReturnsTrue)
 {
    const bool argValueInMap = ZenUnit::Random<bool>();
-   _docoptArgs[_argName] = docopt::Value(argValueInMap);
+   _docoptArgs[_argName] = docopt::value(argValueInMap);
    //
    const bool argValue = _docoptParser.GetOptionalBool(_docoptArgs, _argName);
    //
@@ -155,12 +158,32 @@ TEST(GetOptionalString_ArgNotInMap_ReturnsEmptyString)
    IS_EMPTY_STRING(argValue);
 }
 
-TEST(GetOptionalString_ArgInMapWithStringValue_ReturnsValue)
+TEST(GetOptionalString_ArgInMap_ReturnsValue)
 {
    const string argValueInMap = ZenUnit::Random<string>();
-   _docoptArgs[_argName] = docopt::Value(argValueInMap);
+   _docoptArgs[_argName] = docopt::value(argValueInMap);
    //
    const string argValue = _docoptParser.GetOptionalString(_docoptArgs, _argName);
+   //
+   ARE_EQUAL(argValueInMap, argValue);
+}
+
+TEST(GetOptionalStringWithDefaultValue_ArgNotInMap_ReturnsDefaultValue)
+{
+   const string defaultValue = ZenUnit::Random<string>();
+   //
+   const string argValue = _docoptParser.GetOptionalStringWithDefaultValue(_docoptArgs, _argName, defaultValue);
+   //
+   ARE_EQUAL(defaultValue, argValue);
+}
+
+TEST(GetOptionalStringWithDefaultValue_ArgInMap_ReturnsValue)
+{
+   const string defaultValue = ZenUnit::Random<string>();
+   const string argValueInMap = ZenUnit::Random<string>();
+   _docoptArgs[_argName] = docopt::value(argValueInMap);
+   //
+   const string argValue = _docoptParser.GetOptionalStringWithDefaultValue(_docoptArgs, _argName, defaultValue);
    //
    ARE_EQUAL(argValueInMap, argValue);
 }

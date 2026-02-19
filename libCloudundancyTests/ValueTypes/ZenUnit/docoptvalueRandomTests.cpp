@@ -7,8 +7,8 @@ EVIDENCE
 
 TEST(ZenUnitRandomDocoptValue_ReturnsdocoptvalueThatIsEitherALongOrAString)
 {
-   const docopt::Value randomDocoptValue = ZenUnit::Random<docopt::Value>();
-   IS_TRUE(randomDocoptValue.IsLong() || randomDocoptValue.IsString());
+   const docopt::value randomDocoptValue = ZenUnit::Random<docopt::value>();
+   IS_TRUE(randomDocoptValue.isLong() || randomDocoptValue.isString());
 }
 
 RUN_TESTS(docoptvalueRandomTests)
