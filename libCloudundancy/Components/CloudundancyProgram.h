@@ -3,6 +3,7 @@ namespace Utils
 {
    class Console;
    class EnvironmentService;
+   class FileSystem;
    class Stopwatch;
    template<typename ClassType, typename ArgumentType>
    class TryCatchCaller;
@@ -28,6 +29,7 @@ private:
    unique_ptr<const Utils::Console> _console;
    unique_ptr<const CloudundancyFileCopier> _cloudundancyFileCopier;
    unique_ptr<const Utils::EnvironmentService> _environmentService;
+   unique_ptr<const Utils::FileSystem> _fileSystem;
    unique_ptr<const Utils::Watch> _watch;
    // Mutable Components
    unique_ptr<Utils::Stopwatch> _stopwatch;

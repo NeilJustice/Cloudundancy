@@ -2,11 +2,12 @@
 #include "libCloudundancy/Components/CloudundancyProgram.h"
 #include "libCloudundancyTests/Components/Args/MetalMock/CloudundancyArgsParserMock.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/CloudundancyFileCopierMock.h"
+#include "libCloudundancyTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 #include "libCloudundancyTests/Components/SubPrograms/MetalMock/CloudundancySubProgramFactoryMock.h"
 #include "libCloudundancyTests/Components/SubPrograms/MetalMock/CloudundancySubProgramMock.h"
 
 TESTS(CloudundancyProgramTests)
-AFACT(DefaultConstructor_NewsComponents)
+AFACT(DefaultConstructor_SetsFunctionPointers)
 AFACT(Main_ArgcIs1_WriteLinesCommandLineUsage_Returns0)
 AFACT(Main_ArgcIs2OrGreater_CallsTryCatchCallRunWithStringArgs_ReturnsExitCodeFromCallingRun)
 FACTS(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSubProgram_PrintsEndTimeAndElapsedTime_ExitsWithSubProgramExitCode_WritesExitCodeInGreenIf0OtherwiseRed)
@@ -26,6 +27,7 @@ CloudundancySubProgramFactoryMock* _cloudundancySubProgramFactoryMock = nullptr;
 Utils::ConsoleMock* _consoleMock = nullptr;
 CloudundancyFileCopierMock* _cloudundancyFileCopierMock = nullptr;
 Utils::EnvironmentServiceMock* _environmentServiceMock = nullptr;
+Utils::FileSystemMock* _fileSystemMock = nullptr;
 Utils::WatchMock* _watchMock = nullptr;
 // Mutable Components
 Utils::StopwatchMock* _stopwatchMock = nullptr;
@@ -40,31 +42,21 @@ STARTUP
    // Constant Components
    _cloudundancyProgram._cloudundancyArgsParser.reset(_cloudundancyArgsParserMock = new CloudundancyArgsParserMock);
    _cloudundancyProgram._cloudundancySubProgramFactory.reset(_cloudundancySubProgramFactoryMock = new CloudundancySubProgramFactoryMock);
-   _cloudundancyProgram._environmentService.reset(_environmentServiceMock = new Utils::EnvironmentServiceMock);
    _cloudundancyProgram._console.reset(_consoleMock = new Utils::ConsoleMock);
    _cloudundancyProgram._cloudundancyFileCopier.reset(_cloudundancyFileCopierMock = new CloudundancyFileCopierMock);
+   _cloudundancyProgram._environmentService.reset(_environmentServiceMock = new Utils::EnvironmentServiceMock);
+   _cloudundancyProgram._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
    _cloudundancyProgram._watch.reset(_watchMock = new Utils::WatchMock);
    // Mutable Components
    _cloudundancyProgram._stopwatch.reset(_stopwatchMock = new Utils::StopwatchMock);
 }
 
-TEST(DefaultConstructor_NewsComponents)
+TEST(DefaultConstructor_SetsFunctionPointers)
 {
-   CloudundancyProgram cloudundancyProgram;
+   const CloudundancyProgram cloudundancyProgram;
    // Function Pointers
    STD_FUNCTION_TARGETS(Type::GetExceptionClassNameAndMessage, cloudundancyProgram._call_Type_GetExceptionClassNameAndMessage);
    STD_FUNCTION_TARGETS(Vector::ArgcArgvToStringVector, cloudundancyProgram._call_Vector_ArgcArgvToStringVector);
-   // Function Callers
-   DELETE_TO_ASSERT_NEWED(cloudundancyProgram._tryCatchCaller);
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(cloudundancyProgram._cloudundancyArgsParser);
-   DELETE_TO_ASSERT_NEWED(cloudundancyProgram._cloudundancySubProgramFactory);
-   DELETE_TO_ASSERT_NEWED(cloudundancyProgram._console);
-   DELETE_TO_ASSERT_NEWED(cloudundancyProgram._cloudundancyFileCopier);
-   DELETE_TO_ASSERT_NEWED(cloudundancyProgram._environmentService);
-   DELETE_TO_ASSERT_NEWED(cloudundancyProgram._watch);
-   // Mutable Components
-   DELETE_TO_ASSERT_NEWED(cloudundancyProgram._stopwatch);
 }
 
 TEST(Main_ArgcIs1_WriteLinesCommandLineUsage_Returns0)
@@ -108,8 +100,9 @@ TEST2X2(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSu
    _consoleMock->WriteLineMock.Expect();
    _consoleMock->WriteLineColorMock.Expect();
 
-   const string machineName = _environmentServiceMock->MachineNameMock.ReturnRandom();
-   const string userName = _environmentServiceMock->UserNameMock.ReturnRandom();
+   const string machineName = _environmentServiceMock->GetMachineNameMock.ReturnRandom();
+   const string userName = _environmentServiceMock->GetUserNameStringMock.ReturnRandom();
+   const fs::path currentDirectoryPath = _fileSystemMock->GetCurrentDirectoryPathMock.ReturnRandom();
 
    const string startTime = ZenUnit::Random<string>();
    const string endTime = ZenUnit::Random<string>();
@@ -133,19 +126,27 @@ TEST2X2(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSu
    const string expectedRunningLine = Utils::String::ConcatStrings("[Cloudundancy]   Running: ", expectedSpaceJoinedArgs);
    const string expectedMachineNameLine = Utils::String::ConcatStrings("[Cloudundancy]   Machine: ", machineName);
    const string expectedUserNameLine = Utils::String::ConcatStrings("[Cloudundancy]      User: ", userName);
+   const string expectedCurrentDirectoryPathLine = Utils::String::ConcatStrings("[Cloudundancy] Directory: ", currentDirectoryPath.string());
+
    const string expectedStartTimeLine = Utils::String::ConcatStrings("[Cloudundancy] StartTime: ", startTime);
    const string expectedEndTimeLine = Utils::String::ConcatStrings("[Cloudundancy]  EndTime: ", endTime);
    const string expectedDurationLine = Utils::String::ConcatStrings("[Cloudundancy] Duration: ", elapsedSeconds, " seconds");
    const string expectedExitCodeLine = Utils::String::ConcatValues("[Cloudundancy] ExitCode: ", subProgramExitCode);
-   METALMOCK(_consoleMock->WriteLineMock.CalledNTimes(6));
+   METALMOCK(_consoleMock->WriteLineMock.CalledNTimes(7));
    METALMOCK(_watchMock->DateTimeNowMock.CalledNTimes(2));
 
    METALMOCKTHEN(_stopwatchMock->StartMock.CalledOnce()).Then(
    METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith(expectedRunningLine))).Then(
-   METALMOCKTHEN(_environmentServiceMock->MachineNameMock.CalledOnce())).Then(
+
+   METALMOCKTHEN(_environmentServiceMock->GetMachineNameMock.CalledOnce())).Then(
    METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith(expectedMachineNameLine))).Then(
-   METALMOCKTHEN(_environmentServiceMock->UserNameMock.CalledOnce())).Then(
+
+   METALMOCKTHEN(_environmentServiceMock->GetUserNameStringMock.CalledOnce())).Then(
    METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith(expectedUserNameLine))).Then(
+
+   METALMOCKTHEN(_fileSystemMock->GetCurrentDirectoryPathMock.CalledOnce())).Then(
+   METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith(expectedCurrentDirectoryPathLine))).Then(
+
    METALMOCKTHEN(_watchMock->DateTimeNowMock.Called())).Then(
    METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith(expectedStartTimeLine))).Then(
    METALMOCKTHEN(_cloudundancyArgsParserMock->ParseStringArgsMock.CalledOnceWith(stringArgs))).Then(

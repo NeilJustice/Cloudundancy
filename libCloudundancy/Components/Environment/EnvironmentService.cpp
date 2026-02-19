@@ -15,7 +15,7 @@ namespace Utils
    {
    }
 
-   string EnvironmentService::MachineName() const
+   string EnvironmentService::GetMachineName() const
    {
       array<char, 65> linuxMachineNameChars{};
       const int gethostnameResult = _call_gethostname(linuxMachineNameChars.data(), sizeof(linuxMachineNameChars));
@@ -25,7 +25,7 @@ namespace Utils
       return linuxMachineName;
    }
 
-   string EnvironmentService::UserName() const
+   string EnvironmentService::GetUserNameString() const
    {
       const uid_t uidValue = _call_geteuid();
       const struct passwd* const passwdValue = _call_getpwuid(uidValue);
@@ -45,7 +45,7 @@ namespace Utils
    {
    }
 
-   string EnvironmentService::MachineName() const
+   string EnvironmentService::GetMachineName() const
    {
       CHAR computerNameChars[41]{};
       DWORD computerNameCharsSize = sizeof(computerNameChars);
@@ -56,7 +56,7 @@ namespace Utils
       return windowsMachineName;
    }
 
-   string EnvironmentService::UserName() const
+   string EnvironmentService::GetUserNameString() const
    {
       CHAR windowsUserNameChars[257]{};
       DWORD windowsUserNameCharsSize = sizeof(windowsUserNameChars);

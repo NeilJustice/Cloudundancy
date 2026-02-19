@@ -2,6 +2,7 @@
 #include "libCloudundancy/Components/Args/CloudundancyArgsParser.h"
 #include "libCloudundancy/Components/CloudundancyProgram.h"
 #include "libCloudundancy/Components/FileSystem/CloudundancyFileCopier.h"
+#include "libCloudundancy/Components/FileSystem/FileSystem.h"
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgram.h"
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgramFactory.h"
 
@@ -17,6 +18,7 @@ CloudundancyProgram::CloudundancyProgram() noexcept
    , _console(make_unique<Utils::Console>())
    , _cloudundancyFileCopier(make_unique<CloudundancyFileCopier>())
    , _environmentService(make_unique<Utils::EnvironmentService>())
+   , _fileSystem(make_unique<Utils::FileSystem>())
    , _watch(make_unique<Utils::Watch>())
    // Mutable Components
    , _stopwatch(make_unique<Utils::Stopwatch>())
@@ -48,13 +50,17 @@ int CloudundancyProgram::Run(const std::vector<std::string>& stringArgs)
    const string runningLine = Utils::String::ConcatStrings("[Cloudundancy]   Running: ", spaceJoinedArgs);
    _console->WriteLine(runningLine);
 
-   const string machineName = _environmentService->MachineName();
+   const string machineName = _environmentService->GetMachineName();
    const string machineNameLine = Utils::String::ConcatStrings("[Cloudundancy]   Machine: ", machineName);
    _console->WriteLine(machineNameLine);
 
-   const string userName = _environmentService->UserName();
+   const string userName = _environmentService->GetUserNameString();
    const string userNameLine = Utils::String::ConcatStrings("[Cloudundancy]      User: ", userName);
    _console->WriteLine(userNameLine);
+
+   const fs::path currentDirectoryPath = _fileSystem->GetCurrentDirectoryPath();
+   const string currentDirectoryPathLine = Utils::String::ConcatStrings("[Cloudundancy] Directory: ", currentDirectoryPath.string());
+   _console->WriteLine(currentDirectoryPathLine);
 
    const string startTime = _watch->DateTimeNow();
    const string startTimeLine = Utils::String::ConcatStrings("[Cloudundancy] StartTime: ", startTime);

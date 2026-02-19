@@ -79,12 +79,14 @@ namespace Utils
    public:
       FileSystem();
       virtual ~FileSystem();
+
       // File Open Functions
       virtual shared_ptr<FILE> CreateFileInBinaryWriteMode(const fs::path& filePath) const;
       virtual shared_ptr<FILE> CreateOrOpenFileInBinaryAppendMode(const fs::path& filePath) const;
       virtual bool FileOrFolderExists(const fs::path& fileOrFolderPath) const;
       virtual shared_ptr<FILE> OpenFileInBinaryReadMode(const fs::path& filePath) const;
       virtual shared_ptr<FILE> OpenFileInTextReadMode(const fs::path& filePath) const;
+
       // Behavior Functions
       virtual void AppendTextToClosedFile(const fs::path& filePath, string_view text) const;
       virtual void CloseFile(const shared_ptr<FILE>& filePointer, const fs::path& filePath) const;
@@ -95,7 +97,10 @@ namespace Utils
       virtual vector<string> ReadFileLinesWhichMustBeNonEmpty(const fs::path& filePath) const;
       virtual shared_ptr<const vector<char>> ReadFileBytes(const fs::path& filePath) const;
       virtual string ReadFileText(const fs::path& filePath) const;
+
+      virtual fs::path GetCurrentDirectoryPath() const;
       virtual void SetCurrentPath(const fs::path& folderPath) const;
+
       virtual void ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExist(const fs::path& filePath) const;
       virtual void WriteTextToOpenFile(const shared_ptr<FILE>& filePointer, string_view text) const;
       virtual void WriteBytesToOpenFile(const shared_ptr<FILE>& filePointer, const void* bytes, size_t bytesLength) const;

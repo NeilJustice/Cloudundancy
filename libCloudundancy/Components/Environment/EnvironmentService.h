@@ -23,8 +23,9 @@ namespace Utils
    public:
       EnvironmentService() noexcept;
       virtual ~EnvironmentService() = default;
-      virtual string MachineName() const;
-      virtual string UserName() const;
+
+      virtual string GetMachineName() const;
+      virtual string GetUserNameString() const;
    };
 
 #elif _WIN32
@@ -42,8 +43,9 @@ namespace Utils
    public:
       EnvironmentService() noexcept;
       virtual ~EnvironmentService() = default;
-      virtual string MachineName() const;
-      virtual string UserName() const;
+
+      virtual string GetMachineName() const;
+      virtual string GetUserNameString() const;
    };
 
 #endif

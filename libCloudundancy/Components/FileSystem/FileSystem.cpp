@@ -242,6 +242,12 @@ namespace Utils
       return fileText;
    }
 
+   fs::path FileSystem::GetCurrentDirectoryPath() const
+   {
+      fs::path currentPath = fs::current_path();
+      return currentPath;
+   }
+
    void FileSystem::SetCurrentPath(const fs::path& folderPath) const
    {
       _call_fs_current_path(folderPath);

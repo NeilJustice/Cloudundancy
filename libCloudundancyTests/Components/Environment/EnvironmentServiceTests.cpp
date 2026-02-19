@@ -13,8 +13,8 @@ EVIDENCE
 class EnvironmentServiceSelfMocked : public Metal::Mock<Utils::EnvironmentService>
 {
 public:
-   METALMOCK_NONVOID0_CONST(string, MachineName)
-   METALMOCK_NONVOID0_CONST(string, UserName)
+   METALMOCK_NONVOID0_CONST(string, GetMachineName)
+   METALMOCK_NONVOID0_CONST(string, GetUserNameString)
 } _environmentServiceSelfMocked;
 
 Utils::EnvironmentService _environmentService;
@@ -95,7 +95,7 @@ TEST(MachineName_ReturnsResultOfCallinggethostname)
       &gethostnameMock_CallInstead::CallInstead, &_gethostnameMock_CallInstead, placeholders::_1, placeholders::_2));
    _asserterMock->ThrowIfIntsNotEqualMock.Expect();
    //
-   const string linuxMachineName = _environmentService.MachineName();
+   const string linuxMachineName = _environmentService.GetMachineName();
    //
    METALMOCK(_asserterMock->ThrowIfIntsNotEqualMock.CalledOnceWith(
       0, getHostnameReturnValue,
@@ -113,7 +113,7 @@ TEST(UserName_ReturnsResultOfCallinggetlogin_r)
    passwdValue.pw_name = const_cast<char*>(pwName.c_str());
    getpwuidMock.Return(&passwdValue);
    //
-   const string username = _environmentService.UserName();
+   const string username = _environmentService.GetUserNameString();
    //
    METALMOCK(geteuidMock.CalledOnce());
    METALMOCK(getpwuidMock.CalledOnceWith(uidValue));
@@ -136,8 +136,8 @@ EVIDENCE
 class EnvironmentServiceSelfMocked : public Metal::Mock<Utils::EnvironmentService>
 {
 public:
-   METALMOCK_NONVOID0_CONST(string, MachineName)
-   METALMOCK_NONVOID0_CONST(string, UserName)
+   METALMOCK_NONVOID0_CONST(string, GetMachineName)
+   METALMOCK_NONVOID0_CONST(string, GetUserNameString)
 } _environmentServiceSelfMocked;
 
 Utils::EnvironmentService _environmentService;
@@ -204,7 +204,7 @@ TEST(MachineName_ReturnsResultOfCallingGetComputerNameA)
 
    _asserterMock->ThrowIfIntsNotEqualMock.Expect();
    //
-   const string windowsMachineName = _environmentService.MachineName();
+   const string windowsMachineName = _environmentService.GetMachineName();
    //
    METALMOCK(_GetComputerNameAMock_CallInsteadMock.CalledOnceWith(41));
    METALMOCK(_asserterMock->ThrowIfIntsNotEqualMock.CalledOnceWith(
@@ -250,7 +250,7 @@ TEST(UserName_ReturnsResultOfCallingGetUserNameA)
 
    _asserterMock->ThrowIfIntsNotEqualMock.Expect();
    //
-   const string windowsUserName = _environmentService.UserName();
+   const string windowsUserName = _environmentService.GetUserNameString();
    //
    _GetUserNameAMock_CallInsteadMock.CalledOnceWith(257);
    METALMOCK(_asserterMock->ThrowIfIntsNotEqualMock.CalledOnceWith(
