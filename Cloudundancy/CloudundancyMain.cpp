@@ -25,7 +25,7 @@ using namespace std;
 // ===============
 // copy-files-to-multiple-folders --ini-file=C:\Code\WindowsCloudundancyFiles\WindowsCloudundancy.ini
 // copy-files-to-multiple-folders --ini-file=C:\Code\WindowsCloudundancyFiles\WindowsCloudundancy.ini --delete-destination-folders-first
-// 7zip-files-then-copy-the-7zip-file-to-multiple-folders --ini-file-to-copy-files-to-7zip-staging-folder=C:\Code\WindowsCloudundancyFiles\WindowsCloudundancy_CopyCodeFolderTo7ZipStagingFolder.ini --7zip-staging-folder=D:\CodeBackup --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=C:\Code\PowerShellFiles\WindowsCloudundancy_Copy7ZipFileFromStagingFolderToMultipleFolders.ini
+// 7zip-files-then-copy-the-7zip-file-to-multiple-folders --ini-file-to-copy-files-to-7zip-staging-folder=C:\Code\WindowsCloudundancyFiles\WindowsCloudundancy_CopyCodeFolderTo7ZipStagingFolder.ini --7zip-staging-folder=C:\CodeBackup --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=C:\Code\WindowsCloudundancyFiles\WindowsCloudundancy_Copy7ZipFileFromStagingFolderToMultipleFolders.ini
 
 int main(int argc, char* argv[])
 {
