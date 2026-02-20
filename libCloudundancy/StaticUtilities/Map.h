@@ -43,6 +43,6 @@ private:
       std::ostringstream oss;
       oss << "Error: Key not found in map: [" << key << "]";
       const std::string what(oss.str());
-      throw std::out_of_range(what);
+      throw std::invalid_argument(what);
    }
 };

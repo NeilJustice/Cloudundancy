@@ -50,6 +50,7 @@ using namespace std;
 #include "libCloudundancy/ValueTypes/FilePathLineNumberLineText.h"
 #include "libCloudundancy/ValueTypes/ProcessResult.h"
 // libCloudundancy Components
+#include "libCloudundancy/docopt/docopt.h"
 #include "libCloudundancy/StaticUtilities/Chars.h"
 #include "libCloudundancy/StaticUtilities/Map.h"
 #include "libCloudundancy/StaticUtilities/ReleaseAssert.h"

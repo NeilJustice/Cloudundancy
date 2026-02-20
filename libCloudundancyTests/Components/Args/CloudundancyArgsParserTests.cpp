@@ -1,10 +1,11 @@
 #include "pch.h"
 #include "libCloudundancy/Components/Args/CloudundancyArgsParser.h"
 #include "libCloudundancyTests/Components/Args/MetalMock/ProgramModeDeterminerMock.h"
+#include "libCloudundancyTests/Components/Args/MetalMock/ProgramModeSpecificArgsParserFactoryMock.h"
+#include "libCloudundancyTests/Components/Args/MetalMock/ProgramModeSpecificArgsParserMock.h"
 
 TESTS(CloudundancyArgsParserTests)
-AFACT(DefaultConstructor_NewsComponents)
-FACTS(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs)
+AFACT(ParseStringArgs_DoesSo)
 EVIDENCE
 
 CloudundancyArgsParser _cloudundancyArgsParser;
@@ -14,6 +15,7 @@ DocoptParserMock* _docoptParserMock = nullptr;
 Utils::FileSystemMock* _fileSystemMock = nullptr;
 Utils::ProcessRunnerMock* _processRunnerMock = nullptr;
 ProgramModeDeterminerMock* _programModeDeterminerMock = nullptr;
+ProgramModeSpecificArgsParserFactoryMock* _programModeSpecificArgsParserFactoryMock = nullptr;
 
 STARTUP
 {
@@ -23,116 +25,39 @@ STARTUP
    _cloudundancyArgsParser._fileSystem.reset(_fileSystemMock = new Utils::FileSystemMock);
    _cloudundancyArgsParser._processRunner.reset(_processRunnerMock = new Utils::ProcessRunnerMock);
    _cloudundancyArgsParser._programModeDeterminer.reset(_programModeDeterminerMock = new ProgramModeDeterminerMock);
+   _cloudundancyArgsParser._programModeSpecificArgsParserFactory.reset(_programModeSpecificArgsParserFactoryMock = new ProgramModeSpecificArgsParserFactoryMock);
 }
 
-TEST(DefaultConstructor_NewsComponents)
-{
-   CloudundancyArgsParser cloudundancyArgsParser;
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._console);
-   DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._docoptParser);
-   DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._fileSystem);
-   DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._processRunner);
-   DELETE_TO_ASSERT_NEWED(cloudundancyArgsParser._programModeDeterminer);
-}
-
-TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
-   bool is7ZipMode, bool expectRun7zToConfirm7zIsInThePath,
-   false, false,
-   true, true)
+TEST(ParseStringArgs_DoesSo)
 {
    const map<string, docopt::value> docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::value>();
    _docoptParserMock->ParseArgsMock.Return(docoptArgs);
 
-   const bool isCopyFileToFilesToMultipleFoldersMode = ZenUnit::Random<bool>();
-   const bool isExampleLinuxIniFileMode = ZenUnit::Random<bool>();
-   const bool isExampleWindowsIniFileMode = ZenUnit::Random<bool>();
-   _docoptParserMock->GetRequiredBoolMock.ReturnValues(
-      isCopyFileToFilesToMultipleFoldersMode,
-      is7ZipMode,
-      isExampleLinuxIniFileMode,
-      isExampleWindowsIniFileMode);
-
    const ProgramMode programMode = _programModeDeterminerMock->DetermineProgramModeMock.ReturnRandom();
 
-   const string iniFilePath = _docoptParserMock->GetRequiredStringMock.ReturnRandom();
+   const shared_ptr<const ProgramModeSpecificArgsParserMock> programModeSpecificArgsParserMock =
+      make_shared<ProgramModeSpecificArgsParserMock>();
+   _programModeSpecificArgsParserFactoryMock->NewProgramModeSpecificArgsParserMock.Return(programModeSpecificArgsParserMock);
 
-   const bool deleteDestinationFoldersFirst = _docoptParserMock->GetOptionalBoolMock.ReturnRandom();
-
-   const string sevenZipModeIniFilePath = ZenUnit::Random<string>();
-   const string sevenZipStagingFolderPath = ZenUnit::Random<string>();
-   const string sevenZipFileCopyingIniFilePath = ZenUnit::Random<string>();
-   _docoptParserMock->GetProgramModeSpecificRequiredStringMock.ReturnValues(
-      sevenZipModeIniFilePath, sevenZipStagingFolderPath, sevenZipFileCopyingIniFilePath);
-
-   _fileSystemMock->ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExistMock.Expect();
-
-   if (expectRun7zToConfirm7zIsInThePath)
-   {
-      _consoleMock->WriteLineMock.Expect();
-      _processRunnerMock->FailFastRunMock.ReturnRandom();
-   }
+   const CloudundancyArgs cloudundancyArgs = programModeSpecificArgsParserMock->ParseDocoptArgsMock.ReturnRandom();
 
    const vector<string> stringArgs = ZenUnit::RandomVector<string>();
    //
-   const CloudundancyArgs args = _cloudundancyArgsParser.ParseStringArgs(stringArgs);
+   const CloudundancyArgs returnedCloudundancyArgs = _cloudundancyArgsParser.ParseStringArgs(stringArgs);
    //
-   METALMOCK(_docoptParserMock->GetRequiredBoolMock.CalledNTimes(4));
-   METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledNTimes(3));
-   METALMOCK(_fileSystemMock->ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExistMock.CalledNTimes(3));
-
    METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledOnceWith(
       CloudundancyArgs::CommandLineUsage, stringArgs, false)).Then(
 
-   METALMOCKTHEN(_docoptParserMock->GetRequiredBoolMock.CalledWith(
-      docoptArgs, "copy-files-to-multiple-folders"))).Then(
-
-   METALMOCKTHEN(_docoptParserMock->GetRequiredBoolMock.CalledWith(
-      docoptArgs, "7zip-files-then-copy-the-7zip-file-to-multiple-folders"))).Then(
-
-   METALMOCKTHEN(_docoptParserMock->GetRequiredBoolMock.CalledWith(
-      docoptArgs, "example-linux-ini-file"))).Then(
-
-   METALMOCKTHEN(_docoptParserMock->GetRequiredBoolMock.CalledWith(
-      docoptArgs, "example-windows-ini-file"))).Then(
-
    METALMOCKTHEN(_programModeDeterminerMock->DetermineProgramModeMock.CalledOnceWith(
-      isCopyFileToFilesToMultipleFoldersMode,
-      is7ZipMode,
-      isExampleLinuxIniFileMode,
-      isExampleWindowsIniFileMode))).Then(
+      docoptArgs))).Then(
 
-   METALMOCKTHEN(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptArgs, "--ini-file"))).Then(
+   METALMOCKTHEN(_programModeSpecificArgsParserFactoryMock->NewProgramModeSpecificArgsParserMock.CalledOnceWith(
+      programMode))).Then(
 
-   METALMOCKTHEN(_docoptParserMock->GetOptionalBoolMock.CalledOnceWith(docoptArgs, "--delete-destination-folders-first"))).Then(
+   METALMOCKTHEN(programModeSpecificArgsParserMock->ParseDocoptArgsMock.CalledOnceWith(
+      docoptArgs)));
 
-   METALMOCKTHEN(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledWith(
-      docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::SevenZip), "--ini-file-to-copy-files-to-7zip-staging-folder"))).Then(
-
-   METALMOCKTHEN(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledWith(
-      docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::SevenZip), "--7zip-staging-folder"))).Then(
-
-   METALMOCKTHEN(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledWith(
-      docoptArgs, static_cast<int>(programMode), static_cast<int>(ProgramMode::SevenZip), "--ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders"))).Then(
-
-   METALMOCKTHEN(_fileSystemMock->ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExistMock.CalledWith(iniFilePath))).Then(
-   METALMOCKTHEN(_fileSystemMock->ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExistMock.CalledWith(sevenZipModeIniFilePath))).Then(
-   METALMOCKTHEN(_fileSystemMock->ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExistMock.CalledWith(sevenZipFileCopyingIniFilePath)));
-
-   if (expectRun7zToConfirm7zIsInThePath)
-   {
-      METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith("[Cloudundancy] Running program 7z to confirm 7z is present on the PATH")).Then(
-      METALMOCKTHEN(_processRunnerMock->FailFastRunMock.CalledOnceWith("7z", "", false))).Then(
-      METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith("[Cloudundancy] 7z ran and exited with code 0 and is therefore confirmed to be present on the PATH\n")));
-   }
-   CloudundancyArgs expectedArgs{};
-   expectedArgs.programMode = programMode;
-   expectedArgs.iniFilePath = iniFilePath;
-   expectedArgs.deleteDestinationFoldersFirst = deleteDestinationFoldersFirst;
-   expectedArgs.sevenZipModeIniFilePath = sevenZipModeIniFilePath;
-   expectedArgs.sevenZipStagingFolderPath = sevenZipStagingFolderPath;
-   expectedArgs.sevenZipFileCopyingIniFilePath = sevenZipFileCopyingIniFilePath;
-   ARE_EQUAL(expectedArgs, args);
+   ARE_EQUAL(cloudundancyArgs, returnedCloudundancyArgs);
 }
 
 RUN_TESTS(CloudundancyArgsParserTests)

@@ -30,7 +30,7 @@ TEST(DefaultConstructor_SetsFieldsToDefaults)
    const CloudundancyArgs cloudundancyArgs;
    CloudundancyArgs expectedCloudundancyArgs;
    expectedCloudundancyArgs.programMode = ProgramMode::Unset;
-   expectedCloudundancyArgs.iniFilePath = "";
+   expectedCloudundancyArgs.iniInputFilePath = "";
    expectedCloudundancyArgs.deleteDestinationFoldersFirst = false;
    expectedCloudundancyArgs.sevenZipModeIniFilePath = "";
    expectedCloudundancyArgs.sevenZipStagingFolderPath = "";

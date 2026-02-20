@@ -90,4 +90,3 @@ elseif(MSVC)
    #set_target_properties(libCloudundancyTests PROPERTIES UNITY_BUILD_BATCH_SIZE 8)
    #append(CMAKE_CXX_FLAGS "/FIpch.h")
 endif()
-

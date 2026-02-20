@@ -34,16 +34,16 @@ CloudundancyFileCopier::~CloudundancyFileCopier()
 }
 
 void CloudundancyFileCopier::CopyFilteredFilesAndFoldersToDestinationFolders(
-   const fs::path& iniFilePath, bool deleteDestinationFoldersFirst) const
+   const fs::path& iniInputFilePath, bool deleteDestinationFoldersFirst) const
 {
-   const CloudundancyIni cloudundancyIni = _cloudundancyIniFileReader->ReadIniFile(iniFilePath);
+   const CloudundancyIni cloudundancyIni = _cloudundancyIniFileReader->ReadIniFile(iniInputFilePath);
    if (deleteDestinationFoldersFirst)
    {
       _console->WriteLine("[Cloudundancy] Deleting [DestinationFolders] first because --delete-destination-folders-first is specified");
       _cloudundancyFileSystem->DeleteMultipleFolderContentsExceptForFile(cloudundancyIni.destinationFolderPaths, "Cloudundancy.log");
    }
    const string copyingMessage = Utils::String::ConcatStrings(
-      "[Cloudundancy] Copying [SourceFilesAndFolders] to [DestinationFolders] as listed in ", iniFilePath.string(), ":\n");
+      "[Cloudundancy] Copying [SourceFilesAndFolders] to [DestinationFolders] as listed in ", iniInputFilePath.string(), ":\n");
    _console->WriteLineColor(copyingMessage, Utils::Color::Teal);
 
    _console->WriteLines(cloudundancyIni.iniFileLines);

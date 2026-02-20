@@ -135,13 +135,13 @@ TEST(CopyFilteredFilesAndFoldersToDestinationFolders_DeleteDestinationFoldersFir
 
    _forEacher_CopyEachFileOrFolderToFolderMock->CallConstMemberFunctionWithEachElementMock.Expect();
 
-   const fs::path iniFilePath = ZenUnit::Random<fs::path>();
+   const fs::path iniInputFilePath = ZenUnit::Random<fs::path>();
    //
-   _cloudundancyFileCopier.CopyFilteredFilesAndFoldersToDestinationFolders(iniFilePath, true);
+   _cloudundancyFileCopier.CopyFilteredFilesAndFoldersToDestinationFolders(iniInputFilePath, true);
    //
    const string expectedCopyingMessage = Utils::String::ConcatStrings(
-      "[Cloudundancy] Copying [SourceFilesAndFolders] to [DestinationFolders] as listed in ", iniFilePath.string(), ":\n");
-   METALMOCKTHEN(_cloudundancyIniFileReaderMock->ReadIniFileMock.CalledOnceWith(iniFilePath)).Then(
+      "[Cloudundancy] Copying [SourceFilesAndFolders] to [DestinationFolders] as listed in ", iniInputFilePath.string(), ":\n");
+   METALMOCKTHEN(_cloudundancyIniFileReaderMock->ReadIniFileMock.CalledOnceWith(iniInputFilePath)).Then(
    METALMOCKTHEN(_consoleMock->WriteLineMock.CalledOnceWith("[Cloudundancy] Deleting [DestinationFolders] first because --delete-destination-folders-first is specified"))).Then(
    METALMOCKTHEN(_cloudundancyFileSystemMock->DeleteMultipleFolderContentsExceptForFileMock.CalledOnceWith(cloudundancyIni.destinationFolderPaths, "Cloudundancy.log"))).Then(
    METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedCopyingMessage, Utils::Color::Teal))).Then(
@@ -165,13 +165,13 @@ TEST(CopyFilteredFilesAndFoldersToDestinationFolders_DeleteDestinationFoldersFir
 
    _forEacher_CopyEachFileOrFolderToFolderMock->CallConstMemberFunctionWithEachElementMock.Expect();
 
-   const fs::path iniFilePath = ZenUnit::Random<fs::path>();
+   const fs::path iniInputFilePath = ZenUnit::Random<fs::path>();
    //
-   _cloudundancyFileCopier.CopyFilteredFilesAndFoldersToDestinationFolders(iniFilePath, false);
+   _cloudundancyFileCopier.CopyFilteredFilesAndFoldersToDestinationFolders(iniInputFilePath, false);
    //
    const string expectedCopyingMessage = Utils::String::ConcatStrings(
-      "[Cloudundancy] Copying [SourceFilesAndFolders] to [DestinationFolders] as listed in ", iniFilePath.string(), ":\n");
-   METALMOCKTHEN(_cloudundancyIniFileReaderMock->ReadIniFileMock.CalledOnceWith(iniFilePath)).Then(
+      "[Cloudundancy] Copying [SourceFilesAndFolders] to [DestinationFolders] as listed in ", iniInputFilePath.string(), ":\n");
+   METALMOCKTHEN(_cloudundancyIniFileReaderMock->ReadIniFileMock.CalledOnceWith(iniInputFilePath)).Then(
    METALMOCKTHEN(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedCopyingMessage, Utils::Color::Teal))).Then(
    METALMOCKTHEN(_consoleMock->WriteLinesMock.CalledOnceWith(cloudundancyIni.iniFileLines))).Then(
    METALMOCKTHEN(_recursiveDirectoryIteratorMock->SetFileSubpathsToIgnoreMock.CalledOnceWith(cloudundancyIni.fileSubpathsToIgnore))).Then(

@@ -11,7 +11,7 @@ TEST(ZenUnitEqualizer_ThrowsIfAnyFieldNotEqual)
 {
    ZENUNIT_EQUALIZER_TEST_SETUP(CloudundancyArgs);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyArgs, programMode, ZenUnit::RandomNon0Enum<ProgramMode>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyArgs, iniFilePath, ZenUnit::Random<fs::path>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyArgs, iniInputFilePath, ZenUnit::Random<fs::path>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyArgs, deleteDestinationFoldersFirst, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyArgs, sevenZipModeIniFilePath, ZenUnit::Random<fs::path>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(CloudundancyArgs, sevenZipStagingFolderPath, ZenUnit::Random<fs::path>());
@@ -25,12 +25,12 @@ TEST(TestableRandomCloudundancyArgs_ReturnsCloudundancyArgsWithAllRandomFields)
 
    const bool deleteDestinationFoldersFirst = randomGeneratorMock.BoolMock.ReturnRandom();
 
-   const fs::path iniFilePath = ZenUnit::Random<fs::path>();
+   const fs::path iniInputFilePath = ZenUnit::Random<fs::path>();
    const fs::path sevenZipModeIniFilePath = ZenUnit::Random<fs::path>();
    const fs::path sevenZipStagingFolderPath = ZenUnit::Random<fs::path>();
    const fs::path sevenZipFileCopyingIniFilePath = ZenUnit::Random<fs::path>();
    randomGeneratorMock.FilesystemPathMock.ReturnValues(
-      iniFilePath, sevenZipModeIniFilePath, sevenZipStagingFolderPath, sevenZipFileCopyingIniFilePath);
+      iniInputFilePath, sevenZipModeIniFilePath, sevenZipStagingFolderPath, sevenZipFileCopyingIniFilePath);
    //
    const CloudundancyArgs cloundundancyArgs = TestableRandomCloudundancyArgs(&randomGeneratorMock);
    //
@@ -39,7 +39,7 @@ TEST(TestableRandomCloudundancyArgs_ReturnsCloudundancyArgsWithAllRandomFields)
    METALMOCK(randomGeneratorMock.BoolMock.CalledOnce());
    CloudundancyArgs expectedCloundundancyArgs;
    expectedCloundundancyArgs.programMode = programMode;
-   expectedCloundundancyArgs.iniFilePath = iniFilePath;
+   expectedCloundundancyArgs.iniInputFilePath = iniInputFilePath;
    expectedCloundundancyArgs.deleteDestinationFoldersFirst = deleteDestinationFoldersFirst;
    expectedCloundundancyArgs.sevenZipModeIniFilePath = sevenZipModeIniFilePath;
    expectedCloundundancyArgs.sevenZipStagingFolderPath = sevenZipStagingFolderPath;

@@ -5,7 +5,7 @@ struct CloudundancyArgs
    static const std::string CommandLineUsage;
 
    ProgramMode programMode = ProgramMode::Unset;
-   fs::path iniFilePath;
+   fs::path iniInputFilePath;
    bool deleteDestinationFoldersFirst = false;
    fs::path sevenZipModeIniFilePath;
    fs::path sevenZipStagingFolderPath;

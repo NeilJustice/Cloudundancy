@@ -65,4 +65,3 @@ if(UNIX)
      target_link_libraries(libCloudundancy CodeCovLibraryInterface)
    endif()
 endif()
-

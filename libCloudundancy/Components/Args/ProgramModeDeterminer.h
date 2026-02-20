@@ -1,13 +1,15 @@
 #pragma once
+class DocoptParser;
 
 class ProgramModeDeterminer
 {
+   friend class ProgramModeDeterminerTests;
+private:
+   // Constant Components
+   unique_ptr<const DocoptParser> _docoptParser;
 public:
-   virtual ~ProgramModeDeterminer() = default;
+   ProgramModeDeterminer();
+   virtual ~ProgramModeDeterminer();
 
-   virtual ProgramMode DetermineProgramMode(
-      bool isCopyFileToFilesToMultipleFoldersMode,
-      bool is7ZipMode,
-      bool isExampleLinuxIniFileMode,
-      bool isExampleWindowsIniFileMode) const;
+   virtual ProgramMode DetermineProgramMode(const map<string, docopt::value>& docoptArgs) const;
 };

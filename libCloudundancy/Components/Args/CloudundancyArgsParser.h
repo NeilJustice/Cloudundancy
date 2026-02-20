@@ -2,6 +2,7 @@
 class CloudundancyArgsParserTests;
 class DocoptParser;
 class ProgramModeDeterminer;
+class ProgramModeSpecificArgsParserFactory;
 
 class CloudundancyArgsParser
 {
@@ -13,6 +14,7 @@ private:
    unique_ptr<const Utils::FileSystem> _fileSystem;
    unique_ptr<const Utils::ProcessRunner> _processRunner;
    unique_ptr<const ProgramModeDeterminer> _programModeDeterminer;
+   unique_ptr<const ProgramModeSpecificArgsParserFactory> _programModeSpecificArgsParserFactory;
 public:
    CloudundancyArgsParser();
    virtual ~CloudundancyArgsParser();

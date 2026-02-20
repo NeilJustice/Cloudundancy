@@ -47,13 +47,13 @@ TEST(At_OrderedMap_ReturnsValueIfKeyPresent_OtherwiseThrows)
 {
    map<int, int> m_int_int;
    THROWS_EXCEPTION(Map::At(m_int_int, 0),
-      out_of_range, "Error: Key not found in map: [0]");
+      invalid_argument, "Error: Key not found in map: [0]");
    m_int_int[0] = 1;
    ARE_EQUAL(1, Map::At(m_int_int, 0));
 
    map<TestingStruct, string> m_Struct_string;
    THROWS_EXCEPTION(Map::At(m_Struct_string, TestingStruct(0)),
-      out_of_range, "Error: Key not found in map: [Struct::operator<<]");
+      invalid_argument, "Error: Key not found in map: [Struct::operator<<]");
    m_Struct_string[TestingStruct(0)] = "1";
    ARE_EQUAL("1", Map::At(m_Struct_string, TestingStruct(0)));
 }
@@ -62,13 +62,13 @@ TEST(At_UnorderedMap_ReturnsValueIfKeyPresent_OtherwiseThrows)
 {
    unordered_map<int, int> um_int_int;
    THROWS_EXCEPTION(Map::At(um_int_int, 0),
-      out_of_range, "Error: Key not found in map: [0]");
+      invalid_argument, "Error: Key not found in map: [0]");
    um_int_int[0] = 1;
    ARE_EQUAL(1, Map::At(um_int_int, 0));
 
    unordered_map<TestingStruct, string> um_Struct_string;
    THROWS_EXCEPTION(Map::At(um_Struct_string, TestingStruct(0)),
-      out_of_range, "Error: Key not found in map: [Struct::operator<<]");
+      invalid_argument, "Error: Key not found in map: [Struct::operator<<]");
    um_Struct_string[TestingStruct(0)] = "1";
    ARE_EQUAL("1", Map::At(um_Struct_string, TestingStruct(0)));
 }

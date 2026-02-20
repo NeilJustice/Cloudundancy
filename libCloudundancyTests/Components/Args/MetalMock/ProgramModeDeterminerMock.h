@@ -4,5 +4,6 @@
 class ProgramModeDeterminerMock : public Metal::Mock<ProgramModeDeterminer>
 {
 public:
-   METALMOCK_NONVOID4_CONST(ProgramMode, DetermineProgramMode, bool, bool, bool, bool)
+   using DocoptMapType = map<string, docopt::value>;
+   METALMOCK_NONVOID1_CONST(ProgramMode, DetermineProgramMode, const DocoptMapType&)
 };

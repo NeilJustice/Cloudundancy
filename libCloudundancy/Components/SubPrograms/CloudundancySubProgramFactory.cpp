@@ -9,22 +9,10 @@ shared_ptr<CloudundancySubProgram> CloudundancySubProgramFactory::NewCloudundanc
 {
    switch (programMode)
    {
-   case ProgramMode::CopyFileToFilesAndFoldersToMultipleFolders:
-   {
-      return make_shared<CopyFileToFilesToMultipleFoldersSubProgram>();
-   }
-   case ProgramMode::SevenZip:
-   {
-      return make_shared<SevenZipSubProgram>();
-   }
-   case ProgramMode::ExampleLinuxIniFile:
-   {
-      return make_shared<ExampleLinuxIniFileSubProgram>();
-   }
-   case ProgramMode::ExampleWindowsIniFile:
-   {
-      return make_shared<ExampleWindowsIniFileSubProgram>();
-   }
+   case ProgramMode::CopyFilesToMultipleFolders: return make_shared<CopyFileToFilesToMultipleFoldersSubProgram>();
+   case ProgramMode::SevenZip: return make_shared<SevenZipSubProgram>();
+   case ProgramMode::ExampleLinuxIniFile: return make_shared<ExampleLinuxIniFileSubProgram>();
+   case ProgramMode::ExampleWindowsIniFile: return make_shared<ExampleWindowsIniFileSubProgram>();
    default:
    {
       throw invalid_argument("Invalid Cloudundancy program mode: " + to_string(static_cast<int>(programMode)));

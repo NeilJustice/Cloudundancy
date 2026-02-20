@@ -38,6 +38,7 @@ using namespace std;
 #include "libCloudundancyTests/ValueTypes/ZenUnit/ProcessResultEqualizerAndRandom.h"
 #include "libCloudundancyTests/ValueTypes/ZenUnit/tmZenUnitEqualizerAndRandom.h"
 // libCloudundancy Components
+#include "libCloudundancy/docopt/docopt.h"
 #include "libCloudundancy/StaticUtilities/ReleaseAssert.h"
 #include "libCloudundancy/StaticUtilities/StringUtil.h"
 #include "libCloudundancy/StaticUtilities/Type.h"

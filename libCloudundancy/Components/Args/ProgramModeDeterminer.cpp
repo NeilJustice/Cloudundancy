@@ -1,27 +1,41 @@
 #include "pch.h"
 #include "libCloudundancy/Components/Args/ProgramModeDeterminer.h"
+#include "libCloudundancy/Components/Docopt/DocoptParser.h"
 
-ProgramMode ProgramModeDeterminer::DetermineProgramMode(
-   bool isCopyFileToFilesToMultipleFoldersMode,
-   bool is7ZipMode,
-   bool isExampleLinuxIniFileMode,
-   bool isExampleWindowsIniFileMode) const
+ProgramModeDeterminer::ProgramModeDeterminer()
+   // Constant Components
+   : _docoptParser(make_unique<DocoptParser>())
 {
-   if (isCopyFileToFilesToMultipleFoldersMode)
-   {
-      return ProgramMode::CopyFileToFilesAndFoldersToMultipleFolders;
-   }
-   if (is7ZipMode)
-   {
-      return ProgramMode::SevenZip;
-   }
+}
+
+ProgramModeDeterminer::~ProgramModeDeterminer()
+{
+}
+
+ProgramMode ProgramModeDeterminer::DetermineProgramMode(const map<string, docopt::value>& docoptArgs) const
+{
+   const bool isExampleLinuxIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "example-linux-ini-file");
    if (isExampleLinuxIniFileMode)
    {
       return ProgramMode::ExampleLinuxIniFile;
    }
+
+   const bool isExampleWindowsIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "example-windows-ini-file");
    if (isExampleWindowsIniFileMode)
    {
       return ProgramMode::ExampleWindowsIniFile;
    }
-   throw invalid_argument("ProgramModeDeterminer::DetermineProgramMode(bool, bool, bool, bool): All four ProgramMode bools are unexpectedly false");
+
+   const bool isCopyFileToFilesToMultipleFoldersMode = _docoptParser->GetRequiredBool(docoptArgs, "copy-files-to-multiple-folders");
+   if (isCopyFileToFilesToMultipleFoldersMode)
+   {
+      return ProgramMode::CopyFilesToMultipleFolders;
+   }
+
+   const bool is7ZipMode = _docoptParser->GetRequiredBool(docoptArgs, "7zip-files-then-copy-the-7zip-file-to-multiple-folders");
+   if (is7ZipMode)
+   {
+      return ProgramMode::SevenZip;
+   }
+   return ProgramMode::Invalid;
 }

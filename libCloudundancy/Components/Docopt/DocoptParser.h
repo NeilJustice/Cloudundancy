@@ -1,7 +1,7 @@
 #pragma once
-#include "libCloudundancy/docopt/docopt.h"
 namespace Utils
 {
+   class FileSystemPather;
    template<typename KeyType, typename ValueType>
    class MapHelper;
 }
@@ -12,7 +12,10 @@ class DocoptParser
 private:
    // Function Pointers
    function<size_t(const map<string, docopt::value>&, const string&)> _call_StaticGetRequiredSizeT;
+   function<string(const map<string, docopt::value>&, const string&)> _call_StaticGetRequiredString;
    // Constant Components
+   unique_ptr<const Utils::FileSystemPather> _fileSystemPather;
+
    using _mapHelperType = Utils::MapHelper<string, docopt::value>;
    unique_ptr<const _mapHelperType> _mapHelper;
 public:
@@ -20,8 +23,7 @@ public:
    virtual ~DocoptParser();
 
    virtual bool DocoptArgsAreForProgramMode(
-      const map<string, docopt::value>& docoptArgs,
-      const string& programModeString) const;
+      const map<string, docopt::value>& docoptArgs, const string& programModeString) const;
 
    virtual map<string, docopt::value> ParseArgs(
       const string& usage,
@@ -29,12 +31,10 @@ public:
       bool doExitIfInvalid) const;
 
    virtual string GetRequiredString(
-      const map<string, docopt::value>& docoptArgs,
-      const string& argName) const;
+      const map<string, docopt::value>& docoptArgs, const string& argName) const;
 
    virtual bool GetRequiredBool(
-      const map<string, docopt::value>& docoptArgs,
-      const string& argName) const;
+      const map<string, docopt::value>& docoptArgs, const string& argName) const;
 
    virtual string GetProgramModeSpecificRequiredString(
       const map<string, docopt::value>& docoptArgs,
@@ -43,12 +43,10 @@ public:
       const string& argName) const;
 
    virtual bool GetOptionalBool(
-      const map<string, docopt::value>& docoptArgs,
-      const string& argName) const;
+      const map<string, docopt::value>& docoptArgs, const string& argName) const;
 
    virtual string GetOptionalString(
-      const map<string, docopt::value>& docoptArgs,
-      const string& argName) const;
+      const map<string, docopt::value>& docoptArgs, const string& argName) const;
 
    virtual string GetOptionalStringWithDefaultValue(
       const map<string, docopt::value>& docoptArgs,
@@ -56,10 +54,14 @@ public:
       string_view defaultValue) const;
 
    virtual size_t GetRequiredSizeT(
-      const map<string, docopt::value>& docoptArgs,
-      const string& argName) const;
+      const map<string, docopt::value>& docoptArgs, const string& argName) const;
+
+   virtual fs::path GetRequiredFilePathWhichMustExist(
+      const map<string, docopt::value>& docoptArgs, const string& argName) const;
    private:
       static size_t StaticGetRequiredSizeT(
-         const map<string, docopt::value>& docoptArgs,
-         const string& argName);
+         const map<string, docopt::value>& docoptArgs, const string& argName);
+
+      static string StaticGetRequiredString(
+         const map<string, docopt::value>& docoptArgs, const string& argName);
 };

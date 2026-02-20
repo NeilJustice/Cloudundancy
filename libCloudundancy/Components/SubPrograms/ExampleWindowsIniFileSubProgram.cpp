@@ -29,7 +29,7 @@ C:\VS2022\VC#\Snippets\1033\Visual C#\CSharpSnippets.snippet                    
 
 # Critical folders to backup
 # Source folder paths ending in a '\' or '/' character are interpretted as folders and not files to be backed up
-C:\Users\GetUserNameString\Documents\WindowsPowerShell\ -> PowerShell
+C:\Users\UserName\Documents\WindowsPowerShell\ -> PowerShell
 
 [FileSubpathsToNotCopy]
 # In the [FileSubpathsToNotCopy] section, case-sensitive file path substrings can be listed one per line

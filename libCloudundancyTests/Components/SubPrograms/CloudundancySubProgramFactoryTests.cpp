@@ -18,7 +18,7 @@ CloudundancySubProgramFactory _cloudundancySubProgramFactory;
 TEST(NewCloudundancySubProgram_ProgramModeIsCopyFileToFilesAndFoldersToMultipleFolder_ReturnsMakeSharedCopyFileToFilesToMultipleFoldersSubProgram)
 {
    const shared_ptr<CloudundancySubProgram> cloudundancySubProgram =
-      _cloudundancySubProgramFactory.NewCloudundancySubProgram(ProgramMode::CopyFileToFilesAndFoldersToMultipleFolders);
+      _cloudundancySubProgramFactory.NewCloudundancySubProgram(ProgramMode::CopyFilesToMultipleFolders);
    POINTEE_IS_EXACT_TYPE(CopyFileToFilesToMultipleFoldersSubProgram, cloudundancySubProgram);
 }
 
