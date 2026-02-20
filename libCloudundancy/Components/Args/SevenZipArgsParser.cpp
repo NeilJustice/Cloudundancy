@@ -17,7 +17,7 @@ CloudundancyArgs SevenZipArgsParser::ParseDocoptArgs(const map<string, docopt::v
    cloudundancyArgs.iniInputFilePath = p_docoptParser->GetRequiredFilePathWhichMustExist(
       docoptArgs, "--ini-file-to-copy-files-to-7zip-staging-folder");
 
-   //cloudundancyArgs.sevenZipStagingFolderPath = _docoptParser->GetRequiredString(
+   //cloudundancyArgs.sevenZipStagingFolderPath = _docoptParser->GetRequiredFolderPathWhichNeedNotExist(
    //   docoptArgs, "--7zip-staging-folder");
 
    //cloudundancyArgs.sevenZipFileCopyingIniFilePath = _docoptParser->GetRequiredString(

@@ -29,7 +29,8 @@ AFACT(GetOptionalStringWithDefaultValue_ArgNotInMap_ReturnsDefaultValue)
 AFACT(GetOptionalStringWithDefaultValue_ArgInMap_ReturnsValue)
 
 AFACT(GetRequiredFilePathWhichMustExist_DoesSo)
-
+AFACT(GetRequiredFolderPathWhichNeedNotExist_DoesSo)
+// Private Functions
 AFACT(StaticGetRequiredString_ArgNotInMap_ThrowsOutOfRangeException)
 AFACT(StaticGetRequiredString_ArgInMapAsNoneValue_ThrowsInvalidArgumentException)
 AFACT(StaticGetRequiredString_ArgInMapAsStringValue_ReturnsValue)
@@ -249,6 +250,22 @@ TEST(GetRequiredFilePathWhichMustExist_DoesSo)
    METALMOCKTHEN(_fileSystemPatherMock->ThrowIfFileDoesNotExistMock.CalledOnceWith(
       absoluteFilePathArgument)));
    ARE_EQUAL(absoluteFilePathArgument, returnedFullFilePathArgument);
+}
+
+TEST(GetRequiredFolderPathWhichNeedNotExist_DoesSo)
+{
+   const string potentiallyRelativeFolderPathStringArgument = _call_DocoptParser_StaticGetRequiredStringMock.ReturnRandom();
+   const fs::path absoluteFolderPathArgument = _fileSystemPatherMock->GetAbsoluteFileOrFolderPathMock.ReturnRandom();
+   //
+   const fs::path returnedAbsoluteFolderPathArgument = _docoptParser.GetRequiredFolderPathWhichNeedNotExist(_docoptArgs, _argName);
+   //
+   const fs::path expectedPotentiallyRelativeFolderPathArgument(potentiallyRelativeFolderPathStringArgument);
+   METALMOCKTHEN(_call_DocoptParser_StaticGetRequiredStringMock.CalledOnceWith(
+      _docoptArgs, _argName)).Then(
+
+   METALMOCKTHEN(_fileSystemPatherMock->GetAbsoluteFileOrFolderPathMock.CalledOnceWith(
+      expectedPotentiallyRelativeFolderPathArgument)));
+   ARE_EQUAL(absoluteFolderPathArgument, returnedAbsoluteFolderPathArgument);
 }
 
 // Private Functions

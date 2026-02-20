@@ -58,6 +58,9 @@ public:
 
    virtual fs::path GetRequiredFilePathWhichMustExist(
       const map<string, docopt::value>& docoptArgs, const string& argName) const;
+
+   virtual fs::path GetRequiredFolderPathWhichNeedNotExist(
+      const map<string, docopt::value>& docoptArgs, const string& argName) const;
    private:
       static size_t StaticGetRequiredSizeT(
          const map<string, docopt::value>& docoptArgs, const string& argName);

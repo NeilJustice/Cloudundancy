@@ -135,6 +135,15 @@ fs::path DocoptParser::GetRequiredFilePathWhichMustExist(
    return absoluteFilePathArgument;
 }
 
+fs::path DocoptParser::GetRequiredFolderPathWhichNeedNotExist(
+   const map<string, docopt::value>& docoptArgs, const string& argName) const
+{
+   const string potentiallyRelativeFolderPathStringArgument = _call_StaticGetRequiredString(docoptArgs, argName);
+   fs::path potentiallyRelativeFolderPathArgument(potentiallyRelativeFolderPathStringArgument);
+   fs::path absoluteFolderPathArgument = _fileSystemPather->GetAbsoluteFileOrFolderPath(potentiallyRelativeFolderPathArgument);
+   return absoluteFolderPathArgument;
+}
+
 // Private Functions
 
 size_t DocoptParser::StaticGetRequiredSizeT(
