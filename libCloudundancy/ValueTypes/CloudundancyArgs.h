@@ -7,7 +7,7 @@ struct CloudundancyArgs
    ProgramMode programMode = ProgramMode::Unset;
    fs::path iniInputFilePath;
    bool deleteDestinationFoldersFirst = false;
-   fs::path sevenZipModeIniFilePath;
+   fs::path sevenZipModeIniInputFilePath;
    fs::path sevenZipStagingFolderPath;
    fs::path sevenZipFileCopyingIniFilePath;
 };

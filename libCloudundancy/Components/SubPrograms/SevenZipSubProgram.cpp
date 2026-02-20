@@ -41,7 +41,7 @@ void SevenZipSubProgram::Copy7ZipFileToDestinationFolders(const CloudundancyArgs
 
 void SevenZipSubProgram::CopyFileToFilesAndFoldersToBackupStagingFolder(const CloudundancyArgs& args) const
 {
-   _cloudundancyFileCopier->CopyFilteredFilesAndFoldersToDestinationFolders(args.sevenZipModeIniFilePath, false);
+   _cloudundancyFileCopier->CopyFilteredFilesAndFoldersToDestinationFolders(args.sevenZipModeIniInputFilePath, false);
 }
 
 void SevenZipSubProgram::DeleteBackupStagingFolder(const CloudundancyArgs& args) const

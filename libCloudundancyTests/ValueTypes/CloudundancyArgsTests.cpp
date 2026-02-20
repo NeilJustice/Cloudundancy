@@ -32,7 +32,7 @@ TEST(DefaultConstructor_SetsFieldsToDefaults)
    expectedCloudundancyArgs.programMode = ProgramMode::Unset;
    expectedCloudundancyArgs.iniInputFilePath = "";
    expectedCloudundancyArgs.deleteDestinationFoldersFirst = false;
-   expectedCloudundancyArgs.sevenZipModeIniFilePath = "";
+   expectedCloudundancyArgs.sevenZipModeIniInputFilePath = "";
    expectedCloudundancyArgs.sevenZipStagingFolderPath = "";
    expectedCloudundancyArgs.sevenZipFileCopyingIniFilePath = "";
    ARE_EQUAL(expectedCloudundancyArgs, cloudundancyArgs);

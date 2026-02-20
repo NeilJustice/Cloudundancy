@@ -83,7 +83,7 @@ TEST(CopyFileToFilesAndFoldersToBackupStagingFolder_CopiesSourceFilesAndFoldersT
    //
    _sevenZipSubProgram.CopyFileToFilesAndFoldersToBackupStagingFolder(args);
    //
-   METALMOCK(_cloudundancyFileCopierMock->CopyFilteredFilesAndFoldersToDestinationFoldersMock.CalledOnceWith(args.sevenZipModeIniFilePath, false));
+   METALMOCK(_cloudundancyFileCopierMock->CopyFilteredFilesAndFoldersToDestinationFoldersMock.CalledOnceWith(args.sevenZipModeIniInputFilePath, false));
 }
 
 TEST(DeleteBackupStagingFolder_PrintsDeleting_DeletesBackupStagingFolder_PrintsDeletedInElapsedSeconds)
