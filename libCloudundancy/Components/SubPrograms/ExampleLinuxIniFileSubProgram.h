@@ -6,5 +6,5 @@ class ExampleLinuxIniFileSubProgram : public CloudundancySubProgram
 public:
    ~ExampleLinuxIniFileSubProgram() override = default;
 
-   int Run(const CloudundancyArgs& args) override;
+   int Run() override;
 };

@@ -11,7 +11,12 @@ CloudundancySubProgram::~CloudundancySubProgram()
 {
 }
 
-int CloudundancySubProgram::Run(const CloudundancyArgs& /*args*/)
+void CloudundancySubProgram::Initialize(const CloudundancyArgs& args)
+{
+   p_args = args;
+}
+
+int CloudundancySubProgram::Run()
 {
    return 0;
 }

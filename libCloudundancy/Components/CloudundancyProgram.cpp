@@ -69,7 +69,8 @@ int CloudundancyProgram::Run(const std::vector<std::string>& stringArgs)
    const CloudundancyArgs args = _cloudundancyArgsParser->ParseStringArgs(stringArgs);
    const shared_ptr<CloudundancySubProgram> cloudundancySubProgram =
       _cloudundancySubProgramFactory->NewCloudundancySubProgram(args.programMode);
-   int exitCode = cloudundancySubProgram->Run(args);
+   cloudundancySubProgram->Initialize(args);
+   int exitCode = cloudundancySubProgram->Run();
 
    const string endTime = _watch->DateTimeNow();
    const string endTimeLine = Utils::String::ConcatStrings("[Cloudundancy]  EndTime: ", endTime);

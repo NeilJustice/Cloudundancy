@@ -11,5 +11,5 @@ public:
 
    virtual void ThrowIfZeroDestinationFolderPaths(
       const CloudundancyIni& cloudundancyIni,
-      const fs::path& cloudundancyIniPath) const;
+      const fs::path& cloudundancyIniInputFilePath) const;
 };

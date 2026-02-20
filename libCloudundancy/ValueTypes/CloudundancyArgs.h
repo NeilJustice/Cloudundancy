@@ -9,7 +9,7 @@ struct CloudundancyArgs
    bool deleteDestinationFoldersFirst = false;
    fs::path sevenZipModeIniInputFilePath;
    fs::path sevenZipStagingFolderPath;
-   fs::path sevenZipFileCopyingIniFilePath;
+   fs::path sevenZipFileCopyingIniInputFilePath;
 };
 
 #ifdef _WIN32

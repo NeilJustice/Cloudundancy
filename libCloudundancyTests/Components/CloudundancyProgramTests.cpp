@@ -115,8 +115,9 @@ TEST2X2(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSu
    _stopwatchMock->StopAndGetElapsedSecondsMock.Return(elapsedSeconds);
 
    const shared_ptr<CloudundancySubProgramMock> cloudundancySubProgramMock = make_shared<CloudundancySubProgramMock>();
-   cloudundancySubProgramMock->RunMock.Return(subProgramExitCode);
    _cloudundancySubProgramFactoryMock->NewCloudundancySubProgramMock.Return(cloudundancySubProgramMock);
+   cloudundancySubProgramMock->InitializeMock.Expect();
+   cloudundancySubProgramMock->RunMock.Return(subProgramExitCode);
 
    const vector<string> stringArgs = ZenUnit::RandomVector<string>();
    //
@@ -151,7 +152,8 @@ TEST2X2(Run_PrintsCommandLineAndStartTimeAndMachineName_ParsesArgs_NewsAndRunsSu
    METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith(expectedStartTimeLine))).Then(
    METALMOCKTHEN(_cloudundancyArgsParserMock->ParseStringArgsMock.CalledOnceWith(stringArgs))).Then(
    METALMOCKTHEN(_cloudundancySubProgramFactoryMock->NewCloudundancySubProgramMock.CalledOnceWith(args.programMode))).Then(
-   METALMOCKTHEN(cloudundancySubProgramMock->RunMock.CalledOnceWith(args))).Then(
+   METALMOCKTHEN(cloudundancySubProgramMock->InitializeMock.CalledOnceWith(args))).Then(
+   METALMOCKTHEN(cloudundancySubProgramMock->RunMock.CalledOnce())).Then(
 
    METALMOCKTHEN(_watchMock->DateTimeNowMock.Called())).Then(
    METALMOCKTHEN(_consoleMock->WriteLineMock.CalledWith(expectedEndTimeLine))).Then(

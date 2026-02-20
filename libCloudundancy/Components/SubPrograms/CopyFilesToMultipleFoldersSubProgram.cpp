@@ -12,9 +12,13 @@ CopyFileToFilesToMultipleFoldersSubProgram::~CopyFileToFilesToMultipleFoldersSub
 {
 }
 
-int CopyFileToFilesToMultipleFoldersSubProgram::Run(const CloudundancyArgs& args)
+int CopyFileToFilesToMultipleFoldersSubProgram::Run()
 {
-   _cloudundancyFileCopier->CopyFilteredFilesAndFoldersToDestinationFolders(args.iniInputFilePath, args.deleteDestinationFoldersFirst);
-   p_console->WriteLineColor("\n[Cloudundancy] OverallBackupResult: Successfully copied all [SourceFilesAndFolders] to all [DestinationFolders]", Utils::Color::Green);
+   _cloudundancyFileCopier->CopyFilteredFilesAndFoldersToDestinationFolders(
+      p_args.iniInputFilePath, p_args.deleteDestinationFoldersFirst);
+
+   p_console->WriteLineColor(
+      "\n[Cloudundancy] OverallBackupResult: Successfully copied all [SourceFilesAndFolders] to all [DestinationFolders]",
+      Utils::Color::Green);
    return 0;
 }

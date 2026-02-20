@@ -12,5 +12,5 @@ public:
    CopyFileToFilesToMultipleFoldersSubProgram();
    virtual ~CopyFileToFilesToMultipleFoldersSubProgram() override;
 
-   int Run(const CloudundancyArgs& args) override;
+   int Run() override;
 };

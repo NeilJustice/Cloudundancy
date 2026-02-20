@@ -4,5 +4,6 @@
 class CloudundancySubProgramMock : public Metal::Mock<CloudundancySubProgram>
 {
 public:
-   METALMOCK_NONVOID1(int, Run, const CloudundancyArgs&)
+   METALMOCK_VOID1(Initialize, const CloudundancyArgs&)
+   METALMOCK_NONVOID0(int, Run)
 };

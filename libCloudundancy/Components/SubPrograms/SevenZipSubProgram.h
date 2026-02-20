@@ -1,5 +1,10 @@
 #pragma once
 #include "libCloudundancy/Components/SubPrograms/CloudundancySubProgram.h"
+namespace Utils
+{
+   template<typename ClassType>
+   class VoidZeroArgMemberFunctionCaller;
+}
 class CloudundancyFileCopier;
 class CloudundancyFileSystem;
 
@@ -8,8 +13,8 @@ class SevenZipSubProgram : public CloudundancySubProgram
    friend class SevenZipSubProgramTests;
 private:
    // Function Callers
-   using VoidOneArgMemberFunctionCallerType = Utils::VoidOneArgMemberFunctionCaller<SevenZipSubProgram, const CloudundancyArgs&>;
-   unique_ptr<const VoidOneArgMemberFunctionCallerType> _voidOneArgMemberFunctionCaller;
+   using _voidZeroArgMemberFunctionCallerType = Utils::VoidZeroArgMemberFunctionCaller<SevenZipSubProgram>;
+   unique_ptr<const _voidZeroArgMemberFunctionCallerType> _voidZeroArgMemberFunctionCaller;
    // Constant Components
    unique_ptr<const CloudundancyFileCopier> _cloudundancyFileCopier;
    unique_ptr<const CloudundancyFileSystem> _cloudundancyFileSystem;
@@ -21,10 +26,10 @@ private:
 public:
    SevenZipSubProgram();
    ~SevenZipSubProgram() override;
-   int Run(const CloudundancyArgs& args) override;
+   int Run() override;
 private:
-   void Copy7ZipFileToDestinationFolders(const CloudundancyArgs& args) const;
-   void CopyFileToFilesAndFoldersToBackupStagingFolder(const CloudundancyArgs& args) const;
-   void DeleteBackupStagingFolder(const CloudundancyArgs& args) const;
-   void SevenZipBackupStagingFolder(const CloudundancyArgs& args) const;
+   void Copy7ZipFileToDestinationFolders() const;
+   void CopyFileToFilesAndFoldersToBackupStagingFolder() const;
+   void DeleteBackupStagingFolder() const;
+   void SevenZipBackupStagingFolder() const;
 };

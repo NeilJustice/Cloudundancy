@@ -37,4 +37,7 @@ public:
 
    METALMOCK_NONVOID2_CONST(fs::path, GetRequiredFilePathWhichMustExist,
       const DocoptMapType&, const string&)
+
+   METALMOCK_NONVOID2_CONST(fs::path, GetRequiredFolderPathWhichNeedNotExist,
+      const DocoptMapType&, const string&)
 };

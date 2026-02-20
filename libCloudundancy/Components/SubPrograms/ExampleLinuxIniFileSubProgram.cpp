@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libCloudundancy/Components/SubPrograms/ExampleLinuxIniFileSubProgram.h"
 
-int ExampleLinuxIniFileSubProgram::Run(const CloudundancyArgs&)
+int ExampleLinuxIniFileSubProgram::Run()
 {
    const string exampleLinuxIniFileText =
 R"(

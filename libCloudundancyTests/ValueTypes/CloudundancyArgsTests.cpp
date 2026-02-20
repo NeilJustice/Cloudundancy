@@ -34,7 +34,7 @@ TEST(DefaultConstructor_SetsFieldsToDefaults)
    expectedCloudundancyArgs.deleteDestinationFoldersFirst = false;
    expectedCloudundancyArgs.sevenZipModeIniInputFilePath = "";
    expectedCloudundancyArgs.sevenZipStagingFolderPath = "";
-   expectedCloudundancyArgs.sevenZipFileCopyingIniFilePath = "";
+   expectedCloudundancyArgs.sevenZipFileCopyingIniInputFilePath = "";
    ARE_EQUAL(expectedCloudundancyArgs, cloudundancyArgs);
 }
 

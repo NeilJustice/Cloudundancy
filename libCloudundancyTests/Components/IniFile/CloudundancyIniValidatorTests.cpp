@@ -28,10 +28,10 @@ TEST(ThrowIfZeroDestinationFolderPaths_DestinationFolderPathsIsEmpty_ThrowsFileS
    CloudundancyIni cloudundancyIni = ZenUnit::Random<CloudundancyIni>();
    cloudundancyIni.destinationFolderPaths = {};
    //
-   const fs::path cloudundancyIniPath = ZenUnit::Random<fs::path>();
-   const Utils::FileMalformedException expectedFileMalformedException(cloudundancyIniPath, "cloudundancyIni.destinationFolderPaths cannot be empty");
+   const fs::path cloudundancyIniInputFilePath = ZenUnit::Random<fs::path>();
+   const Utils::FileMalformedException expectedFileMalformedException(cloudundancyIniInputFilePath, "cloudundancyIni.destinationFolderPaths cannot be empty");
    const string expectedExceptionMessage = expectedFileMalformedException.what();
-   THROWS_EXCEPTION(_cloudundancyIniValidator.ThrowIfZeroDestinationFolderPaths(cloudundancyIni, cloudundancyIniPath),
+   THROWS_EXCEPTION(_cloudundancyIniValidator.ThrowIfZeroDestinationFolderPaths(cloudundancyIni, cloudundancyIniInputFilePath),
       Utils::FileMalformedException, expectedExceptionMessage);
 }
 

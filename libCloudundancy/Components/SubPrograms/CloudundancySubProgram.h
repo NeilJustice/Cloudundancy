@@ -8,9 +8,12 @@ class CloudundancySubProgram
 protected:
    // Constant Components
    unique_ptr<const Utils::Console> p_console;
+   // Mutable Fields
+   CloudundancyArgs p_args;
 public:
    CloudundancySubProgram();
    virtual ~CloudundancySubProgram();
 
-   virtual int Run(const CloudundancyArgs& args);
+   virtual void Initialize(const CloudundancyArgs& args);
+   virtual int Run();
 };

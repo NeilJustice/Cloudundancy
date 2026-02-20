@@ -11,7 +11,7 @@ namespace ZenUnit
       ARE_EQUAL(expectedCloudundancyArgs.deleteDestinationFoldersFirst, actualCloudundancyArgs.deleteDestinationFoldersFirst);
       ARE_EQUAL(expectedCloudundancyArgs.sevenZipModeIniInputFilePath, actualCloudundancyArgs.sevenZipModeIniInputFilePath);
       ARE_EQUAL(expectedCloudundancyArgs.sevenZipStagingFolderPath, actualCloudundancyArgs.sevenZipStagingFolderPath);
-      ARE_EQUAL(expectedCloudundancyArgs.sevenZipFileCopyingIniFilePath, actualCloudundancyArgs.sevenZipFileCopyingIniFilePath);
+      ARE_EQUAL(expectedCloudundancyArgs.sevenZipFileCopyingIniInputFilePath, actualCloudundancyArgs.sevenZipFileCopyingIniInputFilePath);
    }
 
    CloudundancyArgs TestableRandomCloudundancyArgs(const ZenUnit::RandomGenerator* randomGenerator)
@@ -22,7 +22,7 @@ namespace ZenUnit
       randomCloudundancyArgs.deleteDestinationFoldersFirst = randomGenerator->Bool();
       randomCloudundancyArgs.sevenZipModeIniInputFilePath = randomGenerator->FilesystemPath();
       randomCloudundancyArgs.sevenZipStagingFolderPath = randomGenerator->FilesystemPath();
-      randomCloudundancyArgs.sevenZipFileCopyingIniFilePath = randomGenerator->FilesystemPath();
+      randomCloudundancyArgs.sevenZipFileCopyingIniInputFilePath = randomGenerator->FilesystemPath();
       return randomCloudundancyArgs;
    }
 

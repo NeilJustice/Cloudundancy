@@ -53,7 +53,7 @@ public:
    virtual ~CloudundancyFileCopier();
 
    virtual void CopyFilteredFilesAndFoldersToDestinationFolders(
-      const fs::path& cloudundancyIniFilePath, bool deleteDestinationFoldersFirst) const;
+      const fs::path& sevenZipModeIniInputFilePath, bool deleteDestinationFoldersFirst) const;
 private:
    void CopyFilteredFilesAndFoldersToDestinationFolder(
       const fs::path& destinationFolderPath, const CloudundancyIni& cloudundancyIni) const;
@@ -73,7 +73,8 @@ private:
       const fs::path& destinationFolderPath) const;
 
    void CopyNonIgnoredFilesInAndBelowFolderToFolder(
-      const CloudundancyIniCopyInstruction& cloudundancyIniCopyInstruction, const fs::path& destinationFolderPath) const;
+      const CloudundancyIniCopyInstruction& cloudundancyIniCopyInstruction,
+      const fs::path& destinationFolderPath) const;
 
    Utils::FileCopyResult CopyFileToFile(
       const fs::path& sourceFilePath, const fs::path& destinationFilePath) const;

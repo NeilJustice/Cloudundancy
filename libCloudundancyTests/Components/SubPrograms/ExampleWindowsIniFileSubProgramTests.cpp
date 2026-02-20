@@ -18,9 +18,8 @@ STARTUP
 TEST(Run_PrintsExampleWindowsIniFile_Returns0)
 {
    p_consoleMock->WriteLineMock.Expect();
-   const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
-   const int exitCode = _exampleWindowsIniFileSubProgram.Run(args);
+   const int exitCode = _exampleWindowsIniFileSubProgram.Run();
    //
    const string expectedExampleWindowsIniFileText =
 R"(

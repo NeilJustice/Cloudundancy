@@ -23,7 +23,7 @@ public:
    CloudundancyIniFileReader() noexcept;
    virtual ~CloudundancyIniFileReader();
 
-   virtual CloudundancyIni ReadIniFile(const fs::path& cloudundancyIniPath) const;
+   virtual CloudundancyIni ReadIniFile(const fs::path& cloudundancyIniInputFilePath) const;
 private:
    CloudundancyIniCopyInstruction ParseFileCopyInstructionLine(
       const FilePathLineNumberLineText& fileCopyInstructionLine) const;

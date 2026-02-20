@@ -7,10 +7,12 @@ namespace Utils
    {
    public:
       virtual ~VoidOneArgMemberFunctionCaller() = default;
+      using ConstMemberFunctionType = void (ClassType::*)(ArgType) const;
+      using NonConstMemberFunctionType = void (ClassType::*)(ArgType);
 
       virtual void CallConstMemberFunction(
          const ClassType* constClassPointer,
-         void (ClassType::*constMemberFunction)(ArgType) const,
+         ConstMemberFunctionType constMemberFunction,
          ArgType arg) const
       {
          (constClassPointer->*constMemberFunction)(arg);
@@ -18,7 +20,7 @@ namespace Utils
 
       virtual void CallCallNonConstMemberFunctionMemberFunction(
          ClassType* nonConstClassPointer,
-         void (ClassType::*nonConstMemberFunction)(ArgType),
+         NonConstMemberFunctionType nonConstMemberFunction,
          ArgType arg) const
       {
          (nonConstClassPointer->*nonConstMemberFunction)(arg);

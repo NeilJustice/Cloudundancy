@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libCloudundancy/Components/SubPrograms/ExampleWindowsIniFileSubProgram.h"
 
-int ExampleWindowsIniFileSubProgram::Run(const CloudundancyArgs&)
+int ExampleWindowsIniFileSubProgram::Run()
 {
    const string exampleWindowsIniFileText =
 R"(

@@ -13,11 +13,11 @@ CloudundancyIniValidator::~CloudundancyIniValidator()
 
 void CloudundancyIniValidator::ThrowIfZeroDestinationFolderPaths(
    const CloudundancyIni& cloudundancyIni,
-   const fs::path& cloudundancyIniPath) const
+   const fs::path& cloudundancyIniInputFilePath) const
 {
    if (cloudundancyIni.destinationFolderPaths.empty())
    {
-      const Utils::FileMalformedException fileMalformedException(cloudundancyIniPath, "cloudundancyIni.destinationFolderPaths cannot be empty");
+      const Utils::FileMalformedException fileMalformedException(cloudundancyIniInputFilePath, "cloudundancyIni.destinationFolderPaths cannot be empty");
       throw fileMalformedException;
    }
 }

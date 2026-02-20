@@ -16,10 +16,10 @@ CloudundancyIniFileReader::~CloudundancyIniFileReader()
 {
 }
 
-CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudundancyIniPath) const
+CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudundancyIniInputFilePath) const
 {
    CloudundancyIni cloudundancyIni;
-   cloudundancyIni.iniFileLines = _fileSystem->ReadFileLinesWhichMustBeNonEmpty(cloudundancyIniPath);
+   cloudundancyIni.iniFileLines = _fileSystem->ReadFileLinesWhichMustBeNonEmpty(cloudundancyIniInputFilePath);
    bool inDestinationFoldersSection = false;
    bool inSourceFilesAndFoldersToCopySection = false;
    bool inFileSubpathsToNotCopySection = false;
@@ -59,7 +59,7 @@ CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudunda
       }
       else if (inSourceFilesAndFoldersToCopySection)
       {
-         const FilePathLineNumberLineText fileCopyInstructionLine(cloudundancyIniPath, lineNumber, iniFileLine);
+         const FilePathLineNumberLineText fileCopyInstructionLine(cloudundancyIniInputFilePath, lineNumber, iniFileLine);
          CloudundancyIniCopyInstruction cloudundancyIniCopyInstruction =
             _caller_ParseFileCopyInstructionLine->CallConstMemberFunction(
                this, &CloudundancyIniFileReader::ParseFileCopyInstructionLine, fileCopyInstructionLine);
@@ -71,7 +71,7 @@ CloudundancyIni CloudundancyIniFileReader::ReadIniFile(const fs::path& cloudunda
          cloudundancyIni.fileSubpathsToIgnore.push_back(iniFileLine);
       }
    }
-   _cloudundancyIniValidator->ThrowIfZeroDestinationFolderPaths(cloudundancyIni, cloudundancyIniPath);
+   _cloudundancyIniValidator->ThrowIfZeroDestinationFolderPaths(cloudundancyIni, cloudundancyIniInputFilePath);
    return cloudundancyIni;
 }
 

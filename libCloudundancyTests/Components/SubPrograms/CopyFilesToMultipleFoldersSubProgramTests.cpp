@@ -4,8 +4,7 @@
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/CloudundancyFileCopierMock.h"
 
 TESTS(CopyFileToFilesToMultipleFoldersSubProgramTests)
-AFACT(DefaultConstructor_NewsComponents)
-AFACT(Run_SetsArgs_CallsCopyFilteredFilesAndFoldersToDestinationFolders_Returns0)
+AFACT(Run_DoesSo)
 EVIDENCE
 
 CopyFileToFilesToMultipleFoldersSubProgram _copyFilesToMultipleFoldersSubProgram;
@@ -13,6 +12,8 @@ CopyFileToFilesToMultipleFoldersSubProgram _copyFilesToMultipleFoldersSubProgram
 Utils::ConsoleMock* p_consoleMock = nullptr;
 // Constant Components
 CloudundancyFileCopierMock* _cloudundancyFileCopierMock = nullptr;
+// Mutable Fields
+CloudundancyArgs p_args;
 
 STARTUP
 {
@@ -20,25 +21,19 @@ STARTUP
    _copyFilesToMultipleFoldersSubProgram.p_console.reset(p_consoleMock = new Utils::ConsoleMock);
    // Constant Components
    _copyFilesToMultipleFoldersSubProgram._cloudundancyFileCopier.reset(_cloudundancyFileCopierMock = new CloudundancyFileCopierMock);
+   // Mutable Fields
+   _copyFilesToMultipleFoldersSubProgram.p_args = p_args = ZenUnit::Random<CloudundancyArgs>();
 }
 
-TEST(DefaultConstructor_NewsComponents)
-{
-   CopyFileToFilesToMultipleFoldersSubProgram copyFilesAndFoldersToMultipleFoldersSubProgram;
-   DELETE_TO_ASSERT_NEWED(copyFilesAndFoldersToMultipleFoldersSubProgram._cloudundancyFileCopier);
-}
-
-TEST(Run_SetsArgs_CallsCopyFilteredFilesAndFoldersToDestinationFolders_Returns0)
+TEST(Run_DoesSo)
 {
    _cloudundancyFileCopierMock->CopyFilteredFilesAndFoldersToDestinationFoldersMock.Expect();
    p_consoleMock->WriteLineColorMock.Expect();
-
-   const CloudundancyArgs args = ZenUnit::Random<CloudundancyArgs>();
    //
-   const int exitCode = _copyFilesToMultipleFoldersSubProgram.Run(args);
+   const int exitCode = _copyFilesToMultipleFoldersSubProgram.Run();
    //
    METALMOCKTHEN(_cloudundancyFileCopierMock->CopyFilteredFilesAndFoldersToDestinationFoldersMock.CalledOnceWith(
-      args.iniInputFilePath, args.deleteDestinationFoldersFirst)).Then(
+      p_args.iniInputFilePath, p_args.deleteDestinationFoldersFirst)).Then(
    METALMOCKTHEN(p_consoleMock->WriteLineColorMock.CalledOnceWith(
       "\n[Cloudundancy] OverallBackupResult: Successfully copied all [SourceFilesAndFolders] to all [DestinationFolders]",
       Utils::Color::Green)));
