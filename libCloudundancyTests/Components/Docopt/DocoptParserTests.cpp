@@ -1,20 +1,27 @@
 #include "pch.h"
 #include "libCloudundancy/Components/Docopt/DocoptParser.h"
-#include "libCloudundancyTests/ValueTypes/ZenUnit/docoptvalueRandom.h"
+#include "libCloudundancyTests/Components/Maps/MetalMock/MapHelperMock.h"
 
 TESTS(DocoptParserTests)
 AFACT(DefaultConstructor_SetsFieldsToDefaultValues)
-AFACT(ParseStringArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
-AFACT(ParseStringArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
+AFACT(DocoptArgsAreForProgramMode_ReturnsTrueIfSo)
+
+AFACT(ParseArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
+AFACT(ParseArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
+
 AFACT(GetRequiredString_ArgNotInMap_ThrowsOutOfRange)
 AFACT(GetRequiredString_ArgInMap_ReturnsValue)
+
 AFACT(GetRequiredBool_ArgNotInMap_ThrowsOutOfRange)
 AFACT(GetRequiredBool_ArgInMap_ReturnsValue)
+
 AFACT(GetProgramModeSpecificRequiredString_ProgramModeValueDoesNotEqualComparisonProgramModeValue_ReturnsEmptyString)
 AFACT(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgNotInMap_ThrowsOutOfRange)
 AFACT(GetProgramModeSpecificRequiredString_ProgramModeValueEqualsComparisonProgramModeValue_ArgInMap_ReturnsValue)
+
 AFACT(GetOptionalBool_ArgNotInMap_ReturnsFalse)
 AFACT(GetOptionalBool_ArgInMap_ReturnsTrue)
+
 AFACT(GetOptionalString_ArgNotInMap_ReturnsEmptyString)
 AFACT(GetOptionalString_ArgInMap_ReturnsValue)
 AFACT(GetOptionalStringWithDefaultValue_ArgNotInMap_ReturnsDefaultValue)
@@ -24,7 +31,10 @@ EVIDENCE
 DocoptParser _docoptParser;
 // Function Pointers
 //METALMOCK_NONVOID5_STATIC_OR_FREE(map<string COMMA docopt::value>, docopt, const string&, const vector<string>&, bool, const string&, bool)
-
+// Constant Components
+using _mapHelperMockType = Utils::MapHelperMock<string, docopt::value>;
+_mapHelperMockType* _mapHelperMock = nullptr;
+// Testing Fields
 map<string, docopt::value> _docoptArgs;
 string _argName;
 string _expectedKeyNotFoundWhat;
@@ -33,7 +43,9 @@ STARTUP
 {
    // Function Pointers
    //_docoptParser._call_docopt_docopt = BIND_5ARG_METALMOCK_OBJECT(docoptMock);
-
+   // Constant Components
+   _docoptParser._mapHelper.reset(_mapHelperMock = new _mapHelperMockType);
+   // Testing Fields
    _docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::value>();
    _argName = ZenUnit::Random<string>() + "_argName";
    _expectedKeyNotFoundWhat = "Error: Key not found in map: [" + _argName + "]";
@@ -46,15 +58,31 @@ TEST(DefaultConstructor_SetsFieldsToDefaultValues)
    //STD_FUNCTION_TARGETS(docopt::docopt, docoptParser._call_docopt_docopt);
 }
 
-TEST(ParseStringArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
+TEST(DocoptArgsAreForProgramMode_ReturnsTrueIfSo)
+{
+   const bool docoptArgsAreForProgramMode = _mapHelperMock->ContainsKeyWithValueMock.ReturnRandom();
+   const map<string, docopt::value> docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::value>();
+   const string programModeString = ZenUnit::Random<string>();
+   //
+   const bool returnedDocoptArgsAreForProgramMode = _docoptParser.DocoptArgsAreForProgramMode(docoptArgs, programModeString);
+   //
+   const docopt::value trueDocoptValue(true);
+   METALMOCK(_mapHelperMock->ContainsKeyWithValueMock.CalledOnceWith(
+      &docoptArgs, programModeString, trueDocoptValue));
+   ARE_EQUAL(docoptArgsAreForProgramMode, returnedDocoptArgsAreForProgramMode);
+}
+
+TEST(ParseArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
 {
    const string usage = ZenUnit::Random<string>();
    const vector<string> emptyArgv;
    //
-   THROWS_EXCEPTION(const auto returnValue = _docoptParser.ParseArgs(usage, emptyArgv), invalid_argument, "argv cannot be empty");
+   THROWS_EXCEPTION(const auto returnValue = _docoptParser.ParseArgs(
+      usage, emptyArgv, false),
+      invalid_argument, "argv cannot be empty");
 }
 
-TEST(ParseStringArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
+TEST(ParseArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
 {
    //const map<string, docopt::value> docoptReturnValue = ZenUnit::RandomOrderedMap<string, docopt::value>();
    //docoptMock.Return(docoptReturnValue);

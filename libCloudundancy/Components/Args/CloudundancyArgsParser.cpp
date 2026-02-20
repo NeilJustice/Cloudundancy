@@ -19,8 +19,11 @@ CloudundancyArgsParser::~CloudundancyArgsParser()
 
 CloudundancyArgs CloudundancyArgsParser::ParseStringArgs(const vector<string>& stringArgs) const
 {
-   const map<string, docopt::value> docoptArgs = _docoptParser->ParseArgs(CloudundancyArgs::CommandLineUsage, stringArgs);
+   const map<string, docopt::value> docoptArgs =
+      _docoptParser->ParseArgs(CloudundancyArgs::CommandLineUsage, stringArgs, false);
+
    CloudundancyArgs cloudundancyArgs;
+
    const bool isCopyFileToFilesToMultipleFoldersMode = _docoptParser->GetRequiredBool(docoptArgs, "copy-files-to-multiple-folders");
    const bool is7ZipMode = _docoptParser->GetRequiredBool(docoptArgs, "7zip-files-then-copy-the-7zip-file-to-multiple-folders");
    const bool isExampleLinuxIniFileMode = _docoptParser->GetRequiredBool(docoptArgs, "example-linux-ini-file");

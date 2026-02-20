@@ -11,15 +11,13 @@
 #include "docopt_private.h"
 #include "docopt_util.h"
 #include "docopt_value.h"
-#include <cassert>
-#include <iostream>
 #include <map>
 #include <string>
 #include <unordered_set>
 #include <vector>
 using namespace docopt;
 
-DOCOPT_INLINE std::ostream& docopt::operator<<(std::ostream& os, value const& val)
+std::ostream& docopt::operator<<(std::ostream& os, const value& val)
 {
    if (val.isBool())
    {
@@ -33,15 +31,15 @@ DOCOPT_INLINE std::ostream& docopt::operator<<(std::ostream& os, value const& va
    }
    else if (val.isString())
    {
-      std::string const& str = val.asString();
+      const std::string& str = val.asString();
       os << '"' << str << '"';
    }
    else if (val.isStringList())
    {
-      auto const& list = val.asStringList();
+      const auto& list = val.asStringList();
       os << "[";
       bool first = true;
-      for (auto const& el : list)
+      for (const auto& el : list)
       {
          if (first)
          {
@@ -70,9 +68,13 @@ public:
       , fIsParsingArgv(isParsingArgv) {
    }
 
-   explicit operator bool() const { return fIndex < fTokens.size(); }
+   explicit operator bool() const
+   {
+      return fIndex < fTokens.size();
+   }
 
-   static Tokens from_pattern(std::string const& source) {
+   static Tokens from_pattern(const std::string& source)
+   {
       constexpr static auto re_separator =
          ctll::fixed_string{ R"((?:\s*))"	 // any spaces (non-matching subgroup)
                         "("
@@ -92,35 +94,51 @@ public:
       // tokens. This is a little harder than the python version
 
       std::vector<std::string> tokens;
-      for (auto [first_stage, sep] : ctre::split<re_separator>(source)) {
-         for (auto sub_match : ctre::range<re_strings>(first_stage)) {
+      for (auto [first_stage, sep] : ctre::split<re_separator>(source))
+      {
+         for (auto sub_match : ctre::range<re_strings>(first_stage))
+         {
             tokens.emplace_back(sub_match.to_string());
          }
-         if (sep) {
+         if (sep)
+         {
             tokens.emplace_back(sep.to_string());
          }
       }
-
       return Tokens(tokens, false);
    }
 
-   std::string const& current() const {
-      if (*this) return fTokens[fIndex];
-
+   const std::string& current() const
+   {
+      if (*this)
+      {
+         return fTokens[fIndex];
+      }
       static std::string const empty;
       return empty;
    }
 
-   std::string the_rest() const {
-      if (!*this) return {};
+   std::string the_rest() const
+   {
+      if (!*this)
+      {
+         return {};
+      }
       return join(fTokens.begin() + static_cast<std::ptrdiff_t>(fIndex), fTokens.end(), " ");
    }
 
-   std::string pop() { return std::move(fTokens.at(fIndex++)); }
+   std::string pop()
+   {
+      return std::move(fTokens.at(fIndex++));
+   }
 
-   bool isParsingArgv() const { return fIsParsingArgv; }
+   bool isParsingArgv() const
+   {
+      return fIsParsingArgv;
+   }
 
-   struct OptionError : std::runtime_error {
+   struct OptionError : std::runtime_error
+   {
       using runtime_error::runtime_error;
    };
 
@@ -131,15 +149,19 @@ private:
 };
 
 // Get all instances of 'T' from the pattern
-template <typename T>
-std::vector<T*> flat_filter(Pattern& pattern) {
+template<typename T>
+std::vector<T*> flat_filter(Pattern& pattern)
+{
    std::vector<Pattern*> flattened =
       pattern.flat([](Pattern const* p) -> bool { return dynamic_cast<T const*>(p) != nullptr; });
 
    // now, we're guaranteed to have T*'s, so just use static_cast
    std::vector<T*> ret;
    std::transform(
-      flattened.begin(), flattened.end(), std::back_inserter(ret), [](Pattern* p) { return static_cast<T*>(p); });
+      flattened.begin(), flattened.end(), std::back_inserter(ret), [](Pattern* p)
+      {
+         return static_cast<T*>(p);
+      });
    return ret;
 }
 
@@ -174,46 +196,64 @@ static auto parse_options(std::string_view source) -> std::vector<std::string> {
    return ret;
 }
 
-static bool is_argument_spec(std::string const& token) {
-   if (token.empty()) return false;
-
-   if (token[0] == '<' && token[token.size() - 1] == '>') return true;
-
-   if (std::all_of(token.begin(), token.end(), &::isupper)) return true;
-
+static bool is_argument_spec(const std::string& token)
+{
+   if (token.empty())
+   {
+      return false;
+   }
+   if (token[0] == '<' && token[token.size() - 1] == '>')
+   {
+      return true;
+   }
+   if (std::all_of(token.begin(), token.end(), &::isupper))
+   {
+      return true;
+   }
    return false;
 }
 
-template <typename I>
-std::vector<std::string> longOptions(I iter, I end) {
+template<typename I>
+std::vector<std::string> longOptions(I iter, I end)
+{
    std::vector<std::string> ret;
    std::transform(iter, end, std::back_inserter(ret), [](typename I::reference opt) { return opt->longOption(); });
    return ret;
 }
 
-static PatternList parse_long(Tokens& tokens, std::vector<Option>& options) {
+static PatternList parse_long(Tokens& tokens, std::vector<Option>& options)
+{
    // long ::= '--' chars [ ( ' ' | '=' ) chars ] ;
    std::string longOpt, equal;
    value val;
    std::tie(longOpt, equal, val) = partition(tokens.pop(), "=");
-
    assert(starts_with(longOpt, "--"));
-
-   if (equal.empty()) {
+   if (equal.empty())
+   {
       val = value{};
    }
-
    // detect with options match this long option
    std::vector<Option const*> similar;
-   for (auto const& option : options) {
-      if (option.longOption() == longOpt) similar.push_back(&option);
+   for (const auto& option : options)
+   {
+      if (option.longOption() == longOpt)
+      {
+         similar.push_back(&option);
+      }
    }
-
    // maybe allow similar options that match by prefix
-   if (tokens.isParsingArgv() && similar.empty()) {
-      for (auto const& option : options) {
-         if (option.longOption().empty()) continue;
-         if (starts_with(option.longOption(), longOpt)) similar.push_back(&option);
+   if (tokens.isParsingArgv() && similar.empty())
+   {
+      for (const auto& option : options)
+      {
+         if (option.longOption().empty())
+         {
+            continue;
+         }
+         if (starts_with(option.longOption(), longOpt))
+         {
+            similar.push_back(&option);
+         }
       }
    }
 
@@ -245,7 +285,7 @@ static PatternList parse_long(Tokens& tokens, std::vector<Option>& options) {
       }
       else {
          if (!val) {
-            auto const& token = tokens.current();
+            const auto& token = tokens.current();
             if (token.empty() || token == "--") {
                std::string error = o->longOption() + " requires an argument";
                throw Tokens::OptionError(std::move(error));
@@ -279,7 +319,7 @@ static PatternList parse_short(Tokens& tokens, std::vector<Option>& options) {
       ++i;
 
       std::vector<Option const*> similar;
-      for (auto const& option : options) {
+      for (const auto& option : options) {
          if (option.shortOption() == shortOpt) similar.push_back(&option);
       }
 
@@ -302,7 +342,7 @@ static PatternList parse_short(Tokens& tokens, std::vector<Option>& options) {
          if (o->argCount()) {
             if (i == token.end()) {
                // consume the next token
-               auto const& ttoken = tokens.current();
+               const auto& ttoken = tokens.current();
                if (ttoken.empty() || ttoken == "--") {
                   std::string error = shortOpt + " requires an argument";
                   throw Tokens::OptionError(std::move(error));
@@ -332,7 +372,7 @@ static PatternList parse_atom(Tokens& tokens, std::vector<Option>& options) {
    // atom ::= '(' expr ')' | '[' expr ']' | 'options'
    //             | long | shorts | argument | command ;
 
-   std::string const& token = tokens.current();
+   const std::string& token = tokens.current();
 
    PatternList ret;
 
@@ -386,7 +426,7 @@ static PatternList parse_seq(Tokens& tokens, std::vector<Option>& options) {
    PatternList ret;
 
    while (tokens) {
-      auto const& token = tokens.current();
+      const auto& token = tokens.current();
 
       if (token == "]" || token == ")" || token == "|") break;
 
@@ -436,7 +476,7 @@ PatternList parse_expr(Tokens& tokens, std::vector<Option>& options) {
    return { maybe_collapse_to_either(std::move(ret)) };
 }
 
-static Required parse_pattern(std::string const& source, std::vector<Option>& options) {
+static Required parse_pattern(const std::string& source, std::vector<Option>& options) {
    auto tokens = Tokens::from_pattern(source);
    auto result = parse_expr(tokens, options);
 
@@ -446,7 +486,7 @@ static Required parse_pattern(std::string const& source, std::vector<Option>& op
    return Required{ std::move(result) };
 }
 
-static std::string formal_usage(std::string const& section) {
+static std::string formal_usage(const std::string& section) {
    std::string ret = "(";
 
    auto i = section.find(':') + 1;	 // skip past "usage:"
@@ -475,7 +515,7 @@ static PatternList parse_argv(Tokens tokens, std::vector<Option>& options, bool 
 
    PatternList ret;
    while (tokens) {
-      auto const& token = tokens.current();
+      const auto& token = tokens.current();
 
       if (token == "--") {
          // option list is done; convert all the rest to arguments
@@ -505,7 +545,7 @@ static PatternList parse_argv(Tokens tokens, std::vector<Option>& options, bool 
    return ret;
 }
 
-static std::vector<Option> parse_defaults(std::string const& doc) {
+static std::vector<Option> parse_defaults(const std::string& doc) {
    // This pattern is a delimiter by which we split the options.
    // The delimiter is a new line followed by a whitespace(s) followed by one or two hyphens.
    static constexpr auto re_delimiter = ctll::fixed_string{
@@ -527,9 +567,9 @@ static std::vector<Option> parse_defaults(std::string const& doc) {
    return defaults;
 }
 
-static bool isOptionSet(PatternList const& options, std::string const& opt1, std::string const& opt2 = "") {
+static bool isOptionSet(PatternList const& options, const std::string& opt1, const std::string& opt2 = "") {
    return std::any_of(options.begin(), options.end(), [&](std::shared_ptr<Pattern const> const& opt) -> bool {
-      auto const& name = opt->name();
+      const auto& name = opt->name();
       if (name == opt1 || (!opt2.empty() && name == opt2)) {
          return opt->hasValue();
       }
@@ -548,7 +588,7 @@ static void extras(bool help, bool version, PatternList const& options) {
 }
 
 // Parse the doc string and generate the Pattern tree
-static std::pair<Required, std::vector<Option>> create_pattern_tree(std::string const& doc)
+static std::pair<Required, std::vector<Option>> create_pattern_tree(const std::string& doc)
 {
    auto usage_sections = parse_usage(doc);
    if (usage_sections.empty())
@@ -574,7 +614,7 @@ static std::pair<Required, std::vector<Option>> create_pattern_tree(std::string 
 
       // set(doc_options) - set(pattern_options)
       UniqueOptions uniq_doc_options;
-      for (auto const& opt : doc_options) {
+      for (const auto& opt : doc_options) {
          if (uniq_pattern_options.count(&opt)) continue;
          uniq_doc_options.insert(&opt);
       }
@@ -591,85 +631,96 @@ static std::pair<Required, std::vector<Option>> create_pattern_tree(std::string 
    return { std::move(pattern), std::move(options) };
 }
 
-DOCOPT_INLINE docopt::Options docopt::docopt_parse(
-   std::string const& doc,
+docopt::Options docopt::docopt_parse(
+   const std::string& doc,
    std::vector<std::string> const& argv,
    bool help,
    bool version,
-   bool options_first) {
+   bool options_first)
+{
    Required pattern;
    std::vector<Option> options;
-   try {
+   try
+   {
       std::tie(pattern, options) = create_pattern_tree(doc);
    }
-   catch (Tokens::OptionError const& error) {
-      throw DocoptLanguageError(error.what());
+   catch (const Tokens::OptionError& optionError)
+   {
+      throw DocoptLanguageError(optionError.what());
    }
 
    PatternList argv_patterns;
-   try {
+   try
+   {
       argv_patterns = parse_argv(Tokens(argv), options, options_first);
    }
-   catch (Tokens::OptionError const& error) {
-      throw DocoptArgumentError(error.what());
+   catch (const Tokens::OptionError& optionError)
+   {
+      throw DocoptArgumentError(optionError.what());
    }
-
    extras(help, version, argv_patterns);
 
    std::vector<std::shared_ptr<LeafPattern>> collected;
    bool matched = pattern.fix().match(argv_patterns, collected);
-   if (matched && argv_patterns.empty()) {
+   if (matched && argv_patterns.empty())
+   {
       docopt::Options ret;
-
       // (a.name, a.value) for a in (pattern.flat() + collected)
-      for (auto* p : pattern.leaves()) {
+      for (auto* p : pattern.leaves())
+      {
          ret[p->name()] = p->getValue();
       }
-
-      for (auto const& p : collected) {
+      for (const auto& p : collected)
+      {
          ret[p->name()] = p->getValue();
       }
-
       return ret;
    }
-
-   if (matched) {
+   if (matched)
+   {
       std::string leftover = join(argv.begin(), argv.end(), ", ");
       throw DocoptArgumentError("Unexpected argument: " + leftover);
    }
-
    throw DocoptArgumentError("Arguments did not match expected patterns");	 // BLEH. Bad error.
 }
 
-DOCOPT_INLINE docopt::Options docopt::docopt(
-   std::string const& doc,
-   std::vector<std::string> const& argv,
+docopt::Options docopt::docopt(
+   const std::string& doc,
+   const std::vector<std::string>& argv,
    bool help,
-   std::string const& version,
-   bool options_first) noexcept
+   const std::string& version,
+   bool options_first,
+   bool doExitIfDocoptArgumentError) noexcept
 {
    try
    {
-      return docopt_parse(doc, argv, help, !version.empty(), options_first);
+      docopt::Options docoptOptions = docopt_parse(doc, argv, help, !version.empty(), options_first);
+      return docoptOptions;
    }
-   catch (DocoptExitHelp const&)
+   catch (const DocoptExitHelp&)
    {
       std::cout << doc << std::endl;
       std::exit(0);
    }
-   catch (DocoptExitVersion const&) {
+   catch (const DocoptExitVersion&)
+   {
       std::cout << version << std::endl;
       std::exit(0);
    }
-   catch (DocoptLanguageError const& error) {
+   catch (const DocoptLanguageError& docoptLanguageError)
+   {
       std::cerr << "Docopt usage string could not be parsed" << std::endl;
-      std::cerr << error.what() << std::endl;
-      std::exit(-1);
+      std::cerr << docoptLanguageError.what() << std::endl;
+      std::exit(1);
    }
-   catch (DocoptArgumentError const& error) {
-      std::cerr << error.what();
-      std::cout << std::endl;
-      std::cout << doc << std::endl;
-      std::exit(-1);
-   } /* Any other exception is unexpected: let std::terminate grab it */
+   catch (const DocoptArgumentError& /*docoptArgumentError*/)
+   {
+      if (doExitIfDocoptArgumentError)
+      {
+         cout << "Error: Invalid command line arguments. Valid command line arguments:\n\n";
+         cout << doc << '\n';
+         exit(1);
+      }
+      return {};
+   }
 }

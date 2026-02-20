@@ -81,7 +81,8 @@ TEST2X2(ParseStringArgs_CallsDocoptParserForEachField_ReturnsCloudundancyArgs,
    METALMOCK(_docoptParserMock->GetProgramModeSpecificRequiredStringMock.CalledNTimes(3));
    METALMOCK(_fileSystemMock->ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExistMock.CalledNTimes(3));
 
-   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledOnceWith(CloudundancyArgs::CommandLineUsage, stringArgs)).Then(
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledOnceWith(
+      CloudundancyArgs::CommandLineUsage, stringArgs, false)).Then(
 
    METALMOCKTHEN(_docoptParserMock->GetRequiredBoolMock.CalledWith(
       docoptArgs, "copy-files-to-multiple-folders"))).Then(
