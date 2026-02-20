@@ -1,5 +1,4 @@
 #pragma once
-#include "libCloudundancy/Compiler/CompilerHints.h"
 
 class Map
 {
@@ -38,7 +37,7 @@ public:
    Map() = delete;
 private:
    template<typename KeyType>
-   [[noreturn]] static NOINLINE void ThrowKeyNotFound(const KeyType& key)
+   [[noreturn]] static void ThrowKeyNotFound(const KeyType& key)
    {
       std::ostringstream oss;
       oss << "Error: Key not found in map: [" << key << "]";
