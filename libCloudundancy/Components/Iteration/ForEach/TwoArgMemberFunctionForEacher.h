@@ -6,6 +6,8 @@ namespace Utils
    class TwoArgMemberFunctionForEacher
    {
    public:
+      virtual ~TwoArgMemberFunctionForEacher() = default;
+
       using ConstMemberFunctionType = void(ClassType::*)(const ElementType&, ExtraArgType) const;
 
       virtual void CallConstMemberFunctionWithEachElement(
@@ -19,7 +21,5 @@ namespace Utils
             (constClassPointer->*constMemberFunction)(element, arg2);
          }
       }
-
-      virtual ~TwoArgMemberFunctionForEacher() = default;
    };
 }

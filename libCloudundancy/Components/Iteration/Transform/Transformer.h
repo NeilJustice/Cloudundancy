@@ -6,6 +6,8 @@ namespace Utils
    class Transformer
    {
    public:
+      virtual ~Transformer() = default;
+
       virtual std::vector<TransformedT> Transform(const std::vector<T>& source, TransformedT(*transformer)(const T&)) const
       {
          const size_t sourceSize = source.size();
@@ -17,7 +19,5 @@ namespace Utils
          }
          return dest;
       }
-
-      virtual ~Transformer() = default;
    };
 }

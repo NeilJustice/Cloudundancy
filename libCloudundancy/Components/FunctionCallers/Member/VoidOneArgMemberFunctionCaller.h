@@ -6,7 +6,7 @@ namespace Utils
    class VoidOneArgMemberFunctionCaller
    {
    public:
-      VoidOneArgMemberFunctionCaller() {}
+      virtual ~VoidOneArgMemberFunctionCaller() = default;
 
       virtual void CallConstMemberFunction(
          const ClassType* constClassPointer,
@@ -23,7 +23,5 @@ namespace Utils
       {
          (nonConstClassPointer->*nonConstMemberFunction)(arg);
       }
-
-      virtual ~VoidOneArgMemberFunctionCaller() = default;
    };
 }

@@ -6,6 +6,8 @@ namespace Utils
    class NonVoidOneArgMemberFunctionCaller
    {
    public:
+      virtual ~NonVoidOneArgMemberFunctionCaller() = default;
+
       virtual ReturnType CallConstMemberFunction(
          const ClassType* constClassPointer,
          ReturnType(ClassType::* constMemberFunction)(ArgType) const,
@@ -23,7 +25,5 @@ namespace Utils
          ReturnType returnValue = (nonConstClassPointer->*nonConstMemberFunction)(arg);
          return returnValue;
       }
-
-      virtual ~NonVoidOneArgMemberFunctionCaller() = default;
    };
 }

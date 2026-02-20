@@ -22,10 +22,12 @@ private:
 public:
    CloudundancyIniFileReader() noexcept;
    virtual ~CloudundancyIniFileReader();
+
    virtual CloudundancyIni ReadIniFile(const fs::path& cloudundancyIniPath) const;
 private:
    CloudundancyIniCopyInstruction ParseFileCopyInstructionLine(
       const FilePathLineNumberLineText& fileCopyInstructionLine) const;
+
    void ThrowIfSourceFileOrFolderDoesNotExist(
       const CloudundancyIniCopyInstruction& cloudundancyIniCopyInstruction) const;
 };

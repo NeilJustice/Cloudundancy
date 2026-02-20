@@ -6,6 +6,8 @@ namespace Utils
    class ForEacher
    {
    public:
+      virtual ~ForEacher() = default;
+
       virtual void CallFunctionWithEachElement(const CollectionType& collection, FunctionType func) const
       {
          const auto collectionConstEnd = collection.cend();
@@ -15,7 +17,5 @@ namespace Utils
             func(element);
          }
       }
-
-      virtual ~ForEacher() = default;
    };
 }

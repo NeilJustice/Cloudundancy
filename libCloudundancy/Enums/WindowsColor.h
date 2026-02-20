@@ -1,6 +1,6 @@
 #pragma once
 
-enum class WindowsColor : unsigned char
+enum struct WindowsColor : unsigned char
 {
    Black,
    DarkBlue,

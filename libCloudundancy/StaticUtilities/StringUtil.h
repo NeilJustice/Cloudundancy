@@ -5,8 +5,6 @@ namespace Utils
    class String
    {
    public:
-      String() = delete;
-
       template<typename... Types>
       static string ConcatStrings(Types&&... values)
       {
@@ -42,6 +40,8 @@ namespace Utils
       static bool StartsWith(string_view str, string_view substring);
       static std::vector<std::string> Split(string_view str, char separator);
       static std::string TrimWhitespace(string_view str);
+
+      String() = delete;
    private:
       static string ToLower(string_view str);
    };

@@ -8,6 +8,8 @@ private:
 public:
    CloudundancyIniValidator();
    virtual ~CloudundancyIniValidator();
+
    virtual void ThrowIfZeroDestinationFolderPaths(
-      const CloudundancyIni& cloudundancyIni, const fs::path& cloudundancyIniPath) const;
+      const CloudundancyIni& cloudundancyIni,
+      const fs::path& cloudundancyIniPath) const;
 };

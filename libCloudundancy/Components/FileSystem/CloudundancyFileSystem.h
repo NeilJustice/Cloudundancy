@@ -19,6 +19,7 @@ private:
 public:
    CloudundancyFileSystem();
    virtual ~CloudundancyFileSystem();
+
    virtual void DeleteMultipleFolderContentsExceptForFile(const vector<fs::path>& folderPaths, string_view exceptFileName) const;
    virtual void DeleteFolderContentsExceptForFile(const fs::path& folderPath, string_view exceptFileName) const;
    virtual bool FileSizeIsGreaterThanOrEqualTo2GB(const fs::path& filePath) const;

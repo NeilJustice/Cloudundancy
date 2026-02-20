@@ -6,7 +6,8 @@ namespace Utils
    {
    public:
       CharVectorAllocator();
-      virtual vector<char>* NewCharVector(size_t size) const;
       virtual ~CharVectorAllocator() = default;
+
+      virtual vector<char>* NewCharVector(size_t size) const;
    };
 }

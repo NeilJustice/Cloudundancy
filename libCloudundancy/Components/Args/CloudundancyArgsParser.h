@@ -16,5 +16,6 @@ private:
 public:
    CloudundancyArgsParser();
    virtual ~CloudundancyArgsParser();
+
    virtual CloudundancyArgs ParseStringArgs(const vector<string>& stringArgs) const;
 };

@@ -6,6 +6,8 @@ namespace Utils
    class MemberFunctionForEacher
    {
    public:
+      virtual ~MemberFunctionForEacher() = default;
+
       using ConstMemberFunctionType = void(ClassType::*)(const ElementType&) const;
 
       virtual void CallConstMemberFunctionWithEachElement(
@@ -18,7 +20,5 @@ namespace Utils
             (constClassPointer->*constMemberFunction)(element);
          }
       }
-
-      virtual ~MemberFunctionForEacher() = default;
    };
 }

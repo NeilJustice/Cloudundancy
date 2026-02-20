@@ -36,6 +36,7 @@ private:
 public:
    CloudundancyProgram() noexcept;
    virtual ~CloudundancyProgram();
+
    int Main(int argc, char* argv[]);
 private:
    int Run(const vector<string>& stringArgs);

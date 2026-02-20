@@ -51,6 +51,7 @@ private:
 public:
    CloudundancyFileCopier() noexcept;
    virtual ~CloudundancyFileCopier();
+
    virtual void CopyFilteredFilesAndFoldersToDestinationFolders(
       const fs::path& cloudundancyIniFilePath, bool deleteDestinationFoldersFirst) const;
 private:

@@ -6,6 +6,8 @@ namespace Utils
    class VoidTwoArgMemberFunctionCaller
    {
    public:
+      virtual ~VoidTwoArgMemberFunctionCaller() = default;
+
       virtual void CallConstMemberFunction(
          const ClassType* constClassPointer,
          void (ClassType::*constMemberFunction)(Arg1Type, Arg2Type) const,
@@ -23,7 +25,5 @@ namespace Utils
       {
          (nonConstClassPointer->*nonConstMemberFunction)(arg1, arg2);
       }
-
-      virtual ~VoidTwoArgMemberFunctionCaller() = default;
    };
 }

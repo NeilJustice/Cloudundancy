@@ -1,6 +1,6 @@
 #pragma once
 
-enum class FileSystemExceptionType : unsigned char
+enum struct FileSystemExceptionType : unsigned char
 {
    Unset,
    CloseFileFailed,

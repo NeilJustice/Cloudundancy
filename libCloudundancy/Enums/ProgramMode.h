@@ -1,6 +1,6 @@
 #pragma once
 
-enum ProgramMode : unsigned char
+enum struct ProgramMode : unsigned char
 {
    Unset,
    CopyFileToFilesAndFoldersToMultipleFolders,

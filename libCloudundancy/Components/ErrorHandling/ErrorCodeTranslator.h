@@ -21,6 +21,7 @@ namespace Utils
    public:
       ErrorCodeTranslator();
       virtual ~ErrorCodeTranslator() = default;
+
       virtual int GetErrnoValue() const;
       virtual pair<int, string> GetErrnoWithDescription() const;
       virtual string GetErrnoDescription(int errnoValue) const;

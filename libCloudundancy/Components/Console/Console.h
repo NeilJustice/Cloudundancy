@@ -17,6 +17,7 @@ namespace Utils
    public:
       Console();
       virtual ~Console();
+
       virtual void Write(string_view message) const;
       virtual void WriteLine(string_view message) const;
       virtual void WriteLines(const vector<string>& lines) const;

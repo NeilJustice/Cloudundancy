@@ -11,5 +11,6 @@ protected:
 public:
    CloudundancySubProgram();
    virtual ~CloudundancySubProgram();
+
    virtual int Run(const CloudundancyArgs& args);
 };

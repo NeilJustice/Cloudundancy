@@ -6,6 +6,8 @@ namespace Utils
    class NonVoidTwoArgMemberFunctionCaller
    {
    public:
+      virtual ~NonVoidTwoArgMemberFunctionCaller() = default;
+
       virtual ReturnType CallConstMemberFunction(
          const ClassType* classPointer,
          ReturnType(ClassType::*constMemberFunction)(Arg1Type, Arg2Type) const,
@@ -25,7 +27,5 @@ namespace Utils
          ReturnType returnValue = (classPointer->*nonConstMemberFunction)(arg1, arg2);
          return returnValue;
       }
-
-      virtual ~NonVoidTwoArgMemberFunctionCaller() = default;
    };
 }

@@ -19,6 +19,7 @@ namespace Utils
    public:
       RecursiveDirectoryIterator() noexcept;
       virtual ~RecursiveDirectoryIterator();
+
       virtual void SetFileSubpathsToIgnore(const vector<string>& fileSubpathsToIgnore);
       virtual void InitializeIteratorAtFolderPath(const fs::path& folderPath);
       virtual fs::path NextNonIgnoredFilePath();

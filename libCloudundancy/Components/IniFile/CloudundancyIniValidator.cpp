@@ -11,7 +11,9 @@ CloudundancyIniValidator::~CloudundancyIniValidator()
 {
 }
 
-void CloudundancyIniValidator::ThrowIfZeroDestinationFolderPaths(const CloudundancyIni& cloudundancyIni, const fs::path& cloudundancyIniPath) const
+void CloudundancyIniValidator::ThrowIfZeroDestinationFolderPaths(
+   const CloudundancyIni& cloudundancyIni,
+   const fs::path& cloudundancyIniPath) const
 {
    if (cloudundancyIni.destinationFolderPaths.empty())
    {
