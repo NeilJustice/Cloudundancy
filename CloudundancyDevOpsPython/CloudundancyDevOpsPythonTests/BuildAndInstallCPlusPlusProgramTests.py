@@ -92,7 +92,7 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-build
       BuildAndInstallCPlusPlusProgram.windows_cmake_build_test_install(
          self.solutionName, self.cmakeBuildType, self.testsProjectName, self.cmakeDefinitions, doInstallProgram)
       #
-      CMake.generate.assert_called_once_with('.', 'Visual Studio 17 2022', self.cmakeBuildType, self.cmakeDefinitions, '.')
+      CMake.generate.assert_called_once_with('.', 'Visual Studio 18 2026', self.cmakeBuildType, self.cmakeDefinitions, '.')
       expectedMSBuildCommand = f'MSBuild.exe {self.solutionName}.sln /p:Configuration={self.cmakeBuildType} /p:Platform=x64 /m'
       expectedZenUnitTestsProgramCommand = f'{self.testsProjectName}/{self.cmakeBuildType}/{self.testsProjectName}.exe --test-runs=2 --random --max-test-milliseconds=1000 --exit-1-if-tests-skipped'
       self.assertEqual(2, len(Process.fail_fast_run.call_args_list))
