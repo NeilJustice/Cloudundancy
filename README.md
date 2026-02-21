@@ -5,7 +5,7 @@
 |Build Type|Build Status|
 |----------|------------|
 |Clang 18 and GCC 13 on ubuntu-latest|<a href="https://github.com/NeilJustice/Cloudundancy/actions/workflows/linux_build.yml"><img src="https://github.com/NeilJustice/Cloudundancy/actions/workflows/linux_build.yml/badge.svg"></a>|
-|VS2022 on windows-latest|<a href="https://github.com/NeilJustice/Cloudundancy/actions/workflows/windows_build.yml"><img src="https://github.com/NeilJustice/Cloudundancy/actions/workflows/windows_build.yml/badge.svg"></a>|
+|VS2026 on windows-latest|<a href="https://github.com/NeilJustice/Cloudundancy/actions/workflows/windows_build.yml"><img src="https://github.com/NeilJustice/Cloudundancy/actions/workflows/windows_build.yml/badge.svg"></a>|
 |GCC lcov code coverage|<a href="https://codecov.io/gh/NeilJustice/Cloudundancy"><img src="https://codecov.io/gh/NeilJustice/Cloudundancy/branch/master/graph/badge.svg?token=khcIKQTiuu"></a>|
 
 Cloudundancy is a C++23 command line program for quickly copying a configurable list of files and folders to a configurable list of destination folders to achieve cloud-redundant and device-redundant backups of files.
@@ -21,8 +21,8 @@ On Linux, a Bash script can be written to run a Google Drive CLI command such as
    * [copy-files-to-multiple-folders](#copy-files-to-multiple-folders)
    * [7zip-files-then-copy-the-7zip-file-to-multiple-folders](#7zip-files-then-copy-the-7zip-file-to-multiple-folders)
 * [Steps to build binary cloudundancy on Linux with Clang](#steps-to-build-binary-cloudundancy-on-linux-with-clang)
-* [Steps to build executable Cloudundancy.exe on Windows with Visual Studio 2022](#steps-to-build-executable-cloudundancyexe-on-windows-with-visual-studio-2022)
-* [Thanks to](#thanks-to)
+* [Steps to build executable Cloudundancy.exe on Windows with Visual Studio 2026](#steps-to-build-executable-cloudundancyexe-on-windows-with-visual-studio-2026)
+* [Acknowledgements](#acknowledgements)
 
 ## Cloudundancy command line usage
 
@@ -70,9 +70,9 @@ E:\CloudundancyBackups
 # Critical files to backup
 C:\CriticalFiles\KeePassFile.kdbx -> .
 C:\CriticalFiles\PersonalFinancesSpreadsheet.xlsx -> .
-C:\VS2022\Common7\IDE\VC\Snippets\1033\Visual C++\C++Snippets.snippet                              -> Snippets
-C:\VS2022\Common7\IDE\Extensions\Microsoft\Python\Core\Snippets\1033\Python\PythonSnippets.snippet -> Snippets
-C:\VS2022\VC#\Snippets\1033\Visual C#\CSharpSnippets.snippet                                       -> Snippets
+C:\VS2026\Common7\IDE\VC\Snippets\1033\Visual C++\C++Snippets.snippet                              -> Snippets
+C:\VS2026\Common7\IDE\Extensions\Microsoft\Python\Core\Snippets\1033\Python\PythonSnippets.snippet -> Snippets
+C:\VS2026\VC#\Snippets\1033\Visual C#\CSharpSnippets.snippet                                       -> Snippets
 
 # Critical folders to backup
 # Source folder paths ending in a '\' or '/' character are interpretted as folders instead of files
@@ -190,7 +190,7 @@ CXX=clang++ cmake .. -DCMAKE_BUILD_TYPE=Release
 sudo cmake --build . --target install
 ```
 
-## Steps to build executable Cloudundancy.exe on Windows with Visual Studio 2022
+## Steps to build executable Cloudundancy.exe on Windows with Visual Studio 2026
 
 ```powershell
 git clone https://github.com/NeilJustice/Cloudundancy
@@ -199,7 +199,6 @@ cmake . -G"Visual Studio 18 2026" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
 cmake --build . --config Release --target install
 ```
 
-## Thanks to
+## Acknowledgements
 
 <a href="https://brandmark.io">brandmark.io</a> for Cloudundancy's logo
-
