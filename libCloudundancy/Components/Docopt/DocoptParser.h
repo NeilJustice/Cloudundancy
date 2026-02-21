@@ -2,8 +2,6 @@
 namespace Utils
 {
    class FileSystemPather;
-   template<typename KeyType, typename ValueType>
-   class MapHelper;
 }
 
 class DocoptParser
@@ -15,9 +13,6 @@ private:
    function<string(const map<string, docopt::value>&, const string&)> _call_StaticGetRequiredString;
    // Constant Components
    unique_ptr<const Utils::FileSystemPather> _fileSystemPather;
-
-   using _mapHelperType = Utils::MapHelper<string, docopt::value>;
-   unique_ptr<const _mapHelperType> _mapHelper;
 public:
    DocoptParser();
    virtual ~DocoptParser();

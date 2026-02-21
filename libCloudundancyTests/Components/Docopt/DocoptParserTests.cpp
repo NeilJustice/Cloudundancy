@@ -1,11 +1,12 @@
 #include "pch.h"
 #include "libCloudundancy/Components/Docopt/DocoptParser.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/FileSystemPatherMock.h"
-#include "libCloudundancyTests/Components/Maps/MetalMock/MapHelperMock.h"
 
 TESTS(DocoptParserTests)
 AFACT(DefaultConstructor_SetsFieldsToDefaultValues)
-AFACT(DocoptArgsAreForProgramMode_ReturnsTrueIfSo)
+
+AFACT(DocoptArgsAreForProgramMode_ArgInMapAsFalse_ReturnsFalse)
+AFACT(DocoptArgsAreForProgramMode_ArgInMapAsTrue_ReturnsTrue)
 
 AFACT(ParseArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
 AFACT(ParseArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
@@ -43,9 +44,6 @@ using DocoptMapType = map<string, docopt::value>;
 METALMOCK_NONVOID2_STATIC_OR_FREE(string, _call_DocoptParser_StaticGetRequiredString, const DocoptMapType&, const string&)
 // Constant Components
 Utils::FileSystemPatherMock* _fileSystemPatherMock = nullptr;
-
-using _mapHelperMockType = Utils::MapHelperMock<string, docopt::value>;
-_mapHelperMockType* _mapHelperMock = nullptr;
 // Testing Fields
 map<string, docopt::value> _docoptArgs;
 string _argName;
@@ -59,7 +57,6 @@ STARTUP
    _docoptParser._call_StaticGetRequiredString = BIND_2ARG_METALMOCK_OBJECT(_call_DocoptParser_StaticGetRequiredStringMock);
    // Constant Components
    _docoptParser._fileSystemPather.reset(_fileSystemPatherMock = new Utils::FileSystemPatherMock);
-   _docoptParser._mapHelper.reset(_mapHelperMock = new _mapHelperMockType);
    // Testing Fields
    _docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::value>();
    _argName = ZenUnit::Random<string>() + "_argName";
@@ -74,18 +71,22 @@ TEST(DefaultConstructor_SetsFieldsToDefaultValues)
    //STD_FUNCTION_TARGETS(docopt::docopt, docoptParser._call_docopt_docopt);
 }
 
-TEST(DocoptArgsAreForProgramMode_ReturnsTrueIfSo)
+TEST(DocoptArgsAreForProgramMode_ArgInMapAsFalse_ReturnsFalse)
 {
-   const bool docoptArgsAreForProgramMode = _mapHelperMock->ContainsKeyWithValueMock.ReturnRandom();
-   const map<string, docopt::value> docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::value>();
-   const string programModeString = ZenUnit::Random<string>();
+   _docoptArgs[_argName] = docopt::value(false);
    //
-   const bool returnedDocoptArgsAreForProgramMode = _docoptParser.DocoptArgsAreForProgramMode(docoptArgs, programModeString);
+   const bool returnedDocoptArgsAreForProgramMode = _docoptParser.DocoptArgsAreForProgramMode(_docoptArgs, _argName);
    //
-   const docopt::value trueDocoptValue(true);
-   METALMOCK(_mapHelperMock->ContainsKeyWithValueMock.CalledOnceWith(
-      &docoptArgs, programModeString, trueDocoptValue));
-   ARE_EQUAL(docoptArgsAreForProgramMode, returnedDocoptArgsAreForProgramMode);
+   IS_FALSE(returnedDocoptArgsAreForProgramMode);
+}
+
+TEST(DocoptArgsAreForProgramMode_ArgInMapAsTrue_ReturnsTrue)
+{
+   _docoptArgs[_argName] = docopt::value(true);
+   //
+   const bool returnedDocoptArgsAreForProgramMode = _docoptParser.DocoptArgsAreForProgramMode(_docoptArgs, _argName);
+   //
+   IS_TRUE(returnedDocoptArgsAreForProgramMode);
 }
 
 TEST(ParseArgs_ArgvVectorEmpty_ThrowsInvalidArgument)

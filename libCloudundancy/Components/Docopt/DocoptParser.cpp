@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/Components/Docopt/DocoptParser.h"
 #include "libCloudundancy/Components/FileSystem/FileSystemPather.h"
-#include "libCloudundancy/Components/Maps/MapHelper.h"
 #include "libCloudundancy/StaticUtilities/Map.h"
 
 DocoptParser::DocoptParser()
@@ -10,7 +9,6 @@ DocoptParser::DocoptParser()
    , _call_StaticGetRequiredString(StaticGetRequiredString)
    // Constant Components
    , _fileSystemPather(make_unique<Utils::FileSystemPather>())
-   , _mapHelper(make_unique<_mapHelperType>())
 {
 }
 
@@ -21,8 +19,8 @@ DocoptParser::~DocoptParser()
 bool DocoptParser::DocoptArgsAreForProgramMode(
    const map<string, docopt::value>& docoptArgs, const string& programModeString) const
 {
-   const docopt::value trueDocoptValue(true);
-   bool docoptArgsAreForProgramMode = _mapHelper->ContainsKeyWithValue(&docoptArgs, programModeString, trueDocoptValue);
+   const docopt::value docoptValue = Map::At(docoptArgs, programModeString);
+   bool docoptArgsAreForProgramMode = docoptValue.asBool();
    return docoptArgsAreForProgramMode;
 }
 
