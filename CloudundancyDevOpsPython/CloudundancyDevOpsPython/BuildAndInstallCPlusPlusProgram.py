@@ -17,7 +17,7 @@ def linux_cmake_build_test_install(cmakeBuildType: str, testsProjectName: str, c
 
 def windows_cmake_build_test_install(solutionName: str, cmakeBuildType: str, testsProjectName: str, cmakeDefinitions: str, doInstallProgram: bool) -> None:
    CMake.generate('.', 'Visual Studio 18 2026', cmakeBuildType, cmakeDefinitions, '.')
-   msbuildCommand = f'MSBuild.exe {solutionName}.sln /p:Configuration={cmakeBuildType} /p:Platform=x64 /m'
+   msbuildCommand = f'MSBuild.exe {solutionName}.slnx /p:Configuration={cmakeBuildType} /p:Platform=x64 /m'
    Process.fail_fast_run(msbuildCommand)
    zenUnitTestsProgramCommand = f'{testsProjectName}/{cmakeBuildType}/{testsProjectName}.exe --test-runs=2 --random --max-test-milliseconds=1000 --exit-1-if-tests-skipped'
    Process.fail_fast_run(zenUnitTestsProgramCommand)
