@@ -1,7 +1,2 @@
-coverage:
-   precision: 2
-   round: down
 ignore:
-  - "ZenUnit.h"
-  - "MetalMock.h"
   - "libCloudundancy/docopt/**/*"
