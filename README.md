@@ -5,7 +5,7 @@
 |Build Type|Build Status|
 |----------|------------|
 |Clang 18 and GCC 13 on ubuntu-latest|<a href="https://github.com/NeilJustice/Cloudundancy/actions/workflows/linux_build.yml"><img src="https://github.com/NeilJustice/Cloudundancy/actions/workflows/linux_build.yml/badge.svg"></a>|
-|VS2026 on windows-latest|<a href="https://github.com/NeilJustice/Cloudundancy/actions/workflows/windows_build.yml"><img src="https://github.com/NeilJustice/Cloudundancy/actions/workflows/windows_build.yml/badge.svg"></a>|
+|VS2026 on windows-2025-vs2026|<a href="https://github.com/NeilJustice/Cloudundancy/actions/workflows/windows_build.yml"><img src="https://github.com/NeilJustice/Cloudundancy/actions/workflows/windows_build.yml/badge.svg"></a>|
 |GCC lcov code coverage|<a href="https://codecov.io/gh/NeilJustice/Cloudundancy"><img src="https://codecov.io/gh/NeilJustice/Cloudundancy/branch/master/graph/badge.svg?token=khcIKQTiuu"></a>|
 
 Cloudundancy is a C++23 command line program for quickly copying a configurable list of files and folders to a configurable list of destination folders to achieve cloud-redundant and device-redundant backups of files.
