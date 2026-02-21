@@ -9,6 +9,7 @@ if(UNIX)
          -Wno-alloca \
          -Wno-c++98-compat \
          -Wno-c++98-compat-pedantic \
+         -Wno-class-varargs \
          -Wno-covered-switch-default \
          -Wno-deprecated-copy-with-dtor \
          -Wno-disabled-macro-expansion \
