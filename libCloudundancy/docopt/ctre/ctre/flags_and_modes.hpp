@@ -18,53 +18,53 @@ struct flags {
 	bool block_empty_match = false;
 	bool multiline = false;
 	bool case_insensitive = false;
-	
+
 	constexpr flags() = default;
 	constexpr flags(const flags &) = default;
 	constexpr flags(flags &&) = default;
-	
+
 	constexpr CTRE_FORCE_INLINE flags(ctre::singleline v) noexcept { set_flag(v); }
 	constexpr CTRE_FORCE_INLINE flags(ctre::multiline v) noexcept { set_flag(v); }
 	constexpr CTRE_FORCE_INLINE flags(ctre::case_sensitive v) noexcept { set_flag(v); }
 	constexpr CTRE_FORCE_INLINE flags(ctre::case_insensitive v) noexcept { set_flag(v); }
-	
-	
+
+
 	template <typename... Args> constexpr CTRE_FORCE_INLINE flags(ctll::list<Args...>) noexcept {
 		(this->set_flag(Args{}), ...);
 	}
-	
+
 	constexpr friend CTRE_FORCE_INLINE auto operator+(flags f, pcre::mode_case_insensitive) noexcept {
 		f.case_insensitive = true;
 		return f;
 	}
-	
+
 	constexpr friend CTRE_FORCE_INLINE auto operator+(flags f, pcre::mode_case_sensitive) noexcept {
 		f.case_insensitive = false;
 		return f;
 	}
-	
+
 	constexpr friend CTRE_FORCE_INLINE auto operator+(flags f, pcre::mode_singleline) noexcept {
 		f.multiline = false;
 		return f;
 	}
-	
+
 	constexpr friend CTRE_FORCE_INLINE auto operator+(flags f, pcre::mode_multiline) noexcept {
 		f.multiline = true;
 		return f;
 	}
-	
+
 	constexpr CTRE_FORCE_INLINE void set_flag(ctre::singleline) noexcept {
 		multiline = false;
 	}
-	
+
 	constexpr CTRE_FORCE_INLINE void set_flag(ctre::multiline) noexcept {
 		multiline = true;
 	}
-	
+
 	constexpr CTRE_FORCE_INLINE void set_flag(ctre::case_insensitive) noexcept {
 		case_insensitive = true;
 	}
-	
+
 	constexpr CTRE_FORCE_INLINE void set_flag(ctre::case_sensitive) noexcept {
 		case_insensitive = false;
 	}
