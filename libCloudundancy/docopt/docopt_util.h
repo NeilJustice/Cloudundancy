@@ -21,19 +21,6 @@ namespace
       return std::equal(prefix.begin(), prefix.end(), str.begin());
    }
 
-   std::string trim(std::string&& str, const std::string& whitespace = " \t\n")
-   {
-      const auto strEnd = str.find_last_not_of(whitespace);
-      if (strEnd == std::string::npos)
-      {
-         return {}; // no content
-      }
-      str.erase(strEnd + 1);
-      const auto strBegin = str.find_first_not_of(whitespace);
-      str.erase(0, strBegin);
-      return std::move(str);
-   }
-
    std::string trim(std::string_view str, std::string_view whitespace = " \t\n")
    {
       auto const strEnd = str.find_last_not_of(whitespace);
