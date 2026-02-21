@@ -1,0 +1,11 @@
+[FORMAT]
+indent-string='   '
+max-line-length=130
+max-args=7
+
+[MASTER]
+disable=missing-docstring,invalid-name,line-too-long,no-value-for-parameter,no-member,multiple-imports,missing-final-newline,expression-not-assigned,wrong-import-position,broad-except
+
+[REPORTS]
+output-format=text
+reports=no

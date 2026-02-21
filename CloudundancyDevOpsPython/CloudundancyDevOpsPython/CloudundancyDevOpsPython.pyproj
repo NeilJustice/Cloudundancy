@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>7442c4b6-4d10-4aea-a009-421f7252d55e</ProjectGuid>
+    <ProjectHome>
+    </ProjectHome>
+    <StartupFile>MypyFlake8PylintThenRunTestsWithCoverage.py</StartupFile>
+    <SearchPath>..\</SearchPath>
+    <WorkingDirectory>C:\Code\Cloudundancy</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>DevOpsPython</Name>
+    <RootNamespace>DevOpsPython</RootNamespace>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <CommandLineArguments>--run-tests-with-coverage-python-file=CloudundancyDevOpsPythonTests/RunAllWithCoverage.py</CommandLineArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
+    <IsWindowsApplication>False</IsWindowsApplication>
+    <InterpreterArguments>
+    </InterpreterArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="BuildAndInstallCPlusPlusProgram.py" />
+    <Compile Include="CMake.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MypyFlake8PylintThenRunTestsWithCoverage.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Process.py" />
+    <Compile Include="ProcessThread.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Python.py" />
+    <Compile Include="__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>
