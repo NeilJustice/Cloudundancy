@@ -12,6 +12,7 @@ if(UNIX)
          -Wno-class-varargs \
          -Wno-covered-switch-default \
          -Wno-deprecated-copy-with-dtor \
+         -Wno-deprecated-declarations \
          -Wno-disabled-macro-expansion \
          -Wno-exit-time-destructors \
          -Wno-extra-semi-stmt \
