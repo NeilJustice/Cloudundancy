@@ -11,6 +11,7 @@ if(UNIX)
          -Wno-c++98-compat-pedantic \
          -Wno-class-varargs \
          -Wno-covered-switch-default \
+         -Wno-ctad-maybe-unsupported \
          -Wno-deprecated-copy-with-dtor \
          -Wno-deprecated-declarations \
          -Wno-disabled-macro-expansion \
