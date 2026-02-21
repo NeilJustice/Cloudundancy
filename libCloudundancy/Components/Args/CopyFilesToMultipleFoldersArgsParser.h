@@ -4,7 +4,7 @@
 class CopyFilesToMultipleFoldersArgsParser : public ProgramModeSpecificArgsParser
 {
 public:
-   virtual ~CopyFilesToMultipleFoldersArgsParser() = default;
+   virtual ~CopyFilesToMultipleFoldersArgsParser() override = default;
 
    virtual CloudundancyArgs ParseDocoptArgs(const map<string, docopt::value>& docoptArgs) const override;
 };

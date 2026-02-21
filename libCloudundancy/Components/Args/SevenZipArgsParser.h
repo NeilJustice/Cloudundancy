@@ -15,7 +15,7 @@ private:
    unique_ptr<const Utils::ProcessRunner> _processRunner;
 public:
    SevenZipArgsParser();
-   virtual ~SevenZipArgsParser();
+   virtual ~SevenZipArgsParser() override;
 
    virtual CloudundancyArgs ParseDocoptArgs(const map<string, docopt::value>& docoptArgs) const override;
 };

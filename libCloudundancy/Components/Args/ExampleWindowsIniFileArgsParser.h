@@ -4,7 +4,7 @@
 class ExampleWindowsIniFileArgsParser : public ProgramModeSpecificArgsParser
 {
 public:
-   virtual ~ExampleWindowsIniFileArgsParser() = default;
+   virtual ~ExampleWindowsIniFileArgsParser() override = default;
 
    virtual CloudundancyArgs ParseDocoptArgs(const map<string, docopt::value>& docoptArgs) const override;
 };
