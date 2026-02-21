@@ -18,7 +18,7 @@ namespace Utils
          const KeyType& key,
          const ValueType& value) const
       {
-         const map<KeyType, ValueType>::const_iterator findIter = m->find(key);
+         const typename map<KeyType, ValueType>::const_iterator findIter = m->find(key);
          if (findIter != m->cend())
          {
             bool mapContainsKeyWithValue = findIter->second == value;
