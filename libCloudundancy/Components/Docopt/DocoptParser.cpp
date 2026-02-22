@@ -148,8 +148,14 @@ size_t DocoptParser::StaticGetRequiredSizeT(
    const map<string, docopt::value>& docoptArgs, const string& argName)
 {
    const docopt::value& docoptValue = Map::At(docoptArgs, argName);
-   size_t sizeTValue = docoptValue.asSizeT();
-   return sizeTValue;
+   if (docoptValue.isSizeT())
+   {
+      size_t sizeTArgumentValue = docoptValue.asSizeT();
+      return sizeTArgumentValue;
+   }
+   const string exceptionMessage = Utils::String::ConcatStrings(
+      "Key[", argName, "] found in map but with non-size_t value");
+   throw invalid_argument(exceptionMessage);
 }
 
 string DocoptParser::StaticGetRequiredString(const map<string, docopt::value>& docoptArgs, const string& argName)
@@ -160,6 +166,7 @@ string DocoptParser::StaticGetRequiredString(const map<string, docopt::value>& d
       const string& stringArgumentValue = docoptValue.asString();
       return stringArgumentValue;
    }
-   const string exceptionMessage = Utils::String::ConcatValues("String key not found in map: [", argName, "]");
+   const string exceptionMessage = Utils::String::ConcatStrings(
+      "Key[", argName, "] found in map but with non-string value");
    throw invalid_argument(exceptionMessage);
 }

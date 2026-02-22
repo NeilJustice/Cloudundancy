@@ -29,18 +29,24 @@ AFACT(GetOptionalString_ArgInMap_ReturnsValue)
 AFACT(GetOptionalStringWithDefaultValue_ArgNotInMap_ReturnsDefaultValue)
 AFACT(GetOptionalStringWithDefaultValue_ArgInMap_ReturnsValue)
 
+AFACT(GetRequiredSizeT_DoesSo)
+
 AFACT(GetRequiredFilePathWhichMustExist_DoesSo)
 AFACT(GetRequiredFolderPathWhichNeedNotExist_DoesSo)
 // Private Functions
-AFACT(StaticGetRequiredString_ArgNotInMap_ThrowsOutOfRangeException)
+AFACT(StaticGetRequiredSizeT_ArgNotInMap_ThrowsInvalidArgumentException)
+AFACT(StaticGetRequiredSizeT_ArgInMapAsNoneValue_ThrowsInvalidArgumentException)
+AFACT(StaticGetRequiredSizeT_ArgInMapAsSizeTValue_ReturnsValue)
+
+AFACT(StaticGetRequiredString_ArgNotInMap_ThrowsInvalidArgumentException)
 AFACT(StaticGetRequiredString_ArgInMapAsNoneValue_ThrowsInvalidArgumentException)
 AFACT(StaticGetRequiredString_ArgInMapAsStringValue_ReturnsValue)
 EVIDENCE
 
 DocoptParser _docoptParser;
 // Function Pointers
-//METALMOCK_NONVOID5_STATIC_OR_FREE(map<string COMMA docopt::value>, docopt, const string&, const vector<string>&, bool, const string&, bool)
 using DocoptMapType = map<string, docopt::value>;
+METALMOCK_NONVOID2_STATIC_OR_FREE(size_t, _call_DocoptParser_StaticGetRequiredSizeT, const DocoptMapType&, const string&)
 METALMOCK_NONVOID2_STATIC_OR_FREE(string, _call_DocoptParser_StaticGetRequiredString, const DocoptMapType&, const string&)
 // Constant Components
 Utils::FileSystemPatherMock* _fileSystemPatherMock = nullptr;
@@ -48,12 +54,11 @@ Utils::FileSystemPatherMock* _fileSystemPatherMock = nullptr;
 map<string, docopt::value> _docoptArgs;
 string _argName;
 string _expectedKeyNotFoundInMapExceptionMessage;
-string _expectedStringKeyNotFoundInMapExceptionMessage;
 
 STARTUP
 {
    // Function Pointers
-   //_docoptParser._call_docopt_docopt = BIND_5ARG_METALMOCK_OBJECT(docoptMock);
+   _docoptParser._call_StaticGetRequiredSizeT = BIND_2ARG_METALMOCK_OBJECT(_call_DocoptParser_StaticGetRequiredSizeTMock);
    _docoptParser._call_StaticGetRequiredString = BIND_2ARG_METALMOCK_OBJECT(_call_DocoptParser_StaticGetRequiredStringMock);
    // Constant Components
    _docoptParser._fileSystemPather.reset(_fileSystemPatherMock = new Utils::FileSystemPatherMock);
@@ -61,7 +66,6 @@ STARTUP
    _docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::value>();
    _argName = ZenUnit::Random<string>() + "_argName";
    _expectedKeyNotFoundInMapExceptionMessage = Utils::String::ConcatStrings("Error: Key not found in map: [", _argName, "]");
-   _expectedStringKeyNotFoundInMapExceptionMessage = Utils::String::ConcatStrings("String key not found in map: [", _argName, "]");
 }
 
 TEST(DefaultConstructor_SetsFieldsToDefaultValues)
@@ -101,18 +105,24 @@ TEST(ParseArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
 
 TEST(ParseArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
 {
-   //const map<string, docopt::value> docoptReturnValue = ZenUnit::RandomOrderedMap<string, docopt::value>();
-   //docoptMock.Return(docoptReturnValue);
-
-   //const string usage = ZenUnit::Random<string>();
-   //const vector<string> nonEmptyArgv(ZenUnit::RandomBetween<size_t>(1, 2));
-   ////
-   //const map<string, docopt::value> docoptValues = _docoptParser.ParseArgs(usage, nonEmptyArgv);
-   ////
-   //const vector<string> expectedNonEmptyArgvWithoutFirstArgument(
-   //   nonEmptyArgv.data() + 1, nonEmptyArgv.data() + nonEmptyArgv.size());
-   //METALMOCK(docoptMock.CalledOnceWith(usage, expectedNonEmptyArgvWithoutFirstArgument, true, "", false));
-   //ARE_EQUAL(docoptReturnValue, docoptValues);
+   const string usage = R"(
+usage:
+   program_name --arg1=<Value> --arg2=<Value>)";
+   const vector<string> argv =
+   {
+      "program_name",
+      "--arg1=value1",
+      "--arg2=value2"
+   };
+   //
+   const map<string, docopt::value> docoptValues = _docoptParser.ParseArgs(usage, argv, true);
+   //
+   const map<string, docopt::value> expectedDocoptValues
+   {
+      { "--arg1", docopt::value(string("value1")) },
+      { "--arg2", docopt::value(string("value2")) }
+   };
+   MAPS_ARE_EQUAL(expectedDocoptValues, docoptValues);
 }
 
 TEST(GetRequiredString_ArgNotInMap_ThrowsOutOfRange)
@@ -233,6 +243,16 @@ TEST(GetOptionalStringWithDefaultValue_ArgInMap_ReturnsValue)
    ARE_EQUAL(argValueInMap, argValue);
 }
 
+TEST(GetRequiredSizeT_DoesSo)
+{
+   const size_t sizeTValue = _call_DocoptParser_StaticGetRequiredSizeTMock.ReturnRandom();
+   //
+   const size_t returnedSizeTValue = _docoptParser.GetRequiredSizeT(_docoptArgs, _argName);
+   //
+   METALMOCK(_call_DocoptParser_StaticGetRequiredSizeTMock.CalledOnceWith(_docoptArgs, _argName));
+   ARE_EQUAL(sizeTValue, returnedSizeTValue);
+}
+
 TEST(GetRequiredFilePathWhichMustExist_DoesSo)
 {
    const string potentiallyRelativeFilePathStringArgument = _call_DocoptParser_StaticGetRequiredStringMock.ReturnRandom();
@@ -271,7 +291,33 @@ TEST(GetRequiredFolderPathWhichNeedNotExist_DoesSo)
 
 // Private Functions
 
-TEST(StaticGetRequiredString_ArgNotInMap_ThrowsOutOfRangeException)
+TEST(StaticGetRequiredSizeT_ArgNotInMap_ThrowsInvalidArgumentException)
+{
+   THROWS_EXCEPTION(_docoptParser.StaticGetRequiredSizeT(_docoptArgs, _argName),
+      invalid_argument, _expectedKeyNotFoundInMapExceptionMessage);
+}
+
+TEST(StaticGetRequiredSizeT_ArgInMapAsNoneValue_ThrowsInvalidArgumentException)
+{
+   _docoptArgs[_argName] = docopt::value();
+   //
+   const string expectedExceptionMessage = Utils::String::ConcatStrings(
+      "Key[", _argName, "] found in map but with non-size_t value");
+   THROWS_EXCEPTION(_docoptParser.StaticGetRequiredSizeT(_docoptArgs, _argName),
+      invalid_argument, expectedExceptionMessage);
+}
+
+TEST(StaticGetRequiredSizeT_ArgInMapAsSizeTValue_ReturnsValue)
+{
+   const size_t sizeTArgumentValue = ZenUnit::Random<size_t>();
+   _docoptArgs[_argName] = docopt::value(sizeTArgumentValue);
+   //
+   const size_t returnedSizeTArgumentValue = _docoptParser.StaticGetRequiredSizeT(_docoptArgs, _argName);
+   //
+   ARE_EQUAL(sizeTArgumentValue, returnedSizeTArgumentValue);
+}
+
+TEST(StaticGetRequiredString_ArgNotInMap_ThrowsInvalidArgumentException)
 {
    THROWS_EXCEPTION(_docoptParser.StaticGetRequiredString(_docoptArgs, _argName),
       invalid_argument, _expectedKeyNotFoundInMapExceptionMessage);
@@ -281,8 +327,10 @@ TEST(StaticGetRequiredString_ArgInMapAsNoneValue_ThrowsInvalidArgumentException)
 {
    _docoptArgs[_argName] = docopt::value();
    //
+   const string expectedExceptionMessage = Utils::String::ConcatStrings(
+      "Key[", _argName, "] found in map but with non-string value");
    THROWS_EXCEPTION(_docoptParser.StaticGetRequiredString(_docoptArgs, _argName),
-      invalid_argument, _expectedStringKeyNotFoundInMapExceptionMessage);
+      invalid_argument, expectedExceptionMessage);
 }
 
 TEST(StaticGetRequiredString_ArgInMapAsStringValue_ReturnsValue)

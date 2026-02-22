@@ -380,8 +380,8 @@ namespace docopt
          }
          return ret;
       }
-      throwIfNotKind(Kind::Long);
-      return variant_.longValue;
+      throwIfNotKind(Kind::SizeT);
+      return variant_.sizeTValue;
    }
 
    inline const std::string& value::asString() const
