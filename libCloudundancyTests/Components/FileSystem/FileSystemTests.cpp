@@ -40,6 +40,7 @@ AFACT(ReadFileText_ReadsFileSizeWhichReturns0_ClosesFile_ReturnsEmptyString)
 AFACT(ReadFileText_ReadsFileSizeWhichReturnsGreaterThan0_ReadsFileBytesIntoString_ClosesFile_ReturnsFileTextString)
 AFACT(ReadFileLinesWhichMustBeNonEmpty_FileTextIsEmpty_ThrowsFileSystemException)
 FACTS(ReadFileLinesWhichMustBeNonEmpty_FileTextIsNotEmpty_ReturnsFileTextSplitOnNewlines)
+AFACT(GetCurrentDirectoryPath_CodeCoverage)
 AFACT(SetCurrentPath_CallsFSCurrentPathWithFolderPath)
 AFACT(ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExist_FilePathIsEmpty_DoesNothing)
 AFACT(ThrowIfFilePathIsNotEmptyPathAndFileDoesNotExist_FilePathIsNotEmpty_FilePathExists_DoesNothing)
@@ -668,6 +669,11 @@ TEST(ReadFileText_ReadsFileSizeWhichReturnsGreaterThan0_ReadsFileBytesIntoString
    _call_fread_AssertCalledOnceWith(1, FileSize, readModeTextFilePointer.get());
    const string expectedFileText(bufferReturnValue.data(), _fread_CallHistory.returnValue);
    ARE_EQUAL(expectedFileText, fileText);
+}
+
+TEST(GetCurrentDirectoryPath_CodeCoverage)
+{
+   _fileSystem.GetCurrentDirectoryPath();
 }
 
 TEST(SetCurrentPath_CallsFSCurrentPathWithFolderPath)
