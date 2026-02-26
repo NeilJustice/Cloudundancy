@@ -13,5 +13,5 @@ public:
    ProgramModeSpecificArgsParser();
    virtual ~ProgramModeSpecificArgsParser();
 
-   virtual CloudundancyArgs ParseDocoptArgs(const map<string, docopt::value>& docoptArgs) const;
+   [[noreturn]] virtual CloudundancyArgs ParseDocoptArgs(const map<string, docopt::value>& docoptArgs) const;
 };

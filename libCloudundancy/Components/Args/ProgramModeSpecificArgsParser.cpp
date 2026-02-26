@@ -12,7 +12,7 @@ ProgramModeSpecificArgsParser::~ProgramModeSpecificArgsParser()
 {
 }
 
-CloudundancyArgs ProgramModeSpecificArgsParser::ParseDocoptArgs(const map<string, docopt::value>& /*docoptArgs*/) const
+[[noreturn]] CloudundancyArgs ProgramModeSpecificArgsParser::ParseDocoptArgs(const map<string, docopt::value>& /*docoptArgs*/) const
 {
    throw logic_error("Unimplemented call to ProgramModeSpecificArgsParser::ParseDocoptArgs");
 }
