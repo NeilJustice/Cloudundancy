@@ -20,6 +20,7 @@ if(UNIX)
          -Wno-global-constructors \
          -Wno-gnu-zero-variadic-macro-arguments \
          -Wno-header-hygiene \
+         -Wno-missing-noreturn \
          -Wno-missing-variable-declarations \
          -Wno-padded \
          -Wno-reserved-identifier \
