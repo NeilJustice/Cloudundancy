@@ -56,7 +56,7 @@ elseif(MSVC)
    append(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/Oi /Ot /GS- /arch:AVX2 /fp:fast")
 
    set_target_properties(libCloudundancy PROPERTIES UNITY_BUILD ON)
-   set_target_properties(libCloudundancy PROPERTIES UNITY_BUILD_BATCH_SIZE 2)
+   set_target_properties(libCloudundancy PROPERTIES UNITY_BUILD_BATCH_SIZE 4)
    append(CMAKE_CXX_FLAGS "/FIpch.h")
 
    set_target_properties(libCloudundancy PROPERTIES DEBUG_OUTPUT_NAME "libCloudundancyDebug")
