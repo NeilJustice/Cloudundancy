@@ -28,6 +28,7 @@ On Linux, a Bash script can be written to run a Google Drive CLI command such as
 
 ```ini
 Cloudundancy v1.0.0
+Copies configurable file and folder paths to configurable file and folder paths.
 
 Usage:
    cloudundancy example-linux-ini-file
