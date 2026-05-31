@@ -16,10 +16,10 @@ using namespace std;
 
 // Testing Args
 // ============
-// copy-files-to-multiple-folders --ini-file=C:\Code\Cloudundancy\TestingIniFiles\WindowsCloudundancy.ini
-// 7zip-files-then-copy-the-7zip-file-to-multiple-folders --ini-file-to-copy-files-to-7zip-staging-folder=D:\Cloudundancy7ZipTesting\CodeFolderTo7ZipStagingFolderCopyingStep.ini --7zip-staging-folder=D:\Cloudundancy7ZipTesting\7ZipStagingFolder --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=D:\Cloudundancy7ZipTesting\7ZipFileToGoogleDriveAndOneDriveCopyingStep.ini
 // example-linux-ini-file
 // example-windows-ini-file
+// copy-files-to-multiple-folders --ini-file=C:\Code\Cloudundancy\TestingIniFiles\WindowsCloudundancy.ini
+// 7zip-files-then-copy-the-7zip-file-to-multiple-folders --ini-file-to-copy-files-to-7zip-staging-folder=D:\Cloudundancy7ZipTesting\CodeFolderTo7ZipStagingFolderCopyingStep.ini --7zip-staging-folder=D:\Cloudundancy7ZipTesting\7ZipStagingFolder --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=D:\Cloudundancy7ZipTesting\7ZipFileToGoogleDriveAndOneDriveCopyingStep.ini
 
 // Production Args
 // ===============

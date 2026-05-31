@@ -352,9 +352,12 @@ TEST(CopyNestedFileToFolder_RelativeDestinationFolderPathIsDot_CopiesNestedFileT
    const fs::path expectedDestinationFilePath =
       destinationFolderPath /
       sourceFilePathRelativeToSourceFolderPath;
-   METALMOCKTHEN(_call_String_ReplaceFirstMock.CalledOnceWith(sourceFilePath.string(), cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath.string(), "")).Then(
+   METALMOCKTHEN(_call_String_ReplaceFirstMock.CalledOnceWith(
+      sourceFilePath.string(), cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath.string(), "")).Then(
+
    METALMOCKTHEN(_caller_CopyFileToFileMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_cloudundancyFileCopier, &CloudundancyFileCopier::CopyFileToFile, sourceFilePath, expectedDestinationFilePath))).Then(
+
    METALMOCKTHEN(_caller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_cloudundancyFileCopier, &CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed, fileCopyResult, destinationFolderPath)));
 }
@@ -377,8 +380,12 @@ TEST(CopyNestedFileToFolder_RelativeDestinationFolderPathIsNotDot_CopiesNestedFi
       destinationFolderPath /
       cloudundancyIniCopyInstruction.relativeDestinationFolderPath /
       sourceFilePathRelativeToSourceFolderPath;
-   METALMOCKTHEN(_call_String_ReplaceFirstMock.CalledOnceWith(sourceFilePath.string(), cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath.string(), "")).Then(
-   METALMOCKTHEN(_caller_CopyFileToFileMock->CallConstMemberFunctionMock.CalledOnceWith(&_cloudundancyFileCopier, &CloudundancyFileCopier::CopyFileToFile, sourceFilePath, expectedDestinationFilePath))).Then(
+   METALMOCKTHEN(_call_String_ReplaceFirstMock.CalledOnceWith(
+      sourceFilePath.string(), cloudundancyIniCopyInstruction.absoluteSourceFileOrFolderPath.string(), "")).Then(
+
+   METALMOCKTHEN(_caller_CopyFileToFileMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &_cloudundancyFileCopier, &CloudundancyFileCopier::CopyFileToFile, sourceFilePath, expectedDestinationFilePath))).Then(
+
    METALMOCKTHEN(_caller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_cloudundancyFileCopier, &CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed, fileCopyResult, destinationFolderPath)));
 }
@@ -400,9 +407,15 @@ TEST(CopyFileToFile_FileSizeIsGreaterThanOrEqualTo2GB_CopiesFileWithStdFilesyste
    const string expectedCopyingFileMessage = Utils::String::ConcatStrings(
       "Copying ", sourceFilePath.string(), "\n",
       "     to ", destinationFilePath.string(), ". ");
-   METALMOCKTHEN(_consoleMock->WriteMock.CalledOnceWith(expectedCopyingFileMessage)).Then(
-   METALMOCKTHEN(_cloudundancyFileSystemMock->FileSizeIsGreaterThanOrEqualTo2GBMock.CalledOnceWith(sourceFilePath))).Then(
-   METALMOCKTHEN(_fileSystemMock->CopyFileToFileLargerThan2GBMock.CalledOnceWith(sourceFilePath, destinationFilePath)));
+   METALMOCKTHEN(_consoleMock->WriteMock.CalledOnceWith(
+      expectedCopyingFileMessage)).Then(
+
+   METALMOCKTHEN(_cloudundancyFileSystemMock->FileSizeIsGreaterThanOrEqualTo2GBMock.CalledOnceWith(
+      sourceFilePath))).Then(
+
+   METALMOCKTHEN(_fileSystemMock->CopyFileToFileLargerThan2GBMock.CalledOnceWith(
+      sourceFilePath, destinationFilePath)));
+
    ARE_EQUAL(fileCopyResult, returnedFileCopyResult);
 }
 
@@ -421,9 +434,15 @@ TEST(CopyFileToFile_FileSizeIsLessThan2GB_CopiesFileWithCStyleCopyFileToFile_Ret
    const string expectedCopyingFileMessage = Utils::String::ConcatStrings(
       "Copying ", sourceFilePath.string(), "\n",
       "     to ", destinationFilePath.string(), ". ");
-   METALMOCKTHEN(_consoleMock->WriteMock.CalledOnceWith(expectedCopyingFileMessage)).Then(
-   METALMOCKTHEN(_cloudundancyFileSystemMock->FileSizeIsGreaterThanOrEqualTo2GBMock.CalledOnceWith(sourceFilePath))).Then(
-   METALMOCKTHEN(_fileSystemMock->CopyFileToFileMock.CalledOnceWith(sourceFilePath, destinationFilePath)));
+   METALMOCKTHEN(_consoleMock->WriteMock.CalledOnceWith(
+      expectedCopyingFileMessage)).Then(
+
+   METALMOCKTHEN(_cloudundancyFileSystemMock->FileSizeIsGreaterThanOrEqualTo2GBMock.CalledOnceWith(
+      sourceFilePath))).Then(
+
+   METALMOCKTHEN(_fileSystemMock->CopyFileToFileMock.CalledOnceWith(
+      sourceFilePath, destinationFilePath)));
+
    ARE_EQUAL(fileCopyResult, returnedFileCopyResult);
 }
 
@@ -444,6 +463,7 @@ TEST(CopyFileToFolder_RelativeDestinationFolderPathIsADot_DoesNotJoinDotCharacte
    const fs::path expectedDestinationFilePath = destinationFolderPath / expectedSourceFileName;
    METALMOCKTHEN(_caller_CopyFileToFileMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_cloudundancyFileCopier, &CloudundancyFileCopier::CopyFileToFile, expectedSourceFilePath, expectedDestinationFilePath)).Then(
+
    METALMOCKTHEN(_caller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_cloudundancyFileCopier, &CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed, fileCopyResult, destinationFolderPath)));
 }
@@ -465,6 +485,7 @@ TEST(CopyFileToFolder_RelativeDestinationFolderPathIsNotADot_JoinsRelativeDestin
       destinationFolderPath / cloudundancyIniCopyInstruction.relativeDestinationFolderPath / expectedSourceFileName;
    METALMOCKTHEN(_caller_CopyFileToFileMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_cloudundancyFileCopier, &CloudundancyFileCopier::CopyFileToFile, expectedSourceFilePath, expectedDestinationFilePath)).Then(
+
    METALMOCKTHEN(_caller_WriteCopiedMessageOrExitWithCode1IfCopyFailedMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_cloudundancyFileCopier, &CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed, fileCopyResult, destinationFolderPath)));
 }
@@ -478,8 +499,7 @@ TEST(WriteCopiedMessageOrExitWithCode1IfCopyFailed_CopySucceeded_WritesCopiedAnd
    //
    _cloudundancyFileCopier.WriteCopiedMessageOrExitWithCode1IfCopyFailed(fileCopyResult, destinationFolderPath);
    //
-   const string expectedCopiedMessage = Utils::String::ConcatValues("Copied [", fileCopyResult.durationInMilliseconds, "ms]\n");
-   METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith(expectedCopiedMessage, Utils::Color::Green));
+   METALMOCK(_consoleMock->WriteLineColorMock.CalledOnceWith("Copied", Utils::Color::Green));
 }
 
 TEST(WriteCopiedMessageOrExitWithCode1IfCopyFailed_CopyFailed_WritesCopyFailedAndDurationInMillisecondsAndCopyFailureReason_AppendsErrorToCloudundancyLog_ExitsProgramWithCode1)
@@ -497,7 +517,9 @@ TEST(WriteCopiedMessageOrExitWithCode1IfCopyFailed_CopyFailed_WritesCopyFailedAn
       fileCopyResult.sourceFilePath.string(), " -> ", fileCopyResult.destinationFilePath.string(),
       ". Reason: ", fileCopyResult.copyFailureReason);
    const string expectedCopyFailedConsoleMessage = Utils::String::ConcatValues(
-      "Copy failed [", fileCopyResult.durationInMilliseconds, "ms]: ", fileCopyResult.copyFailureReason, "\n\n[Cloudundancy] ExitCode: 1");
+      "Copy failed: ", fileCopyResult.copyFailureReason, "\n",
+      "\n",
+      "[Cloudundancy] ExitCode: 1");
 
    METALMOCKTHEN(_cloudundancyLogFileWriterMock->AppendTextToCloudundancyLogFileInFolderMock.CalledOnceWith(
       destinationFolderPath, expectedCopyFailedLogFileMessage)).Then(
