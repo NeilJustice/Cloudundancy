@@ -25,23 +25,14 @@ TEST(Run_PrintsExampleLinuxIniFile_Returns0)
 R"(
 [DestinationFolders]
 /code/dotfiles/LinuxCloudundancy
-/home/neil/BlackUSB/LinuxCloudundancy
-/home/neil/SilverUSB/LinuxCloudundancy
+/home/user/USBDrive1/LinuxCloudundancy
+/home/user/USBDrive2/LinuxCloudundancy
 
 [SourceFilesAndFolders]
-# dotfiles
-/code/dotfiles/linux/ -> dotfiles
-
-# Linux
 /etc/fstab -> Linux
-
-# VS Code
-/home/neil/.config/Code/User/keybindings.json -> VSCode
-/home/neil/.config/Code/User/settings.json    -> VSCode
-/home/neil/.config/Code/User/snippets/        -> VSCode/Snippets
-
-[FileSubpathsToNotCopy]
-/.git/
+/home/user/.config/Code/User/keybindings.json -> VSCode
+/home/user/.config/Code/User/settings.json    -> VSCode
+/home/user/.config/Code/User/snippets/        -> VSCode/Snippets
 )";
    METALMOCK(p_consoleMock->WriteLineMock.CalledOnceWith(expectedExampleLinuxIniFileText));
    IS_ZERO(exitCode);

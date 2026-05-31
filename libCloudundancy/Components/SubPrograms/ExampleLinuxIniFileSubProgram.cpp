@@ -7,23 +7,14 @@ int ExampleLinuxIniFileSubProgram::Run()
 R"(
 [DestinationFolders]
 /code/dotfiles/LinuxCloudundancy
-/home/neil/BlackUSB/LinuxCloudundancy
-/home/neil/SilverUSB/LinuxCloudundancy
+/home/user/USBDrive1/LinuxCloudundancy
+/home/user/USBDrive2/LinuxCloudundancy
 
 [SourceFilesAndFolders]
-# dotfiles
-/code/dotfiles/linux/ -> dotfiles
-
-# Linux
 /etc/fstab -> Linux
-
-# VS Code
-/home/neil/.config/Code/User/keybindings.json -> VSCode
-/home/neil/.config/Code/User/settings.json    -> VSCode
-/home/neil/.config/Code/User/snippets/        -> VSCode/Snippets
-
-[FileSubpathsToNotCopy]
-/.git/
+/home/user/.config/Code/User/keybindings.json -> VSCode
+/home/user/.config/Code/User/settings.json    -> VSCode
+/home/user/.config/Code/User/snippets/        -> VSCode/Snippets
 )";
    p_console->WriteLine(exampleLinuxIniFileText);
    return 0;

@@ -55,33 +55,30 @@ Program mode `example-windows-ini-file` prints an example Windows Cloudundancy .
 
 ```
 [DestinationFolders]
-# Cloud-redundant backups to Google's cloud, Microsoft's cloud, and GitHub's cloud
+# Cloud-redundancy backups to GoogleDrive and OneDrive
 C:\GoogleDrive\CloudundancyBackups
 C:\OneDrive\CloudundancyBackups
-C:\GitHubRepos\CloudundancyBackups
 
-# Device-redundant backups to USB drive D: and USB drive E:
+# Device-redundant backups to USB drives D: and E:
 D:\CloudundancyBackups
 E:\CloudundancyBackups
 
 [SourceFilesAndFolders]
-# In the [SourceFilesAndFolders] section, the line format is:
+# In the [SourceFilesAndFolders] section the line format is
 # SourceFileOrFolderPath -> RelativeDestinationFolderPath
 
-# Critical files to backup
+# Files to backup
 C:\CriticalFiles\KeePassFile.kdbx -> .
 C:\CriticalFiles\PersonalFinancesSpreadsheet.xlsx -> .
 C:\VS2026\Common7\IDE\VC\Snippets\1033\Visual C++\C++Snippets.snippet                              -> Snippets
 C:\VS2026\Common7\IDE\Extensions\Microsoft\Python\Core\Snippets\1033\Python\PythonSnippets.snippet -> Snippets
 C:\VS2026\VC#\Snippets\1033\Visual C#\CSharpSnippets.snippet                                       -> Snippets
 
-# Critical folders to backup
+# Folders to backup
 # Source folder paths ending in a '\' or '/' character are interpretted as folders instead of files
 C:\Users\UserName\Documents\WindowsPowerShell\ -> PowerShell
 
 [FileSubpathsToNotCopy]
-# In the [FileSubpathsToNotCopy] section, case-sensitive file path substrings can be listed one per line
-# PowerShell Modules folder to not backup because PowerShell modules can be easily reinstalled
 PowerShell\Modules\
 ```
 
