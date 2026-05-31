@@ -6,7 +6,7 @@
 
 CloudundancyFileCopier::CloudundancyFileCopier() noexcept
    // Function Pointers
-   : _call_quick_exit(quick_exit)
+   : _call_exit(exit)
    , _call_String_ReplaceFirst(Utils::String::ReplaceFirst)
    , _call_Type_GetExceptionClassNameAndMessage(Type::GetExceptionClassNameAndMessage)
    // Function Callers
@@ -224,6 +224,6 @@ void CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed(
          "Copy failed [", durationInMilliseconds, "ms]: ", fileCopyResult.copyFailureReason, "\n\n[Cloudundancy] ExitCode: 1");
       _console->WriteLineColor(copyFailedConsoleMessage, Utils::Color::Red);
 
-      _call_quick_exit(1);
+      _call_exit(1);
    }
 }
