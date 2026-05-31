@@ -11,8 +11,8 @@ public:
    {
       try
       {
-         const ValueType& Value = m.at(key);
-         return Value;
+         const ValueType& value = m.at(key);
+         return value;
       }
       // When std::map::at() throws out_of_range, its what() text reads just "key not found",
       // not including in the message the key not found.
