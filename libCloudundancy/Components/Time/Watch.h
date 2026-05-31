@@ -14,6 +14,7 @@ namespace Utils
    public:
       Watch() noexcept;
       virtual ~Watch();
+
       virtual string DateTimeNow() const;
       virtual string DateTimeNowForFileNames() const;
    private:

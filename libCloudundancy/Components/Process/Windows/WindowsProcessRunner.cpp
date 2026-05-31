@@ -96,7 +96,11 @@ namespace Utils
       const unsigned elapsedMilliseconds = static_cast<unsigned>(
          chrono::duration_cast<chrono::milliseconds>(endTime - beginTime).count());
       ProcessResult processResult(
-         processName.data(), arguments.data(), static_cast<int>(processExitCode), standardOutputAndError, elapsedMilliseconds);
+         processName.data(),
+         arguments.data(),
+         static_cast<int>(processExitCode),
+         standardOutputAndError,
+         elapsedMilliseconds);
       return processResult;
    }
 

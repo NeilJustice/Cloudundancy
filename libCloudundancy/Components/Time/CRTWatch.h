@@ -20,6 +20,7 @@ namespace Utils
    public:
       CRTWatch();
       virtual ~CRTWatch();
+
       virtual tm TmNow() const;
    };
 }

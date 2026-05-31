@@ -14,6 +14,7 @@ namespace Utils
    public:
       Stopwatch();
       virtual ~Stopwatch();
+
       virtual void Start();
       virtual unsigned StopAndGetElapsedMilliseconds();
       virtual long long StopAndGetElapsedMicroseconds();
