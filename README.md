@@ -8,11 +8,13 @@
 |VS2026 on windows-2025-vs2026|<a href="https://github.com/NeilJustice/Cloudundancy/actions/workflows/windows_build.yml"><img src="https://github.com/NeilJustice/Cloudundancy/actions/workflows/windows_build.yml/badge.svg"></a>|
 |GCC lcov code coverage|<a href="https://codecov.io/gh/NeilJustice/Cloudundancy"><img src="https://codecov.io/gh/NeilJustice/Cloudundancy/branch/master/graph/badge.svg?token=khcIKQTiuu"></a>|
 
-Cloudundancy is a C++23 command line program for quickly copying a configurable list of files and folders to a configurable list of destination folders to achieve cloud-redundant and device-redundant backups of files.
+Cloudundancy is a C++ command line program for quickly copying a configurable list of files and folders to a configurable list of destination folders to achieve cloud-redundant and device-redundant backups of files.
 
-For example, on Windows in a Cloudundancy.ini file, destination folders can be configured to be automatic-cloud-uploading Google Drive and Microsoft OneDrive folders `C:\GoogleDrive\CloudundancyBackups` and `C:\OneDrive\CloudundancyBackups`. Double USB backups can also be achieved by adding USB drive paths such as `E:\CloudundancyBackups` and `F:\CloudundancyBackups` to a Cloudundancy.ini file.
+For example, on Windows in a Cloudundancy.ini file, destination folders can be configured to be automatic-cloud-uploading Google Drive and Microsoft OneDrive folders `C:\GoogleDrive\CloudundancyBackups` and `C:\OneDrive\CloudundancyBackups`.
 
-On Linux, a Bash script can be written to run a Google Drive CLI command such as `drive push` from `~/googledrive` after having run `cloudundancy` to copy files to `~/googledrive`.
+Double USB backups can be made by adding USB drive path destinations such as `E:\CloudundancyBackups` and `F:\CloudundancyBackups` to a Cloudundancy.ini file.
+
+On Linux, a Bash script can be written to run a Google Drive CLI upload command such as `drive push` from `~/googledrive` after having run `cloudundancy` to copy files to `~/googledrive`.
 
 * [Cloudundancy command line usage](#cloudundancy-command-line-usage)
 * [Cloudundancy program modes](#cloudundancy-program-modes)
@@ -22,7 +24,7 @@ On Linux, a Bash script can be written to run a Google Drive CLI command such as
    * [7zip-files-then-copy-the-7zip-file-to-multiple-folders](#7zip-files-then-copy-the-7zip-file-to-multiple-folders)
 * [Steps to build binary cloudundancy on Linux with Clang](#steps-to-build-binary-cloudundancy-on-linux-with-clang)
 * [Steps to build executable Cloudundancy.exe on Windows with Visual Studio 2026](#steps-to-build-executable-cloudundancyexe-on-windows-with-visual-studio-2026)
-* [Acknowledgements](#acknowledgements)
+* [Thanks to](#thanks-to)
 
 ## Cloudundancy command line usage
 
@@ -197,6 +199,6 @@ cmake . -G"Visual Studio 18 2026" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
 cmake --build . --config Release --target install
 ```
 
-## Acknowledgements
+## Thanks to
 
 <a href="https://brandmark.io">brandmark.io</a> for Cloudundancy's logo
