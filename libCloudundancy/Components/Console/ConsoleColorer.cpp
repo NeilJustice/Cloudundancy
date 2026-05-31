@@ -108,7 +108,7 @@ namespace Utils
    {
       const int stdoutFileHandle = _call_fileno(stdout);
       const int isAtty = _call_isatty(stdoutFileHandle);
-      const bool supportsColor = isAtty != 0;
+      bool supportsColor = isAtty != 0;
       return supportsColor;
    }
 }

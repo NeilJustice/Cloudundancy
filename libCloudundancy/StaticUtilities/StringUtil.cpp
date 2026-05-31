@@ -9,7 +9,7 @@ namespace Utils
 {
    bool Utils::String::Contains(string_view str, string_view substring)
    {
-      const bool strContainsSubstring = strstr(str.data(), substring.data()) != nullptr;
+      bool strContainsSubstring = strstr(str.data(), substring.data()) != nullptr;
       return strContainsSubstring;
    }
 
@@ -17,7 +17,7 @@ namespace Utils
    {
       const string lowercaseStr = Utils::String::ToLower(str);
       const string lowercaseSubstring = Utils::String::ToLower(substring);
-      const bool strContainsSubstring = Contains(lowercaseStr, lowercaseSubstring);
+      bool strContainsSubstring = Contains(lowercaseStr, lowercaseSubstring);
       return strContainsSubstring;
    }
 

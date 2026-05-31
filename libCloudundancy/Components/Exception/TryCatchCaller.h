@@ -14,12 +14,12 @@ namespace Utils
       {
          try
          {
-            const int exitCode = (nonConstClassPointer->*nonConstMemberFunction)(argument);
+            int exitCode = (nonConstClassPointer->*nonConstMemberFunction)(argument);
             return exitCode;
          }
          catch (const exception& ex)
          {
-            const int exceptionHandlerExitCode = (nonConstClassPointer->*constMemberFunctionExceptionHandler)(ex, argument);
+            int exceptionHandlerExitCode = (nonConstClassPointer->*constMemberFunctionExceptionHandler)(ex, argument);
             return exceptionHandlerExitCode;
          }
       }

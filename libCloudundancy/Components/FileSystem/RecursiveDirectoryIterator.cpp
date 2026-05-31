@@ -58,7 +58,7 @@ namespace Utils
          return false;
       }
       const string filePathAsString = filePath.string();
-      const bool doIgnoreFilePath = std::any_of(
+      bool doIgnoreFilePath = std::any_of(
          filePathIgnoreSubstrings.cbegin(), filePathIgnoreSubstrings.cend(), [&](const string& ignoredFilePathSubstring)
          {
             if (Utils::String::Contains(filePathAsString, ignoredFilePathSubstring))

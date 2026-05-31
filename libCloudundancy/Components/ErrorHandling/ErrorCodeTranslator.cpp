@@ -21,7 +21,7 @@ namespace Utils
 
    int ErrorCodeTranslator::GetErrnoValue() const
    {
-      const int errnoValue = *_call_errno();
+      int errnoValue = *_call_errno();
       return errnoValue;
    }
 

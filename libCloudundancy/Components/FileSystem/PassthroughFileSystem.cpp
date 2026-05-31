@@ -7,7 +7,7 @@ PassthroughFileSystem::~PassthroughFileSystem()
 
 unsigned long long PassthroughFileSystem::remove_all(const fs::path& p) const
 {
-   const unsigned long long numberOfFilesRemoved = fs::remove_all(p);
+   unsigned long long numberOfFilesRemoved = fs::remove_all(p);
    return numberOfFilesRemoved;
 }
 

@@ -189,7 +189,7 @@ namespace Utils
 
    bool FileSystem::FileOrFolderExists(const fs::path& fileOrFolderPath) const
    {
-      const bool fileOrFolderExists = _call_fs_exists(fileOrFolderPath);
+      bool fileOrFolderExists = _call_fs_exists(fileOrFolderPath);
       return fileOrFolderExists;
    }
 
@@ -333,7 +333,7 @@ namespace Utils
       const int fseekSetReturnValue = _call_fseek(filePointer.get(), 0, SEEK_SET);
       _asserter->ThrowIfIntsNotEqual(
          0, fseekSetReturnValue, "fseek(filePointer.get(), 0, SEEK_SET) in FileSystem::FileSize() unexpectedly did not return 0");
-      const size_t fileSizeInBytes = static_cast<size_t>(ftellReturnValue);
+      size_t fileSizeInBytes = static_cast<size_t>(ftellReturnValue);
       return fileSizeInBytes;
    }
 }
