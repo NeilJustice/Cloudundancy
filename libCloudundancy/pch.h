@@ -1,16 +1,8 @@
 #pragma once
 #include "libCloudundancy/Compiler/IfWindowsIgnoreTheseWarningsGlobally.h"
 
-#ifdef _WIN32
-#pragma warning(push)
-#pragma warning(disable: 4365) // signed / unsigned mismatch
-#endif
-#include <filesystem>
-#ifdef _WIN32
-#pragma warning(pop)
-#endif
-
 #include <array>
+#include <filesystem>
 #include <functional>
 #include <iostream>
 #include <map>
