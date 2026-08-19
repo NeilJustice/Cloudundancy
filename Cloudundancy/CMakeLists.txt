@@ -20,4 +20,5 @@ elseif(MSVC)
    replace(CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO "/debug" "/DEBUG:FULL")
 endif()
 
+set_target_properties(Cloudundancy PROPERTIES OUTPUT_NAME_RELWITHDEBINFO "CloudundancyRelease")
 install(TARGETS Cloudundancy DESTINATION "bin")

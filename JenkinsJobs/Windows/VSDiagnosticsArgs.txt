@@ -1,0 +1,3 @@
+copy-files-to-multiple-folders
+--ini-file="C:\Code\Cloudundancy\TestingIniFiles\Windows\Cloudundancy_VSDiagnostics.ini"
+--delete-destination-folders-first

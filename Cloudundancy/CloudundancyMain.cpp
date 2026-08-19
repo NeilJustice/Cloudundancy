@@ -18,14 +18,25 @@ using namespace std;
 // ============
 // example-linux-ini-file
 // example-windows-ini-file
-// copy-files-to-multiple-folders --ini-file=C:\Code\Cloudundancy\TestingIniFiles\WindowsCloudundancy.ini
+// copy-files-to-multiple-folders --ini-file=C:\Code\Cloudundancy\TestingIniFiles\Windows\WindowsCloudundancy.ini
 // 7zip-files-then-copy-the-7zip-file-to-multiple-folders --ini-file-to-copy-files-to-7zip-staging-folder=D:\Cloudundancy7ZipTesting\CodeFolderTo7ZipStagingFolderCopyingStep.ini --7zip-staging-folder=D:\Cloudundancy7ZipTesting\7ZipStagingFolder --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=D:\Cloudundancy7ZipTesting\7ZipFileToGoogleDriveAndOneDriveCopyingStep.ini
 
 // Production Args
 // ===============
 // copy-files-to-multiple-folders --ini-file=C:\Code\WindowsCloudundancyFiles\WindowsCloudundancy.ini
 // copy-files-to-multiple-folders --ini-file=C:\Code\WindowsCloudundancyFiles\WindowsCloudundancy.ini --delete-destination-folders-first
+
 // 7zip-files-then-copy-the-7zip-file-to-multiple-folders --ini-file-to-copy-files-to-7zip-staging-folder=C:\Code\WindowsCloudundancyFiles\WindowsCloudundancy_CopyCodeFolderTo7ZipStagingFolder.ini --7zip-staging-folder=C:\CodeBackup --ini-file-to-copy-7zip-file-from-staging-folder-to-multiple-folders=C:\Code\WindowsCloudundancyFiles\WindowsCloudundancy_Copy7ZipFileFromStagingFolderToMultipleFolders.ini
+
+// Performance Test Args
+// =====================
+// copy-files-to-multiple-folders --ini-file=TestingIniFiles\Windows\Cloudundancy_PerformanceTest.ini --delete-destination-folders-first
+// C:\Code\Cloudundancy
+
+// VTune Hotspots Args
+// ===================
+// copy-files-to-multiple-folders --ini-file=TestingIniFiles\Windows\Cloudundancy_VTuneHotspots.ini --delete-destination-folders-first
+// C:\Code\Cloudundancy
 
 int main(int argc, char* argv[])
 {
