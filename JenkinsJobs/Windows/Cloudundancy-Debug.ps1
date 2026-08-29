@@ -1,4 +1,4 @@
-WindowsCPlusPlusBuilder.exe build-cpp-program `
+WindowsCPlusPlusBuilder.exe build-cpp-solution `
    --solution-name=Cloudundancy `
    --configuration=Debug `
    --install=false
