@@ -4,6 +4,7 @@ $args = "copy-files-to-multiple-folders " +
 
 AcceliTune.exe build-then-collect-hotspots `
    --working-dir="." `
+   --solution="Cloudundancy" `
    --program="Cloudundancy" `
    --configuration=RelWithDebInfo `
    --args="$args" `
