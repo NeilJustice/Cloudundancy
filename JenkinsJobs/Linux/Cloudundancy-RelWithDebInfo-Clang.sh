@@ -1,11 +1,9 @@
 #!/bin/bash
 set -ev
 
-export PYTHONPATH=CloudundancyDevOpsPython
 export CXX=clang++
-python -u CloudundancyDevOpsPython/CloudundancyDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
+LinuxCPlusPlusBuilder build-cpp-solution \
    --solution-name=Cloudundancy \
-   --cmake-build-type=RelWithDebInfo \
+   --configuration=RelWithDebInfo \
    --cmake-definitions="-DFastLinuxReleaseBuildMode=ON" \
-   --tests-project-name=libCloudundancyTests \
-   --install
+   --install=true

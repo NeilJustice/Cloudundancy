@@ -1,12 +1,10 @@
 #!/bin/bash
 set -ev
 
-export PYTHONPATH=CloudundancyDevOpsPython
 export CXX=clang++
 export UBSAN_OPTIONS="silence_unsigned_overflow=1"
-python -u CloudundancyDevOpsPython/CloudundancyDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
+LinuxCPlusPlusBuilder build-cpp-solution \
    --solution-name=Cloudundancy \
-   --cmake-build-type=Debug \
-   --tests-project-name=libCloudundancyTests \
+   --configuration=Debug \
    --cmake-definitions="-DClangUndefinedBehaviorSanitizerMode=ON" \
-   --no-install
+   --install=false
