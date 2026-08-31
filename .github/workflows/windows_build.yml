@@ -12,12 +12,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/download-artifact@v8
+      - uses: dawidd6/action-download-artifact@v9
         with:
+          repo: NeilJustice/WindowsCPlusPlusBuilder
+          github_token: ${{ secrets.WINDOWSCPLUSPLUSBUILDER_READ_PAT }}
+          workflow_search: true
+          workflow_conclusion: success
           name: WindowsCPlusPlusBuilder
-          github-token: ${{ secrets.WINDOWSCPLUSPLUSBUILDER_READ_PAT }}
-          repository: NeilJustice/WindowsCPlusPlusBuilder
-          run-id: 33347859387
+          use_unzip: true
           path: WindowsCPlusPlusBuilder/
 
       - name: Download ZenUnit.h and MetalMock.h
