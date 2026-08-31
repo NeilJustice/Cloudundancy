@@ -27,7 +27,7 @@ jobs:
            
       - name: Run WindowsCPlusPlusBuilder
         run: |
-           WindowsCPlusPlusBuilder.exe build-cpp-solution `
+           WindowsCPlusPlusBuilder/WindowsCPlusPlusBuilder.exe build-cpp-solution `
               --solution-name=Cloudundancy `
               --configuration="${{ matrix.cmake_build_type }}" `
               --cmake-definitions="" `
