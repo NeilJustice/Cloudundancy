@@ -34,5 +34,5 @@ jobs:
            WindowsCPlusPlusBuilder/WindowsCPlusPlusBuilder.exe build-cpp-solution `
               --solution-name=Cloudundancy `
               --configuration="${{ matrix.cmake_build_type }}" `
-              --cmake-definitions="-DFastLinuxDebugBuildMode=ON -DFastLinuxReleaseBuildMode=ON" `
+              --cmake-definitions="" `
               --install=false
