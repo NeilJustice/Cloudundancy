@@ -25,6 +25,8 @@ jobs:
            curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/ZenUnit.h"
            curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/MetalMock.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/MetalMock.h"
            
+      - uses: ilammy/msvc-dev-cmd@v1 # Places MSBuild.exe on the PATH, which is invoked by WindowsCPlusPlusBuilder.exe
+      
       - name: Run WindowsCPlusPlusBuilder
         run: |
            WindowsCPlusPlusBuilder/WindowsCPlusPlusBuilder.exe build-cpp-solution `
