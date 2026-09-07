@@ -72,7 +72,7 @@ add_executable(libCloudundancyTests ${Sources})
 
 target_link_libraries(libCloudundancyTests libCloudundancy)
 if(UNIX)
-   IfUNIXEnablePrecompiledHeaderAndPossiblyUnityBuildIfNotIncludeWhatYouUseOrClangTidyMode(libCloudundancyTests 8)
+   IfUNIXEnablePrecompiledHeaderAndPossiblyUnityBuildIfNotClangTidyMode(libCloudundancyTests 8)
    set_property(TARGET libCloudundancyTests PROPERTY LINKER_TYPE LLD)
    if(LCovCodeCoverageMode)
      target_link_libraries(libCloudundancyTests CodeCovLibraryInterface)

@@ -47,7 +47,7 @@ source_group("" FILES ${Sources})
 
 add_library(libCloudundancy ${Sources})
 if(UNIX)
-   IfUNIXEnablePrecompiledHeaderAndPossiblyUnityBuildIfNotIncludeWhatYouUseOrClangTidyMode(libCloudundancy 8)
+   IfUNIXEnablePrecompiledHeaderAndPossiblyUnityBuildIfNotClangTidyMode(libCloudundancy 8)
    set_target_properties(libCloudundancy PROPERTIES DEBUG_OUTPUT_NAME "CloudundancyDebug")
    set_target_properties(libCloudundancy PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "CloudundancyRelWithDebInfo")
 elseif(MSVC)
