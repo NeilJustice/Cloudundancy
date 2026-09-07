@@ -1,3 +1,2 @@
 ignore:
-  - libCloudundancy/docopt/**/*
-  - libCloudundancy/docopt/docopt_value.h
+  - libCloudundancy/docopt
