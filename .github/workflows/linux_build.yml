@@ -55,7 +55,7 @@ jobs:
            LinuxCPlusPlusBuilder/LinuxCPlusPlusBuilder build-cpp-solution \
              --solution-name=Cloudundancy \
              --configuration=RelWithDebInfo \
-             --cmake-definitions="-DFastLinuxReleaseBuildMode=ON -DLCovCodeCoverageMode=ON" \
+             --cmake-definitions="-DLCovCodeCoverageMode=ON" \
              --install=false
         env:
           CXX: "/usr/bin/${{ matrix.cxx }}"
