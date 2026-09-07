@@ -32,6 +32,10 @@ if(UNIX)
       if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 21.0.0)
          append(CMAKE_CXX_FLAGS "-Wno-nrvo")
       endif()
+   elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+      set(CMAKE_CXX_FLAGS "-std=c++2b \
+         -Wall -Wextra -pedantic -Werror \
+         -Wno-deprecated-declarations")
    endif()
    if(FastLinuxDebugBuildMode)
       replace(CMAKE_CXX_FLAGS_DEBUG "-g" "")
