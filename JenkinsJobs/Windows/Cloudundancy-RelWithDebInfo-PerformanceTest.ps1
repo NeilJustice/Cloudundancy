@@ -9,4 +9,4 @@ AcceliTune.exe build-then-measure-program-run-time `
    --configuration="RelWithDebInfo" `
    --args="$args" `
    --performance-test-results-file="C:\Code\WindowsPerformanceTestResults\Performance\Cloudundancy-Performance.txt" `
-   --prerun-powershell-script="Scripts\Windows\GenerateMarketDataForPerformanceTest.ps1"
+   --prerun-powershell-script="Scripts\Windows\GenerateDataForPerformanceTest.ps1"

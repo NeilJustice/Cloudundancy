@@ -10,4 +10,4 @@ AcceliTune.exe build-then-collect-hotspots `
    --args="$args" `
    --results-folder="D:\PerformanceProfilingResults\VTune\Cloudundancy_Hotspots" `
    --overwrite-results-folder `
-   --prerun-powershell-script="Scripts\Windows\GenerateMarketDataForSequentialProfiling.ps1"
+   --prerun-powershell-script="Scripts\Windows\GenerateDataForSequentialProfiling.ps1"
