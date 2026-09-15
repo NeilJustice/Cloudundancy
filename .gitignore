@@ -9,7 +9,7 @@ CMakeCache.txt
 libCloudundancyTests/IntegrationTest_RecursiveDirectoryIterator/
 
 # Linux
-covhtml/
+cov/
 build_errors.txt
 build.ninja
 *.o
