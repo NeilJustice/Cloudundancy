@@ -5,7 +5,7 @@ export CXX=clang++
 LinuxCPlusPlusBuilder build-cpp-solution \
    --solution-name=Cloudundancy \
    --configuration=Debug \
-   --cmake-definitions="" \
+   --cmake-definitions="-DClangCodeCoverageMode=ON" \
    --install=false
 
 LinuxCodeCoverageRunner measure-cplusplus-code-coverage \
