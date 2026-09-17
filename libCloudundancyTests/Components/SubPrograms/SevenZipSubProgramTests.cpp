@@ -81,7 +81,7 @@ TEST(CopyFileToFilesAndFoldersToBackupStagingFolder_CopiesSourceFilesAndFoldersT
 TEST(DeleteBackupStagingFolder_PrintsDeleting_DeletesBackupStagingFolder_PrintsDeletedInElapsedSeconds)
 {
    p_consoleMock->WriteLineMock.Expect();
-   _cloudundancyFileSystemMock->DeleteFolderContentsExceptForFileMock.Expect();
+   _cloudundancyFileSystemMock->DeleteFolderMock.Expect();
    _stopwatchMock->StartMock.Expect();
    const string elapsedSeconds = _stopwatchMock->StopAndGetElapsedSecondsMock.ReturnRandom();
    //
@@ -94,8 +94,7 @@ TEST(DeleteBackupStagingFolder_PrintsDeleting_DeletesBackupStagingFolder_PrintsD
    METALMOCK(p_consoleMock->WriteLineMock.CalledNTimes(2));
    METALMOCKTHEN(_stopwatchMock->StartMock.CalledOnce()).Then(
    METALMOCKTHEN(p_consoleMock->WriteLineMock.CalledWith(expectedDeletingMessage))).Then(
-   METALMOCKTHEN(_cloudundancyFileSystemMock->DeleteFolderContentsExceptForFileMock.CalledOnceWith(
-      p_args.sevenZipStagingFolderPath, "Cloudundancy.log"))).Then(
+   METALMOCKTHEN(_cloudundancyFileSystemMock->DeleteFolderMock.CalledOnceWith(p_args.sevenZipStagingFolderPath))).Then(
    METALMOCKTHEN(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce())).Then(
    METALMOCKTHEN(p_consoleMock->WriteLineMock.CalledWith(expectedDeletedMessage)));
 }

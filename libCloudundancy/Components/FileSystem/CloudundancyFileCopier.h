@@ -1,7 +1,6 @@
 #pragma once
 class CloudundancyFileSystem;
 class CloudundancyIniFileReader;
-class CloudundancyLogFileWriter;
 
 class CloudundancyFileCopier
 {
@@ -29,18 +28,17 @@ private:
       CloudundancyFileCopier, const Utils::FileCopyResult&, const fs::path&>;
    unique_ptr<const _caller_WriteCopiedMessageOrExitWithCode1IfCopyFailedType> _caller_WriteCopiedMessageOrExitWithCode1IfCopyFailed;
 
-   using _forEacher_CopyEachFileOrFolderToFolderType = Utils::TwoArgMemberFunctionForEacher<
+   using _forEacher_CopyEachFileOrFolderToFolderType = Utils::TwoArgOneArgMemberFunctionForEacher<
       CloudundancyFileCopier, fs::path, const CloudundancyIni&>;
    unique_ptr<const _forEacher_CopyEachFileOrFolderToFolderType> _forEacher_CopyEachFileOrFolderToFolder;
 
-   using _forEacher_CopyFileOrFolderToFolderType = Utils::TwoArgMemberFunctionForEacher<
+   using _forEacher_CopyFileOrFolderToFolderType = Utils::TwoArgOneArgMemberFunctionForEacher<
       CloudundancyFileCopier, CloudundancyIniCopyInstruction, const fs::path&>;
    unique_ptr<const _forEacher_CopyFileOrFolderToFolderType> _forEacher_CopyFileOrFolderToFolder;
 
    // Constant Components
    unique_ptr<const CloudundancyFileSystem> _cloudundancyFileSystem;
    unique_ptr<const CloudundancyIniFileReader> _cloudundancyIniFileReader;
-   unique_ptr<const CloudundancyLogFileWriter> _cloudundancyLogFileWriter;
    unique_ptr<const Utils::Console> _console;
    unique_ptr<const Utils::FileSystem> _fileSystem;
    unique_ptr<const Utils::TryCatchCaller<CloudundancyFileCopier, const pair<fs::path, CloudundancyIni>&>> _tryCatchCaller;

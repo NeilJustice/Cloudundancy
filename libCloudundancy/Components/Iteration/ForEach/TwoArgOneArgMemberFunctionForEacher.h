@@ -3,10 +3,10 @@
 namespace Utils
 {
    template<typename ClassType, typename ElementType, typename ExtraArgType>
-   class TwoArgMemberFunctionForEacher
+   class TwoArgOneArgMemberFunctionForEacher
    {
    public:
-      virtual ~TwoArgMemberFunctionForEacher() = default;
+      virtual ~TwoArgOneArgMemberFunctionForEacher() = default;
 
       using ConstMemberFunctionType = void(ClassType::*)(const ElementType&, ExtraArgType) const;
 

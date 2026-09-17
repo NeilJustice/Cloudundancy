@@ -1,4 +1,9 @@
 #pragma once
+namespace Utils
+{
+   template<typename ClassType, typename T>
+   class OneArgMemberFunctionForEacher;
+}
 class PassthroughFileSystem;
 
 class CloudundancyFileSystem
@@ -10,8 +15,8 @@ private:
    bool(*_call_fs_exists_as_assignable_function_overload_pointer)(const fs::path&);
    function<bool(const fs::path&)> _call_fs_exists;
    // Function Callers
-   using _forEacher_DeleteContentsOfFolderExceptForFileNameType = Utils::TwoArgMemberFunctionForEacher<CloudundancyFileSystem, fs::path, string_view>;
-   unique_ptr<const _forEacher_DeleteContentsOfFolderExceptForFileNameType> _forEacher_DeleteContentsOfFolderExceptForFileName;
+   using _forEacher_DeleteFolderType = Utils::OneArgMemberFunctionForEacher<CloudundancyFileSystem, fs::path>;
+   unique_ptr<const _forEacher_DeleteFolderType> _forEacher_DeleteFolder;
    // Constant Components
    unique_ptr<const Utils::Console> _console;
    unique_ptr<const Utils::FileSystem> _fileSystem;
@@ -20,7 +25,9 @@ public:
    CloudundancyFileSystem();
    virtual ~CloudundancyFileSystem();
 
-   virtual void DeleteMultipleFolderContentsExceptForFile(const vector<fs::path>& folderPaths, string_view exceptFileName) const;
-   virtual void DeleteFolderContentsExceptForFile(const fs::path& folderPath, string_view exceptFileName) const;
+   virtual void DeleteFolder(const fs::path& folderPath) const;
+
+   virtual void DeleteMultipleFolders(const vector<fs::path>& folderPaths) const;
+
    virtual bool FileSizeIsGreaterThanOrEqualTo2GB(const fs::path& filePath) const;
 };

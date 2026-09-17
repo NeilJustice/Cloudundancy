@@ -2,13 +2,14 @@
 #include "libCloudundancy/Components/FileSystem/CloudundancyFileSystem.h"
 #include "libCloudundancy/Components/FileSystem/FileSystem.h"
 #include "libCloudundancy/Components/FileSystem/PassthroughFileSystem.h"
+#include "libCloudundancy/Components/Iteration/ForEach/OneArgMemberFunctionForEacher.h"
 
 CloudundancyFileSystem::CloudundancyFileSystem()
    // Function Pointers
    : _call_fs_exists_as_assignable_function_overload_pointer(fs::exists)
    , _call_fs_exists(_call_fs_exists_as_assignable_function_overload_pointer)
    // Function Callers
-   , _forEacher_DeleteContentsOfFolderExceptForFileName(make_unique<_forEacher_DeleteContentsOfFolderExceptForFileNameType>())
+   , _forEacher_DeleteFolder(make_unique<_forEacher_DeleteFolderType>())
    // Constant Components
    , _console(make_unique<Utils::Console>())
    , _fileSystem(make_unique<Utils::FileSystem>())
@@ -20,26 +21,23 @@ CloudundancyFileSystem::~CloudundancyFileSystem()
 {
 }
 
-void CloudundancyFileSystem::DeleteMultipleFolderContentsExceptForFile(const vector<fs::path>& folderPaths, string_view exceptFileName) const
-{
-   _forEacher_DeleteContentsOfFolderExceptForFileName->CallConstMemberFunctionWithEachElement(
-      folderPaths, this, &CloudundancyFileSystem::DeleteFolderContentsExceptForFile, exceptFileName);
-}
-
-void CloudundancyFileSystem::DeleteFolderContentsExceptForFile(const fs::path& folderPath, string_view exceptFileName) const
+void CloudundancyFileSystem::DeleteFolder(const fs::path& folderPath) const
 {
    const bool folderPathExists = _call_fs_exists(folderPath);
    if (!folderPathExists)
    {
       return;
    }
-   const fs::path exceptFilePath = folderPath / exceptFileName;
-   const string textOfExceptFile = _fileSystem->ReadFileText(exceptFilePath);
    _fileSystem->DeleteFolder(folderPath);
-   _fileSystem->CreateTextFileIfDoesNotExist(exceptFilePath, textOfExceptFile);
-   const string deletedFolderMessage = Utils::String::ConcatStrings(
-      "[Cloudundancy] Deleted folder ", folderPath.string(), " except for ", exceptFileName);
+   const string deletedFolderMessage = Utils::String::ConcatStrings("[Cloudundancy] Deleted folder ", folderPath.string());
    _console->WriteLine(deletedFolderMessage);
+}
+
+void CloudundancyFileSystem::DeleteMultipleFolders(const vector<fs::path>& folderPaths) const
+{
+   _forEacher_DeleteFolder->CallConstMemberFunctionWithEachElement(
+      folderPaths,
+      this, &CloudundancyFileSystem::DeleteFolder);
 }
 
 bool CloudundancyFileSystem::FileSizeIsGreaterThanOrEqualTo2GB(const fs::path& filePath) const

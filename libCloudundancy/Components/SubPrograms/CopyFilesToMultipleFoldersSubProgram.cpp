@@ -16,7 +16,6 @@ int CopyFileToFilesToMultipleFoldersSubProgram::Run()
 {
    _cloudundancyFileCopier->CopyFilteredFilesAndFoldersToDestinationFolders(
       p_args.iniInputFilePath, p_args.deleteDestinationFoldersFirst);
-
    p_console->WriteLineColor(
       "\n[Cloudundancy] OverallBackupResult: Successfully copied all [SourceFilesAndFolders] to all [DestinationFolders]",
       Utils::Color::Green);

@@ -3,17 +3,16 @@
 namespace Utils
 {
    template<typename ClassType, typename ElementType>
-   class MemberFunctionForEacher
+   class OneArgMemberFunctionForEacher
    {
    public:
-      virtual ~MemberFunctionForEacher() = default;
+      virtual ~OneArgMemberFunctionForEacher() = default;
 
       using ConstMemberFunctionType = void(ClassType::*)(const ElementType&) const;
 
       virtual void CallConstMemberFunctionWithEachElement(
          const std::vector<ElementType>& elements,
-         ConstMemberFunctionType constMemberFunction,
-         const ClassType* constClassPointer) const
+         const ClassType* constClassPointer, ConstMemberFunctionType constMemberFunction) const
       {
          for (const ElementType& element : elements)
          {

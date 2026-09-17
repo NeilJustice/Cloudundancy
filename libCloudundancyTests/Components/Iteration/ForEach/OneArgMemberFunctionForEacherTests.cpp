@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "libCloudundancy/Components/Iteration/ForEach/MemberFunctionForEacher.h"
+#include "libCloudundancy/Components/Iteration/ForEach/OneArgMemberFunctionForEacher.h"
 
 template<typename ElementType>
-TEMPLATE_TESTS(MemberFunctionForEacherTests, ElementType)
+TEMPLATE_TESTS(OneArgMemberFunctionForEacherTests, ElementType)
 AFACT(CallConstMemberFunctionWithEachElement_EmptyElementsVector_DoesNotCallMemberFunction)
 AFACT(CallConstMemberFunctionWithEachElement_TwoElementsVector_CallsMemberFunctionForEachEachElement)
 AFACT(CodeCoverage_ClassType_ConstMemberFunctionFunction)
@@ -22,13 +22,14 @@ public:
    METALMOCK_VOID1_CONST(ConstMemberFunctionFunction, const ElementType&)
 };
 
-Utils::MemberFunctionForEacher<ClassType, ElementType> _memberFunctionForEacher;
+Utils::OneArgMemberFunctionForEacher<ClassType, ElementType> _oneArgMemberFunctionForEacher;
 
 TEST(CallConstMemberFunctionWithEachElement_EmptyElementsVector_DoesNotCallMemberFunction)
 {
    const ClassTypeMock classInstance{};
-   _memberFunctionForEacher.CallConstMemberFunctionWithEachElement(
-      classInstance.elements, &ClassType::ConstMemberFunctionFunction, &classInstance);
+   _oneArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(
+      classInstance.elements,
+      &classInstance, &ClassType::ConstMemberFunctionFunction);
 }
 
 TEST(CallConstMemberFunctionWithEachElement_TwoElementsVector_CallsMemberFunctionForEachEachElement)
@@ -39,8 +40,9 @@ TEST(CallConstMemberFunctionWithEachElement_TwoElementsVector_CallsMemberFunctio
    classInstance.elements = { element1, element2 };
    classInstance.ConstMemberFunctionFunctionMock.Expect();
    //
-   _memberFunctionForEacher.CallConstMemberFunctionWithEachElement(
-      classInstance.elements, &ClassType::ConstMemberFunctionFunction, &classInstance);
+   _oneArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(
+      classInstance.elements,
+      &classInstance, &ClassType::ConstMemberFunctionFunction);
    //
    METALMOCK(classInstance.ConstMemberFunctionFunctionMock.CalledNTimes(2));
    METALMOCKTHEN(classInstance.ConstMemberFunctionFunctionMock.CalledWith(element1)).Then(
@@ -53,5 +55,5 @@ TEST(CodeCoverage_ClassType_ConstMemberFunctionFunction)
    classType.ConstMemberFunctionFunction(ElementType{});
 }
 
-RUN_TEMPLATE_TESTS(MemberFunctionForEacherTests, int)
-THEN_RUN_TEMPLATE_TESTS(MemberFunctionForEacherTests, string)
+RUN_TEMPLATE_TESTS(OneArgMemberFunctionForEacherTests, int)
+THEN_RUN_TEMPLATE_TESTS(OneArgMemberFunctionForEacherTests, string)

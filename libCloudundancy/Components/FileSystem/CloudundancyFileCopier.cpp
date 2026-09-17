@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "libCloudundancy/Components/FileSystem/CloudundancyFileCopier.h"
 #include "libCloudundancy/Components/FileSystem/CloudundancyFileSystem.h"
-#include "libCloudundancy/Components/FileSystem/CloudundancyLogFileWriter.h"
 #include "libCloudundancy/Components/IniFile/CloudundancyIniFileReader.h"
 
 CloudundancyFileCopier::CloudundancyFileCopier() noexcept
@@ -19,7 +18,6 @@ CloudundancyFileCopier::CloudundancyFileCopier() noexcept
    // Constant Components
    , _cloudundancyFileSystem(make_unique<CloudundancyFileSystem>())
    , _cloudundancyIniFileReader(make_unique<CloudundancyIniFileReader>())
-   , _cloudundancyLogFileWriter(make_unique<CloudundancyLogFileWriter>())
    , _console(make_unique<Utils::Console>())
    , _fileSystem(make_unique<Utils::FileSystem>())
    , _tryCatchCaller(make_unique<Utils::TryCatchCaller<CloudundancyFileCopier, const pair<fs::path, CloudundancyIni>&>>())
@@ -40,7 +38,7 @@ void CloudundancyFileCopier::CopyFilteredFilesAndFoldersToDestinationFolders(
    if (deleteDestinationFoldersFirst)
    {
       _console->WriteLine("[Cloudundancy] Deleting [DestinationFolders] first because --delete-destination-folders-first is specified");
-      _cloudundancyFileSystem->DeleteMultipleFolderContentsExceptForFile(cloudundancyIni.destinationFolderPaths, "Cloudundancy.log");
+      _cloudundancyFileSystem->DeleteMultipleFolders(cloudundancyIni.destinationFolderPaths);
    }
    const string copyingMessage = Utils::String::ConcatStrings(
       "[Cloudundancy] Copying [SourceFilesAndFolders] to [DestinationFolders] as listed in ", sevenZipModeIniInputFilePath.string(), ":\n");
@@ -75,7 +73,6 @@ void CloudundancyFileCopier::DoCopyFilteredFilesAndFoldersToDestinationFolder(
    const string copyingMessage = Utils::String::ConcatStrings(
       "\n[Cloudundancy] Copying [SourceFilesAndFolders] to destination folder ", destinationFolderPath.string(), ":\n");
    _console->WriteLineColor(copyingMessage, Utils::Color::Teal);
-   _cloudundancyLogFileWriter->AppendTextToCloudundancyLogFileInFolder(destinationFolderPath, "Cloudundancy backup started");
    _stopwatch->Start();
 
    _forEacher_CopyFileOrFolderToFolder->CallConstMemberFunctionWithEachElement(
@@ -87,12 +84,13 @@ void CloudundancyFileCopier::DoCopyFilteredFilesAndFoldersToDestinationFolder(
       "[Cloudundancy]   FolderBackupResult: Successfully copied [SourceFilesAndFolders] to ", destinationFolderPath.string());
    _console->WriteLineColor(folderBackupResultSuccessMessage, Utils::Color::Green);
 
-   const string folderBackupDurationMessage = Utils::String::ConcatStrings("[Cloudundancy] FolderBackupDuration: ", elapsedSeconds, " seconds");
+   const string folderBackupDurationMessage = Utils::String::ConcatStrings(
+      "[Cloudundancy] FolderBackupDuration: ", elapsedSeconds, " seconds");
    _console->WriteLine(folderBackupDurationMessage);
 
-   const string cloudundancyBackupSuccessfulMessage = Utils::String::ConcatStrings("Cloudundancy backup successful in ", elapsedSeconds, " seconds");
-   _cloudundancyLogFileWriter->AppendTextToCloudundancyLogFileInFolder(
-      destinationFolderPath, cloudundancyBackupSuccessfulMessage);
+   const string cloudundancyBackupSuccessfulMessage = Utils::String::ConcatStrings(
+      "Cloudundancy backup successful in ", elapsedSeconds, " seconds");
+   _console->WriteLine(cloudundancyBackupSuccessfulMessage);
 }
 
 [[noreturn]] void CloudundancyFileCopier::ExceptionHandlerForDoCopyFilteredFilesAndFoldersToDestinationFolder(
@@ -100,10 +98,10 @@ void CloudundancyFileCopier::DoCopyFilteredFilesAndFoldersToDestinationFolder(
 {
    const fs::path& destinationFolderPath = destinationFolderPath_cloudundancyIni.first;
    const string exceptionClassNameAndMessage = _call_Type_GetExceptionClassNameAndMessage(&ex);
-   const string errorMessage = Utils::String::ConcatStrings(
-      "Exception thrown while copying files to destination folder ", destinationFolderPath.string(), ": ", exceptionClassNameAndMessage);
-   _cloudundancyLogFileWriter->AppendTextToCloudundancyLogFileInFolder(destinationFolderPath, errorMessage);
-   throw runtime_error(exceptionClassNameAndMessage);
+   const string fullExceptionMessage = Utils::String::ConcatStrings(
+      "Exception thrown while copying files to destination folder ",
+      destinationFolderPath.string(), ": ", exceptionClassNameAndMessage);
+   throw runtime_error(fullExceptionMessage);
 }
 
 void CloudundancyFileCopier::CopyFileOrFolderToFolder(
@@ -115,12 +113,14 @@ void CloudundancyFileCopier::CopyFileOrFolderToFolder(
    if (sourcePathIsAFile)
    {
       _caller_CopyFileToFileFunctions->CallConstMemberFunction(
-         this, &CloudundancyFileCopier::CopyFileToFolder, cloudundancyIniCopyInstruction, destinationFolderPath);
+         this, &CloudundancyFileCopier::CopyFileToFolder,
+         cloudundancyIniCopyInstruction, destinationFolderPath);
    }
    else
    {
       _caller_CopyFileToFileFunctions->CallConstMemberFunction(
-         this, &CloudundancyFileCopier::CopyNonIgnoredFilesInAndBelowFolderToFolder, cloudundancyIniCopyInstruction, destinationFolderPath);
+         this, &CloudundancyFileCopier::CopyNonIgnoredFilesInAndBelowFolderToFolder,
+         cloudundancyIniCopyInstruction, destinationFolderPath);
    }
 }
 
@@ -205,7 +205,7 @@ void CloudundancyFileCopier::CopyFileToFolder(
 }
 
 void CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed(
-   const Utils::FileCopyResult& fileCopyResult, const fs::path& destinationFolderPath) const
+   const Utils::FileCopyResult& fileCopyResult, const fs::path& /*destinationFolderPath*/) const
 {
    const string durationInMilliseconds = to_string(fileCopyResult.durationInMilliseconds);
    if (fileCopyResult.copySucceeded)
@@ -214,17 +214,11 @@ void CloudundancyFileCopier::WriteCopiedMessageOrExitWithCode1IfCopyFailed(
    }
    else
    {
-      const string copyFailedLogFileMessage = Utils::String::ConcatStrings("File copy failed: ",
-         fileCopyResult.sourceFilePath.string(), " -> ", fileCopyResult.destinationFilePath.string(),
-         ". Reason: ", fileCopyResult.copyFailureReason);
-      _cloudundancyLogFileWriter->AppendTextToCloudundancyLogFileInFolder(destinationFolderPath, copyFailedLogFileMessage);
-
-      const string copyFailedConsoleMessage = Utils::String::ConcatStrings(
-         "Copy failed: ", fileCopyResult.copyFailureReason, "\n",
-         "\n",
+      const string message = Utils::String::ConcatStrings(
+         "File copy failed: ", fileCopyResult.sourceFilePath.string(), " -> ", fileCopyResult.destinationFilePath.string(), "\n",
+         "          Reason: ", fileCopyResult.copyFailureReason, "\n",
          "[Cloudundancy] ExitCode: 1");
-      _console->WriteLineColor(copyFailedConsoleMessage, Utils::Color::Red);
-
+      _console->WriteLineColor(message, Utils::Color::Red);
       _call_exit(1);
    }
 }
