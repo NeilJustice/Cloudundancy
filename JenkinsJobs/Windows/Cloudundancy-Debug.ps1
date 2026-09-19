@@ -1,5 +1,5 @@
 WindowsCPlusPlusBuilder.exe build-cpp-solution `
-   --solution-name=Cloudundancy `
+   --solution=Cloudundancy `
    --configuration=Debug `
    --cmake-definitions="" `
    --install=false
