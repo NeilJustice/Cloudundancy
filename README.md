@@ -23,7 +23,7 @@ On Linux, a Bash script can be written to run a Google Drive CLI upload command 
    * [copy-files-to-multiple-folders](#copy-files-to-multiple-folders)
    * [7zip-files-then-copy-the-7zip-file-to-multiple-folders](#7zip-files-then-copy-the-7zip-file-to-multiple-folders)
 * [Steps to build binary cloudundancy on Linux with Clang](#steps-to-build-binary-cloudundancy-on-linux-with-clang)
-* [Steps to build executable Cloudundancy.exe on Windows with Visual Studio 2026](#steps-to-build-executable-cloudundancyexe-on-windows-with-visual-studio-2026)
+* [Steps to build Cloudundancy.exe on Windows with Visual Studio 2026](#steps-to-build-cloudundancyexe-on-windows-with-visual-studio-2026)
 * [Thanks to](#thanks-to)
 
 ## Cloudundancy command line usage
@@ -190,7 +190,7 @@ CXX=clang++ cmake .. -DCMAKE_BUILD_TYPE=Release
 sudo cmake --build . --target install
 ```
 
-## Steps to build executable Cloudundancy.exe on Windows with Visual Studio 2026
+## Steps to build Cloudundancy.exe on Windows with Visual Studio 2026
 
 ```powershell
 git clone https://github.com/NeilJustice/Cloudundancy
@@ -200,5 +200,9 @@ cmake --build . --config Release --target install
 ```
 
 ## Thanks to
+
+<a href="https://github.com/docopt/docopt.cpp">docopt.cpp</a>
+
+<a href="https://github.com/hanickadot/compile-time-regular-expressions">compile-time-regular-expressions</a>
 
 <a href="https://brandmark.io">brandmark.io</a> for Cloudundancy's logo
