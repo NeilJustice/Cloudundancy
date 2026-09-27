@@ -10,7 +10,7 @@ Write-Host
 FileArb.exe create-binary-files `
    --target="$performanceTestingInputFilesFolderPath" `
    --directories="32" `
-   --files="200" `
+   --files="300" `
    --bytes="1M" `
    --parallel `
    --quiet
