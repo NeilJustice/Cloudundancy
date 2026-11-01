@@ -26,8 +26,8 @@ jobs:
 
       - name: Download ZenUnit.h and MetalMock.h
         run: |
-          sudo mkdir "/usr/local/include/ZenUnitAndMetalMock/ZenUnitAndMetalMock"
-          sudo chown -R $(whoami):$(id -g) "/usr/local/include/ZenUnitAndMetalMock"
+          sudo mkdir -p /usr/local/include/ZenUnitAndMetalMock/ZenUnitAndMetalMock
+          sudo chown -R $(whoami):$(id -g) /usr/local/include/ZenUnitAndMetalMock
           curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "/usr/local/include/ZenUnitAndMetalMock/ZenUnitAndMetalMock/ZenUnit.h"
           curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/MetalMock.h --create-dirs -o "/usr/local/include/ZenUnitAndMetalMock/ZenUnitAndMetalMock/MetalMock.h"
         
