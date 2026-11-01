@@ -26,6 +26,7 @@ jobs:
 
       - name: Download ZenUnit.h and MetalMock.h
         run: |
+          mkdir "/usr/local/include/ZenUnitAndMetalMock"
           curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "/usr/local/include/ZenUnitAndMetalMock/ZenUnit.h"
           curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/MetalMock.h --create-dirs -o "/usr/local/include/ZenUnitAndMetalMock/MetalMock.h"
         
