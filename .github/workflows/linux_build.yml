@@ -26,9 +26,8 @@ jobs:
 
       - name: Download ZenUnit.h and MetalMock.h
         run: |
-          sudo mkdir "/usr/local/include/ZenUnitAndMetalMock"
-          curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "/usr/local/include/ZenUnitAndMetalMock/ZenUnit.h"
-          curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/MetalMock.h --create-dirs -o "/usr/local/include/ZenUnitAndMetalMock/MetalMock.h"
+          sudo curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "/usr/local/include/ZenUnitAndMetalMock/ZenUnit.h"
+          sudo curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/MetalMock.h --create-dirs -o "/usr/local/include/ZenUnitAndMetalMock/MetalMock.h"
         
       - name: Install lld, ninja-build, and libtbb-dev
         run: sudo apt-get install lld ninja-build libtbb-dev
