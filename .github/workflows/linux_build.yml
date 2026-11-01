@@ -39,6 +39,9 @@ jobs:
       - name: Prebuild tree $GITHUB_WORKSPACE
         run: tree $GITHUB_WORKSPACE
         
+      - name: tree /usr/local/include
+        run: tree /usr/local/include
+        
       - name: Build with LinuxCPlusPlusBuilder in non-code-coverage mode if Clang Debug, Clang RelWithDebInfo, or GCC Debug
         run: |
           LinuxCPlusPlusBuilder/LinuxCPlusPlusBuilder build-cpp-solution \
