@@ -24,6 +24,7 @@ namespace Utils
       virtual void InitializeIteratorAtFolderPath(const fs::path& folderPath);
       virtual fs::path NextNonIgnoredFilePath();
    private:
-      static bool FilePathContainsAnySubstring(const fs::path& filePath, const vector<string>& filePathIgnoreSubstrings);
+      static bool FilePathContainsAnySubstring(
+         const fs::path& filePath, const vector<string>& filePathIgnoreSubstrings);
    };
 }

@@ -51,7 +51,8 @@ namespace Utils
 
    // Private Functions
 
-   bool RecursiveDirectoryIterator::FilePathContainsAnySubstring(const fs::path& filePath, const vector<string>& filePathIgnoreSubstrings)
+   bool RecursiveDirectoryIterator::FilePathContainsAnySubstring(
+      const fs::path& filePath, const vector<string>& filePathIgnoreSubstrings)
    {
       if (filePathIgnoreSubstrings.empty())
       {

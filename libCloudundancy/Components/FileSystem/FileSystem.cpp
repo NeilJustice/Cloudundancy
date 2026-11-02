@@ -1,16 +1,17 @@
 #include "pch.h"
-#include "libCloudundancy/Exceptions/FileSystemExceptions.h"
 #include "libCloudundancy/Components/Asserters/Asserter.h"
 #include "libCloudundancy/Components/ErrorHandling/ErrorCodeTranslator.h"
 #include "libCloudundancy/Components/FileSystem/FCloseDeleter.h"
 #include "libCloudundancy/Components/FileSystem/FileSystem.h"
 #include "libCloudundancy/Components/FileSystem/PassthroughFileSystem.h"
+#include "libCloudundancy/Components/FileSystem/RawCFileAPI.h"
 #include "libCloudundancy/Components/FunctionCallers/Member/NonVoidOneArgMemberFunctionCaller.h"
 #include "libCloudundancy/Components/FunctionCallers/Member/NonVoidTwoArgMemberFunctionCaller.h"
 #include "libCloudundancy/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
 #include "libCloudundancy/Components/Memory/CharVectorAllocator.h"
 #include "libCloudundancy/Components/Time/Stopwatch.h"
 #include "libCloudundancy/Components/Time/StopwatchFactory.h"
+#include "libCloudundancy/Exceptions/FileSystemExceptions.h"
 
 namespace Utils
 {
@@ -22,11 +23,6 @@ namespace Utils
       , _call_fseek(fseek)
       , _call_ftell(ftell)
       , _call_fwrite(fwrite)
-#if defined __linux__
-      , _call_fopen(::fopen)
-#elif defined _WIN32
-      , _call_wfsopen(_wfsopen)
-#endif
       // std::filesystem Function Pointers
       , _call_fs_copy_file(static_cast<fs_copy_file_FunctionOverloadType>(fs::copy_file))
       , _call_fs_create_directories(static_cast<fs_create_directories_FunctionOverloadType>(fs::create_directories))
@@ -38,16 +34,13 @@ namespace Utils
       , _caller_ReadFileSize(make_unique<_caller_ReadFileSizeType>())
       , _caller_ReadFileText(make_unique<_caller_ReadFileTextType>())
       , _caller_WriteTextToOpenFile(make_unique<_caller_WriteTextToOpenFileType>())
-#if defined __linux__
-      , _caller_CreateOrOpenFileOnLinux(make_unique<_caller_CreateOrOpenFileOnLinuxType>())
-#elif defined _WIN32
-      , _caller_CreateOrOpenFileOnWindows(make_unique<_caller_CreateOrOpenFileOnWindowsType>())
-#endif
+      , _caller_CreateOrOpenFile(make_unique<_caller_CreateOrOpenFileType>())
       // Constant Components
       , _asserter(make_unique<Asserter>())
       , _charVectorAllocator(make_unique<CharVectorAllocator>())
       , _errorCodeTranslator(make_unique<ErrorCodeTranslator>())
       , _passthroughFileSystem(make_unique<PassthroughFileSystem>())
+      , _rawCFileAPI(make_unique<RawCFileAPI>())
       , _stopwatchFactory(make_unique<StopwatchFactory>())
    {
    }
@@ -60,24 +53,24 @@ namespace Utils
 
    shared_ptr<FILE> FileSystem::CreateFileInBinaryWriteMode(const fs::path& filePath) const
    {
-#if defined __linux__
-      shared_ptr<FILE> binaryWriteModeFilePointer =
-         _caller_CreateOrOpenFileOnLinux->CallConstMemberFunction(this, &FileSystem::CreateOrOpenFileOnLinux, filePath, "wb");
-#elif defined _WIN32
-      shared_ptr<FILE> binaryWriteModeFilePointer =
-         _caller_CreateOrOpenFileOnWindows->CallConstMemberFunction(this, &FileSystem::CreateOrOpenFileOnWindows, filePath, L"wb");
+#ifdef __linux__
+      shared_ptr<FILE> binaryWriteModeFilePointer = _caller_CreateOrOpenFile->CallConstMemberFunction(
+         this, &FileSystem::CreateOrOpenFileOnLinux, filePath, "wb");
+#elif _WIN32
+      shared_ptr<FILE> binaryWriteModeFilePointer = _caller_CreateOrOpenFile->CallConstMemberFunction(
+         this, &FileSystem::CreateOrOpenFileOnWindows, filePath, "wb");
 #endif
       return binaryWriteModeFilePointer;
    }
 
    shared_ptr<FILE> FileSystem::CreateOrOpenFileInBinaryAppendMode(const fs::path& filePath) const
    {
-#if defined __linux__
-      shared_ptr<FILE> binaryAppendModeFilePointer =
-         _caller_CreateOrOpenFileOnLinux->CallConstMemberFunction(this, &FileSystem::CreateOrOpenFileOnLinux, filePath, "ab");
-#elif defined _WIN32
-      shared_ptr<FILE> binaryAppendModeFilePointer =
-         _caller_CreateOrOpenFileOnWindows->CallConstMemberFunction(this, &FileSystem::CreateOrOpenFileOnWindows, filePath, L"ab");
+#ifdef __linux__
+      shared_ptr<FILE> binaryAppendModeFilePointer = _caller_CreateOrOpenFile->CallConstMemberFunction(
+         this, &FileSystem::CreateOrOpenFileOnLinux, filePath, "ab");
+#elif _WIN32
+      shared_ptr<FILE> binaryAppendModeFilePointer = _caller_CreateOrOpenFile->CallConstMemberFunction(
+         this, &FileSystem::CreateOrOpenFileOnWindows, filePath, "ab");
 #endif
       return binaryAppendModeFilePointer;
    }
@@ -89,25 +82,25 @@ namespace Utils
 
    shared_ptr<FILE> FileSystem::OpenFileInBinaryReadMode(const fs::path& filePath) const
    {
-#if defined __linux__
-      shared_ptr<FILE> binaryReadModeFilePointer =
-         _caller_CreateOrOpenFileOnLinux->CallConstMemberFunction(this, &FileSystem::CreateOrOpenFileOnLinux, filePath, "rb");
-#elif defined _WIN32
-      shared_ptr<FILE> binaryReadModeFilePointer =
-         _caller_CreateOrOpenFileOnWindows->CallConstMemberFunction(this, &FileSystem::CreateOrOpenFileOnWindows, filePath, L"rb");
+#ifdef __linux__
+      shared_ptr<FILE> binaryReadModeFilePointer = _caller_CreateOrOpenFile->CallConstMemberFunction(
+         this, &FileSystem::CreateOrOpenFileOnLinux, filePath, "rb");
+#elif _WIN32
+      shared_ptr<FILE> binaryReadModeFilePointer = _caller_CreateOrOpenFile->CallConstMemberFunction(
+         this, &FileSystem::CreateOrOpenFileOnWindows, filePath, "rb");
 #endif
       return binaryReadModeFilePointer;
    }
 
    shared_ptr<FILE> FileSystem::OpenFileInTextReadMode(const fs::path& filePath) const
    {
-   #if defined __linux__
-      shared_ptr<FILE> textReadModeFilePointer =
-         _caller_CreateOrOpenFileOnLinux->CallConstMemberFunction(this, &FileSystem::CreateOrOpenFileOnLinux, filePath, "r");
-   #elif defined _WIN32
-      shared_ptr<FILE> textReadModeFilePointer =
-         _caller_CreateOrOpenFileOnWindows->CallConstMemberFunction(this, &FileSystem::CreateOrOpenFileOnWindows, filePath, L"r");
-   #endif
+#ifdef __linux__
+      shared_ptr<FILE> textReadModeFilePointer = _caller_CreateOrOpenFile->CallConstMemberFunction(
+         this, &FileSystem::CreateOrOpenFileOnLinux, filePath, "r");
+#elif _WIN32
+      shared_ptr<FILE> textReadModeFilePointer = _caller_CreateOrOpenFile->CallConstMemberFunction(
+         this, &FileSystem::CreateOrOpenFileOnWindows, filePath, "r");
+#endif
       return textReadModeFilePointer;
    }
 
@@ -115,8 +108,8 @@ namespace Utils
 
    void FileSystem::AppendTextToClosedFile(const fs::path& filePath, string_view text) const
    {
-      const shared_ptr<FILE> appendModeBinaryFilePointer =
-         _caller_CreateOrOpenFileFunction->CallConstMemberFunction(this, &FileSystem::CreateOrOpenFileInBinaryAppendMode, filePath);
+      const shared_ptr<FILE> appendModeBinaryFilePointer = _caller_CreateOrOpenFileFunction->CallConstMemberFunction(
+         this, &FileSystem::CreateOrOpenFileInBinaryAppendMode, filePath);
       const size_t textSize = text.size();
       const size_t numberOfBytesAppended = _call_fwrite(text.data(), 1, textSize, appendModeBinaryFilePointer.get());
       _asserter->ThrowIfSizeTsNotEqual(textSize, numberOfBytesAppended,
@@ -126,7 +119,7 @@ namespace Utils
    void FileSystem::CloseFile(const shared_ptr<FILE>& filePointer, const fs::path& filePath) const
    {
       const int fcloseReturnValue = _call_fclose(filePointer.get());
-      if (fcloseReturnValue != 0)
+      [[unlikely]] if (fcloseReturnValue != 0)
       {
          const pair<int, string> errnoWithDescription = _errorCodeTranslator->GetErrnoWithDescription();
          const string exceptionMessage = Utils::String::ConcatValues(
@@ -198,7 +191,7 @@ namespace Utils
       const shared_ptr<FILE> binaryReadModeFilePointer =
          _caller_CreateOrOpenFileFunction->CallConstMemberFunction(this, &FileSystem::OpenFileInBinaryReadMode, filePath);
       const size_t fileSize = _caller_ReadFileSize->CallConstMemberFunction(this, &FileSystem::ReadFileSize, binaryReadModeFilePointer);
-      if (fileSize == 0)
+      [[unlikely]] if (fileSize == 0)
       {
          shared_ptr<const vector<char>> emptyFileBytes = make_shared<vector<char>>(vector<char>{});
          return emptyFileBytes;
@@ -212,8 +205,8 @@ namespace Utils
 
    vector<string> FileSystem::ReadFileLinesWhichMustBeNonEmpty(const fs::path& filePath) const
    {
-      string fileText = _caller_ReadFileText->CallConstMemberFunction(this, &FileSystem::ReadFileText, filePath);
-      if (fileText.empty())
+      const string fileText = _caller_ReadFileText->CallConstMemberFunction(this, &FileSystem::ReadFileText, filePath);
+      [[unlikely]] if (fileText.empty())
       {
          throw FileMalformedException(filePath, "File cannot be empty");
       }
@@ -258,7 +251,7 @@ namespace Utils
       if (!filePath.empty())
       {
          const bool filePathExists = _call_fs_exists(filePath);
-         if (!filePathExists)
+         [[unlikely]] if (!filePathExists)
          {
             throw FileNotFoundException(filePath);
          }
@@ -290,8 +283,8 @@ namespace Utils
    {
       const fs::path parentDirectoryPath = filePath.parent_path();
       _call_fs_create_directories(parentDirectoryPath);
-      FILE* const rawFilePointer = _call_fopen(filePath.c_str(), fileOpenMode);
-      if (rawFilePointer == nullptr)
+      FILE* const rawFilePointer = _rawCFileAPI->fopen(filePath.c_str(), fileOpenMode);
+      [[unlikely]] if (rawFilePointer == nullptr)
       {
          const pair<int, string> errnoWithDescription = _errorCodeTranslator->GetErrnoWithDescription();
          const string exceptionMessage = Utils::String::ConcatValues(
@@ -305,12 +298,12 @@ namespace Utils
 
 #elif defined _WIN32
 
-   shared_ptr<FILE> FileSystem::CreateOrOpenFileOnWindows(const fs::path& filePath, const wchar_t* fileOpenMode) const
+   shared_ptr<FILE> FileSystem::CreateOrOpenFileOnWindows(const fs::path& filePath, const char* fileOpenMode) const
    {
       const fs::path parentDirectoryPath = filePath.parent_path();
       _call_fs_create_directories(parentDirectoryPath);
-      FILE* const rawFilePointer = _call_wfsopen(filePath.c_str(), fileOpenMode, _SH_DENYWR);
-      if (rawFilePointer == nullptr)
+      FILE* const rawFilePointer = _rawCFileAPI->wfsopen(filePath.c_str(), fileOpenMode, _SH_DENYWR);
+      [[unlikely]] if (rawFilePointer == nullptr)
       {
          const pair<int, string> errnoWithDescription = _errorCodeTranslator->GetErrnoWithDescription();
          const string exceptionMessage = Utils::String::ConcatValues(

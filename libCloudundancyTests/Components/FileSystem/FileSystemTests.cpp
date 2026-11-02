@@ -3,6 +3,7 @@
 #include "libCloudundancyTests/Components/Asserters/MetalMock/AsserterMock.h"
 #include "libCloudundancyTests/Components/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
 #include "libCloudundancyTests/Components/FileSystem/MetalMock/PassthroughFileSystemMock.h"
+#include "libCloudundancyTests/Components/FileSystem/MetalMock/RawCFileAPIMock.h"
 #include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
 #include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
 #include "libCloudundancyTests/Components/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
@@ -65,11 +66,6 @@ METALMOCK_NONVOID1_STATIC_OR_FREE(int, _call_fflush, FILE*)
 METALMOCK_NONVOID4_STATIC_OR_FREE(size_t, _call_fread, void*, size_t, size_t, FILE*)
 METALMOCK_NONVOID3_STATIC_OR_FREE(int, _call_fseek, FILE*, long, int)
 METALMOCK_NONVOID1_STATIC_OR_FREE(long, _call_ftell, FILE*)
-#if defined __linux__
-METALMOCK_NONVOID2_STATIC_OR_FREE(FILE*, _call_fopen, const char*, const char*)
-#elif defined _WIN32
-METALMOCK_NONVOID3_STATIC_OR_FREE(FILE*, _call_wfsopen, const wchar_t*, const wchar_t*, int)
-#endif
 METALMOCK_NONVOID4_STATIC_OR_FREE(size_t, _call_fwrite, const void*, size_t, size_t, FILE*)
 // std::filesystem Function Pointers
 METALMOCK_NONVOID3_STATIC_OR_FREE(bool, _call_fs_copy_file, const fs::path&, const fs::path&, fs::copy_options)
@@ -93,19 +89,19 @@ _caller_ReadFileTextMockType* _caller_ReadFileTextMock = nullptr;
 using _caller_WriteTextToOpenFileMockType = Utils::VoidTwoArgMemberFunctionCallerMock<Utils::FileSystem, const shared_ptr<FILE>&, string_view>;
 _caller_WriteTextToOpenFileMockType* _caller_WriteTextToOpenFileMock = nullptr;
 
-#if defined __linux__
-using _caller_CreateOrOpenFileOnLinuxMockType = Utils::NonVoidTwoArgMemberFunctionCallerMock<shared_ptr<FILE>, Utils::FileSystem, const fs::path&, const char*>;
-_caller_CreateOrOpenFileOnLinuxMockType* _caller_CreateOrOpenFileOnLinuxMock = nullptr;
-#elif defined _WIN32
-using _caller_CreateOrOpenFileOnWindowsMockType = Utils::NonVoidTwoArgMemberFunctionCallerMock<shared_ptr<FILE>, Utils::FileSystem, const fs::path&, const wchar_t*>;
-_caller_CreateOrOpenFileOnWindowsMockType* _caller_CreateOrOpenFileOnWindowsMock = nullptr;
-#endif
+using _caller_CreateOrOpenFileMockType = Utils::NonVoidTwoArgMemberFunctionCallerMock<
+   shared_ptr<FILE>,
+   Utils::FileSystem,
+   const fs::path&,
+   const char*>;
+_caller_CreateOrOpenFileMockType* _caller_CreateOrOpenFileMock = nullptr;
 
 // Constant Components
 Utils::AsserterMock* _asserterMock = nullptr;
 Utils::CharVectorAllocatorMock* _charVectorAllocatorMock = nullptr;
 Utils::ErrorCodeTranslatorMock* _errorCodeTranslatorMock = nullptr;
 PassthroughFileSystemMock* _passthroughFileSystemMock = nullptr;
+Utils::RawCFileAPIMock* _rawCFileAPIMock = nullptr;
 Utils::StopwatchFactoryMock* _stopwatchFactoryMock = nullptr;
 
 STARTUP
@@ -117,11 +113,6 @@ STARTUP
    _fileSystem._call_fseek = BIND_3ARG_METALMOCK_OBJECT(_call_fseekMock);
    _fileSystem._call_ftell = BIND_1ARG_METALMOCK_OBJECT(_call_ftellMock);
    _fileSystem._call_fwrite = BIND_4ARG_METALMOCK_OBJECT(_call_fwriteMock);
-#if defined __linux__
-   _fileSystem._call_fopen = BIND_2ARG_METALMOCK_OBJECT(_call_fopenMock);
-#elif defined _WIN32
-   _fileSystem._call_wfsopen = BIND_3ARG_METALMOCK_OBJECT(_call_wfsopenMock);
-#endif
    // std::filesystem Function Pointers
    _fileSystem._call_fs_copy_file = BIND_3ARG_METALMOCK_OBJECT(_call_fs_copy_fileMock);
    _fileSystem._call_fs_create_directories = BIND_1ARG_METALMOCK_OBJECT(_call_fs_create_directoriesMock);
@@ -132,17 +123,14 @@ STARTUP
    _fileSystem._caller_ReadFileBytes.reset(_caller_ReadFileBytesMock = new _caller_ReadFileBytesMockType);
    _fileSystem._caller_ReadFileSize.reset(_caller_ReadFileSizeMock = new _caller_ReadFileSizeMockType);
    _fileSystem._caller_ReadFileText.reset(_caller_ReadFileTextMock = new _caller_ReadFileTextMockType);
-#if defined __linux__
-   _fileSystem._caller_CreateOrOpenFileOnLinux.reset(_caller_CreateOrOpenFileOnLinuxMock = new _caller_CreateOrOpenFileOnLinuxMockType);
-#elif defined _WIN32
-   _fileSystem._caller_CreateOrOpenFileOnWindows.reset(_caller_CreateOrOpenFileOnWindowsMock = new _caller_CreateOrOpenFileOnWindowsMockType);
-#endif
+   _fileSystem._caller_CreateOrOpenFile.reset(_caller_CreateOrOpenFileMock = new _caller_CreateOrOpenFileMockType);
    _fileSystem._caller_WriteTextToOpenFile.reset(_caller_WriteTextToOpenFileMock = new _caller_WriteTextToOpenFileMockType);
    // Constant Components
    _fileSystem._asserter.reset(_asserterMock = new Utils::AsserterMock);
    _fileSystem._charVectorAllocator.reset(_charVectorAllocatorMock = new Utils::CharVectorAllocatorMock);
    _fileSystem._errorCodeTranslator.reset(_errorCodeTranslatorMock = new Utils::ErrorCodeTranslatorMock);
    _fileSystem._passthroughFileSystem.reset(_passthroughFileSystemMock = new PassthroughFileSystemMock);
+   _fileSystem._rawCFileAPI.reset(_rawCFileAPIMock = new Utils::RawCFileAPIMock);
    _fileSystem._stopwatchFactory.reset(_stopwatchFactoryMock = new Utils::StopwatchFactoryMock);
 }
 
@@ -156,11 +144,6 @@ TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
    STD_FUNCTION_TARGETS(fseek, fileSystem._call_fseek);
    STD_FUNCTION_TARGETS(ftell, fileSystem._call_ftell);
    STD_FUNCTION_TARGETS(fwrite, fileSystem._call_fwrite);
-#if defined __linux__
-   STD_FUNCTION_TARGETS(fopen, fileSystem._call_fopen);
-#elif defined _WIN32
-   STD_FUNCTION_TARGETS(_wfsopen, fileSystem._call_wfsopen);
-#endif
    // std::filesystem Function Pointers
 #if defined _WIN32
    STD_FUNCTION_TARGETS_OVERLOAD(Utils::FileSystem::fs_copy_file_FunctionOverloadType, fs::copy_file, fileSystem._call_fs_copy_file);
@@ -173,11 +156,7 @@ TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
    DELETE_TO_ASSERT_NEWED(fileSystem._caller_ReadFileBytes);
    DELETE_TO_ASSERT_NEWED(fileSystem._caller_ReadFileSize);
    DELETE_TO_ASSERT_NEWED(fileSystem._caller_WriteTextToOpenFile);
-#if defined __linux__
-   DELETE_TO_ASSERT_NEWED(fileSystem._caller_CreateOrOpenFileOnLinux);
-#elif defined _WIN32
-   DELETE_TO_ASSERT_NEWED(fileSystem._caller_CreateOrOpenFileOnWindows);
-#endif
+   DELETE_TO_ASSERT_NEWED(fileSystem._caller_CreateOrOpenFile);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(fileSystem._asserter);
    DELETE_TO_ASSERT_NEWED(fileSystem._charVectorAllocator);
@@ -216,34 +195,6 @@ TEST(Linux__CreateOrOpenFileInBinaryAppendMode_ReturnsSharedFilePointerCreatedWi
    ARE_EQUAL(binaryAppendModeFilePointer, returnedFilePointer);
 }
 
-struct fopen_CallHistory
-{
-   size_t numberOfCalls = 0;
-   FILE* returnValue = nullptr;
-   fs::path filePathArgument;
-   const char* fileOpenModeArgument = nullptr;
-
-   void RecordFunctionCall(const char* filePath, const char* fileOpenMode)
-   {
-      ++numberOfCalls;
-      filePathArgument = filePath;
-      fileOpenModeArgument = fileOpenMode;
-   }
-
-   void AssertCalledOnceWith(const fs::path& expectedFilePath, const char* expectedFileOpenMode) const
-   {
-      ARE_EQUAL(1, numberOfCalls);
-      ARE_EQUAL(expectedFilePath, filePathArgument);
-      ARE_EQUAL(expectedFileOpenMode, fileOpenModeArgument);
-   }
-} _fopen_CallHistory;
-
-FILE* fopen_CallInsteadFunction(const char* filePath, const char* fileOpenMode)
-{
-   _fopen_CallHistory.RecordFunctionCall(filePath, fileOpenMode);
-   return _fopen_CallHistory.returnValue;
-}
-
 TEST(Linux__OpenFileInBinaryReadMode_ReturnsSharedPtrFromCallingCreateOrOpenFileOnLinux)
 {
    shared_ptr<FILE> binaryReadModeFilePointer = make_shared<FILE>();
@@ -275,52 +226,52 @@ TEST(Linux__OpenFileInTextReadMode_ReturnsSharedPtrFromCallingCreateOrOpenFileOn
 TEST(Windows__CreateFileInBinaryWriteMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_wb)
 {
    const shared_ptr<FILE> binaryWriteModeFilePointer = make_shared<FILE>();
-   _caller_CreateOrOpenFileOnWindowsMock->CallConstMemberFunctionMock.Return(binaryWriteModeFilePointer);
+   _caller_CreateOrOpenFileMock->CallConstMemberFunctionMock.Return(binaryWriteModeFilePointer);
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
    const shared_ptr<FILE> returnedFilePointer = _fileSystem.CreateFileInBinaryWriteMode(filePath);
    //
-   METALMOCK(_caller_CreateOrOpenFileOnWindowsMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &_fileSystem, &Utils::FileSystem::CreateOrOpenFileOnWindows, filePath, L"wb"));
+   METALMOCK(_caller_CreateOrOpenFileMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &_fileSystem, &Utils::FileSystem::CreateOrOpenFileOnWindows, filePath, "wb"));
    ARE_EQUAL(binaryWriteModeFilePointer, returnedFilePointer);
 }
 
 TEST(Windows__CreateOrOpenFileInBinaryAppendMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_ab)
 {
    const shared_ptr<FILE> binaryAppendModeFilePointer = make_shared<FILE>();
-   _caller_CreateOrOpenFileOnWindowsMock->CallConstMemberFunctionMock.Return(binaryAppendModeFilePointer);
+   _caller_CreateOrOpenFileMock->CallConstMemberFunctionMock.Return(binaryAppendModeFilePointer);
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
    const shared_ptr<FILE> returnedFilePointer = _fileSystem.CreateOrOpenFileInBinaryAppendMode(filePath);
    //
-   METALMOCK(_caller_CreateOrOpenFileOnWindowsMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &_fileSystem, &Utils::FileSystem::CreateOrOpenFileOnWindows, filePath, L"ab"));
+   METALMOCK(_caller_CreateOrOpenFileMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &_fileSystem, &Utils::FileSystem::CreateOrOpenFileOnWindows, filePath, "ab"));
    ARE_EQUAL(binaryAppendModeFilePointer, returnedFilePointer);
 }
 
 TEST(Windows__OpenFileInBinaryReadMode_ReturnsSharedPtrFromCallingCreateOrOpenFileOnWindows)
 {
    shared_ptr<FILE> binaryReadModeFilePointer = make_shared<FILE>();
-   _caller_CreateOrOpenFileOnWindowsMock->CallConstMemberFunctionMock.Return(binaryReadModeFilePointer);
+   _caller_CreateOrOpenFileMock->CallConstMemberFunctionMock.Return(binaryReadModeFilePointer);
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
    const shared_ptr<FILE> returnedFilePointer = _fileSystem.OpenFileInBinaryReadMode(filePath);
    //
-   METALMOCK(_caller_CreateOrOpenFileOnWindowsMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &_fileSystem, &Utils::FileSystem::CreateOrOpenFileOnWindows, filePath, L"rb"));
+   METALMOCK(_caller_CreateOrOpenFileMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &_fileSystem, &Utils::FileSystem::CreateOrOpenFileOnWindows, filePath, "rb"));
    ARE_EQUAL(binaryReadModeFilePointer, returnedFilePointer);
 }
 
 TEST(Windows__OpenFileInTextReadMode_ReturnsSharedPtrFromCallingCreateOrOpenFileOnLinux)
 {
    shared_ptr<FILE> textReadModeFilePointer = make_shared<FILE>();
-   _caller_CreateOrOpenFileOnWindowsMock->CallConstMemberFunctionMock.Return(textReadModeFilePointer);
+   _caller_CreateOrOpenFileMock->CallConstMemberFunctionMock.Return(textReadModeFilePointer);
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
    const shared_ptr<FILE> returnedFilePointer = _fileSystem.OpenFileInTextReadMode(filePath);
    //
-   METALMOCK(_caller_CreateOrOpenFileOnWindowsMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &_fileSystem, &Utils::FileSystem::CreateOrOpenFileOnWindows, filePath, L"r"));
+   METALMOCK(_caller_CreateOrOpenFileMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &_fileSystem, &Utils::FileSystem::CreateOrOpenFileOnWindows, filePath, "r"));
    ARE_EQUAL(textReadModeFilePointer, returnedFilePointer);
 }
 
@@ -765,9 +716,7 @@ TEST(Linux__CreateOrOpenFileOnLinux_CreatesParentDirectoriesForFilePath_fopenRet
    _call_fs_create_directoriesMock.ReturnRandom();
 
    FILE* const textModeWriteFilePointer = tmpfile();
-   _fopen_CallHistory.returnValue = textModeWriteFilePointer;
-
-   _call_fopenMock.CallInstead(std::bind(&FileSystemTests::fopen_CallInsteadFunction, this, placeholders::_1, placeholders::_2));
+   _rawCFileAPIMock->fopenMock.Return(textModeWriteFilePointer);
 
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const char* const fileOpenMode = ZenUnit::Random<const char*>();
@@ -775,17 +724,15 @@ TEST(Linux__CreateOrOpenFileOnLinux_CreatesParentDirectoriesForFilePath_fopenRet
    const shared_ptr<FILE> returnedFilePointer = _fileSystem.CreateOrOpenFileOnLinux(filePath, fileOpenMode);
    //
    const fs::path expectedParentDirectoryPath = filePath.parent_path();
-   METALMOCK(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentDirectoryPath));
-   _fopen_CallHistory.AssertCalledOnceWith(filePath.c_str(), fileOpenMode);
+   METALMOCKTHEN(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentDirectoryPath)).Then(
+   METALMOCKTHEN(_rawCFileAPIMock->fopenMock.CalledOnceWith(filePath.c_str(), fileOpenMode)));
    ARE_EQUAL(textModeWriteFilePointer, returnedFilePointer.get());
 }
 
 TEST(Linux__CreateOrOpenFileOnLinux_CreatesParentDirectoriesForFilePath_fopenReturnsNullptr_ThrowsRuntimeError)
 {
    _call_fs_create_directoriesMock.ReturnRandom();
-
-   _fopen_CallHistory.returnValue = nullptr;
-   _call_fopenMock.CallInstead(std::bind(&FileSystemTests::fopen_CallInsteadFunction, this, placeholders::_1, placeholders::_2));
+   _rawCFileAPIMock->fopenMock.Return(nullptr);
 
    const pair<int, string> errnoWithDescription = _errorCodeTranslatorMock->GetErrnoWithDescriptionMock.ReturnRandom();
 
@@ -799,8 +746,8 @@ TEST(Linux__CreateOrOpenFileOnLinux_CreatesParentDirectoriesForFilePath_fopenRet
       runtime_error, expectedExceptionMessage);
    //
    const fs::path expectedParentDirectoryPath = filePath.parent_path();
-   METALMOCK(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentDirectoryPath));
-   _fopen_CallHistory.AssertCalledOnceWith(filePath.c_str(), fileOpenMode);
+   METALMOCKTHEN(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentDirectoryPath)).Then(
+   METALMOCKTHEN(_rawCFileAPIMock->fopenMock.CalledOnceWith(filePath.c_str(), fileOpenMode)));
    METALMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
 }
 
@@ -812,28 +759,28 @@ TEST(Windows__CreateOrOpenFileOnWindows_CreatesParentDirectoriesForFilePath_Call
 
    FILE* tempFilePointer = nullptr;
    tmpfile_s(&tempFilePointer);
-   _call_wfsopenMock.Return(tempFilePointer);
+   _rawCFileAPIMock->wfsopenMock.Return(tempFilePointer);
 
    const fs::path filePath = ZenUnit::Random<fs::path>();
-   const wchar_t* const fileOpenMode = ZenUnit::Random<const wchar_t*>();
+   const char* const fileOpenMode = ZenUnit::Random<const char*>();
    //
    const shared_ptr<FILE> sharedFilePointer = _fileSystem.CreateOrOpenFileOnWindows(filePath, fileOpenMode);
    //
    const fs::path expectedParentDirectoryPath = filePath.parent_path();
    METALMOCKTHEN(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentDirectoryPath)).Then(
-   METALMOCKTHEN(_call_wfsopenMock.CalledOnceWith(filePath.c_str(), fileOpenMode, _SH_DENYWR)));
+   METALMOCKTHEN(_rawCFileAPIMock->wfsopenMock.CalledOnceWith(filePath.c_str(), fileOpenMode, _SH_DENYWR)));
    ARE_EQUAL(tempFilePointer, sharedFilePointer.get());
 }
 
 TEST(Windows__CreateOrOpenFileOnWindows_CreatesParentDirectoriesForFilePath_CallswfsopenWhichReturnsNullptr_ThrowsRuntimeError)
 {
    _call_fs_create_directoriesMock.ReturnRandom();
-   _call_wfsopenMock.Return(nullptr);
+   _rawCFileAPIMock->wfsopenMock.Return(nullptr);
 
    const pair<int, string> errnoWithDescription = _errorCodeTranslatorMock->GetErrnoWithDescriptionMock.ReturnRandom();
 
    const fs::path filePath = ZenUnit::Random<fs::path>();
-   const wchar_t* const fileOpenMode = ZenUnit::Random<const wchar_t*>();
+   const char* const fileOpenMode = ZenUnit::Random<const char*>();
 
    const string expectedExceptionMessage = Utils::String::ConcatValues(
       "_wfsopen(filePath.c_str(), fileOpenMode, _SH_DENYWR) returned nullptr. ",
@@ -843,7 +790,7 @@ TEST(Windows__CreateOrOpenFileOnWindows_CreatesParentDirectoriesForFilePath_Call
    //
    const fs::path expectedParentDirectoryPath = filePath.parent_path();
    METALMOCKTHEN(_call_fs_create_directoriesMock.CalledOnceWith(expectedParentDirectoryPath)).Then(
-   METALMOCKTHEN(_call_wfsopenMock.CalledOnceWith(filePath.c_str(), fileOpenMode, _SH_DENYWR))).Then(
+   METALMOCKTHEN(_rawCFileAPIMock->wfsopenMock.CalledOnceWith(filePath.c_str(), fileOpenMode, _SH_DENYWR))).Then(
    METALMOCKTHEN(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce()));
 }
 
@@ -853,7 +800,9 @@ TEST(ReadFileSize_CallsFSeekEndThenFTellToDetermineSizeOfFileInBytes)
 {
    const int fseekEndReturnValue = ZenUnit::Random<int>();
    const int fseekSetReturnValue = ZenUnit::Random<int>();
-   _call_fseekMock.ReturnValues(fseekEndReturnValue, fseekSetReturnValue);
+   _call_fseekMock.ReturnValues(
+      fseekEndReturnValue,
+      fseekSetReturnValue);
 
    _asserterMock->ThrowIfIntsNotEqualMock.Expect();
 
@@ -866,13 +815,21 @@ TEST(ReadFileSize_CallsFSeekEndThenFTellToDetermineSizeOfFileInBytes)
    METALMOCK(_call_fseekMock.CalledNTimes(2));
    METALMOCK(_asserterMock->ThrowIfIntsNotEqualMock.CalledNTimes(2));
 
-   METALMOCKTHEN(_call_fseekMock.CalledWith(filePointer.get(), 0, SEEK_END)).Then(
+   METALMOCKTHEN(_call_fseekMock.CalledWith(
+      filePointer.get(), 0, SEEK_END)).Then(
+
    METALMOCKTHEN(_asserterMock->ThrowIfIntsNotEqualMock.CalledWith(
       0, fseekEndReturnValue, "fseek(filePointer.get(), 0, SEEK_END) in FileSystem::FileSize() unexpectedly did not return 0"))).Then(
-   METALMOCKTHEN(_call_ftellMock.CalledOnceWith(filePointer.get()))).Then(
-   METALMOCKTHEN(_call_fseekMock.CalledWith(filePointer.get(), 0, SEEK_SET))).Then(
+
+   METALMOCKTHEN(_call_ftellMock.CalledOnceWith(
+      filePointer.get()))).Then(
+
+   METALMOCKTHEN(_call_fseekMock.CalledWith(
+      filePointer.get(), 0, SEEK_SET))).Then(
+
    METALMOCKTHEN(_asserterMock->ThrowIfIntsNotEqualMock.CalledWith(
       0, fseekSetReturnValue, "fseek(filePointer.get(), 0, SEEK_SET) in FileSystem::FileSize() unexpectedly did not return 0")));
+
    ARE_EQUAL(static_cast<size_t>(ftellReturnValue), fileSizeInBytes);
 }
 
