@@ -172,12 +172,12 @@ TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
 TEST(Linux__CreateFileInBinaryWriteMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_wb)
 {
    const shared_ptr<FILE> binaryWriteModeFilePointer = make_shared<FILE>();
-   _caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.Return(binaryWriteModeFilePointer);
+   _caller_CreateOrOpenFileMock->CallConstMemberFunctionMock.Return(binaryWriteModeFilePointer);
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
    const shared_ptr<FILE> returnedFilePointer = _fileSystem.CreateFileInBinaryWriteMode(filePath);
    //
-   METALMOCK(_caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.CalledOnceWith(
+   METALMOCK(_caller_CreateOrOpenFileMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_fileSystem, &Utils::FileSystem::CreateOrOpenFileOnLinux, filePath, "wb"));
    ARE_EQUAL(binaryWriteModeFilePointer, returnedFilePointer);
 }
@@ -185,12 +185,12 @@ TEST(Linux__CreateFileInBinaryWriteMode_ReturnsSharedFilePointerCreatedWithFileO
 TEST(Linux__CreateOrOpenFileInBinaryAppendMode_ReturnsSharedFilePointerCreatedWithFileOpenMode_ab)
 {
    const shared_ptr<FILE> binaryAppendModeFilePointer = make_shared<FILE>();
-   _caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.Return(binaryAppendModeFilePointer);
+   _caller_CreateOrOpenFileMock->CallConstMemberFunctionMock.Return(binaryAppendModeFilePointer);
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
    const shared_ptr<FILE> returnedFilePointer = _fileSystem.CreateOrOpenFileInBinaryAppendMode(filePath);
    //
-   METALMOCK(_caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.CalledOnceWith(
+   METALMOCK(_caller_CreateOrOpenFileMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_fileSystem, &Utils::FileSystem::CreateOrOpenFileOnLinux, filePath, "ab"));
    ARE_EQUAL(binaryAppendModeFilePointer, returnedFilePointer);
 }
@@ -198,12 +198,12 @@ TEST(Linux__CreateOrOpenFileInBinaryAppendMode_ReturnsSharedFilePointerCreatedWi
 TEST(Linux__OpenFileInBinaryReadMode_ReturnsSharedPtrFromCallingCreateOrOpenFileOnLinux)
 {
    shared_ptr<FILE> binaryReadModeFilePointer = make_shared<FILE>();
-   _caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.Return(binaryReadModeFilePointer);
+   _caller_CreateOrOpenFileMock->CallConstMemberFunctionMock.Return(binaryReadModeFilePointer);
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
    const shared_ptr<FILE> returnedFilePointer = _fileSystem.OpenFileInBinaryReadMode(filePath);
    //
-   METALMOCK(_caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.CalledOnceWith(
+   METALMOCK(_caller_CreateOrOpenFileMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_fileSystem, &Utils::FileSystem::CreateOrOpenFileOnLinux, filePath, "rb"));
    ARE_EQUAL(binaryReadModeFilePointer, returnedFilePointer);
 }
@@ -211,12 +211,12 @@ TEST(Linux__OpenFileInBinaryReadMode_ReturnsSharedPtrFromCallingCreateOrOpenFile
 TEST(Linux__OpenFileInTextReadMode_ReturnsSharedPtrFromCallingCreateOrOpenFileOnLinux)
 {
    shared_ptr<FILE> textReadModeFilePointer = make_shared<FILE>();
-   _caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.Return(textReadModeFilePointer);
+   _caller_CreateOrOpenFileMock->CallConstMemberFunctionMock.Return(textReadModeFilePointer);
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
    const shared_ptr<FILE> returnedFilePointer = _fileSystem.OpenFileInTextReadMode(filePath);
    //
-   METALMOCK(_caller_CreateOrOpenFileOnLinuxMock->CallConstMemberFunctionMock.CalledOnceWith(
+   METALMOCK(_caller_CreateOrOpenFileMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_fileSystem, &Utils::FileSystem::CreateOrOpenFileOnLinux, filePath, "r"));
    ARE_EQUAL(textReadModeFilePointer, returnedFilePointer);
 }
