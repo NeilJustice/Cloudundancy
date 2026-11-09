@@ -20,6 +20,8 @@ if(UNIX)
          -Wno-global-constructors \
          -Wno-gnu-zero-variadic-macro-arguments \
          -Wno-header-hygiene \
+         -Wno-lifetime-safety-intra-tu-suggestions \
+         -Wno-lifetime-safety-invalidation \
          -Wno-missing-noreturn \
          -Wno-missing-variable-declarations \
          -Wno-padded \
